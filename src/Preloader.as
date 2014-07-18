@@ -6,7 +6,7 @@ package
     {
         public function Preloader()
         {
-            className = "video_test";
+            className = "patheditor";
             super();
         }
     }
