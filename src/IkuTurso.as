@@ -3,6 +3,7 @@ package{
 
     public class IkuTurso extends PathEditorState {
         [Embed(source="../assets/testpath.png")] private var ImgBG:Class;
+
         public var player:Player;
         public var timeFrame:Number = 0;
         public var timer:Number = 0;
@@ -29,7 +30,7 @@ package{
             enemy = new SmallEnemy(new DHPoint(250,300));
             add(enemy);
 
-            player = new Player(200, 1000);
+            player = new Player(100, 100);
             add(player);
             player_rect = new FlxRect(player.x,player.y,player.width,player.height);
 
@@ -41,6 +42,8 @@ package{
             zoomcam.target = player;
             zoomcam.targetZoom = 1.2;
             FlxG.worldBounds = new FlxRect(0, 0, bg.width, bg.height);
+
+            super.create();
         }
 
         override public function update():void{

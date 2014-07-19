@@ -29,11 +29,13 @@ package
         }
 
         override public function update():void {
-            this.pathWalker.update();
+            if (this.pathWalker != null) {
+                this.pathWalker.update();
+            }
 
             if (FlxG.mouse.justReleased()) {
                 if (FlxG.keys["A"]) {
-                    _path.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
+                    this._path.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
                     this.pathWalker.moveToNextNode();
                 } else if (FlxG.keys["Z"]) {
                     var en:Enemy = new Enemy(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));

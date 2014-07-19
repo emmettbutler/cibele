@@ -4,6 +4,7 @@ package{
     public class HallwayToFern extends FlxState {
         [Embed(source="../assets/it_teleport_640_480.png")] private var ImgBG:Class;
         [Embed(source="../assets/firstconvo.mp3")] private var Convo:Class;
+
         public var player:Player;
         public var timeFrame:Number = 0;
         public var timer:Number = 0;

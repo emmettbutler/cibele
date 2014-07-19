@@ -14,7 +14,7 @@ package{
 
         public function Player(x:Number, y:Number):void{
             super(x,y);
-            makeGraphic(50,50,0xffffffff);
+            makeGraphic(50,50,0xffff0000);
 
             /*addAnimation("run", [2,3], 14, true);
             addAnimation("runFront", [0,1], 14, true);
