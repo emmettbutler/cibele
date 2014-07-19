@@ -48,6 +48,7 @@ package{
 
         override public function update():void{
             super.update();
+            player.update();
             player_rect.x = player.x;
             player_rect.y = player.y;
 
