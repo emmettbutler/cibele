@@ -1,0 +1,1 @@
+mxmlc src/ferntest.as -o src/ferntest.swf -use-network=false -verbose-stacktraces=true -static-link-runtime-shared-libraries
