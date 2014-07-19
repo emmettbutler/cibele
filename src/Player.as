@@ -2,7 +2,7 @@ package{
     import org.flixel.*;
 
     public class Player extends FlxSprite{
-        public var runSpeed:Number = 5;
+        public var runSpeed:Number = 3;
 
         public var STATE_IDLE:Number = 0;
         public var STATE_ATTACK:Number = 1;
@@ -27,23 +27,28 @@ package{
 
         override public function update():void{
             super.update();
-            borderCollide();
+            //borderCollide();
 
             if(FlxG.keys.LEFT) {
                 x -= runSpeed;
                 //play("run");
-            } else if(FlxG.keys.RIGHT){
+            }
+            if(FlxG.keys.RIGHT){
                 x += runSpeed;
                 //play("run");
-            } else if(FlxG.keys.UP){
+            }
+            if(FlxG.keys.UP){
                 y -= runSpeed;
                 //play("runBack");
-            } else if(FlxG.keys.DOWN){
+            }
+            if(FlxG.keys.DOWN){
                 y += runSpeed;
                 //play("runFront");
-            } else if(FlxG.keys.justPressed("UP")){
+            }
+            if(FlxG.keys.justPressed("UP")){
                 //play("standingBack");
-            } else if (FlxG.keys.justPressed("DOWN")){
+            }
+            if (FlxG.keys.justPressed("DOWN")){
                 //play("standing");
             }
 
@@ -62,6 +67,7 @@ package{
         }
 
         public function borderCollide():void{
+            //fix this so it matches world bounds
             if(this.x >= FlxG.width - width)
                 this.x = FlxG.width - width;
             if(this.x <= 0)
