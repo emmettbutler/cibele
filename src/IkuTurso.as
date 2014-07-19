@@ -24,10 +24,8 @@ package{
         protected var zoomcam:ZoomCamera;
 
         override public function create():void {
-            FlxG.bgColor = 0x00000000;
-            //bg = new FlxSprite(0,(480-img_height)/2);
-            //bg.loadGraphic(ImgBG,false,false,640,img_height);
-            //add(bg);
+            FlxG.bgColor = 0xff000000;
+
             bg = new FlxExtSprite(0,0);
             add(bg);
 
