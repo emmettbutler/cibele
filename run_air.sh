@@ -1,1 +1,1 @@
-~/Downloads/AIRSDK_Compiler/bin/adl Cibele-app.xml
+adl -runtime /Library/Frameworks Cibele-app.xml
