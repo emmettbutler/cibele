@@ -1,8 +1,8 @@
 package{
     import org.flixel.*;
 
-    public class IkuTurso extends FlxState {
-        [Embed(source="../assets/test_bg.png")] private var ImgBG:Class;
+    public class IkuTurso extends PathEditorState {
+        [Embed(source="../assets/testpath.png")] private var ImgBG:Class;
         public var player:Player;
         public var timeFrame:Number = 0;
         public var timer:Number = 0;
@@ -23,7 +23,7 @@ package{
             //bg.loadGraphic(ImgBG,false,false,640,img_height);
             //add(bg);
             bg = new FlxSprite(0,0);
-            bg.loadGraphic(ImgBG,false,false,3200,4200);
+            bg.loadGraphic(ImgBG,false,false,15272,17456);
             add(bg);
 
             enemy = new SmallEnemy(new DHPoint(250,300));
