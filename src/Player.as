@@ -3,7 +3,12 @@ package{
 
     public class Player extends FlxSprite{
         public var runSpeed:Number = 5;
-        public var state:String = "idle";
+
+        public var STATE_IDLE:Number = 0;
+        public var STATE_ATTACK:Number = 1;
+        public var state:Number = STATE_IDLE;
+
+        public var attack_timer:Number = 0;
 
         public var img_height:Number = 357;
 
@@ -42,10 +47,17 @@ package{
                 //play("standing");
             }
 
+            if (state == STATE_ATTACK) {
+                state = STATE_IDLE;
+            }
+
             if(FlxG.keys.justPressed("SPACE")){
-                state = "attack";
-            } else if(FlxG.keys.justReleased("SPACE")){
-                state = "idle";
+                if(state != STATE_ATTACK){
+                    state = STATE_ATTACK;
+                }
+            }
+            if(FlxG.keys.justReleased("SPACE")){
+                state = STATE_IDLE;
             }
         }
 
@@ -58,6 +70,14 @@ package{
                 this.y = (FlxG.height - ((FlxG.height-img_height)/2)) - height;
             if(this.y <= (0 + ((FlxG.height-img_height)/2)))
                 this.y = (0 + ((FlxG.height-img_height)/2));
+        }
+
+        public function attacking(e:SmallEnemy):void{
+            if(state == STATE_ATTACK){
+                if(e.state == e.STATE_IDLE){
+                    e.state = e.STATE_DAMAGED;
+                }
+            }
         }
     }
 }
