@@ -1,1 +1,0 @@
-mxmlc src/ferntest.as -o src/ferntest.swf -use-network=false -verbose-stacktraces=true -compiler.include-libraries /opt/flex_sdk_4.6/frameworks/libs/air/airglobal.swc -static-link-runtime-shared-libraries

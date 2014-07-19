@@ -1,1 +1,0 @@
-mxmlc src/patheditor.as -o src/patheditor.swf -use-network=false -verbose-stacktraces=true -compiler.include-libraries /opt/flex/frameworks/libs/air/airglobal.swc -static-link-runtime-shared-libraries
