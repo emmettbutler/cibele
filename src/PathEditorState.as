@@ -44,6 +44,8 @@ package
 
             if (FlxG.keys.justReleased("W")) {
                 this._path.writeOut();
+            } else if (FlxG.keys.justReleased("C")) {
+                this._path.clearPath();
             }
         }
     }

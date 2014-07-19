@@ -84,5 +84,14 @@ package
         public function hasNodes():Boolean {
             return this.nodes.length != 0;
         }
+
+        public function clearPath():void {
+            for (var i:int = 0; i < this.nodes.length; i++) {
+                FlxG.state.remove(this.nodes[i]);
+                this.nodes[i].destroy();
+            }
+            this.currentNode = null;
+            this.nodes.length = 0;
+        }
     }
 }

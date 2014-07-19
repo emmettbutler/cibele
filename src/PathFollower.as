@@ -52,11 +52,15 @@ package
 //                                + this.targetNode.pos.x + "x" + this.targetNode.pos.y;
 
             if (this._state == STATE_MOVE_TO_NODE) {
-                var disp:DHPoint = this.targetNode.pos.sub(this.pos);
-                if (disp._length() < 10) {
-                    this._state = STATE_IDLE_AT_NODE;
+                if (!this._path.hasNodes()) {
+                    this._state = STATE_NULL;
                 } else {
-                    this.setPos(disp.normalized().add(this.pos));
+                    var disp:DHPoint = this.targetNode.pos.sub(this.pos);
+                    if (disp._length() < 10) {
+                        this._state = STATE_IDLE_AT_NODE;
+                    } else {
+                        this.setPos(disp.normalized().add(this.pos));
+                    }
                 }
             } else if (this._state == STATE_IDLE_AT_NODE) {
                 this.moveToNextNode();
