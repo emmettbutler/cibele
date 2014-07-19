@@ -46,7 +46,10 @@ package
             super.update();
             this.closestEnemy = this.getClosestEnemy();
 
-            this.dbgText.text = stateMap[this._state] + "\n" + this.timeAlive;
+//            this.dbgText.text = stateMap[this._state] + "\n"
+//                                + this.timeAlive + "\n"
+//                                + this.pos.x + "x" + this.pos.y + "\n"
+//                                + this.targetNode.pos.x + "x" + this.targetNode.pos.y;
 
             if (this._state == STATE_MOVE_TO_NODE) {
                 var disp:DHPoint = this.targetNode.pos.sub(this.pos);
@@ -65,8 +68,6 @@ package
                     this.resolveStatePostAttack();
                 }
             }
-
-
 
             if (this._state == STATE_IDLE_AT_NODE ||
                 this._state == STATE_MOVE_TO_NODE)
@@ -137,11 +138,9 @@ package
         }
 
         public function moveToNextNode():void {
-            if (this._state == STATE_NULL || this._state == STATE_IDLE_AT_NODE) {
-                this._path.advance();
-                this.targetNode = this._path.currentNode;
-                this._state = STATE_MOVE_TO_NODE;
-            }
+            this._path.advance();
+            this.targetNode = this._path.currentNode;
+            this._state = STATE_MOVE_TO_NODE;
         }
     }
 }

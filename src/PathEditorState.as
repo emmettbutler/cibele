@@ -22,6 +22,8 @@ package
 
             this.enemies = new EnemyGroup();
             pathWalker.setEnemyGroupReference(this.enemies);
+
+            this.pathWalker.moveToNextNode();
         }
 
         override public function update():void {
@@ -36,6 +38,10 @@ package
                     add(en);
                     this.enemies.addEnemy(en);
                 }
+            }
+
+            if (FlxG.keys.justReleased("W")) {
+                this._path.writeOut();
             }
         }
     }
