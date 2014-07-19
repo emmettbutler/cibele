@@ -43,6 +43,9 @@ package
         public function readIn():void {
             var f:File = File.applicationStorageDirectory.resolvePath("cibele.txt");
             var str:FileStream = new FileStream();
+            if (!f.exists) {
+                return;
+            }
             str.open(f, FileMode.READ);
             var fileContents:String = str.readUTFBytes(f.size);
             str.close();
@@ -76,6 +79,10 @@ package
 
         public function hasNextNode():Boolean {
             return this.currentNode.next != null;
+        }
+
+        public function hasNodes():Boolean {
+            return this.nodes.length != 0;
         }
     }
 }

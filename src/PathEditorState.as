@@ -23,7 +23,9 @@ package
             this.enemies = new EnemyGroup();
             pathWalker.setEnemyGroupReference(this.enemies);
 
-            this.pathWalker.moveToNextNode();
+            if (this._path.hasNodes()) {
+                this.pathWalker.moveToNextNode();
+            }
         }
 
         override public function update():void {
