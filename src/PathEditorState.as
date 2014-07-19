@@ -21,8 +21,11 @@ package
         }
 
         override public function update():void {
-            if (FlxG.mouse.pressed()) {
+            this.pathWalker.update();
+
+            if (FlxG.mouse.justReleased()) {
                 _path.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
+                this.pathWalker.moveToNextNode();
             }
         }
     }

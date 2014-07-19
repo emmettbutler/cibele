@@ -7,18 +7,37 @@ package
         public var nodes:Array;
         public var currentNode:PathNode;
 
+        public var dbgText:FlxText;
+
         public function Path() {
             this.nodes = new Array();
+            this.currentNode = null;
+
+            this.dbgText = new FlxText(100, 150, 100, "");
+            FlxG.state.add(this.dbgText);
         }
 
         public function addNode(point:DHPoint):void {
             var node:PathNode = new PathNode(point);
-            if (this.nodes.length == 0) {
-            } else {
-                node.next = this.nodes[0];
-                node.prev = this.nodes[this.nodes.length - 1];
+            node.next = null;
+            var prevNode:PathNode = this.nodes[this.nodes.length - 1];
+            node.prev = prevNode
+            if (prevNode != null) {
+                prevNode.next = node;
             }
             this.nodes.push(node);
+        }
+
+        public function advance():void {
+            if (this.currentNode != null && this.currentNode.next != null) {
+                this.currentNode = this.currentNode.next;
+            } else {
+                this.currentNode = this.nodes[0];
+            }
+        }
+
+        public function hasNextNode():Boolean {
+            return this.currentNode.next != null;
         }
     }
 }

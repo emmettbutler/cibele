@@ -19,5 +19,13 @@ package
         {
             return Math.sqrt(this.x*this.x + this.y*this.y)
         }
+
+        public function sub(other:DHPoint):DHPoint {
+            return new DHPoint(this.x - other.x, this.y - other.y);
+        }
+
+        public function add(other:DHPoint):DHPoint {
+            return new DHPoint(this.x + other.x, this.y + other.y);
+        }
     }
 }
