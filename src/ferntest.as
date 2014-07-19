@@ -5,7 +5,7 @@ package{
 
     public class ferntest extends FlxGame{
         public function ferntest(){
-            super(640, 480, Fern,1);
+            super(640, 480, HallwayToFern, 1);
         }
     }
 }

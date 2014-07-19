@@ -3,6 +3,7 @@ package{
 
     public class Fern extends FlxState {
         [Embed(source="../assets/fern_640_480.png")] private var ImgBG:Class;
+        [Embed(source="../assets/ikuturso.mp3")] private var Convo:Class;
         public var player:Player;
         public var timeFrame:Number = 0;
         public var timer:Number = 0;
@@ -15,10 +16,17 @@ package{
         public var right_wall:Wall;
         public var top_wall:Wall;
 
+        public var convoTrack:FlxSound;
+
         public var img_height:Number = 357;
 
         override public function create():void {
             FlxG.bgColor = 0x00000000;
+
+            convoTrack = new FlxSound();
+            convoTrack.loadEmbedded(Convo, true);
+            convoTrack.play();
+
             bg = new FlxSprite(0,(480-img_height)/2);
             bg.loadGraphic(ImgBG,false,false,640,img_height);
             add(bg);
