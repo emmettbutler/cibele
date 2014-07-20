@@ -24,11 +24,6 @@ package
         override public function update():void{
             pos.x = x;
             pos.y = y;
-
-            if(hitpoints < 0){
-                FlxG.state.remove(this);
-                this.destroy();
-            }
         }
 
         public function playerTracking(p:Player):void{
@@ -44,6 +39,10 @@ package
 
         public function takeDamage():void{
             hitpoints -= 20;
+            if(hitpoints < 0){
+                FlxG.state.remove(this);
+                this.destroy();
+            }
         }
     }
 }
