@@ -4,9 +4,9 @@ package{
     public class Player extends GameObject {
         public var runSpeed:Number = 10;
 
-        public var STATE_IDLE:Number = 0;
-        public var STATE_ATTACK:Number = 1;
-        public var state:Number = STATE_IDLE;
+        public static const STATE_IDLE:Number = 0;
+        public static const STATE_ATTACK:Number = 1;
+        public var _state:Number = STATE_IDLE;
 
         public var lastAttackTime:Number = 0;
 
@@ -32,8 +32,6 @@ package{
 
         override public function update():void{
             super.update();
-            pos.x = x;
-            pos.y = y;
 
             this.dbgText.text = this.pos.x + "x" + this.pos.y;
             this.dbgText.x = x;
@@ -62,10 +60,14 @@ package{
             if(FlxG.keys.justPressed("DOWN")){
                 //play("standing");
             }
+            if(FlxG.keys.justPressed("SPACE")){
+                this.attack();
+            }
 
-            if (state == STATE_ATTACK) {
+            if (this._state == STATE_ATTACK) {
                 if (timeSinceLastAttack() > 100) {
-                    state = STATE_IDLE;
+                    this._state = STATE_IDLE;
+                    makeGraphic(50, 50, 0xffff0000);
                 }
             }
         }
@@ -78,14 +80,16 @@ package{
             return this.timeSinceLastAttack() > 2*MSEC_PER_SEC;
         }
 
-        public function attack(e:Enemy):void {
-            if(pos.sub(e.pos)._length() < 100){
-                if (this.canAttack()) {
-                    this.state = STATE_ATTACK;
-                    e.takeDamage();
-                    this.lastAttackTime = this.currentTime;
-                }
+        public function attack():void {
+            if (this.canAttack()) {
+                this._state = STATE_ATTACK;
+                this.lastAttackTime = this.currentTime;
+                this.makeGraphic(50, 50, 0xff00ffff);
             }
+        }
+
+        public function isAttacking():Boolean {
+            return this._state == STATE_ATTACK;
         }
 
         public function borderCollide():void{

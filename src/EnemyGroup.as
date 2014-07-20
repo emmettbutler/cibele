@@ -23,7 +23,7 @@ package
             return this.enemies[i];
         }
 
-        public function update(p:Player):void {
+        public function update():void {
             for(var i:Number = 0; i < this.length(); i++){
                 this.get_(i).update();
             }

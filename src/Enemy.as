@@ -30,6 +30,7 @@ package
             hitpoints -= 20;
             if(hitpoints < 0){
                 FlxG.state.remove(this);
+                FlxG.state.remove(this.debugText);
                 this.destroy();
             }
         }

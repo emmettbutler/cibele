@@ -41,8 +41,10 @@ package{
             super.update();
             this.bgLoader.update();
             player.update();
-            enemies.update(player);
-            enemiesFollowPlayer(enemies);
+            enemies.update();
+
+            enemiesFollowPlayer();
+            resolveAttacks();
 
             player_rect.x = player.x;
             player_rect.y = player.y;
@@ -60,16 +62,29 @@ package{
             }
         }
 
-        public function enemiesFollowPlayer(e:EnemyGroup):void{
+        public function resolveAttacks():void {
+            if (!player.isAttacking()) {
+                return;
+            }
+            var current_enemy:Enemy;
+            var disp:DHPoint;
+            for (var i:int = 0; i < this.enemies.length(); i++) {
+                current_enemy = this.enemies.get_(i);
+                disp = current_enemy.pos.sub(this.player.pos);
+                if (disp._length() < 30) {
+                    current_enemy.takeDamage();
+                }
+            }
+        }
+
+        public function enemiesFollowPlayer():void{
+            var e:EnemyGroup = this.enemies;
             for(var i:Number = 0; i < e.length(); i++){
                 current_enemy = e.get_(i);
                 if(player.pos.sub(current_enemy.pos)._length() < 208){
                     if(player.pos.sub(current_enemy.pos)._length() > 10){
                         enemies.preventEnemyOverlap(current_enemy);
                         current_enemy.playerTracking(player);
-                        if(FlxG.keys.justPressed("SPACE")){
-                            player.attack(current_enemy);
-                        }
                     }
                 } else {
                     if(current_enemy.state != current_enemy.STATE_DAMAGED){
