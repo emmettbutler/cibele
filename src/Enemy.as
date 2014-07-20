@@ -3,6 +3,7 @@ package
     import org.flixel.*;
 
     public class Enemy extends GameObject {
+        [Embed(source="../assets/ikuturso_enemy_1.png")] private var ImgIT1:Class;
         public var hitpoints:Number = 20;
         public var damage:Number = 2;
 
@@ -15,7 +16,7 @@ package
 
         public function Enemy(pos:DHPoint) {
             super(pos);
-            makeGraphic(10, 10, 0xff00ff00);
+            loadGraphic(ImgIT1,false,false,151,104);
             debugText = new FlxText(pos.x, pos.y, 100, "");
             debugText.color = 0xff0000ff;
             FlxG.state.add(debugText);

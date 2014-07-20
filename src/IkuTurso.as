@@ -20,7 +20,7 @@ package{
 
             this.bgLoader = new BackgroundLoader("TestSquares", 10, 5);
 
-            player = new Player(100, 100);
+            player = new Player(5460, 7390);
             this.bgLoader.setPlayerReference(player);
             player_rect = new FlxRect(player.x,player.y,player.width,player.height);
 
@@ -58,7 +58,7 @@ package{
             debugText.y = player.y-20;
 
             if(pathWalker.pathComplete){
-                debugText.text = "Path Complete";
+                //debugText.text = "Path Complete";
             }
         }
 
