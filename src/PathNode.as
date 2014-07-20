@@ -12,7 +12,7 @@ package {
         public function PathNode(pos:DHPoint)
         {
             super(pos.x, pos.y);
-            makeGraphic(10, 10, 0xff0000ff);
+            makeGraphic(10, 10, 0x000000ff);
             this.pos = pos;
             FlxG.state.add(this);
 

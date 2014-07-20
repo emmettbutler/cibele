@@ -12,7 +12,7 @@ package
         public var targetNode:PathNode;
         public var pathComplete:Boolean = false;
 
-        public var runSpeed:Number = 5;
+        public var runSpeed:Number = 6;
 
         public var closestEnemy:Enemy;
         public var lastAttackTime:Number = -1;
@@ -20,6 +20,7 @@ package
         public static const STATE_MOVE_TO_NODE:Number = 2;
         public static const STATE_IDLE_AT_NODE:Number = 3;
         public static const STATE_AT_ENEMY:Number = 4;
+        public static const STATE_MOVE_TO_ENEMY:Number = 5;
 
         {
             public static var stateMap:Dictionary = new Dictionary();
@@ -28,34 +29,39 @@ package
             stateMap[STATE_IDLE_AT_NODE] = "STATE_IDLE_AT_NODE";
             stateMap[STATE_AT_ENEMY] = "STATE_AT_ENEMY";
             stateMap[STATE_IN_ATTACK] = "STATE_IN_ATTACK";
+            stateMap[STATE_MOVE_TO_ENEMY] = "STATE_MOVE_TO_ENEMY";
         }
 
         public var dbgText:FlxText;
 
         public function PathFollower(pos:DHPoint) {
             super(pos);
-            makeGraphic(10, 10, 0xffff0000);
+            makeGraphic(50, 50, 0xffff0000);
             this.targetNode = null;
             this._state = STATE_NULL;
 
             this.dbgText = new FlxText(100, 100, 100, "");
+            this.dbgText.color = 0xff000000;
             FlxG.state.add(this.dbgText);
         }
 
         override public function update():void {
             super.update();
             this.closestEnemy = this.getClosestEnemy();
+            dbgText.x = this.x;
+            dbgText.y = this.y-20;
 
 //            this.dbgText.text = stateMap[this._state] + "\n"
 //                                + this.timeAlive + "\n"
 //                                + this.pos.x + "x" + this.pos.y + "\n"
 //                                + this.targetNode.pos.x + "x" + this.targetNode.pos.y;
 
+            var disp:DHPoint;
             if (this._state == STATE_MOVE_TO_NODE) {
                 if (!this._path.hasNodes()) {
                     this._state = STATE_NULL;
                 } else {
-                    var disp:DHPoint = this.targetNode.pos.sub(this.pos);
+                    disp = this.targetNode.pos.sub(this.pos);
                     if (disp._length() < 10) {
                         this._state = STATE_IDLE_AT_NODE;
                     } else {
@@ -63,13 +69,17 @@ package
                     }
                 }
             } else if (this._state == STATE_IDLE_AT_NODE) {
+                dbgText.text = "IDLE";
                 this.markCurrentNode();
                 this.moveToNextNode();
             } else if (this._state == STATE_AT_ENEMY) {
                 this.attack(this.closestEnemy);
+            } else if (this._state == STATE_MOVE_TO_ENEMY){
+                disp = this.closestEnemy.pos.sub(this.pos);
+                this.setPos(disp.normalized().mulScl(this.runSpeed).add(this.pos));
             } else if (this._state == STATE_IN_ATTACK) {
                 if (this.timeSinceLastAttack() > 500) {
-                    this.makeGraphic(10, 10, 0xffff0000);
+                    dbgText.text = "ATTACK";
                     this.resolveStatePostAttack();
                 }
             }
@@ -79,6 +89,8 @@ package
             {
                 if (this.closestEnemy != null && this.enemyIsInAttackRange(this.closestEnemy)) {
                     this._state = STATE_AT_ENEMY;
+                } else if(!this.enemyIsInAttackRange(this.closestEnemy) && this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
+                    this._state = STATE_MOVE_TO_ENEMY;
                 }
             }
         }
@@ -87,12 +99,18 @@ package
             if (this.closestEnemy != null && this.enemyIsInAttackRange(this.closestEnemy))
             {
                 this._state = STATE_AT_ENEMY;
+            } else if(this.closestEnemy != null && !this.enemyIsInAttackRange(this.closestEnemy) && this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
+                this._state = STATE_MOVE_TO_ENEMY;
             } else {
                 this._state = STATE_MOVE_TO_NODE;
             }
         }
 
         public function enemyIsInAttackRange(en:Enemy):Boolean {
+            return en.pos.sub(this.pos)._length() < 100;
+        }
+
+        public function enemyIsInMoveTowardsRange(en:Enemy):Boolean{
             return en.pos.sub(this.pos)._length() < 200;
         }
 
@@ -124,7 +142,6 @@ package
             if (this.canAttack()) {
                 this._state = STATE_IN_ATTACK;
                 this.lastAttackTime = this.currentTime;
-                this.makeGraphic(10, 10, 0xffffff00);
             }
         }
 

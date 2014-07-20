@@ -3,7 +3,7 @@ package{
 
     public class Player extends PartyMember {
         [Embed(source="../assets/cib_walk.png")] private var ImgCibWalk:Class;
-        public var runSpeed:Number = 10;
+        public var runSpeed:Number = 5;
 
         public var lastAttackTime:Number = 0;
 

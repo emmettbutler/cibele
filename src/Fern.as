@@ -38,7 +38,7 @@ package{
             top_wall = new Wall(0,0,640,210);
             add(top_wall);
 
-            player = new Player(250, 300);
+            player = new Player(250, 280);
             add(player);
             player_rect = new FlxRect(player.x,player.y,player.width,player.height);
 

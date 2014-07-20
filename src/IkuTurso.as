@@ -70,7 +70,7 @@ package{
             for (var i:int = 0; i < this.enemies.length(); i++) {
                 current_enemy = this.enemies.get_(i);
                 disp = current_enemy.pos.sub(obj.pos);
-                if (disp._length() < 30) {
+                if (disp._length() < 100) {
                     current_enemy.takeDamage();
                 }
             }
