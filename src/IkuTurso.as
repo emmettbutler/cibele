@@ -1,11 +1,6 @@
 package{
     import org.flixel.*;
 
-    import flash.display.Bitmap;
-    import flash.display.Loader;
-    import flash.events.Event;
-    import flash.net.URLRequest;
-
     public class IkuTurso extends PathEditorState {
         public var player:Player;
         public var timeFrame:Number = 0;
@@ -14,20 +9,15 @@ package{
 
         public var bg:FlxExtSprite;
         public var player_rect:FlxRect;
-
         public var img_height:Number = 357;
-
-        private var receivingMachine:Loader;
-
         public var enemy:SmallEnemy;
-
         protected var zoomcam:ZoomCamera;
+        public var bgLoader:BackgroundLoader;
 
         override public function create():void {
             FlxG.bgColor = 0xff000000;
 
-            //bg = new FlxExtSprite(0,0);
-            //add(bg);
+            this.bgLoader = new BackgroundLoader("TestSquares", 10, 5);
 
             enemy = new SmallEnemy(new DHPoint(250,300));
             add(enemy);
@@ -43,17 +33,9 @@ package{
             FlxG.resetCameras(zoomcam);
             zoomcam.target = player;
             zoomcam.targetZoom = 1.2;
-            FlxG.worldBounds = new FlxRect(0, 0, 800, 600);
-
-            receivingMachine = new Loader();
-            receivingMachine.contentLoaderInfo.addEventListener(Event.COMPLETE, loadComplete);
-            receivingMachine.load(new URLRequest("../assets/testpath.png"));
+            FlxG.worldBounds = new FlxRect(0, 0, 15272, 17456);
 
             super.create();
-        }
-
-        private function loadComplete(event_load:Event):void {
-            //bg.loadExtGraphic(new Bitmap(event_load.target.content.bitmapData), false, false, 15272, 17456);
         }
 
         override public function update():void{
