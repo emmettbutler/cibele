@@ -21,15 +21,13 @@ package
             FlxG.state.add(debugText);
         }
 
-        public function playerTracking(p:Player, e:EnemyGroup):void{
+        public function playerTracking(p:Player):void{
             var disp:DHPoint = p.pos.sub(this.pos);
             this.setPos(disp.normalized().add(this.pos));
         }
 
         public function setPos(pos:DHPoint):void {
             this.pos = pos;
-            this.x = pos.x;
-            this.y = pos.y;
         }
 
         public function takeDamage():void{
@@ -42,7 +40,7 @@ package
 
         override public function update():void{
             debugText.x = pos.x;
-            debugText.y = pos.y;
+            debugText.y = pos.y-10;
             debugText.text = "HP: " + hitpoints;
         }
     }

@@ -12,7 +12,7 @@ package
         public var targetNode:PathNode;
         public var pathComplete:Boolean = false;
 
-        public var runSpeed:Number = 20;
+        public var runSpeed:Number = 10;
 
         public var closestEnemy:Enemy;
         public var lastAttackTime:Number = -1;

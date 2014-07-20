@@ -10,7 +10,6 @@ package{
         public var bg:FlxExtSprite;
         public var player_rect:FlxRect;
         public var img_height:Number = 357;
-        public var enemy:SmallEnemy;
         public var current_enemy:Enemy;
 
         protected var zoomcam:ZoomCamera;
@@ -54,7 +53,7 @@ package{
                 timer++;
             }
             debugText.x = player.x;
-            debugText.y = player.y;
+            debugText.y = player.y-20;
 
             if(pathWalker.pathComplete){
                 debugText.text = "Path Complete";
@@ -67,16 +66,15 @@ package{
                 if(player.pos.sub(current_enemy.pos)._length() < 208){
                     if(player.pos.sub(current_enemy.pos)._length() > 10){
                         enemies.preventEnemyOverlap(current_enemy);
-                        current_enemy.playerTracking(player, e);
+                        current_enemy.playerTracking(player);
+                        if(FlxG.keys.justPressed("SPACE")){
+                            player.attack(current_enemy);
+                        }
                     }
                 } else {
                     if(current_enemy.state != current_enemy.STATE_DAMAGED){
                         current_enemy.state = current_enemy.STATE_IDLE;
                     }
-                }
-
-                if(FlxG.keys.justPressed("SPACE")){
-                   player.attack(current_enemy);
                 }
             }
         }
