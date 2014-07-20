@@ -46,6 +46,7 @@ package{
             this.bgLoader.update();
             player.update();
             enemies.update();
+            SoundManager.getInstance().update();
 
             resolveAttacks();
 
