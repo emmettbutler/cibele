@@ -16,16 +16,12 @@ package{
         public var right_wall:Wall;
         public var top_wall:Wall;
 
-        public var convoTrack:FlxSound;
-
         public var img_height:Number = 357;
 
         override public function create():void {
             FlxG.bgColor = 0x00000000;
 
-            convoTrack = new FlxSound();
-            convoTrack.loadEmbedded(Convo, true);
-            convoTrack.play();
+            GameSound.getInstance.play_(Convo, 60000+28000);
 
             bg = new FlxSprite(0,(480-img_height)/2);
             bg.loadGraphic(ImgBG,false,false,640,img_height);
@@ -50,6 +46,7 @@ package{
 
         override public function update():void{
             super.update();
+            convoTrack.update();
             player_rect.x = player.x;
             player_rect.y = player.y;
             FlxG.collide();

@@ -42,6 +42,7 @@ package{
             this.bgLoader.update();
             player.update();
             enemies.update();
+            convoTrack.update();
 
             resolveAttacks();
 
