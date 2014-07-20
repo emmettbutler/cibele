@@ -23,5 +23,11 @@ package
             this.pos.x = this.x;
             this.pos.y = this.y;
         }
+
+        public function setPos(pos:DHPoint):void {
+            this.pos = pos;
+            this.x = pos.x;
+            this.y = pos.y;
+        }
     }
 }

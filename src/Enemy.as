@@ -26,10 +26,6 @@ package
             this.setPos(disp.normalized().add(this.pos));
         }
 
-        public function setPos(pos:DHPoint):void {
-            this.pos = pos;
-        }
-
         public function takeDamage():void{
             hitpoints -= 20;
             if(hitpoints < 0){

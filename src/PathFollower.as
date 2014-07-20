@@ -131,12 +131,6 @@ package
             }
         }
 
-        public function setPos(pos:DHPoint):void {
-            this.pos = pos;
-            this.x = pos.x;
-            this.y = pos.y;
-        }
-
         public function setPath(path:Path):void {
             this._path = path;
         }
