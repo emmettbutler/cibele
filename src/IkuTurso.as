@@ -43,7 +43,6 @@ package{
             player.update();
             enemies.update();
 
-            enemiesFollowPlayer();
             resolvePlayerAttacks();
             resolveFollowerAttacks();
 
@@ -89,23 +88,6 @@ package{
                 disp = current_enemy.pos.sub(this.pathWalker.pos);
                 if (disp._length() < 200) {
                     current_enemy.takeDamage();
-                }
-            }
-        }
-
-        public function enemiesFollowPlayer():void{
-            var e:EnemyGroup = this.enemies;
-            for(var i:Number = 0; i < e.length(); i++){
-                current_enemy = e.get_(i);
-                if(player.pos.sub(current_enemy.pos)._length() < 208){
-                    if(player.pos.sub(current_enemy.pos)._length() > 10){
-                        enemies.preventEnemyOverlap(current_enemy);
-                        current_enemy.playerTracking(player);
-                    }
-                } else {
-                    if(current_enemy.state != current_enemy.STATE_DAMAGED){
-                        current_enemy.state = current_enemy.STATE_IDLE;
-                    }
                 }
             }
         }

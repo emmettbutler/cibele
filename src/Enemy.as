@@ -7,13 +7,16 @@ package
         public var hitpoints:Number = 20;
         public var damage:Number = 2;
 
-        public var STATE_IDLE:Number = 0;
-        public var STATE_DAMAGED:Number = 1;
-        public var STATE_ATTACK:Number = 2;
-        public var STATE_TRACKING:Number = 3;
-        public var state:Number = STATE_IDLE;
+        public static const STATE_IDLE:Number = 0;
+        public static const STATE_DAMAGED:Number = 1;
+        public static const STATE_ATTACK:Number = 2;
+        public static const STATE_TRACKING:Number = 3;
+        public var _state:Number = STATE_IDLE;
         public var debugText:FlxText;
         public var dead:Boolean = false;
+
+        public var player:Player;
+        private var playerDisp:DHPoint;
 
         public function Enemy(pos:DHPoint) {
             super(pos);
@@ -23,9 +26,8 @@ package
             FlxG.state.add(debugText);
         }
 
-        public function playerTracking(p:Player):void{
-            var disp:DHPoint = p.pos.sub(this.pos);
-            this.setPos(disp.normalized().add(this.pos));
+        public function setPlayerRef(p:Player):void{
+            this.player = p;
         }
 
         public function takeDamage():void{
@@ -38,10 +40,34 @@ package
             }
         }
 
+        public function setIdle():void {
+            this._state = STATE_IDLE;
+        }
+
+        public function isFollowing():Boolean {
+            return this._state == STATE_TRACKING;
+        }
+
         override public function update():void{
             debugText.x = pos.x;
             debugText.y = pos.y-10;
             debugText.text = "HP: " + hitpoints;
+
+            this.playerDisp = this.player.pos.sub(this.pos);
+
+            if (this._state == STATE_IDLE) {
+                if (this.playerDisp._length() < 208) {
+                    this._state = STATE_TRACKING;
+                }
+            } else if (this._state == STATE_TRACKING) {
+                if (this.playerDisp._length() > 208 ||
+                    this.playerDisp._length() < 10)
+                {
+                    this._state = STATE_IDLE;
+                }
+                var disp:DHPoint = this.player.pos.sub(this.pos);
+                this.setPos(disp.normalized().add(this.pos));
+            }
         }
     }
 }

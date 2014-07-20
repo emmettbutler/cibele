@@ -8,10 +8,11 @@ package
 
         public function EnemyGroup(p:Player) {
             this.enemies = new Array();
-            player = p;
+            this.player = p;
         }
 
         public function addEnemy(en:Enemy):void {
+            en.setPlayerRef(this.player);
             this.enemies.push(en);
         }
 
@@ -24,8 +25,13 @@ package
         }
 
         public function update():void {
+            var cur:Enemy;
             for(var i:Number = 0; i < this.length(); i++){
-                this.get_(i).update();
+                cur = this.get_(i);
+                cur.update();
+                if (cur.isFollowing()) {
+                    this.preventEnemyOverlap(cur);
+                }
             }
         }
 

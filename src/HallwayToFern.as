@@ -46,9 +46,6 @@ package{
 
             debugText = new FlxText(0,0,100,"");
             add(debugText);
-
-            enemy = new SmallEnemy(new DHPoint(250,300));
-            add(enemy);
         }
 
         override public function update():void{
