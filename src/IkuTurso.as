@@ -43,7 +43,7 @@ package{
             FlxG.resetCameras(zoomcam);
             zoomcam.target = player;
             zoomcam.targetZoom = 1.2;
-            //FlxG.worldBounds = new FlxRect(0, 0, bg.width, bg.height);
+            FlxG.worldBounds = new FlxRect(0, 0, 800, 600);
 
             receivingMachine = new Loader();
             receivingMachine.contentLoaderInfo.addEventListener(Event.COMPLETE, loadComplete);
@@ -72,7 +72,9 @@ package{
             }
 
             if(player.pos.sub(enemy.pos)._length() < 208){
-                enemy.playerTracking(player);
+                if(player.pos.sub(enemy.pos)._length() > 10){
+                    enemy.playerTracking(player);
+                }
             } else {
                 if(enemy.state != enemy.STATE_DAMAGED){
                     enemy.state = enemy.STATE_IDLE;

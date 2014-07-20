@@ -9,10 +9,13 @@ package
         public var pathWalker:PathFollower;
         public var _path:Path;
         public var enemies:EnemyGroup;
+        public var mouseImg:FlxSprite;
 
         override public function create():void
         {
-            FlxG.mouse.show();
+            mouseImg = new FlxSprite(FlxG.mouse.x, FlxG.mouse.y);
+            mouseImg.makeGraphic(5, 5, 0xffffffff);
+            add(mouseImg);
 
             pathWalker = new PathFollower(new DHPoint(100, 100));
             add(pathWalker);
@@ -29,6 +32,9 @@ package
         }
 
         override public function update():void {
+            mouseImg.x = FlxG.mouse.x;
+            mouseImg.y = FlxG.mouse.y;
+
             if (this.pathWalker != null) {
                 this.pathWalker.update();
             }
