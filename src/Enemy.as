@@ -16,6 +16,9 @@ package
         public function Enemy(pos:DHPoint) {
             super(pos);
             makeGraphic(10, 10, 0xff00ff00);
+            debugText = new FlxText(pos.x, pos.y, 100, "");
+            debugText.color = 0xff000000;
+            FlxG.state.add(debugText);
         }
 
         public function playerTracking(p:Player):void{
@@ -35,6 +38,12 @@ package
                 FlxG.state.remove(this);
                 this.destroy();
             }
+        }
+
+        override public function update():void{
+            debugText.x = pos.x;
+            debugText.y = pos.y;
+            debugText.text = "HP: " + hitpoints;
         }
     }
 }

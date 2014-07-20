@@ -13,6 +13,7 @@ package
         }
 
         override public function update():void{
+            super.update();
             pos.x = x;
             pos.y = y;
         }

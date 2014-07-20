@@ -2,7 +2,7 @@ package{
     import org.flixel.*;
 
     public class Player extends GameObject {
-        public var runSpeed:Number = 3;
+        public var runSpeed:Number = 10;
 
         public var STATE_IDLE:Number = 0;
         public var STATE_ATTACK:Number = 1;
