@@ -16,13 +16,6 @@ package{
             this.dbgText = new FlxText(x, y, 200, "");
             this.dbgText.color = 0xffffffff;
             FlxG.state.add(this.dbgText);
-
-            /*addAnimation("run", [2,3], 14, true);
-            addAnimation("runFront", [0,1], 14, true);
-            addAnimation("standing", [0]);
-            addAnimation("runBack", [4,5], 14, true);
-            addAnimation("standingBack", [4]);
-            play("standingBack");*/
         }
 
         override public function update():void{
@@ -31,29 +24,18 @@ package{
             this.dbgText.text = this.pos.x + "x" + this.pos.y;
             this.dbgText.x = x;
             this.dbgText.y = y;
-            //borderCollide();
 
             if(FlxG.keys.LEFT) {
                 x -= runSpeed;
-                //play("run");
             }
             if(FlxG.keys.RIGHT){
                 x += runSpeed;
-                //play("run");
             }
             if(FlxG.keys.UP){
                 y -= runSpeed;
-                //play("runBack");
             }
             if(FlxG.keys.DOWN){
                 y += runSpeed;
-                //play("runFront");
-            }
-            if(FlxG.keys.justPressed("UP")){
-                //play("standingBack");
-            }
-            if(FlxG.keys.justPressed("DOWN")){
-                //play("standing");
             }
             if(FlxG.keys.justPressed("SPACE")){
                 this.attack();
