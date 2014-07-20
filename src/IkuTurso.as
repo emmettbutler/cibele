@@ -26,6 +26,7 @@ package{
             player_rect = new FlxRect(player.x,player.y,player.width,player.height);
 
             debugText = new FlxText(0,0,100,"");
+            debugText.color = 0xff000000;
             add(debugText);
 
             zoomcam = new ZoomCamera(0, 0, 640, 480);
@@ -55,6 +56,12 @@ package{
             if(timeFrame%30 == 0){
                 timer++;
             }
+            debugText.x = player.x;
+            debugText.y = player.y;
+
+            if(pathWalker.pathComplete){
+                debugText.text = "Path Complete";
+            }
         }
 
         public function enemiesFollowPlayer(e:EnemyGroup):void{
@@ -63,7 +70,7 @@ package{
                 if(player.pos.sub(current_enemy.pos)._length() < 208){
                     if(player.pos.sub(current_enemy.pos)._length() > 10){
                         current_enemy.playerTracking(player);
-                        debugText.text = current_enemy.hitpoints + "";
+                        //debugText.text = current_enemy.hitpoints + "";
                     }
                 } else {
                     if(current_enemy.state != current_enemy.STATE_DAMAGED){

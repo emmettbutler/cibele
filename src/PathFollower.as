@@ -10,8 +10,9 @@ package
         public var _path:Path;
         public var _enemies:EnemyGroup;
         public var targetNode:PathNode;
+        public var pathComplete:Boolean = false;
 
-        public var runSpeed:Number = 1;
+        public var runSpeed:Number = 20;
 
         public var closestEnemy:Enemy;
         public var lastAttackTime:Number = -1;
@@ -65,6 +66,7 @@ package
                     }
                 }
             } else if (this._state == STATE_IDLE_AT_NODE) {
+                this.markCurrentNode();
                 this.moveToNextNode();
             } else if (this._state == STATE_AT_ENEMY) {
                 this.attack(this.closestEnemy);
@@ -147,6 +149,11 @@ package
             this._path.advance();
             this.targetNode = this._path.currentNode;
             this._state = STATE_MOVE_TO_NODE;
+        }
+
+        public function markCurrentNode():void{
+            this.targetNode.mark();
+            pathComplete = _path.isPathComplete();
         }
     }
 }

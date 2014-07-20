@@ -6,6 +6,8 @@ package
     {
         public var nodes:Array;
         public var currentNode:PathNode;
+        public var nodeStatusCounter:Number;
+        public var complete_:Boolean = false;
 
         public var dbgText:FlxText;
 
@@ -51,6 +53,21 @@ package
             }
             this.currentNode = null;
             this.nodes.length = 0;
+        }
+
+        public function isPathComplete():Boolean{
+            var _status:Boolean = false;
+            nodeStatusCounter = 0;
+            for(var i:Number = 0; i < this.nodes.length; i++){
+                _status = this.nodes[i].status_();
+                if(_status == true){
+                    nodeStatusCounter++;
+                }
+            }
+            if(nodeStatusCounter >= this.nodes.length){
+                complete_ = true;
+            }
+            return complete_;
         }
     }
 }

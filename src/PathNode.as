@@ -7,6 +7,7 @@ package {
         public var pos:DHPoint;
         public var next:PathNode;
         public var prev:PathNode;
+        public var marked:Boolean = false;
 
         public function PathNode(pos:DHPoint)
         {
@@ -17,6 +18,14 @@ package {
 
             this.next = null;
             this.prev = null;
+        }
+
+        public function mark():void{
+            marked = true;
+        }
+
+        public function status_():Boolean{
+            return marked;
         }
     }
 }
