@@ -44,7 +44,8 @@ package{
             enemies.update();
 
             enemiesFollowPlayer();
-            resolveAttacks();
+            resolvePlayerAttacks();
+            resolveFollowerAttacks();
 
             player_rect.x = player.x;
             player_rect.y = player.y;
@@ -62,7 +63,7 @@ package{
             }
         }
 
-        public function resolveAttacks():void {
+        public function resolvePlayerAttacks():void {
             if (!player.isAttacking()) {
                 return;
             }
@@ -72,6 +73,21 @@ package{
                 current_enemy = this.enemies.get_(i);
                 disp = current_enemy.pos.sub(this.player.pos);
                 if (disp._length() < 30) {
+                    current_enemy.takeDamage();
+                }
+            }
+        }
+
+        public function resolveFollowerAttacks():void{
+            if (!pathWalker.isAttacking()) {
+                return;
+            }
+            var current_enemy:Enemy;
+            var disp:DHPoint;
+            for (var i:int = 0; i < this.enemies.length(); i++) {
+                current_enemy = this.enemies.get_(i);
+                disp = current_enemy.pos.sub(this.pathWalker.pos);
+                if (disp._length() < 200) {
                     current_enemy.takeDamage();
                 }
             }

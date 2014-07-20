@@ -13,6 +13,7 @@ package
         public var STATE_TRACKING:Number = 3;
         public var state:Number = STATE_IDLE;
         public var debugText:FlxText;
+        public var dead:Boolean = false;
 
         public function Enemy(pos:DHPoint) {
             super(pos);
@@ -32,6 +33,7 @@ package
             if(hitpoints < 0){
                 FlxG.state.remove(this);
                 FlxG.state.remove(this.debugText);
+                this.dead = true;
                 this.destroy();
             }
         }
