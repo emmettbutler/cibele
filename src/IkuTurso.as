@@ -35,7 +35,7 @@ package{
             zoomcam.targetZoom = 1.2;
             FlxG.worldBounds = new FlxRect(0, 0, 15272, 17456);
 
-            super.create();
+            super.create_(player);
 
             enemy = new SmallEnemy(new DHPoint(250,300));
             add(enemy);
@@ -46,6 +46,7 @@ package{
             super.update();
             this.bgLoader.update();
             player.update();
+            enemies.update(player);
             enemiesFollowPlayer(enemies);
 
             player_rect.x = player.x;
@@ -69,8 +70,8 @@ package{
                 current_enemy = e.get_(i);
                 if(player.pos.sub(current_enemy.pos)._length() < 208){
                     if(player.pos.sub(current_enemy.pos)._length() > 10){
-                        current_enemy.playerTracking(player);
-                        //debugText.text = current_enemy.hitpoints + "";
+                        enemies.preventEnemyOverlap(current_enemy);
+                        current_enemy.playerTracking(player, e);
                     }
                 } else {
                     if(current_enemy.state != current_enemy.STATE_DAMAGED){

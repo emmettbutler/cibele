@@ -15,7 +15,7 @@ package
         public var enemies:EnemyGroup;
         public var mouseImg:FlxSprite;
 
-        override public function create():void
+        public function create_(player:Player):void
         {
             mouseImg = new FlxSprite(FlxG.mouse.x, FlxG.mouse.y);
             mouseImg.makeGraphic(5, 5, 0xffffffff);
@@ -27,7 +27,7 @@ package
             _path = new Path();
             pathWalker.setPath(_path);
 
-            this.enemies = new EnemyGroup();
+            this.enemies = new EnemyGroup(player);
             pathWalker.setEnemyGroupReference(this.enemies);
 
             this.readIn();

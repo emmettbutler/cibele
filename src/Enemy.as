@@ -21,7 +21,7 @@ package
             FlxG.state.add(debugText);
         }
 
-        public function playerTracking(p:Player):void{
+        public function playerTracking(p:Player, e:EnemyGroup):void{
             var disp:DHPoint = p.pos.sub(this.pos);
             this.setPos(disp.normalized().add(this.pos));
         }
