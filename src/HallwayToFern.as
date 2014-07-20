@@ -18,6 +18,8 @@ package{
         public var wall_rect_r:Wall;
         public var bottom_wall_rect_r:Wall;
 
+        public var enemy:SmallEnemy;
+
         public var img_height:Number = 357;
 
         override public function create():void {
@@ -44,6 +46,9 @@ package{
 
             debugText = new FlxText(0,0,100,"");
             add(debugText);
+
+            enemy = new SmallEnemy(new DHPoint(250,300));
+            add(enemy);
         }
 
         override public function update():void{

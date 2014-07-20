@@ -38,7 +38,7 @@ package
                     this._path.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
                     this.pathWalker.moveToNextNode();
                 } else if (FlxG.keys["Z"]) {
-                    var en:Enemy = new Enemy(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
+                    var en:SmallEnemy = new SmallEnemy(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
                     add(en);
                     this.enemies.addEnemy(en);
                 }

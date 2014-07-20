@@ -26,8 +26,8 @@ package{
         override public function create():void {
             FlxG.bgColor = 0xff000000;
 
-            bg = new FlxExtSprite(0,0);
-            add(bg);
+            //bg = new FlxExtSprite(0,0);
+            //add(bg);
 
             enemy = new SmallEnemy(new DHPoint(250,300));
             add(enemy);
@@ -43,7 +43,7 @@ package{
             FlxG.resetCameras(zoomcam);
             zoomcam.target = player;
             zoomcam.targetZoom = 1.2;
-            FlxG.worldBounds = new FlxRect(0, 0, bg.width, bg.height);
+            //FlxG.worldBounds = new FlxRect(0, 0, bg.width, bg.height);
 
             receivingMachine = new Loader();
             receivingMachine.contentLoaderInfo.addEventListener(Event.COMPLETE, loadComplete);
@@ -53,7 +53,7 @@ package{
         }
 
         private function loadComplete(event_load:Event):void {
-            bg.loadExtGraphic(new Bitmap(event_load.target.content.bitmapData), false, false, 15272, 17456);
+            //bg.loadExtGraphic(new Bitmap(event_load.target.content.bitmapData), false, false, 15272, 17456);
         }
 
         override public function update():void{
@@ -62,19 +62,26 @@ package{
             player_rect.x = player.x;
             player_rect.y = player.y;
 
-            FlxG.overlap(player,enemy,attack);
-
             timeFrame++;
             debugText.x = player.x-50;
             debugText.y = player.y;
+            debugText.text = "ENEMY HP: " + enemy.hitpoints + "ENEMY STATE" + enemy.state + "PLAYER STATE" + player.state;
 
             if(timeFrame%30 == 0){
                 timer++;
             }
-        }
 
-        public function attack(p:Player, e:SmallEnemy):void{
-            p.attacking(e);
+            if(player.pos.sub(enemy.pos)._length() < 208){
+                enemy.playerTracking(player);
+            } else {
+                if(enemy.state != enemy.STATE_DAMAGED){
+                    enemy.state = enemy.STATE_IDLE;
+                }
+            }
+
+            if(FlxG.keys.justPressed("SPACE")){
+               player.attack(enemy);
+            }
         }
     }
 }
