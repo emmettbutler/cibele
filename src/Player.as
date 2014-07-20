@@ -79,7 +79,7 @@ package{
             return this.timeSinceLastAttack() > 2*MSEC_PER_SEC;
         }
 
-        public function attack(e:SmallEnemy):void {
+        public function attack(e:Enemy):void {
             if(pos.sub(e.pos)._length() < 100){
                 if (this.canAttack()) {
                     this.state = STATE_ATTACK;
