@@ -17,6 +17,7 @@ package
 
         public function Enemy(pos:DHPoint) {
             super(pos);
+            this._state = STATE_IDLE;
             loadGraphic(ImgIT1,false,false,151,104);
             debugText = new FlxText(pos.x, pos.y, 100, "");
             debugText.color = 0xff0000ff;
@@ -46,11 +47,11 @@ package
         }
 
         override public function update():void{
+            this.playerDisp = this.player.pos.sub(this.pos);
+
             debugText.x = pos.x;
             debugText.y = pos.y-10;
             debugText.text = "HP: " + hitpoints;
-
-            this.playerDisp = this.player.pos.sub(this.pos);
 
             if (this._state == STATE_IDLE) {
                 if (this.playerDisp._length() < 208) {
