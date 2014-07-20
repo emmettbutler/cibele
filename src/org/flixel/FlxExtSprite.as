@@ -10,6 +10,7 @@ package org.flixel
     public class FlxExtSprite extends FlxSprite
     {
         public var hasLoaded:Boolean = false;
+        public var hasStartedLoad:Boolean = false;
 
         public function FlxExtSprite(X:Number, Y:Number, SimpleGraphic:Class=null):void
         {
@@ -58,7 +59,6 @@ package org.flixel
             }
             height = frameHeight = Height;
             resetHelpers();
-            this.hasLoaded = true;
             return this;
         }
     }

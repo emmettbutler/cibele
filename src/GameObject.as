@@ -20,6 +20,8 @@ package
         override public function update():void {
             this.currentTime = new Date().valueOf();
             this.timeAlive = this.currentTime - this.bornTime;
+            this.pos.x = this.x;
+            this.pos.y = this.y;
         }
     }
 }

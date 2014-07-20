@@ -23,7 +23,7 @@ package{
             add(enemy);
 
             player = new Player(100, 100);
-            add(player);
+            this.bgLoader.setPlayerReference(player);
             player_rect = new FlxRect(player.x,player.y,player.width,player.height);
 
             debugText = new FlxText(0,0,100,"");
@@ -40,14 +40,12 @@ package{
 
         override public function update():void{
             super.update();
+            this.bgLoader.update();
             player.update();
             player_rect.x = player.x;
             player_rect.y = player.y;
 
             timeFrame++;
-            debugText.x = player.x-50;
-            debugText.y = player.y;
-            debugText.text = "ENEMY HP: " + enemy.hitpoints + "ENEMY STATE" + enemy.state + "PLAYER STATE" + player.state;
 
             if(timeFrame%30 == 0){
                 timer++;

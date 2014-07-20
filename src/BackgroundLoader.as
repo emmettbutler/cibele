@@ -16,6 +16,8 @@ package {
         public var playerRef:Player;
         public var estTileWidth:Number, estTileHeight:Number;
 
+        public var dbgText:FlxText;
+
         public function BackgroundLoader(macroImageName:String, rows:Number, cols:Number) {
             this.macroImageName = macroImageName;
             this.rows = rows;
@@ -37,6 +39,11 @@ package {
 
             this.receivingMachine = new Loader();
             this.loadTile(0, 0);
+
+            this.dbgText = new FlxText(100, 100, FlxG.width, "");
+            this.dbgText.color = 0xff0000ff;
+            this.dbgText.scrollFactor = new FlxPoint(0, 0);
+            FlxG.state.add(dbgText);
         }
 
         public function loadTile(row:Number, col:Number):void {
@@ -47,25 +54,48 @@ package {
                 tile.loadExtGraphic(bmp, false, false, bmp.width, bmp.height);
                 tile.x = col * estTileWidth;
                 tile.y = row * estTileHeight;
+                tile.hasLoaded = true;
                 receivingMachine.contentLoaderInfo.removeEventListener(
                     Event.COMPLETE, arguments.callee);
             }
 
-            if (!tile.hasLoaded) {
+            if (!tile.hasStartedLoad) {
+                tile.hasStartedLoad = true;
+
+                var numberString:String = this.getTileIndex(row, col);
+
                 receivingMachine.contentLoaderInfo.addEventListener(
                     Event.COMPLETE, loadComplete);
                 var req:URLRequest = new URLRequest(
-                    "../assets/test_tiles/" + macroImageName + "_01.png")
+                    "../assets/test_tiles/" + macroImageName + "_" + numberString + ".png")
                 receivingMachine.load(req);
             }
         }
 
-        public function update():void {
-            var playerRow:Number, playerCol:Number;
-            playerRow = this.playerRef.pos.y % this.estTileHeight;
-            playerCol = this.playerRef.pos.x % this.estTileWidth;
+        public function getTileIndex(row:int, col:int):String {
+            var idx:int = cols * (row % rows) + col % cols;
+            idx += 1;
+            if (idx < 10) {
+                return "0" + idx;
+            }
+            return "" + idx;
+        }
 
-            this.loadTile(playerRow, playerCol);
+        public function tileHasLoaded(row:int, col:int):Boolean {
+            var tile:FlxExtSprite = this.tiles[row][col];
+            return tile.hasLoaded;
+        }
+
+        public function update():void {
+            var playerRow:int, playerCol:int;
+            playerRow = Math.floor(this.playerRef.pos.y / this.estTileHeight);
+            playerCol = Math.floor(this.playerRef.pos.x / this.estTileWidth);
+
+            this.dbgText.text = playerRow + "x" + playerCol;
+
+            if (!this.tileHasLoaded(playerRow, playerCol)) {
+                this.loadTile(playerRow, playerCol);
+            }
         }
 
         public function setPlayerReference(pl:Player):void {
