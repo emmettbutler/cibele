@@ -9,14 +9,25 @@ package
         public var totalSeconds:Number = 0;
         public var embeddedSound:Class;
         public var soundObject:FlxSound;
+        public var endCallback:Function;
 
         public static const MSEC_PER_SEC:Number = 1000;
 
-        public static var _instance:GameSound = null;
-
-        public function GameSound() {
+        public function GameSound(embeddedSound:Class, dur:Number,
+                                  endCallback:Function=null) {
             this.bornTime = new Date().valueOf();
             this.timeAlive = 0;
+
+            this.totalSeconds = dur;
+            this.embeddedSound = embeddedSound;
+            this.endCallback = endCallback;
+            if (this.endCallback == null) {
+                this.endCallback = this.defaultEnd;
+            }
+
+            soundObject = new FlxSound();
+            soundObject.loadEmbedded(embeddedSound, true);
+            soundObject.play();
         }
 
         public function update():void {
@@ -24,28 +35,10 @@ package
             this.timeAlive = this.currentTime - this.bornTime;
 
             if(this.timeAlive >= totalSeconds){
-                didEnd();
+                this.endCallback();
             }
         }
 
-        public function didEnd():void{
-
-        }
-
-        public function play_(sound:Class, sec:Number):void{
-            totalSeconds = sec;
-            embeddedSound = sound;
-
-            soundObject = new FlxSound();
-            soundObject.loadEmbedded(sound, true);
-            soundObject.play();
-        }
-
-        public static function getInstance():GameSound {
-            if (_instance == null) {
-                _instance = new GameSound();
-            }
-            return _instance;
-        }
+        public function defaultEnd():void { }
     }
 }

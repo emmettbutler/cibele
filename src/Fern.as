@@ -4,6 +4,7 @@ package{
     public class Fern extends FlxState {
         [Embed(source="../assets/fern_640_480.png")] private var ImgBG:Class;
         [Embed(source="../assets/voc_ikuturso.mp3")] private var Convo:Class;
+
         public var player:Player;
         public var timeFrame:Number = 0;
         public var timer:Number = 0;
@@ -21,7 +22,7 @@ package{
         override public function create():void {
             FlxG.bgColor = 0x00000000;
 
-            GameSound.getInstance.play_(Convo, 60000+28000);
+            SoundManager.getInstance().playSound(Convo, 60000+28000);
 
             bg = new FlxSprite(0,(480-img_height)/2);
             bg.loadGraphic(ImgBG,false,false,640,img_height);
@@ -46,7 +47,9 @@ package{
 
         override public function update():void{
             super.update();
-            convoTrack.update();
+
+            SoundManager.getInstance().update();
+
             player_rect.x = player.x;
             player_rect.y = player.y;
             FlxG.collide();
