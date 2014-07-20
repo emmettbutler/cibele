@@ -1,0 +1,19 @@
+{
+	"bgm_fern": {
+		"behavior": "sequence",
+		"subevents": [
+			{
+				"file": "bgm_fern_intro.mp3",
+				"startTime": 0,
+				"loop": false,
+				"bpm": 95
+			}
+			{
+				"file": "bgm_fern_loop.mp3",
+				"startTime": 12.631,
+				"loop": true,
+				"bpm": 95
+			}
+		]
+	}
+}
