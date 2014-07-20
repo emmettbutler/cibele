@@ -5,8 +5,6 @@ package{
         [Embed(source="../assets/cib_walk.png")] private var ImgCibWalk:Class;
         public var runSpeed:Number = 5;
 
-        public var lastAttackTime:Number = 0;
-
         public var img_height:Number = 357;
         public var dbgText:FlxText;
 
@@ -65,21 +63,6 @@ package{
                 if (timeSinceLastAttack() > 100) {
                     this._state = STATE_IDLE;
                 }
-            }
-        }
-
-        public function timeSinceLastAttack():Number {
-            return this.currentTime - this.lastAttackTime;
-        }
-
-        public function canAttack():Boolean {
-            return this.timeSinceLastAttack() > 2*MSEC_PER_SEC;
-        }
-
-        public function attack():void {
-            if (this.canAttack()) {
-                this._state = STATE_IN_ATTACK;
-                this.lastAttackTime = this.currentTime;
             }
         }
 

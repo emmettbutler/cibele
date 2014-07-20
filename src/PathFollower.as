@@ -15,7 +15,6 @@ package
         public var runSpeed:Number = 6;
 
         public var closestEnemy:Enemy;
-        public var lastAttackTime:Number = -1;
 
         public static const STATE_MOVE_TO_NODE:Number = 2;
         public static const STATE_IDLE_AT_NODE:Number = 3;
@@ -73,7 +72,7 @@ package
                 this.markCurrentNode();
                 this.moveToNextNode();
             } else if (this._state == STATE_AT_ENEMY) {
-                this.attack(this.closestEnemy);
+                this.attack();
             } else if (this._state == STATE_MOVE_TO_ENEMY){
                 disp = this.closestEnemy.pos.sub(this.pos);
                 this.setPos(disp.normalized().mulScl(this.runSpeed).add(this.pos));
@@ -130,18 +129,10 @@ package
             return ret;
         }
 
-        public function timeSinceLastAttack():Number {
-            return this.currentTime - this.lastAttackTime;
-        }
-
-        public function canAttack():Boolean {
-            return this.timeSinceLastAttack() > 2*MSEC_PER_SEC;
-        }
-
-        public function attack(en:Enemy):void {
-            if (this.canAttack()) {
-                this._state = STATE_IN_ATTACK;
-                this.lastAttackTime = this.currentTime;
+        override public function attack():void {
+            super.attack();
+            if (this._state == STATE_IN_ATTACK) {
+                this.makeGraphic(10, 10, 0xffffff00);
             }
         }
 
