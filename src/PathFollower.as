@@ -12,7 +12,7 @@ package
         public var targetNode:PathNode;
         public var pathComplete:Boolean = false;
 
-        public var runSpeed:Number = 10;
+        public var runSpeed:Number = 5;
 
         public var closestEnemy:Enemy;
         public var lastAttackTime:Number = -1;
@@ -96,7 +96,7 @@ package
         }
 
         public function enemyIsInAttackRange(en:Enemy):Boolean {
-            return en.pos.sub(this.pos)._length() < 10;
+            return en.pos.sub(this.pos)._length() < 200;
         }
 
         public function getClosestEnemy():Enemy {
@@ -107,7 +107,7 @@ package
             for (var i:int = 0; i < this._enemies.length(); i++) {
                 cur = this._enemies.get_(i);
                 disp = cur.pos.sub(this.pos)._length();
-                if (disp < shortest) {
+                if (disp < shortest && !cur.dead) {
                     shortest = disp;
                     ret = cur;
                 }
@@ -129,6 +129,10 @@ package
                 this.lastAttackTime = this.currentTime;
                 this.makeGraphic(10, 10, 0xffffff00);
             }
+        }
+
+        public function isAttacking():Boolean{
+            return this._state == STATE_IN_ATTACK;
         }
 
         public function setPath(path:Path):void {

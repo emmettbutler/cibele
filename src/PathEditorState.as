@@ -21,7 +21,7 @@ package
             mouseImg.makeGraphic(5, 5, 0xffffffff);
             add(mouseImg);
 
-            pathWalker = new PathFollower(new DHPoint(100, 100));
+            pathWalker = new PathFollower(new DHPoint(5460, 7390));
             add(pathWalker);
 
             _path = new Path();

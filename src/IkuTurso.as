@@ -20,7 +20,7 @@ package{
 
             this.bgLoader = new BackgroundLoader("TestSquares", 10, 5);
 
-            player = new Player(100, 100);
+            player = new Player(5460, 7390);
             this.bgLoader.setPlayerReference(player);
             player_rect = new FlxRect(player.x,player.y,player.width,player.height);
 
@@ -44,7 +44,8 @@ package{
             enemies.update();
 
             enemiesFollowPlayer();
-            resolveAttacks();
+            resolvePlayerAttacks();
+            resolveFollowerAttacks();
 
             player_rect.x = player.x;
             player_rect.y = player.y;
@@ -58,11 +59,11 @@ package{
             debugText.y = player.y-20;
 
             if(pathWalker.pathComplete){
-                debugText.text = "Path Complete";
+                //debugText.text = "Path Complete";
             }
         }
 
-        public function resolveAttacks():void {
+        public function resolvePlayerAttacks():void {
             if (!player.isAttacking()) {
                 return;
             }
@@ -72,6 +73,21 @@ package{
                 current_enemy = this.enemies.get_(i);
                 disp = current_enemy.pos.sub(this.player.pos);
                 if (disp._length() < 30) {
+                    current_enemy.takeDamage();
+                }
+            }
+        }
+
+        public function resolveFollowerAttacks():void{
+            if (!pathWalker.isAttacking()) {
+                return;
+            }
+            var current_enemy:Enemy;
+            var disp:DHPoint;
+            for (var i:int = 0; i < this.enemies.length(); i++) {
+                current_enemy = this.enemies.get_(i);
+                disp = current_enemy.pos.sub(this.pathWalker.pos);
+                if (disp._length() < 200) {
                     current_enemy.takeDamage();
                 }
             }

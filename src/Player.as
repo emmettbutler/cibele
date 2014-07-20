@@ -2,6 +2,7 @@ package{
     import org.flixel.*;
 
     public class Player extends GameObject {
+        [Embed(source="../assets/cib_walk.png")] private var ImgCibWalk:Class;
         public var runSpeed:Number = 10;
 
         public static const STATE_IDLE:Number = 0;
@@ -15,7 +16,7 @@ package{
 
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x,y));
-            makeGraphic(50, 50, 0xffff0000);
+            loadGraphic(ImgCibWalk,false,false,126,134);
             FlxG.state.add(this);
 
             this.dbgText = new FlxText(x, y, 200, "");
@@ -67,7 +68,6 @@ package{
             if (this._state == STATE_ATTACK) {
                 if (timeSinceLastAttack() > 100) {
                     this._state = STATE_IDLE;
-                    makeGraphic(50, 50, 0xffff0000);
                 }
             }
         }
@@ -84,7 +84,6 @@ package{
             if (this.canAttack()) {
                 this._state = STATE_ATTACK;
                 this.lastAttackTime = this.currentTime;
-                this.makeGraphic(50, 50, 0xff00ffff);
             }
         }
 

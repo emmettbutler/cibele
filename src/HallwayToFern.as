@@ -40,7 +40,7 @@ package{
 
             door = new FlxRect(210,100,200,100);
 
-            player = new Player(200, 300);
+            player = new Player(200, 280);
             add(player);
             player_rect = new FlxRect(player.x,player.y,player.width,player.height);
 
