@@ -27,5 +27,13 @@ package
         public function add(other:DHPoint):DHPoint {
             return new DHPoint(this.x + other.x, this.y + other.y);
         }
+
+        public function mul(other:DHPoint):DHPoint {
+            return new DHPoint(this.x * other.x, this.y * other.y);
+        }
+
+        public function mulScl(other:Number):DHPoint {
+            return new DHPoint(this.x * other, this.y * other);
+        }
     }
 }

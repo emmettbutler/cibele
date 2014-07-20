@@ -11,6 +11,8 @@ package
         public var _enemies:EnemyGroup;
         public var targetNode:PathNode;
 
+        public var runSpeed:Number = 1;
+
         public var closestEnemy:Enemy;
         public var lastAttackTime:Number = -1;
 
@@ -59,7 +61,7 @@ package
                     if (disp._length() < 10) {
                         this._state = STATE_IDLE_AT_NODE;
                     } else {
-                        this.setPos(disp.normalized().add(this.pos));
+                        this.setPos(disp.normalized().mulScl(this.runSpeed).add(this.pos));
                     }
                 }
             } else if (this._state == STATE_IDLE_AT_NODE) {
