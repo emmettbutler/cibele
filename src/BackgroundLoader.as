@@ -15,6 +15,7 @@ package {
         public var rows:Number, cols:Number;
         public var playerRef:Player;
         public var estTileWidth:Number, estTileHeight:Number;
+        public var adjacentCoords:Array;
 
         public var dbgText:FlxText;
 
@@ -24,6 +25,7 @@ package {
             this.cols = cols;
             this.estTileWidth = 1400;
             this.estTileHeight = 750;
+            this.adjacentCoords = new Array();
 
             tiles = new Array();
             var spr:FlxExtSprite;
@@ -33,17 +35,29 @@ package {
                     spr = new FlxExtSprite(0, 0);
                     spr.makeGraphic(10, 10, 0x00000000);
                     FlxG.state.add(spr);
+                    spr.x = j * estTileWidth;
+                    spr.y = i * estTileHeight;
                     tiles[i][j] = spr;
                 }
             }
 
             this.receivingMachine = new Loader();
-            this.loadTile(0, 0);
 
             this.dbgText = new FlxText(100, 100, FlxG.width, "");
             this.dbgText.color = 0xff0000ff;
             this.dbgText.scrollFactor = new FlxPoint(0, 0);
             FlxG.state.add(dbgText);
+        }
+
+        public function makeCallback(tile:FlxExtSprite):Function {
+            return function (event_load:Event):void {
+                var tileInner:FlxExtSprite = tile;
+                var bmp:Bitmap = new Bitmap(event_load.target.content.bitmapData);
+                tileInner.loadExtGraphic(bmp, false, false, bmp.width, bmp.height);
+                tileInner.hasLoaded = true;
+                receivingMachine.contentLoaderInfo.removeEventListener(
+                    Event.COMPLETE, arguments.callee);
+            }
         }
 
         public function loadTile(row:Number, col:Number):void {
@@ -56,25 +70,15 @@ package {
                 return;
             }
 
-            function loadComplete(event_load:Event):void {
-                var bmp:Bitmap = new Bitmap(event_load.target.content.bitmapData);
-                tile.loadExtGraphic(bmp, false, false, bmp.width, bmp.height);
-                tile.x = col * estTileWidth;
-                tile.y = row * estTileHeight;
-                tile.hasLoaded = true;
-                receivingMachine.contentLoaderInfo.removeEventListener(
-                    Event.COMPLETE, arguments.callee);
-            }
-
             if (!tile.hasStartedLoad) {
                 tile.hasStartedLoad = true;
-
                 var numberString:String = this.getTileIndex(row, col);
-
                 receivingMachine.contentLoaderInfo.addEventListener(
-                    Event.COMPLETE, loadComplete);
+                    Event.COMPLETE, this.makeCallback(tile));
                 var req:URLRequest = new URLRequest(
-                    "../assets/test_tiles/" + macroImageName + "_" + numberString + ".png")
+                    "../assets/test_tiles/" + macroImageName + "_"
+                    + numberString + ".png"
+                );
                 receivingMachine.load(req);
             }
         }
@@ -107,9 +111,18 @@ package {
 
             this.dbgText.text = playerRow + "x" + playerCol;
 
-            if (!this.tileHasLoaded(playerRow, playerCol)) {
-                this.loadTile(playerRow, playerCol);
+            adjacentCoords.push([playerRow,   playerCol]);
+
+            var row:int, col:int;
+            for (var i:int = 0; i < adjacentCoords.length; i++) {
+                row = adjacentCoords[i][0];
+                col = adjacentCoords[i][1];
+                if (!this.tileHasLoaded(row, col)) {
+                    this.loadTile(row, col);
+                }
             }
+
+            adjacentCoords.length = 0;
         }
 
         public function setPlayerReference(pl:Player):void {

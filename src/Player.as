@@ -30,7 +30,6 @@ package{
             play("standingBack");*/
         }
 
-
         override public function update():void{
             super.update();
             pos.x = x;
