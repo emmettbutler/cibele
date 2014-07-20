@@ -22,7 +22,10 @@ package{
         override public function create():void {
             FlxG.bgColor = 0x00000000;
 
-            SoundManager.getInstance().playSound(Convo, 60000+28000);
+            function _callback():void {
+                FlxG.switchState(new PlayVideoState());
+            }
+            SoundManager.getInstance().playSound(Convo, (6*60+27)*1000, _callback);
 
             bg = new FlxSprite(0,(480-img_height)/2);
             bg.loadGraphic(ImgBG,false,false,640,img_height);

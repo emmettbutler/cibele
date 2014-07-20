@@ -35,6 +35,7 @@ package
             this.timeAlive = this.currentTime - this.bornTime;
 
             if(this.timeAlive >= totalSeconds){
+                this.soundObject.stop();
                 this.endCallback();
             }
         }
