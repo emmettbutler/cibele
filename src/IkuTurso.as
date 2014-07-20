@@ -6,6 +6,7 @@ package{
         public var timeFrame:Number = 0;
         public var timer:Number = 0;
         public var debugText:FlxText;
+        public var boss:BossEnemy;
 
         public var bg:FlxExtSprite;
         public var player_rect:FlxRect;
@@ -23,6 +24,9 @@ package{
             player = new Player(5460, 7390);
             this.bgLoader.setPlayerReference(player);
             player_rect = new FlxRect(player.x,player.y,player.width,player.height);
+
+            boss = new BossEnemy(new DHPoint(3345,485));
+            this.add(boss);
 
             debugText = new FlxText(0,0,100,"");
             debugText.color = 0xff000000;

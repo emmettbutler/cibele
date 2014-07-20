@@ -23,10 +23,6 @@ package{
         override public function create():void {
             FlxG.bgColor = 0x00000000;
 
-            convoTrack = new FlxSound();
-            convoTrack.loadEmbedded(Convo, true);
-            convoTrack.play();
-
             bg = new FlxSprite(0,(480-img_height)/2);
             bg.loadGraphic(ImgBG,false,false,640,img_height);
             add(bg);
