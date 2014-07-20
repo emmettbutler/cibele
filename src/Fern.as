@@ -3,7 +3,7 @@ package{
 
     public class Fern extends FlxState {
         [Embed(source="../assets/fern_640_480.png")] private var ImgBG:Class;
-        [Embed(source="../assets/ikuturso.mp3")] private var Convo:Class;
+        [Embed(source="../assets/voc_ikuturso.mp3")] private var Convo:Class;
         public var player:Player;
         public var timeFrame:Number = 0;
         public var timer:Number = 0;

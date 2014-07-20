@@ -8,6 +8,10 @@ package
         public var timeAlive:Number = -1;
         public var currentTime:Number = -1;
 
+        public static const STATE_NULL:Number = -1;
+        public static const STATE_IDLE:Number = 0;
+        public var _state:Number;
+
         public static const MSEC_PER_SEC:Number = 1000;
 
         public function GameObject(pos:DHPoint) {

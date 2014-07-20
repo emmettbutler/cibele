@@ -5,7 +5,7 @@ package
     import flash.utils.setTimeout;
     import flash.utils.Dictionary;
 
-    public class PathFollower extends GameObject
+    public class PathFollower extends PartyMember
     {
         public var _path:Path;
         public var _enemies:EnemyGroup;
@@ -17,12 +17,9 @@ package
         public var closestEnemy:Enemy;
         public var lastAttackTime:Number = -1;
 
-        public var _state:Number;
-        public static const STATE_NULL:Number = 0;
-        public static const STATE_MOVE_TO_NODE:Number = 1;
-        public static const STATE_IDLE_AT_NODE:Number = 2;
-        public static const STATE_AT_ENEMY:Number = 3;
-        public static const STATE_IN_ATTACK:Number = 4;
+        public static const STATE_MOVE_TO_NODE:Number = 2;
+        public static const STATE_IDLE_AT_NODE:Number = 3;
+        public static const STATE_AT_ENEMY:Number = 4;
 
         {
             public static var stateMap:Dictionary = new Dictionary();
@@ -129,10 +126,6 @@ package
                 this.lastAttackTime = this.currentTime;
                 this.makeGraphic(10, 10, 0xffffff00);
             }
-        }
-
-        public function isAttacking():Boolean{
-            return this._state == STATE_IN_ATTACK;
         }
 
         public function setPath(path:Path):void {

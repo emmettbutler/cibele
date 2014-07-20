@@ -1,13 +1,9 @@
 package{
     import org.flixel.*;
 
-    public class Player extends GameObject {
+    public class Player extends PartyMember {
         [Embed(source="../assets/cib_walk.png")] private var ImgCibWalk:Class;
         public var runSpeed:Number = 10;
-
-        public static const STATE_IDLE:Number = 0;
-        public static const STATE_ATTACK:Number = 1;
-        public var _state:Number = STATE_IDLE;
 
         public var lastAttackTime:Number = 0;
 
@@ -65,7 +61,7 @@ package{
                 this.attack();
             }
 
-            if (this._state == STATE_ATTACK) {
+            if (this._state == STATE_IN_ATTACK) {
                 if (timeSinceLastAttack() > 100) {
                     this._state = STATE_IDLE;
                 }
@@ -82,13 +78,9 @@ package{
 
         public function attack():void {
             if (this.canAttack()) {
-                this._state = STATE_ATTACK;
+                this._state = STATE_IN_ATTACK;
                 this.lastAttackTime = this.currentTime;
             }
-        }
-
-        public function isAttacking():Boolean {
-            return this._state == STATE_ATTACK;
         }
 
         public function borderCollide():void{

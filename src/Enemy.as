@@ -7,11 +7,8 @@ package
         public var hitpoints:Number = 20;
         public var damage:Number = 2;
 
-        public static const STATE_IDLE:Number = 0;
-        public static const STATE_DAMAGED:Number = 1;
-        public static const STATE_ATTACK:Number = 2;
+        public static const STATE_DAMAGED:Number = 2;
         public static const STATE_TRACKING:Number = 3;
-        public var _state:Number = STATE_IDLE;
         public var debugText:FlxText;
         public var dead:Boolean = false;
 
