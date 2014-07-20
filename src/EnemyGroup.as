@@ -24,8 +24,9 @@ package
         }
 
         public function update(p:Player):void {
-            player.x = p.x;
-            player.y = p.y;
+            for(var i:Number = 0; i < this.length(); i++){
+                this.get_(i).update();
+            }
         }
 
         public function preventEnemyOverlap(e:Enemy):void{

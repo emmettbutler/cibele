@@ -36,10 +36,6 @@ package{
             FlxG.worldBounds = new FlxRect(0, 0, 15272, 17456);
 
             super.create_(player);
-
-            enemy = new SmallEnemy(new DHPoint(250,300));
-            add(enemy);
-            this.enemies.addEnemy(enemy);
         }
 
         override public function update():void{

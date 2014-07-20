@@ -17,7 +17,7 @@ package
             super(pos);
             makeGraphic(10, 10, 0xff00ff00);
             debugText = new FlxText(pos.x, pos.y, 100, "");
-            debugText.color = 0xff000000;
+            debugText.color = 0xff0000ff;
             FlxG.state.add(debugText);
         }
 
