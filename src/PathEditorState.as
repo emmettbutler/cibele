@@ -63,7 +63,24 @@ package
             }
         }
 
+        public function writeBackup():void {
+            var f:File = File.applicationStorageDirectory.resolvePath("cibele.txt");
+            var str:FileStream = new FileStream();
+            if (!f.exists) {
+                return;
+            }
+            str.open(f, FileMode.READ);
+            var fileContents:String = str.readUTFBytes(f.size);
+            str.close();
+
+            var fBak:File = File.applicationStorageDirectory.resolvePath("cibele.txt.bak");
+            str.open(fBak, FileMode.WRITE);
+            str.writeUTFBytes(fileContents);
+            str.close();
+        }
+
         public function writeOut():void {
+            this.writeBackup();
             var f:File = File.applicationStorageDirectory.resolvePath("cibele.txt");
             var str:FileStream = new FileStream();
             str.open(f, FileMode.WRITE);
@@ -86,6 +103,7 @@ package
 
             str.writeUTFBytes(fString);
             str.close();
+            this.writeBackup();
         }
 
         public function readIn():void {
