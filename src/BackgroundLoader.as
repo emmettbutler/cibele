@@ -47,7 +47,14 @@ package {
         }
 
         public function loadTile(row:Number, col:Number):void {
-            var tile:FlxExtSprite = tiles[row][col];
+            var rowArr:Array = this.tiles[row];
+            if (rowArr == null) {
+                return;
+            }
+            var tile:FlxExtSprite = rowArr[col];
+            if (tile == null) {
+                return;
+            }
 
             function loadComplete(event_load:Event):void {
                 var bmp:Bitmap = new Bitmap(event_load.target.content.bitmapData);
@@ -82,8 +89,15 @@ package {
         }
 
         public function tileHasLoaded(row:int, col:int):Boolean {
-            var tile:FlxExtSprite = this.tiles[row][col];
-            return tile.hasLoaded;
+            var rowArr:Array = this.tiles[row];
+            if (rowArr == null) {
+                return false;
+            }
+            var tile:FlxExtSprite = rowArr[col];
+            if (tile != null) {
+                return tile.hasLoaded;
+            }
+            return false
         }
 
         public function update():void {
