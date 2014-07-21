@@ -10,7 +10,10 @@ package{
         public var timer:Number = 0;
         public var debugText:FlxText;
 
-        public var bg:FlxSprite;
+        public var bg1:FlxSprite;
+        public var bg2:FlxSprite;
+        public var bg3:FlxSprite;
+
         public var door:FlxRect;
         public var player_rect:FlxRect;
         public var wall_rect_l:Wall;
@@ -30,11 +33,17 @@ package{
         }
 
         override public function create():void {
-            FlxG.bgColor = 0x00000000;
+            FlxG.bgColor = 0xff000000;
 
-            bg = new FlxSprite(0,(FlxG.height-img_height)/2);
-            bg.loadGraphic(ImgBG,false,false,640,img_height);
-            add(bg);
+            bg2 = new FlxSprite(0,0);
+            bg2.loadGraphic(ImgBG,false,false,640,img_height);
+            add(bg2);
+            bg1 = new FlxSprite(0,-bg2.height);
+            bg1.loadGraphic(ImgBG,false,false,640,img_height);
+            add(bg1);
+            bg3 = new FlxSprite(0,+bg2.height);
+            bg3.loadGraphic(ImgBG,false,false,640,img_height);
+            add(bg3);
 
             wall_rect_l = new Wall(0,(FlxG.height-img_height)/2,200,FlxG.height - (FlxG.height-img_height)/2);
             add(wall_rect_l);
@@ -64,6 +73,7 @@ package{
 
         override public function update():void{
             super.update();
+            player.runSpeed = 0;
             player_rect.x = player.x;
             player_rect.y = player.y;
             FlxG.collide();
@@ -72,6 +82,22 @@ package{
             timeFrame++;
             debugText.x = player.x-50;
             debugText.y = player.y;
+
+            if(FlxG.keys.UP){
+                bg1.y++;
+                bg2.y++;
+                bg3.y++;
+
+                if(bg2.y == 0){
+                    bg1.y = bg2.y-bg2.height;
+                }
+                if(bg1.y == 0){
+                    bg3.y = bg2.y-bg1.height;
+                }
+                if(bg3.y == 0){
+                    bg2.y = bg3.y-bg3.height;
+                }
+            }
 
 
             debugText.text = FlxG.height + "";
