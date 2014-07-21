@@ -19,7 +19,7 @@ package{
         override public function create():void {
             FlxG.bgColor = 0xff000000;
 
-            this.bgLoader = new BackgroundLoader("TestSquares", 10, 5);
+            this.bgLoader = new BackgroundLoader("Map", 10, 5);
 
             player = new Player(5460, 7390);
             this.bgLoader.setPlayerReference(player);

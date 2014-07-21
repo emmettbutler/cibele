@@ -23,8 +23,8 @@ package {
             this.macroImageName = macroImageName;
             this.rows = rows;
             this.cols = cols;
-            this.estTileWidth = 1400;
-            this.estTileHeight = 750;
+            this.estTileWidth = 1433;
+            this.estTileHeight = 820;
             this.adjacentCoords = new Array();
 
             tiles = new Array();
