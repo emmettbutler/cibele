@@ -11,7 +11,6 @@ package
     public class LogoCutscene extends FlxState
     {
         public var videoStream:NetStream;
-        public var spr:FlxSprite;
         public var video:Video;
 
         override public function create():void
@@ -21,7 +20,7 @@ package
             var videoConnection:NetConnection = new NetConnection();
             videoConnection.connect(null);
             videoStream = new NetStream(videoConnection);
-            videoStream.play("scooter.flv");
+            videoStream.play("../assets/test_video.flv");
             videoStream.client = { onMetaData:function(obj:Object):void{} };
             videoStream.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
 
@@ -35,10 +34,6 @@ package
             video.x = (screenWidth - videoLetterboxWidth) / 2;
 
             FlxG.stage.addChild(video);
-
-            spr = new FlxSprite(300, 10);
-            spr.makeGraphic(20, 20, 0xffff0000);
-            add(spr);
         }
 
         override public function update():void {
