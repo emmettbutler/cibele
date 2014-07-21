@@ -7,6 +7,7 @@ package
 
     public class PathFollower extends PartyMember
     {
+        //todo add a fading footprint to make it easier for player to follow him
         public var _path:Path;
         public var _enemies:EnemyGroup;
         public var targetNode:PathNode;
