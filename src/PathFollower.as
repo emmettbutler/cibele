@@ -50,10 +50,8 @@ package
             dbgText.x = this.x;
             dbgText.y = this.y-20;
 
-//            this.dbgText.text = stateMap[this._state] + "\n"
-//                                + this.timeAlive + "\n"
-//                                + this.pos.x + "x" + this.pos.y + "\n"
-//                                + this.targetNode.pos.x + "x" + this.targetNode.pos.y;
+            this.dbgText.text = stateMap[this._state] + "\n"
+                                + this.canAttack();
 
             var disp:DHPoint;
             if (this._state == STATE_MOVE_TO_NODE) {
@@ -67,29 +65,31 @@ package
                         this.setPos(disp.normalized().mulScl(this.runSpeed).add(this.pos));
                     }
                 }
+                if (this.enemyIsInAttackRange(this.closestEnemy)) {
+                    this._state = STATE_AT_ENEMY;
+                } else if(this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
+                    this._state = STATE_MOVE_TO_ENEMY;
+                }
             } else if (this._state == STATE_IDLE_AT_NODE) {
-                dbgText.text = "IDLE";
                 this.markCurrentNode();
                 this.moveToNextNode();
+                if (this.enemyIsInAttackRange(this.closestEnemy)) {
+                    this._state = STATE_AT_ENEMY;
+                } else if(this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
+                    this._state = STATE_MOVE_TO_ENEMY;
+                }
             } else if (this._state == STATE_AT_ENEMY) {
                 this.attack();
             } else if (this._state == STATE_MOVE_TO_ENEMY){
                 disp = this.closestEnemy.pos.sub(this.pos);
                 this.setPos(disp.normalized().mulScl(this.runSpeed).add(this.pos));
+                if (this.enemyIsInAttackRange(this.closestEnemy)) {
+                    this._state = STATE_AT_ENEMY;
+                }
             } else if (this._state == STATE_IN_ATTACK) {
                 if (this.timeSinceLastAttack() > 500) {
-                    dbgText.text = "ATTACK";
                     this.resolveStatePostAttack();
-                }
-            }
-
-            if (this._state == STATE_IDLE_AT_NODE ||
-                this._state == STATE_MOVE_TO_NODE)
-            {
-                if (this.closestEnemy != null && this.enemyIsInAttackRange(this.closestEnemy)) {
-                    this._state = STATE_AT_ENEMY;
-                } else if(!this.enemyIsInAttackRange(this.closestEnemy) && this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
-                    this._state = STATE_MOVE_TO_ENEMY;
+                    this.makeGraphic(10, 10, 0xffff0000);
                 }
             }
         }
@@ -98,19 +98,19 @@ package
             if (this.closestEnemy != null && this.enemyIsInAttackRange(this.closestEnemy))
             {
                 this._state = STATE_AT_ENEMY;
-            } else if(this.closestEnemy != null && !this.enemyIsInAttackRange(this.closestEnemy) && this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
-                this._state = STATE_MOVE_TO_ENEMY;
             } else {
                 this._state = STATE_MOVE_TO_NODE;
             }
         }
 
         public function enemyIsInAttackRange(en:Enemy):Boolean {
-            return en.pos.sub(this.pos)._length() < 100;
+            if (en == null) { return false; }
+            return en.pos.sub(this.pos)._length() < 150;
         }
 
         public function enemyIsInMoveTowardsRange(en:Enemy):Boolean{
-            return en.pos.sub(this.pos)._length() < 200;
+            if (en == null) { return false; }
+            return en.pos.sub(this.pos)._length() < 280;
         }
 
         public function getClosestEnemy():Enemy {
