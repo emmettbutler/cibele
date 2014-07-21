@@ -10,6 +10,7 @@ package
         public var embeddedSound:Class;
         public var soundObject:FlxSound;
         public var endCallback:Function;
+        public var callbackLock:Boolean = false;
 
         public static const MSEC_PER_SEC:Number = 1000;
 
@@ -34,7 +35,8 @@ package
             this.currentTime = new Date().valueOf();
             this.timeAlive = this.currentTime - this.bornTime;
 
-            if(this.timeAlive >= totalSeconds){
+            if(this.timeAlive >= totalSeconds && !callbackLock){
+                callbackLock = true;
                 this.soundObject.stop();
                 this.endCallback();
             }
