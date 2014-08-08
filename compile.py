@@ -52,7 +52,7 @@ package
 
 
 def compile_main(entry_point_class, libpath):
-    command = "mxmlc src/{entry_point_class}.as -o src/{entry_point_class}.swf -use-network=false -verbose-stacktraces=true -compiler.include-libraries /opt/{libpath}/frameworks/libs/air/airglobal.swc -static-link-runtime-shared-libraries" \
+    command = "mxmlc src/{entry_point_class}.as -o src/{entry_point_class}.swf -use-network=false -verbose-stacktraces=true -compiler.include-libraries {libpath} -static-link-runtime-shared-libraries" \
         .format(entry_point_class=entry_point_class, libpath=libpath)
     subprocess.check_call(command.split())
     return "src/{entry_point_class}.swf".format(entry_point_class=entry_point_class)
@@ -100,7 +100,7 @@ if __name__ == "__main__":
                         default="", nargs=1,
                         help="The main FlxState class to use")
     parser.add_argument('--libpath', '-l', metavar="LIBPATH", type=str,
-                        default=["flex_sdk_4.6"], nargs=1,
+                        default=["opt/flex/frameworks/libs/air/airglobal.swc"], nargs=1,
                         help="The name of the flex directory in /opt")
     args = parser.parse_args()
 
