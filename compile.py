@@ -52,9 +52,12 @@ package
 
 
 def compile_main(entry_point_class, libpath):
-    command = "mxmlc src/{entry_point_class}.as -o src/{entry_point_class}.swf -use-network=false -verbose-stacktraces=true -compiler.include-libraries {libpath} -static-link-runtime-shared-libraries" \
-        .format(entry_point_class=entry_point_class, libpath=libpath)
-    subprocess.check_call(command.split())
+    command = ["mxmlc", "src/{entry_point_class}.as", "-o",
+               "src/{entry_point_class}.swf".format(entry_point_class=entry_point_class),
+               "-use-network=false", "-verbose-stacktraces=true",
+               "-compiler.include-libraries", libpath,
+               "-static-link-runtime-shared-libraries"]
+    subprocess.check_call(command)
     return "src/{entry_point_class}.swf".format(entry_point_class=entry_point_class)
 
 
