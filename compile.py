@@ -52,7 +52,7 @@ package
 
 
 def compile_main(entry_point_class, libpath):
-    command = ["mxmlc", "src/{entry_point_class}.as", "-o",
+    command = ["mxmlc", "src/{entry_point_class}.as".format(entry_point_class=entry_point_class), "-o",
                "src/{entry_point_class}.swf".format(entry_point_class=entry_point_class),
                "-use-network=false", "-verbose-stacktraces=true",
                "-compiler.include-libraries", libpath,
