@@ -30,17 +30,26 @@ package{
             this.dbgText.y = y;
 
             if (FlxG.keys.LEFT || FlxG.keys.RIGHT || FlxG.keys.UP || FlxG.keys.DOWN) {
-                if(FlxG.keys.LEFT) {
-                    this.dir.x = -1 * runSpeed;
+                if(FlxG.keys.LEFT || FlxG.keys.RIGHT) {
+                    if(FlxG.keys.LEFT) {
+                        this.dir.x = -1 * runSpeed;
+                    }
+                    if(FlxG.keys.RIGHT){
+                        this.dir.x = runSpeed;
+                    }
+                } else {
+                    this.dir.x = 0;
                 }
-                if(FlxG.keys.RIGHT){
-                    this.dir.x = runSpeed;
-                }
-                if(FlxG.keys.UP){
-                    this.dir.y = -1 * runSpeed;
-                }
-                if(FlxG.keys.DOWN){
-                    this.dir.y = runSpeed;
+
+                if(FlxG.keys.UP || FlxG.keys.DOWN) {
+                    if(FlxG.keys.UP){
+                        this.dir.y = -1 * runSpeed;
+                    }
+                    if(FlxG.keys.DOWN){
+                        this.dir.y = runSpeed;
+                    }
+                } else {
+                    this.dir.y = 0;
                 }
             } else {
                 this.dir.x = 0;

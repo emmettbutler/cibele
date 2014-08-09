@@ -117,7 +117,7 @@ package {
                 );
                 colliderReceivingMachine.contentLoaderInfo.addEventListener(
                     Event.COMPLETE, this.makeCallback(colliderTile, colliderReceivingMachine, false));
-                colliderReceivingMachine.load(req);
+                //colliderReceivingMachine.load(req);
             }
         }
 
@@ -168,6 +168,14 @@ package {
             this.dbgText.text = playerRow + "x" + playerCol;
 
             adjacentCoords.push([playerRow,   playerCol]);
+            adjacentCoords.push([playerRow-1, playerCol]);
+            adjacentCoords.push([playerRow+1, playerCol]);
+            adjacentCoords.push([playerRow, playerCol-1]);
+            adjacentCoords.push([playerRow, playerCol+1]);
+            adjacentCoords.push([playerRow-1, playerCol+1]);
+            adjacentCoords.push([playerRow+1, playerCol-1]);
+            adjacentCoords.push([playerRow-1, playerCol-1]);
+            adjacentCoords.push([playerRow+1, playerCol+1]);
 
             var row:int, col:int;
             for (var i:int = 0; i < adjacentCoords.length; i++) {
@@ -176,7 +184,7 @@ package {
                 if (!this.tileHasLoaded(row, col)) {
                     this.loadTile(row, col);
                 } else {
-                    this.performCollision(row, col);
+                    //this.performCollision(row, col);
                 }
             }
 
