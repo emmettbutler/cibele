@@ -21,7 +21,7 @@ package{
 
             this.bgLoader = new BackgroundLoader("Map", 10, 5);
 
-            player = new Player(5460, 7390);
+            player = new Player(4600, 7565);
             this.bgLoader.setPlayerReference(player);
             player_rect = new FlxRect(player.x,player.y,player.width,player.height);
 

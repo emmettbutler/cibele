@@ -4,6 +4,9 @@ package{
     public class Player extends PartyMember {
         [Embed(source="../assets/cib_walk.png")] private var ImgCibWalk:Class;
         public var runSpeed:Number = 5;
+        public var dir:DHPoint;
+        public var colliding:Boolean = false;
+        public var lastPos:DHPoint;
 
         public var img_height:Number = 357;
         public var dbgText:FlxText;
@@ -16,6 +19,9 @@ package{
             this.dbgText = new FlxText(x, y, 200, "");
             this.dbgText.color = 0xffffffff;
             FlxG.state.add(this.dbgText);
+
+            this.dir = new DHPoint(0, 0);
+            this.lastPos = new DHPoint(this.pos.x, this.pos.y);
         }
 
         override public function update():void{
@@ -25,18 +31,42 @@ package{
             this.dbgText.x = x;
             this.dbgText.y = y;
 
-            if(FlxG.keys.LEFT) {
-                x -= runSpeed;
+            if (FlxG.keys.LEFT || FlxG.keys.RIGHT || FlxG.keys.UP || FlxG.keys.DOWN) {
+                if(FlxG.keys.LEFT || FlxG.keys.RIGHT) {
+                    if(FlxG.keys.LEFT) {
+                        this.dir.x = -1 * runSpeed;
+                    }
+                    if(FlxG.keys.RIGHT){
+                        this.dir.x = runSpeed;
+                    }
+                } else {
+                    this.dir.x = 0;
+                }
+
+                if(FlxG.keys.UP || FlxG.keys.DOWN) {
+                    if(FlxG.keys.UP){
+                        this.dir.y = -1 * runSpeed;
+                    }
+                    if(FlxG.keys.DOWN){
+                        this.dir.y = runSpeed;
+                    }
+                } else {
+                    this.dir.y = 0;
+                }
+            } else {
+                this.dir.x = 0;
+                this.dir.y = 0;
             }
-            if(FlxG.keys.RIGHT){
-                x += runSpeed;
+
+            if (this.colliding) {
+                this.dir = this.lastPos.sub(this.pos).mulScl(1.1);
             }
-            if(FlxG.keys.UP){
-                y -= runSpeed;
+
+            if (!this.lastPos.eq(this.pos)) {
+                this.lastPos = new DHPoint(this.pos.x, this.pos.y);
             }
-            if(FlxG.keys.DOWN){
-                y += runSpeed;
-            }
+            this.setPos(this.pos.add(this.dir));
+
             if(FlxG.keys.justPressed("SPACE")){
                 this.attack();
             }
