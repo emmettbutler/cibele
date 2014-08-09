@@ -103,7 +103,7 @@ if __name__ == "__main__":
                         default="", nargs=1,
                         help="The main FlxState class to use")
     parser.add_argument('--libpath', '-l', metavar="LIBPATH", type=str,
-                        default=["opt/flex_sdk_4.6/frameworks/libs/air/airglobal.swc"], nargs=1,
+                        default=["/opt/flex_sdk_4.6/frameworks/libs/air/airglobal.swc"], nargs=1,
                         help="The name of the flex directory in /opt")
     args = parser.parse_args()
 
