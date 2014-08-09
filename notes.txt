@@ -1,0 +1,11 @@
+Map tile notes:
+
+Map tile width: 1433
+Map tile height: 820
+Collider tile width: 179
+Collider tile height: 102
+
+Collider tiles exactly match their corresponding map tiles, with two
+differences:
+1. 1/8 the size
+2. all non-collidable areas are fully transparent
