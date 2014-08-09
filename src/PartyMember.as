@@ -13,6 +13,7 @@ package {
         }
 
         override public function update():void {
+            super.update();
             //var footstep:FlxSprite = new FlxSprite(pos.x, pos.y);
             //footstep.loadGraphic(ImgFeet,false,false,17,12)
         }
