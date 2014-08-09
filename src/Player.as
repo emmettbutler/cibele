@@ -4,7 +4,6 @@ package{
     public class Player extends PartyMember {
         [Embed(source="../assets/cib_walk.png")] private var ImgCibWalk:Class;
         public var runSpeed:Number = 5;
-        public var dir:DHPoint;
         public var colliding:Boolean = false;
         public var lastPos:DHPoint;
         public var mapHitbox:FlxSprite;
@@ -26,7 +25,6 @@ package{
             this.dbgText.color = 0xffffffff;
             FlxG.state.add(this.dbgText);
 
-            this.dir = new DHPoint(0, 0);
             this.lastPos = new DHPoint(this.pos.x, this.pos.y);
         }
 

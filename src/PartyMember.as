@@ -4,18 +4,18 @@ package {
     public class PartyMember extends GameObject {
         [Embed(source="../assets/feet.png")] private var ImgFeet:Class;
         public static const STATE_IN_ATTACK:Number = 1;
+        public var dir:DHPoint;
 
         public var lastAttackTime:Number = 0;
         public var footstepGroup:FlxGroup;
 
         public function PartyMember(pos:DHPoint) {
             super(pos);
+            this.dir = new DHPoint(pos.x, pos.y);
         }
 
         override public function update():void {
             super.update();
-            //var footstep:FlxSprite = new FlxSprite(pos.x, pos.y);
-            //footstep.loadGraphic(ImgFeet,false,false,17,12)
         }
 
         public function isAttacking():Boolean{

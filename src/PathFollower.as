@@ -64,7 +64,8 @@ package
                     if (disp._length() < 10) {
                         this._state = STATE_IDLE_AT_NODE;
                     } else {
-                        this.setPos(disp.normalized().mulScl(this.runSpeed).add(this.pos));
+                        dir = disp.normalized().mulScl(this.runSpeed).add(this.pos)
+                        this.setPos(dir);
                     }
                 }
                 if (this.enemyIsInAttackRange(this.closestEnemy)) {
@@ -86,7 +87,8 @@ package
                 this.attack();
             } else if (this._state == STATE_MOVE_TO_ENEMY){
                 disp = this.closestEnemy.pos.sub(this.pos);
-                this.setPos(disp.normalized().mulScl(this.runSpeed).add(this.pos));
+                dir = disp.normalized().mulScl(this.runSpeed).add(this.pos)
+                this.setPos(dir);
                 if (this.enemyIsInAttackRange(this.closestEnemy)) {
                     this._state = STATE_AT_ENEMY;
                 }
