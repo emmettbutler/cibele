@@ -172,13 +172,13 @@ package {
 
             // TODO - be smart about making this list as small as possible
             adjacentCoords.push([playerRow,   playerCol]);
+            adjacentCoords.push([playerRow,   playerCol-1]);
+            adjacentCoords.push([playerRow,   playerCol+1]);
             adjacentCoords.push([playerRow-1, playerCol]);
-            adjacentCoords.push([playerRow+1, playerCol]);
-            adjacentCoords.push([playerRow, playerCol-1]);
-            adjacentCoords.push([playerRow, playerCol+1]);
-            adjacentCoords.push([playerRow-1, playerCol+1]);
-            adjacentCoords.push([playerRow+1, playerCol-1]);
             adjacentCoords.push([playerRow-1, playerCol-1]);
+            adjacentCoords.push([playerRow-1, playerCol+1]);
+            adjacentCoords.push([playerRow+1, playerCol]);
+            adjacentCoords.push([playerRow+1, playerCol-1]);
             adjacentCoords.push([playerRow+1, playerCol+1]);
 
             var row:int, col:int, contact:Boolean;
