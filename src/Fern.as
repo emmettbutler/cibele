@@ -26,7 +26,8 @@ package{
                 function _innerCallback():void {
                     FlxG.switchState(new HallwayToFern());
                 }
-                FlxG.switchState(new PlayVideoState("../assets/test_video.flv", _innerCallback));
+                FlxG.switchState(new PlayVideoState("../assets/test_video.flv",
+                                                    _innerCallback));
             }
             SoundManager.getInstance().playSound(Convo, (6*60+27)*1000, _callback);
 

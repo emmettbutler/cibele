@@ -40,17 +40,17 @@ package {
                 receivingMachines[i] = new Array();
                 colliderReceivingMachines[i] = new Array();
                 for (var j:int = 0; j < this.cols; j++) {
-                    spr = new FlxExtSprite(j * estTileWidth, i * estTileHeight);
-                    spr.makeGraphic(10, 10, 0x00000000);
-                    FlxG.state.add(spr);
-                    tiles[i][j] = spr;
-                    receivingMachines[i][j] = new Loader();
-
                     colSpr = new FlxExtSprite(j * estTileWidth, i * estTileHeight);
                     colSpr.makeGraphic(10, 10, 0x00000000);
                     FlxG.state.add(colSpr);
                     colliderTiles[i][j] = colSpr;
                     colliderReceivingMachines[i][j] = new Loader();
+
+                    spr = new FlxExtSprite(j * estTileWidth, i * estTileHeight);
+                    spr.makeGraphic(10, 10, 0x00000000);
+                    FlxG.state.add(spr);
+                    tiles[i][j] = spr;
+                    receivingMachines[i][j] = new Loader();
                 }
             }
 
@@ -60,11 +60,9 @@ package {
             FlxG.state.add(dbgText);
         }
 
-        public function makeCallback(tile:FlxExtSprite, receivingMachine:Loader,
-                                     vis:Boolean=true):Function {
+        public function makeCallback(tile:FlxExtSprite, receivingMachine:Loader):Function {
             return function (event_load:Event):void {
                 var tileInner:FlxExtSprite = tile;
-                var visInner:Boolean = vis;
                 tileInner.makeGraphic(10, 10, 0x00000000);
                 if (!tileInner.hasLoaded) {
                     var bmp:Bitmap = new Bitmap(event_load.target.content.bitmapData);
@@ -174,15 +172,15 @@ package {
             for (var i:int = 0; i < adjacentCoords.length; i++) {
                 row = adjacentCoords[i][0];
                 col = adjacentCoords[i][1];
+                // load background tiles
                 if (!this.tileHasLoaded(row, col)) {
-                    //this.loadTile(row, col);
+                    this.loadTile(row, col);
                 }
+                // load tile colliders
                 if (!this.tileHasLoaded(row, col, this.colliderTiles)) {
                     this.loadTile(row, col, this.colliderTiles, this.colliderReceivingMachines, "_collide");
-                } else {
-                    if (this.isColliding(row, col)) {
-                        contact = true;
-                    }
+                } else if (this.isColliding(row, col)) {
+                    contact = true;
                 }
             }
             this.playerRef.colliding = contact;
