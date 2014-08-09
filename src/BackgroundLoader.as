@@ -78,21 +78,28 @@ package {
             }
         }
 
-        public function loadTile(row:Number, col:Number):void {
-            var rowArr:Array = this.tiles[row];
+        public function getTileByIndex(row:Number, col:Number, arr:Array=null):FlxExtSprite {
+            if (arr == null) {
+                arr = this.tiles;
+            }
+            var rowArr:Array = arr[row];
             if (rowArr == null) {
-                return;
+                return null;
             }
             var tile:FlxExtSprite = rowArr[col];
+            if (tile == null) {
+                return null;
+            }
+            return tile;
+        }
+
+        public function loadTile(row:Number, col:Number):void {
+            var tile:FlxExtSprite = getTileByIndex(row, col);
             if (tile == null) {
                 return;
             }
 
-            var rowColliderArr:Array = this.colliderTiles[row];
-            if (rowColliderArr == null) {
-                return;
-            }
-            var colliderTile:FlxExtSprite = rowColliderArr[col];
+            var colliderTile:FlxExtSprite = getTileByIndex(row, col, colliderTiles);
             if (colliderTile == null) {
                 return;
             }
@@ -143,11 +150,7 @@ package {
         }
 
         public function performCollision(row:int, col:int):void {
-            var rowColliderArr:Array = this.colliderTiles[row];
-            if (rowColliderArr == null) {
-                return;
-            }
-            var colliderTile:FlxExtSprite = rowColliderArr[col];
+            var colliderTile:FlxExtSprite = this.getTileByIndex(row, col, this.colliderTiles);
             if (colliderTile == null) {
                 return;
             }
@@ -167,6 +170,7 @@ package {
 
             this.dbgText.text = playerRow + "x" + playerCol;
 
+            // TODO - be smart about making this list as small as possible
             adjacentCoords.push([playerRow,   playerCol]);
             adjacentCoords.push([playerRow-1, playerCol]);
             adjacentCoords.push([playerRow+1, playerCol]);
