@@ -33,29 +33,23 @@ package {
 
             tiles = new Array();
             colliderTiles = new Array();
-            var spr:FlxExtSprite;
+            var spr:FlxExtSprite, colSpr:FlxExtSprite;
             for (var i:int = 0; i < this.rows; i++) {
                 tiles[i] = new Array();
                 colliderTiles[i] = new Array();
                 receivingMachines[i] = new Array();
                 colliderReceivingMachines[i] = new Array();
                 for (var j:int = 0; j < this.cols; j++) {
-                    spr = new FlxExtSprite(0, 0);
+                    spr = new FlxExtSprite(j * estTileWidth, i * estTileHeight);
                     spr.makeGraphic(10, 10, 0x00000000);
                     FlxG.state.add(spr);
-                    spr.x = j * estTileWidth;
-                    spr.y = i * estTileHeight;
                     tiles[i][j] = spr;
-
                     receivingMachines[i][j] = new Loader();
 
-                    spr = new FlxExtSprite(0, 0);
-                    spr.makeGraphic(10, 10, 0x00000000);
-                    FlxG.state.add(spr);
-                    spr.x = j * estTileWidth;
-                    spr.y = i * estTileHeight;
-                    colliderTiles[i][j] = spr;
-
+                    colSpr = new FlxExtSprite(j * estTileWidth, i * estTileHeight);
+                    colSpr.makeGraphic(10, 10, 0x00000000);
+                    FlxG.state.add(colSpr);
+                    colliderTiles[i][j] = colSpr;
                     colliderReceivingMachines[i][j] = new Loader();
                 }
             }
@@ -66,13 +60,17 @@ package {
             FlxG.state.add(dbgText);
         }
 
-        public function makeCallback(tile:FlxExtSprite, receivingMachine:Loader, vis:Boolean=true):Function {
+        public function makeCallback(tile:FlxExtSprite, receivingMachine:Loader,
+                                     vis:Boolean=true):Function {
             return function (event_load:Event):void {
                 var tileInner:FlxExtSprite = tile;
                 var visInner:Boolean = vis;
-                var bmp:Bitmap = new Bitmap(event_load.target.content.bitmapData);
-                tileInner.loadExtGraphic(bmp, false, false, bmp.width, bmp.height);
-                tileInner.hasLoaded = true;
+                tileInner.makeGraphic(10, 10, 0x00000000);
+                if (!tileInner.hasLoaded) {
+                    var bmp:Bitmap = new Bitmap(event_load.target.content.bitmapData);
+                    tileInner.loadExtGraphic(bmp, false, false, bmp.width, bmp.height, true);
+                    tileInner.hasLoaded = true;
+                }
                 receivingMachine.contentLoaderInfo.removeEventListener(
                     Event.COMPLETE, arguments.callee);
             }
@@ -93,38 +91,30 @@ package {
             return tile;
         }
 
-        public function loadTile(row:Number, col:Number):void {
-            var tile:FlxExtSprite = getTileByIndex(row, col);
+        public function loadTile(row:Number, col:Number, arr:Array=null, machines:Array=null, suffix:String=""):void {
+            if (arr == null) {
+                arr = this.tiles;
+            }
+            if (machines == null) {
+                machines = this.receivingMachines;
+            }
+
+            var tile:FlxExtSprite = this.getTileByIndex(row, col, arr);
             if (tile == null) {
                 return;
             }
 
-            var colliderTile:FlxExtSprite = getTileByIndex(row, col, colliderTiles);
-            if (colliderTile == null) {
-                return;
-            }
+            var receivingMachine:Loader = machines[row][col];
 
-            var receivingMachine:Loader, colliderReceivingMachine:Loader;
-            receivingMachine = this.receivingMachines[row][col];
-            colliderReceivingMachine = this.colliderReceivingMachines[row][col];
+            var numberString:String = this.getTileIndex(row, col);
 
             if (!tile.hasStartedLoad) {
                 tile.hasStartedLoad = true;
-                var numberString:String = this.getTileIndex(row, col);
-                receivingMachine.contentLoaderInfo.addEventListener(
-                    Event.COMPLETE, this.makeCallback(tile, receivingMachine));
-                var req:URLRequest = new URLRequest(
-                    "../assets/test_tiles/" + macroImageName + "_"
-                    + numberString + ".png"
-                );
+                receivingMachine.contentLoaderInfo.addEventListener(Event.COMPLETE,
+                    this.makeCallback(tile, receivingMachine));
+                var path:String = "../assets/test_tiles/" + macroImageName + "_" + numberString + suffix + ".png";
+                var req:URLRequest = new URLRequest(path);
                 receivingMachine.load(req);
-
-                req = new URLRequest(
-                    "../assets/test_tiles/" + macroImageName + "_02_collide.png"
-                );
-                colliderReceivingMachine.contentLoaderInfo.addEventListener(
-                    Event.COMPLETE, this.makeCallback(colliderTile, colliderReceivingMachine, false));
-                //colliderReceivingMachine.load(req);
             }
         }
 
@@ -137,30 +127,28 @@ package {
             return "" + idx;
         }
 
-        public function tileHasLoaded(row:int, col:int):Boolean {
-            var rowArr:Array = this.tiles[row];
+        public function tileHasLoaded(row:int, col:int, arr:Array=null):Boolean {
+            if (arr == null) {
+                arr = this.tiles;
+            }
+            var rowArr:Array = arr[row];
             if (rowArr == null) {
                 return false;
             }
             var tile:FlxExtSprite = rowArr[col];
             if (tile != null) {
-                return tile.hasLoaded;
+                return tile.hasStartedLoad;
             }
             return false
         }
 
-        public function performCollision(row:int, col:int):void {
+        public function isColliding(row:int, col:int):Boolean {
             var colliderTile:FlxExtSprite = this.getTileByIndex(row, col, this.colliderTiles);
             if (colliderTile == null) {
-                return;
+                return false;
             }
 
-            if (FlxCollision.pixelPerfectCheck(playerRef, colliderTile)) {
-                playerRef.colliding = true;
-                playerRef.x += 10;
-            } else {
-                playerRef.colliding = false;
-            }
+            return FlxCollision.pixelPerfectCheck(playerRef, colliderTile);
         }
 
         public function update():void {
@@ -168,7 +156,8 @@ package {
             playerRow = Math.floor(this.playerRef.pos.y / this.estTileHeight);
             playerCol = Math.floor(this.playerRef.pos.x / this.estTileWidth);
 
-            this.dbgText.text = playerRow + "x" + playerCol;
+            var numberString:String = this.getTileIndex(playerRow, playerCol);
+            this.dbgText.text = playerRow + "x" + playerCol + "\n" + numberString;
 
             // TODO - be smart about making this list as small as possible
             adjacentCoords.push([playerRow,   playerCol]);
@@ -181,16 +170,22 @@ package {
             adjacentCoords.push([playerRow-1, playerCol-1]);
             adjacentCoords.push([playerRow+1, playerCol+1]);
 
-            var row:int, col:int;
+            var row:int, col:int, contact:Boolean;
             for (var i:int = 0; i < adjacentCoords.length; i++) {
                 row = adjacentCoords[i][0];
                 col = adjacentCoords[i][1];
                 if (!this.tileHasLoaded(row, col)) {
-                    this.loadTile(row, col);
+                    //this.loadTile(row, col);
+                }
+                if (!this.tileHasLoaded(row, col, this.colliderTiles)) {
+                    this.loadTile(row, col, this.colliderTiles, this.colliderReceivingMachines, "_collide");
                 } else {
-                    //this.performCollision(row, col);
+                    if (this.isColliding(row, col)) {
+                        contact = true;
+                    }
                 }
             }
+            this.playerRef.colliding = contact;
 
             adjacentCoords.length = 0;
         }
