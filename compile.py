@@ -1,8 +1,10 @@
 import argparse
 import subprocess
-
-agrs = None
-
+try:
+    import ConfigParser as configparser
+except ImportError:
+    import configparser
+#args = None
 
 def write_entry_point():
     name = args.mainclass[0].lower()
@@ -106,9 +108,20 @@ if __name__ == "__main__":
                         default="", nargs=1,
                         help="The main FlxState class to use")
     parser.add_argument('--libpath', '-l', metavar="LIBPATH", type=str,
-                        default=["/opt/flex_sdk_4.6/frameworks/libs/air/airglobal.swc"], nargs=1,
+                        nargs=1,
                         help="The name of the flex directory in /opt")
+    parser.add_argument('--config', '-c', metavar="CONFIG", type=str,
+                        default="settings.ini", nargs=1,
+                        help="The config file to use")
     args = parser.parse_args()
+
+    config = configparser.ConfigParser()
+    config.read(args.config)
+
+    if not args.__dict__.get("libpath"):
+        args.libpath = [config.get("compile", "libpath")]
+    if not args.__dict__.get("mainclass"):
+        args.libpath = config.get("compile", "mainclass")
 
     if args.mainclass and args.mainclass[0]:
         main()
