@@ -6,6 +6,7 @@ package{
         public var runSpeed:Number = 5;
         public var dir:DHPoint;
         public var colliding:Boolean = false;
+        public var lastPos:DHPoint;
 
         public var img_height:Number = 357;
         public var dbgText:FlxText;
@@ -20,6 +21,7 @@ package{
             FlxG.state.add(this.dbgText);
 
             this.dir = new DHPoint(0, 0);
+            this.lastPos = new DHPoint(this.pos.x, this.pos.y);
         }
 
         override public function update():void{
@@ -56,10 +58,14 @@ package{
                 this.dir.y = 0;
             }
 
-            if (!this.colliding) {
-                this.x += this.dir.x;
-                this.y += this.dir.y;
+            if (this.colliding) {
+                this.dir = this.lastPos.sub(this.pos).mulScl(1.1);
             }
+
+            if (!this.lastPos.eq(this.pos)) {
+                this.lastPos = new DHPoint(this.pos.x, this.pos.y);
+            }
+            this.setPos(this.pos.add(this.dir));
 
             if(FlxG.keys.justPressed("SPACE")){
                 this.attack();
