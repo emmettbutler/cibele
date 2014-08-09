@@ -3,8 +3,11 @@ package {
     import org.flixel.plugin.photonstorm.FlxCollision;
 
     import flash.display.Bitmap;
+    import flash.display.BitmapData;
+    import flash.display.PixelSnapping;
     import flash.display.Loader;
     import flash.events.Event;
+    import flash.geom.Matrix;
     import flash.net.URLRequest;
 
     public class BackgroundLoader {
@@ -18,6 +21,7 @@ package {
         public var playerRef:Player;
         public var estTileWidth:Number, estTileHeight:Number;
         public var adjacentCoords:Array;
+        public var colliderScaleFactor:Number = 4;
 
         public var dbgText:FlxText;
 
@@ -60,12 +64,20 @@ package {
             FlxG.state.add(dbgText);
         }
 
-        public function makeCallback(tile:FlxExtSprite, receivingMachine:Loader):Function {
+        public function makeCallback(tile:FlxExtSprite, receivingMachine:Loader, scaleFactor:Number=1):Function {
             return function (event_load:Event):void {
                 var tileInner:FlxExtSprite = tile;
                 tileInner.makeGraphic(10, 10, 0x00000000);
                 if (!tileInner.hasLoaded) {
                     var bmp:Bitmap = new Bitmap(event_load.target.content.bitmapData);
+                    // scale bitmap up for collider tiles
+                    if (scaleFactor != 1) {
+                        var matrix:Matrix = new Matrix();
+                        matrix.scale(scaleFactor, scaleFactor);
+                        var scaledBMD:BitmapData = new BitmapData(bmp.width * scaleFactor, bmp.height * scaleFactor, true, 0x000000);
+                        scaledBMD.draw(bmp, matrix, null, null, null, true);
+                        bmp = new Bitmap(scaledBMD, PixelSnapping.NEVER, true);
+                    }
                     tileInner.loadExtGraphic(bmp, false, false, bmp.width, bmp.height, true);
                     tileInner.hasLoaded = true;
                 }
@@ -108,8 +120,9 @@ package {
 
             if (!tile.hasStartedLoad) {
                 tile.hasStartedLoad = true;
+
                 receivingMachine.contentLoaderInfo.addEventListener(Event.COMPLETE,
-                    this.makeCallback(tile, receivingMachine));
+                    this.makeCallback(tile, receivingMachine, suffix == "_collide" ? 8 : 1));
                 var path:String = "../assets/test_tiles/" + macroImageName + "_" + numberString + suffix + ".png";
                 var req:URLRequest = new URLRequest(path);
                 receivingMachine.load(req);
