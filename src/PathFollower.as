@@ -16,6 +16,7 @@ package
         public var runSpeed:Number = 6;
 
         public var closestEnemy:Enemy;
+        public var playerRef:Player;
 
         public static const STATE_MOVE_TO_NODE:Number = 2;
         public static const STATE_IDLE_AT_NODE:Number = 3;
@@ -73,7 +74,9 @@ package
                 }
             } else if (this._state == STATE_IDLE_AT_NODE) {
                 this.markCurrentNode();
-                this.moveToNextNode();
+                if(this.playerIsInMovementRange(playerRef)){
+                    this.moveToNextNode();
+                }
                 if (this.enemyIsInAttackRange(this.closestEnemy)) {
                     this._state = STATE_AT_ENEMY;
                 } else if(this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
@@ -154,6 +157,15 @@ package
         public function markCurrentNode():void{
             this.targetNode.mark();
             pathComplete = _path.isPathComplete();
+        }
+
+        public function setPlayerReference(pl:Player):void {
+            this.playerRef = pl;
+        }
+
+        public function playerIsInMovementRange(pl:Player):Boolean {
+            if (pl == null) { return false; }
+            return pl.pos.sub(this.pos)._length() < 200;
         }
     }
 }

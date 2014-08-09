@@ -26,6 +26,7 @@ package
 
             _path = new Path();
             pathWalker.setPath(_path);
+            pathWalker.setPlayerReference(player);
 
             this.enemies = new EnemyGroup(player);
             pathWalker.setEnemyGroupReference(this.enemies);
