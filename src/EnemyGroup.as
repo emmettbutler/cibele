@@ -5,14 +5,17 @@ package
     public class EnemyGroup {
         public var enemies:Array;
         public var player:Player;
+        public var path_follower:PathFollower;
 
-        public function EnemyGroup(p:Player) {
+        public function EnemyGroup(p:Player, f:PathFollower) {
             this.enemies = new Array();
             this.player = p;
+            this.path_follower = f;
         }
 
         public function addEnemy(en:Enemy):void {
             en.setPlayerRef(this.player);
+            en.setFollowerRef(this.path_follower);
             this.enemies.push(en);
         }
 
@@ -30,7 +33,7 @@ package
                 cur = this.get_(i);
                 cur.update();
                 if (cur.isFollowing()) {
-                    this.preventEnemyOverlap(cur);
+                    //this.preventEnemyOverlap(cur);
                 }
             }
         }

@@ -11,7 +11,7 @@ package
             debugText.text = "BOSS";
         }
 
-        override public function takeDamage():void{
+        override public function takeDamage(p:PartyMember):void{
             hitpoints -= 0;
         }
     }

@@ -35,5 +35,9 @@ package
         public function mulScl(other:Number):DHPoint {
             return new DHPoint(this.x * other, this.y * other);
         }
+
+        public function reverse():DHPoint {
+            return new DHPoint(this.x * -1, this.y * -1);
+        }
     }
 }

@@ -93,7 +93,7 @@ package
             } else if (this._state == STATE_IN_ATTACK) {
                 if (this.timeSinceLastAttack() > 500) {
                     this.resolveStatePostAttack();
-                    this.makeGraphic(10, 10, 0xffff0000);
+                    this.makeGraphic(50, 50, 0xffff0000);
                 }
             }
         }
@@ -136,7 +136,7 @@ package
         override public function attack():void {
             super.attack();
             if (this._state == STATE_IN_ATTACK) {
-                this.makeGraphic(10, 10, 0xffffff00);
+                this.makeGraphic(60, 60, 0xffffff00);
             }
         }
 
