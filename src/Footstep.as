@@ -6,7 +6,7 @@ package {
 
         public var age:Number = 0;
         public var drawn:Boolean;
-        public var fadeFrames:Number = 50;
+        public var fadeFrames:Number = 60;
 
         public function Footstep() {
             super(ZERO_POINT);
