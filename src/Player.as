@@ -16,6 +16,7 @@ package{
 
             loadGraphic(ImgCibWalk, true, false, 108, 132);
             addAnimation("walk",[1],7,false);
+            addAnimation("idle",[1],7,false);
             addAnimation("attack",[0,1],7,true);
 
             this.hitboxOffset = new DHPoint(60, 80);
@@ -33,6 +34,9 @@ package{
 
         override public function update():void{
             if (FlxG.keys.LEFT || FlxG.keys.RIGHT || FlxG.keys.UP || FlxG.keys.DOWN) {
+                if(this._state != STATE_IN_ATTACK){
+                    play("walk");
+                }
                 if(FlxG.keys.LEFT || FlxG.keys.RIGHT) {
                     if(FlxG.keys.LEFT) {
                         this.dir.x = -1 * runSpeed;
@@ -76,6 +80,7 @@ package{
 
             if (this._state == STATE_IN_ATTACK) {
                 if (timeSinceLastAttack() > 100) {
+                    play("idle");
                     this._state = STATE_IDLE;
                 }
             }

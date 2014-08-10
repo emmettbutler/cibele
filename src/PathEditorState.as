@@ -38,7 +38,7 @@ package
             //this.editorMode = MODE_EDIT; //turn this on in order to edit
             //compile with -a flag if I edit or make new path
 
-            pathWalker = new PathFollower(new DHPoint(5460, 7390));
+            pathWalker = new PathFollower(new DHPoint(player.x-10, player.y-100));
 
             player.initFootsteps();
             pathWalker.initFootsteps();

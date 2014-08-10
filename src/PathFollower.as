@@ -40,6 +40,7 @@ package
         public function PathFollower(pos:DHPoint) {
             super(pos);
             loadGraphic(ImgIchi, true, false, 72, 126);
+            addAnimation("idle",[0],7,false);
             addAnimation("walk",[0],7,false);
             addAnimation("attack",[0,1],7,true);
             play("walk");
@@ -81,6 +82,7 @@ package
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
             } else if (this._state == STATE_IDLE_AT_NODE) {
+                play("idle");
                 this.markCurrentNode();
                 if(this.playerIsInMovementRange(playerRef)){
                     this.moveToNextNode();
@@ -170,6 +172,13 @@ package
         public function playerIsInMovementRange(pl:Player):Boolean {
             if (pl == null) { return false; }
             return pl.pos.sub(this.pos)._length() < 300;
+        }
+
+        override public function attack():void {
+            super.attack();
+            if (this._state == STATE_IN_ATTACK) {
+                play("attack");
+            }
         }
     }
 }
