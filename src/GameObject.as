@@ -27,6 +27,7 @@ package
         }
 
         override public function update():void {
+            super.update();
             this.currentTime = new Date().valueOf();
             this.timeAlive = this.currentTime - this.bornTime;
             this.pos.x = this.x;
