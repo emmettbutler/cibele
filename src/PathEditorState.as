@@ -17,6 +17,8 @@ package
 
         public function create_(player:Player):void
         {
+            add(player);
+
             mouseImg = new FlxSprite(FlxG.mouse.x, FlxG.mouse.y);
             mouseImg.makeGraphic(5, 5, 0xffffffff);
             add(mouseImg);

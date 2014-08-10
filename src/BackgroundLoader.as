@@ -159,7 +159,7 @@ package {
                 return false;
             }
 
-            return FlxCollision.pixelPerfectCheck(playerRef, colliderTile);
+            return FlxCollision.pixelPerfectCheck(playerRef.mapHitbox, colliderTile);
         }
 
         public function update():void {

@@ -7,14 +7,20 @@ package{
         public var dir:DHPoint;
         public var colliding:Boolean = false;
         public var lastPos:DHPoint;
+        public var mapHitbox:FlxSprite;
+        public var hitboxOffset:DHPoint, hitboxDim:DHPoint;
 
         public var dbgText:FlxText;
 
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x,y));
 
-            loadGraphic(ImgCibWalk,false,false,126,134);
-            FlxG.state.add(this);
+            loadGraphic(ImgCibWalk, false, false, 126, 134);
+
+            this.hitboxOffset = new DHPoint(60, 80);
+            this.hitboxDim = new DHPoint(40, 50);
+            this.mapHitbox = new FlxSprite(x, y);
+            this.mapHitbox.makeGraphic(this.hitboxDim.x, this.hitboxDim.y, 0xffff0000);
 
             this.dbgText = new FlxText(x, y, 200, "");
             this.dbgText.color = 0xffffffff;
@@ -76,6 +82,13 @@ package{
                     this._state = STATE_IDLE;
                 }
             }
+        }
+
+        override public function setPos(pos:DHPoint):void {
+            super.setPos(pos);
+
+            this.mapHitbox.x = pos.x + this.hitboxOffset.x;
+            this.mapHitbox.y = pos.y + this.hitboxOffset.y;
         }
     }
 }

@@ -11,9 +11,9 @@ package {
         override public function create():void {
             FlxG.bgColor = 0xff000000;
 
-            this.bgLoader = new BackgroundLoader("Map", 10, 5);
-
             player = new Player(4600, 7565);
+            this.add(player.mapHitbox)
+            this.bgLoader = new BackgroundLoader("Map", 10, 5);
             this.bgLoader.setPlayerReference(player);
 
             boss = new BossEnemy(new DHPoint(3345,485));
