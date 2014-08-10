@@ -8,3 +8,6 @@ src/*_loader.as
 src/*main.as
 
 settings.ini
+
+*.pfx
+*.air
