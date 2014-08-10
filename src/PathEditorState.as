@@ -65,6 +65,8 @@ package
         }
 
         override public function update():void {
+            super.update();
+
             mouseImg.x = FlxG.mouse.x;
             mouseImg.y = FlxG.mouse.y;
 
