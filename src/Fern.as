@@ -12,6 +12,8 @@ package{
 
         public var bg:FlxSprite;
         public var ikutursodoor:FlxRect;
+        public var euryaledoor:FlxRect;
+        public var hiisidoor:FlxRect;
         public var player_rect:FlxRect;
         public var left_wall:Wall;
         public var right_wall:Wall;
@@ -35,20 +37,22 @@ package{
             bg.loadGraphic(ImgBG,false,false,640,img_height);
             add(bg);
 
-            left_wall = new Wall(0,0,100,500);
+            left_wall = new Wall(0,0,100,300);
             add(left_wall);
-            right_wall = new Wall(FlxG.width-120,0,150,500);
+            right_wall = new Wall(FlxG.width-120,0,150,300);
             add(right_wall);
-            top_wall = new Wall(0,0,640,210);
+            top_wall = new Wall(0,0,640,130);
             add(top_wall);
 
             player = new Player(250, 280);
             add(player);
             player_rect = new FlxRect(player.x,player.y,player.width,player.height);
 
-            ikutursodoor = new FlxRect(110,70,60,150);
+            ikutursodoor = new FlxRect(160,70,10,50);
+            euryaledoor = new FlxRect(339,108,10,50);
+            hiisidoor = new FlxRect(497,105,10,50);
 
-            debugText = new FlxText(0,0,100,"");
+            debugText = new FlxText(0,0,100,"TEST");
             add(debugText);
         }
 
@@ -63,12 +67,17 @@ package{
             if(player_rect.overlaps(ikutursodoor)){
                 FlxG.switchState(new IkuTursoTeleportRoom());
             }
+            if(player_rect.overlaps(euryaledoor)){
+                FlxG.switchState(new IkuTursoTeleportRoom());
+            }
+            if(player_rect.overlaps(hiisidoor)){
+                FlxG.switchState(new IkuTursoTeleportRoom());
+            }
 
             timeFrame++;
-            debugText.x = player.x-50;
-            debugText.y = player.y;
-
-            debugText.text = FlxG.height + "";
+            debugText.x = FlxG.mouse.x;
+            debugText.y = FlxG.mouse.y;
+            debugText.text = "X: " + FlxG.mouse.x + "Y: " + FlxG.mouse.y;
 
             if(timeFrame%30 == 0){
                 timer++;
