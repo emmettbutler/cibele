@@ -3,6 +3,8 @@ package{
 
     public class IkuTurso extends LevelMapState {
         override public function create():void {
+            this.filename = "ikuturso_path.txt";
+
             super.create();
 
             debugText = new FlxText(0,0,100,"");

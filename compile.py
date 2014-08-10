@@ -1,4 +1,5 @@
 import argparse
+import os
 import subprocess
 try:
     import ConfigParser as configparser
@@ -97,8 +98,18 @@ def package_application(entry_point_class):
     subprocess.call(command.split())
 
 
+def copy_path_files():
+    command = ["cp", os.path.expanduser("~/Library/Preferences/com.starmaid.Cibele/Local Store/ikuturso_path.txt"), "assets"]
+    print " ".join(command)
+    subprocess.call(command)
+
+
 def main():
     libpath = args.libpath[0]
+
+    copy_path_files()
+    if args.copy_path:
+        return
 
     entry_point_class = write_entry_point()
     preloader_class = write_preloader()
@@ -124,6 +135,8 @@ if __name__ == "__main__":
                         help="The config file to use")
     parser.add_argument('--package', '-p', action="store_true",
                         help="Build an Adobe AIR application")
+    parser.add_argument('--copy_path', '-a', action="store_true",
+                        help="Copy editor path files to source control")
     args = parser.parse_args()
 
     config = configparser.ConfigParser()

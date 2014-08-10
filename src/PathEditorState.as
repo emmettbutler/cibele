@@ -14,9 +14,28 @@ package
         public var _path:Path;
         public var enemies:EnemyGroup;
         public var mouseImg:FlxSprite;
+        public var filename:String;
+        public var dataFile:File, backupFile:File, writeFile:File;
+
+        public static const MODE_READONLY:Number = 0;
+        public static const MODE_EDIT:Number = 1;
+        public var editorMode:Number;
 
         public function create_(player:Player):void
         {
+            this.dataFile = File.applicationDirectory.resolvePath(
+                "assets/" + this.filename);
+            this.writeFile = File.applicationStorageDirectory.resolvePath(
+                this.filename);
+            this.backupFile = File.applicationStorageDirectory.resolvePath(
+                this.filename + ".bak");
+
+            if (!this.writeFile.exists) {
+                this.editorMode = MODE_READONLY;
+            } else {
+                this.editorMode = MODE_EDIT;
+            }
+
             pathWalker = new PathFollower(new DHPoint(5460, 7390));
 
             player.initFootsteps();
@@ -76,7 +95,7 @@ package
         }
 
         public function writeBackup():void {
-            var f:File = File.applicationStorageDirectory.resolvePath("cibele.txt");
+            var f:File = this.writeFile;
             var str:FileStream = new FileStream();
             if (!f.exists) {
                 return;
@@ -85,15 +104,18 @@ package
             var fileContents:String = str.readUTFBytes(f.size);
             str.close();
 
-            var fBak:File = File.applicationStorageDirectory.resolvePath("cibele.txt.bak");
+            var fBak:File = this.backupFile;
             str.open(fBak, FileMode.WRITE);
             str.writeUTFBytes(fileContents);
             str.close();
         }
 
         public function writeOut():void {
+            if (this.editorMode != MODE_EDIT) {
+                return;
+            }
             this.writeBackup();
-            var f:File = File.applicationStorageDirectory.resolvePath("cibele.txt");
+            var f:File = this.writeFile;
             var str:FileStream = new FileStream();
             str.open(f, FileMode.WRITE);
 
@@ -119,7 +141,12 @@ package
         }
 
         public function readIn():void {
-            var f:File = File.applicationStorageDirectory.resolvePath("cibele.txt");
+            var f:File = this.dataFile;
+            if (this.editorMode == MODE_EDIT) {
+                if (this.writeFile.exists) {
+                    f = this.writeFile;
+                }
+            }
             var str:FileStream = new FileStream();
             if (!f.exists) {
                 return;
