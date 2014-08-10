@@ -35,6 +35,8 @@ package
             } else {
                 this.editorMode = MODE_EDIT;
             }
+            //this.editorMode = MODE_EDIT; //turn this on in order to edit
+            //compile with -a flag if I edit or make new path
 
             pathWalker = new PathFollower(new DHPoint(5460, 7390));
 

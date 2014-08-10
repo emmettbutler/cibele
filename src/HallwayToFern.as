@@ -2,7 +2,7 @@ package{
     import org.flixel.*;
 
     public class HallwayToFern extends FlxState {
-        [Embed(source="../assets/it_teleport_640_480.png")] private var ImgBG:Class;
+        [Embed(source="../assets/pathtofern.png")] private var ImgBG:Class;
         [Embed(source="../assets/voc_firstconvo.mp3")] private var Convo1:Class;
 
         public var player:Player;
@@ -23,10 +23,11 @@ package{
 
         public var enemy:SmallEnemy;
 
-        public var img_height:Number = 357;
+        public var img_height:Number = 480;
 
         public static const STATE_PRE_IT:Number = 0;
         public var _state:Number = 0;
+        public var runSpeed:Number = 5;
 
         public function HallwayToFern(state:Number = 0){
             _state = state;
@@ -35,13 +36,13 @@ package{
         override public function create():void {
             FlxG.bgColor = 0xff000000;
 
+            bg1 = new FlxSprite(0,-img_height);
+            bg1.loadGraphic(ImgBG,false,false,640,img_height);
+            add(bg1);
             bg2 = new FlxSprite(0,0);
             bg2.loadGraphic(ImgBG,false,false,640,img_height);
             add(bg2);
-            bg1 = new FlxSprite(0,-bg2.height);
-            bg1.loadGraphic(ImgBG,false,false,640,img_height);
-            add(bg1);
-            bg3 = new FlxSprite(0,+bg2.height);
+            bg3 = new FlxSprite(0,img_height);
             bg3.loadGraphic(ImgBG,false,false,640,img_height);
             add(bg3);
 
@@ -84,19 +85,30 @@ package{
             debugText.y = player.y;
 
             if(FlxG.keys.UP){
-                bg1.y++;
-                bg2.y++;
-                bg3.y++;
+                bg1.y += runSpeed;
+                bg2.y += runSpeed;
+                bg3.y += runSpeed;
+            }
+            if(FlxG.keys.DOWN){
+                bg1.y -= runSpeed;
+                bg2.y -= runSpeed;
+                bg3.y -= runSpeed;
+            }
+            if(FlxG.keys.LEFT){
+                player.x -= runSpeed;
+            }
+            if(FlxG.keys.RIGHT){
+                player.x += runSpeed;
+            }
 
-                if(bg2.y == 0){
-                    bg1.y = bg2.y-bg2.height;
-                }
-                if(bg1.y == 0){
-                    bg3.y = bg2.y-bg1.height;
-                }
-                if(bg3.y == 0){
-                    bg2.y = bg3.y-bg3.height;
-                }
+            if(bg2.y == 0){
+                bg1.y = bg2.y-bg2.height;
+            }
+            if(bg1.y == 0){
+                bg3.y = bg2.y-bg1.height;
+            }
+            if(bg3.y == 0){
+                bg2.y = bg3.y-bg3.height;
             }
 
 
