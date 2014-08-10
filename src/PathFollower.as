@@ -57,7 +57,7 @@ package
             dbgText.x = this.x;
             dbgText.y = this.y-20;
 
-            this.dbgText.text = stateMap[this._state];
+//            this.dbgText.text = stateMap[this._state];
 
             var disp:DHPoint;
             if (this._state == STATE_MOVE_TO_NODE) {

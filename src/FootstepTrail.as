@@ -45,7 +45,7 @@ package {
                     oldest = cur;
                 }
             }
-            oldest.setPos(this.target_.pos.add(this.target_.footstepOffset));
+            oldest.place(this.target_.pos.add(this.target_.footstepOffset));
             this.angleStep(oldest);
         }
 

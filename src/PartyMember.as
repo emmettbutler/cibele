@@ -4,7 +4,6 @@ package {
     public class PartyMember extends GameObject {
         public static const STATE_IN_ATTACK:Number = 1;
 
-        public var dir:DHPoint;
         public var lastAttackTime:Number = 0;
         public var footsteps:FootstepTrail = null;
         public var footstepOffset:DHPoint;
@@ -12,7 +11,6 @@ package {
 
         public function PartyMember(pos:DHPoint) {
             super(pos);
-            this.dir = new DHPoint(0, 0);
         }
 
         public function initFootsteps():void {
@@ -24,7 +22,6 @@ package {
             if (this.footsteps != null) {
                 this.footsteps.update();
             }
-            this.setPos(this.pos.add(this.dir));
         }
 
         public function isAttacking():Boolean{

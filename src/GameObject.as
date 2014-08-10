@@ -4,6 +4,7 @@ package
 
     public class GameObject extends FlxSprite {
         public var pos:DHPoint;
+        public var dir:DHPoint;
         public var bornTime:Number = -1;
         public var timeAlive:Number = -1;
         public var currentTime:Number = -1;
@@ -22,6 +23,7 @@ package
             this.pos = pos;
             this.bornTime = new Date().valueOf();
             this.timeAlive = 0;
+            this.dir = new DHPoint(0, 0);
         }
 
         override public function update():void {
@@ -29,6 +31,7 @@ package
             this.timeAlive = this.currentTime - this.bornTime;
             this.pos.x = this.x;
             this.pos.y = this.y;
+            this.setPos(this.pos.add(this.dir));
         }
 
         public function setPos(pos:DHPoint):void {
