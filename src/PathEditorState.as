@@ -70,10 +70,6 @@ package
             mouseImg.x = FlxG.mouse.x;
             mouseImg.y = FlxG.mouse.y;
 
-            if (this.pathWalker != null) {
-                this.pathWalker.update();
-            }
-
             if (FlxG.mouse.justReleased()) {
                 if (FlxG.keys["A"]) {
                     this._path.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));

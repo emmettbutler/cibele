@@ -31,7 +31,6 @@ package
             var cur:Enemy;
             for(var i:Number = 0; i < this.length(); i++){
                 cur = this.get_(i);
-                cur.update();
                 if (cur.isFollowing()) {
                     //this.preventEnemyOverlap(cur);
                 }
