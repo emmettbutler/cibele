@@ -64,22 +64,28 @@ package {
             FlxG.state.add(dbgText);
         }
 
-        public function makeCallback(tile:FlxExtSprite, receivingMachine:Loader, scaleFactor:Number=1):Function {
+        public function buildLoadCompleteCallback(tile:FlxExtSprite,
+                                                  receivingMachine:Loader,
+                                                  scaleFactor:Number=1):Function {
             return function (event_load:Event):void {
-                var tileInner:FlxExtSprite = tile;
-                tileInner.makeGraphic(10, 10, 0x00000000);
-                if (!tileInner.hasLoaded) {
+                tile.makeGraphic(10, 10, 0x00000000);
+                if (!tile.hasLoaded) {
                     var bmp:Bitmap = new Bitmap(event_load.target.content.bitmapData);
                     // scale bitmap up for collider tiles
                     if (scaleFactor != 1) {
                         var matrix:Matrix = new Matrix();
                         matrix.scale(scaleFactor, scaleFactor);
-                        var scaledBMD:BitmapData = new BitmapData(bmp.width * scaleFactor, bmp.height * scaleFactor, true, 0x000000);
+                        var scaledBMD:BitmapData = new BitmapData(bmp.width * scaleFactor,
+                                                                  bmp.height * scaleFactor,
+                                                                  true, 0x000000);
                         scaledBMD.draw(bmp, matrix, null, null, null, true);
                         bmp = new Bitmap(scaledBMD, PixelSnapping.NEVER, true);
                     }
-                    tileInner.loadExtGraphic(bmp, false, false, bmp.width, bmp.height, true);
-                    tileInner.hasLoaded = true;
+                    // the last parameter is really important for transparent images
+                    // it says "clear the pixel cache before loading this image"
+                    // weird things happen with collider tiles when it's false
+                    tile.loadExtGraphic(bmp, false, false, bmp.width, bmp.height, true);
+                    tile.hasLoaded = true;
                 }
                 receivingMachine.contentLoaderInfo.removeEventListener(
                     Event.COMPLETE, arguments.callee);
@@ -108,21 +114,18 @@ package {
             if (machines == null) {
                 machines = this.receivingMachines;
             }
-
             var tile:FlxExtSprite = this.getTileByIndex(row, col, arr);
             if (tile == null) {
                 return;
             }
 
             var receivingMachine:Loader = machines[row][col];
-
             var numberString:String = this.getTileIndex(row, col);
-
             if (!tile.hasStartedLoad) {
                 tile.hasStartedLoad = true;
 
                 receivingMachine.contentLoaderInfo.addEventListener(Event.COMPLETE,
-                    this.makeCallback(tile, receivingMachine, suffix == "_collide" ? 8 : 1));
+                    this.buildLoadCompleteCallback(tile, receivingMachine, suffix == "_collide" ? 8 : 1));
                 var path:String = "../assets/test_tiles/" + macroImageName + "_" + numberString + suffix + ".png";
                 var req:URLRequest = new URLRequest(path);
                 receivingMachine.load(req);

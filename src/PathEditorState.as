@@ -107,11 +107,7 @@ package
 
             for (i = 0; i < this.enemies.length(); i++) {
                 curEnemy = this.enemies.get_(i);
-                if (curEnemy.enemyType == "enemy") {
-                    fString += "enemy " + curEnemy.pos.x + "x" + curEnemy.pos.y + "\n";
-                } else if (curEnemy.enemyType == "boss") {
-                    fString += "boss " + curEnemy.pos.x + "x" + curEnemy.pos.y + "\n";
-                }
+                fString += curEnemy.enemyType + " " + curEnemy.pos.x + "x" + curEnemy.pos.y + "\n";
             }
 
             str.writeUTFBytes(fString);

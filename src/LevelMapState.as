@@ -26,12 +26,9 @@ package {
 
         override public function update():void {
             super.update();
-
             this.bgLoader.update();
             this.player.update();
-
             SoundManager.getInstance().update();
-
             this.resolveAttacks();
         }
 
