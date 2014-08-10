@@ -4,7 +4,6 @@ package {
     public class LevelMapState extends PathEditorState {
         public var player:Player;
         public var debugText:FlxText;
-        public var boss:BossEnemy;
         public var bgLoader:BackgroundLoader;
         public var zoomcam:ZoomCamera;
 
@@ -15,9 +14,6 @@ package {
             this.add(player.mapHitbox)
             this.bgLoader = new BackgroundLoader("Map", 10, 5);
             this.bgLoader.setPlayerReference(player);
-
-            boss = new BossEnemy(new DHPoint(3345,485));
-            this.add(boss);
 
             zoomcam = new ZoomCamera(0, 0, 640, 480);
             FlxG.resetCameras(zoomcam);

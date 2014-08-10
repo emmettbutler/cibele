@@ -56,6 +56,10 @@ package
                     var en:SmallEnemy = new SmallEnemy(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
                     add(en);
                     this.enemies.addEnemy(en);
+                } else if (FlxG.keys["Q"]) {
+                    var boss:BossEnemy = new BossEnemy(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
+                    add(boss);
+                    this.enemies.addEnemy(boss);
                 }
             }
 
@@ -103,7 +107,11 @@ package
 
             for (i = 0; i < this.enemies.length(); i++) {
                 curEnemy = this.enemies.get_(i);
-                fString += "enemy " + curEnemy.pos.x + "x" + curEnemy.pos.y + "\n";
+                if (curEnemy.enemyType == "enemy") {
+                    fString += "enemy " + curEnemy.pos.x + "x" + curEnemy.pos.y + "\n";
+                } else if (curEnemy.enemyType == "boss") {
+                    fString += "boss " + curEnemy.pos.x + "x" + curEnemy.pos.y + "\n";
+                }
             }
 
             str.writeUTFBytes(fString);
@@ -138,6 +146,12 @@ package
                         new DHPoint(Number(coords[0]), Number(coords[1])));
                     add(en);
                     this.enemies.addEnemy(en);
+                } else if (prefix_.indexOf("boss") == 0) {
+                    coords = line[1].split("x");
+                    var bo:BossEnemy = new BossEnemy(
+                        new DHPoint(Number(coords[0]), Number(coords[1])));
+                    add(bo);
+                    this.enemies.addEnemy(bo);
                 }
             }
         }

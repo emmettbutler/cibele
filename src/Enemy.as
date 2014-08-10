@@ -5,6 +5,7 @@ package
 
     public class Enemy extends GameObject {
         [Embed(source="../assets/ikuturso_enemy_1.png")] private var ImgIT1:Class;
+        public var enemyType:String = "enemy";
         public var hitpoints:Number = 100;
         public var damage:Number = 2;
 
@@ -85,7 +86,7 @@ package
             }
 
             if (this._state == STATE_IDLE) {
-                if (this.playerDisp._length() < 208 &&
+                if (this.playerDisp._length() < 308 &&
                     this.playerDisp._length() > 100) {
                     this._state = STATE_TRACKING;
                 }
