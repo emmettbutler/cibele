@@ -11,7 +11,7 @@ package {
             super(ZERO_POINT);
 
             this.sprites = new Array();
-            this.count = 20;
+            this.count = 10;
             this.interval = 100;
             this.lastTick = 0;
             this.target_ = tar;
