@@ -62,6 +62,8 @@ package
             } else if (FlxG.keys.justReleased("C")) {
                 this._path.clearPath();
             }
+
+            this.enemies.update();
         }
 
         public function writeBackup():void {
