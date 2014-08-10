@@ -12,7 +12,7 @@ package{
         public var dbgText:FlxText;
 
         public function Player(x:Number, y:Number):void{
-            super(new DHPoint(x,y));
+            super(new DHPoint(x, y));
 
             loadGraphic(ImgCibWalk, false, false, 126, 134);
 
@@ -26,10 +26,10 @@ package{
             FlxG.state.add(this.dbgText);
 
             this.lastPos = new DHPoint(this.pos.x, this.pos.y);
+            this.footstepOffset = new DHPoint(80, this.height);
         }
 
         override public function update():void{
-            super.update();
 
             this.dbgText.text = this.pos.x + "x" + this.pos.y;
             this.dbgText.x = x;
@@ -69,7 +69,7 @@ package{
             if (!this.lastPos.eq(this.pos)) {
                 this.lastPos = new DHPoint(this.pos.x, this.pos.y);
             }
-            this.setPos(this.pos.add(this.dir));
+            super.update();
 
             if(FlxG.keys.justPressed("SPACE")){
                 this.attack();

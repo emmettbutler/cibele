@@ -44,6 +44,8 @@ package
             this.dbgText = new FlxText(100, 100, 100, "");
             this.dbgText.color = 0xff000000;
             FlxG.state.add(this.dbgText);
+
+            this.footstepOffset = new DHPoint(0, 0);
         }
 
         override public function update():void {
@@ -64,8 +66,7 @@ package
                     if (disp._length() < 10) {
                         this._state = STATE_IDLE_AT_NODE;
                     } else {
-                        dir = disp.normalized().mulScl(this.runSpeed).add(this.pos)
-                        this.setPos(dir);
+                        this.dir = disp.normalized().mulScl(this.runSpeed);
                     }
                 }
                 if (this.enemyIsInAttackRange(this.closestEnemy)) {
@@ -83,12 +84,13 @@ package
                 } else if(this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
+                this.dir = ZERO_POINT;
             } else if (this._state == STATE_AT_ENEMY) {
                 this.attack();
+                this.dir = ZERO_POINT;
             } else if (this._state == STATE_MOVE_TO_ENEMY){
                 disp = this.closestEnemy.pos.sub(this.pos);
-                dir = disp.normalized().mulScl(this.runSpeed).add(this.pos)
-                this.setPos(dir);
+                this.dir = disp.normalized().mulScl(this.runSpeed);
                 if (this.enemyIsInAttackRange(this.closestEnemy)) {
                     this._state = STATE_AT_ENEMY;
                 }
@@ -97,6 +99,7 @@ package
                     this.resolveStatePostAttack();
                     this.makeGraphic(50, 50, 0xffff0000);
                 }
+                this.dir = ZERO_POINT;
             }
         }
 

@@ -17,14 +17,17 @@ package
 
         public function create_(player:Player):void
         {
-            add(player);
+            pathWalker = new PathFollower(new DHPoint(5460, 7390));
+
+            player.initFootsteps();
+            pathWalker.initFootsteps();
 
             mouseImg = new FlxSprite(FlxG.mouse.x, FlxG.mouse.y);
             mouseImg.makeGraphic(5, 5, 0xffffffff);
             add(mouseImg);
 
-            pathWalker = new PathFollower(new DHPoint(5460, 7390));
             add(pathWalker);
+            add(player);
 
             _path = new Path();
             pathWalker.setPath(_path);

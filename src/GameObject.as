@@ -7,6 +7,9 @@ package
         public var bornTime:Number = -1;
         public var timeAlive:Number = -1;
         public var currentTime:Number = -1;
+        {
+            public static var ZERO_POINT:DHPoint = new DHPoint(0, 0);
+        }
 
         public static const STATE_NULL:Number = -1;
         public static const STATE_IDLE:Number = 0;
