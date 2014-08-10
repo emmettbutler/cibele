@@ -22,14 +22,14 @@ package{
         override public function create():void {
             FlxG.bgColor = 0x00000000;
 
-            function _callback():void {
-                function _innerCallback():void {
-                    FlxG.switchState(new HallwayToFern());
-                }
-                FlxG.switchState(new PlayVideoState("../assets/test_video.flv",
-                                                    _innerCallback));
-            }
-            SoundManager.getInstance().playSound(Convo, (6*60+27)*1000, _callback);
+            SoundManager.getInstance().playSound(Convo, (6*60+27)*1000,
+                function():void {
+                    FlxG.switchState(
+                        new PlayVideoState("../assets/test_video.flv",
+                            function():void {
+                                FlxG.switchState(new HallwayToFern());
+                            }));
+                });
 
             bg = new FlxSprite(0,(480-img_height)/2);
             bg.loadGraphic(ImgBG,false,false,640,img_height);
