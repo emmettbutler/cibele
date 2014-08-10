@@ -22,7 +22,7 @@ package{
         override public function create():void {
             FlxG.bgColor = 0x00000000;
 
-            SoundManager.getInstance().playSound(Convo, 345*1000,
+            SoundManager.getInstance().playSound(Convo, 340*1000,
                 function():void {
                     FlxG.switchState(
                         new PlayVideoState("../assets/selfie.flv",
