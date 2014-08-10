@@ -31,7 +31,6 @@ package{
                             }));
                 });
 
-
             bg = new FlxSprite(0,(480-img_height)/2);
             bg.loadGraphic(ImgBG,false,false,640,img_height);
             add(bg);
