@@ -7,7 +7,7 @@ package
 
     public class PathFollower extends PartyMember
     {
-        //todo add a fading footprint to make it easier for player to follow him
+        [Embed(source="../assets/ichi.png")] private var ImgIchi:Class;
         public var _path:Path;
         public var _enemies:EnemyGroup;
         public var targetNode:PathNode;
@@ -37,7 +37,7 @@ package
 
         public function PathFollower(pos:DHPoint) {
             super(pos);
-            makeGraphic(50, 50, 0xffff0000);
+            loadGraphic(ImgIchi, false, false, 81, 130);
             this.targetNode = null;
             this._state = STATE_NULL;
 

@@ -39,9 +39,11 @@ package{
                 if(FlxG.keys.LEFT || FlxG.keys.RIGHT) {
                     if(FlxG.keys.LEFT) {
                         this.dir.x = -1 * runSpeed;
+                        this.scale.x = 1;
                     }
                     if(FlxG.keys.RIGHT){
                         this.dir.x = runSpeed;
+                        this.scale.x = -1;
                     }
                 } else {
                     this.dir.x = 0;
