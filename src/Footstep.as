@@ -6,6 +6,7 @@ package {
 
         public var age:Number = 0;
         public var drawn:Boolean;
+        public var fadeFrames:Number = 350;
 
         public function Footstep() {
             super(ZERO_POINT);
@@ -19,6 +20,7 @@ package {
         override public function update():void {
             super.update();
             this.age++;
+            this.alpha = (this.fadeFrames - this.age) / this.fadeFrames;
         }
 
         override public function setPos(pos:DHPoint):void {
