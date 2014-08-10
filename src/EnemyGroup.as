@@ -28,21 +28,6 @@ package
         }
 
         public function update():void {
-            var cur:Enemy;
-            for(var i:Number = 0; i < this.length(); i++){
-                cur = this.get_(i);
-                if (cur.isFollowing()) {
-                    //this.preventEnemyOverlap(cur);
-                }
-            }
-        }
-
-        public function preventEnemyOverlap(e:Enemy):void{
-            for(var i:Number = 0; i < this.length(); i++){
-                if(this.get_(i).pos.sub(e.pos)._length() < 10){
-                    FlxG.collide(this.get_(i), e);
-                }
-            }
         }
     }
 }
