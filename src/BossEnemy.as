@@ -7,15 +7,13 @@ package
             super(pos);
             makeGraphic(300, 300, 0xffff0000);
             enemyType = "boss";
+            hitpoints = 200;
+            damage = 200;
         }
 
         override public function update():void{
             super.update();
             debugText.text = "BOSS";
-        }
-
-        override public function takeDamage(p:PartyMember):void{
-            hitpoints -= 0;
         }
     }
 }

@@ -7,7 +7,7 @@ package
         [Embed(source="../assets/ikuturso_enemy_1.png")] private var ImgIT1:Class;
         public var enemyType:String = "enemy";
         public var hitpoints:Number = 100;
-        public var damage:Number = 2;
+        public var damage:Number = 5;
 
         public static const STATE_IDLE:Number = 1;
         public static const STATE_DAMAGED:Number = 2;
@@ -54,7 +54,7 @@ package
         public function takeDamage(p:PartyMember):void{
             this.attacker = p;
             this._state = STATE_RECOIL;
-            this.hitpoints -= 5;
+            this.hitpoints -= damage;
             if(this.hitpoints < 0){
                 FlxG.state.remove(this);
                 FlxG.state.remove(this.debugText);
