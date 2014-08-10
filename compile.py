@@ -4,7 +4,6 @@ try:
     import ConfigParser as configparser
 except ImportError:
     import configparser
-#args = None
 
 def write_entry_point():
     name = args.mainclass[0].lower()
@@ -92,6 +91,12 @@ def run_main(conf_file):
     subprocess.call(command.split())
 
 
+def package_application(entry_point_class):
+    command = "adt -package -storetype pkcs12 -keystore cibelecert.pfx CibeleBeta.air {entry_point_class}.xml src/{entry_point_class}.swf assets".format(entry_point_class=entry_point_class)
+    print command
+    subprocess.call(command.split())
+
+
 def main():
     libpath = args.libpath[0]
 
@@ -99,7 +104,11 @@ def main():
     preloader_class = write_preloader()
     swf_path = compile_main(entry_point_class, libpath)
     conf_path = write_conf_file(swf_path, entry_point_class, args.mainclass[0])
-    run_main(conf_path)
+
+    if args.package:
+        package_application(entry_point_class)
+    else:
+        run_main(conf_path)
 
 
 if __name__ == "__main__":
@@ -113,6 +122,8 @@ if __name__ == "__main__":
     parser.add_argument('--config', '-c', metavar="CONFIG", type=str,
                         default="settings.ini", nargs=1,
                         help="The config file to use")
+    parser.add_argument('--package', '-p', action="store_true",
+                        help="Build an Adobe AIR application")
     args = parser.parse_args()
 
     config = configparser.ConfigParser()
