@@ -8,7 +8,7 @@ package
             super(pos);
             loadGraphic(ImgBoss, false, false, 300, 366);
             enemyType = "boss";
-            hitpoints = 200;
+            hitpoints = 300;
             damage = 5;
         }
 
