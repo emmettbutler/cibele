@@ -19,8 +19,7 @@ package {
             FlxG.resetCameras(zoomcam);
             zoomcam.target = player;
             zoomcam.targetZoom = 1.2;
-            FlxG.worldBounds = new FlxRect(0, 0, 15272, 17456);
-
+            FlxG.camera.setBounds(0, 0, bgLoader.cols * bgLoader.estTileWidth, bgLoader.rows * bgLoader.estTileHeight);
             super.create_(player);
         }
 

@@ -26,7 +26,6 @@ package{
 
             this.dbgText = new FlxText(x, y, 200, "");
             this.dbgText.color = 0xffffffff;
-            FlxG.state.add(this.dbgText);
 
             this.lastPos = new DHPoint(this.pos.x, this.pos.y);
             this.footstepOffset = new DHPoint(80, this.height);
