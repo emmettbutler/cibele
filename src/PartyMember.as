@@ -19,6 +19,7 @@ package {
 
         override public function update():void {
             super.update();
+            play("attack");
             if (this.footsteps != null) {
                 this.footsteps.update();
             }
@@ -30,6 +31,7 @@ package {
 
         public function attack():void {
             if (this.canAttack()) {
+                play("attack");
                 this._state = STATE_IN_ATTACK;
                 this.lastAttackTime = this.currentTime;
             }

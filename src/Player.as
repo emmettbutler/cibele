@@ -3,7 +3,7 @@ package{
 
     public class Player extends PartyMember {
         [Embed(source="../assets/cib_walk.png")] private var ImgCibWalk:Class;
-        public var runSpeed:Number = 5;
+        public var runSpeed:Number = 4;
         public var colliding:Boolean = false;
         public var lastPos:DHPoint;
         public var mapHitbox:FlxSprite;
@@ -14,7 +14,9 @@ package{
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
 
-            loadGraphic(ImgCibWalk, false, false, 126, 134);
+            loadGraphic(ImgCibWalk, true, false, 108, 132);
+            addAnimation("walk",[1],7,false);
+            addAnimation("attack",[0,1],7,true);
 
             this.hitboxOffset = new DHPoint(60, 80);
             this.hitboxDim = new DHPoint(40, 50);
@@ -84,6 +86,13 @@ package{
 
             this.mapHitbox.x = pos.x + this.hitboxOffset.x;
             this.mapHitbox.y = pos.y + this.hitboxOffset.y;
+        }
+
+        override public function attack():void {
+            super.attack();
+            if (this._state == STATE_IN_ATTACK) {
+                //play("attack");
+            }
         }
     }
 }

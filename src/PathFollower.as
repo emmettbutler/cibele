@@ -13,7 +13,7 @@ package
         public var targetNode:PathNode;
         public var pathComplete:Boolean = false;
 
-        public var runSpeed:Number = 6;
+        public var runSpeed:Number = 8;
 
         public var closestEnemy:Enemy;
         public var playerRef:Player;
@@ -39,7 +39,10 @@ package
 
         public function PathFollower(pos:DHPoint) {
             super(pos);
-            loadGraphic(ImgIchi, false, false, 81, 130);
+            loadGraphic(ImgIchi, true, false, 72, 126);
+            addAnimation("walk",[0],7,false);
+            addAnimation("attack",[0,1],7,true);
+            play("walk");
             this.targetNode = null;
             this._state = STATE_NULL;
 
@@ -61,6 +64,7 @@ package
 
             var disp:DHPoint;
             if (this._state == STATE_MOVE_TO_NODE) {
+                play("walk");
                 if (!this._path.hasNodes()) {
                     this._state = STATE_NULL;
                 } else {
@@ -91,6 +95,7 @@ package
                 this.attack();
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_MOVE_TO_ENEMY){
+                play("walk");
                 disp = this.closestEnemy.pos.sub(this.pos);
                 this.dir = disp.normalized().mulScl(this.runSpeed);
                 if (this.enemyIsInAttackRange(this.closestEnemy)) {
@@ -164,7 +169,7 @@ package
 
         public function playerIsInMovementRange(pl:Player):Boolean {
             if (pl == null) { return false; }
-            return pl.pos.sub(this.pos)._length() < 200;
+            return pl.pos.sub(this.pos)._length() < 300;
         }
     }
 }
