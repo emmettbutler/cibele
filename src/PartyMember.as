@@ -8,6 +8,7 @@ package {
         public var lastAttackTime:Number = 0;
         public var footsteps:FootstepTrail = null;
         public var footstepOffset:DHPoint;
+        public var attackRange:Number = 150;
 
         public function PartyMember(pos:DHPoint) {
             super(pos);

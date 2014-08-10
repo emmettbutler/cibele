@@ -23,6 +23,8 @@ package
         public static const STATE_AT_ENEMY:Number = 4;
         public static const STATE_MOVE_TO_ENEMY:Number = 5;
 
+        public static const ATTACK_RANGE:Number = 150;
+
         {
             public static var stateMap:Dictionary = new Dictionary();
             stateMap[STATE_NULL] = "STATE_NULL";
@@ -46,6 +48,7 @@ package
             FlxG.state.add(this.dbgText);
 
             this.footstepOffset = new DHPoint(0, 0);
+            this.attackRange = 90;
         }
 
         override public function update():void {
@@ -54,8 +57,7 @@ package
             dbgText.x = this.x;
             dbgText.y = this.y-20;
 
-            //this.dbgText.text = stateMap[this._state] + "\n"
-            //                    + this.canAttack();
+            this.dbgText.text = stateMap[this._state];
 
             var disp:DHPoint;
             if (this._state == STATE_MOVE_TO_NODE) {
@@ -113,7 +115,7 @@ package
 
         public function enemyIsInAttackRange(en:Enemy):Boolean {
             if (en == null) { return false; }
-            return en.pos.sub(this.pos)._length() < 150;
+            return en.pos.sub(this.pos)._length() < this.attackRange;
         }
 
         public function enemyIsInMoveTowardsRange(en:Enemy):Boolean{
@@ -135,12 +137,6 @@ package
                 }
             }
             return ret;
-        }
-
-        override public function attack():void {
-            super.attack();
-            if (this._state == STATE_IN_ATTACK) {
-            }
         }
 
         public function setPath(path:Path):void {
