@@ -5,7 +5,8 @@ package {
         [Embed(source="../assets/feet.png")] private var ImgFeet:Class;
 
         public var age:Number = 0;
-        public var fadeFrames:Number = 350;
+        public var drawn:Boolean;
+        public var fadeFrames:Number = 50;
 
         public function Footstep() {
             super(ZERO_POINT);
