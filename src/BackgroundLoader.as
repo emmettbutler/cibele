@@ -171,7 +171,6 @@ package {
             playerCol = Math.floor(this.playerRef.pos.x / this.estTileWidth);
 
             var numberString:String = this.getTileIndex(playerRow, playerCol);
-            this.dbgText.text = playerRow + "x" + playerCol + "\n" + numberString;
 
             // TODO - be smart about making this list as small as possible
             adjacentCoords.push([playerRow,   playerCol]);

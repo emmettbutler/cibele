@@ -14,9 +14,6 @@ package{
 
         override public function update():void{
             super.update();
-
-            debugText.x = player.x;
-            debugText.y = player.y-20;
         }
     }
 }

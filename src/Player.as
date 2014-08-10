@@ -30,11 +30,6 @@ package{
         }
 
         override public function update():void{
-
-            this.dbgText.text = this.pos.x + "x" + this.pos.y;
-            this.dbgText.x = x;
-            this.dbgText.y = y;
-
             if (FlxG.keys.LEFT || FlxG.keys.RIGHT || FlxG.keys.UP || FlxG.keys.DOWN) {
                 if(FlxG.keys.LEFT || FlxG.keys.RIGHT) {
                     if(FlxG.keys.LEFT) {

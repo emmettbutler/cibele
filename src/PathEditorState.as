@@ -45,9 +45,6 @@ package
             mouseImg.makeGraphic(5, 5, 0xffffffff);
             add(mouseImg);
 
-            add(pathWalker);
-            add(player);
-
             _path = new Path();
             pathWalker.setPath(_path);
             pathWalker.setPlayerReference(player);
@@ -60,6 +57,9 @@ package
             if (this._path.hasNodes()) {
                 this.pathWalker.moveToNextNode();
             }
+
+            add(pathWalker);
+            add(player);
         }
 
         override public function update():void {
@@ -165,7 +165,8 @@ package
                 if (prefix_.indexOf("pathnode") == 0) {
                     coords = line[1].split("x");
                     this._path.addNode(
-                        new DHPoint(Number(coords[0]), Number(coords[1])));
+                        new DHPoint(Number(coords[0]), Number(coords[1])),
+                        this.editorMode == MODE_EDIT);
                 } else if (prefix_.indexOf("enemy") == 0) {
                     coords = line[1].split("x");
                     var en:SmallEnemy = new SmallEnemy(

@@ -19,9 +19,10 @@ package
             FlxG.state.add(this.dbgText);
         }
 
-        public function addNode(point:DHPoint):void {
+        public function addNode(point:DHPoint, showNodes:Boolean=false):void {
             var node:PathNode = new PathNode(point);
             node.next = null;
+            node.alpha = showNodes ? 1 : 0;
             var prevNode:PathNode = this.nodes[this.nodes.length - 1];
             node.prev = prevNode
             if (prevNode != null) {

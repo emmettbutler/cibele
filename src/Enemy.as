@@ -82,7 +82,7 @@ package
             debugText.y = pos.y-10;
             var str:String = stateMap[this._state] + "\n" + hitpoints;
             if (str != null) {
-                debugText.text = str;
+                //debugText.text = str;
             }
 
             if (this._state == STATE_IDLE) {
