@@ -72,6 +72,8 @@ package
         }
 
         override public function update():void{
+            super.update();
+
             this.playerDisp = this.player.pos.sub(this.pos);
             this.followerDisp = this.path_follower.pos.sub(this.pos);
             if(this.attacker != null){
@@ -90,6 +92,7 @@ package
                     this.playerDisp._length() > 100) {
                     this._state = STATE_TRACKING;
                 }
+                this.dir = ZERO_POINT;
             } else if (this._state == STATE_TRACKING) {
                 if (this.playerDisp._length() > 208 ||
                     this.playerDisp._length() < 10)
@@ -97,14 +100,14 @@ package
                     this._state = STATE_IDLE;
                 }
                 this.disp = this.player.pos.sub(this.pos);
-                this.setPos(disp.normalized().add(this.pos));
+                this.dir = disp.normalized();
             } else if (this._state == STATE_RECOIL) {
                 if (this.attackerDisp._length() > 120)
                 {
                     this._state = STATE_TRACKING;
                 }
                 this.disp = this.attacker.pos.sub(this.pos);
-                this.setPos(disp.normalized().mulScl(7).reverse().add(this.pos));
+                this.dir = disp.normalized().mulScl(7).reverse();
             }
         }
     }
