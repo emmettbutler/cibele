@@ -58,7 +58,7 @@ def compile_main(entry_point_class, libpath):
                "-use-network=false", "-verbose-stacktraces=true",
                "-compiler.include-libraries", libpath,
                "-static-link-runtime-shared-libraries",
-               "-debug=false", "-omit-trace-statements=false"]
+               "-debug=true", "-omit-trace-statements=false"]
     print " ".join(command)
     subprocess.check_call(command)
     return "src/{entry_point_class}.swf".format(entry_point_class=entry_point_class)
@@ -86,7 +86,7 @@ def write_conf_file(swf_path, entry_point_class, main_class):
 
 
 def run_main(conf_file):
-    command = "adl -runtime /Library/Frameworks {conf_path} -nodebug".format(conf_path=conf_file)
+    command = "adl -runtime /Library/Frameworks {conf_path}".format(conf_path=conf_file)
     print command
     subprocess.call(command.split())
 
