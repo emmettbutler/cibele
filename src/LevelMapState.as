@@ -37,11 +37,9 @@ package {
                 return;
             }
             var current_enemy:Enemy;
-            var disp:DHPoint;
             for (var i:int = 0; i < this.enemies.length(); i++) {
                 current_enemy = this.enemies.get_(i);
-                disp = current_enemy.pos.sub(obj.pos);
-                if (disp._length() < obj.attackRange) {
+                if (current_enemy.pos.sub(obj.pos)._length() < obj.attackRange) {
                     current_enemy.takeDamage(obj);
                 }
             }
