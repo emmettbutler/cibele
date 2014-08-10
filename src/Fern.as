@@ -25,9 +25,9 @@ package{
             SoundManager.getInstance().playSound(Convo, 380*1000,
                 function():void {
                     FlxG.switchState(
-                        new PlayVideoState("../assets/test_video.flv",
+                        new PlayVideoState("../assets/selfie.flv",
                             function():void {
-                                FlxG.switchState(new HallwayToFern());
+                                FlxG.switchState(new StartScreen());
                             }));
                 });
 

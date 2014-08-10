@@ -7,8 +7,9 @@ package{
         override public function create():void {
             FlxG.bgColor = 0xff000000;
 
-            startText = new FlxText(0,0,100,"Cibele // SPACE to start");
+            startText = new FlxText(100,100,300,"Cibele // SPACE to start\nThis build ends after the first world.");
             add(startText);
+            startText.size = 16;
         }
 
         public function startGame():void {
