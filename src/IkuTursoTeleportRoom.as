@@ -33,9 +33,9 @@ package{
             bottom_wall_rect_r = new Wall(FlxG.width-280,FlxG.height - (FlxG.height-img_height+60)/2,200,150);
             add(bottom_wall_rect_r);
 
-            door = new FlxRect(210,100,200,100);
+            door = new FlxRect(210,50,200,100);
 
-            player = new Player(200, 280);
+            player = new Player(220, 280);
             add(player);
             player_rect = new FlxRect(player.x,player.y,player.width,player.height);
 
