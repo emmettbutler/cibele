@@ -10,6 +10,8 @@ package{
             startText = new FlxText(100,100,500,"Cibele // This build ends after the first world.\n\nARROWS to move.\nSPACE to attack.\nMake sure your sound is on.\n\nSPACE to start.");
             add(startText);
             startText.size = 16;
+
+            ScreenManager.getInstance();
         }
 
         public function startGame():void {
