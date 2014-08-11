@@ -23,8 +23,16 @@ package {
             videoStream.play(filename);
             videoStream.client = { onMetaData:function(obj:Object):void{} };
             videoStream.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
+            var screenWidth:Number = ScreenManager.getInstance().screenWidth;
+            var screenHeight:Number = ScreenManager.getInstance().screenHeight;
+            var aspectRatio:Number = 640/360;
 
-            video = new Video(640, 480);
+            var videoWidth:Number = screenHeight*aspectRatio;
+            var videoHeight:Number = screenWidth/aspectRatio;
+
+            video = new Video(videoWidth, videoHeight);
+            video.x = (screenWidth - videoWidth) / 2;
+            video.y = (screenHeight - videoHeight) / 2;
             video.attachNetStream(videoStream);
 
             FlxG.stage.addChild(video);
