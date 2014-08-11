@@ -1,7 +1,7 @@
 package{
     import org.flixel.*;
 
-    public class IkuTursoTeleportRoom extends FlxState {
+    public class EuryaleTeleportRoom extends FlxState {
         [Embed(source="../assets/it_teleport_640_480.png")] private var ImgBG:Class;
         public var player:Player;
         public var timeFrame:Number = 0;
@@ -10,6 +10,7 @@ package{
 
         public var bg:FlxSprite;
         public var door:FlxRect;
+        public var exit:FlxRect;
         public var player_rect:FlxRect;
         public var wall_rect_l:Wall;
         public var bottom_wall_rect_l:Wall;
@@ -34,6 +35,8 @@ package{
             add(bottom_wall_rect_r);
 
             door = new FlxRect(210,50,200,100);
+
+            //exit = new FlxRect(200,FlxG.height - (FlxG.height-img_height+70)/2,210,50);
 
             player = new Player(220, 280);
             add(player);

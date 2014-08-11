@@ -24,6 +24,7 @@ package{
         override public function create():void {
             FlxG.bgColor = 0x00000000;
 
+            //TODO this needs to not happen if sound is already playing
             SoundManager.getInstance().playSound(Convo, 340*1000,
                 function():void {
                     FlxG.switchState(
@@ -68,10 +69,10 @@ package{
                 FlxG.switchState(new IkuTursoTeleportRoom());
             }
             if(player_rect.overlaps(euryaledoor)){
-                FlxG.switchState(new IkuTursoTeleportRoom());
+                FlxG.switchState(new EuryaleTeleportRoom());
             }
             if(player_rect.overlaps(hiisidoor)){
-                FlxG.switchState(new IkuTursoTeleportRoom());
+                FlxG.switchState(new HiisiTeleportRoom());
             }
 
             timeFrame++;
