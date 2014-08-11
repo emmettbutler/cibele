@@ -5,6 +5,7 @@ package {
         public static var _instance:SoundManager = null;
 
         public var runningSounds:Array;
+        public var newSound:GameSound;
 
         public function SoundManager() {
             this.runningSounds = new Array();
@@ -12,8 +13,17 @@ package {
 
         public function playSound(embeddedSound:Class, dur:Number,
                                   endCallback:Function=null):void {
-            var newSound:GameSound = new GameSound(embeddedSound, dur, endCallback);
-            this.runningSounds.push(newSound);
+            if(runningSounds.length > 0){
+                for(var i:Number = 0; i < runningSounds.length; i++){
+                    if(embeddedSound != runningSounds[i].embeddedSound){
+                        newSound = new GameSound(embeddedSound, dur, endCallback);
+                        this.runningSounds.push(newSound);
+                    }
+                }
+            } else {
+                newSound = new GameSound(embeddedSound, dur, endCallback);
+                this.runningSounds.push(newSound);
+            }
         }
 
         public function update():void {

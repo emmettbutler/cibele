@@ -49,7 +49,7 @@ package{
             add(player);
             player_rect = new FlxRect(player.x,player.y,player.width,player.height);
 
-            ikutursodoor = new FlxRect(160,70,10,50);
+            ikutursodoor = new FlxRect(160,70,30,80);
             euryaledoor = new FlxRect(339,108,10,50);
             hiisidoor = new FlxRect(497,105,10,50);
 

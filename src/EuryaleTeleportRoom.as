@@ -36,7 +36,7 @@ package{
 
             door = new FlxRect(210,50,200,100);
 
-            //exit = new FlxRect(200,FlxG.height - (FlxG.height-img_height+70)/2,210,50);
+            exit = new FlxRect(200,FlxG.height - (FlxG.height-img_height+70)/2,210,50);
 
             player = new Player(220, 280);
             add(player);
@@ -52,8 +52,11 @@ package{
             player_rect.y = player.y;
             FlxG.collide();
             if (player_rect.overlaps(door)){
-                FlxG.switchState(new IkuTurso());
+                FlxG.switchState(new Fern());
             }
+            //if (player_rect.overlaps(exit)){
+            //    FlxG.switchState(new Fern());
+            //}
             //TODO build an exit
 
             timeFrame++;

@@ -49,7 +49,7 @@ package{
             player_rect.y = player.y;
             FlxG.collide();
             if (player_rect.overlaps(door)){
-                FlxG.switchState(new IkuTurso());
+                FlxG.switchState(new Fern());
             }
             //TODO build an exit
 
