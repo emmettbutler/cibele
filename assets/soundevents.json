@@ -16,4 +16,21 @@
 			}
 		]
 	}
+	"bgm_euryale": {
+		"behavior": "sequence",
+		"subevents": [
+			{
+				"file": "bgm_euryale_intro.mp3",
+				"startTime": 0,
+				"loop": false,
+				"bpm": 95
+			}
+			{
+				"file": "bgm_euryale_intro.mp3",
+				"startTime": 4.421,
+				"loop": true,
+				"bpm": 95
+			}
+		]
+	}
 }
