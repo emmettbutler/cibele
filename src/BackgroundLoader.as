@@ -15,7 +15,7 @@ package {
         private var receivingMachines:Array;
         private var colliderReceivingMachines:Array;
 
-        public var macroImageName:String;
+        public var macroImageName:String, colliderName:String;
         public var tiles:Array, colliderTiles:Array;
         public var rows:Number, cols:Number;
         public var playerRef:Player;
@@ -25,12 +25,17 @@ package {
 
         public var dbgText:FlxText;
 
-        public function BackgroundLoader(macroImageName:String, rows:Number, cols:Number) {
+        public function BackgroundLoader(macroImageName:String, rows:Number, cols:Number, colliderName:String=null) {
+            if (colliderName == null) {
+                this.colliderName = macroImageName;
+            } else {
+                this.colliderName = colliderName;
+            }
             this.macroImageName = macroImageName;
             this.rows = rows;
             this.cols = cols;
-            this.estTileWidth = 1433;
-            this.estTileHeight = 820;
+            this.estTileWidth = 1360;
+            this.estTileHeight = 819;
             this.adjacentCoords = new Array();
             this.receivingMachines = new Array();
             this.colliderReceivingMachines = new Array();
@@ -107,7 +112,13 @@ package {
             return tile;
         }
 
-        public function loadTile(row:Number, col:Number, arr:Array=null, machines:Array=null, suffix:String=""):void {
+        public function loadTile(row:Number, col:Number, arr:Array=null,
+                                 machines:Array=null, imgName:String=null,
+                                 isCollider:Boolean=false):void
+        {
+            if (imgName == null) {
+                imgName = this.macroImageName;
+            }
             if (arr == null) {
                 arr = this.tiles;
             }
@@ -125,8 +136,9 @@ package {
                 tile.hasStartedLoad = true;
 
                 receivingMachine.contentLoaderInfo.addEventListener(Event.COMPLETE,
-                    this.buildLoadCompleteCallback(tile, receivingMachine, suffix == "_collide" ? 8 : 1));
-                var path:String = "../assets/test_tiles/" + macroImageName + "_" + numberString + suffix + ".png";
+                    this.buildLoadCompleteCallback(tile, receivingMachine,
+                                                   isCollider ? 8.65 : 1));
+                var path:String = "../assets/test_tiles/" + imgName + "_" + numberString + ".png";
                 var req:URLRequest = new URLRequest(path);
                 receivingMachine.load(req);
             }
@@ -189,11 +201,11 @@ package {
                 col = adjacentCoords[i][1];
                 // load background tiles
                 if (!this.tileHasLoaded(row, col)) {
-                    this.loadTile(row, col);
+                    this.loadTile(row, col, null, null, "", this.macroImageName);
                 }
                 // load tile colliders
                 if (!this.tileHasLoaded(row, col, this.colliderTiles)) {
-                    this.loadTile(row, col, this.colliderTiles, this.colliderReceivingMachines, "_collide");
+                    this.loadTile(row, col, this.colliderTiles, this.colliderReceivingMachines, this.colliderName, true);
                 } else if (this.isColliding(row, col)) {
                     contact = true;
                 }
