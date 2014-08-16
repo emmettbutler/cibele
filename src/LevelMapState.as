@@ -8,11 +8,11 @@ package {
         public var zoomcam:ZoomCamera;
 
         override public function create():void {
-            FlxG.bgColor = 0xff000000;
+            FlxG.bgColor = 0xffffffff;
 
             player = new Player(4600, 7565);
             this.add(player.mapHitbox)
-            this.bgLoader = new BackgroundLoader("full-map-iggo-turso", 10, 5, "Map");
+            this.bgLoader = new BackgroundLoader("full-map-iggo-turso", 10, 5, "paths");
             this.bgLoader.setPlayerReference(player);
 
             zoomcam = new ZoomCamera(0, 0, 640, 480);
