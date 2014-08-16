@@ -185,6 +185,7 @@ package
                         new DHPoint(Number(coords[0]), Number(coords[1])),
                         this.editorMode == MODE_EDIT);
                 } else if (prefix_.indexOf("mapnode") == 0) {
+                    coords = line[1].split("x");
                     this._mapnodes.addNode(
                         new DHPoint(Number(coords[0]), Number(coords[1])),
                         this.editorMode == MODE_EDIT);
