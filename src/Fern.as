@@ -5,9 +5,9 @@ package{
         [Embed(source="../assets/voc_ikuturso.mp3")] private var Convo:Class;
 
         public var player:Player;
-        public var ikutursodoor:FlxRect;
-        public var euryaledoor:FlxRect;
-        public var hiisidoor:FlxRect;
+        public var ikutursodoor:FlxSprite;
+        public var euryaledoor:FlxSprite;
+        public var hiisidoor:FlxSprite;
 
         override public function create():void {
             FlxG.bgColor = 0x00000000;
