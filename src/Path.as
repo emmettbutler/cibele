@@ -2,15 +2,6 @@ package
 {
     import org.flixel.*;
 
-    /*
-        Make PathNode a subclass of GenericNode (to be implemented)
-        Implement getClosestNode() in Path - take a DHPoint, return the pathnode closest to that point
-        Implement MapNodeContainer class with a getClosestNode() method
-        MapNodeContainer has a member _path which is a reference to the Path
-        getClosestNode() should return the closest node of any kind (path or non path)
-        Ichi logic is tbd - needs to know about the Path and the MapNodeContainer
-    */
-
     public class Path
     {
         public var nodes:Array;
