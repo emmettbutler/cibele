@@ -12,7 +12,7 @@ package {
 
             player = new Player(4600, 7565);
             this.add(player.mapHitbox)
-            this.bgLoader = new BackgroundLoader("Map", 10, 5);
+            this.bgLoader = new BackgroundLoader("full-map-iggo-turso", 10, 5, "Map");
             this.bgLoader.setPlayerReference(player);
 
             zoomcam = new ZoomCamera(0, 0, 640, 480);
