@@ -3,64 +3,30 @@ package{
 
     public class IkuTursoTeleportRoom extends FlxState {
         public var player:Player;
-        public var timeFrame:Number = 0;
-        public var timer:Number = 0;
-        public var debugText:FlxText;
 
         public var bg:FlxSprite;
-        public var door:FlxRect;
-        public var player_rect:FlxRect;
-        public var wall_rect_l:Wall;
-        public var bottom_wall_rect_l:Wall;
-        public var wall_rect_r:Wall;
-        public var bottom_wall_rect_r:Wall;
+        public var door:FlxSprite;
 
         public var img_height:Number = 357;
 
         override public function create():void {
-            FlxG.bgColor = 0x00000000;
-
             (new BackgroundLoader()).loadSingleTileBG("../assets/it_teleport_640_480.png");
             ScreenManager.getInstance().setupCamera(null, 1);
 
-            wall_rect_l = new Wall(0,(FlxG.height-img_height)/2,200,FlxG.height - (FlxG.height-img_height)/2);
-            add(wall_rect_l);
-            bottom_wall_rect_l = new Wall(65,FlxG.height - (FlxG.height-img_height+110)/2,200,200);
-            add(bottom_wall_rect_l);
-            wall_rect_r = new Wall(FlxG.width-200,(FlxG.height-img_height)/2,200,FlxG.height - (FlxG.height-img_height)/2);
-            add(wall_rect_r);
-            bottom_wall_rect_r = new Wall(FlxG.width-280,FlxG.height - (FlxG.height-img_height+60)/2,200,150);
-            add(bottom_wall_rect_r);
-
-            door = new FlxRect(210,50,200,100);
+            var _screen:ScreenManager = ScreenManager.getInstance();
+            door = new FlxSprite(_screen.screenWidth * .5, _screen.screenHeight * .4);
+            door.makeGraphic(20, 20, 0xffff0000);
+            add(door);
 
             player = new Player(220, 280);
             add(player);
-            player_rect = new FlxRect(player.x,player.y,player.width,player.height);
-
-            debugText = new FlxText(0,0,100,"");
-            add(debugText);
         }
 
         override public function update():void{
             super.update();
-            player_rect.x = player.x;
-            player_rect.y = player.y;
-            FlxG.collide();
-            if (player_rect.overlaps(door)){
+
+            if (player.mapHitbox.overlaps(door)){
                 FlxG.switchState(new IkuTurso());
-            }
-            //TODO build an exit
-
-            timeFrame++;
-            debugText.x = player.x-50;
-            debugText.y = player.y;
-
-
-            debugText.text = FlxG.height + "";
-
-            if(timeFrame%30 == 0){
-                timer++;
             }
         }
     }

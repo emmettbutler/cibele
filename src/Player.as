@@ -5,6 +5,7 @@ package{
         [Embed(source="../assets/cib_walk.png")] private var ImgCibWalk:Class;
         public var runSpeed:Number = 4;
         public var colliding:Boolean = false;
+        public var hitbox_rect:FlxRect;
         public var lastPos:DHPoint;
         public var mapHitbox:FlxSprite;
         public var hitboxOffset:DHPoint, hitboxDim:DHPoint;
@@ -23,6 +24,7 @@ package{
             this.hitboxDim = new DHPoint(40, 50);
             this.mapHitbox = new FlxSprite(x, y);
             this.mapHitbox.makeGraphic(this.hitboxDim.x, this.hitboxDim.y, 0xffff0000);
+            this.hitbox_rect = new FlxRect(this.pos.x, this.pos.y, this.mapHitbox.width, this.mapHitbox.height);
 
             this.dbgText = new FlxText(x, y, 200, "");
             this.dbgText.color = 0xffffffff;
@@ -32,6 +34,9 @@ package{
         }
 
         override public function update():void{
+            this.hitbox_rect.x = this.pos.x;
+            this.hitbox_rect.y = this.pos.y;
+
             if (FlxG.keys.LEFT || FlxG.keys.RIGHT || FlxG.keys.UP || FlxG.keys.DOWN) {
                 if(this._state != STATE_IN_ATTACK){
                     play("walk");

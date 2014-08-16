@@ -5,17 +5,9 @@ package{
         [Embed(source="../assets/voc_ikuturso.mp3")] private var Convo:Class;
 
         public var player:Player;
-        public var timeFrame:Number = 0;
-        public var timer:Number = 0;
-        public var debugText:FlxText;
-
         public var ikutursodoor:FlxRect;
         public var euryaledoor:FlxRect;
         public var hiisidoor:FlxRect;
-        public var player_rect:FlxRect;
-        public var left_wall:Wall;
-        public var right_wall:Wall;
-        public var top_wall:Wall;
 
         override public function create():void {
             FlxG.bgColor = 0x00000000;
@@ -32,23 +24,21 @@ package{
             (new BackgroundLoader()).loadSingleTileBG("../assets/fern_640_480.png");
             ScreenManager.getInstance().setupCamera(null, 1);
 
-            left_wall = new Wall(0,0,100,300);
-            add(left_wall);
-            right_wall = new Wall(FlxG.width-120,0,150,300);
-            add(right_wall);
-            top_wall = new Wall(0,0,640,130);
-            add(top_wall);
-
             player = new Player(0, 0);
             add(player);
-            player_rect = new FlxRect(player.x,player.y,player.width,player.height);
 
-            ikutursodoor = new FlxRect(160,70,30,80);
-            euryaledoor = new FlxRect(339,108,10,50);
-            hiisidoor = new FlxRect(497,105,10,50);
+            var _screen:ScreenManager = ScreenManager.getInstance();
+            ikutursodoor = new FlxSprite(_screen.screenWidth * .3, _screen.screenHeight * .5);
+            ikutursodoor.makeGraphic(20, 20, 0xffff0000);
+            add(ikutursodoor);
 
-            debugText = new FlxText(0,0,100,"TEST");
-            add(debugText);
+            euryaledoor = new FlxSprite(_screen.screenWidth * .6, _screen.screenHeight * .5);
+            euryaledoor.makeGraphic(20, 20, 0xffff0000);
+            add(euryaledoor);
+
+            hiisidoor = new FlxSprite(_screen.screenWidth * .9, _screen.screenHeight * .5);
+            hiisidoor.makeGraphic(20, 20, 0xffff0000);
+            add(hiisidoor);
         }
 
         override public function update():void{
@@ -56,26 +46,14 @@ package{
 
             SoundManager.getInstance().update();
 
-            player_rect.x = player.x;
-            player_rect.y = player.y;
-            FlxG.collide();
-            if(player_rect.overlaps(ikutursodoor)){
+            if(player.mapHitbox.overlaps(ikutursodoor)){
                 FlxG.switchState(new IkuTursoTeleportRoom());
             }
-            if(player_rect.overlaps(euryaledoor)){
+            if(player.mapHitbox.overlaps(euryaledoor)){
                 FlxG.switchState(new EuryaleTeleportRoom());
             }
-            if(player_rect.overlaps(hiisidoor)){
+            if(player.mapHitbox.overlaps(hiisidoor)){
                 FlxG.switchState(new HiisiTeleportRoom());
-            }
-
-            timeFrame++;
-            debugText.x = FlxG.mouse.x;
-            debugText.y = FlxG.mouse.y;
-            debugText.text = "X: " + FlxG.mouse.x + "Y: " + FlxG.mouse.y;
-
-            if(timeFrame%30 == 0){
-                timer++;
             }
         }
     }
