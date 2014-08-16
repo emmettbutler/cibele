@@ -6,6 +6,8 @@ package {
     import flash.ui.Keyboard;
 
     public class ScreenManager {
+        public static const DEFAULT_ASPECT:Number = 640/360;
+        public var zoomcam:ZoomCamera;
         public var screenWidth:Number, screenHeight:Number, aspect_ratio:Number;
         public var applet_dimensions:FlxPoint, letterbox_dimensions:FlxPoint, zero_point:FlxPoint;
 
@@ -32,6 +34,36 @@ package {
                                                 (screenHeight - screenHeight/aspect_ratio)/2);
             zero_point = new FlxPoint((letterbox_dimensions.x),
                                       (letterbox_dimensions.y));
+        }
+
+        public function calcFullscreenDimensions(aspect:Number=DEFAULT_ASPECT):DHPoint {
+            return new DHPoint(screenHeight * aspect, screenWidth / aspect);
+        }
+
+        public function calcFullscreenDimensionsAlt(dim:DHPoint):DHPoint {
+            var aspect:Number = dim.x / dim.y;
+            if (dim.x > dim.y) {
+                return new DHPoint(screenWidth, screenWidth / aspect);
+            } else {
+                return new DHPoint(screenHeight * aspect, screenHeight);
+            }
+        }
+
+        public function calcFullscreenScale(dim:DHPoint):DHPoint {
+            return new DHPoint(screenWidth / dim.x, screenHeight / dim.y);
+        }
+
+        public function calcFullscreenOrigin(dim:DHPoint):DHPoint {
+            return new DHPoint((screenWidth - dim.x) / 2, (screenHeight - dim.y) / 2);
+        }
+
+        public function setupCamera(player:Player, zoomFactor:Number=1.2):void {
+            zoomcam = new ZoomCamera(0, 0, screenWidth, screenHeight);
+            FlxG.resetCameras(zoomcam);
+            if (player != null) {
+                zoomcam.target = player;
+            }
+            zoomcam.targetZoom = zoomFactor;
         }
 
         public function addLetterbox():void {

@@ -25,7 +25,7 @@ package {
             videoStream.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
             var screenWidth:Number = ScreenManager.getInstance().screenWidth;
             var screenHeight:Number = ScreenManager.getInstance().screenHeight;
-            var aspectRatio:Number = 640/360;
+            var aspectRatio:Number = ScreenManager.DEFAULT_ASPECT;
 
             var dim:DHPoint = ScreenManager.getInstance().calcFullscreenDimensions();
             var origin:DHPoint = ScreenManager.getInstance().calcFullscreenOrigin(dim);
