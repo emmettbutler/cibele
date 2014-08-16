@@ -9,6 +9,7 @@ package
     {
         [Embed(source="../assets/ichi.png")] private var ImgIchi:Class;
         public var _path:Path;
+        public var _mapnodes:MapNodeContainer;
         public var _enemies:EnemyGroup;
         public var targetNode:PathNode;
         public var pathComplete:Boolean = false;
@@ -18,21 +19,23 @@ package
         public var closestEnemy:Enemy;
         public var playerRef:Player;
 
-        public static const STATE_MOVE_TO_NODE:Number = 2;
+        public static const STATE_MOVE_TO_PATH_NODE:Number = 2;
         public static const STATE_IDLE_AT_NODE:Number = 3;
         public static const STATE_AT_ENEMY:Number = 4;
         public static const STATE_MOVE_TO_ENEMY:Number = 5;
+        public static const STATE_MOVE_TO_MAP_NODE:Number = 6;
 
         public static const ATTACK_RANGE:Number = 150;
 
         {
             public static var stateMap:Dictionary = new Dictionary();
             stateMap[STATE_NULL] = "STATE_NULL";
-            stateMap[STATE_MOVE_TO_NODE] = "STATE_MOVE_TO_NODE";
+            stateMap[STATE_MOVE_TO_PATH_NODE] = "STATE_MOVE_TO_PATH_NODE";
             stateMap[STATE_IDLE_AT_NODE] = "STATE_IDLE_AT_NODE";
             stateMap[STATE_AT_ENEMY] = "STATE_AT_ENEMY";
             stateMap[STATE_IN_ATTACK] = "STATE_IN_ATTACK";
             stateMap[STATE_MOVE_TO_ENEMY] = "STATE_MOVE_TO_ENEMY";
+            stateMap[STATE_MOVE_TO_MAP_NODE] = "STATE_MOVE_TO_MAP_NODE";
         }
 
         public var dbgText:FlxText;
@@ -64,7 +67,7 @@ package
 //            this.dbgText.text = stateMap[this._state];
 
             var disp:DHPoint;
-            if (this._state == STATE_MOVE_TO_NODE) {
+            if (this._state == STATE_MOVE_TO_PATH_NODE) {
                 play("walk");
                 if (!this._path.hasNodes()) {
                     this._state = STATE_NULL;
@@ -80,6 +83,11 @@ package
                     this._state = STATE_AT_ENEMY;
                 } else if(this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
                     this._state = STATE_MOVE_TO_ENEMY;
+                }
+            } else if (this._state == STATE_MOVE_TO_MAP_NODE) {
+                play("walk");
+                if (!this._mapnodes.hasNodes()) {
+                    this._state = STATE_NULL;
                 }
             } else if (this._state == STATE_IDLE_AT_NODE) {
                 play("idle");
@@ -116,7 +124,7 @@ package
             {
                 this._state = STATE_AT_ENEMY;
             } else {
-                this._state = STATE_MOVE_TO_NODE;
+                this._state = STATE_MOVE_TO_PATH_NODE;
             }
         }
 
@@ -150,6 +158,10 @@ package
             this._path = path;
         }
 
+        public function setMapNopes(nodes:MapNodeContainer):void {
+            this._mapnodes = nodes;
+        }
+
         public function setEnemyGroupReference(_group:EnemyGroup):void {
             this._enemies = _group;
         }
@@ -157,7 +169,7 @@ package
         public function moveToNextNode():void {
             this._path.advance();
             this.targetNode = this._path.currentNode;
-            this._state = STATE_MOVE_TO_NODE;
+            this._state = STATE_MOVE_TO_PATH_NODE;
         }
 
         public function markCurrentNode():void{

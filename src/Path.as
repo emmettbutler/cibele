@@ -2,12 +2,22 @@ package
 {
     import org.flixel.*;
 
+    /*
+        Make PathNode a subclass of GenericNode (to be implemented)
+        Implement getClosestNode() in Path - take a DHPoint, return the pathnode closest to that point
+        Implement MapNodeContainer class with a getClosestNode() method
+        MapNodeContainer has a member _path which is a reference to the Path
+        getClosestNode() should return the closest node of any kind (path or non path)
+        Ichi logic is tbd - needs to know about the Path and the MapNodeContainer
+    */
+
     public class Path
     {
         public var nodes:Array;
         public var currentNode:PathNode;
         public var nodeStatusCounter:Number;
         public var complete_:Boolean = false;
+        public var currentClosestNode:PathNode;
 
         public var dbgText:FlxText;
 
@@ -69,6 +79,15 @@ package
                 complete_ = true;
             }
             return complete_;
+        }
+
+        public function getClosestNode(fl:PathFollower):PathNode{
+            for(var i:Number = 0; i < this.nodes.length; i++){
+                if(fl.pos.sub(this.nodes[i].pos)._length() < 100){
+                    this.currentClosestNode = this.nodes[i];
+                }
+            }
+            return this.currentClosestNode;
         }
     }
 }

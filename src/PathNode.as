@@ -2,16 +2,15 @@ package {
 
     import org.flixel.*;
 
-    public class PathNode extends FlxSprite
+    public class PathNode extends MapNode
     {
-        public var pos:DHPoint;
         public var next:PathNode;
         public var prev:PathNode;
         public var marked:Boolean = false;
 
         public function PathNode(pos:DHPoint)
         {
-            super(pos.x, pos.y);
+            super(pos);
             makeGraphic(10, 10, 0xff0000ff);
             this.pos = pos;
             FlxG.state.add(this);
