@@ -10,7 +10,6 @@ package{
         public var timer:Number = 0;
         public var debugText:FlxText;
 
-        public var bg:FlxSprite;
         public var ikutursodoor:FlxRect;
         public var euryaledoor:FlxRect;
         public var hiisidoor:FlxRect;
@@ -31,21 +30,8 @@ package{
                             }));
                 });
 
-            var imgDim:DHPoint = new DHPoint(640, 375);
-            var bgAspect:Number = imgDim.x / imgDim.y;
-            var dim:DHPoint = ScreenManager.getInstance().calcFullscreenDimensionsAlt(imgDim);
-            var bgScale:DHPoint = ScreenManager.getInstance().calcFullscreenScale(imgDim);
-            var origin:DHPoint = ScreenManager.getInstance().calcFullscreenOrigin(dim);
-
-            trace(origin.x + "x" + origin.y);
-            trace(dim.x + "x" + dim.y);
-            bg = new FlxSprite(origin.x, origin.y);
-            bg.loadGraphic(ImgBG, false, false, imgDim.x, imgDim.y);
-            bg.scale.x = bgScale.x;
-            bg.scale.y = bgScale.y;
-            bg.x = origin.x;
-            bg.y = origin.y;
-            add(bg);
+            (new BackgroundLoader()).loadSingleTileBG("../assets/fern_640_480.png");
+            ScreenManager.getInstance().setupCamera(null, 1);
 
             left_wall = new Wall(0,0,100,300);
             add(left_wall);
@@ -64,20 +50,12 @@ package{
 
             debugText = new FlxText(0,0,100,"TEST");
             add(debugText);
-
-            ScreenManager.getInstance().setupCamera(null, 1);
-            //FlxG.camera.setBounds(origin.x, origin.y, ScreenManager.getInstance().screenWidth,
-            //                      ScreenManager.getInstance().screenHeight);
         }
 
         override public function update():void{
             super.update();
 
             SoundManager.getInstance().update();
-
-            bg.x += 1;
-            bg.y += 1;
-            trace(bg.x + "x" + bg.y);
 
             player_rect.x = player.x;
             player_rect.y = player.y;

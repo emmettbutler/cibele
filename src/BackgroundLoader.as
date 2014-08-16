@@ -25,7 +25,9 @@ package {
 
         public var dbgText:FlxText;
 
-        public function BackgroundLoader(macroImageName:String, rows:Number, cols:Number, colliderName:String=null) {
+        public function BackgroundLoader(macroImageName:String, rows:Number,
+                                         cols:Number, colliderName:String=null)
+        {
             if (colliderName == null) {
                 this.colliderName = macroImageName;
             } else {
@@ -217,6 +219,33 @@ package {
 
         public function setPlayerReference(pl:Player):void {
             this.playerRef = pl;
+        }
+
+        public function loadSingleTileBG(path:String):void {
+            var _screen:ScreenManager = ScreenManager.getInstance();
+            var bg:FlxExtSprite = new FlxExtSprite(0, 0);
+            FlxG.state.add(bg);
+            var receivingMachine:Loader = new Loader();
+            receivingMachine.contentLoaderInfo.addEventListener(Event.COMPLETE,
+                function (event_load:Event):void {
+                    var bmp:Bitmap = new Bitmap(event_load.target.content.bitmapData);
+                    var imgDim:DHPoint = new DHPoint(bmp.width, bmp.height);
+                    var dim:DHPoint = _screen.calcFullscreenDimensionsAlt(imgDim);
+                    var origin:DHPoint = _screen.calcFullscreenOrigin(dim);
+                    var bgScale:Number = _screen.calcFullscreenScale(imgDim);
+                    var matrix:Matrix = new Matrix();
+                    matrix.scale(bgScale, bgScale);
+                    var scaledBMD:BitmapData = new BitmapData(bmp.width * bgScale,
+                                                            bmp.height * bgScale,
+                                                            true, 0x000000);
+                    scaledBMD.draw(bmp, matrix, null, null, null, true);
+                    bmp = new Bitmap(scaledBMD, PixelSnapping.NEVER, true);
+                    bg.loadExtGraphic(bmp, false, false, bmp.width, bmp.height, true);
+                    bg.x = origin.x;
+                    bg.y = origin.y;
+                }
+            );
+            receivingMachine.load(new URLRequest(path));
         }
     }
 }

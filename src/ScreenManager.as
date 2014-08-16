@@ -49,8 +49,14 @@ package {
             }
         }
 
-        public function calcFullscreenScale(dim:DHPoint):DHPoint {
-            return new DHPoint(screenWidth / dim.x, screenHeight / dim.y);
+        public function calcFullscreenScale(dim:DHPoint):Number {
+            var factor:Number;
+            if (dim.x > dim.y) {
+                factor = screenWidth / dim.x;
+            } else {
+                factor = screenHeight / dim.y;
+            }
+            return factor;
         }
 
         public function calcFullscreenOrigin(dim:DHPoint):DHPoint {
