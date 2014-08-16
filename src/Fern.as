@@ -2,7 +2,6 @@ package{
     import org.flixel.*;
 
     public class Fern extends FlxState {
-        [Embed(source="../assets/fern_640_480.png")] private var ImgBG:Class;
         [Embed(source="../assets/voc_ikuturso.mp3")] private var Convo:Class;
 
         public var player:Player;

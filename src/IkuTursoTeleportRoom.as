@@ -2,7 +2,6 @@ package{
     import org.flixel.*;
 
     public class IkuTursoTeleportRoom extends FlxState {
-        [Embed(source="../assets/it_teleport_640_480.png")] private var ImgBG:Class;
         public var player:Player;
         public var timeFrame:Number = 0;
         public var timer:Number = 0;
@@ -20,9 +19,9 @@ package{
 
         override public function create():void {
             FlxG.bgColor = 0x00000000;
-            bg = new FlxSprite(0,(FlxG.height-img_height)/2);
-            bg.loadGraphic(ImgBG,false,false,640,img_height);
-            add(bg);
+
+            (new BackgroundLoader()).loadSingleTileBG("../assets/it_teleport_640_480.png");
+            ScreenManager.getInstance().setupCamera(null, 1);
 
             wall_rect_l = new Wall(0,(FlxG.height-img_height)/2,200,FlxG.height - (FlxG.height-img_height)/2);
             add(wall_rect_l);
