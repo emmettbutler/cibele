@@ -2,6 +2,8 @@ package {
     import org.flixel.*;
 
     import flash.display.StageDisplayState;
+    import flash.events.KeyboardEvent;
+    import flash.ui.Keyboard;
 
     public class ScreenManager {
         public var screenWidth:Number, screenHeight:Number, aspect_ratio:Number;
@@ -13,6 +15,13 @@ package {
 
         public function ScreenManager() {
             FlxG.stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+
+            FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, function(e:KeyboardEvent):void {
+                if (e.keyCode == Keyboard.ESCAPE) {
+                    e.preventDefault();
+                }
+            });
+
             applet_dimensions = new FlxPoint(640/2, 480/2);
             screenWidth = FlxG.stage.fullScreenWidth;
             screenHeight = FlxG.stage.fullScreenHeight;
