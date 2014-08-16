@@ -25,6 +25,8 @@ package{
         override public function update():void{
             super.update();
 
+            SoundManager.getInstance().update();
+
             if (player.mapHitbox.overlaps(door)){
                 FlxG.switchState(new IkuTurso());
             }
