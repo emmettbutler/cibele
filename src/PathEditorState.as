@@ -60,13 +60,15 @@ package
 
             this.readIn();
 
-            //if (this._path.hasNodes()) {
-            //    this.pathWalker.moveToNextPathNode();
-            //}
+            if (this._path.hasNodes()) {
+                this.pathWalker.moveToNextPathNode();
+            }
 
+            /*
             if (this._mapnodes.hasNodes()) {
                 this.pathWalker.moveToNextNode();
             }
+            */
 
             add(pathWalker);
             add(player);
