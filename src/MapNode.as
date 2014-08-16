@@ -13,7 +13,7 @@ package {
         {
             super(pos.x, pos.y);
             this._type = TYPE_MAP;
-            makeGraphic(10, 10, 0xff0000ff);
+            makeGraphic(10, 10, 0xff00ffff);
             this.pos = pos;
             FlxG.state.add(this);
         }

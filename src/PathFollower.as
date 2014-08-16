@@ -67,7 +67,7 @@ package
             dbgText.y = this.y-20;
 
 //            this.dbgText.text = stateMap[this._state];
-
+            //TODO ichi teleport function should set state to IDLE_AT_MAP_NODE
             var disp:DHPoint;
             if (this._state == STATE_MOVE_TO_PATH_NODE) {
                 play("walk");
@@ -188,7 +188,7 @@ package
             this._path = path;
         }
 
-        public function setMapNopes(nodes:MapNodeContainer):void {
+        public function setMapNodes(nodes:MapNodeContainer):void {
             this._mapnodes = nodes;
         }
 

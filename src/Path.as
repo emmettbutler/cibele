@@ -17,6 +17,7 @@ package
         public var currentNode:PathNode;
         public var nodeStatusCounter:Number;
         public var complete_:Boolean = false;
+        public var closestNode:PathNode;
         public var currentClosestNode:PathNode;
 
         public var dbgText:FlxText;
@@ -82,8 +83,9 @@ package
         }
 
         public function getClosestNode(pos:DHPoint):PathNode{
+            currentClosestNode = this.nodes[0];
             for(var i:Number = 0; i < this.nodes.length; i++){
-                if(pos.sub(this.nodes[i].pos)._length() < 100){
+                if(pos.sub(this.nodes[i].pos)._length() < pos.sub(currentClosestNode.pos)._length()){
                     this.currentClosestNode = this.nodes[i];
                 }
             }

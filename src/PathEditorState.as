@@ -12,6 +12,7 @@ package
     {
         public var pathWalker:PathFollower;
         public var _path:Path;
+        public var _mapnodes:MapNodeContainer;
         public var enemies:EnemyGroup;
         public var mouseImg:FlxSprite;
         public var filename:String;
@@ -35,7 +36,7 @@ package
             } else {
                 this.editorMode = MODE_EDIT;
             }
-            //this.editorMode = MODE_EDIT; //turn this on in order to edit
+            this.editorMode = MODE_EDIT; //turn this on in order to edit
             //compile with -a flag if I edit or make new path
 
             pathWalker = new PathFollower(new DHPoint(player.x-10, player.y-100));
@@ -51,12 +52,19 @@ package
             pathWalker.setPath(_path);
             pathWalker.setPlayerReference(player);
 
+            _mapnodes = new MapNodeContainer(_path);
+            pathWalker.setMapNodes(_mapnodes);
+
             this.enemies = new EnemyGroup(player, pathWalker);
             pathWalker.setEnemyGroupReference(this.enemies);
 
             this.readIn();
 
-            if (this._path.hasNodes()) {
+            //if (this._path.hasNodes()) {
+            //    this.pathWalker.moveToNextPathNode();
+            //}
+
+            if (this._mapnodes.hasNodes()) {
                 this.pathWalker.moveToNextNode();
             }
 
@@ -72,7 +80,10 @@ package
 
             if (FlxG.mouse.justReleased()) {
                 if (FlxG.keys["A"]) {
-                    this._path.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
+                    this._path.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y), this.editorMode == MODE_EDIT);
+                    this.pathWalker.moveToNextPathNode();
+                } else if(FlxG.keys["S"]){
+                    this._mapnodes.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y), this.editorMode == MODE_EDIT);
                     this.pathWalker.moveToNextNode();
                 } else if (FlxG.keys["Z"]) {
                     var en:SmallEnemy = new SmallEnemy(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
@@ -121,6 +132,7 @@ package
 
             var fString:String = "";
             var curNode:PathNode = null;
+            var curMapNode:MapNode = null;
             var curEnemy:Enemy = null;
 
             var i:int;
@@ -128,6 +140,11 @@ package
             for (i = 0; i < this._path.nodes.length; i++) {
                 curNode = this._path.nodes[i];
                 fString += "pathnode " + curNode.pos.x + "x" + curNode.pos.y + "\n";
+            }
+
+            for (i = 0; i < this._mapnodes.nodes.length; i++) {
+                curMapNode = this._mapnodes.nodes[i];
+                fString += "mapnode " + curMapNode.pos.x + "x" + curMapNode.pos.y + "\n";
             }
 
             for (i = 0; i < this.enemies.length(); i++) {
@@ -165,6 +182,10 @@ package
                 if (prefix_.indexOf("pathnode") == 0) {
                     coords = line[1].split("x");
                     this._path.addNode(
+                        new DHPoint(Number(coords[0]), Number(coords[1])),
+                        this.editorMode == MODE_EDIT);
+                } else if (prefix_.indexOf("mapnode") == 0) {
+                    this._mapnodes.addNode(
                         new DHPoint(Number(coords[0]), Number(coords[1])),
                         this.editorMode == MODE_EDIT);
                 } else if (prefix_.indexOf("enemy") == 0) {
