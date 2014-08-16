@@ -113,8 +113,8 @@ package {
         }
 
         public function loadTile(row:Number, col:Number, arr:Array=null,
-                                 machines:Array=null, suffix:String="",
-                                 imgName:String=null, isCollider:Boolean=false):void
+                                 machines:Array=null, imgName:String=null,
+                                 isCollider:Boolean=false):void
         {
             if (imgName == null) {
                 imgName = this.macroImageName;
@@ -138,7 +138,7 @@ package {
                 receivingMachine.contentLoaderInfo.addEventListener(Event.COMPLETE,
                     this.buildLoadCompleteCallback(tile, receivingMachine,
                                                    isCollider ? 8.65 : 1));
-                var path:String = "../assets/test_tiles/" + imgName + "_" + numberString + suffix + ".png";
+                var path:String = "../assets/test_tiles/" + imgName + "_" + numberString + ".png";
                 var req:URLRequest = new URLRequest(path);
                 receivingMachine.load(req);
             }
@@ -205,7 +205,7 @@ package {
                 }
                 // load tile colliders
                 if (!this.tileHasLoaded(row, col, this.colliderTiles)) {
-                    this.loadTile(row, col, this.colliderTiles, this.colliderReceivingMachines, "", this.colliderName, true);
+                    this.loadTile(row, col, this.colliderTiles, this.colliderReceivingMachines, this.colliderName, true);
                 } else if (this.isColliding(row, col)) {
                     contact = true;
                 }
