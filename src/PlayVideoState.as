@@ -27,12 +27,12 @@ package {
             var screenHeight:Number = ScreenManager.getInstance().screenHeight;
             var aspectRatio:Number = 640/360;
 
-            var videoWidth:Number = screenHeight*aspectRatio;
-            var videoHeight:Number = screenWidth/aspectRatio;
+            var dim:DHPoint = ScreenManager.getInstance().calcFullscreenDimensions();
+            var origin:DHPoint = ScreenManager.getInstance().calcFullscreenOrigin(dim);
 
-            video = new Video(videoWidth, videoHeight);
-            video.x = (screenWidth - videoWidth) / 2;
-            video.y = (screenHeight - videoHeight) / 2;
+            video = new Video(dim.x, dim.y);
+            video.x = origin.x;
+            video.y = origin.y;
             video.attachNetStream(videoStream);
 
             FlxG.stage.addChild(video);

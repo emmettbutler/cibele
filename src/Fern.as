@@ -19,12 +19,9 @@ package{
         public var right_wall:Wall;
         public var top_wall:Wall;
 
-        public var img_height:Number = 357;
-
         override public function create():void {
             FlxG.bgColor = 0x00000000;
 
-            //TODO this needs to not happen if sound is already playing
             SoundManager.getInstance().playSound(Convo, 340*1000,
                 function():void {
                     FlxG.switchState(
@@ -34,8 +31,20 @@ package{
                             }));
                 });
 
-            bg = new FlxSprite(0,(480-img_height)/2);
-            bg.loadGraphic(ImgBG,false,false,640,img_height);
+            var imgDim:DHPoint = new DHPoint(640, 375);
+            var bgAspect:Number = imgDim.x / imgDim.y;
+            var dim:DHPoint = ScreenManager.getInstance().calcFullscreenDimensionsAlt(imgDim);
+            var bgScale:DHPoint = ScreenManager.getInstance().calcFullscreenScale(imgDim);
+            var origin:DHPoint = ScreenManager.getInstance().calcFullscreenOrigin(dim);
+
+            trace(origin.x + "x" + origin.y);
+            trace(dim.x + "x" + dim.y);
+            bg = new FlxSprite(origin.x, origin.y);
+            bg.loadGraphic(ImgBG, false, false, imgDim.x, imgDim.y);
+            bg.scale.x = bgScale.x;
+            bg.scale.y = bgScale.y;
+            bg.x = origin.x;
+            bg.y = origin.y;
             add(bg);
 
             left_wall = new Wall(0,0,100,300);
@@ -45,7 +54,7 @@ package{
             top_wall = new Wall(0,0,640,130);
             add(top_wall);
 
-            player = new Player(250, 280);
+            player = new Player(0, 0);
             add(player);
             player_rect = new FlxRect(player.x,player.y,player.width,player.height);
 
@@ -55,12 +64,20 @@ package{
 
             debugText = new FlxText(0,0,100,"TEST");
             add(debugText);
+
+            ScreenManager.getInstance().setupCamera(null, 1);
+            //FlxG.camera.setBounds(origin.x, origin.y, ScreenManager.getInstance().screenWidth,
+            //                      ScreenManager.getInstance().screenHeight);
         }
 
         override public function update():void{
             super.update();
 
             SoundManager.getInstance().update();
+
+            bg.x += 1;
+            bg.y += 1;
+            trace(bg.x + "x" + bg.y);
 
             player_rect.x = player.x;
             player_rect.y = player.y;

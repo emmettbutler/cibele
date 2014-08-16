@@ -15,11 +15,7 @@ package {
             this.bgLoader = new BackgroundLoader("full-map-iggo-turso", 10, 5, "paths");
             this.bgLoader.setPlayerReference(player);
 
-            zoomcam = new ZoomCamera(0, 0, ScreenManager.getInstance().screenWidth,
-                                     ScreenManager.getInstance().screenHeight);
-            FlxG.resetCameras(zoomcam);
-            zoomcam.target = player;
-            zoomcam.targetZoom = 1.2;
+            ScreenManager.getInstance().setupCamera(player);
             FlxG.camera.setBounds(0, 0, bgLoader.cols * bgLoader.estTileWidth,
                                   bgLoader.rows * bgLoader.estTileHeight);
             super.create_(player);
