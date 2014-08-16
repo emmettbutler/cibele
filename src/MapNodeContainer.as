@@ -22,7 +22,6 @@ package
         public function MapNodeContainer(p:Path) {
             this.nodes = new Array();
             this.path = p;
-            this.addNode(new DHPoint(0,0));
             this.dbgText = new FlxText(100, 250, FlxG.width, "");
             FlxG.state.add(this.dbgText);
         }
@@ -53,7 +52,7 @@ package
                     this.currentClosestNode = this.nodes[i];
                 }
             }
-            if(pos.sub(this.closestPathNode.pos)._length() <
+            if(this.closestPathNode != null && pos.sub(this.closestPathNode.pos)._length() <
                 pos.sub(this.currentClosestNode.pos)._length()){
                 return this.closestPathNode;
             } else {
