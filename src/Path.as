@@ -81,9 +81,9 @@ package
             return complete_;
         }
 
-        public function getClosestNode(fl:PathFollower):PathNode{
+        public function getClosestNode(pos:DHPoint):PathNode{
             for(var i:Number = 0; i < this.nodes.length; i++){
-                if(fl.pos.sub(this.nodes[i].pos)._length() < 100){
+                if(pos.sub(this.nodes[i].pos)._length() < 100){
                     this.currentClosestNode = this.nodes[i];
                 }
             }

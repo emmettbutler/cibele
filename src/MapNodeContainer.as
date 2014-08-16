@@ -45,15 +45,15 @@ package
             this.nodes.length = 0;
         }
 
-        public function getClosestNode(fl:PathFollower):FlxSprite {
-            this.closestPathNode = this.path.getClosestNode(fl);
+        public function getClosestNode(pos:DHPoint):MapNode {
+            this.closestPathNode = this.path.getClosestNode(pos);
             for(var i:Number = 0; i < this.nodes.length; i++){
-                if(fl.pos.sub(this.nodes[i].pos)._length() < 100){
+                if(pos.sub(this.nodes[i].pos)._length() < 100){
                     this.currentClosestNode = this.nodes[i];
                 }
             }
-            if(fl.pos.sub(this.closestPathNode.pos)._length() <
-                fl.pos.sub(this.currentClosestNode.pos)._length()){
+            if(pos.sub(this.closestPathNode.pos)._length() <
+                pos.sub(this.currentClosestNode.pos)._length()){
                 return this.closestPathNode;
             } else {
                 return this.currentClosestNode;

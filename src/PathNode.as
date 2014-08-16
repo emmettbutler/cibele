@@ -11,6 +11,7 @@ package {
         public function PathNode(pos:DHPoint)
         {
             super(pos);
+            this._type = TYPE_PATH;
             makeGraphic(10, 10, 0xff0000ff);
             this.pos = pos;
             FlxG.state.add(this);
@@ -19,7 +20,7 @@ package {
             this.prev = null;
         }
 
-        public function mark():void{
+        override public function mark():void{
             marked = true;
         }
 

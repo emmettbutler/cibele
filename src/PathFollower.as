@@ -11,7 +11,7 @@ package
         public var _path:Path;
         public var _mapnodes:MapNodeContainer;
         public var _enemies:EnemyGroup;
-        public var targetNode:PathNode;
+        public var targetNode:MapNode;
         public var pathComplete:Boolean = false;
 
         public var runSpeed:Number = 8;
@@ -20,10 +20,11 @@ package
         public var playerRef:Player;
 
         public static const STATE_MOVE_TO_PATH_NODE:Number = 2;
-        public static const STATE_IDLE_AT_NODE:Number = 3;
+        public static const STATE_IDLE_AT_PATH_NODE:Number = 3;
         public static const STATE_AT_ENEMY:Number = 4;
         public static const STATE_MOVE_TO_ENEMY:Number = 5;
         public static const STATE_MOVE_TO_MAP_NODE:Number = 6;
+        public static const STATE_IDLE_AT_MAP_NODE:Number = 7;
 
         public static const ATTACK_RANGE:Number = 150;
 
@@ -31,11 +32,12 @@ package
             public static var stateMap:Dictionary = new Dictionary();
             stateMap[STATE_NULL] = "STATE_NULL";
             stateMap[STATE_MOVE_TO_PATH_NODE] = "STATE_MOVE_TO_PATH_NODE";
-            stateMap[STATE_IDLE_AT_NODE] = "STATE_IDLE_AT_NODE";
+            stateMap[STATE_IDLE_AT_PATH_NODE] = "STATE_IDLE_AT_PATH_NODE";
             stateMap[STATE_AT_ENEMY] = "STATE_AT_ENEMY";
             stateMap[STATE_IN_ATTACK] = "STATE_IN_ATTACK";
             stateMap[STATE_MOVE_TO_ENEMY] = "STATE_MOVE_TO_ENEMY";
             stateMap[STATE_MOVE_TO_MAP_NODE] = "STATE_MOVE_TO_MAP_NODE";
+            stateMap[STATE_IDLE_AT_MAP_NODE] = "STATE_IDLE_AT_MAP_NODE";
         }
 
         public var dbgText:FlxText;
@@ -74,7 +76,7 @@ package
                 } else {
                     disp = this.targetNode.pos.sub(this.pos);
                     if (disp._length() < 10) {
-                        this._state = STATE_IDLE_AT_NODE;
+                        this._state = STATE_IDLE_AT_PATH_NODE;
                     } else {
                         this.dir = disp.normalized().mulScl(this.runSpeed);
                     }
@@ -88,10 +90,38 @@ package
                 play("walk");
                 if (!this._mapnodes.hasNodes()) {
                     this._state = STATE_NULL;
+                } else {
+                    disp = this.targetNode.pos.sub(this.pos);
+                    if (disp._length() < 10) {
+                        if(this.targetNode._type == MapNode.TYPE_PATH){
+                            this._state = STATE_IDLE_AT_PATH_NODE;
+                        } else if(this.targetNode._type == MapNode.TYPE_MAP){
+                            this._state = STATE_IDLE_AT_MAP_NODE;
+                        }
+
+                    } else {
+                        this.dir = disp.normalized().mulScl(this.runSpeed);
+                    }
                 }
-            } else if (this._state == STATE_IDLE_AT_NODE) {
+                if (this.enemyIsInAttackRange(this.closestEnemy)) {
+                    this._state = STATE_AT_ENEMY;
+                } else if(this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
+                    this._state = STATE_MOVE_TO_ENEMY;
+                }
+            } else if (this._state == STATE_IDLE_AT_PATH_NODE) {
                 play("idle");
                 this.markCurrentNode();
+                if(this.playerIsInMovementRange(playerRef)){
+                    this.moveToNextPathNode();
+                }
+                if (this.enemyIsInAttackRange(this.closestEnemy)) {
+                    this._state = STATE_AT_ENEMY;
+                } else if(this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
+                    this._state = STATE_MOVE_TO_ENEMY;
+                }
+                this.dir = ZERO_POINT;
+            } else if (this._state == STATE_IDLE_AT_MAP_NODE) {
+                play("idle");
                 if(this.playerIsInMovementRange(playerRef)){
                     this.moveToNextNode();
                 }
@@ -166,10 +196,19 @@ package
             this._enemies = _group;
         }
 
-        public function moveToNextNode():void {
+        public function moveToNextPathNode():void {
             this._path.advance();
             this.targetNode = this._path.currentNode;
             this._state = STATE_MOVE_TO_PATH_NODE;
+        }
+
+        public function moveToNextNode():void {
+            this.targetNode = this._mapnodes.getClosestNode(this.pos);
+            if(this.targetNode._type == MapNode.TYPE_PATH) {
+                this._state = STATE_MOVE_TO_PATH_NODE;
+            } else if(this.targetNode._type == MapNode.TYPE_MAP) {
+                this._state = STATE_MOVE_TO_MAP_NODE;
+            }
         }
 
         public function markCurrentNode():void{
