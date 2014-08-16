@@ -25,8 +25,8 @@ package {
 
         public var dbgText:FlxText;
 
-        public function BackgroundLoader(macroImageName:String, rows:Number,
-                                         cols:Number, colliderName:String=null)
+        public function BackgroundLoader(macroImageName:String="", rows:Number=0,
+                                         cols:Number=0, colliderName:String=null)
         {
             if (colliderName == null) {
                 this.colliderName = macroImageName;
