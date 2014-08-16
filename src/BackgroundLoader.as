@@ -201,7 +201,7 @@ package {
                 col = adjacentCoords[i][1];
                 // load background tiles
                 if (!this.tileHasLoaded(row, col)) {
-                    this.loadTile(row, col, null, null, "", this.macroImageName);
+                    this.loadTile(row, col, null, null, this.macroImageName);
                 }
                 // load tile colliders
                 if (!this.tileHasLoaded(row, col, this.colliderTiles)) {
