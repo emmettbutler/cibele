@@ -72,6 +72,9 @@ package
 
             add(pathWalker);
             add(player);
+
+            add(player.debugText);
+            add(pathWalker.debugText);
         }
 
         override public function update():void {

@@ -41,8 +41,6 @@ package
             stateMap[STATE_IDLE_AT_MAP_NODE] = "STATE_IDLE_AT_MAP_NODE";
         }
 
-        public var dbgText:FlxText;
-
         public function PathFollower(pos:DHPoint) {
             super(pos);
             loadGraphic(ImgIchi, true, false, 72, 126);

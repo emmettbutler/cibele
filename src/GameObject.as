@@ -8,6 +8,7 @@ package
         public var bornTime:Number = -1;
         public var timeAlive:Number = -1;
         public var currentTime:Number = -1;
+        public var debugText:FlxText;
         {
             public static var ZERO_POINT:DHPoint = new DHPoint(0, 0);
         }
@@ -24,6 +25,7 @@ package
             this.bornTime = new Date().valueOf();
             this.timeAlive = 0;
             this.dir = new DHPoint(0, 0);
+            this.debugText = new FlxText(0, 0, 400, "");
         }
 
         override public function update():void {
@@ -33,6 +35,9 @@ package
             this.pos.x = this.x;
             this.pos.y = this.y;
             this.setPos(this.pos.add(this.dir));
+
+            this.debugText.x = this.pos.x;
+            this.debugText.y = this.pos.y;
         }
 
         public function setPos(pos:DHPoint):void {

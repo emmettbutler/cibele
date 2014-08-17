@@ -13,7 +13,6 @@ package
         public static const STATE_DAMAGED:Number = 2;
         public static const STATE_TRACKING:Number = 3;
         public static const STATE_RECOIL:Number = 4;
-        public var debugText:FlxText;
         public var dead:Boolean = false;
 
         public var player:Player;
@@ -36,9 +35,6 @@ package
             super(pos);
             this._state = STATE_IDLE;
             loadGraphic(ImgIT1,false,false,151,104);
-            debugText = new FlxText(pos.x, pos.y, 100, "");
-            debugText.color = 0xff0000ff;
-            FlxG.state.add(debugText);
             disp = new DHPoint(0, 0);
             followerDisp = new DHPoint(0, 0);
         }
@@ -57,7 +53,6 @@ package
             this.hitpoints -= damage;
             if(this.hitpoints < 0){
                 FlxG.state.remove(this);
-                FlxG.state.remove(this.debugText);
                 this.dead = true;
                 this.destroy();
             }
@@ -80,12 +75,7 @@ package
                 this.attackerDisp = this.attacker.pos.sub(this.pos);
             }
 
-            debugText.x = pos.x;
-            debugText.y = pos.y-10;
             var str:String = stateMap[this._state] + "\n" + hitpoints;
-            if (str != null) {
-                //debugText.text = str;
-            }
 
             if (this._state == STATE_IDLE) {
                 if (this.playerDisp._length() < 308 &&
