@@ -225,6 +225,14 @@ package
             return pl.pos.sub(this.pos)._length() < 300;
         }
 
+        public function inViewOfPlayer(pl:Player):Boolean {
+            if (pl.pos.sub(this.pos)._length() > ScreenManager.getInstance().screenWidth) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
         override public function attack():void {
             super.attack();
             if (this._state == STATE_IN_ATTACK) {

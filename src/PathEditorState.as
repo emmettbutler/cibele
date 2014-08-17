@@ -102,6 +102,7 @@ package
                 this.writeOut();
             } else if (FlxG.keys.justReleased("C")) {
                 this._path.clearPath();
+                this._mapnodes.clearNodes();
             }
 
             this.enemies.update();

@@ -27,7 +27,7 @@ package
             return this.nodes.length != 0;
         }
 
-        public function clearPath():void {
+        public function clearNodes():void {
             for (var i:int = 0; i < this.nodes.length; i++) {
                 FlxG.state.remove(this.nodes[i]);
                 this.nodes[i].destroy();
