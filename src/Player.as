@@ -45,10 +45,16 @@ package{
                     if(FlxG.keys.LEFT) {
                         this.dir.x = -1 * runSpeed;
                         this.scale.x = 1;
+                        this.offset.x = 63;
+                        this.hitboxOffset.x = -13;
+                        this.footstepOffset.x = 2;
                     }
                     if(FlxG.keys.RIGHT){
                         this.dir.x = runSpeed;
                         this.scale.x = -1;
+                        this.offset.x = 0;
+                        this.hitboxOffset.x = 20;
+                        this.footstepOffset.x = 20;
                     }
                 } else {
                     this.dir.x = 0;
