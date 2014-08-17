@@ -14,6 +14,7 @@ package
         public var _path:Path;
         public var _mapnodes:MapNodeContainer;
         public var enemies:EnemyGroup;
+        public var showNodes:Boolean;
         public var mouseImg:FlxSprite;
         public var filename:String;
         public var dataFile:File, backupFile:File, writeFile:File;
@@ -33,9 +34,12 @@ package
 
             if (!this.writeFile.exists) {
                 this.editorMode = MODE_READONLY;
+                this.showNodes = false;
             } else {
                 this.editorMode = MODE_EDIT;
+                this.showNodes = true;
             }
+            this.showNodes = true;
             //this.editorMode = MODE_EDIT; //turn this on in order to edit
             //compile with -a flag if I edit or make new path
 
@@ -85,10 +89,10 @@ package
 
             if (FlxG.mouse.justReleased()) {
                 if (FlxG.keys["A"]) {
-                    this._path.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y), this.editorMode == MODE_EDIT);
+                    this._path.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y), this.showNodes);
                     this.pathWalker.moveToNextPathNode();
                 } else if(FlxG.keys["S"]){
-                    this._mapnodes.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y), this.editorMode == MODE_EDIT);
+                    this._mapnodes.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y), this.showNodes);
                     this.pathWalker.moveToNextNode();
                 } else if (FlxG.keys["Z"]) {
                     var en:SmallEnemy = new SmallEnemy(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
@@ -189,12 +193,12 @@ package
                     coords = line[1].split("x");
                     this._path.addNode(
                         new DHPoint(Number(coords[0]), Number(coords[1])),
-                        this.editorMode == MODE_EDIT);
+                        this.showNodes);
                 } else if (prefix_.indexOf("mapnode") == 0) {
                     coords = line[1].split("x");
                     this._mapnodes.addNode(
                         new DHPoint(Number(coords[0]), Number(coords[1])),
-                        this.editorMode == MODE_EDIT);
+                        this.showNodes);
                 } else if (prefix_.indexOf("enemy") == 0) {
                     coords = line[1].split("x");
                     var en:SmallEnemy = new SmallEnemy(
