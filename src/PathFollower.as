@@ -76,7 +76,6 @@ package
             }
 
 //            this.dbgText.text = stateMap[this._state];
-            //TODO ichi teleport function should set state to IDLE_AT_MAP_NODE
             var disp:DHPoint;
             if (this._state == STATE_MOVE_TO_PATH_NODE) {
                 play("walk");
@@ -237,6 +236,13 @@ package
         public function inViewOfPlayer(pl:Player):Boolean {
             return !(pl.pos.sub(this.pos)._length() >
                     ScreenManager.getInstance().screenWidth / 2 + 100);
+        }
+
+        public function moveToMapNode():void {
+            //find map node nearest to the player
+            //in the direction that she is facing
+            //right outside of her screen view
+            _state = IDLE_AT_MAP_NODE;
         }
 
         override public function attack():void {
