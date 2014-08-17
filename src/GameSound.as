@@ -27,13 +27,17 @@ package
             }
 
             soundObject = new FlxSound();
-            soundObject.loadEmbedded(embeddedSound, true);
+            soundObject.loadEmbedded(embeddedSound, false);
             soundObject.play();
         }
 
         public function update():void {
             this.currentTime = new Date().valueOf();
             this.timeAlive = this.currentTime - this.bornTime;
+
+            if (this.timeAlive % 4 == 0) {
+                //trace(this.timeAlive);
+            }
 
             if(this.timeAlive >= totalSeconds && !callbackLock){
                 callbackLock = true;
