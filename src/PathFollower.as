@@ -11,7 +11,7 @@ package
         public var _path:Path;
         public var _mapnodes:MapNodeContainer;
         public var _enemies:EnemyGroup;
-        public var targetNode:MapNode;
+        public var targetPathNode:PathNode, targetMapNode:MapNode;
         public var pathComplete:Boolean = false;
         public var lastInViewTime:Number = 0;
 
@@ -48,12 +48,8 @@ package
             addAnimation("walk",[0],7,false);
             addAnimation("attack",[0,1],7,true);
             play("walk");
-            this.targetNode = null;
+            this.targetPathNode = null;
             this._state = STATE_NULL;
-
-            this.dbgText = new FlxText(100, 100, 100, "");
-            this.dbgText.color = 0xff000000;
-            FlxG.state.add(this.dbgText);
 
             this.footstepOffset = new DHPoint(0, 0);
             this.attackRange = 90;
@@ -61,26 +57,24 @@ package
 
         override public function update():void {
             super.update();
-            this.closestEnemy = this.getClosestEnemy();
-            dbgText.x = this.x;
-            dbgText.y = this.y-20;
 
+            //this.debugText.text = stateMap[this._state];
+
+            this.closestEnemy = this.getClosestEnemy();
             if (this.inViewOfPlayer()) {
                 lastInViewTime = this.currentTime;
             }
-
-            if (this.currentTime - this.lastInViewTime >= 10) {
-                //teleport pathfollower
+            if (this.shouldWarpToPlayer()) {
+                this.warpToPlayer();
             }
 
-//            this.dbgText.text = stateMap[this._state];
             var disp:DHPoint;
             if (this._state == STATE_MOVE_TO_PATH_NODE) {
                 play("walk");
                 if (!this._path.hasNodes()) {
                     this._state = STATE_NULL;
                 } else {
-                    disp = this.targetNode.pos.sub(this.pos);
+                    disp = this.targetPathNode.pos.sub(this.pos);
                     if (disp._length() < 10) {
                         this._state = STATE_IDLE_AT_PATH_NODE;
                     } else {
@@ -97,14 +91,13 @@ package
                 if (!this._mapnodes.hasNodes()) {
                     this._state = STATE_NULL;
                 } else {
-                    disp = this.targetNode.pos.sub(this.pos);
+                    disp = this.targetMapNode.pos.sub(this.pos);
                     if (disp._length() < 10) {
-                        if(this.targetNode._type == MapNode.TYPE_PATH){
+                        if(this.targetMapNode._type == MapNode.TYPE_PATH){
                             this._state = STATE_IDLE_AT_PATH_NODE;
-                        } else if(this.targetNode._type == MapNode.TYPE_MAP){
+                        } else if(this.targetMapNode._type == MapNode.TYPE_MAP){
                             this._state = STATE_IDLE_AT_MAP_NODE;
                         }
-
                     } else {
                         this.dir = disp.normalized().mulScl(this.runSpeed);
                     }
@@ -117,7 +110,7 @@ package
             } else if (this._state == STATE_IDLE_AT_PATH_NODE) {
                 play("idle");
                 this.markCurrentNode();
-                if(this.playerIsInMovementRange(playerRef)){
+                if(this.playerIsInMovementRange()){
                     this.moveToNextPathNode();
                 }
                 if (this.enemyIsInAttackRange(this.closestEnemy)) {
@@ -128,14 +121,16 @@ package
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_IDLE_AT_MAP_NODE) {
                 play("idle");
-                if(this.playerIsInMovementRange(playerRef)){
+                if(this.playerIsInMovementRange()){
                     this.moveToNextNode();
                 }
+                /*
                 if (this.enemyIsInAttackRange(this.closestEnemy)) {
                     this._state = STATE_AT_ENEMY;
                 } else if(this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
+                */
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_AT_ENEMY) {
                 this.attack();
@@ -156,6 +151,7 @@ package
         }
 
         public function resolveStatePostAttack():void {
+            // TODO - which state were you in before attacking? go back to that one
             if (this.closestEnemy != null && this.enemyIsInAttackRange(this.closestEnemy))
             {
                 this._state = STATE_AT_ENEMY;
@@ -204,21 +200,24 @@ package
 
         public function moveToNextPathNode():void {
             this._path.advance();
-            this.targetNode = this._path.currentNode;
+            this.targetPathNode = this._path.currentNode;
             this._state = STATE_MOVE_TO_PATH_NODE;
         }
 
         public function moveToNextNode():void {
-            this.targetNode = this._mapnodes.getClosestNode(this.pos);
-            if(this.targetNode._type == MapNode.TYPE_PATH) {
+            this.targetMapNode = this._mapnodes.getClosestNode(this.pos, this.targetMapNode);
+            if(this.targetMapNode._type == MapNode.TYPE_PATH) {
                 this._state = STATE_MOVE_TO_PATH_NODE;
-            } else if(this.targetNode._type == MapNode.TYPE_MAP) {
+                this.targetPathNode = this.targetMapNode as PathNode;
+                this._path.setCurrentNode(this.targetPathNode);
+            } else if(this.targetMapNode._type == MapNode.TYPE_MAP) {
                 this._state = STATE_MOVE_TO_MAP_NODE;
+                this.targetMapNode = this.targetMapNode;
             }
         }
 
         public function markCurrentNode():void{
-            this.targetNode.mark();
+            this.targetPathNode.mark();
             pathComplete = _path.isPathComplete();
         }
 
@@ -226,21 +225,27 @@ package
             this.playerRef = pl;
         }
 
-        public function playerIsInMovementRange(pl:Player):Boolean {
-            if (pl == null) { return false; }
-            return pl.pos.sub(this.pos)._length() < 300;
+        public function playerIsInMovementRange():Boolean {
+            if (this.playerRef == null) { return false; }
+            return this.playerRef.pos.sub(this.pos)._length() < 300;
         }
 
-        public function inViewOfPlayer(pl:Player):Boolean {
-            return !(pl.pos.sub(this.pos)._length() >
+        public function inViewOfPlayer():Boolean {
+            return !(this.playerRef.pos.sub(this.pos)._length() >
                     ScreenManager.getInstance().screenWidth / 2 + 100);
         }
 
-        public function moveToMapNode():void {
+        public function warpToPlayer():void {
             //find map node nearest to the player
             //in the direction that she is facing
             //right outside of her screen view
-            _state = STATE_IDLE_AT_MAP_NODE;
+            var closestNodeToPlayer:MapNode = this._mapnodes.getClosestNode(this.playerRef.pos);
+            this.setPos(this.playerRef.pos);
+            this._state = STATE_IDLE_AT_MAP_NODE;
+        }
+
+        public function shouldWarpToPlayer():Boolean {
+            return this.currentTime - this.lastInViewTime >= 2;
         }
 
         override public function attack():void {

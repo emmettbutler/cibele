@@ -40,6 +40,10 @@ package
             }
         }
 
+        public function setCurrentNode(n:PathNode):void {
+            this.currentNode = n;
+        }
+
         public function hasNextNode():Boolean {
             return this.currentNode.next != null;
         }

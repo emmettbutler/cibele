@@ -35,12 +35,17 @@ package
             this.nodes.length = 0;
         }
 
-        public function getClosestNode(pos:DHPoint):MapNode {
+        public function getClosestNode(pos:DHPoint, exclude:MapNode=null):MapNode {
             this.closestPathNode = this.path.getClosestNode(pos);
             currentClosestNode = this.nodes[0];
+            var curNode:MapNode;
             for(var i:Number = 0; i < this.nodes.length; i++){
-                if(pos.sub(this.nodes[i].pos)._length() < pos.sub(currentClosestNode.pos)._length()){
-                    this.currentClosestNode = this.nodes[i];
+                curNode = this.nodes[i];
+                if(exclude != null && curNode != exclude &&
+                   pos.sub(curNode.pos)._length() <
+                   pos.sub(currentClosestNode.pos)._length())
+                {
+                    this.currentClosestNode = curNode;
                 }
             }
             if(this.closestPathNode != null && pos.sub(this.closestPathNode.pos)._length() <
