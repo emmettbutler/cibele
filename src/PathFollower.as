@@ -236,16 +236,14 @@ package
         }
 
         public function warpToPlayer():void {
-            //find map node nearest to the player
-            //in the direction that she is facing
-            //right outside of her screen view
-            var closestNodeToPlayer:MapNode = this._mapnodes.getClosestNode(this.playerRef.pos);
-            this.setPos(this.playerRef.pos);
+            var targetPoint:DHPoint = this.playerRef.pos.add(this.playerRef.dir.normalized().mulScl(555));
+            var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint);
+            this.setPos(warpNode.pos);
             this._state = STATE_IDLE_AT_MAP_NODE;
         }
 
         public function shouldWarpToPlayer():Boolean {
-            return this.currentTime - this.lastInViewTime >= 2;
+            return this.currentTime - this.lastInViewTime >= 7*1000;
         }
 
         override public function attack():void {
