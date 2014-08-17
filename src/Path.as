@@ -8,13 +8,15 @@ package
         public var currentNode:PathNode;
         public var nodeStatusCounter:Number;
         public var complete_:Boolean = false;
+        public var player:Player;
         public var closestNode:PathNode;
 
         public var dbgText:FlxText;
 
-        public function Path() {
+        public function Path(player:Player) {
             this.nodes = new Array();
             this.currentNode = null;
+            this.player = player;
 
             this.dbgText = new FlxText(100, 250, FlxG.width, "");
             FlxG.state.add(this.dbgText);
@@ -59,6 +61,12 @@ package
             }
             this.currentNode = null;
             this.nodes.length = 0;
+        }
+
+        public function update():void {
+            for(var i:int = 0; i < this.nodes.length; i++) {
+                this.nodes[i].toggleActive(this.player);
+            }
         }
 
         public function isPathComplete():Boolean{

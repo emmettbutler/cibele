@@ -28,6 +28,9 @@ package
         }
 
         public function update():void {
+            for(var i:int = 0; i < this.enemies.length; i++) {
+                this.enemies[i].toggleActive(this.player);
+            }
         }
     }
 }

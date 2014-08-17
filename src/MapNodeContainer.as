@@ -6,13 +6,15 @@ package
     {
         public var nodes:Array;
         public var path:Path;
+        public var player:Player;
         public var dbgText:FlxText;
         public var closestPathNode:PathNode;
         public var currentClosestNode:MapNode;
 
-        public function MapNodeContainer(p:Path) {
+        public function MapNodeContainer(p:Path, player:Player) {
             this.nodes = new Array();
             this.path = p;
+            this.player = player;
             this.dbgText = new FlxText(100, 250, FlxG.width, "");
             FlxG.state.add(this.dbgText);
         }
@@ -33,6 +35,12 @@ package
                 this.nodes[i].destroy();
             }
             this.nodes.length = 0;
+        }
+
+        public function update():void {
+            for(var i:int = 0; i < this.nodes.length; i++) {
+                this.nodes[i].toggleActive(this.player);
+            }
         }
 
         public function getClosestNode(pos:DHPoint, exclude:MapNode=null):MapNode {

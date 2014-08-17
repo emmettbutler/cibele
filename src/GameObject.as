@@ -40,6 +40,11 @@ package
             this.debugText.y = this.pos.y;
         }
 
+        public function toggleActive(player:Player):void {
+            var disp:DHPoint = this.pos.sub(player.pos);
+            this.active = disp._length() < ScreenManager.getInstance().screenWidth/2;
+        }
+
         public function setPos(pos:DHPoint):void {
             this.pos = pos;
             this.x = pos.x;

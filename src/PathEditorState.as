@@ -51,11 +51,11 @@ package
             mouseImg.makeGraphic(5, 5, 0xffffffff);
             add(mouseImg);
 
-            _path = new Path();
+            _path = new Path(player);
             pathWalker.setPath(_path);
             pathWalker.setPlayerReference(player);
 
-            _mapnodes = new MapNodeContainer(_path);
+            _mapnodes = new MapNodeContainer(_path, player);
             pathWalker.setMapNodes(_mapnodes);
 
             this.enemies = new EnemyGroup(player, pathWalker);
@@ -66,12 +66,6 @@ package
             if (this._path.hasNodes()) {
                 this.pathWalker.moveToNextPathNode();
             }
-
-            /*
-            if (this._mapnodes.hasNodes()) {
-                this.pathWalker.moveToNextNode();
-            }
-            */
 
             add(pathWalker);
             add(player);
@@ -85,6 +79,9 @@ package
 
             mouseImg.x = FlxG.mouse.x;
             mouseImg.y = FlxG.mouse.y;
+
+            this._mapnodes.update();
+            this._path.update();
 
             if (FlxG.mouse.justReleased()) {
                 if (FlxG.keys["A"]) {
