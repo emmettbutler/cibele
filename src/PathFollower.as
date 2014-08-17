@@ -242,7 +242,7 @@ package
             //find map node nearest to the player
             //in the direction that she is facing
             //right outside of her screen view
-            _state = IDLE_AT_MAP_NODE;
+            _state = STATE_IDLE_AT_MAP_NODE;
         }
 
         override public function attack():void {
