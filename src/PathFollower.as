@@ -13,8 +13,7 @@ package
         public var _enemies:EnemyGroup;
         public var targetNode:MapNode;
         public var pathComplete:Boolean = false;
-        public var onScreen:Boolean = true;
-        public var teleportTimer = 0;
+        public var lastInViewTime:Number = 0;
 
         public var runSpeed:Number = 8;
 
@@ -68,14 +67,11 @@ package
             dbgText.x = this.x;
             dbgText.y = this.y-20;
 
-            onScreen = inViewOfPlayer();
-            if (onScreen) {
-                teleportTimer = 0;
-            } else {
-                teleportTimer++;
+            if (this.inViewOfPlayer()) {
+                lastInViewTime = this.currentTime;
             }
 
-            if (teleportTimer >= 300) {
+            if (this.currentTime - this.lastInViewTime >= 10) {
                 //teleport pathfollower
             }
 
@@ -239,11 +235,8 @@ package
         }
 
         public function inViewOfPlayer(pl:Player):Boolean {
-            if (pl.pos.sub(this.pos)._length() > ScreenManager.getInstance().screenWidth) {
-                return false;
-            } else {
-                return true;
-            }
+            return !(pl.pos.sub(this.pos)._length() >
+                    ScreenManager.getInstance().screenWidth / 2 + 100);
         }
 
         override public function attack():void {
