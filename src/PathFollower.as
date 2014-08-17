@@ -13,6 +13,8 @@ package
         public var _enemies:EnemyGroup;
         public var targetNode:MapNode;
         public var pathComplete:Boolean = false;
+        public var onScreen:Boolean = true;
+        public var teleportTimer = 0;
 
         public var runSpeed:Number = 8;
 
@@ -65,6 +67,17 @@ package
             this.closestEnemy = this.getClosestEnemy();
             dbgText.x = this.x;
             dbgText.y = this.y-20;
+
+            onScreen = inViewOfPlayer();
+            if (onScreen) {
+                teleportTimer = 0;
+            } else {
+                teleportTimer++;
+            }
+
+            if (teleportTimer >= 300) {
+                //teleport pathfollower
+            }
 
 //            this.dbgText.text = stateMap[this._state];
             //TODO ichi teleport function should set state to IDLE_AT_MAP_NODE
