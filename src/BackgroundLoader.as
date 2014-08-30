@@ -36,8 +36,8 @@ package {
             this.macroImageName = macroImageName;
             this.rows = rows;
             this.cols = cols;
-            this.estTileWidth = 1360;
-            this.estTileHeight = 819;
+            this.estTileWidth = 1359;
+            this.estTileHeight = 818;
             this.adjacentCoords = new Array();
             this.receivingMachines = new Array();
             this.colliderReceivingMachines = new Array();
