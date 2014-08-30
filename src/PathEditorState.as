@@ -67,6 +67,8 @@ package
                 this.pathWalker.moveToNextPathNode();
             }
 
+            new FPSCounter();
+
             add(pathWalker);
             add(player);
 
