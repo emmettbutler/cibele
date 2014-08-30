@@ -61,6 +61,7 @@ package {
                     colliderReceivingMachines[i][j] = new Loader();
 
                     spr = new FlxExtSprite(j * estTileWidth, i * estTileHeight);
+                    spr.active = false;
                     FlxG.state.add(spr);
                     tiles[i][j] = spr;
                     receivingMachines[i][j] = new Loader();
