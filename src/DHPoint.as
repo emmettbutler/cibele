@@ -1,6 +1,7 @@
 package
 {
     import org.flixel.*;
+    import org.flixel.plugin.photonstorm.FlxMath;
 
     public class DHPoint extends FlxPoint
     {
@@ -20,7 +21,7 @@ package
 
         public function _length():Number
         {
-            return Math.sqrt(this.x*this.x + this.y*this.y)
+            return FlxMath.sqrt(this.x*this.x + this.y*this.y)
         }
 
         public function sub(other:DHPoint):DHPoint {

@@ -17,12 +17,14 @@ package {
 
         public function ScreenManager() {
             FlxG.stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+            FlxG.stage.frameRate = 50;
 
-            FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, function(e:KeyboardEvent):void {
-                if (e.keyCode == Keyboard.ESCAPE) {
-                    e.preventDefault();
-                }
-            });
+            FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN,
+                function(e:KeyboardEvent):void {
+                    if (e.keyCode == Keyboard.ESCAPE) {
+                        e.preventDefault();
+                    }
+                });
 
             applet_dimensions = new FlxPoint(640/2, 480/2);
             screenWidth = FlxG.stage.fullScreenWidth;
@@ -30,8 +32,8 @@ package {
             FlxG.width = screenWidth;
             FlxG.height = screenHeight;
             aspect_ratio = applet_dimensions.x/applet_dimensions.y;
-            letterbox_dimensions = new FlxPoint((screenWidth - screenWidth/aspect_ratio)/2,
-                                                (screenHeight - screenHeight/aspect_ratio)/2);
+            letterbox_dimensions = new FlxPoint((screenWidth - screenWidth/aspect_ratio) / 2,
+                (screenHeight - screenHeight/aspect_ratio) / 2);
             zero_point = new FlxPoint((letterbox_dimensions.x),
                                       (letterbox_dimensions.y));
         }

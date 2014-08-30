@@ -13,6 +13,7 @@ package {
             this.scrollFactor.x = 0;
             this.scrollFactor.y = 0;
             this.size = 20;
+            this.color = 0xff0000ff;
             FlxG.state.add(this);
 
             startTime = getTimer();
