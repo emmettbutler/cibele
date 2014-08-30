@@ -89,17 +89,21 @@ package
 
             if (FlxG.mouse.justReleased()) {
                 if (FlxG.keys["A"]) {
-                    this._path.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y), this.showNodes);
+                    this._path.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y),
+                                       this.showNodes);
                     this.pathWalker.moveToNextPathNode();
                 } else if(FlxG.keys["S"]){
-                    this._mapnodes.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y), this.showNodes);
+                    this._mapnodes.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y),
+                                           this.showNodes);
                     this.pathWalker.moveToNextNode();
                 } else if (FlxG.keys["Z"]) {
-                    var en:SmallEnemy = new SmallEnemy(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
+                    var en:SmallEnemy = new SmallEnemy(new DHPoint(FlxG.mouse.x,
+                                                                   FlxG.mouse.y));
                     add(en);
                     this.enemies.addEnemy(en);
                 } else if (FlxG.keys["Q"]) {
-                    var boss:BossEnemy = new BossEnemy(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
+                    var boss:BossEnemy = new BossEnemy(new DHPoint(FlxG.mouse.x,
+                                                                   FlxG.mouse.y));
                     add(boss);
                     this.enemies.addEnemy(boss);
                 }
