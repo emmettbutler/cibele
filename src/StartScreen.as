@@ -16,7 +16,7 @@ package{
 
         public function startGame():void {
             function _innerCallback():void {
-                FlxG.switchState(new HallwayToFern());
+                FlxG.switchState(new Desktop());
             }
             FlxG.switchState(new PlayVideoState("../assets/test_video.flv",
                                                 _innerCallback));

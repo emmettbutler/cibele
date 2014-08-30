@@ -35,7 +35,7 @@ package
             if (!this.writeFile.exists) {
                 this.editorMode = MODE_READONLY;
             } else {
-                this.editorMode = MODE_EDIT;
+                //this.editorMode = MODE_EDIT;
             }
             //this.editorMode = MODE_EDIT; //turn this on in order to edit
             //compile with -a flag if I edit or make new path

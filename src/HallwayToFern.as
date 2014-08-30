@@ -27,6 +27,7 @@ package{
         }
 
         override public function create():void {
+            /*
             FlxG.bgColor = 0xff000000;
 
             var _screen:ScreenManager = ScreenManager.getInstance();
@@ -46,7 +47,18 @@ package{
 
             player = new Player(originX + 640/2, 280);
             add(player);
+*/
 
+            (new BackgroundLoader()).loadSingleTileBG("../assets/it_teleport_640_480.png");
+            ScreenManager.getInstance().setupCamera(null, 1);
+
+            var _screen:ScreenManager = ScreenManager.getInstance();
+            var debugText:FlxText = new FlxText(_screen.screenWidth * .2, _screen.screenHeight * .2,200,"placeholder for hallway\nthat player will run down\nduring this sequence");
+            add(debugText);
+            debugText.size = 12;
+
+            player = new Player(_screen.screenWidth * .5, _screen.screenHeight * .5);
+            add(player);
             if(_state == STATE_PRE_IT){
                 function _callback():void {
                     FlxG.switchState(new Fern());
@@ -57,9 +69,8 @@ package{
 
         override public function update():void{
             super.update();
-            player.runSpeed = 0;
             SoundManager.getInstance().update();
-
+/*
             if(FlxG.keys.UP){
                 bg1.y += runSpeed;
                 bg2.y += runSpeed;
@@ -85,7 +96,7 @@ package{
             }
             if(bg3.y == 0){
                 bg2.y = bg3.y-bg3.height;
-            }
+            }*/
         }
     }
 }

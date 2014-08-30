@@ -24,21 +24,21 @@ package{
             (new BackgroundLoader()).loadSingleTileBG("../assets/fern_640_480.png");
             ScreenManager.getInstance().setupCamera(null, 1);
 
-            player = new Player(0, 0);
-            add(player);
-
             var _screen:ScreenManager = ScreenManager.getInstance();
-            ikutursodoor = new FlxSprite(_screen.screenWidth * .3, _screen.screenHeight * .5);
-            ikutursodoor.makeGraphic(20, 20, 0xffff0000);
+            ikutursodoor = new FlxSprite(_screen.screenWidth * .2, _screen.screenHeight * .1);
+            //ikutursodoor.makeGraphic(200, 300, 0xffff0000);
             add(ikutursodoor);
 
-            euryaledoor = new FlxSprite(_screen.screenWidth * .6, _screen.screenHeight * .5);
-            euryaledoor.makeGraphic(20, 20, 0xffff0000);
+            euryaledoor = new FlxSprite(_screen.screenWidth * .4, _screen.screenHeight * .1);
+            //euryaledoor.makeGraphic(200, 300, 0xffff0000);
             add(euryaledoor);
 
-            hiisidoor = new FlxSprite(_screen.screenWidth * .9, _screen.screenHeight * .5);
-            hiisidoor.makeGraphic(20, 20, 0xffff0000);
+            hiisidoor = new FlxSprite(_screen.screenWidth * .7, _screen.screenHeight * .1);
+            //hiisidoor.makeGraphic(200, 300, 0xffff0000);
             add(hiisidoor);
+
+            player = new Player(_screen.screenWidth * .5, _screen.screenHeight * .5);
+            add(player);
         }
 
         override public function update():void{
@@ -49,11 +49,12 @@ package{
             if(player.mapHitbox.overlaps(ikutursodoor)){
                 FlxG.switchState(new IkuTursoTeleportRoom());
             }
+
             if(player.mapHitbox.overlaps(euryaledoor)){
-                FlxG.switchState(new EuryaleTeleportRoom());
+                FlxG.switchState(new IkuTursoTeleportRoom());
             }
             if(player.mapHitbox.overlaps(hiisidoor)){
-                FlxG.switchState(new HiisiTeleportRoom());
+                FlxG.switchState(new IkuTursoTeleportRoom());
             }
         }
     }
