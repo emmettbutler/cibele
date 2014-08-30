@@ -23,15 +23,9 @@ package{
 
         public var img_height:Number = 357;
 
-        public static const PLAY_SCREEN:Number = 0;
-        public static const CHARACTER_SELECT:Number = 1;
-
-        public var state:Number;
-
         override public function create():void {
             FlxG.bgColor = 0x00000000;
             FlxG.mouse.show();
-            state = PLAY_SCREEN;
 
             (new BackgroundLoader()).loadSingleTileBG("../assets/menuscreen.png");
             ScreenManager.getInstance().setupCamera(null, 1);
@@ -80,10 +74,6 @@ package{
                 if (mouse_rect.overlaps(quit_rect)){
                     FlxG.switchState(new Desktop());
                 }
-            }
-
-            if(state == CHARACTER_SELECT){
-
             }
 
             timeFrame++;
