@@ -4,6 +4,8 @@ package{
     public class MenuScreen extends FlxState {
         [Embed(source="../assets/login.png")] private var ImgLogin:Class;
         [Embed(source="../assets/quit.png")] private var ImgQuit:Class;
+        [Embed(source="../assets/play.png")] private var ImgPlay:Class;
+        [Embed(source="../assets/charselect.png")] private var ImgChar:Class;
         public var timeFrame:Number = 0;
         public var timer:Number = 0;
         public var debugText:FlxText;
@@ -11,28 +13,46 @@ package{
         public var bg:FlxSprite;
         public var login:FlxSprite;
         public var quit:FlxSprite;
+        public var play_game:FlxSprite;
+        public var char_select:FlxSprite;
+
+        public var play_game_rect:FlxRect;
         public var login_rect:FlxRect;
         public var quit_rect:FlxRect;
         public var mouse_rect:FlxRect;
 
         public var img_height:Number = 357;
 
+        public static const PLAY_SCREEN:Number = 0;
+        public static const CHARACTER_SELECT:Number = 1;
+
+        public var state:Number;
+
         override public function create():void {
             FlxG.bgColor = 0x00000000;
             FlxG.mouse.show();
+            state = PLAY_SCREEN;
+
             (new BackgroundLoader()).loadSingleTileBG("../assets/menuscreen.png");
             ScreenManager.getInstance().setupCamera(null, 1);
 
             var _screen:ScreenManager = ScreenManager.getInstance();
-            login = new FlxSprite(_screen.screenWidth * .45, _screen.screenHeight * .55);
-            login.loadGraphic(ImgLogin,false,false,121,17);
-            add(login);
-            login_rect = new FlxRect(login.x,login.y,login.width,login.height);
+            play_game = new FlxSprite(_screen.screenWidth * .45, _screen.screenHeight * .55);
+            play_game.loadGraphic(ImgPlay,false,false,121,17);
+            add(play_game);
+            play_game_rect = new FlxRect(play_game.x,play_game.y,play_game.width,play_game.height);
 
             quit = new FlxSprite(_screen.screenWidth * .45, _screen.screenHeight * .65);
             quit.loadGraphic(ImgQuit,false,false,121,17);
             add(quit);
             quit_rect = new FlxRect(quit.x,quit.y,quit.width,quit.height);
+
+            login = new FlxSprite(_screen.screenWidth * .45, _screen.screenHeight * .93);
+            login.loadGraphic(ImgLogin,false,false,121,17);
+            login_rect = new FlxRect(login.x,login.y,login.width,login.height);
+
+            char_select = new FlxSprite(_screen.screenWidth * .35, _screen.screenHeight * .15)
+            char_select.loadGraphic(ImgChar,false,false,400,494);
 
             mouse_rect = new FlxRect(FlxG.mouse.x,FlxG.mouse.y,1,1);
 
@@ -45,12 +65,25 @@ package{
             mouse_rect.x = FlxG.mouse.x;
             mouse_rect.y = FlxG.mouse.y;
             if(FlxG.mouse.justPressed()){
+                if(mouse_rect.overlaps(play_game_rect)){
+                    state = CHARACTER_SELECT;
+                    (new BackgroundLoader()).loadSingleTileBG("../assets/charselectbg.png");
+                    ScreenManager.getInstance().setupCamera(null, 1);
+                    play_game.kill();
+                    quit.kill();
+                    add(login);
+                    add(char_select);
+                }
                 if (mouse_rect.overlaps(login_rect)){
                     FlxG.switchState(new HallwayToFern());
                 }
                 if (mouse_rect.overlaps(quit_rect)){
                     FlxG.switchState(new Desktop());
                 }
+            }
+
+            if(state == CHARACTER_SELECT){
+
             }
 
             timeFrame++;
