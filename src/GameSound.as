@@ -15,7 +15,8 @@ package
         public static const MSEC_PER_SEC:Number = 1000;
 
         public function GameSound(embeddedSound:Class, dur:Number,
-                                  endCallback:Function=null) {
+                                  endCallback:Function=null,
+                                  _loop:Boolean=false, _vol:Number=1) {
             this.bornTime = new Date().valueOf();
             this.timeAlive = 0;
 
@@ -27,7 +28,8 @@ package
             }
 
             soundObject = new FlxSound();
-            soundObject.loadEmbedded(embeddedSound, false);
+            soundObject.loadEmbedded(embeddedSound, _loop);
+            soundObject.volume = _vol;
             soundObject.play();
         }
 
@@ -39,7 +41,9 @@ package
                 //trace(this.timeAlive);
             }
 
-            if(this.timeAlive >= totalSeconds && !callbackLock){
+            if(this.totalSeconds != 0 && this.timeAlive >= totalSeconds &&
+               !callbackLock)
+            {
                 callbackLock = true;
                 this.soundObject.stop();
                 this.endCallback();

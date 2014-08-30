@@ -12,16 +12,17 @@ package {
         }
 
         public function playSound(embeddedSound:Class, dur:Number,
-                                  endCallback:Function=null):void {
+                                  endCallback:Function=null,
+                                  _loop:Boolean=false, _vol:Number=1):void {
             if(runningSounds.length > 0){
                 for(var i:Number = 0; i < runningSounds.length; i++){
                     if(embeddedSound != runningSounds[i].embeddedSound){
-                        newSound = new GameSound(embeddedSound, dur, endCallback);
+                        newSound = new GameSound(embeddedSound, dur, endCallback, _loop, _vol);
                         this.runningSounds.push(newSound);
                     }
                 }
             } else {
-                newSound = new GameSound(embeddedSound, dur, endCallback);
+                newSound = new GameSound(embeddedSound, dur, endCallback, _loop, _vol);
                 this.runningSounds.push(newSound);
             }
         }

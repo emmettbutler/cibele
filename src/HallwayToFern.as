@@ -4,6 +4,8 @@ package{
     public class HallwayToFern extends FlxState {
         [Embed(source="../assets/pathtofern.png")] private var ImgBG:Class;
         [Embed(source="../assets/voc_firstconvo.mp3")] private var Convo1:Class;
+        [Embed(source="../assets/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
+        [Embed(source="../assets/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
 
         public var player:Player;
         public var timer:Number = 0;
@@ -64,6 +66,10 @@ package{
                     FlxG.switchState(new Fern());
                 }
                 SoundManager.getInstance().playSound(Convo1, 24000, _callback);
+                function _musicCallback():void {
+                    SoundManager.getInstance().playSound(FernBGMLoop, 0, null, true, .3);
+                }
+                SoundManager.getInstance().playSound(FernBGMIntro, 12631, _musicCallback, false, .5);
             }
         }
 
