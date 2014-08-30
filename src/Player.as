@@ -2,7 +2,7 @@ package{
     import org.flixel.*;
 
     public class Player extends PartyMember {
-        [Embed(source="../assets/cib_walk.png")] private var ImgCibWalk:Class;
+        [Embed(source="../assets/c_left_walk.png")] private var ImgCibWalk:Class;
         public var runSpeed:Number = 4;
         public var colliding:Boolean = false;
         public var hitbox_rect:FlxRect;
@@ -15,10 +15,10 @@ package{
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
 
-            loadGraphic(ImgCibWalk, true, false, 108, 132);
-            addAnimation("walk",[1],7,false);
-            addAnimation("idle",[1],7,false);
-            addAnimation("attack",[0,1],7,true);
+            loadGraphic(ImgCibWalkL, true, false, 3358/14, 250);
+            addAnimation("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], 20, false);
+            addAnimation("idle", [11], 7, false);
+            addAnimation("attack", [0, 1], 7, true);
 
             this.hitboxOffset = new DHPoint(60, 80);
             this.hitboxDim = new DHPoint(40, 50);

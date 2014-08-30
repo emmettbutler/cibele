@@ -4,7 +4,7 @@ package
     import flash.utils.Dictionary;
 
     public class Enemy extends GameObject {
-        [Embed(source="../assets/ikuturso_enemy_1.png")] private var ImgIT1:Class;
+        [Embed(source="../assets/sprite_squidbuddy.png")] private var ImgIT1:Class;
         public var enemyType:String = "enemy";
         public var hitpoints:Number = 100;
         public var damage:Number = 5;
@@ -34,7 +34,9 @@ package
         public function Enemy(pos:DHPoint) {
             super(pos);
             this._state = STATE_IDLE;
-            loadGraphic(ImgIT1,false,false,151,104);
+            loadGraphic(ImgIT1, false, false, 1755/6, 200);
+            addAnimation("run", [0, 1, 2, 3, 4, 5], 12, true);
+            play("run");
             disp = new DHPoint(0, 0);
             followerDisp = new DHPoint(0, 0);
         }
