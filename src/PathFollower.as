@@ -12,7 +12,6 @@ package
         public var _mapnodes:MapNodeContainer;
         public var _enemies:EnemyGroup;
         public var targetPathNode:PathNode, targetMapNode:MapNode;
-        public var pathComplete:Boolean = false;
         public var lastInViewTime:Number = 0;
 
         public var runSpeed:Number = 8;
@@ -124,13 +123,11 @@ package
                 if(this.playerIsInMovementRange()){
                     this.moveToNextNode();
                 }
-                /*
-                if (this.enemyIsInAttackRange(this.closestEnemy)) {
-                    this._state = STATE_AT_ENEMY;
-                } else if(this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
-                    this._state = STATE_MOVE_TO_ENEMY;
-                }
-                */
+                //if (this.enemyIsInAttackRange(this.closestEnemy)) {
+                //    this._state = STATE_AT_ENEMY;
+                //} else if(this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
+                //    this._state = STATE_MOVE_TO_ENEMY;
+                //}
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_AT_ENEMY) {
                 this.attack();
@@ -152,7 +149,8 @@ package
 
         public function resolveStatePostAttack():void {
             // TODO - which state were you in before attacking? go back to that one
-            if (this.closestEnemy != null && this.enemyIsInAttackRange(this.closestEnemy))
+            if (this.closestEnemy != null &&
+                this.enemyIsInAttackRange(this.closestEnemy))
             {
                 this._state = STATE_AT_ENEMY;
             } else {
@@ -218,7 +216,6 @@ package
 
         public function markCurrentNode():void{
             this.targetPathNode.mark();
-            pathComplete = _path.isPathComplete();
         }
 
         public function setPlayerReference(pl:Player):void {

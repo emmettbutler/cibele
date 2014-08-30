@@ -34,8 +34,10 @@ package
 
             if (!this.writeFile.exists) {
                 this.editorMode = MODE_READONLY;
+                FlxG.flashGfxSprite.mouseEnabled = false;
             } else {
-                //this.editorMode = MODE_EDIT;
+                this.editorMode = MODE_EDIT;
+                FlxG.flashGfxSprite.mouseEnabled = true;
             }
             //this.editorMode = MODE_EDIT; //turn this on in order to edit
             //compile with -a flag if I edit or make new path

@@ -8,14 +8,12 @@ package {
         public var prev:PathNode;
         public var marked:Boolean = false;
 
-        public function PathNode(pos:DHPoint)
+        public function PathNode(pos:DHPoint, addToState:Boolean=false)
         {
-            super(pos);
+            super(pos, addToState);
             this._type = TYPE_PATH;
             makeGraphic(10, 10, 0xff0000ff);
             this.pos = pos;
-            FlxG.state.add(this);
-
             this.next = null;
             this.prev = null;
         }

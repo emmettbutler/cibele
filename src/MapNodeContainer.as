@@ -20,8 +20,9 @@ package
         }
 
         public function addNode(point:DHPoint, showNodes:Boolean=false):void {
-            var node:MapNode = new MapNode(point);
+            var node:MapNode = new MapNode(point, showNodes);
             node.alpha = showNodes ? 1 : 0;
+            node.active = false;
             this.nodes.push(node);
         }
 
@@ -38,9 +39,6 @@ package
         }
 
         public function update():void {
-            for(var i:int = 0; i < this.nodes.length; i++) {
-                this.nodes[i].toggleActive(this.player);
-            }
         }
 
         public function getClosestNode(pos:DHPoint, exclude:MapNode=null):MapNode {

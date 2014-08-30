@@ -23,7 +23,7 @@ package
         }
 
         public function addNode(point:DHPoint, showNodes:Boolean=false):void {
-            var node:PathNode = new PathNode(point);
+            var node:PathNode = new PathNode(point, showNodes);
             node.next = null;
             node.alpha = showNodes ? 1 : 0;
             var prevNode:PathNode = this.nodes[this.nodes.length - 1];
@@ -31,6 +31,7 @@ package
             if (prevNode != null) {
                 prevNode.next = node;
             }
+            node.active = false;
             this.nodes.push(node);
         }
 
@@ -64,9 +65,6 @@ package
         }
 
         public function update():void {
-            for(var i:int = 0; i < this.nodes.length; i++) {
-                this.nodes[i].toggleActive(this.player);
-            }
         }
 
         public function isPathComplete():Boolean{
