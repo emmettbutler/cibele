@@ -171,12 +171,13 @@ package {
         }
 
         public function isColliding(row:int, col:int):Boolean {
-            var colliderTile:FlxExtSprite = this.getTileByIndex(row, col, this.colliderTiles);
+            var colliderTile:FlxExtSprite = this.getTileByIndex(row, col,
+                                                                this.colliderTiles);
             if (colliderTile == null) {
                 return false;
             }
-
-            return FlxCollision.pixelPerfectCheck(playerRef.mapHitbox, colliderTile);
+            return FlxCollision.pixelPerfectCheck(playerRef.mapHitbox,
+                                                  colliderTile);
         }
 
         public function update():void {
@@ -207,7 +208,9 @@ package {
                 }
                 // load tile colliders
                 if (!this.tileHasLoaded(row, col, this.colliderTiles)) {
-                    this.loadTile(row, col, this.colliderTiles, this.colliderReceivingMachines, this.colliderName, true);
+                    this.loadTile(row, col, this.colliderTiles,
+                                  this.colliderReceivingMachines,
+                                  this.colliderName, true);
                 } else if (this.isColliding(row, col)) {
                     contact = true;
                 }

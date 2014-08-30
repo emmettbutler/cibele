@@ -5,14 +5,14 @@ package {
         public var player:Player;
         public var debugText:FlxText;
         public var bgLoader:BackgroundLoader;
-        public var zoomcam:ZoomCamera;
 
         override public function create():void {
             FlxG.bgColor = 0xffffffff;
 
             player = new Player(4600, 7565);
             this.add(player.mapHitbox)
-            this.bgLoader = new BackgroundLoader("full-map-iggo-turso", 10, 5, "paths");
+            this.bgLoader = new BackgroundLoader("full-map-iggo-turso", 10, 5,
+                                                 "paths");
             this.bgLoader.setPlayerReference(player);
 
             ScreenManager.getInstance().setupCamera(player);
