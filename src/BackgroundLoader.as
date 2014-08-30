@@ -26,7 +26,8 @@ package {
         public var dbgText:FlxText;
 
         public function BackgroundLoader(macroImageName:String="", rows:Number=0,
-                                         cols:Number=0, colliderName:String=null)
+                                         cols:Number=0, colliderName:String=null,
+                                         showColliders:Boolean=false)
         {
             if (colliderName == null) {
                 this.colliderName = macroImageName;
@@ -52,13 +53,14 @@ package {
                 colliderReceivingMachines[i] = new Array();
                 for (var j:int = 0; j < this.cols; j++) {
                     colSpr = new FlxExtSprite(j * estTileWidth, i * estTileHeight);
-                    colSpr.makeGraphic(10, 10, 0x00000000);
-                    FlxG.state.add(colSpr);
+                    colSpr.active = false;
+                    if (showColliders) {
+                        FlxG.state.add(colSpr);
+                    }
                     colliderTiles[i][j] = colSpr;
                     colliderReceivingMachines[i][j] = new Loader();
 
                     spr = new FlxExtSprite(j * estTileWidth, i * estTileHeight);
-                    spr.makeGraphic(10, 10, 0x00000000);
                     FlxG.state.add(spr);
                     tiles[i][j] = spr;
                     receivingMachines[i][j] = new Loader();

@@ -12,7 +12,7 @@ package {
             player = new Player(4600, 7565);
             this.add(player.mapHitbox)
             this.bgLoader = new BackgroundLoader("full-map-iggo-turso", 10, 5,
-                                                 "paths");
+                                                 "paths", this.editorMode == PathEditorState.MODE_EDIT);
             this.bgLoader.setPlayerReference(player);
 
             ScreenManager.getInstance().setupCamera(player);
