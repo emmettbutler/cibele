@@ -22,6 +22,7 @@ package {
         public var estTileWidth:Number, estTileHeight:Number;
         public var adjacentCoords:Array;
         public var colliderScaleFactor:Number = 4;
+        public var loadPositionThreshold:DHPoint;
 
         public var dbgText:FlxText;
 
@@ -39,6 +40,11 @@ package {
             this.cols = cols;
             this.estTileWidth = 1359;
             this.estTileHeight = 818;
+            this.loadPositionThreshold = new DHPoint(
+                Math.min((ScreenManager.getInstance().screenWidth) /
+                    this.estTileWidth, .5),
+                Math.min((ScreenManager.getInstance().screenHeight) /
+                    this.estTileHeight, .5));
             this.adjacentCoords = new Array();
             this.receivingMachines = new Array();
             this.colliderReceivingMachines = new Array();
@@ -184,22 +190,42 @@ package {
         }
 
         public function update():void {
-            var playerRow:int, playerCol:int;
-            playerRow = Math.floor(this.playerRef.pos.y / this.estTileHeight);
-            playerCol = Math.floor(this.playerRef.pos.x / this.estTileWidth);
+            var playerRow:int, playerCol:int, playerRelativePos:DHPoint;
+            playerRelativePos = new DHPoint(this.playerRef.pos.x / this.estTileWidth,
+                                            this.playerRef.pos.y / this.estTileHeight);
+            playerRow = Math.floor(playerRelativePos.y);
+            playerCol = Math.floor(playerRelativePos.x);
+            playerRelativePos.x -= playerCol;
+            playerRelativePos.y -= playerRow;
 
             var numberString:String = this.getTileIndex(playerRow, playerCol);
+            var playerSpriteTileWidthPct:Number = this.playerRef.width / this.estTileWidth;
 
-            // TODO - be smart about making this list as small as possible
             adjacentCoords.push([playerRow,   playerCol]);
-            adjacentCoords.push([playerRow,   playerCol-1]);
-            adjacentCoords.push([playerRow,   playerCol+1]);
-            adjacentCoords.push([playerRow-1, playerCol]);
-            adjacentCoords.push([playerRow-1, playerCol-1]);
-            adjacentCoords.push([playerRow-1, playerCol+1]);
-            adjacentCoords.push([playerRow+1, playerCol]);
-            adjacentCoords.push([playerRow+1, playerCol-1]);
-            adjacentCoords.push([playerRow+1, playerCol+1]);
+            if (playerRelativePos.x > 1 - loadPositionThreshold.x - playerSpriteTileWidthPct) {
+                adjacentCoords.push([playerRow,   playerCol+1]);
+            }
+            if (playerRelativePos.x <= loadPositionThreshold.x) {
+                adjacentCoords.push([playerRow,   playerCol-1]);
+            }
+            if (playerRelativePos.y > 1 - loadPositionThreshold.y) {
+                adjacentCoords.push([playerRow+1, playerCol]);
+                if (playerRelativePos.x > 1 - loadPositionThreshold.x - playerSpriteTileWidthPct) {
+                    adjacentCoords.push([playerRow+1, playerCol+1]);
+                }
+                if (playerRelativePos.x <= loadPositionThreshold.x) {
+                    adjacentCoords.push([playerRow+1, playerCol-1]);
+                }
+            }
+            if (playerRelativePos.y <= loadPositionThreshold.y) {
+                adjacentCoords.push([playerRow-1, playerCol]);
+                if (playerRelativePos.x > 1 - loadPositionThreshold.x - playerSpriteTileWidthPct) {
+                    adjacentCoords.push([playerRow-1, playerCol+1]);
+                }
+                if (playerRelativePos.x <= loadPositionThreshold.x) {
+                    adjacentCoords.push([playerRow-1, playerCol-1]);
+                }
+            }
 
             var row:int, col:int, contact:Boolean;
             for (var i:int = 0; i < adjacentCoords.length; i++) {

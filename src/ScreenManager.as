@@ -29,6 +29,7 @@ package {
             applet_dimensions = new FlxPoint(640/2, 480/2);
             screenWidth = FlxG.stage.fullScreenWidth;
             screenHeight = FlxG.stage.fullScreenHeight;
+            trace("SCREEN DIMENSIONS: " + screenWidth + "x" + screenHeight);
             FlxG.width = screenWidth;
             FlxG.height = screenHeight;
             aspect_ratio = applet_dimensions.x/applet_dimensions.y;
