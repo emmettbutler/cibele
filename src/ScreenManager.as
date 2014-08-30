@@ -7,7 +7,7 @@ package {
 
     public class ScreenManager {
         public static const DEFAULT_ASPECT:Number = 640/360;
-        public var zoomcam:ZoomCamera;
+        public var cam:FlxCamera;
         public var screenWidth:Number, screenHeight:Number, aspect_ratio:Number;
         public var applet_dimensions:FlxPoint, letterbox_dimensions:FlxPoint, zero_point:FlxPoint;
 
@@ -64,12 +64,12 @@ package {
         }
 
         public function setupCamera(player:Player, zoomFactor:Number=1.2):void {
-            zoomcam = new ZoomCamera(0, 0, screenWidth, screenHeight);
-            FlxG.resetCameras(zoomcam);
+            cam = new FlxCamera(0, 0, screenWidth, screenHeight);
+            FlxG.resetCameras(cam);
             if (player != null) {
-                zoomcam.target = player;
+                cam.target = player;
             }
-            zoomcam.targetZoom = zoomFactor;
+            //zoomcam.targetZoom = zoomFactor;
         }
 
         public function addLetterbox():void {
