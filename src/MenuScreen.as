@@ -60,7 +60,6 @@ package{
             mouse_rect.y = FlxG.mouse.y;
             if(FlxG.mouse.justPressed()){
                 if(mouse_rect.overlaps(play_game_rect)){
-                    state = CHARACTER_SELECT;
                     (new BackgroundLoader()).loadSingleTileBG("../assets/charselectbg.png");
                     ScreenManager.getInstance().setupCamera(null, 1);
                     play_game.kill();
