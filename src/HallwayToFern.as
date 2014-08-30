@@ -24,6 +24,8 @@ package{
         public var _state:Number = 0;
         public var runSpeed:Number = 5;
 
+        public var messages:MessageManager;
+
         public function HallwayToFern(state:Number = 0){
             _state = state;
         }
@@ -71,6 +73,8 @@ package{
                 }
                 SoundManager.getInstance().playSound(FernBGMIntro, 12631, _musicCallback, false, .5);
             }
+
+            messages = new MessageManager();
         }
 
         override public function update():void{
