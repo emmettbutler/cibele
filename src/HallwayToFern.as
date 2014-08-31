@@ -80,6 +80,7 @@ package{
         override public function update():void{
             super.update();
             SoundManager.getInstance().update();
+            messages.update();
 /*
             if(FlxG.keys.UP){
                 bg1.y += runSpeed;
