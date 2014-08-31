@@ -26,15 +26,15 @@ package{
 
             var _screen:ScreenManager = ScreenManager.getInstance();
             ikutursodoor = new FlxSprite(_screen.screenWidth * .2, _screen.screenHeight * .1);
-            //ikutursodoor.makeGraphic(200, 300, 0xffff0000);
+            ikutursodoor.makeGraphic(200, 300, 0xffff0000);
             add(ikutursodoor);
 
             euryaledoor = new FlxSprite(_screen.screenWidth * .4, _screen.screenHeight * .1);
-            //euryaledoor.makeGraphic(200, 300, 0xffff0000);
+            euryaledoor.makeGraphic(200, 300, 0xffff0000);
             add(euryaledoor);
 
             hiisidoor = new FlxSprite(_screen.screenWidth * .7, _screen.screenHeight * .1);
-            //hiisidoor.makeGraphic(200, 300, 0xffff0000);
+            hiisidoor.makeGraphic(200, 300, 0xffff0000);
             add(hiisidoor);
 
             player = new Player(_screen.screenWidth * .5, _screen.screenHeight * .5);
