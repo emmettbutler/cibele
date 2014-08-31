@@ -5,6 +5,7 @@ package
     public class GameSound {
         public var bornTime:Number = -1;
         public var timeAlive:Number = -1;
+        public var timeRemaining:Number = -1;
         public var currentTime:Number = -1;
         public var totalSeconds:Number = 0;
         public var embeddedSound:Class;
@@ -36,6 +37,7 @@ package
         public function update():void {
             this.currentTime = new Date().valueOf();
             this.timeAlive = this.currentTime - this.bornTime;
+            this.timeRemaining = this.totalSeconds - this.timeAlive;
 
             if (this.timeAlive % 4 == 0) {
                 //trace(this.timeAlive);

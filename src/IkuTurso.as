@@ -2,6 +2,14 @@ package{
     import org.flixel.*;
 
     public class IkuTurso extends LevelMapState {
+        public var runningSound:GameSound;
+        public var bossHasAppeared:Boolean;
+
+        public function IkuTurso(runningSound:GameSound) {
+            this.runningSound = runningSound;
+            this.bossHasAppeared = false;
+        }
+
         override public function create():void {
             this.filename = "ikuturso_path.txt";
 
@@ -14,6 +22,15 @@ package{
 
         override public function update():void{
             super.update();
+            this.boss.update();
+
+            if (this.runningSound.timeRemaining < 20*1000 &&
+                !this.bossHasAppeared && FlxG.state.ID == LevelMapState.LEVEL_ID)
+            {
+                this.bossHasAppeared = true;
+                this.boss.warpToPlayer();
+                this.boss.visible = true;
+            }
         }
     }
 }

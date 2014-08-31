@@ -14,6 +14,7 @@ package
         public var _path:Path;
         public var _mapnodes:MapNodeContainer;
         public var enemies:EnemyGroup;
+        public var boss:BossEnemy;
         public var showNodes:Boolean;
         public var mouseImg:FlxSprite;
         public var filename:String;
@@ -70,6 +71,12 @@ package
             }
 
             new FPSCounter();
+
+            this.boss = new BossEnemy(new DHPoint(0, 0));
+            add(this.boss);
+            this.boss.visible = false;
+            this.boss._mapnodes = this._mapnodes;
+            this.enemies.addEnemy(this.boss);
 
             add(pathWalker);
             add(player);

@@ -8,11 +8,12 @@ package{
         public var ikutursodoor:FlxSprite;
         public var euryaledoor:FlxSprite;
         public var hiisidoor:FlxSprite;
+        public var convoSound:GameSound;
 
         override public function create():void {
             FlxG.bgColor = 0x00000000;
 
-            SoundManager.getInstance().playSound(Convo, 319632,
+            this.convoSound = SoundManager.getInstance().playSound(Convo, 319632,
                 function():void {
                     FlxG.switchState(
                         new PlayVideoState("../assets/selfie.flv",
@@ -47,14 +48,14 @@ package{
             SoundManager.getInstance().update();
 
             if(player.mapHitbox.overlaps(ikutursodoor)){
-                FlxG.switchState(new IkuTursoTeleportRoom());
+                FlxG.switchState(new IkuTursoTeleportRoom(this.convoSound));
             }
 
             if(player.mapHitbox.overlaps(euryaledoor)){
-                FlxG.switchState(new IkuTursoTeleportRoom());
+                FlxG.switchState(new IkuTursoTeleportRoom(this.convoSound));
             }
             if(player.mapHitbox.overlaps(hiisidoor)){
-                FlxG.switchState(new IkuTursoTeleportRoom());
+                FlxG.switchState(new IkuTursoTeleportRoom(this.convoSound));
             }
         }
     }

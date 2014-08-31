@@ -13,7 +13,7 @@ package {
 
         public function playSound(embeddedSound:Class, dur:Number,
                                   endCallback:Function=null,
-                                  _loop:Boolean=false, _vol:Number=1):void {
+                                  _loop:Boolean=false, _vol:Number=1):GameSound {
             if(runningSounds.length > 0){
                 for(var i:Number = 0; i < runningSounds.length; i++){
                     if(embeddedSound != runningSounds[i].embeddedSound){
@@ -25,6 +25,7 @@ package {
                 newSound = new GameSound(embeddedSound, dur, endCallback, _loop, _vol);
                 this.runningSounds.push(newSound);
             }
+            return newSound;
         }
 
         public function update():void {

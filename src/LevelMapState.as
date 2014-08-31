@@ -6,8 +6,12 @@ package {
         public var debugText:FlxText;
         public var bgLoader:BackgroundLoader;
 
+        public static const LEVEL_ID:int = 9234876592837465;
+
         override public function create():void {
             FlxG.bgColor = 0xffffffff;
+
+            this.ID = LEVEL_ID;
 
             player = new Player(4600, 7565);
             this.add(player.mapHitbox)

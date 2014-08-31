@@ -22,6 +22,7 @@ package
         private var attackerDisp:DHPoint;
         public var path_follower:PathFollower;
         public var attacker:PartyMember;
+        public var _mapnodes:MapNodeContainer;
 
         {
             public static var stateMap:Dictionary = new Dictionary();
@@ -39,6 +40,12 @@ package
             play("run");
             disp = new DHPoint(0, 0);
             followerDisp = new DHPoint(0, 0);
+        }
+
+        public function warpToPlayer():void {
+            var targetPoint:DHPoint = this.player.pos.add(this.player.dir.normalized().mulScl(1000));
+            var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint);
+            this.setPos(warpNode.pos);
         }
 
         public function setPlayerRef(p:Player):void{
@@ -71,8 +78,17 @@ package
         override public function update():void{
             super.update();
 
-            this.playerDisp = this.player.pos.sub(this.pos);
-            this.followerDisp = this.path_follower.pos.sub(this.pos);
+            if (this.player == null) {
+                this.playerDisp = new DHPoint(0, 0);
+            } else {
+                this.playerDisp = this.player.pos.sub(this.pos);
+            }
+            if (this.path_follower == null) {
+                this.followerDisp = new DHPoint(0, 0);
+            } else {
+                this.followerDisp = this.path_follower.pos.sub(this.pos);
+            }
+
             if(this.attacker != null){
                 this.attackerDisp = this.attacker.pos.sub(this.pos);
             }

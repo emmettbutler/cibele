@@ -6,8 +6,14 @@ package{
 
         public var bg:FlxSprite;
         public var door:FlxSprite;
+        public var runningSound:GameSound;
 
         public var img_height:Number = 357;
+
+        public function IkuTursoTeleportRoom(runningSound:GameSound) {
+            super();
+            this.runningSound = runningSound;
+        }
 
         override public function create():void {
             (new BackgroundLoader()).loadSingleTileBG("../assets/it_teleport_640_480.png");
@@ -28,7 +34,7 @@ package{
             SoundManager.getInstance().update();
 
             if (player.mapHitbox.overlaps(door)){
-                FlxG.switchState(new IkuTurso());
+                FlxG.switchState(new IkuTurso(this.runningSound));
             }
         }
     }

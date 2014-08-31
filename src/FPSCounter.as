@@ -25,9 +25,11 @@ package {
             framesNumber++;
             var _fps:Number = Math.floor((framesNumber / currentTime) * 10000.0) / 10000.0;
             if (currentTime > 1) {
-                this.text = " FPS: " + _fps;
-                startTime = getTimer();
-                framesNumber = 0;
+                if (this != null) {
+                    this.text = " FPS: " + _fps;
+                    startTime = getTimer();
+                    framesNumber = 0;
+                }
             }
         }
     }
