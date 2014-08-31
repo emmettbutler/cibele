@@ -34,8 +34,8 @@ package
         public function Enemy(pos:DHPoint) {
             super(pos);
             this._state = STATE_IDLE;
-            loadGraphic(ImgIT1, false, false, 150, 104);
-            addAnimation("run", [0, 1, 2, 3, 4, 5], 16, true);
+            loadGraphic(ImgIT1, false, false, 152, 104);
+            addAnimation("run", [0, 1, 2, 3, 4, 5], 12, true);
             play("run");
             disp = new DHPoint(0, 0);
             followerDisp = new DHPoint(0, 0);
