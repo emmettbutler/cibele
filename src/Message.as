@@ -5,6 +5,7 @@ package{
         public var msg_text:String;
         public var msg:FlxText;
         public var viewing:Boolean = false;
+        public var read:Boolean = false;
 
         public var send_time:Number;
         public var sent:Boolean = false;
@@ -19,6 +20,9 @@ package{
         public var exit_msg:FlxText;
         public var exit_box:FlxRect;
 
+        public var font_size:Number = 16;
+        public var font_color:uint = 0xff000000;
+
         public function Message(txt:String, sec:Number, inbox:FlxSprite) {
             inbox_ref = inbox;
             pos = new DHPoint(inbox_ref.x + 10, inbox_ref.y + 5);
@@ -28,22 +32,22 @@ package{
             send_time = sec;
 
             msg = new FlxText(pos.x, pos.y, inbox_ref.width, msg_text);
-            msg.color = 0xff000000;
-            msg.size = 16;
+            msg.color = font_color;
+            msg.size = font_size;
             FlxG.state.add(msg);
             msg.alpha = 0;
 
             list_pos = new DHPoint(pos.x, pos.y);
 
             truncated_msg = new FlxText(list_pos.x, list_pos.y, inbox_ref.width, ">> " + msg_text.slice(0,3) + "...");
-            truncated_msg.color = 0xff000000;
-            truncated_msg.size = 16;
+            truncated_msg.color = font_color;
+            truncated_msg.size = font_size;
             FlxG.state.add(truncated_msg);
             truncated_msg.alpha = 0;
 
             exit_msg = new FlxText(pos.x+inbox_ref.width-30, pos.y+5, inbox_ref.width, "X")
-            exit_msg.color = 0xff000000;
-            exit_msg.size = 16;
+            exit_msg.color = font_color;
+            exit_msg.size = font_size;
             FlxG.state.add(exit_msg);
             exit_msg.alpha = 0;
 

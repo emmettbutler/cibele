@@ -6,7 +6,7 @@ package{
         [Embed(source="../assets/inbox.png")] private var ImgInbox:Class;
         public var img_msg:FlxSprite;
         public var notifications:FlxText;
-        public var unread_num:Number = 0;
+        public var unread_count:Number = 0;
         public var notifications_pos:DHPoint;
 
         public var bornTime:Number = -1;
@@ -38,7 +38,7 @@ package{
             img_msg.loadGraphic(ImgMsg,false,false,132,28);
             FlxG.state.add(img_msg);
 
-            notifications = new FlxText(notifications_pos.x+10,notifications_pos.y+5,img_msg.width,"0 unread messages.");
+            notifications = new FlxText(notifications_pos.x+10, notifications_pos.y+5, img_msg.width, unread_count.toString() + " unread messages.");
             FlxG.state.add(notifications);
 
             inbox_pos = new DHPoint(_screen.screenWidth * .05, _screen.screenHeight * .3);
@@ -56,6 +56,12 @@ package{
             debugText.color = 0xffffffff;
 
             mouse_rect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 5, 5);
+
+            for(var i:Number = 0; i < msgs.length; i++) {
+                if(!msgs[i].read) {
+                    unread_count += 1;
+                }
+            }
         }
 
         public function update():void {
@@ -65,7 +71,7 @@ package{
             mouse_rect.y = FlxG.mouse.y;
 
             debugText.text = state.toString();
-
+            notifications.text = unread_count.toString() + " unread messages.";
 
             for(var i:Number = 0; i < msgs.length; i++) {
                 msgs[i].update();
@@ -86,10 +92,19 @@ package{
                     }
                 }
                 if(state == VIEW_MSG) {
-                    msgs[i].truncated_msg.alpha = 0;
-                    if(msgs[i].viewing){
-                        msgs[i].msg.alpha = 1;
+                    if(msgs[i] != currently_viewing){
+                        msgs[i].truncated_msg.alpha = 0;
+                        msgs[i].msg.alpha = 0;
                     }
+
+                    currently_viewing.truncated_msg.alpha = 0;
+                    currently_viewing.msg.alpha = 1;
+
+                    if(!currently_viewing.read) {
+                        currently_viewing.read = true;
+                        unread_count -= 1;
+                    }
+
                     if(FlxG.mouse.justPressed() && mouse_rect.overlaps(currently_viewing.exit_box)){
                         currently_viewing.viewing = false;
                         currently_viewing.msg.alpha = 0;
