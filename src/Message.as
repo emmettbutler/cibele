@@ -87,5 +87,34 @@ package{
             msg.alpha = 0;
             exit_msg.alpha = 0;
         }
+
+        public function sendMsg():void {
+            sent = true;
+        }
+
+        public function viewingList():void {
+            truncated_msg.alpha = 1;
+            msg.alpha = 0;
+            viewing = false;
+        }
+
+        public function hideUnviewedMsgs():void {
+            truncated_msg.alpha = 0;
+            msg.alpha = 0;
+        }
+
+        public function showCurrentlyViewedMsg():void {
+            truncated_msg.alpha = 0;
+            msg.alpha = 1;
+        }
+
+        public function markAsRead():void {
+            read = true;
+        }
+
+        public function exitCurrentlyViewedMsg():void {
+            viewing = false;
+            msg.alpha = 0;
+        }
     }
 }

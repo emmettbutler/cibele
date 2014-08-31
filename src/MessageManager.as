@@ -83,28 +83,24 @@ package{
             mouse_rect.x = FlxG.mouse.x;
             mouse_rect.y = FlxG.mouse.y;
 
-            debugText.text = state.toString();
+            debugText.text = "";
             notifications.text = unread_count.toString() + " unread messages.";
 
-            if(state == HIDE_INBOX) {
-                for(i = 0; i < msgs.length; i++) {
+            for(i = 0; i < msgs.length; i++) {
+                if(state == HIDE_INBOX) {
                     msgs[i].hideMessages();
-                }
-            } else {
-                for(i = 0; i < msgs.length; i++) {
+                } else {
                     msgs[i].update();
 
                     if(this.timeAlive > msgs[i].send_time && !msgs[i].sent) {
                         if(i != 0){
                             msgs[i].setListPos(msgs[i-1].list_pos);
                         }
-                        msgs[i].sent = true;
+                        msgs[i].sendMsg();
                     }
                     if(msgs[i].sent){
                         if(state == VIEW_LIST) {
-                            msgs[i].truncated_msg.alpha = 1;
-                            msgs[i].msg.alpha = 0;
-                            msgs[i].viewing = false;
+                            msgs[i].viewingList();
                             if(FlxG.mouse.justPressed() && mouse_rect.overlaps(msgs[i].list_hitbox)){
                                 msgs[i].viewing = true;
                                 currently_viewing = msgs[i];
@@ -113,21 +109,18 @@ package{
                         }
                         if(state == VIEW_MSG) {
                             if(msgs[i] != currently_viewing){
-                                msgs[i].truncated_msg.alpha = 0;
-                                msgs[i].msg.alpha = 0;
+                                msgs[i].hideUnviewedMsgs();
                             }
 
-                            currently_viewing.truncated_msg.alpha = 0;
-                            currently_viewing.msg.alpha = 1;
+                            currently_viewing.showCurrentlyViewedMsg();
 
                             if(!currently_viewing.read) {
-                                currently_viewing.read = true;
+                                currently_viewing.markAsRead();
                                 unread_count -= 1;
                             }
 
                             if(FlxG.mouse.justPressed() && mouse_rect.overlaps(currently_viewing.exit_box)){
-                                currently_viewing.viewing = false;
-                                currently_viewing.msg.alpha = 0;
+                                currently_viewing.exitCurrentlyViewedMsg();
                                 currently_viewing = null;
                                 state = VIEW_LIST;
                             }
