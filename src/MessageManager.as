@@ -17,8 +17,16 @@ package{
         public var inbox_pos:DHPoint;
 
         public var msgs:Array;
+        public var currently_viewing:Message;
 
         public var debugText:FlxText;
+
+        public var mouse_rect:FlxRect;
+
+        public static const HIDE_INBOX:Number = 0;
+        public static const VIEW_LIST:Number = 1;
+        public static const VIEW_MSG:Number = 2;
+        public var state:Number = VIEW_LIST;
 
         public function MessageManager() {
             this.bornTime = new Date().valueOf();
@@ -46,13 +54,18 @@ package{
             debugText = new FlxText(_screen.screenWidth * .01, _screen.screenHeight * .01, 500, "");
             FlxG.state.add(debugText);
             debugText.color = 0xffffffff;
+
+            mouse_rect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 5, 5);
         }
 
         public function update():void {
             this.currentTime = new Date().valueOf();
             this.timeAlive = this.currentTime - this.bornTime;
+            mouse_rect.x = FlxG.mouse.x;
+            mouse_rect.y = FlxG.mouse.y;
 
-            debugText.text = "cur: " + timeAlive.toString() + "\nsend_time: " + msgs[0].send_time.toString();
+            debugText.text = state.toString();
+
 
             for(var i:Number = 0; i < msgs.length; i++) {
                 msgs[i].update();
@@ -62,6 +75,27 @@ package{
                         msgs[i].setListPos(msgs[i-1].list_pos);
                     }
                     msgs[i].sent = true;
+                }
+                if(state == VIEW_LIST) {
+                    msgs[i].truncated_msg.alpha = 1;
+                    msgs[i].msg.alpha = 0;
+                    if(FlxG.mouse.justPressed() && mouse_rect.overlaps(msgs[i].list_hitbox)){
+                        msgs[i].viewing = true;
+                        currently_viewing = msgs[i];
+                        state = VIEW_MSG;
+                    }
+                }
+                if(state == VIEW_MSG) {
+                    msgs[i].truncated_msg.alpha = 0;
+                    if(msgs[i].viewing){
+                        msgs[i].msg.alpha = 1;
+                    }
+                    if(FlxG.mouse.justPressed() && mouse_rect.overlaps(currently_viewing.exit_box)){
+                        currently_viewing.viewing = false;
+                        currently_viewing.msg.alpha = 0;
+                        currently_viewing = null;
+                        state = VIEW_LIST;
+                    }
                 }
             }
             // for each message in level list

@@ -31,6 +31,7 @@ package{
         }
 
         override public function create():void {
+            FlxG.mouse.show();
             /*
             FlxG.bgColor = 0xff000000;
 
