@@ -22,6 +22,7 @@ package{
 
         public var font_size:Number = 16;
         public var font_color:uint = 0xff000000;
+        public var unread_color:uint = 0xffF584CA;
 
         public function Message(txt:String, sec:Number, inbox:FlxSprite) {
             inbox_ref = inbox;
@@ -57,13 +58,18 @@ package{
         }
 
         override public function update():void {
-            if(sent) {
+            if(sent == true) {
                 truncated_msg.alpha = 1;
             }
-            if(viewing) {
+            if(viewing == true) {
                 exit_msg.alpha = 1;
             } else {
                 exit_msg.alpha = 0;
+            }
+            if(read == true){
+                truncated_msg.color = font_color;
+            } else {
+                truncated_msg.color = unread_color;
             }
             truncated_msg.x = list_pos.x;
             truncated_msg.y = list_pos.y;
@@ -74,6 +80,12 @@ package{
 
         public function setListPos(new_pos:DHPoint):void {
             list_pos.y = new_pos.y+list_offset;
+        }
+
+        public function hideMessages():void {
+            truncated_msg.alpha = 0;
+            msg.alpha = 0;
+            exit_msg.alpha = 0;
         }
     }
 }
