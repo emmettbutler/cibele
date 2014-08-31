@@ -2,7 +2,7 @@ package{
     import org.flixel.*;
 
     public class Player extends PartyMember {
-        [Embed(source="../assets/cib_walk.png")] private var ImgCibWalk:Class;
+        [Embed(source="../assets/c_walk.png")] private var ImgCibWalk:Class;
         public var runSpeed:Number = 4;
         public var colliding:Boolean = false;
         public var hitbox_rect:FlxRect;
@@ -15,10 +15,11 @@ package{
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
 
-            loadGraphic(ImgCibWalk, true, false, 108, 132);
-            addAnimation("walk",[1],7,false);
-            addAnimation("idle",[1],7,false);
-            addAnimation("attack",[0,1],7,true);
+            loadGraphic(ImgCibWalk, true, false, 4032/28, 150);
+            addAnimation("walk_l", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], 20, false);
+            addAnimation("walk_r", [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], 20, false);
+            addAnimation("idle", [11], 7, false);
+            addAnimation("attack", [0, 1], 7, true);
 
             this.hitboxOffset = new DHPoint(60, 80);
             this.hitboxDim = new DHPoint(40, 50);
@@ -38,11 +39,9 @@ package{
             this.hitbox_rect.y = this.pos.y;
 
             if (FlxG.keys.LEFT || FlxG.keys.RIGHT || FlxG.keys.UP || FlxG.keys.DOWN) {
-                if(this._state != STATE_IN_ATTACK){
-                    play("walk");
-                }
                 if(FlxG.keys.LEFT || FlxG.keys.RIGHT) {
                     if(FlxG.keys.LEFT) {
+                        play("walk_l");
                         this.dir.x = -1 * runSpeed;
                         this.scale.x = 1;
                         this.offset.x = 63;
@@ -50,8 +49,8 @@ package{
                         this.footstepOffset.x = 2;
                     }
                     if(FlxG.keys.RIGHT){
+                        play("walk_r");
                         this.dir.x = runSpeed;
-                        this.scale.x = -1;
                         this.offset.x = 0;
                         this.hitboxOffset.x = 20;
                         this.footstepOffset.x = 20;
