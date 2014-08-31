@@ -58,19 +58,6 @@ package{
         }
 
         override public function update():void {
-            if(sent == true) {
-                truncated_msg.alpha = 1;
-            }
-            if(viewing == true) {
-                exit_msg.alpha = 1;
-            } else {
-                exit_msg.alpha = 0;
-            }
-            if(read == true){
-                truncated_msg.color = font_color;
-            } else {
-                truncated_msg.color = unread_color;
-            }
             truncated_msg.x = list_pos.x;
             truncated_msg.y = list_pos.y;
             list_hitbox.x = truncated_msg.x;
@@ -82,7 +69,7 @@ package{
             list_pos.y = new_pos.y+list_offset;
         }
 
-        public function hideMessages():void {
+        public function hideMessage():void {
             truncated_msg.alpha = 0;
             msg.alpha = 0;
             exit_msg.alpha = 0;
@@ -93,9 +80,19 @@ package{
         }
 
         public function viewingList():void {
-            truncated_msg.alpha = 1;
             msg.alpha = 0;
             viewing = false;
+            exit_msg.alpha = 0;
+
+            if(sent == true) {
+                truncated_msg.alpha = 1;
+            }
+
+            if(read == true){
+                truncated_msg.color = font_color;
+            } else {
+                truncated_msg.color = unread_color;
+            }
         }
 
         public function hideUnviewedMsgs():void {
@@ -104,8 +101,10 @@ package{
         }
 
         public function showCurrentlyViewedMsg():void {
+            viewing = true;
             truncated_msg.alpha = 0;
             msg.alpha = 1;
+            exit_msg.alpha = 1;
         }
 
         public function markAsRead():void {

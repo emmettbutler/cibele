@@ -4,6 +4,9 @@ package{
     public class MessageManager {
         [Embed(source="../assets/messages.png")] private var ImgMsg:Class;
         [Embed(source="../assets/inbox.png")] private var ImgInbox:Class;
+
+        public static var _instance:MessageManager = null;
+
         public var img_msg:FlxSprite;
         public var notifications:FlxText;
         public var unread_count:Number = 0;
@@ -29,7 +32,7 @@ package{
         public static const HIDE_INBOX:Number = 0;
         public static const VIEW_LIST:Number = 1;
         public static const VIEW_MSG:Number = 2;
-        public var state:Number = VIEW_LIST;
+        public var state:Number = HIDE_INBOX;
 
         public var i:Number = 0;
 
@@ -83,12 +86,13 @@ package{
             mouse_rect.x = FlxG.mouse.x;
             mouse_rect.y = FlxG.mouse.y;
 
-            debugText.text = "";
+            debugText.text = state.toString();
             notifications.text = unread_count.toString() + " unread messages.";
 
             for(i = 0; i < msgs.length; i++) {
                 if(state == HIDE_INBOX) {
-                    msgs[i].hideMessages();
+                    exitInbox();
+                    msgs[i].hideMessage();
                 } else {
                     msgs[i].update();
 
@@ -99,10 +103,10 @@ package{
                         msgs[i].sendMsg();
                     }
                     if(msgs[i].sent){
+                        viewingInbox();
                         if(state == VIEW_LIST) {
                             msgs[i].viewingList();
                             if(FlxG.mouse.justPressed() && mouse_rect.overlaps(msgs[i].list_hitbox)){
-                                msgs[i].viewing = true;
                                 currently_viewing = msgs[i];
                                 state = VIEW_MSG;
                             }
@@ -132,10 +136,8 @@ package{
             if(FlxG.mouse.justPressed()) {
                 if(state != HIDE_INBOX && mouse_rect.overlaps(exit_inbox_box)){
                     state = HIDE_INBOX;
-                    toggleInbox();
                 } else if(state == HIDE_INBOX && mouse_rect.overlaps(notifications_box)) {
                     state = VIEW_LIST;
-                    toggleInbox();
                 }
             }
             // for each message in level list
@@ -160,18 +162,21 @@ package{
             //this.bornTime = 0;
         }
 
-        public function toggleInbox():void {
-            if(img_inbox.alpha == 0) {
-                img_inbox.alpha = 1;
-            } else {
-                img_inbox.alpha = 0;
-            }
+        public function exitInbox():void {
+            exit_inbox.alpha = 0;
+            img_inbox.alpha = 0;
+        }
 
-            if(exit_inbox.alpha == 0) {
-                exit_inbox.alpha = 1;
-            } else {
-                exit_inbox.alpha = 0;
+        public function viewingInbox():void {
+            exit_inbox.alpha = 1;
+            img_inbox.alpha = 1;
+        }
+
+        public static function getInstance():MessageManager {
+            if (_instance == null) {
+                _instance = new MessageManager();
             }
+            return _instance;
         }
     }
 }
