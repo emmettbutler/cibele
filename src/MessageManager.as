@@ -26,10 +26,10 @@ package{
         public var _screen:ScreenManager = ScreenManager.getInstance();
         public var mouse_rect:FlxRect;
 
-        public static const HIDE_INBOX:Number = 0;
-        public static const VIEW_LIST:Number = 1;
-        public static const VIEW_MSG:Number = 2;
-        public var state:Number = HIDE_INBOX;
+        public static const STATE_HIDE_INBOX:Number = 0;
+        public static const STATE_VIEW_LIST:Number = 1;
+        public static const STATE_VIEW_MESSAGE:Number = 2;
+        public var _state:Number = STATE_HIDE_INBOX;
 
         public var i:Number = 0;
 
@@ -139,31 +139,34 @@ package{
             this.mouse_rect.x = FlxG.mouse.screenX;
             this.mouse_rect.y = FlxG.mouse.screenY;
 
-            for(i = 0; i < this.messages.length; i++) {
-                if(state == HIDE_INBOX) {
-                    exitInbox();
-                    this.messages[i].hideMessage();
-                } else {
-                    this.messages[i].update();
+            var cur_message:Message;
 
-                    if(this.timeAlive > this.messages[i].send_time && !this.messages[i].sent) {
+            for(i = 0; i < this.messages.length; i++) {
+                cur_message = this.messages[i];
+                if(this._state == STATE_HIDE_INBOX) {
+                    exitInbox();
+                    cur_message.hideMessage();
+                } else {
+                    cur_message.update();
+
+                    if(this.timeAlive > cur_message.send_time && !cur_message.sent) {
                         if(i != 0){
-                            this.messages[i].setListPos(this.messages[i-1].list_pos);
+                            cur_message.setListPos(this.messages[i-1].list_pos);
                         }
-                        this.messages[i].sendMsg();
+                        cur_message.sendMsg();
                     }
-                    if(this.messages[i].sent){
+                    if(cur_message.sent){
                         viewingInbox();
-                        if(state == VIEW_LIST) {
-                            this.messages[i].viewingList();
-                            if(FlxG.mouse.justPressed() && this.mouse_rect.overlaps(this.messages[i].list_hitbox)){
-                                currently_viewing = this.messages[i];
-                                state = VIEW_MSG;
+                        if(this._state == STATE_VIEW_LIST) {
+                            cur_message.viewingList();
+                            if(FlxG.mouse.justPressed() && this.mouse_rect.overlaps(cur_message.list_hitbox)){
+                                currently_viewing = cur_message;
+                                this._state = STATE_VIEW_MESSAGE;
                             }
                         }
-                        if(state == VIEW_MSG) {
-                            if(this.messages[i] != currently_viewing){
-                                this.messages[i].hideUnviewedmessages();
+                        if(this._state == STATE_VIEW_MESSAGE) {
+                            if(cur_message != currently_viewing){
+                                cur_message.hideUnviewedmessages();
                             }
 
                             currently_viewing.showCurrentlyViewedMsg();
@@ -176,7 +179,7 @@ package{
                             if(FlxG.mouse.justPressed() && currently_viewing != null && this.mouse_rect.overlaps(currently_viewing.exit_box)){
                                 currently_viewing.exitCurrentlyViewedMsg();
                                 currently_viewing = null;
-                                state = VIEW_LIST;
+                                this._state = STATE_VIEW_LIST;
                             }
 
                             if(FlxG.mouse.justPressed() && currently_viewing != null && this.mouse_rect.overlaps(currently_viewing.reply_to_box)){
@@ -188,10 +191,10 @@ package{
             }
 
             if(FlxG.mouse.justPressed()) {
-                if(state != HIDE_INBOX && this.mouse_rect.overlaps(this.exit_inbox_rect)){
-                    state = HIDE_INBOX;
-                } else if(state == HIDE_INBOX && this.mouse_rect.overlaps(this.notifications_box)) {
-                    state = VIEW_LIST;
+                if(this._state != STATE_HIDE_INBOX && this.mouse_rect.overlaps(this.exit_inbox_rect)){
+                    this._state = STATE_HIDE_INBOX;
+                } else if(this._state == STATE_HIDE_INBOX && this.mouse_rect.overlaps(this.notifications_box)) {
+                    this._state = STATE_VIEW_LIST;
                 }
             }
         }
