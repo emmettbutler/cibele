@@ -20,7 +20,7 @@ package{
             addAnimation("idle", [11], 7, false);
             addAnimation("attack", [0, 1], 7, true);
 
-            this.hitboxOffset = new DHPoint(60, 80);
+            this.hitboxOffset = new DHPoint(60, 100);
             this.hitboxDim = new DHPoint(40, 50);
             this.mapHitbox = new FlxSprite(x, y);
             this.mapHitbox.makeGraphic(this.hitboxDim.x, this.hitboxDim.y, 0xffff0000);
@@ -40,14 +40,14 @@ package{
                         play("walk_l");
                         this.dir.x = -1 * runSpeed;
                         this.offset.x = 63;
-                        this.hitboxOffset.x = -13;
+                        this.hitboxOffset.x = 10;
                         this.footstepOffset.x = 2;
                     }
                     if(FlxG.keys.RIGHT){
                         play("walk_r");
                         this.dir.x = runSpeed;
                         this.offset.x = 0;
-                        this.hitboxOffset.x = 20;
+                        this.hitboxOffset.x = 30;
                         this.footstepOffset.x = 20;
                     }
                 } else {
