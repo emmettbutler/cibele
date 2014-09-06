@@ -41,13 +41,6 @@ package{
             this.timeAlive = 0;
 
             this.initNotifications();
-
-            msgs = new Array(
-                new Message("did you get that link i sent you on aim last night? its an anime you might like :D", 1, img_inbox, "Rusher"),
-                new Message("hey giiiiiirl how are things? you never chat with me anymore </3", 1, img_inbox, "GuyverGuy"),
-                new Message("Cib! Wanna do a euryale run w/ me on friday?", 1, img_inbox, "Airia")
-            );
-
             this.initDebugText();
 
             for(i = 0; i < msgs.length; i++) {
@@ -82,6 +75,12 @@ package{
             exit_inbox.color = 0xff000000;
             FlxG.state.add(exit_inbox);
             exit_inbox_box = new FlxRect(exit_inbox.x, exit_inbox.y, img_inbox.width, 20);
+
+            msgs = new Array(
+                new Message("did you get that link i sent you on aim last night? its an anime you might like :D", 1, img_inbox, "Rusher"),
+                new Message("hey giiiiiirl how are things? you never chat with me anymore </3", 1, img_inbox, "GuyverGuy"),
+                new Message("Cib! Wanna do a euryale run w/ me on friday?", 1, img_inbox, "Airia")
+            );
         }
 
         public function initDebugText():void {
