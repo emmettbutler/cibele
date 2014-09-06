@@ -7,10 +7,8 @@ package{
 
         public static var _instance:MessageManager = null;
 
-        public var img_msg:FlxSprite;
-        public var notifications:FlxText;
+        public var notifications_text:FlxText;
         public var unread_count:Number = 0;
-        public var notifications_pos:DHPoint;
         public var notifications_box:FlxRect;
 
         public var bornTime:Number = -1;
@@ -18,15 +16,14 @@ package{
         public var currentTime:Number = -1;
 
         public var img_inbox:FlxSprite;
-        public var inbox_pos:DHPoint;
         public var exit_inbox:FlxText;
-        public var exit_inbox_box:FlxRect;
+        public var exit_inbox_rect:FlxRect;
 
         public var msgs:Array;
         public var currently_viewing:Message;
 
         public var debugText:FlxText;
-
+        public var _screen:ScreenManager = ScreenManager.getInstance();
         public var mouse_rect:FlxRect;
 
         public static const HIDE_INBOX:Number = 0;
@@ -47,7 +44,6 @@ package{
                 new Message("Cib! Wanna do a euryale run w/ me on friday?", "ok! <3 see you then girl~", 1, img_inbox, "Airia")
             );
             this.loadVisibleMessageObjects();
-            this.initDebugText();
 
             for(i = 0; i < msgs.length; i++) {
                 if(!msgs[i].read) {
@@ -57,30 +53,50 @@ package{
         }
 
         public function initNotifications():void {
-            mouse_rect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 5, 5);
-            var _screen:ScreenManager = ScreenManager.getInstance();
-            notifications_pos = new DHPoint(_screen.screenWidth * .001, _screen.screenHeight * .85);
-            img_msg = new FlxSprite(notifications_pos.x, notifications_pos.y);
-            img_msg.loadGraphic(ImgMsg,false,false,197,71);
+            this.mouse_rect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 5, 5);
+            var notifications_pos:DHPoint = new DHPoint(
+                _screen.screenWidth * .001, _screen.screenHeight * .85);
+            var img_msg:FlxSprite = new FlxSprite(
+                notifications_pos.x, notifications_pos.y);
+            img_msg.loadGraphic(ImgMsg, false, false, 197, 71);
+            img_msg.scrollFactor = new FlxPoint(0, 0);
             FlxG.state.add(img_msg);
 
-            notifications = new FlxText(notifications_pos.x, notifications_pos.y, img_msg.width, unread_count.toString() + " unread messages.");
-            notifications.size = 14;
-            notifications.color = 0xff000000;
-            FlxG.state.add(notifications);
+            this.notifications_text = new FlxText(
+                notifications_pos.x, notifications_pos.y,
+                img_msg.width, unread_count.toString() + " unread messages.");
+            this.notifications_text.size = 14;
+            this.notifications_text.color = 0xff000000;
+            FlxG.state.add(this.notifications_text);
 
-            notifications_box = new FlxRect(notifications.x, notifications.y, img_msg.width, 100);
+            this.notifications_box = new FlxRect(this.notifications_text.x,
+                                                 this.notifications_text.y,
+                                                 img_msg.width, 100);
+            this.notifications_box.x = this.notifications_text.x;
+            this.notifications_box.y = this.notifications_text.y;
 
-            inbox_pos = new DHPoint(_screen.screenWidth * .05, _screen.screenHeight * .3);
+            var inbox_pos:DHPoint = new DHPoint(_screen.screenWidth * .05,
+                                                _screen.screenHeight * .3);
             img_inbox = new FlxSprite(inbox_pos.x, inbox_pos.y);
             img_inbox.loadGraphic(ImgInbox, false, false, 500, 230);
             FlxG.state.add(img_inbox);
 
-            exit_inbox = new FlxText(inbox_pos.x+5, inbox_pos.y+(img_inbox.height-25), 250, "Exit Inbox");
-            exit_inbox.size = 16;
-            exit_inbox.color = 0xff000000;
-            FlxG.state.add(exit_inbox);
-            exit_inbox_box = new FlxRect(exit_inbox.x, exit_inbox.y, 70, 20);
+            this.exit_inbox = new FlxText(
+                inbox_pos.x + 5, inbox_pos.y + (img_inbox.height-25),
+                250, "Exit Inbox");
+            this.exit_inbox.size = 16;
+            this.exit_inbox.color = 0xff000000;
+            FlxG.state.add(this.exit_inbox);
+
+            this.exit_inbox_rect = new FlxRect(this.exit_inbox.x,
+                                               this.exit_inbox.y, 70, 20);
+            this.exit_inbox_rect.x = this.exit_inbox.x;
+            this.exit_inbox_rect.y = this.exit_inbox.y;
+
+            this.debugText = new FlxText(_screen.screenWidth * .01,
+                                         _screen.screenHeight * .01, 500, "");
+            FlxG.state.add(this.debugText);
+            this.debugText.color = 0xffffffff;
         }
 
         public function loadVisibleMessageObjects():void {
@@ -89,23 +105,11 @@ package{
             }
         }
 
-        public function initDebugText():void {
-            var _screen:ScreenManager = ScreenManager.getInstance();
-            debugText = new FlxText(_screen.screenWidth * .01, _screen.screenHeight * .01, 500, "");
-            FlxG.state.add(debugText);
-            debugText.color = 0xffffffff;
-        }
-
         public function update():void {
             this.currentTime = new Date().valueOf();
             this.timeAlive = this.currentTime - this.bornTime;
 
-            if (debugText._textField == null) {
-                // text was previously freed, and thus deleted - recreate it
-                this.initDebugText();
-            }
-            debugText.text = timeAlive.toString();
-            if (notifications._textField == null) {
+            if (this.notifications_text._textField == null) {
                 this.initNotifications();
                 this.loadVisibleMessageObjects();
                 for(i = 0; i < msgs.length; i++){
@@ -114,33 +118,27 @@ package{
                     }
                 }
             }
+            debugText.text = timeAlive.toString();
 
-            mouse_rect.x = FlxG.mouse.screenX;
-            mouse_rect.y = FlxG.mouse.screenY;
+            this.mouse_rect.x = FlxG.mouse.screenX;
+            this.mouse_rect.y = FlxG.mouse.screenY;
 
-            //debugText.text = "Mouse: " + FlxG.mouse.x + "," + FlxG.mouse.y + "\nMouse Rect: " + mouse_rect.x + "," + mouse_rect.y + "Notifications Box: " + notifications_box.x + "," + notifications_box.y;
+            //debugText.text = "Mouse: " + FlxG.mouse.x + "," + FlxG.mouse.y + "\nMouse Rect: " + this.mouse_rect.x + "," + this.mouse_rect.y + "Notifications Box: " + this.notifications_box.x + "," + notifications_box.y;
 
-            notifications.scrollFactor.x = 0;
-            notifications.scrollFactor.y = 0;
-            img_msg.scrollFactor.x = 0;
-            img_msg.scrollFactor.y = 0;
+            this.notifications_text.scrollFactor.x = 0;
+            this.notifications_text.scrollFactor.y = 0;
             img_inbox.scrollFactor.x = 0;
             img_inbox.scrollFactor.y = 0;
-            exit_inbox.scrollFactor.x = 0;
-            exit_inbox.scrollFactor.y = 0;
+            this.exit_inbox.scrollFactor.x = 0;
+            this.exit_inbox.scrollFactor.y = 0;
             debugText.scrollFactor.x = 0;
             debugText.scrollFactor.y = 0;
 
-            notifications_box.x = notifications.x;
-            notifications_box.y = notifications.y;
-            exit_inbox_box.x = exit_inbox.x;
-            exit_inbox_box.y = exit_inbox.y;
-
-            notifications.text = unread_count.toString() + " unread messages.";
+            this.notifications_text.text = unread_count.toString() + " unread messages.";
             if(unread_count > 0) {
-                notifications.color = 0xff982708;
+                this.notifications_text.color = 0xff982708;
             } else {
-                notifications.color = 0xff000000;
+                this.notifications_text.color = 0xff000000;
             }
 
             for(i = 0; i < msgs.length; i++) {
@@ -160,7 +158,7 @@ package{
                         viewingInbox();
                         if(state == VIEW_LIST) {
                             msgs[i].viewingList();
-                            if(FlxG.mouse.justPressed() && mouse_rect.overlaps(msgs[i].list_hitbox)){
+                            if(FlxG.mouse.justPressed() && this.mouse_rect.overlaps(msgs[i].list_hitbox)){
                                 currently_viewing = msgs[i];
                                 state = VIEW_MSG;
                             }
@@ -177,13 +175,13 @@ package{
                                 unread_count -= 1;
                             }
 
-                            if(FlxG.mouse.justPressed() && currently_viewing != null && mouse_rect.overlaps(currently_viewing.exit_box)){
+                            if(FlxG.mouse.justPressed() && currently_viewing != null && this.mouse_rect.overlaps(currently_viewing.exit_box)){
                                 currently_viewing.exitCurrentlyViewedMsg();
                                 currently_viewing = null;
                                 state = VIEW_LIST;
                             }
 
-                            if(FlxG.mouse.justPressed() && currently_viewing != null && mouse_rect.overlaps(currently_viewing.reply_to_box)){
+                            if(FlxG.mouse.justPressed() && currently_viewing != null && this.mouse_rect.overlaps(currently_viewing.reply_to_box)){
                                 currently_viewing.showReply();
                             }
                         }
@@ -192,9 +190,9 @@ package{
             }
 
             if(FlxG.mouse.justPressed()) {
-                if(state != HIDE_INBOX && mouse_rect.overlaps(exit_inbox_box)){
+                if(state != HIDE_INBOX && this.mouse_rect.overlaps(this.exit_inbox_rect)){
                     state = HIDE_INBOX;
-                } else if(state == HIDE_INBOX && mouse_rect.overlaps(notifications_box)) {
+                } else if(state == HIDE_INBOX && this.mouse_rect.overlaps(this.notifications_box)) {
                     state = VIEW_LIST;
                 }
             }
@@ -221,12 +219,12 @@ package{
         }
 
         public function exitInbox():void {
-            exit_inbox.alpha = 0;
+            this.exit_inbox.alpha = 0;
             img_inbox.alpha = 0;
         }
 
         public function viewingInbox():void {
-            exit_inbox.alpha = 1;
+            this.exit_inbox.alpha = 1;
             img_inbox.alpha = 1;
         }
 
