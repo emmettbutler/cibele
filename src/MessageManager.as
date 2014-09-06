@@ -12,7 +12,7 @@ package{
         public var notifications_box:FlxRect;
 
         public var bornTime:Number = -1;
-        public var timeAlive:Number = -1;
+        public var timeAlive:Number = 0;
         public var currentTime:Number = -1;
 
         public var img_inbox:FlxSprite;
@@ -35,19 +35,19 @@ package{
 
         public function MessageManager() {
             this.bornTime = new Date().valueOf();
-            this.timeAlive = 0;
-
             this.initNotifications();
+
             msgs = new Array(
-                new Message("did you get that link i sent you on aim last night? its an anime you might like :D", "yeah! the fairies were very very cute and i think that VA was in sailor moon??", 1, img_inbox, "Rusher"),
-                new Message("hey giiiiiirl how are things? you never chat with me anymore </3", ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", 1, img_inbox, "GuyverGuy"),
-                new Message("Cib! Wanna do a euryale run w/ me on friday?", "ok! <3 see you then girl~", 1, img_inbox, "Airia")
+                new Message("did you get that link i sent you on aim last night? its an anime you might like :D", "yeah! the fairies were very very cute and i think that VA was in sailor moon??", 1, this.img_inbox, "Rusher"),
+                new Message("hey giiiiiirl how are things? you never chat with me anymore </3", ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", 1, this.img_inbox, "GuyverGuy"),
+                new Message("Cib! Wanna do a euryale run w/ me on friday?", "ok! <3 see you then girl~", 1, this.img_inbox, "Airia")
             );
+
             this.loadVisibleMessageObjects();
 
             for(i = 0; i < msgs.length; i++) {
                 if(!msgs[i].read) {
-                    unread_count += 1;
+                    this.unread_count += 1;
                 }
             }
         }
@@ -64,9 +64,10 @@ package{
 
             this.notifications_text = new FlxText(
                 notifications_pos.x, notifications_pos.y,
-                img_msg.width, unread_count.toString() + " unread messages.");
+                img_msg.width, this.unread_count.toString() + " unread messages.");
             this.notifications_text.size = 14;
             this.notifications_text.color = 0xff000000;
+            this.notifications_text.scrollFactor = new FlxPoint(0, 0);
             FlxG.state.add(this.notifications_text);
 
             this.notifications_box = new FlxRect(this.notifications_text.x,
@@ -77,15 +78,17 @@ package{
 
             var inbox_pos:DHPoint = new DHPoint(_screen.screenWidth * .05,
                                                 _screen.screenHeight * .3);
-            img_inbox = new FlxSprite(inbox_pos.x, inbox_pos.y);
-            img_inbox.loadGraphic(ImgInbox, false, false, 500, 230);
-            FlxG.state.add(img_inbox);
+            this.img_inbox = new FlxSprite(inbox_pos.x, inbox_pos.y);
+            this.img_inbox.loadGraphic(ImgInbox, false, false, 500, 230);
+            this.img_inbox.scrollFactor = new FlxPoint(0, 0);
+            FlxG.state.add(this.img_inbox);
 
             this.exit_inbox = new FlxText(
-                inbox_pos.x + 5, inbox_pos.y + (img_inbox.height-25),
+                inbox_pos.x + 5, inbox_pos.y + (this.img_inbox.height-25),
                 250, "Exit Inbox");
             this.exit_inbox.size = 16;
             this.exit_inbox.color = 0xff000000;
+            this.exit_inbox.scrollFactor = new FlxPoint(0, 0);
             FlxG.state.add(this.exit_inbox);
 
             this.exit_inbox_rect = new FlxRect(this.exit_inbox.x,
@@ -95,8 +98,9 @@ package{
 
             this.debugText = new FlxText(_screen.screenWidth * .01,
                                          _screen.screenHeight * .01, 500, "");
-            FlxG.state.add(this.debugText);
+            this.debugText.scrollFactor = new FlxPoint(0, 0);
             this.debugText.color = 0xffffffff;
+            FlxG.state.add(this.debugText);
         }
 
         public function loadVisibleMessageObjects():void {
@@ -105,41 +109,35 @@ package{
             }
         }
 
+        public function reloadPersistentObjects():void {
+            this.initNotifications();
+            this.loadVisibleMessageObjects();
+            for(i = 1; i < msgs.length; i++){
+                msgs[i].setListPos(msgs[i - 1].list_pos);
+            }
+        }
+
+        public function updateUnreadNotification():void {
+            this.notifications_text.text = this.unread_count + " unread messages.";
+            if(this.unread_count > 0) {
+                this.notifications_text.color = 0xff982708;
+            } else {
+                this.notifications_text.color = 0xff000000;
+            }
+        }
+
         public function update():void {
             this.currentTime = new Date().valueOf();
             this.timeAlive = this.currentTime - this.bornTime;
 
             if (this.notifications_text._textField == null) {
-                this.initNotifications();
-                this.loadVisibleMessageObjects();
-                for(i = 0; i < msgs.length; i++){
-                    if(i != 0){
-                        msgs[i].setListPos(msgs[i-1].list_pos);
-                    }
-                }
+                this.reloadPersistentObjects();
             }
-            debugText.text = timeAlive.toString();
+
+            this.updateUnreadNotification();
 
             this.mouse_rect.x = FlxG.mouse.screenX;
             this.mouse_rect.y = FlxG.mouse.screenY;
-
-            //debugText.text = "Mouse: " + FlxG.mouse.x + "," + FlxG.mouse.y + "\nMouse Rect: " + this.mouse_rect.x + "," + this.mouse_rect.y + "Notifications Box: " + this.notifications_box.x + "," + notifications_box.y;
-
-            this.notifications_text.scrollFactor.x = 0;
-            this.notifications_text.scrollFactor.y = 0;
-            img_inbox.scrollFactor.x = 0;
-            img_inbox.scrollFactor.y = 0;
-            this.exit_inbox.scrollFactor.x = 0;
-            this.exit_inbox.scrollFactor.y = 0;
-            debugText.scrollFactor.x = 0;
-            debugText.scrollFactor.y = 0;
-
-            this.notifications_text.text = unread_count.toString() + " unread messages.";
-            if(unread_count > 0) {
-                this.notifications_text.color = 0xff982708;
-            } else {
-                this.notifications_text.color = 0xff000000;
-            }
 
             for(i = 0; i < msgs.length; i++) {
                 if(state == HIDE_INBOX) {
@@ -172,7 +170,7 @@ package{
 
                             if(!currently_viewing.read) {
                                 currently_viewing.markAsRead();
-                                unread_count -= 1;
+                                this.unread_count -= 1;
                             }
 
                             if(FlxG.mouse.justPressed() && currently_viewing != null && this.mouse_rect.overlaps(currently_viewing.exit_box)){
@@ -220,12 +218,12 @@ package{
 
         public function exitInbox():void {
             this.exit_inbox.alpha = 0;
-            img_inbox.alpha = 0;
+            this.img_inbox.alpha = 0;
         }
 
         public function viewingInbox():void {
             this.exit_inbox.alpha = 1;
-            img_inbox.alpha = 1;
+            this.img_inbox.alpha = 1;
         }
 
         public static function getInstance():MessageManager {
