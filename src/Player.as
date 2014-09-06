@@ -3,6 +3,7 @@ package{
 
     public class Player extends PartyMember {
         [Embed(source="../assets/c_walk.png")] private var ImgCibWalk:Class;
+
         public var runSpeed:Number = 4;
         public var colliding:Boolean = false;
         public var hitbox_rect:FlxRect;

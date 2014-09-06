@@ -19,6 +19,7 @@ package
         public var mouseImg:FlxSprite;
         public var filename:String;
         public var dataFile:File, backupFile:File, writeFile:File;
+        public var fpsCounter:FPSCounter;
 
         public static const MODE_READONLY:Number = 0;
         public static const MODE_EDIT:Number = 1;
@@ -70,7 +71,7 @@ package
                 this.pathWalker.moveToNextPathNode();
             }
 
-            new FPSCounter();
+            this.fpsCounter = new FPSCounter();
 
             this.boss = new BossEnemy(new DHPoint(0, 0));
             add(this.boss);
@@ -83,6 +84,11 @@ package
 
             add(player.debugText);
             add(pathWalker.debugText);
+        }
+
+        override public function destroy():void {
+            this.fpsCounter.destroy();
+            super.destroy();
         }
 
         override public function update():void {

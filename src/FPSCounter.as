@@ -32,5 +32,10 @@ package {
                 }
             }
         }
+
+        override public function destroy():void {
+            FlxG.stage.removeEventListener(Event.ENTER_FRAME, checkFPS);
+            super.destroy();
+        }
     }
 }
