@@ -25,7 +25,7 @@ package{
             MessageManager.getInstance().update();
             this.boss.update();
 
-            if (this.runningSound != null && this.runningSound.timeRemaining < 20*2000 &&
+            if (this.runningSound != null && this.runningSound.timeRemaining < 40*1000 &&
                 !this.bossHasAppeared && FlxG.state.ID == LevelMapState.LEVEL_ID)
             {
                 this.bossHasAppeared = true;
