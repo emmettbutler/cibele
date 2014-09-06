@@ -104,7 +104,7 @@ package{
                 // text was previously freed, and thus deleted - recreate it
                 this.initDebugText();
             }
-            debugText.text = state.toString();
+            debugText.text = timeAlive.toString();
             if (notifications._textField == null) {
                 this.initNotifications();
                 this.loadVisibleMessageObjects();

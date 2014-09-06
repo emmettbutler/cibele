@@ -6,6 +6,8 @@ package{
         [Embed(source="../assets/quit.png")] private var ImgQuit:Class;
         [Embed(source="../assets/play.png")] private var ImgPlay:Class;
         [Embed(source="../assets/charselect.png")] private var ImgChar:Class;
+        [Embed(source="../assets/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
+        [Embed(source="../assets/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
         public var timeFrame:Number = 0;
         public var timer:Number = 0;
         public var debugText:FlxText;
@@ -52,6 +54,12 @@ package{
 
             debugText = new FlxText(0,0,100,"");
             add(debugText);
+
+            //todo this should probs not trigger every time if there's other music playing
+            function _musicCallback():void {
+                SoundManager.getInstance().playSound(FernBGMLoop, 0, null, true, .2);
+            }
+            SoundManager.getInstance().playSound(FernBGMIntro, 12631, _musicCallback, false, .2);
         }
 
         override public function update():void{
