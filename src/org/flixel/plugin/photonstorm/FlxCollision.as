@@ -48,21 +48,19 @@ package org.flixel.plugin.photonstorm
          *
          * @return    Boolean True if the sprites collide, false if not
          */
-        public static function pixelPerfectCheck(contact:FlxSprite, target:FlxSprite, alphaTolerance:int = 255, camera:FlxCamera = null):Boolean
+        public static function pixelPerfectCheck(contact:FlxSprite, target:FlxSprite, alphaTolerance:int = 255, camera:FlxCamera = null):Array
         {
             var pointA:Point = new Point;
             var pointB:Point = new Point;
 
-            if (camera)
-            {
+            if (camera) {
                 pointA.x = contact.x - int(camera.scroll.x * contact.scrollFactor.x) - contact.offset.x;
                 pointA.y = contact.y - int(camera.scroll.y * contact.scrollFactor.y) - contact.offset.y;
 
                 pointB.x = target.x - int(camera.scroll.x * target.scrollFactor.x) - target.offset.x;
                 pointB.y = target.y - int(camera.scroll.y * target.scrollFactor.y) - target.offset.y;
             }
-            else
-            {
+            else {
                 pointA.x = contact.x - int(FlxG.camera.scroll.x * contact.scrollFactor.x) - contact.offset.x;
                 pointA.y = contact.y - int(FlxG.camera.scroll.y * contact.scrollFactor.y) - contact.offset.y;
 
@@ -75,9 +73,8 @@ package org.flixel.plugin.photonstorm
 
             var intersect:Rectangle = boundsA.intersection(boundsB);
 
-            if (intersect.isEmpty() || intersect.width == 0 || intersect.height == 0)
-            {
-                return false;
+            if (intersect.isEmpty() || intersect.width == 0 || intersect.height == 0) {
+                return [false, null];
             }
 
             //    Normalise the values or it'll break the BitmapData creation below
@@ -86,9 +83,8 @@ package org.flixel.plugin.photonstorm
             intersect.width = Math.ceil(intersect.width);
             intersect.height = Math.ceil(intersect.height);
 
-            if (intersect.isEmpty())
-            {
-                return false;
+            if (intersect.isEmpty()) {
+                return [false, null];
             }
 
             //    Thanks to Chris Underwood for helping with the translate logic :)
@@ -107,18 +103,22 @@ package org.flixel.plugin.photonstorm
             overlapArea.draw(testB, matrixB, new ColorTransform(1, 1, 1, 1, 255, 255, 255, alphaTolerance), BlendMode.DIFFERENCE);
 
             //    Developers: If you'd like to see how this works, display it in your game somewhere. Or you can comment it out to save a tiny bit of performance
-            debug = overlapArea;
+            //debug = overlapArea;
 
             var overlap:Rectangle = overlapArea.getColorBoundsRect(0xffffffff, 0xff00ffff);
             overlap.offset(intersect.x, intersect.y);
 
-            if (overlap.isEmpty())
-            {
-                return false;
+            if (overlap.isEmpty()) {
+                return [false, null];
             }
-            else
-            {
-                return true;
+            else {
+                // added to include information about the direction of the collision
+                // with respect to contact
+                var overlapOffset:DHPoint = new DHPoint(
+                    (intersect.x + intersect.width/2) - overlap.x,
+                    (intersect.y + intersect.height/2) - overlap.y
+                );
+                return [true, overlapOffset];
             }
         }
 

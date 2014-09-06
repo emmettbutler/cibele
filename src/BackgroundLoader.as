@@ -23,6 +23,7 @@ package {
         public var adjacentCoords:Array;
         public var colliderScaleFactor:Number = 4;
         public var loadPositionThreshold:DHPoint;
+        public var collisionData:Array;
 
         public var dbgText:FlxText;
 
@@ -179,11 +180,11 @@ package {
             return false
         }
 
-        public function isColliding(row:int, col:int):Boolean {
+        public function getCollisionData(row:int, col:int):Array {
             var colliderTile:FlxExtSprite = this.getTileByIndex(row, col,
                                                                 this.colliderTiles);
             if (colliderTile == null) {
-                return false;
+                return [false, null];
             }
             return FlxCollision.pixelPerfectCheck(playerRef.mapHitbox,
                                                   colliderTile);
@@ -240,8 +241,12 @@ package {
                     this.loadTile(row, col, this.colliderTiles,
                                   this.colliderReceivingMachines,
                                   this.colliderName, true);
-                } else if (this.isColliding(row, col)) {
-                    contact = true;
+                } else {
+                    collisionData = this.getCollisionData(row, col)
+                    if (collisionData[0]) {
+                        contact = true;
+                        this.playerRef.collisionDirection = collisionData[1];
+                    }
                 }
             }
             this.playerRef.colliding = contact;

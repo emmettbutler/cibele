@@ -9,6 +9,7 @@ package{
         public var lastPos:DHPoint;
         public var mapHitbox:FlxSprite;
         public var hitboxOffset:DHPoint, hitboxDim:DHPoint;
+        public var collisionDirection:DHPoint;
 
         public var dbgText:FlxText;
 
