@@ -31,8 +31,6 @@ package{
         public static const STATE_VIEW_MESSAGE:Number = 2;
         public var _state:Number = STATE_HIDE_INBOX;
 
-        public var i:Number = 0;
-
         public function MessageManager() {
             this.bornTime = new Date().valueOf();
             this.initNotifications();
@@ -45,7 +43,7 @@ package{
 
             this.loadVisibleMessageObjects();
 
-            for(i = 0; i < this.messages.length; i++) {
+            for(var i:int = 0; i < this.messages.length; i++) {
                 if(!this.messages[i].read) {
                     this.unread_count += 1;
                 }
@@ -112,7 +110,7 @@ package{
         public function reloadPersistentObjects():void {
             this.initNotifications();
             this.loadVisibleMessageObjects();
-            for(i = 1; i < this.messages.length; i++){
+            for(var i:int = 1; i < this.messages.length; i++){
                 this.messages[i].setListPos(this.messages[i - 1].list_pos);
             }
         }
@@ -140,8 +138,7 @@ package{
             this.mouse_rect.y = FlxG.mouse.screenY;
 
             var cur_message:Message;
-
-            for(i = 0; i < this.messages.length; i++) {
+            for(var i:int = 0; i < this.messages.length; i++) {
                 cur_message = this.messages[i];
                 if(this._state == STATE_HIDE_INBOX) {
                     exitInbox();
@@ -166,7 +163,7 @@ package{
                         }
                         if(this._state == STATE_VIEW_MESSAGE) {
                             if(cur_message != currently_viewing){
-                                cur_message.hideUnviewedmessages();
+                                cur_message.hideUnviewedMsgs();
                             }
 
                             currently_viewing.showCurrentlyViewedMsg();
