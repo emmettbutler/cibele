@@ -43,7 +43,6 @@ package{
                     if(FlxG.keys.LEFT) {
                         play("walk_l");
                         this.dir.x = -1 * runSpeed;
-                        this.scale.x = 1;
                         this.offset.x = 63;
                         this.hitboxOffset.x = -13;
                         this.footstepOffset.x = 2;
@@ -72,6 +71,7 @@ package{
             } else {
                 this.dir.x = 0;
                 this.dir.y = 0;
+                play("idle");
             }
 
             if (this.colliding) {

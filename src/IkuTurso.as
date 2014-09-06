@@ -5,7 +5,7 @@ package{
         public var runningSound:GameSound;
         public var bossHasAppeared:Boolean;
 
-        public function IkuTurso(runningSound:GameSound) {
+        public function IkuTurso(runningSound:GameSound=null) {
             this.runningSound = runningSound;
             this.bossHasAppeared = false;
         }
@@ -25,7 +25,7 @@ package{
             MessageManager.getInstance().update();
             this.boss.update();
 
-            if (this.runningSound.timeRemaining < 20*1000 &&
+            if (this.runningSound != null && this.runningSound.timeRemaining < 20*1000 &&
                 !this.bossHasAppeared && FlxG.state.ID == LevelMapState.LEVEL_ID)
             {
                 this.bossHasAppeared = true;
