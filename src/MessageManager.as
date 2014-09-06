@@ -113,7 +113,7 @@ package{
             mouse_rect.x = FlxG.mouse.screenX;
             mouse_rect.y = FlxG.mouse.screenY;
 
-            debugText.text = "Mouse: " + FlxG.mouse.x + "," + FlxG.mouse.y + "\nMouse Rect: " + mouse_rect.x + "," + mouse_rect.y + "Notifications Box: " + notifications_box.x + "," + notifications_box.y;
+            //debugText.text = "Mouse: " + FlxG.mouse.x + "," + FlxG.mouse.y + "\nMouse Rect: " + mouse_rect.x + "," + mouse_rect.y + "Notifications Box: " + notifications_box.x + "," + notifications_box.y;
 
             notifications.scrollFactor.x = 0;
             notifications.scrollFactor.y = 0;

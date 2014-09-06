@@ -9,9 +9,7 @@ package{
         public var lastPos:DHPoint;
         public var mapHitbox:FlxSprite;
         public var hitboxOffset:DHPoint, hitboxDim:DHPoint;
-        public var collisionDirection:DHPoint;
-
-        public var dbgText:FlxText;
+        public var collisionDirection:Array;
 
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
@@ -73,7 +71,24 @@ package{
             }
 
             if (this.colliding) {
-                this.dir = this.lastPos.sub(this.pos).mulScl(1.1);
+                if (this.collisionDirection != null) {
+                    if (this.dir.x > 0 && this.collisionDirection[1] == 1) {
+                        // right
+                        this.dir.x = 0;
+                    } else if (this.dir.x < 0 && this.collisionDirection[0] == 1) {
+                        // left
+                        this.dir.x = 0;
+                    }
+                    if (this.dir.y > 0 && this.collisionDirection[3] == 1) {
+                        // down
+                        this.dir.y = 0;
+                    } else if (this.dir.y < 0 && this.collisionDirection[2] == 1) {
+                        // up
+                        this.dir.y = 0;
+                    }
+                } else {
+                    this.dir = this.lastPos.sub(this.pos).mulScl(1.1);
+                }
             }
 
             if (!this.lastPos.eq(this.pos)) {

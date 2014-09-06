@@ -17,6 +17,8 @@ package org.flixel.plugin.photonstorm
 {
     import flash.display.BitmapData;
     import flash.display.Sprite;
+    import flash.display.Bitmap;
+    import flash.display.PixelSnapping;
     import flash.geom.ColorTransform;
     import flash.geom.Matrix;
     import flash.geom.Point;
@@ -48,7 +50,11 @@ package org.flixel.plugin.photonstorm
          *
          * @return    Boolean True if the sprites collide, false if not
          */
-        public static function pixelPerfectCheck(contact:FlxSprite, target:FlxSprite, alphaTolerance:int = 255, camera:FlxCamera = null):Array
+        public static function pixelPerfectCheck(contact:FlxSprite, target:FlxSprite,
+                                                 alphaTolerance:int = 255,
+                                                 camera:FlxCamera = null,
+                                                 collisionWidthThreshold:Number=0,
+                                                 collisionHeightThreshold:Number=0):Array
         {
             var pointA:Point = new Point;
             var pointB:Point = new Point;
@@ -103,7 +109,13 @@ package org.flixel.plugin.photonstorm
             overlapArea.draw(testB, matrixB, new ColorTransform(1, 1, 1, 1, 255, 255, 255, alphaTolerance), BlendMode.DIFFERENCE);
 
             //    Developers: If you'd like to see how this works, display it in your game somewhere. Or you can comment it out to save a tiny bit of performance
-            //debug = overlapArea;
+            /*
+            debug = overlapArea;
+            var spr:FlxExtSprite = new FlxExtSprite(contact.x, contact.y);
+            var bmp:Bitmap = new Bitmap(overlapArea, PixelSnapping.NEVER, true);
+            spr.loadExtGraphic(bmp, false, false, bmp.width, bmp.height, true);
+            FlxG.state.add(spr);
+            */
 
             var overlap:Rectangle = overlapArea.getColorBoundsRect(0xffffffff, 0xff00ffff);
             overlap.offset(intersect.x, intersect.y);
@@ -114,11 +126,28 @@ package org.flixel.plugin.photonstorm
             else {
                 // added to include information about the direction of the collision
                 // with respect to contact
-                var overlapOffset:DHPoint = new DHPoint(
-                    (intersect.x + intersect.width/2) - overlap.x,
-                    (intersect.y + intersect.height/2) - overlap.y
-                );
-                return [true, overlapOffset];
+
+                // don't use a dhpoint for these to avoid using "new" unnecessarily
+                var overlapOffsetX:Number = (intersect.x + intersect.width/2) - overlap.x;
+                var overlapOffsetY:Number = (intersect.y + intersect.height/2) - overlap.y;
+                var ret:Array = new Array(0, 0, 0, 0);  // left, right, up, down
+                if (overlap.width > collisionWidthThreshold) {
+                    ret[2] = overlapOffsetY > 0 ? 1 : 0;
+                    ret[3] = overlapOffsetY < 0 ? 1 : 0;
+                    if (overlap.height == contact.height) {
+                        ret[2] = 1;
+                        ret[3] = 1;
+                    }
+                }
+                if (overlap.height > collisionHeightThreshold) {
+                    ret[0] = overlapOffsetX > 0 ? 1 : 0;
+                    ret[1] = overlapOffsetX < 0 ? 1 : 0;
+                    if (overlap.width == contact.width) {
+                        ret[0] = 1;
+                        ret[1] = 1;
+                    }
+                }
+                return [true, ret];
             }
         }
 
