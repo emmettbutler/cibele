@@ -20,19 +20,25 @@ package{
 
         public var exit_msg:FlxText;
         public var exit_box:FlxRect;
+        public var reply_to_msg:FlxText;
+        public var reply_to_box:FlxRect;
 
         public var pos:DHPoint;
 
         public var font_size:Number = 16;
         public var font_color:uint = 0xff000000;
-        public var unread_color:uint = 0xffF584CA;
+        public var unread_color:uint = 0xff982708;
 
-        public function Message(txt:String, sec:Number, inbox:FlxSprite, sender:String) {
+        public var reply_text:String;
+        public var reply_sent:Boolean = false;
+
+        public function Message(txt:String, rep:String, sec:Number, inbox:FlxSprite, sender:String) {
             inbox_ref = inbox;
             sent_by = sender;
+            reply_text = rep;
             pos = new DHPoint(inbox_ref.x + 5, inbox_ref.y + 10);
 
-            msg_text = txt;
+            msg_text = sent_by + " >> " + txt + "\n";
             send_time = sec;
         }
 
@@ -45,13 +51,13 @@ package{
 
             list_pos = new DHPoint(pos.x, pos.y);
 
-            truncated_msg = new FlxText(list_pos.x, list_pos.y, inbox_ref.width, sent_by + " >> " + msg_text.slice(0,6) + "...");
+            truncated_msg = new FlxText(list_pos.x, list_pos.y, inbox_ref.width, msg_text.slice(0,sent_by.length + 10) + "...");
             truncated_msg.color = font_color;
             truncated_msg.size = font_size;
             FlxG.state.add(truncated_msg);
             truncated_msg.alpha = 0;
 
-            exit_msg = new FlxText(pos.x+inbox_ref.width-30, pos.y+5, inbox_ref.width, "X")
+            exit_msg = new FlxText(inbox_ref.x+110, inbox_ref.y+(inbox_ref.height-25), inbox_ref.width, "| Back")
             exit_msg.color = font_color;
             exit_msg.size = font_size;
             FlxG.state.add(exit_msg);
@@ -59,10 +65,19 @@ package{
 
             exit_box = new FlxRect(exit_msg.x, exit_msg.y, 50, 50);
 
+            reply_to_msg = new FlxText(inbox_ref.x+172, inbox_ref.y+(inbox_ref.height-25), inbox_ref.width, "| Reply")
+            reply_to_msg.color = font_color;
+            reply_to_msg.size = font_size;
+            FlxG.state.add(reply_to_msg);
+            reply_to_msg.alpha = 0;
+
+            reply_to_box = new FlxRect(reply_to_msg.x, reply_to_msg.y, 50, 50);
+
             list_hitbox = new FlxRect(truncated_msg.x, truncated_msg.y, inbox_ref.width, list_offset);
         }
 
         public function update():void {
+            msg.text = msg_text;
             truncated_msg.x = list_pos.x;
             truncated_msg.y = list_pos.y;
             list_hitbox.x = truncated_msg.x;
@@ -74,6 +89,8 @@ package{
             msg.scrollFactor.y = 0;
             exit_msg.scrollFactor.x = 0;
             exit_msg.scrollFactor.y = 0;
+            reply_to_msg.scrollFactor.x = 0;
+            reply_to_msg.scrollFactor.y = 0;
 
         }
 
@@ -85,6 +102,7 @@ package{
             truncated_msg.alpha = 0;
             msg.alpha = 0;
             exit_msg.alpha = 0;
+            reply_to_msg.alpha = 0;
         }
 
         public function sendMsg():void {
@@ -95,6 +113,7 @@ package{
             msg.alpha = 0;
             viewing = false;
             exit_msg.alpha = 0;
+            reply_to_msg.alpha = 0;
 
             if(sent == true) {
                 truncated_msg.alpha = 1;
@@ -117,6 +136,7 @@ package{
             truncated_msg.alpha = 0;
             msg.alpha = 1;
             exit_msg.alpha = 1;
+            reply_to_msg.alpha = 1;
         }
 
         public function markAsRead():void {
@@ -126,6 +146,13 @@ package{
         public function exitCurrentlyViewedMsg():void {
             viewing = false;
             msg.alpha = 0;
+        }
+
+        public function showReply():void {
+            if(!reply_sent){
+                reply_sent = true;
+                msg_text += "\n" + "Cibele >> " + reply_text;
+            }
         }
     }
 }

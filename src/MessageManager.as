@@ -42,9 +42,9 @@ package{
 
             this.initNotifications();
             msgs = new Array(
-                new Message("did you get that link i sent you on aim last night? its an anime you might like :D", 1, img_inbox, "Rusher"),
-                new Message("hey giiiiiirl how are things? you never chat with me anymore </3", 1, img_inbox, "GuyverGuy"),
-                new Message("Cib! Wanna do a euryale run w/ me on friday?", 1, img_inbox, "Airia")
+                new Message("did you get that link i sent you on aim last night? its an anime you might like :D", "yeah! the fairies were very very cute and i think that VA was in sailor moon??", 1, img_inbox, "Rusher"),
+                new Message("hey giiiiiirl how are things? you never chat with me anymore </3", ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", 1, img_inbox, "GuyverGuy"),
+                new Message("Cib! Wanna do a euryale run w/ me on friday?", "ok! <3 see you then girl~", 1, img_inbox, "Airia")
             );
             this.loadVisibleMessageObjects();
             this.initDebugText();
@@ -73,14 +73,14 @@ package{
 
             inbox_pos = new DHPoint(_screen.screenWidth * .05, _screen.screenHeight * .3);
             img_inbox = new FlxSprite(inbox_pos.x, inbox_pos.y);
-            img_inbox.loadGraphic(ImgInbox, false, false, 336, 127);
+            img_inbox.loadGraphic(ImgInbox, false, false, 500, 230);
             FlxG.state.add(img_inbox);
 
-            exit_inbox = new FlxText(inbox_pos.x+5, inbox_pos.y+(img_inbox.height-25), img_inbox.width, "Exit Inbox");
+            exit_inbox = new FlxText(inbox_pos.x+5, inbox_pos.y+(img_inbox.height-25), 250, "Exit Inbox");
             exit_inbox.size = 16;
             exit_inbox.color = 0xff000000;
             FlxG.state.add(exit_inbox);
-            exit_inbox_box = new FlxRect(exit_inbox.x, exit_inbox.y, img_inbox.width, 20);
+            exit_inbox_box = new FlxRect(exit_inbox.x, exit_inbox.y, 70, 20);
         }
 
         public function loadVisibleMessageObjects():void {
@@ -108,6 +108,11 @@ package{
             if (notifications._textField == null) {
                 this.initNotifications();
                 this.loadVisibleMessageObjects();
+                for(i = 0; i < msgs.length; i++){
+                    if(i != 0){
+                        msgs[i].setListPos(msgs[i-1].list_pos);
+                    }
+                }
             }
 
             mouse_rect.x = FlxG.mouse.screenX;
@@ -132,6 +137,11 @@ package{
             exit_inbox_box.y = exit_inbox.y;
 
             notifications.text = unread_count.toString() + " unread messages.";
+            if(unread_count > 0) {
+                notifications.color = 0xff982708;
+            } else {
+                notifications.color = 0xff000000;
+            }
 
             for(i = 0; i < msgs.length; i++) {
                 if(state == HIDE_INBOX) {
@@ -167,10 +177,14 @@ package{
                                 unread_count -= 1;
                             }
 
-                            if(FlxG.mouse.justPressed() && mouse_rect.overlaps(currently_viewing.exit_box)){
+                            if(FlxG.mouse.justPressed() && currently_viewing != null && mouse_rect.overlaps(currently_viewing.exit_box)){
                                 currently_viewing.exitCurrentlyViewedMsg();
                                 currently_viewing = null;
                                 state = VIEW_LIST;
+                            }
+
+                            if(FlxG.mouse.justPressed() && currently_viewing != null && mouse_rect.overlaps(currently_viewing.reply_to_box)){
+                                currently_viewing.showReply();
                             }
                         }
                     }

@@ -12,6 +12,7 @@ package{
 
         override public function create():void {
             FlxG.bgColor = 0x00000000;
+            FlxG.mouse.show();
 
             this.convoSound = SoundManager.getInstance().playSound(Convo, 319632,
                 function():void {
