@@ -100,6 +100,9 @@ package{
             if(FlxG.keys.justPressed("SPACE")){
                 this.attack();
             }
+            if(FlxG.keys.justPressed("N")) {
+                this.emote();
+            }
 
             if (this._state == STATE_IN_ATTACK) {
                 if (timeSinceLastAttack() > 100) {
@@ -107,6 +110,10 @@ package{
                     this._state = STATE_IDLE;
                 }
             }
+        }
+
+        public function emote():void {
+            new Emote(this.pos);
         }
 
         override public function setPos(pos:DHPoint):void {
