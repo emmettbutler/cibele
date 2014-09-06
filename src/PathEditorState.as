@@ -51,7 +51,7 @@ package
             pathWalker.initFootsteps();
 
             mouseImg = new FlxSprite(FlxG.mouse.x, FlxG.mouse.y);
-            mouseImg.makeGraphic(5, 5, 0xffffffff);
+            mouseImg.makeGraphic(10, 10, 0xff000000);
             add(mouseImg);
 
             _path = new Path(player);

@@ -41,14 +41,14 @@ package{
 
             if (FlxG.keys.LEFT || FlxG.keys.RIGHT || FlxG.keys.UP || FlxG.keys.DOWN) {
                 if(FlxG.keys.LEFT || FlxG.keys.RIGHT) {
-                    if(FlxG.keys.LEFT) {
+                    if(FlxG.keys.LEFT || FlxG.keys.UP) {
                         play("walk_l");
                         this.dir.x = -1 * runSpeed;
                         this.offset.x = 63;
                         this.hitboxOffset.x = -13;
                         this.footstepOffset.x = 2;
                     }
-                    if(FlxG.keys.RIGHT){
+                    if(FlxG.keys.RIGHT || FlxG.keys.DOWN){
                         play("walk_r");
                         this.dir.x = runSpeed;
                         this.offset.x = 0;

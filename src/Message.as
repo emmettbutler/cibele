@@ -9,6 +9,7 @@ package{
 
         public var send_time:Number;
         public var sent:Boolean = false;
+        public var sent_by:String;
 
         public var inbox_ref:FlxSprite;
 
@@ -24,15 +25,16 @@ package{
         public var font_color:uint = 0xff000000;
         public var unread_color:uint = 0xffF584CA;
 
-        public function Message(txt:String, sec:Number, inbox:FlxSprite) {
+        public function Message(txt:String, sec:Number, inbox:FlxSprite, sender:String) {
             inbox_ref = inbox;
-            pos = new DHPoint(inbox_ref.x + 10, inbox_ref.y + 5);
+            sent_by = sender;
+            pos = new DHPoint(inbox_ref.x + 5, inbox_ref.y + 10);
             super(pos);
 
             msg_text = txt;
             send_time = sec;
 
-            msg = new FlxText(pos.x, pos.y, inbox_ref.width, msg_text);
+            msg = new FlxText(pos.x, pos.y, inbox_ref.width-50, msg_text);
             msg.color = font_color;
             msg.size = font_size;
             FlxG.state.add(msg);
@@ -40,7 +42,7 @@ package{
 
             list_pos = new DHPoint(pos.x, pos.y);
 
-            truncated_msg = new FlxText(list_pos.x, list_pos.y, inbox_ref.width, ">> " + msg_text.slice(0,3) + "...");
+            truncated_msg = new FlxText(list_pos.x, list_pos.y, inbox_ref.width, sent_by + " >> " + msg_text.slice(0,6) + "...");
             truncated_msg.color = font_color;
             truncated_msg.size = font_size;
             FlxG.state.add(truncated_msg);
@@ -62,6 +64,13 @@ package{
             truncated_msg.y = list_pos.y;
             list_hitbox.x = truncated_msg.x;
             list_hitbox.y = truncated_msg.y;
+
+            truncated_msg.scrollFactor.x = 0;
+            truncated_msg.scrollFactor.y = 0;
+            msg.scrollFactor.x = 0;
+            msg.scrollFactor.y = 0;
+            exit_msg.scrollFactor.x = 0;
+            exit_msg.scrollFactor.y = 0;
 
         }
 

@@ -3,14 +3,14 @@ package org.flixel
 	import flash.display.BitmapData;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-	
+
 	/**
 	 * Extends <code>FlxSprite</code> to support rendering text.
 	 * Can tint, fade, rotate and scale just like a sprite.
 	 * Doesn't really animate though, as far as I know.
 	 * Also does nice pixel-perfect centering on pixel fonts
 	 * as long as they are only one liners.
-	 * 
+	 *
 	 * @author	Adam Atomic
 	 */
 	public class FlxText extends FlxSprite
@@ -28,10 +28,10 @@ package org.flixel
 		 * Internal tracker for the text shadow color, default is clear/transparent.
 		 */
 		protected var _shadow:uint;
-		
+
 		/**
 		 * Creates a new <code>FlxText</code> object at the specified position.
-		 * 
+		 *
 		 * @param	X				The X position of the text.
 		 * @param	Y				The Y position of the text.
 		 * @param	Width			The width of the text object (height is determined automatically).
@@ -42,7 +42,7 @@ package org.flixel
 		{
 			super(X,Y);
 			makeGraphic(Width,1,0);
-			
+
 			if(Text == null)
 				Text = "";
 			_textField = new TextField();
@@ -60,13 +60,13 @@ package org.flixel
 				_textField.height = 1;
 			else
 				_textField.height = 10;
-			
+
 			_regen = true;
 			_shadow = 0;
 			allowCollisions = NONE;
 			calcFrame();
 		}
-		
+
 		/**
 		 * Clean up memory.
 		 */
@@ -75,17 +75,17 @@ package org.flixel
 			_textField = null;
 			super.destroy();
 		}
-		
+
 		/**
 		 * You can use this if you have a lot of text parameters
 		 * to set instead of the individual properties.
-		 * 
+		 *
 		 * @param	Font		The name of the font face for the text display.
 		 * @param	Size		The size of the font (in pixels essentially).
 		 * @param	Color		The color of the text in traditional flash 0xRRGGBB format.
 		 * @param	Alignment	A string representing the desired alignment ("left,"right" or "center").
 		 * @param	ShadowColor	A uint representing the desired text shadow color in flash 0xRRGGBB format.
-		 * 
+		 *
 		 * @return	This FlxText instance (nice for chaining stuff together, if you're into that).
 		 */
 		public function setFormat(Font:String=null,Size:Number=8,Color:uint=0xffffff,Alignment:String=null,ShadowColor:uint=0):FlxText
@@ -104,7 +104,7 @@ package org.flixel
 			calcFrame();
 			return this;
 		}
-		
+
 		/**
 		 * The text being displayed.
 		 */
@@ -112,7 +112,7 @@ package org.flixel
 		{
 			return _textField.text;
 		}
-		
+
 		/**
 		 * @private
 		 */
@@ -126,7 +126,7 @@ package org.flixel
 				calcFrame();
 			}
 		}
-		
+
 		/**
 		 * The size of the text being displayed.
 		 */
@@ -134,7 +134,7 @@ package org.flixel
 		{
 			return _textField.defaultTextFormat.size as Number;
 		}
-		
+
 		/**
 		 * @private
 		 */
@@ -147,7 +147,7 @@ package org.flixel
 			_regen = true;
 			calcFrame();
 		}
-		
+
 		/**
 		 * The color of the text being displayed.
 		 */
@@ -155,7 +155,7 @@ package org.flixel
 		{
 			return _textField.defaultTextFormat.color as uint;
 		}
-		
+
 		/**
 		 * @private
 		 */
@@ -168,7 +168,7 @@ package org.flixel
 			_regen = true;
 			calcFrame();
 		}
-		
+
 		/**
 		 * The font used for this text.
 		 */
@@ -176,7 +176,7 @@ package org.flixel
 		{
 			return _textField.defaultTextFormat.font;
 		}
-		
+
 		/**
 		 * @private
 		 */
@@ -189,7 +189,7 @@ package org.flixel
 			_regen = true;
 			calcFrame();
 		}
-		
+
 		/**
 		 * The alignment of the font ("left", "right", or "center").
 		 */
@@ -197,7 +197,7 @@ package org.flixel
 		{
 			return _textField.defaultTextFormat.align;
 		}
-		
+
 		/**
 		 * @private
 		 */
@@ -209,7 +209,7 @@ package org.flixel
 			_textField.setTextFormat(format);
 			calcFrame();
 		}
-		
+
 		/**
 		 * The color of the text shadow in 0xAARRGGBB hex format.
 		 */
@@ -217,7 +217,7 @@ package org.flixel
 		{
 			return _shadow;
 		}
-		
+
 		/**
 		 * @private
 		 */
@@ -226,7 +226,7 @@ package org.flixel
 			_shadow = Color;
 			calcFrame();
 		}
-		
+
 		/**
 		 * Internal function to update the current animation frame.
 		 */
@@ -252,7 +252,7 @@ package org.flixel
 			}
 			else	//Else just clear the old buffer before redrawing the text
 				_pixels.fillRect(_flashRect,0);
-			
+
 			if((_textField != null) && (_textField.text != null) && (_textField.text.length > 0))
 			{
 				//Now that we've cleared a buffer, we need to actually render the text to it
@@ -263,13 +263,13 @@ package org.flixel
 				if((format.align == "center") && (_textField.numLines == 1))
 				{
 					formatAdjusted = new TextFormat(format.font,format.size,format.color,null,null,null,null,null,"left");
-					_textField.setTextFormat(formatAdjusted);				
+					_textField.setTextFormat(formatAdjusted);
 					_matrix.translate(Math.floor((width - _textField.getLineMetrics(0).width)/2),0);
 				}
 				//Render a single pixel shadow beneath the text
 				if(_shadow > 0)
 				{
-					_textField.setTextFormat(new TextFormat(formatAdjusted.font,formatAdjusted.size,_shadow,null,null,null,null,null,formatAdjusted.align));				
+					_textField.setTextFormat(new TextFormat(formatAdjusted.font,formatAdjusted.size,_shadow,null,null,null,null,null,formatAdjusted.align));
 					_matrix.translate(1,1);
 					_pixels.draw(_textField,_matrix,_colorTransform);
 					_matrix.translate(-1,-1);
@@ -279,16 +279,16 @@ package org.flixel
 				_pixels.draw(_textField,_matrix,_colorTransform);
 				_textField.setTextFormat(new TextFormat(format.font,format.size,format.color,null,null,null,null,null,format.align));
 			}
-			
+
 			//Finally, update the visible pixels
 			if((framePixels == null) || (framePixels.width != _pixels.width) || (framePixels.height != _pixels.height))
 				framePixels = new BitmapData(_pixels.width,_pixels.height,true,0);
 			framePixels.copyPixels(_pixels,_flashRect,_flashPointZero);
 		}
-		
+
 		/**
 		 * A helper function for updating the <code>TextField</code> that we use for rendering.
-		 * 
+		 *
 		 * @return	A writable copy of <code>TextField.defaultTextFormat</code>.
 		 */
 		protected function dtfCopy():TextFormat

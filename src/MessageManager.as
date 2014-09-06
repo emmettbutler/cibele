@@ -50,8 +50,6 @@ package{
 
             this.initDebugText();
 
-            mouse_rect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 5, 5);
-
             for(i = 0; i < msgs.length; i++) {
                 if(!msgs[i].read) {
                     unread_count += 1;
@@ -60,15 +58,18 @@ package{
         }
 
         public function initNotifications():void {
+            mouse_rect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 5, 5);
             var _screen:ScreenManager = ScreenManager.getInstance();
-            notifications_pos = new DHPoint(_screen.screenWidth * .001, _screen.screenHeight * .9);
+            notifications_pos = new DHPoint(_screen.screenWidth * .001, _screen.screenHeight * .85);
             img_msg = new FlxSprite(notifications_pos.x, notifications_pos.y);
-            img_msg.loadGraphic(ImgMsg,false,false,132,28);
+            img_msg.loadGraphic(ImgMsg,false,false,197,71);
             FlxG.state.add(img_msg);
 
-            notifications = new FlxText(notifications_pos.x+5, notifications_pos.y+5, img_msg.width, unread_count.toString() + " unread messages.");
-            notifications.size = 10;
+            notifications = new FlxText(notifications_pos.x, notifications_pos.y, img_msg.width, unread_count.toString() + " unread messages.");
+            notifications.size = 14;
+            notifications.color = 0xff000000;
             FlxG.state.add(notifications);
+
             notifications_box = new FlxRect(notifications.x, notifications.y, img_msg.width, 100);
 
             inbox_pos = new DHPoint(_screen.screenWidth * .05, _screen.screenHeight * .3);
@@ -93,8 +94,6 @@ package{
         public function update():void {
             this.currentTime = new Date().valueOf();
             this.timeAlive = this.currentTime - this.bornTime;
-            mouse_rect.x = FlxG.mouse.x;
-            mouse_rect.y = FlxG.mouse.y;
 
             if (debugText._textField == null) {
                 // text was previously freed, and thus deleted - recreate it
@@ -104,6 +103,28 @@ package{
             if (notifications._textField == null) {
                 this.initNotifications();
             }
+
+            mouse_rect.x = FlxG.mouse.screenX;
+            mouse_rect.y = FlxG.mouse.screenY;
+
+            debugText.text = "Mouse: " + FlxG.mouse.x + "," + FlxG.mouse.y + "\nMouse Rect: " + mouse_rect.x + "," + mouse_rect.y + "Notifications Box: " + notifications_box.x + "," + notifications_box.y;
+
+            notifications.scrollFactor.x = 0;
+            notifications.scrollFactor.y = 0;
+            img_msg.scrollFactor.x = 0;
+            img_msg.scrollFactor.y = 0;
+            img_inbox.scrollFactor.x = 0;
+            img_inbox.scrollFactor.y = 0;
+            exit_inbox.scrollFactor.x = 0;
+            exit_inbox.scrollFactor.y = 0;
+            debugText.scrollFactor.x = 0;
+            debugText.scrollFactor.y = 0;
+
+            notifications_box.x = notifications.x;
+            notifications_box.y = notifications.y;
+            exit_inbox_box.x = exit_inbox.x;
+            exit_inbox_box.y = exit_inbox.y;
+
             notifications.text = unread_count.toString() + " unread messages.";
 
             for(i = 0; i < msgs.length; i++) {
