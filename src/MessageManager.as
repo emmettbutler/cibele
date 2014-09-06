@@ -94,6 +94,9 @@ package{
             this.exit_inbox_rect.x = this.exit_inbox.x;
             this.exit_inbox_rect.y = this.exit_inbox.y;
 
+            this.exit_inbox.alpha = 0;
+            this.img_inbox.alpha = 0;
+
             this.debugText = new FlxText(_screen.screenWidth * .01,
                                          _screen.screenHeight * .01, 500, "");
             this.debugText.scrollFactor = new FlxPoint(0, 0);
@@ -141,7 +144,6 @@ package{
             for(var i:int = 0; i < this.messages.length; i++) {
                 cur_message = this.messages[i];
                 if(this._state == STATE_HIDE_INBOX) {
-                    exitInbox();
                     cur_message.hideMessage();
                 } else {
                     cur_message.update();
@@ -188,10 +190,15 @@ package{
             }
 
             if(FlxG.mouse.justPressed()) {
-                if(this._state != STATE_HIDE_INBOX && this.mouse_rect.overlaps(this.exit_inbox_rect)){
-                    this._state = STATE_HIDE_INBOX;
-                } else if(this._state == STATE_HIDE_INBOX && this.mouse_rect.overlaps(this.notifications_box)) {
-                    this._state = STATE_VIEW_LIST;
+                if(this._state != STATE_HIDE_INBOX) {
+                    if (this.mouse_rect.overlaps(this.exit_inbox_rect)){
+                        this._state = STATE_HIDE_INBOX;
+                        this.exitInbox();
+                    }
+                } else {
+                    if (this.mouse_rect.overlaps(this.notifications_box)) {
+                        this._state = STATE_VIEW_LIST;
+                    }
                 }
             }
         }
