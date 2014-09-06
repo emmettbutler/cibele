@@ -28,9 +28,6 @@ package{
             this.mapHitbox.makeGraphic(this.hitboxDim.x, this.hitboxDim.y, 0xffff0000);
             this.hitbox_rect = new FlxRect(this.pos.x, this.pos.y, this.mapHitbox.width, this.mapHitbox.height);
 
-            this.dbgText = new FlxText(x, y, 200, "");
-            this.dbgText.color = 0xffffffff;
-
             this.lastPos = new DHPoint(this.pos.x, this.pos.y);
             this.footstepOffset = new DHPoint(80, this.height);
         }
@@ -41,14 +38,14 @@ package{
 
             if (FlxG.keys.LEFT || FlxG.keys.RIGHT || FlxG.keys.UP || FlxG.keys.DOWN) {
                 if(FlxG.keys.LEFT || FlxG.keys.RIGHT) {
-                    if(FlxG.keys.LEFT || FlxG.keys.UP) {
+                    if(FlxG.keys.LEFT) {
                         play("walk_l");
                         this.dir.x = -1 * runSpeed;
                         this.offset.x = 63;
                         this.hitboxOffset.x = -13;
                         this.footstepOffset.x = 2;
                     }
-                    if(FlxG.keys.RIGHT || FlxG.keys.DOWN){
+                    if(FlxG.keys.RIGHT){
                         play("walk_r");
                         this.dir.x = runSpeed;
                         this.offset.x = 0;
