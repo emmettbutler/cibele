@@ -74,15 +74,8 @@ package{
             reply_to_box = new FlxRect(reply_to_msg.x, reply_to_msg.y, 50, 50);
 
             list_hitbox = new FlxRect(truncated_msg.x, truncated_msg.y, inbox_ref.width, list_offset);
-        }
 
-        public function update():void {
             msg.text = msg_text;
-            truncated_msg.x = list_pos.x;
-            truncated_msg.y = list_pos.y;
-            list_hitbox.x = truncated_msg.x;
-            list_hitbox.y = truncated_msg.y;
-
             truncated_msg.scrollFactor.x = 0;
             truncated_msg.scrollFactor.y = 0;
             msg.scrollFactor.x = 0;
@@ -91,7 +84,13 @@ package{
             exit_msg.scrollFactor.y = 0;
             reply_to_msg.scrollFactor.x = 0;
             reply_to_msg.scrollFactor.y = 0;
+        }
 
+        public function update():void {
+            truncated_msg.x = list_pos.x;
+            truncated_msg.y = list_pos.y;
+            list_hitbox.x = truncated_msg.x;
+            list_hitbox.y = truncated_msg.y;
         }
 
         public function setListPos(new_pos:DHPoint):void {
@@ -151,7 +150,7 @@ package{
         public function showReply():void {
             if(!reply_sent){
                 reply_sent = true;
-                msg_text += "\n" + "Cibele >> " + reply_text;
+                msg.text += "\n" + "Cibele >> " + reply_text;
             }
         }
     }
