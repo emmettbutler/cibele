@@ -1,7 +1,7 @@
 package{
     import org.flixel.*;
 
-    public class Message extends GameObject {
+    public class Message {
         public var msg_text:String;
         public var msg:FlxText;
         public var viewing:Boolean = false;
@@ -21,6 +21,8 @@ package{
         public var exit_msg:FlxText;
         public var exit_box:FlxRect;
 
+        public var pos:DHPoint;
+
         public var font_size:Number = 16;
         public var font_color:uint = 0xff000000;
         public var unread_color:uint = 0xffF584CA;
@@ -29,11 +31,12 @@ package{
             inbox_ref = inbox;
             sent_by = sender;
             pos = new DHPoint(inbox_ref.x + 5, inbox_ref.y + 10);
-            super(pos);
 
             msg_text = txt;
             send_time = sec;
+        }
 
+        public function initVisibleObjects():void {
             msg = new FlxText(pos.x, pos.y, inbox_ref.width-50, msg_text);
             msg.color = font_color;
             msg.size = font_size;
@@ -59,7 +62,7 @@ package{
             list_hitbox = new FlxRect(truncated_msg.x, truncated_msg.y, inbox_ref.width, list_offset);
         }
 
-        override public function update():void {
+        public function update():void {
             truncated_msg.x = list_pos.x;
             truncated_msg.y = list_pos.y;
             list_hitbox.x = truncated_msg.x;
