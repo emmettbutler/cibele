@@ -48,6 +48,8 @@ package{
 
         override public function update():void{
             super.update();
+            MessageManager.getInstance().update();
+
             player_rect.x = player.x;
             player_rect.y = player.y;
             FlxG.collide();

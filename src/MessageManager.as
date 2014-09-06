@@ -40,6 +40,26 @@ package{
             this.bornTime = new Date().valueOf();
             this.timeAlive = 0;
 
+            this.initNotifications();
+
+            msgs = new Array(
+                new Message("did you get that link i sent you on aim last night? its an anime you might like :D", 1, img_inbox, "Rusher"),
+                new Message("hey giiiiiirl how are things? you never chat with me anymore </3", 1, img_inbox, "GuyverGuy"),
+                new Message("Cib! Wanna do a euryale run w/ me on friday?", 1, img_inbox, "Airia")
+            );
+
+            this.initDebugText();
+
+            mouse_rect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 5, 5);
+
+            for(i = 0; i < msgs.length; i++) {
+                if(!msgs[i].read) {
+                    unread_count += 1;
+                }
+            }
+        }
+
+        public function initNotifications():void {
             var _screen:ScreenManager = ScreenManager.getInstance();
             notifications_pos = new DHPoint(_screen.screenWidth * .001, _screen.screenHeight * .9);
             img_msg = new FlxSprite(notifications_pos.x, notifications_pos.y);
@@ -61,23 +81,13 @@ package{
             exit_inbox.color = 0xff000000;
             FlxG.state.add(exit_inbox);
             exit_inbox_box = new FlxRect(exit_inbox.x, exit_inbox.y, img_inbox.width, 20);
+        }
 
-            msgs = new Array(
-                new Message("hey babe", 1, img_inbox),
-                new Message("waaaa babeyyyyy", 3000, img_inbox)
-            );
-
+        public function initDebugText():void {
+            var _screen:ScreenManager = ScreenManager.getInstance();
             debugText = new FlxText(_screen.screenWidth * .01, _screen.screenHeight * .01, 500, "");
             FlxG.state.add(debugText);
             debugText.color = 0xffffffff;
-
-            mouse_rect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 5, 5);
-
-            for(i = 0; i < msgs.length; i++) {
-                if(!msgs[i].read) {
-                    unread_count += 1;
-                }
-            }
         }
 
         public function update():void {
@@ -86,7 +96,14 @@ package{
             mouse_rect.x = FlxG.mouse.x;
             mouse_rect.y = FlxG.mouse.y;
 
+            if (debugText._textField == null) {
+                // text was previously freed, and thus deleted - recreate it
+                this.initDebugText();
+            }
             debugText.text = state.toString();
+            if (notifications._textField == null) {
+                this.initNotifications();
+            }
             notifications.text = unread_count.toString() + " unread messages.";
 
             for(i = 0; i < msgs.length; i++) {

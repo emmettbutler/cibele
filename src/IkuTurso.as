@@ -22,6 +22,7 @@ package{
 
         override public function update():void{
             super.update();
+            MessageManager.getInstance().update();
             this.boss.update();
 
             if (this.runningSound.timeRemaining < 20*1000 &&

@@ -18,7 +18,7 @@ package org.flixel
 		/**
 		 * Internal reference to a Flash <code>TextField</code> object.
 		 */
-		protected var _textField:TextField;
+		public var _textField:TextField;
 		/**
 		 * Whether the actual text field needs to be regenerated and stamped again.
 		 * This is NOT the same thing as <code>FlxSprite.dirty</code>.
