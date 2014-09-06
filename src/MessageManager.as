@@ -19,7 +19,7 @@ package{
         public var exit_inbox:FlxText;
         public var exit_inbox_rect:FlxRect;
 
-        public var msgs:Array;
+        public var messages:Array;
         public var currently_viewing:Message;
 
         public var debugText:FlxText;
@@ -37,7 +37,7 @@ package{
             this.bornTime = new Date().valueOf();
             this.initNotifications();
 
-            msgs = new Array(
+            this.messages = new Array(
                 new Message("did you get that link i sent you on aim last night? its an anime you might like :D", "yeah! the fairies were very very cute and i think that VA was in sailor moon??", 1, this.img_inbox, "Rusher"),
                 new Message("hey giiiiiirl how are things? you never chat with me anymore </3", ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", 1, this.img_inbox, "GuyverGuy"),
                 new Message("Cib! Wanna do a euryale run w/ me on friday?", "ok! <3 see you then girl~", 1, this.img_inbox, "Airia")
@@ -45,8 +45,8 @@ package{
 
             this.loadVisibleMessageObjects();
 
-            for(i = 0; i < msgs.length; i++) {
-                if(!msgs[i].read) {
+            for(i = 0; i < this.messages.length; i++) {
+                if(!this.messages[i].read) {
                     this.unread_count += 1;
                 }
             }
@@ -104,16 +104,16 @@ package{
         }
 
         public function loadVisibleMessageObjects():void {
-            for (var i:int = 0; i < msgs.length; i++) {
-                msgs[i].initVisibleObjects();
+            for (var i:int = 0; i < this.messages.length; i++) {
+                this.messages[i].initVisibleObjects();
             }
         }
 
         public function reloadPersistentObjects():void {
             this.initNotifications();
             this.loadVisibleMessageObjects();
-            for(i = 1; i < msgs.length; i++){
-                msgs[i].setListPos(msgs[i - 1].list_pos);
+            for(i = 1; i < this.messages.length; i++){
+                this.messages[i].setListPos(this.messages[i - 1].list_pos);
             }
         }
 
@@ -139,31 +139,31 @@ package{
             this.mouse_rect.x = FlxG.mouse.screenX;
             this.mouse_rect.y = FlxG.mouse.screenY;
 
-            for(i = 0; i < msgs.length; i++) {
+            for(i = 0; i < this.messages.length; i++) {
                 if(state == HIDE_INBOX) {
                     exitInbox();
-                    msgs[i].hideMessage();
+                    this.messages[i].hideMessage();
                 } else {
-                    msgs[i].update();
+                    this.messages[i].update();
 
-                    if(this.timeAlive > msgs[i].send_time && !msgs[i].sent) {
+                    if(this.timeAlive > this.messages[i].send_time && !this.messages[i].sent) {
                         if(i != 0){
-                            msgs[i].setListPos(msgs[i-1].list_pos);
+                            this.messages[i].setListPos(this.messages[i-1].list_pos);
                         }
-                        msgs[i].sendMsg();
+                        this.messages[i].sendMsg();
                     }
-                    if(msgs[i].sent){
+                    if(this.messages[i].sent){
                         viewingInbox();
                         if(state == VIEW_LIST) {
-                            msgs[i].viewingList();
-                            if(FlxG.mouse.justPressed() && this.mouse_rect.overlaps(msgs[i].list_hitbox)){
-                                currently_viewing = msgs[i];
+                            this.messages[i].viewingList();
+                            if(FlxG.mouse.justPressed() && this.mouse_rect.overlaps(this.messages[i].list_hitbox)){
+                                currently_viewing = this.messages[i];
                                 state = VIEW_MSG;
                             }
                         }
                         if(state == VIEW_MSG) {
-                            if(msgs[i] != currently_viewing){
-                                msgs[i].hideUnviewedMsgs();
+                            if(this.messages[i] != currently_viewing){
+                                this.messages[i].hideUnviewedmessages();
                             }
 
                             currently_viewing.showCurrentlyViewedMsg();
@@ -194,26 +194,6 @@ package{
                     state = VIEW_LIST;
                 }
             }
-            // for each message in level list
-            // if not appeared
-            // is current time later than message.appear_time?
-            // if so, set message.appeared = true
-            // do animations etc (manager.appearMessage())
-            // if not, continue
-        }
-
-        public function markRead(message:Message):void {
-            //message.read = true;
-        }
-
-        public function appearMessage(message:Message):void {
-            // blink the bar
-            // show a preview
-            // etc
-        }
-
-        public function resetBornTime():void {
-            //this.bornTime = 0;
         }
 
         public function exitInbox():void {
