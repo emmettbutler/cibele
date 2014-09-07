@@ -3,10 +3,14 @@ package{
 
     public class HallwayToFern extends FlxState {
         [Embed(source="../assets/pathtofern.png")] private var ImgBG:Class;
+        [Embed(source="../assets/incomingcall.png")] private var ImgCall:Class;
         [Embed(source="../assets/voc_firstconvo.mp3")] private var Convo1:Class;
 
         public var player:Player;
         public var timer:Number = 0;
+
+        public var call_button:FlxSprite;
+        public var accept_call:Boolean = false;
 
         public var bg1:FlxSprite;
         public var bg2:FlxSprite;
@@ -61,15 +65,25 @@ package{
             player = new Player(_screen.screenWidth * .5, _screen.screenHeight * .5);
             add(player);
             if(_state == STATE_PRE_IT){
-                function _callback():void {
-                    FlxG.switchState(new Fern());
-                }
-                SoundManager.getInstance().playSound(Convo1, 24000, _callback, false, 1);
+                call_button = new FlxSprite(_screen.screenWidth * .3, _screen.screenHeight * .3);
+                call_button.loadGraphic(ImgCall,false,false,500,230);
+                FlxG.state.add(call_button);
             }
         }
 
         override public function update():void{
             super.update();
+            if(_state == STATE_PRE_IT){
+                if(FlxG.mouse.justPressed() && !accept_call){
+                    accept_call = true;
+                    call_button.kill();
+                    function _callback():void {
+                        FlxG.switchState(new Fern());
+                    }
+                    SoundManager.getInstance().playSound(Convo1, 24000, _callback, false, 1);
+                }
+            }
+
             SoundManager.getInstance().update();
             MessageManager.getInstance().update();
 /*
