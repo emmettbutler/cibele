@@ -8,11 +8,11 @@ package{
 
         public var inbox_ref:FlxSprite;
         public var list_hitbox:FlxRect;
-        public var truncated_textbox:FlxText, textbox:FlxText;
+        public var truncated_textbox:FlxText;
 
         public var pos:DHPoint;
 
-        public var send_time:Number, font_size:Number = 16, list_offset:Number = 30;
+        public var font_size:Number = 16, list_offset:Number = 30;
 
         public var font_color:uint = 0xff000000;
         public var unread_color:uint = 0xff982708;
@@ -21,14 +21,10 @@ package{
 
         public var messages:Array;
 
-        public var reply_text:String;
-        public var reply_sent:Boolean = false;
-
         public function Thread(txt:String, rep:String, sec:Number,
                                 inbox:FlxSprite, sender:String) {
             this.inbox_ref = inbox;
             this.sent_by = sender;
-            this.reply_text = rep;
             this.pos = new DHPoint(inbox_ref.x + 5, inbox_ref.y + 10);
 
             this.messages = new Array(
@@ -36,18 +32,9 @@ package{
             );
 
             this.display_text = sent_by + " >> " + txt + "\n";
-            this.send_time = sec;
         }
 
         public function initVisibleObjects():void {
-            this.textbox = new FlxText(pos.x, pos.y, inbox_ref.width - 50,
-                                       display_text);
-            this.textbox.color = this.font_color;
-            this.textbox.scrollFactor = new FlxPoint(0, 0);
-            this.textbox.size = this.font_size;
-            this.textbox.alpha = 0;
-            FlxG.state.add(textbox);
-
             this.truncated_textbox = new FlxText(pos.x, pos.y, inbox_ref.width,
                 this.display_text.slice(0, this.sent_by.length + 10) + "...");
             this.truncated_textbox.color = this.font_color;
@@ -124,13 +111,6 @@ package{
             this.viewing = false;
             for (var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].hide();
-            }
-        }
-
-        public function showReply():void {
-            if(!this.reply_sent){
-                this.reply_sent = true;
-                this.textbox.text += "\n" + "Cibele >> " + this.reply_text;
             }
         }
     }
