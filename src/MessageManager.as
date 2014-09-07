@@ -78,7 +78,7 @@ package{
 
             this.notifications_text = new FlxText(
                 notifications_pos.x, notifications_pos.y,
-                img_msg.width, this.unread_count.toString() + " unread messages.");
+                img_msg.width, this.unread_count.toString() + " unread messages.\n\nN to emote.");
             this.notifications_text.size = 14;
             this.notifications_text.color = 0xff000000;
             this.notifications_text.scrollFactor = new FlxPoint(0, 0);
@@ -164,7 +164,7 @@ package{
         }
 
         public function updateUnreadNotification():void {
-            this.notifications_text.text = this.unread_count + " unread messages.";
+            this.notifications_text.text = this.unread_count + " unread messages.\n\nN to emote.";
             if(this.unread_count > 0) {
                 this.notifications_text.color = 0xff982708;
             } else {
