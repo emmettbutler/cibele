@@ -21,24 +21,21 @@ package{
 
         public var messages:Array;
 
-        public function Thread(sec:Number, inbox:FlxSprite, sender:String,
+        public function Thread(inbox:FlxSprite,
                                ... messages) {
             this.inbox_ref = inbox;
-            this.sent_by = sender;
+            this.sent_by = messages[0][0];
             this.pos = new DHPoint(this.inbox_ref.x + 5, this.inbox_ref.y + 10);
 
             this.messages = new Array();
-            var send_time:Number;
+            var cur_message:Array;
             for (var i:int = 0; i < messages.length; i++) {
-                if (i == 0) {
-                    send_time = sec;
-                } else {
-                    send_time = -1;
-                }
-                this.messages.push(new Message(messages[i], send_time, inbox, sender));
+                cur_message = messages[i];
+                this.messages.push(new Message(cur_message[1], cur_message[2],
+                                               inbox, cur_message[0]));
             }
 
-            this.display_text = sent_by + " >> " + messages[0] + "\n";
+            this.display_text = sent_by + " >> " + messages[0][1] + "\n";
         }
 
         public function initVisibleObjects():void {
@@ -60,6 +57,7 @@ package{
             }
 
             for (var i:int = 0; i < this.messages.length; i++) {
+                this.messages[i].update();
                 if(this.messages[i].send_time != -1 &&
                     this._messages.timeAlive > this.messages[i].send_time &&
                     !this.messages[i].sent)
@@ -126,7 +124,16 @@ package{
         }
 
         public function reply():void {
-
+            for (var i:int = 0; i < messages.length; i++) {
+                if (!this.messages[i].sent &&
+                    this.messages[i].sent_by == MessageManager.SENT_BY_CIBELE)
+                {
+                    this.messages[i].send();
+                    this.messages[i].show();
+                    this.messages[i].pos.y = this.messages[i - 1].pos.y + 50;
+                    break;
+                }
+            }
         }
     }
 }

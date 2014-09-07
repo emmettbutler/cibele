@@ -30,14 +30,25 @@ package{
         public static const STATE_VIEW_MESSAGE:Number = 2;
         public var _state:Number = STATE_HIDE_INBOX;
 
+        public static const SENT_BY_CIBELE:String = "Cibele";
+
         public function MessageManager() {
             this.bornTime = new Date().valueOf();
             this.initNotifications();
 
             this.threads = new Array(
-                new Thread(1, this.img_inbox, "Rusher", "did you get that link i sent you on aim last night? its an anime you might like :D", "yeah! the fairies were very very cute and i think that VA was in sailor moon??"),
-                new Thread(1, this.img_inbox, "GuyverGuy", "hey giiiiiirl how are things? you never chat with me anymore </3", ";_; sorry, ive been pretty busy, ampule has been doing a lot lately"),
-                new Thread(1, this.img_inbox, "Airia", "Cib! Wanna do a euryale run w/ me on friday?", "ok! <3 see you then girl~")
+                new Thread(this.img_inbox,
+                    ["Rusher", "did you get that link i sent you on aim last night? its an anime you might like :D", 1],
+                    [SENT_BY_CIBELE, "yeah! the fairies were very very cute and i think that VA was in sailor moon??", -1]
+                ),
+                new Thread(this.img_inbox,
+                    ["GuyverGuy", "hey giiiiiirl how are things? you never chat with me anymore </3", 1],
+                    [SENT_BY_CIBELE, ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", -1]
+                ),
+                new Thread(this.img_inbox,
+                    ["Airia", "Cib! Wanna do a euryale run w/ me on friday?", 1],
+                    [SENT_BY_CIBELE, "ok! <3 see you then girl~", -1]
+                )
             );
 
             this.loadVisibleMessageObjects();

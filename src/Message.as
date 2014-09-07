@@ -40,7 +40,7 @@ package{
         }
 
         public function update():void {
-
+            this.textbox.y = this.pos.y;
         }
 
         public function hide():void {
