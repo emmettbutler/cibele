@@ -52,7 +52,7 @@ package{
                 this.truncated_textbox.y, this.inbox_ref.width, 10);
         }
 
-        public function sendNext(cur:Message, prev:Message, first:Boolean=false):void {
+        public function send(cur:Message, prev:Message, first:Boolean=false):void {
             cur.send();
             if (this.viewing) {
                 cur.show();
@@ -75,14 +75,16 @@ package{
                 this._messages = MessageManager.getInstance();
             }
 
+            var time_since_last_send:Number = this._messages.timeAlive - this.last_send_time;
+
             for (var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].update();
                 if(this.messages[i].send_time != -1 &&
-                    this._messages.timeAlive - this.last_send_time > this.messages[i].send_time &&
+                    this.time_since_last_send > this.messages[i].send_time &&
                     (i == 0 || (i > 0 && this.messages[i - 1].sent)) &&
                     !this.messages[i].sent)
                 {
-                    this.sendNext(this.messages[i], this.messages[i - 1], i == 0);
+                    this.send(this.messages[i], this.messages[i - 1], i == 0);
                 }
             }
         }
