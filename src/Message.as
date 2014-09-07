@@ -2,19 +2,18 @@ package{
     import org.flixel.*;
 
     public class Message {
-        public var msg_text:String;
-        public var msg:FlxText;
+        public var display_text:String;
+        public var textbox:FlxText;
         public var viewing:Boolean = false;
         public var read:Boolean = false;
+        public var sent:Boolean = false;
 
         public var send_time:Number;
-        public var sent:Boolean = false;
         public var sent_by:String;
 
         public var inbox_ref:FlxSprite;
 
-        public var truncated_msg:FlxText;
-        public var list_pos:DHPoint;
+        public var truncated_textbox:FlxText;
         public var list_offset:Number = 30;
         public var list_hitbox:FlxRect;
 
@@ -40,26 +39,24 @@ package{
             reply_text = rep;
             pos = new DHPoint(inbox_ref.x + 5, inbox_ref.y + 10);
 
-            msg_text = sent_by + " >> " + txt + "\n";
+            display_text = sent_by + " >> " + txt + "\n";
             send_time = sec;
         }
 
         public function initVisibleObjects():void {
-            msg = new FlxText(pos.x, pos.y, inbox_ref.width-50, msg_text);
-            msg.color = font_color;
-            msg.scrollFactor = new FlxPoint(0, 0);
-            msg.size = font_size;
-            FlxG.state.add(msg);
-            msg.alpha = 0;
+            textbox = new FlxText(pos.x, pos.y, inbox_ref.width-50, display_text);
+            textbox.color = font_color;
+            textbox.scrollFactor = new FlxPoint(0, 0);
+            textbox.size = font_size;
+            FlxG.state.add(textbox);
+            textbox.alpha = 0;
 
-            list_pos = new DHPoint(pos.x, pos.y);
-
-            truncated_msg = new FlxText(list_pos.x, list_pos.y, inbox_ref.width, msg_text.slice(0,sent_by.length + 10) + "...");
-            truncated_msg.color = font_color;
-            truncated_msg.scrollFactor = new FlxPoint(0, 0);
-            truncated_msg.size = font_size;
-            FlxG.state.add(truncated_msg);
-            truncated_msg.alpha = 0;
+            truncated_textbox = new FlxText(pos.x, pos.y, inbox_ref.width, display_text.slice(0,sent_by.length + 10) + "...");
+            truncated_textbox.color = font_color;
+            truncated_textbox.scrollFactor = new FlxPoint(0, 0);
+            truncated_textbox.size = font_size;
+            FlxG.state.add(truncated_textbox);
+            truncated_textbox.alpha = 0;
 
             exit_msg = new FlxText(inbox_ref.x+110, inbox_ref.y+(inbox_ref.height-25), inbox_ref.width, "| Back")
             exit_msg.color = font_color;
@@ -79,14 +76,14 @@ package{
 
             reply_box = new FlxRect(reply_to_msg.x, reply_to_msg.y, 50, 50);
 
-            list_hitbox = new FlxRect(truncated_msg.x, truncated_msg.y, inbox_ref.width, list_offset);
+            list_hitbox = new FlxRect(truncated_textbox.x, truncated_textbox.y, inbox_ref.width, list_offset);
         }
 
         public function update():void {
-            truncated_msg.x = list_pos.x;
-            truncated_msg.y = list_pos.y;
-            list_hitbox.x = truncated_msg.x;
-            list_hitbox.y = truncated_msg.y;
+            truncated_textbox.x = pos.x;
+            truncated_textbox.y = pos.y;
+            list_hitbox.x = truncated_textbox.x;
+            list_hitbox.y = truncated_textbox.y;
 
             if (this._messages == null) {
                 this._messages = MessageManager.getInstance();
@@ -98,12 +95,12 @@ package{
         }
 
         public function setListPos(new_pos:DHPoint):void {
-            list_pos.y = new_pos.y + list_offset;
+            pos.y = new_pos.y + list_offset;
         }
 
         public function hideMessage():void {
-            truncated_msg.alpha = 0;
-            msg.alpha = 0;
+            truncated_textbox.alpha = 0;
+            textbox.alpha = 0;
             exit_msg.alpha = 0;
             reply_to_msg.alpha = 0;
         }
@@ -113,31 +110,31 @@ package{
         }
 
         public function showPreview():void {
-            msg.alpha = 0;
+            textbox.alpha = 0;
             viewing = false;
             exit_msg.alpha = 0;
             reply_to_msg.alpha = 0;
 
             if(sent == true) {
-                truncated_msg.alpha = 1;
+                truncated_textbox.alpha = 1;
             }
 
             if(read == true){
-                truncated_msg.color = font_color;
+                truncated_textbox.color = font_color;
             } else {
-                truncated_msg.color = unread_color;
+                truncated_textbox.color = unread_color;
             }
         }
 
         public function hidePreview():void {
-            truncated_msg.alpha = 0;
-            msg.alpha = 0;
+            truncated_textbox.alpha = 0;
+            textbox.alpha = 0;
         }
 
         public function showThread():void {
             viewing = true;
-            truncated_msg.alpha = 0;
-            msg.alpha = 1;
+            truncated_textbox.alpha = 0;
+            textbox.alpha = 1;
             exit_msg.alpha = 1;
             reply_to_msg.alpha = 1;
         }
@@ -148,13 +145,13 @@ package{
 
         public function hideFull():void {
             viewing = false;
-            msg.alpha = 0;
+            textbox.alpha = 0;
         }
 
         public function showReply():void {
             if(!reply_sent){
                 reply_sent = true;
-                msg.text += "\n" + "Cibele >> " + reply_text;
+                textbox.text += "\n" + "Cibele >> " + reply_text;
             }
         }
     }

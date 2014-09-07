@@ -47,7 +47,7 @@ package{
                     this.unread_count += 1;
                 }
                 if(i != 0){
-                    this.messages[i].setListPos(this.messages[i - 1].list_pos);
+                    this.messages[i].setListPos(this.messages[i - 1].pos);
                 }
             }
         }
@@ -116,7 +116,7 @@ package{
             this.initNotifications();
             this.loadVisibleMessageObjects();
             for(var i:int = 1; i < this.messages.length; i++){
-                this.messages[i].setListPos(this.messages[i - 1].list_pos);
+                this.messages[i].setListPos(this.messages[i - 1].pos);
             }
         }
 
