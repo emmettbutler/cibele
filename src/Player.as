@@ -3,6 +3,7 @@ package{
 
     public class Player extends PartyMember {
         [Embed(source="../assets/c_walk.png")] private var ImgCibWalk:Class;
+        [Embed(source="../assets/splash_sprites.png")] private var ImgAttack:Class;
 
         public var runSpeed:Number = 4;
         public var colliding:Boolean = false;
@@ -13,6 +14,7 @@ package{
         public var collisionDirection:Array;
         public var popupmgr:PopUpManager;
         public static const NO_POP_UP:Number = 2;
+        public var splash_sprites:FlxSprite;
 
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
@@ -112,11 +114,27 @@ package{
             }
 
             if (this._state == STATE_IN_ATTACK) {
+                this.splash_sprites.x = this.x;
+                this.splash_sprites.y = this.y;
                 if (timeSinceLastAttack() > 100) {
                     play("idle");
                     this._state = STATE_IDLE;
                 }
+            } else {
+                if(this.splash_sprites.frame == 8) {
+                    this.splash_sprites.alpha = 0;
+                    this.splash_sprites.play("idle");
+                }
             }
+        }
+
+        public function testAttackAnim():void {
+            this.splash_sprites = new FlxSprite(this.x, this.y);
+            this.splash_sprites.loadGraphic(ImgAttack, true, false, 640/10, 64);
+            this.splash_sprites.addAnimation("attack", [0, 1, 2, 3, 4, 5, 6, 7, 8], 15, false);
+            this.splash_sprites.addAnimation("idle", [0], 20, false);
+            FlxG.state.add(this.splash_sprites);
+            this.splash_sprites.alpha = 0;
         }
 
         public function emote():void {
@@ -133,6 +151,8 @@ package{
         override public function attack():void {
             super.attack();
             if (this._state == STATE_IN_ATTACK) {
+                this.splash_sprites.alpha = 1;
+                this.splash_sprites.play("attack");
                 play("attack");
             }
         }

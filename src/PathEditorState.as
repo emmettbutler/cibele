@@ -81,6 +81,7 @@ package
 
             add(pathWalker);
             add(player);
+            player.testAttackAnim();
 
             add(player.debugText);
             add(pathWalker.debugText);
