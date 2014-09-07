@@ -35,9 +35,9 @@ package{
             this.initNotifications();
 
             this.messages = new Array(
-                new Thread("did you get that link i sent you on aim last night? its an anime you might like :D", "yeah! the fairies were very very cute and i think that VA was in sailor moon??", 1, this.img_inbox, "Rusher"),
-                new Thread("hey giiiiiirl how are things? you never chat with me anymore </3", ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", 1, this.img_inbox, "GuyverGuy"),
-                new Thread("Cib! Wanna do a euryale run w/ me on friday?", "ok! <3 see you then girl~", 1, this.img_inbox, "Airia")
+                new Thread(1, this.img_inbox, "Rusher", "did you get that link i sent you on aim last night? its an anime you might like :D", "yeah! the fairies were very very cute and i think that VA was in sailor moon??"),
+                new Thread(1, this.img_inbox, "GuyverGuy", "hey giiiiiirl how are things? you never chat with me anymore </3", ";_; sorry, ive been pretty busy, ampule has been doing a lot lately"),
+                new Thread(1, this.img_inbox, "Airia", "Cib! Wanna do a euryale run w/ me on friday?", "ok! <3 see you then girl~")
             );
 
             this.loadVisibleMessageObjects();
@@ -163,18 +163,16 @@ package{
         public function openThread(thread:Thread):void {
             this.cur_viewing = thread;
             if(this.cur_viewing.unread) {
-                this.cur_viewing.markAsRead();
                 this.unread_count -= 1;
             }
+            this.cur_viewing.markAsRead();
             this.cur_viewing.show();
             this.reply_to_msg.alpha = 1;
             this.exit_msg.alpha = 1;
             this._state = STATE_VIEW_MESSAGE;
 
             for(var i:int = 0; i < this.messages.length; i++) {
-                if(this.messages[i] != cur_viewing){
-                    this.messages[i].hidePreview();
-                }
+                this.messages[i].hidePreview();
             }
         }
 
@@ -220,7 +218,7 @@ package{
                                 this.showPreviews();
                                 this._state = STATE_VIEW_LIST;
                             } else if(this.mouse_rect.overlaps(this.reply_box)) {
-                                cur_viewing.showReply();
+                                cur_viewing.reply();
                             }
                         }
                     }

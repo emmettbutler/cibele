@@ -21,17 +21,24 @@ package{
 
         public var messages:Array;
 
-        public function Thread(txt:String, rep:String, sec:Number,
-                                inbox:FlxSprite, sender:String) {
+        public function Thread(sec:Number, inbox:FlxSprite, sender:String,
+                               ... messages) {
             this.inbox_ref = inbox;
             this.sent_by = sender;
-            this.pos = new DHPoint(inbox_ref.x + 5, inbox_ref.y + 10);
+            this.pos = new DHPoint(this.inbox_ref.x + 5, this.inbox_ref.y + 10);
 
-            this.messages = new Array(
-                new Message(txt, rep, sec, inbox, sender)
-            );
+            this.messages = new Array();
+            var send_time:Number;
+            for (var i:int = 0; i < messages.length; i++) {
+                if (i == 0) {
+                    send_time = sec;
+                } else {
+                    send_time = -1;
+                }
+                this.messages.push(new Message(messages[i], send_time, inbox, sender));
+            }
 
-            this.display_text = sent_by + " >> " + txt + "\n";
+            this.display_text = sent_by + " >> " + messages[0] + "\n";
         }
 
         public function initVisibleObjects():void {
@@ -53,8 +60,10 @@ package{
             }
 
             for (var i:int = 0; i < this.messages.length; i++) {
-                if(this._messages.timeAlive > this.messages[i].send_time &&
-                    !this.messages[i].sent) {
+                if(this.messages[i].send_time != -1 &&
+                    this._messages.timeAlive > this.messages[i].send_time &&
+                    !this.messages[i].sent)
+                {
                     this.messages[i].sendMsg();
                 }
             }
@@ -103,7 +112,9 @@ package{
             this.unread = false;
             this.truncated_textbox.alpha = 0;
             for (var i:int = 0; i < this.messages.length; i++) {
-                this.messages[i].show();
+                if (this.messages[i].sent) {
+                    this.messages[i].show();
+                }
             }
         }
 
@@ -112,6 +123,10 @@ package{
             for (var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].hide();
             }
+        }
+
+        public function reply():void {
+
         }
     }
 }

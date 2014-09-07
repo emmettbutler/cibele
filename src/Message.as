@@ -18,7 +18,7 @@ package{
 
         public var _messages:MessageManager = null;
 
-        public function Message(txt:String, rep:String, sec:Number,
+        public function Message(txt:String, sec:Number,
                                 inbox:FlxSprite, sender:String) {
             this.inbox_ref = inbox;
             this.sent_by = sender;
@@ -31,8 +31,9 @@ package{
         }
 
         public function initVisibleObjects():void {
-            this.textbox = new FlxText(pos.x, pos.y, inbox_ref.width - 50,
-                                       display_text);
+            this.textbox = new FlxText(this.pos.x, this.pos.y,
+                                       this.inbox_ref.width - 50,
+                                       this.display_text);
             this.textbox.color = this.font_color;
             this.textbox.scrollFactor = new FlxPoint(0, 0);
             this.textbox.size = this.font_size;
@@ -43,10 +44,6 @@ package{
         public function update():void {
             if (this._messages == null) {
                 this._messages = MessageManager.getInstance();
-            }
-
-            if(this._messages.timeAlive > this.send_time && !this.sent) {
-                this.sendMsg();
             }
         }
 
