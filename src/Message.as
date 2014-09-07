@@ -2,24 +2,19 @@ package{
     import org.flixel.*;
 
     public class Message {
-        public var display_text:String;
-        public var textbox:FlxText;
-        public var viewing:Boolean = false;
-        public var read:Boolean = false;
-        public var sent:Boolean = false;
+        public var display_text:String, sent_by:String;
 
-        public var send_time:Number;
-        public var sent_by:String;
+        public var viewing:Boolean = false, read:Boolean = false,
+                   sent:Boolean = false;
 
         public var inbox_ref:FlxSprite;
-
-        public var truncated_textbox:FlxText;
-        public var list_offset:Number = 30;
         public var list_hitbox:FlxRect;
+        public var truncated_textbox:FlxText, textbox:FlxText;
 
         public var pos:DHPoint;
 
-        public var font_size:Number = 16;
+        public var send_time:Number, font_size:Number = 16, list_offset:Number = 30;
+
         public var font_color:uint = 0xff000000;
         public var unread_color:uint = 0xff982708;
 
@@ -61,11 +56,6 @@ package{
         }
 
         public function update():void {
-            truncated_textbox.x = pos.x;
-            truncated_textbox.y = pos.y;
-            list_hitbox.x = truncated_textbox.x;
-            list_hitbox.y = truncated_textbox.y;
-
             if (this._messages == null) {
                 this._messages = MessageManager.getInstance();
             }
@@ -76,57 +66,58 @@ package{
         }
 
         public function setListPos(new_pos:DHPoint):void {
-            pos.y = new_pos.y + list_offset;
+            this.pos.y = this.new_pos.y + this.list_offset;
+            this.truncated_textbox.y = this.pos.y;
         }
 
         public function hideMessage():void {
-            truncated_textbox.alpha = 0;
-            textbox.alpha = 0;
+            this.truncated_textbox.alpha = 0;
+            this.textbox.alpha = 0;
         }
 
         public function sendMsg():void {
-            sent = true;
+            this.sent = true;
         }
 
         public function showPreview():void {
-            textbox.alpha = 0;
-            viewing = false;
+            this.textbox.alpha = 0;
+            this.viewing = false;
 
-            if(sent == true) {
-                truncated_textbox.alpha = 1;
+            if(this.sent == true) {
+                this.truncated_textbox.alpha = 1;
             }
 
-            if(read == true){
-                truncated_textbox.color = font_color;
+            if(this.read == true){
+                this.truncated_textbox.color = this.font_color;
             } else {
-                truncated_textbox.color = unread_color;
+                this.truncated_textbox.color = this.unread_color;
             }
         }
 
         public function hidePreview():void {
-            truncated_textbox.alpha = 0;
-            textbox.alpha = 0;
+            this.truncated_textbox.alpha = 0;
+            this.textbox.alpha = 0;
         }
 
         public function showThread():void {
-            viewing = true;
-            truncated_textbox.alpha = 0;
-            textbox.alpha = 1;
+            this.viewing = true;
+            this.truncated_textbox.alpha = 0;
+            this.textbox.alpha = 1;
         }
 
         public function markAsRead():void {
-            read = true;
+            this.read = true;
         }
 
         public function hideFull():void {
-            viewing = false;
-            textbox.alpha = 0;
+            this.viewing = false;
+            this.textbox.alpha = 0;
         }
 
         public function showReply():void {
-            if(!reply_sent){
-                reply_sent = true;
-                textbox.text += "\n" + "Cibele >> " + reply_text;
+            if(!this.reply_sent){
+                this.reply_sent = true;
+                this.textbox.text += "\n" + "Cibele >> " + this.reply_text;
             }
         }
     }
