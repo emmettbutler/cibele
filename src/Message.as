@@ -36,6 +36,7 @@ package{
             this.textbox.scrollFactor = new FlxPoint(0, 0);
             this.textbox.size = this.font_size;
             this.textbox.alpha = 0;
+            this.textbox.active = false;
             FlxG.state.add(this.textbox);
         }
 

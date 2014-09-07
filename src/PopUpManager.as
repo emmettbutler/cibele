@@ -39,6 +39,8 @@ package{
             loadPopUps();
             this.debugText = new FlxText(FlxG.mouse.x,FlxG.mouse.y,500,"");
             FlxG.state.add(this.debugText);
+
+            this.program_picker.scrollFactor = new FlxPoint(0, 0);
         }
 
         public function update():void {
@@ -48,15 +50,8 @@ package{
                 FlxG.state.add(this.debugText);
             }
 
-            this.debugText.x = FlxG.mouse.x;
-            this.debugText.y = FlxG.mouse.y-10;
-            this.debugText.text = this._state.toString();
-
             this.currentTime = new Date().valueOf();
             this.timeAlive = this.currentTime - this.bornTime;
-
-            this.program_picker.scrollFactor.x = 0;
-            this.program_picker.scrollFactor.y = 0;
 
             if(this._state == SHOWING_NOTHING) {
                 checkForNextPopUp();

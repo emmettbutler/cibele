@@ -48,6 +48,7 @@ package{
             this.truncated_textbox.scrollFactor = new FlxPoint(0, 0);
             this.truncated_textbox.size = this.font_size;
             this.truncated_textbox.alpha = 0;
+            this.truncated_textbox.active = false;
             FlxG.state.add(truncated_textbox);
 
             this.list_hitbox = new FlxRect(this.truncated_textbox.x,

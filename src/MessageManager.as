@@ -73,6 +73,7 @@ package{
                 notifications_pos.x, notifications_pos.y);
             img_msg.loadGraphic(ImgMsg, false, false, 197, 71);
             img_msg.scrollFactor = new FlxPoint(0, 0);
+            img_msg.active = false;
             FlxG.state.add(img_msg);
 
             this.notifications_text = new FlxText(
@@ -81,6 +82,7 @@ package{
             this.notifications_text.size = 14;
             this.notifications_text.color = 0xff000000;
             this.notifications_text.scrollFactor = new FlxPoint(0, 0);
+            this.notifications_text.active = false;
             FlxG.state.add(this.notifications_text);
 
             this.notifications_box = new FlxRect(this.notifications_text.x,
@@ -94,6 +96,7 @@ package{
             this.img_inbox = new FlxSprite(inbox_pos.x, inbox_pos.y);
             this.img_inbox.loadGraphic(ImgInbox, false, false, 500, 230);
             this.img_inbox.scrollFactor = new FlxPoint(0, 0);
+            this.img_inbox.active = false;
             FlxG.state.add(this.img_inbox);
 
             this.exit_inbox = new FlxText(
@@ -102,6 +105,7 @@ package{
             this.exit_inbox.size = 16;
             this.exit_inbox.color = 0xff000000;
             this.exit_inbox.scrollFactor = new FlxPoint(0, 0);
+            this.exit_inbox.active = false;
             FlxG.state.add(this.exit_inbox);
 
             this.exit_inbox_rect = new FlxRect(this.exit_inbox.x,
@@ -119,6 +123,7 @@ package{
             this.exit_msg.color = 0xff000000;
             this.exit_msg.scrollFactor = new FlxPoint(0, 0);
             this.exit_msg.alpha = 0;
+            this.exit_msg.active = false;
             FlxG.state.add(this.exit_msg);
 
             this.exit_box = new FlxRect(this.exit_msg.x, this.exit_msg.y, 50, 50);
@@ -130,6 +135,7 @@ package{
             this.reply_to_msg.color = 0xff000000;
             this.reply_to_msg.scrollFactor = new FlxPoint(0, 0);
             this.reply_to_msg.alpha = 0;
+            this.reply_to_msg.active = false;
             FlxG.state.add(this.reply_to_msg);
 
             this.reply_box = new FlxRect(this.reply_to_msg.x, this.reply_to_msg.y,
@@ -139,6 +145,7 @@ package{
                                          _screen.screenHeight * .01, 500, "");
             this.debugText.scrollFactor = new FlxPoint(0, 0);
             this.debugText.color = 0xff0000ff;
+            this.debugText.active = false;
             FlxG.state.add(this.debugText);
         }
 
@@ -201,6 +208,7 @@ package{
 
             var cur_thread:Thread;
             this.unread_count = 0;
+
             for(var i:int = 0; i < this.threads.length; i++) {
                 cur_thread = this.threads[i];
                 cur_thread.update();
