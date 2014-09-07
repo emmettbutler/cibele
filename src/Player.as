@@ -13,6 +13,7 @@ package{
         public var hitboxOffset:DHPoint, hitboxDim:DHPoint;
         public var collisionDirection:Array;
         public var popupmgr:PopUpManager;
+        public var inhibitY:Boolean = false;
         public static const NO_POP_UP:Number = 2;
         public var splash_sprites:FlxSprite;
 
@@ -76,7 +77,7 @@ package{
                         this.dir.x = 0;
                     }
 
-                    if(FlxG.keys.UP || FlxG.keys.DOWN) {
+                    if(!this.inhibitY && (FlxG.keys.UP || FlxG.keys.DOWN)) {
                         if (!(FlxG.keys.LEFT || FlxG.keys.RIGHT)) {
                             this.offset.x = 63;
                             this.hitboxOffset.x = 10;

@@ -2,7 +2,7 @@ package{
     import org.flixel.*;
 
     public class HallwayToFern extends FlxState {
-        [Embed(source="../assets/pathtofern.png")] private var ImgBG:Class;
+        [Embed(source="../assets/hallway sprite.png")] private var ImgBG:Class;
         [Embed(source="../assets/incomingcall.png")] private var ImgCall:Class;
         [Embed(source="../assets/voc_firstconvo.mp3")] private var Convo1:Class;
 
@@ -15,8 +15,6 @@ package{
         public var bg1:FlxSprite;
         public var bg2:FlxSprite;
         public var bg3:FlxSprite;
-
-        public var door:FlxRect;
 
         public var enemy:SmallEnemy;
 
@@ -34,37 +32,35 @@ package{
 
         override public function create():void {
             FlxG.mouse.show();
-            /*
             FlxG.bgColor = 0xff000000;
 
             var _screen:ScreenManager = ScreenManager.getInstance();
-            var originX:Number = (_screen.screenWidth * .5) - 640/2;
+            var originX:Number = (_screen.screenWidth * .5) - 1422/2;
 
             bg1 = new FlxSprite(originX, -img_height);
-            bg1.loadGraphic(ImgBG,false,false,640,img_height);
+            bg1.loadGraphic(ImgBG,false,false,1422,800);
+            bg1.addAnimation("run", [0, 1, 2, 3, 4], 12, true);
+            bg1.play("run");
             add(bg1);
             bg2 = new FlxSprite(originX, 0);
-            bg2.loadGraphic(ImgBG,false,false,640,img_height);
+            bg2.loadGraphic(ImgBG,false,false,1422,800);
+            bg2.addAnimation("run", [0, 1, 2, 3, 4], 12, true);
+            bg2.play("run");
             add(bg2);
             bg3 = new FlxSprite(originX, img_height);
-            bg3.loadGraphic(ImgBG,false,false,640,img_height);
+            bg3.loadGraphic(ImgBG,false,false,1422,800);
+            bg3.addAnimation("run", [0, 1, 2, 3, 4], 12, true);
+            bg3.play("run");
             add(bg3);
 
-            door = new FlxRect(210,100,200,100);
-
-            player = new Player(originX + 640/2, 280);
-            add(player);
-*/
-
-            (new BackgroundLoader()).loadSingleTileBG("../assets/it_teleport_640_480.png");
             ScreenManager.getInstance().setupCamera(null, 1);
 
-            var _screen:ScreenManager = ScreenManager.getInstance();
             var debugText:FlxText = new FlxText(_screen.screenWidth * .2, _screen.screenHeight * .2,200,"placeholder for hallway\nthat player will run down\nduring this sequence");
             add(debugText);
             debugText.size = 12;
 
             player = new Player(_screen.screenWidth * .5, _screen.screenHeight * .5);
+            player.inhibitY = true;
             add(player);
             player.testAttackAnim();
             if(_state == STATE_PRE_IT){
@@ -95,7 +91,7 @@ package{
 
             SoundManager.getInstance().update();
             MessageManager.getInstance().update();
-/*
+
             if(FlxG.keys.UP){
                 bg1.y += runSpeed;
                 bg2.y += runSpeed;
@@ -106,12 +102,6 @@ package{
                 bg2.y -= runSpeed;
                 bg3.y -= runSpeed;
             }
-            if(FlxG.keys.LEFT){
-                player.x -= runSpeed;
-            }
-            if(FlxG.keys.RIGHT){
-                player.x += runSpeed;
-            }
 
             if(bg2.y == 0){
                 bg1.y = bg2.y-bg2.height;
@@ -121,7 +111,7 @@ package{
             }
             if(bg3.y == 0){
                 bg2.y = bg3.y-bg3.height;
-            }*/
+            }
         }
     }
 }
