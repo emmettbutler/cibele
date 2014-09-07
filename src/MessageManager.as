@@ -8,12 +8,12 @@ package{
         public static var _instance:MessageManager = null;
 
         public var notifications_text:FlxText, exit_inbox:FlxText,
-                   debugText:FlxText, exit_msg:FlxText;
+                   debugText:FlxText, exit_msg:FlxText, reply_to_msg:FlxText;
 
         public var img_inbox:FlxSprite;
 
         public var notifications_box:FlxRect, exit_inbox_rect:FlxRect,
-                   mouse_rect:FlxRect, exit_box:FlxRect;
+                   mouse_rect:FlxRect, exit_box:FlxRect, reply_box:FlxRect;
 
         public var messages:Array;
         public var cur_viewing:Message;
@@ -110,6 +110,18 @@ package{
 
             this.exit_box = new FlxRect(this.exit_msg.x, this.exit_msg.y, 50, 50);
 
+            this.reply_to_msg = new FlxText(this.img_inbox.x + 172,
+                this.img_inbox.y + (this.img_inbox.height - 25),
+                this.img_inbox.width, "| Reply");
+            this.reply_to_msg.size = 14;
+            this.reply_to_msg.color = 0xff000000;
+            this.reply_to_msg.scrollFactor = new FlxPoint(0, 0);
+            this.reply_to_msg.alpha = 0;
+            FlxG.state.add(this.reply_to_msg);
+
+            this.reply_box = new FlxRect(this.reply_to_msg.x, this.reply_to_msg.y,
+                                         50, 50);
+
             this.debugText = new FlxText(_screen.screenWidth * .01,
                                          _screen.screenHeight * .01, 500, "");
             this.debugText.scrollFactor = new FlxPoint(0, 0);
@@ -144,6 +156,7 @@ package{
             for(var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].showPreview();
             }
+            this.reply_to_msg.alpha = 0;
             this.exit_msg.alpha = 0;
         }
 
@@ -154,7 +167,8 @@ package{
                 this.unread_count -= 1;
             }
             this.cur_viewing.showThread();
-            exit_msg.alpha = 1;
+            this.reply_to_msg.alpha = 1;
+            this.exit_msg.alpha = 1;
             if(!this.cur_viewing.read) {
                 this.cur_viewing.markAsRead();
                 this.unread_count -= 1;
@@ -211,7 +225,7 @@ package{
                                 cur_viewing = null;
                                 this.showPreviews();
                                 this._state = STATE_VIEW_LIST;
-                            } else if(this.mouse_rect.overlaps(cur_viewing.reply_box)) {
+                            } else if(this.mouse_rect.overlaps(this.reply_box)) {
                                 cur_viewing.showReply();
                             }
                         }
@@ -227,6 +241,7 @@ package{
         public function exitInbox():void {
             this.exit_inbox.alpha = 0;
             this.exit_msg.alpha = 0;
+            this.reply_to_msg.alpha = 0;
             this.img_inbox.alpha = 0;
             for(var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].hideMessage();

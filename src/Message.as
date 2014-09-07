@@ -17,9 +17,6 @@ package{
         public var list_offset:Number = 30;
         public var list_hitbox:FlxRect;
 
-        public var reply_to_msg:FlxText;
-        public var reply_box:FlxRect;
-
         public var pos:DHPoint;
 
         public var font_size:Number = 16;
@@ -56,15 +53,6 @@ package{
             FlxG.state.add(truncated_textbox);
             truncated_textbox.alpha = 0;
 
-            reply_to_msg = new FlxText(inbox_ref.x+172, inbox_ref.y+(inbox_ref.height-25), inbox_ref.width, "| Reply")
-            reply_to_msg.color = font_color;
-            reply_to_msg.size = font_size;
-            reply_to_msg.scrollFactor = new FlxPoint(0, 0);
-            FlxG.state.add(reply_to_msg);
-            reply_to_msg.alpha = 0;
-
-            reply_box = new FlxRect(reply_to_msg.x, reply_to_msg.y, 50, 50);
-
             list_hitbox = new FlxRect(truncated_textbox.x, truncated_textbox.y, inbox_ref.width, list_offset);
         }
 
@@ -90,7 +78,6 @@ package{
         public function hideMessage():void {
             truncated_textbox.alpha = 0;
             textbox.alpha = 0;
-            reply_to_msg.alpha = 0;
         }
 
         public function sendMsg():void {
@@ -100,7 +87,6 @@ package{
         public function showPreview():void {
             textbox.alpha = 0;
             viewing = false;
-            reply_to_msg.alpha = 0;
 
             if(sent == true) {
                 truncated_textbox.alpha = 1;
@@ -122,7 +108,6 @@ package{
             viewing = true;
             truncated_textbox.alpha = 0;
             textbox.alpha = 1;
-            reply_to_msg.alpha = 1;
         }
 
         public function markAsRead():void {
