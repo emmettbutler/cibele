@@ -8,6 +8,7 @@ package
     public class PathFollower extends PartyMember
     {
         [Embed(source="../assets/ichi.png")] private var ImgIchi:Class;
+        [Embed(source="../assets/fire_explosion.png")] private var ImgAttack:Class;
         public var _path:Path;
         public var _mapnodes:MapNodeContainer;
         public var _enemies:EnemyGroup;
@@ -18,6 +19,8 @@ package
 
         public var closestEnemy:Enemy;
         public var playerRef:Player;
+
+        public var attackAnim:FlxSprite;
 
         public static const STATE_MOVE_TO_PATH_NODE:Number = 2;
         public static const STATE_IDLE_AT_PATH_NODE:Number = 3;
@@ -145,6 +148,21 @@ package
                 }
                 this.dir = ZERO_POINT;
             }
+
+            if(this.attackAnim.frame == 8) {
+                attackAnim.play("idle");
+                attackAnim.alpha = 0;
+            }
+        }
+
+        public function tempAttackAnim():void {
+            attackAnim = new FlxSprite(this.x, this.y);
+            attackAnim.loadGraphic(ImgAttack, true, false, 1152/9, 128);
+            attackAnim.addAnimation("attack", [0, 1, 2, 3, 4, 5, 6, 7, 8], 15, false);
+            attackAnim.addAnimation("idle", [0], 15, false);
+            FlxG.state.add(attackAnim);
+            attackAnim.alpha = 0;
+            attackAnim.play("idle");
         }
 
         public function resolveStatePostAttack():void {
@@ -247,6 +265,10 @@ package
             super.attack();
             if (this._state == STATE_IN_ATTACK) {
                 play("attack");
+                attackAnim.x = this.x;
+                attackAnim.y = this.y;
+                attackAnim.alpha = 1;
+                attackAnim.play("attack");
             }
         }
     }

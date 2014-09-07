@@ -80,6 +80,7 @@ package
             this.enemies.addEnemy(this.boss);
 
             add(pathWalker);
+            pathWalker.tempAttackAnim();
             add(player);
             player.testAttackAnim();
 
