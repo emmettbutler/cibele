@@ -131,17 +131,19 @@ package{
                 this.emote();
             }
 
-            if (this._state == STATE_IN_ATTACK) {
-                this.splash_sprites.x = this.x;
-                this.splash_sprites.y = this.y;
-                if (timeSinceLastAttack() > 100) {
-                    play("idle");
-                    this._state = STATE_IDLE;
-                }
-            } else {
-                if(this.splash_sprites.frame == 8) {
-                    this.splash_sprites.alpha = 0;
-                    this.splash_sprites.play("idle");
+            if (this.splash_sprites != null) {
+                if (this._state == STATE_IN_ATTACK) {
+                    this.splash_sprites.x = this.pos.x;
+                    this.splash_sprites.y = this.pos.y;
+                    if (timeSinceLastAttack() > 100) {
+                        play("idle");
+                        this._state = STATE_IDLE;
+                    }
+                } else {
+                    if(this.splash_sprites.frame == 8) {
+                        this.splash_sprites.alpha = 0;
+                        this.splash_sprites.play("idle");
+                    }
                 }
             }
         }

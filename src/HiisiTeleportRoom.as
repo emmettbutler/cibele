@@ -37,6 +37,7 @@ package{
 
             player = new Player(220, 280);
             add(player);
+            player.testAttackAnim();
             player_rect = new FlxRect(player.x,player.y,player.width,player.height);
 
             debugText = new FlxText(0,0,100,"");

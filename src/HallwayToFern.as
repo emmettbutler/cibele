@@ -66,6 +66,7 @@ package{
 
             player = new Player(_screen.screenWidth * .5, _screen.screenHeight * .5);
             add(player);
+            player.testAttackAnim();
             if(_state == STATE_PRE_IT){
                 call_button = new FlxSprite(_screen.screenWidth * .3, _screen.screenHeight * .3);
                 call_button.loadGraphic(ImgCall,false,false,500,230);
