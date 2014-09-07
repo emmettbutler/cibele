@@ -96,6 +96,10 @@ package{
                     this.dir.y = 0;
                     play("idle");
                 }
+            } else {
+                this.dir.x = 0;
+                this.dir.y = 0;
+                play("idle");
             }
 
             if (this.colliding) {
