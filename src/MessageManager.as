@@ -39,20 +39,25 @@ package{
             this.threads = new Array(
                 new Thread(this.img_inbox,
                     ["Rusher", "did you get that link i sent you on aim last night? its an anime you might like :D", 1],
-                    [SENT_BY_CIBELE, "yeah! the fairies were very very cute and i think that VA was in sailor moon??", -1]
+                    [SENT_BY_CIBELE, "yeah! the fairies were very very cute and i think that VA was in sailor moon??", -1],
+                    ["Rusher", "the little pink haired one looks just like you :3", 10*1000],
+                    [SENT_BY_CIBELE, "i always do my best to look anime ^_^", -1]
                 ),
                 new Thread(this.img_inbox,
                     ["GuyverGuy", "hey giiiiiirl how are things? you never chat with me anymore </3", 1],
-                    [SENT_BY_CIBELE, ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", -1]
+                    [SENT_BY_CIBELE, ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", -1],
+                    ["GuyverGuy", "everyone bowing to ichis whip as usual i see", 2*1000],
+                    [SENT_BY_CIBELE, "omg guyver stop lol", 1]
                 ),
                 new Thread(this.img_inbox,
                     ["Airia", "Cib! Wanna do a euryale run w/ me on friday?", 1],
-                    [SENT_BY_CIBELE, "ok! <3 see you then girl~", -1],
-                    ["Airia", "ok! <3 see you then girl~", 5*1000],
-                    [SENT_BY_CIBELE, "ok! <3 see you then girl~", -1],
-                    ["Airia", "ok! <3 see you then girl~", 5*1000],
-                    [SENT_BY_CIBELE, "ok! <3 see you then girl~", -1],
-                    ["Airia", "ok! <3 see you then girl~", 5*1000]
+                    [SENT_BY_CIBELE, "ok! <3 see you then girl~", -1]
+                ),
+                new Thread(this.img_inbox,
+                    ["Guillen", "where u at", 1],
+                    [SENT_BY_CIBELE, "hey sorry duoing with ichi now", -1],
+                    ["Guillen", "omg stop hogging ichi come oooonnnn", 7*1000],
+                    [SENT_BY_CIBELE, "^_^;", 1]
                 )
             );
 
