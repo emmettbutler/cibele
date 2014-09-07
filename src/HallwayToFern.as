@@ -26,6 +26,8 @@ package{
         public var _state:Number = 0;
         public var runSpeed:Number = 5;
 
+        public var popupmgr:PopUpManager;
+
         public function HallwayToFern(state:Number = 0){
             _state = state;
         }
@@ -73,6 +75,9 @@ package{
 
         override public function update():void{
             super.update();
+            popupmgr = PopUpManager.getInstance();
+            popupmgr.update();
+
             if(_state == STATE_PRE_IT){
                 if(FlxG.mouse.justPressed() && !accept_call){
                     accept_call = true;
@@ -81,6 +86,8 @@ package{
                         FlxG.switchState(new Fern());
                     }
                     SoundManager.getInstance().playSound(Convo1, 24000, _callback, false, 1);
+                    popupmgr.createNewPopUp(1);
+                    popupmgr.createNewPopUp(2);
                 }
             }
 

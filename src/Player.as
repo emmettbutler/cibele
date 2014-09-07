@@ -11,6 +11,8 @@ package{
         public var mapHitbox:FlxSprite;
         public var hitboxOffset:DHPoint, hitboxDim:DHPoint;
         public var collisionDirection:Array;
+        public var popupmgr:PopUpManager;
+        public static const NO_POP_UP:Number = 2;
 
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
@@ -35,40 +37,45 @@ package{
             this.hitbox_rect.x = this.pos.x;
             this.hitbox_rect.y = this.pos.y;
 
-            if (FlxG.keys.LEFT || FlxG.keys.RIGHT || FlxG.keys.UP || FlxG.keys.DOWN) {
-                if(FlxG.keys.LEFT || FlxG.keys.RIGHT) {
-                    if(FlxG.keys.LEFT) {
-                        play("walk_l");
-                        this.dir.x = -1 * runSpeed;
-                        this.offset.x = 63;
-                        this.hitboxOffset.x = 10;
-                        this.footstepOffset.x = 2;
+            popupmgr = PopUpManager.getInstance();
+            popupmgr.update();
+
+            if(popupmgr._state == NO_POP_UP){
+                if (FlxG.keys.LEFT || FlxG.keys.RIGHT || FlxG.keys.UP || FlxG.keys.DOWN) {
+                    if(FlxG.keys.LEFT || FlxG.keys.RIGHT) {
+                        if(FlxG.keys.LEFT) {
+                            play("walk_l");
+                            this.dir.x = -1 * runSpeed;
+                            this.offset.x = 63;
+                            this.hitboxOffset.x = 10;
+                            this.footstepOffset.x = 2;
+                        }
+                        if(FlxG.keys.RIGHT){
+                            play("walk_r");
+                            this.dir.x = runSpeed;
+                            this.offset.x = 0;
+                            this.hitboxOffset.x = 30;
+                            this.footstepOffset.x = 20;
+                        }
+                    } else {
+                        this.dir.x = 0;
                     }
-                    if(FlxG.keys.RIGHT){
-                        play("walk_r");
-                        this.dir.x = runSpeed;
-                        this.offset.x = 0;
-                        this.hitboxOffset.x = 30;
-                        this.footstepOffset.x = 20;
+
+                    if(FlxG.keys.UP || FlxG.keys.DOWN) {
+                        if(FlxG.keys.UP){
+                            this.dir.y = -1 * runSpeed;
+                        }
+                        if(FlxG.keys.DOWN){
+                            this.dir.y = runSpeed;
+                        }
+                    } else {
+                        this.dir.y = 0;
                     }
                 } else {
                     this.dir.x = 0;
-                }
-
-                if(FlxG.keys.UP || FlxG.keys.DOWN) {
-                    if(FlxG.keys.UP){
-                        this.dir.y = -1 * runSpeed;
-                    }
-                    if(FlxG.keys.DOWN){
-                        this.dir.y = runSpeed;
-                    }
-                } else {
                     this.dir.y = 0;
+                    play("idle");
                 }
-            } else {
-                this.dir.x = 0;
-                this.dir.y = 0;
-                play("idle");
             }
 
             if (this.colliding) {

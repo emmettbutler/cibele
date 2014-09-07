@@ -23,6 +23,7 @@ package{
         override public function update():void{
             super.update();
             MessageManager.getInstance().update();
+            PopUpManager.getInstance().update();
             this.boss.update();
 
             if (this.runningSound != null && this.runningSound.timeRemaining < 40*1000 &&
