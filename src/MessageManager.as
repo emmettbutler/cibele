@@ -43,7 +43,7 @@ package{
             this.loadVisibleMessageObjects();
 
             for(var i:int = 0; i < this.messages.length; i++) {
-                if(!this.messages[i].read) {
+                if(this.messages[i].unread) {
                     this.unread_count += 1;
                 }
                 if(i != 0){
@@ -162,17 +162,13 @@ package{
 
         public function openThread(thread:Thread):void {
             this.cur_viewing = thread;
-            if(!this.cur_viewing.read) {
+            if(this.cur_viewing.unread) {
                 this.cur_viewing.markAsRead();
                 this.unread_count -= 1;
             }
-            this.cur_viewing.showThread();
+            this.cur_viewing.show();
             this.reply_to_msg.alpha = 1;
             this.exit_msg.alpha = 1;
-            if(!this.cur_viewing.read) {
-                this.cur_viewing.markAsRead();
-                this.unread_count -= 1;
-            }
             this._state = STATE_VIEW_MESSAGE;
 
             for(var i:int = 0; i < this.messages.length; i++) {
@@ -200,13 +196,11 @@ package{
                 cur_thread = this.messages[i];
                 cur_thread.update();
 
-                if(cur_thread.sent){
-                    if(this._state == STATE_VIEW_LIST &&
-                        FlxG.mouse.justPressed() &&
-                        this.mouse_rect.overlaps(cur_thread.list_hitbox))
-                    {
-                        this.openThread(cur_thread);
-                    }
+                if(this._state == STATE_VIEW_LIST &&
+                    FlxG.mouse.justPressed() &&
+                    this.mouse_rect.overlaps(cur_thread.list_hitbox))
+                {
+                    this.openThread(cur_thread);
                 }
             }
 
@@ -244,7 +238,7 @@ package{
             this.reply_to_msg.alpha = 0;
             this.img_inbox.alpha = 0;
             for(var i:int = 0; i < this.messages.length; i++) {
-                this.messages[i].hideMessage();
+                this.messages[i].hide();
             }
         }
 

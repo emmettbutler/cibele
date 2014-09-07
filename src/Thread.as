@@ -4,8 +4,7 @@ package{
     public class Thread {
         public var display_text:String, sent_by:String;
 
-        public var viewing:Boolean = false, read:Boolean = false,
-                   sent:Boolean = false;
+        public var viewing:Boolean = false, unread:Boolean = true;
 
         public var inbox_ref:FlxSprite;
         public var list_hitbox:FlxRect;
@@ -20,6 +19,8 @@ package{
 
         public var _messages:MessageManager = null;
 
+        public var messages:Array;
+
         public var reply_text:String;
         public var reply_sent:Boolean = false;
 
@@ -29,6 +30,10 @@ package{
             this.sent_by = sender;
             this.reply_text = rep;
             this.pos = new DHPoint(inbox_ref.x + 5, inbox_ref.y + 10);
+
+            this.messages = new Array(
+                new Message(txt, rep, sec, inbox, sender)
+            );
 
             this.display_text = sent_by + " >> " + txt + "\n";
             this.send_time = sec;
@@ -60,8 +65,11 @@ package{
                 this._messages = MessageManager.getInstance();
             }
 
-            if(this._messages.timeAlive > this.send_time && !this.sent) {
-                this.sendMsg();
+            for (var i:int = 0; i < this.messages.length; i++) {
+                if(this._messages.timeAlive > this.messages[i].send_time &&
+                    !this.messages[i].sent) {
+                    this.messages[i].sendMsg();
+                }
             }
         }
 
@@ -72,24 +80,27 @@ package{
                 this.truncated_textbox.y, this.inbox_ref.width, 10);
         }
 
-        public function hideMessage():void {
+        public function hide():void {
             this.truncated_textbox.alpha = 0;
-            this.textbox.alpha = 0;
+            for (var i:int = 0; i < this.messages.length; i++) {
+                this.messages[i].hide();
+            }
         }
 
-        public function sendMsg():void {
-            this.sent = true;
+        public function markAsRead():void {
+            for (var i:int = 0; i < this.messages.length; i++) {
+                this.messages[i].markAsRead();
+            }
         }
 
         public function showPreview():void {
-            this.textbox.alpha = 0;
-            this.viewing = false;
-
-            if(this.sent == true) {
-                this.truncated_textbox.alpha = 1;
+            for (var i:int = 0; i < this.messages.length; i++) {
+                this.messages[i].hide();
             }
+            this.viewing = false;
+            this.truncated_textbox.alpha = 1;
 
-            if(this.read == true){
+            if(this.unread == false){
                 this.truncated_textbox.color = this.font_color;
             } else {
                 this.truncated_textbox.color = this.unread_color;
@@ -98,22 +109,22 @@ package{
 
         public function hidePreview():void {
             this.truncated_textbox.alpha = 0;
-            this.textbox.alpha = 0;
         }
 
-        public function showThread():void {
+        public function show():void {
             this.viewing = true;
+            this.unread = false;
             this.truncated_textbox.alpha = 0;
-            this.textbox.alpha = 1;
-        }
-
-        public function markAsRead():void {
-            this.read = true;
+            for (var i:int = 0; i < this.messages.length; i++) {
+                this.messages[i].show();
+            }
         }
 
         public function hideFull():void {
             this.viewing = false;
-            this.textbox.alpha = 0;
+            for (var i:int = 0; i < this.messages.length; i++) {
+                this.messages[i].hide();
+            }
         }
 
         public function showReply():void {

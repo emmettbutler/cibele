@@ -6,6 +6,8 @@ package{
 
         public var read:Boolean = false, sent:Boolean = false;
 
+        public var pos:DHPoint;
+
         public var inbox_ref:FlxSprite;
         public var textbox:FlxText;
 
@@ -20,11 +22,12 @@ package{
                                 inbox:FlxSprite, sender:String) {
             this.inbox_ref = inbox;
             this.sent_by = sender;
-            this.reply_text = rep;
             this.pos = new DHPoint(inbox_ref.x + 5, inbox_ref.y + 10);
 
             this.display_text = sent_by + " >> " + txt + "\n";
             this.send_time = sec;
+
+            this.initVisibleObjects();
         }
 
         public function initVisibleObjects():void {
@@ -34,18 +37,7 @@ package{
             this.textbox.scrollFactor = new FlxPoint(0, 0);
             this.textbox.size = this.font_size;
             this.textbox.alpha = 0;
-            FlxG.state.add(textbox);
-
-            this.truncated_textbox = new FlxText(pos.x, pos.y, inbox_ref.width,
-                this.display_text.slice(0, this.sent_by.length + 10) + "...");
-            this.truncated_textbox.color = this.font_color;
-            this.truncated_textbox.scrollFactor = new FlxPoint(0, 0);
-            this.truncated_textbox.size = this.font_size;
-            this.truncated_textbox.alpha = 0;
-            FlxG.state.add(truncated_textbox);
-
-            this.list_hitbox = new FlxRect(this.truncated_textbox.x,
-                this.truncated_textbox.y, this.inbox_ref.width, 10);
+            FlxG.state.add(this.textbox);
         }
 
         public function update():void {
@@ -58,15 +50,7 @@ package{
             }
         }
 
-        public function setListPos(new_pos:DHPoint):void {
-            this.pos.y = new_pos.y + this.list_offset;
-            this.truncated_textbox.y = this.pos.y;
-            this.list_hitbox = new FlxRect(this.truncated_textbox.x,
-                this.truncated_textbox.y, this.inbox_ref.width, 10);
-        }
-
-        public function hideMessage():void {
-            this.truncated_textbox.alpha = 0;
+        public function hide():void {
             this.textbox.alpha = 0;
         }
 
@@ -74,46 +58,12 @@ package{
             this.sent = true;
         }
 
-        public function showPreview():void {
-            this.textbox.alpha = 0;
-            this.viewing = false;
-
-            if(this.sent == true) {
-                this.truncated_textbox.alpha = 1;
-            }
-
-            if(this.read == true){
-                this.truncated_textbox.color = this.font_color;
-            } else {
-                this.truncated_textbox.color = this.unread_color;
-            }
-        }
-
-        public function hidePreview():void {
-            this.truncated_textbox.alpha = 0;
-            this.textbox.alpha = 0;
-        }
-
-        public function showThread():void {
-            this.viewing = true;
-            this.truncated_textbox.alpha = 0;
+        public function show():void {
             this.textbox.alpha = 1;
         }
 
         public function markAsRead():void {
             this.read = true;
-        }
-
-        public function hideFull():void {
-            this.viewing = false;
-            this.textbox.alpha = 0;
-        }
-
-        public function showReply():void {
-            if(!this.reply_sent){
-                this.reply_sent = true;
-                this.textbox.text += "\n" + "Cibele >> " + this.reply_text;
-            }
         }
     }
 }
