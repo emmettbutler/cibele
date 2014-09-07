@@ -92,25 +92,27 @@ package{
             SoundManager.getInstance().update();
             MessageManager.getInstance().update();
 
-            if(FlxG.keys.UP){
-                bg1.y += runSpeed;
-                bg2.y += runSpeed;
-                bg3.y += runSpeed;
-            }
-            if(FlxG.keys.DOWN){
-                bg1.y -= runSpeed;
-                bg2.y -= runSpeed;
-                bg3.y -= runSpeed;
-            }
+            if(PopUpManager.getInstance()._state == 2){
+                if(FlxG.keys.UP){
+                    bg1.y += runSpeed;
+                    bg2.y += runSpeed;
+                    bg3.y += runSpeed;
+                }
+                if(FlxG.keys.DOWN){
+                    bg1.y -= runSpeed;
+                    bg2.y -= runSpeed;
+                    bg3.y -= runSpeed;
+                }
 
-            if(bg2.y == 0){
-                bg1.y = bg2.y-bg2.height;
-            }
-            if(bg1.y == 0){
-                bg3.y = bg2.y-bg1.height;
-            }
-            if(bg3.y == 0){
-                bg2.y = bg3.y-bg3.height;
+                if(bg2.y == 0){
+                    bg1.y = bg2.y-bg2.height;
+                }
+                if(bg1.y == 0){
+                    bg3.y = bg2.y-bg1.height;
+                }
+                if(bg3.y == 0){
+                    bg2.y = bg3.y-bg3.height;
+                }
             }
         }
     }
