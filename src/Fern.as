@@ -47,6 +47,7 @@ package{
             super.update();
             MessageManager.getInstance().update();
             SoundManager.getInstance().update();
+            PopUpManager.getInstance().update();
 
             if(player.mapHitbox.overlaps(ikutursodoor)){
                 FlxG.switchState(new IkuTursoTeleportRoom(this.convoSound));
