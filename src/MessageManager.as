@@ -166,6 +166,7 @@ package{
             for(var i:int = 1; i < this.threads.length; i++){
                 this.threads[i].setListPos(this.threads[i - 1].pos);
             }
+            this._state = STATE_HIDE_INBOX;
         }
 
         public function updateUnreadNotification():void {
