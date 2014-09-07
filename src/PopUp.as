@@ -31,15 +31,14 @@ package{
                 this.loadGraphic(img,false,false,w,h);
             }
             this.alpha = 0;
+            this.scrollFactor.x = 0;
+            this.scrollFactor.y = 0;
 
         }
 
         override public function update():void {
             this.currentTime = new Date().valueOf();
             this.timeAlive = this.currentTime - this.bornTime;
-
-            this.scrollFactor.x = 0;
-            this.scrollFactor.y = 0;
 
             if(this._state == ARROW_THROUGH) {
                 if(FlxG.keys.justPressed("LEFT") || FlxG.keys.justPressed("RIGHT") ||

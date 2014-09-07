@@ -5,12 +5,14 @@ package{
         [Embed(source="../assets/programs.png")] private var ImgPrograms:Class;
         [Embed(source="../assets/bulldoghell.png")] private var ImgBulldogHell:Class;
         [Embed(source="../assets/cib_selfies_1.png")] private var ImgCibSelfie1:Class;
+        [Embed(source="../assets/forum_selfies_1.png")] private var ImgForumSelfie1:Class;
 
         public static var _instance:PopUpManager = null;
 
         public var program_picker:FlxSprite = null;
         public var bulldog_hell:PopUp;
         public var cib_selfies_1:PopUp;
+        public var forum_selfies_1:PopUp;
 
         public var popup_order:Array;
         public var next_popup:PopUp = null;
@@ -84,6 +86,11 @@ package{
                 this.popup_order.push(this.cib_selfies_1);
                 FlxG.state.add(cib_selfies_1);
             }
+            if(this_popup == 3) {
+                this.forum_selfies_1 = new PopUp(ImgForumSelfie1, 1174, 585, 185000);
+                this.popup_order.push(this.forum_selfies_1);
+                FlxG.state.add(forum_selfies_1);
+            }
         }
 
         public function loadPopUps():void {
@@ -99,6 +106,9 @@ package{
                 }
                 if(i == 1) {
                     FlxG.state.add(cib_selfies_1);
+                }
+                if(i == 2) {
+                    FlxG.state.add(forum_selfies_1);
                 }
             }
         }

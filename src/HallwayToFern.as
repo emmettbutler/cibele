@@ -88,6 +88,7 @@ package{
                     SoundManager.getInstance().playSound(Convo1, 24000, _callback, false, 1);
                     popupmgr.createNewPopUp(1);
                     popupmgr.createNewPopUp(2);
+                    popupmgr.createNewPopUp(3);
                 }
             }
 
