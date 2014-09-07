@@ -16,8 +16,6 @@ package{
         public var font_color:uint = 0xff000000;
         public var unread_color:uint = 0xff982708;
 
-        public var _messages:MessageManager = null;
-
         public function Message(txt:String, sec:Number,
                                 inbox:FlxSprite, sender:String) {
             this.inbox_ref = inbox;
@@ -42,21 +40,19 @@ package{
         }
 
         public function update():void {
-            if (this._messages == null) {
-                this._messages = MessageManager.getInstance();
-            }
+
         }
 
         public function hide():void {
             this.textbox.alpha = 0;
         }
 
-        public function sendMsg():void {
-            this.sent = true;
-        }
-
         public function show():void {
             this.textbox.alpha = 1;
+        }
+
+        public function send():void {
+            this.sent = true;
         }
 
         public function markAsRead():void {

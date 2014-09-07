@@ -64,7 +64,7 @@ package{
                     this._messages.timeAlive > this.messages[i].send_time &&
                     !this.messages[i].sent)
                 {
-                    this.messages[i].sendMsg();
+                    this.messages[i].send();
                 }
             }
         }
