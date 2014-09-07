@@ -56,8 +56,8 @@ package{
             ScreenManager.getInstance().setupCamera(null, 1);
 
             var debugText:FlxText = new FlxText(_screen.screenWidth * .2, _screen.screenHeight * .2,200,"placeholder for hallway\nthat player will run down\nduring this sequence");
-            add(debugText);
-            debugText.size = 12;
+            //add(debugText);
+            //debugText.size = 12;
 
             player = new Player(_screen.screenWidth * .5, _screen.screenHeight * .5);
             player.inhibitY = true;
