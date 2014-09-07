@@ -22,7 +22,7 @@ package{
             this.sent_by = sender;
             this.pos = new DHPoint(inbox_ref.x + 5, inbox_ref.y + 10);
 
-            this.display_text = txt + "\n";
+            this.display_text = txt;
             this.send_time = sec;
 
             this.initVisibleObjects();
