@@ -13,7 +13,7 @@ package{
         public var pos:DHPoint;
 
         public var font_size:Number = 16, list_offset:Number = 30,
-                   last_send_time:Number = 0;
+                   last_send_time:Number = 0, sent_count:Number = 0;
 
         public var font_color:uint = 0xff000000;
         public var unread_color:uint = 0xff982708;
@@ -37,6 +37,8 @@ package{
             }
 
             this.display_text = messages[0][1];
+
+            this.initVisibleObjects();
         }
 
         public function initVisibleObjects():void {
@@ -50,6 +52,10 @@ package{
 
             this.list_hitbox = new FlxRect(this.truncated_textbox.x,
                 this.truncated_textbox.y, this.inbox_ref.width, 10);
+
+            for (var i:int = 0; i < this.messages.length; i++) {
+                this.messages[i].initVisibleObjects();
+            }
         }
 
         public function send(cur:Message, prev:Message, first:Boolean=false):void {
@@ -62,12 +68,32 @@ package{
             if (!first) {
                 cur.pos.y = prev.pos.y + 50;
             }
+            this.sent_count++;
             this.last_send_time = this._messages.timeAlive;
             this.display_text = cur.display_text;
             this.truncated_textbox.color = this.unread_color;
             this.truncated_textbox.text = this.sent_by + " >> " +
                 this.display_text.slice(0, this.sent_by.length + 10) +
                 "...";
+
+            if (this.sent_count > 3) {
+                this.rotate();
+            }
+        }
+
+        public function rotate():void {
+            for (var i:int = 0; i < this.messages.length; i++) {
+                if (this.messages[i].sent) {
+                    if (i != 0) {
+                        this.messages[i].pos.y = this.messages[i - 1].pos.y + 50;
+                    } else {
+                        this.messages[i].pos.y -= 50;
+                    }
+                    if (this.messages[i].pos.y < this.inbox_ref.y) {
+                        this.messages[i].hide();
+                    }
+                }
+            }
         }
 
         public function update():void {
@@ -79,8 +105,9 @@ package{
 
             for (var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].update();
+
                 if(this.messages[i].send_time != -1 &&
-                    this.time_since_last_send > this.messages[i].send_time &&
+                    time_since_last_send > this.messages[i].send_time &&
                     (i == 0 || (i > 0 && this.messages[i - 1].sent)) &&
                     !this.messages[i].sent)
                 {
@@ -154,6 +181,10 @@ package{
                     this.messages[i].show();
                     this.messages[i].pos.y = this.messages[i - 1].pos.y + 50;
                     this.last_send_time = this._messages.timeAlive;
+                    this.sent_count++;
+                    if (this.sent_count > 3) {
+                        this.rotate();
+                    }
                     break;
                 }
             }
