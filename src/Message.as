@@ -2,157 +2,61 @@ package{
     import org.flixel.*;
 
     public class Message {
-        public var msg_text:String;
-        public var msg:FlxText;
-        public var viewing:Boolean = false;
-        public var read:Boolean = false;
+        public var display_text:String, sent_by:String;
 
-        public var send_time:Number;
-        public var sent:Boolean = false;
-        public var sent_by:String;
-
-        public var inbox_ref:FlxSprite;
-
-        public var truncated_msg:FlxText;
-        public var list_pos:DHPoint;
-        public var list_offset:Number = 30;
-        public var list_hitbox:FlxRect;
-
-        public var exit_msg:FlxText;
-        public var exit_box:FlxRect;
-        public var reply_to_msg:FlxText;
-        public var reply_to_box:FlxRect;
+        public var read:Boolean = false, sent:Boolean = false;
 
         public var pos:DHPoint;
 
-        public var font_size:Number = 16;
+        public var inbox_ref:FlxSprite;
+        public var textbox:FlxText;
+
+        public var send_time:Number, font_size:Number = 16, list_offset:Number = 30;
+
         public var font_color:uint = 0xff000000;
         public var unread_color:uint = 0xff982708;
 
-        public var reply_text:String;
-        public var reply_sent:Boolean = false;
+        public function Message(txt:String, sec:Number,
+                                inbox:FlxSprite, sender:String) {
+            this.inbox_ref = inbox;
+            this.sent_by = sender;
+            this.pos = new DHPoint(inbox_ref.x + 5, inbox_ref.y + 10);
 
-        public function Message(txt:String, rep:String, sec:Number, inbox:FlxSprite, sender:String) {
-            inbox_ref = inbox;
-            sent_by = sender;
-            reply_text = rep;
-            pos = new DHPoint(inbox_ref.x + 5, inbox_ref.y + 10);
+            this.display_text = txt;
+            this.send_time = sec;
 
-            msg_text = sent_by + " >> " + txt + "\n";
-            send_time = sec;
+            this.initVisibleObjects();
         }
 
         public function initVisibleObjects():void {
-            msg = new FlxText(pos.x, pos.y, inbox_ref.width-50, msg_text);
-            msg.color = font_color;
-            msg.size = font_size;
-            FlxG.state.add(msg);
-            msg.alpha = 0;
-
-            list_pos = new DHPoint(pos.x, pos.y);
-
-            truncated_msg = new FlxText(list_pos.x, list_pos.y, inbox_ref.width, msg_text.slice(0,sent_by.length + 10) + "...");
-            truncated_msg.color = font_color;
-            truncated_msg.size = font_size;
-            FlxG.state.add(truncated_msg);
-            truncated_msg.alpha = 0;
-
-            exit_msg = new FlxText(inbox_ref.x+110, inbox_ref.y+(inbox_ref.height-25), inbox_ref.width, "| Back")
-            exit_msg.color = font_color;
-            exit_msg.size = font_size;
-            FlxG.state.add(exit_msg);
-            exit_msg.alpha = 0;
-
-            exit_box = new FlxRect(exit_msg.x, exit_msg.y, 50, 50);
-
-            reply_to_msg = new FlxText(inbox_ref.x+172, inbox_ref.y+(inbox_ref.height-25), inbox_ref.width, "| Reply")
-            reply_to_msg.color = font_color;
-            reply_to_msg.size = font_size;
-            FlxG.state.add(reply_to_msg);
-            reply_to_msg.alpha = 0;
-
-            reply_to_box = new FlxRect(reply_to_msg.x, reply_to_msg.y, 50, 50);
-
-            list_hitbox = new FlxRect(truncated_msg.x, truncated_msg.y, inbox_ref.width, list_offset);
+            this.textbox = new FlxText(this.pos.x, this.pos.y,
+                                       this.inbox_ref.width - 50,
+                                       this.sent_by + " >> " + this.display_text);
+            this.textbox.color = this.font_color;
+            this.textbox.scrollFactor = new FlxPoint(0, 0);
+            this.textbox.size = this.font_size;
+            this.textbox.alpha = 0;
+            FlxG.state.add(this.textbox);
         }
 
         public function update():void {
-            msg.text = msg_text;
-            truncated_msg.x = list_pos.x;
-            truncated_msg.y = list_pos.y;
-            list_hitbox.x = truncated_msg.x;
-            list_hitbox.y = truncated_msg.y;
-
-            truncated_msg.scrollFactor.x = 0;
-            truncated_msg.scrollFactor.y = 0;
-            msg.scrollFactor.x = 0;
-            msg.scrollFactor.y = 0;
-            exit_msg.scrollFactor.x = 0;
-            exit_msg.scrollFactor.y = 0;
-            reply_to_msg.scrollFactor.x = 0;
-            reply_to_msg.scrollFactor.y = 0;
-
+            this.textbox.y = this.pos.y;
         }
 
-        public function setListPos(new_pos:DHPoint):void {
-            list_pos.y = new_pos.y+list_offset;
+        public function hide():void {
+            this.textbox.alpha = 0;
         }
 
-        public function hideMessage():void {
-            truncated_msg.alpha = 0;
-            msg.alpha = 0;
-            exit_msg.alpha = 0;
-            reply_to_msg.alpha = 0;
+        public function show():void {
+            this.textbox.alpha = 1;
         }
 
-        public function sendMsg():void {
-            sent = true;
-        }
-
-        public function viewingList():void {
-            msg.alpha = 0;
-            viewing = false;
-            exit_msg.alpha = 0;
-            reply_to_msg.alpha = 0;
-
-            if(sent == true) {
-                truncated_msg.alpha = 1;
-            }
-
-            if(read == true){
-                truncated_msg.color = font_color;
-            } else {
-                truncated_msg.color = unread_color;
-            }
-        }
-
-        public function hideUnviewedMsgs():void {
-            truncated_msg.alpha = 0;
-            msg.alpha = 0;
-        }
-
-        public function showCurrentlyViewedMsg():void {
-            viewing = true;
-            truncated_msg.alpha = 0;
-            msg.alpha = 1;
-            exit_msg.alpha = 1;
-            reply_to_msg.alpha = 1;
+        public function send():void {
+            this.sent = true;
         }
 
         public function markAsRead():void {
-            read = true;
-        }
-
-        public function exitCurrentlyViewedMsg():void {
-            viewing = false;
-            msg.alpha = 0;
-        }
-
-        public function showReply():void {
-            if(!reply_sent){
-                reply_sent = true;
-                msg_text += "\n" + "Cibele >> " + reply_text;
-            }
+            this.read = true;
         }
     }
 }
