@@ -52,7 +52,7 @@ package{
             FlxG.state.add(truncated_textbox);
 
             this.list_hitbox = new FlxRect(this.truncated_textbox.x,
-                this.truncated_textbox.y, this.inbox_ref.width, 50);
+                this.truncated_textbox.y, this.inbox_ref.width, 10);
         }
 
         public function update():void {
@@ -66,8 +66,10 @@ package{
         }
 
         public function setListPos(new_pos:DHPoint):void {
-            this.pos.y = this.new_pos.y + this.list_offset;
+            this.pos.y = new_pos.y + this.list_offset;
             this.truncated_textbox.y = this.pos.y;
+            this.list_hitbox = new FlxRect(this.truncated_textbox.x,
+                this.truncated_textbox.y, this.inbox_ref.width, 10);
         }
 
         public function hideMessage():void {
