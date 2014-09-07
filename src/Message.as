@@ -28,32 +28,36 @@ package{
         public var reply_text:String;
         public var reply_sent:Boolean = false;
 
-        public function Message(txt:String, rep:String, sec:Number, inbox:FlxSprite, sender:String) {
-            inbox_ref = inbox;
-            sent_by = sender;
-            reply_text = rep;
-            pos = new DHPoint(inbox_ref.x + 5, inbox_ref.y + 10);
+        public function Message(txt:String, rep:String, sec:Number,
+                                inbox:FlxSprite, sender:String) {
+            this.inbox_ref = inbox;
+            this.sent_by = sender;
+            this.reply_text = rep;
+            this.pos = new DHPoint(inbox_ref.x + 5, inbox_ref.y + 10);
 
-            display_text = sent_by + " >> " + txt + "\n";
-            send_time = sec;
+            this.display_text = sent_by + " >> " + txt + "\n";
+            this.send_time = sec;
         }
 
         public function initVisibleObjects():void {
-            textbox = new FlxText(pos.x, pos.y, inbox_ref.width-50, display_text);
-            textbox.color = font_color;
-            textbox.scrollFactor = new FlxPoint(0, 0);
-            textbox.size = font_size;
+            this.textbox = new FlxText(pos.x, pos.y, inbox_ref.width - 50,
+                                       display_text);
+            this.textbox.color = this.font_color;
+            this.textbox.scrollFactor = new FlxPoint(0, 0);
+            this.textbox.size = this.font_size;
+            this.textbox.alpha = 0;
             FlxG.state.add(textbox);
-            textbox.alpha = 0;
 
-            truncated_textbox = new FlxText(pos.x, pos.y, inbox_ref.width, display_text.slice(0,sent_by.length + 10) + "...");
-            truncated_textbox.color = font_color;
-            truncated_textbox.scrollFactor = new FlxPoint(0, 0);
-            truncated_textbox.size = font_size;
+            this.truncated_textbox = new FlxText(pos.x, pos.y, inbox_ref.width,
+                this.display_text.slice(0, this.sent_by.length + 10) + "...");
+            this.truncated_textbox.color = this.font_color;
+            this.truncated_textbox.scrollFactor = new FlxPoint(0, 0);
+            this.truncated_textbox.size = this.font_size;
+            this.truncated_textbox.alpha = 0;
             FlxG.state.add(truncated_textbox);
-            truncated_textbox.alpha = 0;
 
-            list_hitbox = new FlxRect(truncated_textbox.x, truncated_textbox.y, inbox_ref.width, list_offset);
+            this.list_hitbox = new FlxRect(this.truncated_textbox.x,
+                this.truncated_textbox.y, this.inbox_ref.width, 50);
         }
 
         public function update():void {

@@ -125,7 +125,7 @@ package{
             this.debugText = new FlxText(_screen.screenWidth * .01,
                                          _screen.screenHeight * .01, 500, "");
             this.debugText.scrollFactor = new FlxPoint(0, 0);
-            this.debugText.color = 0xffffffff;
+            this.debugText.color = 0xff0000ff;
             FlxG.state.add(this.debugText);
         }
 
