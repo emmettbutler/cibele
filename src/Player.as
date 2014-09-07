@@ -19,9 +19,11 @@ package{
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
 
-            loadGraphic(ImgCibWalk, true, false, 4032/28, 150);
-            addAnimation("walk_l", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], 20, false);
-            addAnimation("walk_r", [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], 20, false);
+            loadGraphic(ImgCibWalk, true, false, 143, 150);
+            addAnimation("walk_u", [0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10], 20, false);
+            addAnimation("walk_d", [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21], 20, false);
+            addAnimation("walk_l", [35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22], 20, false);
+            addAnimation("walk_r", [49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36], 20, false);
             addAnimation("idle", [11], 7, false);
             addAnimation("attack", [0, 1], 7, true);
 
@@ -44,26 +46,42 @@ package{
 
             if(popupmgr._state == NO_POP_UP){
                 if (FlxG.keys.LEFT || FlxG.keys.RIGHT || FlxG.keys.UP || FlxG.keys.DOWN) {
+                    if (FlxG.keys.UP) {
+                        play("walk_u");
+                    } else if (FlxG.keys.DOWN) {
+                        play("walk_d");
+                    } else if(FlxG.keys.LEFT) {
+                        play("walk_l");
+                    } else if (FlxG.keys.RIGHT) {
+                        play("walk_r");
+                    }
                     if(FlxG.keys.LEFT || FlxG.keys.RIGHT) {
                         if(FlxG.keys.LEFT) {
-                            play("walk_l");
                             this.dir.x = -1 * runSpeed;
-                            this.offset.x = 63;
-                            this.hitboxOffset.x = 10;
-                            this.footstepOffset.x = 2;
+                            if (!(FlxG.keys.UP || FlxG.keys.DOWN)) {
+                                this.offset.x = 63;
+                                this.hitboxOffset.x = 10;
+                                this.footstepOffset.x = 2;
+                            }
                         }
                         if(FlxG.keys.RIGHT){
-                            play("walk_r");
                             this.dir.x = runSpeed;
-                            this.offset.x = 0;
-                            this.hitboxOffset.x = 30;
-                            this.footstepOffset.x = 20;
+                            if (!(FlxG.keys.UP || FlxG.keys.DOWN)) {
+                                this.offset.x = 0;
+                                this.hitboxOffset.x = 30;
+                                this.footstepOffset.x = 20;
+                            }
                         }
                     } else {
                         this.dir.x = 0;
                     }
 
                     if(FlxG.keys.UP || FlxG.keys.DOWN) {
+                        if (!(FlxG.keys.LEFT || FlxG.keys.RIGHT)) {
+                            this.offset.x = 63;
+                            this.hitboxOffset.x = 10;
+                            this.footstepOffset.x = 2;
+                        }
                         if(FlxG.keys.UP){
                             this.dir.y = -1 * runSpeed;
                         }
