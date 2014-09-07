@@ -15,7 +15,7 @@ package{
         public var notifications_box:FlxRect, exit_inbox_rect:FlxRect,
                    mouse_rect:FlxRect, exit_box:FlxRect, reply_box:FlxRect;
 
-        public var messages:Array;
+        public var threads:Array;
         public var cur_viewing:Thread;
 
         public var unread_count:Number = 0;
@@ -34,7 +34,7 @@ package{
             this.bornTime = new Date().valueOf();
             this.initNotifications();
 
-            this.messages = new Array(
+            this.threads = new Array(
                 new Thread(1, this.img_inbox, "Rusher", "did you get that link i sent you on aim last night? its an anime you might like :D", "yeah! the fairies were very very cute and i think that VA was in sailor moon??"),
                 new Thread(1, this.img_inbox, "GuyverGuy", "hey giiiiiirl how are things? you never chat with me anymore </3", ";_; sorry, ive been pretty busy, ampule has been doing a lot lately"),
                 new Thread(1, this.img_inbox, "Airia", "Cib! Wanna do a euryale run w/ me on friday?", "ok! <3 see you then girl~")
@@ -42,12 +42,12 @@ package{
 
             this.loadVisibleMessageObjects();
 
-            for(var i:int = 0; i < this.messages.length; i++) {
-                if(this.messages[i].unread) {
+            for(var i:int = 0; i < this.threads.length; i++) {
+                if(this.threads[i].unread) {
                     this.unread_count += 1;
                 }
                 if(i != 0){
-                    this.messages[i].setListPos(this.messages[i - 1].pos);
+                    this.threads[i].setListPos(this.threads[i - 1].pos);
                 }
             }
         }
@@ -130,16 +130,16 @@ package{
         }
 
         public function loadVisibleMessageObjects():void {
-            for (var i:int = 0; i < this.messages.length; i++) {
-                this.messages[i].initVisibleObjects();
+            for (var i:int = 0; i < this.threads.length; i++) {
+                this.threads[i].initVisibleObjects();
             }
         }
 
         public function reloadPersistentObjects():void {
             this.initNotifications();
             this.loadVisibleMessageObjects();
-            for(var i:int = 1; i < this.messages.length; i++){
-                this.messages[i].setListPos(this.messages[i - 1].pos);
+            for(var i:int = 1; i < this.threads.length; i++){
+                this.threads[i].setListPos(this.threads[i - 1].pos);
             }
         }
 
@@ -153,8 +153,8 @@ package{
         }
 
         public function showPreviews():void {
-            for(var i:int = 0; i < this.messages.length; i++) {
-                this.messages[i].showPreview();
+            for(var i:int = 0; i < this.threads.length; i++) {
+                this.threads[i].showPreview();
             }
             this.reply_to_msg.alpha = 0;
             this.exit_msg.alpha = 0;
@@ -171,8 +171,8 @@ package{
             this.exit_msg.alpha = 1;
             this._state = STATE_VIEW_MESSAGE;
 
-            for(var i:int = 0; i < this.messages.length; i++) {
-                this.messages[i].hidePreview();
+            for(var i:int = 0; i < this.threads.length; i++) {
+                this.threads[i].hidePreview();
             }
         }
 
@@ -190,8 +190,8 @@ package{
             this.mouse_rect.y = FlxG.mouse.screenY;
 
             var cur_thread:Thread;
-            for(var i:int = 0; i < this.messages.length; i++) {
-                cur_thread = this.messages[i];
+            for(var i:int = 0; i < this.threads.length; i++) {
+                cur_thread = this.threads[i];
                 cur_thread.update();
 
                 if(this._state == STATE_VIEW_LIST &&
@@ -235,8 +235,8 @@ package{
             this.exit_msg.alpha = 0;
             this.reply_to_msg.alpha = 0;
             this.img_inbox.alpha = 0;
-            for(var i:int = 0; i < this.messages.length; i++) {
-                this.messages[i].hide();
+            for(var i:int = 0; i < this.threads.length; i++) {
+                this.threads[i].hide();
             }
         }
 
