@@ -200,7 +200,7 @@ package{
                 cur_message = this.messages[i];
                 cur_message.update();
 
-                if(!cur_message.sent){
+                if(cur_message.sent){
                     if(this._state == STATE_VIEW_LIST &&
                         FlxG.mouse.justPressed() &&
                         this.mouse_rect.overlaps(cur_message.list_hitbox))
