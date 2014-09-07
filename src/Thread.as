@@ -52,6 +52,24 @@ package{
                 this.truncated_textbox.y, this.inbox_ref.width, 10);
         }
 
+        public function sendNext(cur:Message, prev:Message, first:Boolean=false):void {
+            cur.send();
+            if (this.viewing) {
+                cur.show();
+            } else {
+                this.unread = true;
+            }
+            if (!first) {
+                cur.pos.y = prev.pos.y + 50;
+            }
+            this.last_send_time = this._messages.timeAlive;
+            this.display_text = cur.display_text;
+            this.truncated_textbox.color = this.unread_color;
+            this.truncated_textbox.text = this.sent_by + " >> " +
+                this.display_text.slice(0, this.sent_by.length + 10) +
+                "...";
+        }
+
         public function update():void {
             if (this._messages == null) {
                 this._messages = MessageManager.getInstance();
@@ -64,21 +82,7 @@ package{
                     (i == 0 || (i > 0 && this.messages[i - 1].sent)) &&
                     !this.messages[i].sent)
                 {
-                    this.messages[i].send();
-                    if (this.viewing) {
-                        this.messages[i].show();
-                    } else {
-                        this.unread = true;
-                    }
-                    if (i != 0) {
-                        this.messages[i].pos.y = this.messages[i - 1].pos.y + 50;
-                    }
-                    this.last_send_time = this._messages.timeAlive;
-                    this.display_text = this.messages[i].display_text;
-                    this.truncated_textbox.color = this.unread_color;
-                    this.truncated_textbox.text = this.sent_by + " >> " +
-                        this.display_text.slice(0, this.sent_by.length + 10) +
-                        "...";
+                    this.sendNext(this.messages[i], this.messages[i - 1], i == 0);
                 }
             }
         }
