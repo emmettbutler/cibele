@@ -17,8 +17,6 @@ package{
         public var list_offset:Number = 30;
         public var list_hitbox:FlxRect;
 
-        public var exit_msg:FlxText;
-        public var exit_box:FlxRect;
         public var reply_to_msg:FlxText;
         public var reply_box:FlxRect;
 
@@ -58,15 +56,6 @@ package{
             FlxG.state.add(truncated_textbox);
             truncated_textbox.alpha = 0;
 
-            exit_msg = new FlxText(inbox_ref.x+110, inbox_ref.y+(inbox_ref.height-25), inbox_ref.width, "| Back")
-            exit_msg.color = font_color;
-            exit_msg.size = font_size;
-            exit_msg.scrollFactor = new FlxPoint(0, 0);
-            FlxG.state.add(exit_msg);
-            exit_msg.alpha = 0;
-
-            exit_box = new FlxRect(exit_msg.x, exit_msg.y, 50, 50);
-
             reply_to_msg = new FlxText(inbox_ref.x+172, inbox_ref.y+(inbox_ref.height-25), inbox_ref.width, "| Reply")
             reply_to_msg.color = font_color;
             reply_to_msg.size = font_size;
@@ -101,7 +90,6 @@ package{
         public function hideMessage():void {
             truncated_textbox.alpha = 0;
             textbox.alpha = 0;
-            exit_msg.alpha = 0;
             reply_to_msg.alpha = 0;
         }
 
@@ -112,7 +100,6 @@ package{
         public function showPreview():void {
             textbox.alpha = 0;
             viewing = false;
-            exit_msg.alpha = 0;
             reply_to_msg.alpha = 0;
 
             if(sent == true) {
@@ -135,7 +122,6 @@ package{
             viewing = true;
             truncated_textbox.alpha = 0;
             textbox.alpha = 1;
-            exit_msg.alpha = 1;
             reply_to_msg.alpha = 1;
         }
 

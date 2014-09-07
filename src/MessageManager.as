@@ -8,12 +8,12 @@ package{
         public static var _instance:MessageManager = null;
 
         public var notifications_text:FlxText, exit_inbox:FlxText,
-                   debugText:FlxText;
+                   debugText:FlxText, exit_msg:FlxText;
 
         public var img_inbox:FlxSprite;
 
         public var notifications_box:FlxRect, exit_inbox_rect:FlxRect,
-                   mouse_rect:FlxRect;
+                   mouse_rect:FlxRect, exit_box:FlxRect;
 
         public var messages:Array;
         public var cur_viewing:Message;
@@ -99,6 +99,17 @@ package{
             this.exit_inbox.alpha = 0;
             this.img_inbox.alpha = 0;
 
+            this.exit_msg = new FlxText(this.img_inbox.x + 110,
+                this.img_inbox.y + (this.img_inbox.height-25),
+                this.img_inbox.width, "| Back");
+            this.exit_msg.size = 14;
+            this.exit_msg.color = 0xff000000;
+            this.exit_msg.scrollFactor = new FlxPoint(0, 0);
+            this.exit_msg.alpha = 0;
+            FlxG.state.add(this.exit_msg);
+
+            this.exit_box = new FlxRect(this.exit_msg.x, this.exit_msg.y, 50, 50);
+
             this.debugText = new FlxText(_screen.screenWidth * .01,
                                          _screen.screenHeight * .01, 500, "");
             this.debugText.scrollFactor = new FlxPoint(0, 0);
@@ -133,6 +144,7 @@ package{
             for(var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].showPreview();
             }
+            this.exit_msg.alpha = 0;
         }
 
         public function openThread(thread:Message):void {
@@ -142,6 +154,7 @@ package{
                 this.unread_count -= 1;
             }
             this.cur_viewing.showThread();
+            exit_msg.alpha = 1;
             if(!this.cur_viewing.read) {
                 this.cur_viewing.markAsRead();
                 this.unread_count -= 1;
@@ -193,7 +206,7 @@ package{
                 } else {
                     if (this._state == STATE_VIEW_MESSAGE) {
                         if(cur_viewing != null) {
-                            if(this.mouse_rect.overlaps(cur_viewing.exit_box)) {
+                            if(this.mouse_rect.overlaps(this.exit_box)) {
                                 cur_viewing.hideFull();
                                 cur_viewing = null;
                                 this.showPreviews();
@@ -213,6 +226,7 @@ package{
 
         public function exitInbox():void {
             this.exit_inbox.alpha = 0;
+            this.exit_msg.alpha = 0;
             this.img_inbox.alpha = 0;
             for(var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].hideMessage();
