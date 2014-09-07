@@ -87,7 +87,7 @@ package{
             debugText.x = FlxG.mouse.x;
             debugText.y = FlxG.mouse.y;
 
-            debugText.text = "MenuScreen";
+            //debugText.text = "MenuScreen";
 
             if(timeFrame%30 == 0){
                 timer++;
