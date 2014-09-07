@@ -36,13 +36,9 @@ package {
             this.timeAlive = this.currentTime - this.bornTime;
             this.bgLoader.update();
             SoundManager.getInstance().update();
-            // update these only once every 2s. they require lower time resolution
-            // and this helps conserve FPS
-            if (this.timeAlive - this.lastSlowUpdate > 2*1000) {
-                PopUpManager.getInstance().update();
-                MessageManager.getInstance().update();
-                this.lastSlowUpdate = this.timeAlive;
-            }
+            PopUpManager.getInstance().update();
+            MessageManager.getInstance().update();
+            this.lastSlowUpdate = this.timeAlive;
             this.resolveAttacks();
         }
 

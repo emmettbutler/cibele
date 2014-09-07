@@ -47,7 +47,7 @@ package{
                     ["GuyverGuy", "hey giiiiiirl how are things? you never chat with me anymore </3", 1],
                     [SENT_BY_CIBELE, ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", -1],
                     ["GuyverGuy", "everyone bowing to ichis whip as usual i see", 2*1000],
-                    [SENT_BY_CIBELE, "omg guyver stop lol", 1]
+                    [SENT_BY_CIBELE, "omg guyver stop lol", -1]
                 ),
                 new Thread(this.img_inbox,
                     ["Airia", "Cib! Wanna do a euryale run w/ me on friday?", 1],
@@ -57,7 +57,7 @@ package{
                     ["Guillen", "where u at", 1],
                     [SENT_BY_CIBELE, "hey sorry duoing with ichi now", -1],
                     ["Guillen", "omg stop hogging ichi come oooonnnn", 7*1000],
-                    [SENT_BY_CIBELE, "^_^;", 1]
+                    [SENT_BY_CIBELE, "^_^;", -1]
                 )
             );
 
