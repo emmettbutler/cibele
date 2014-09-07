@@ -20,11 +20,12 @@ package{
             ScreenManager.getInstance().setupCamera(null, 1);
 
             var _screen:ScreenManager = ScreenManager.getInstance();
-            door = new FlxSprite(_screen.screenWidth * .5, _screen.screenHeight * .4);
-            door.makeGraphic(20, 20, 0xffff0000);
+            door = new FlxSprite(_screen.screenWidth * .3, _screen.screenHeight * .4);
+            door.makeGraphic(500, 20, 0xffff0000);
+            door.alpha = 0;
             add(door);
 
-            player = new Player(220, 280);
+            player = new Player(_screen.screenWidth * .4, _screen.screenHeight * .6);
             add(player);
         }
 
