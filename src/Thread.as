@@ -12,7 +12,8 @@ package{
 
         public var pos:DHPoint;
 
-        public var font_size:Number = 16, list_offset:Number = 30;
+        public var font_size:Number = 16, list_offset:Number = 30,
+                   last_send_time:Number = 0;
 
         public var font_color:uint = 0xff000000;
         public var unread_color:uint = 0xff982708;
@@ -59,10 +60,18 @@ package{
             for (var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].update();
                 if(this.messages[i].send_time != -1 &&
-                    this._messages.timeAlive > this.messages[i].send_time &&
+                    this._messages.timeAlive - this.last_send_time > this.messages[i].send_time &&
+                    (i == 0 || (i > 0 && this.messages[i - 1].sent)) &&
                     !this.messages[i].sent)
                 {
                     this.messages[i].send();
+                    if (this.viewing) {
+                        this.messages[i].show();
+                    }
+                    if (i != 0) {
+                        this.messages[i].pos.y = this.messages[i - 1].pos.y + 50;
+                    }
+                    this.last_send_time = this._messages.timeAlive;
                 }
             }
         }
@@ -131,6 +140,7 @@ package{
                     this.messages[i].send();
                     this.messages[i].show();
                     this.messages[i].pos.y = this.messages[i - 1].pos.y + 50;
+                    this.last_send_time = this._messages.timeAlive;
                     break;
                 }
             }

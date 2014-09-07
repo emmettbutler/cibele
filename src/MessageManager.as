@@ -47,7 +47,12 @@ package{
                 ),
                 new Thread(this.img_inbox,
                     ["Airia", "Cib! Wanna do a euryale run w/ me on friday?", 1],
-                    [SENT_BY_CIBELE, "ok! <3 see you then girl~", -1]
+                    [SENT_BY_CIBELE, "ok! <3 see you then girl~", -1],
+                    ["Airia", "ok! <3 see you then girl~", 5*1000],
+                    [SENT_BY_CIBELE, "ok! <3 see you then girl~", -1],
+                    ["Airia", "ok! <3 see you then girl~", 5*1000],
+                    [SENT_BY_CIBELE, "ok! <3 see you then girl~", -1],
+                    ["Airia", "ok! <3 see you then girl~", 5*1000]
                 )
             );
 
