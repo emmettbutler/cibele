@@ -21,13 +21,15 @@ package{
         public var exit_msg:FlxText;
         public var exit_box:FlxRect;
         public var reply_to_msg:FlxText;
-        public var reply_to_box:FlxRect;
+        public var reply_box:FlxRect;
 
         public var pos:DHPoint;
 
         public var font_size:Number = 16;
         public var font_color:uint = 0xff000000;
         public var unread_color:uint = 0xff982708;
+
+        public var _messages:MessageManager = null;
 
         public var reply_text:String;
         public var reply_sent:Boolean = false;
@@ -45,6 +47,7 @@ package{
         public function initVisibleObjects():void {
             msg = new FlxText(pos.x, pos.y, inbox_ref.width-50, msg_text);
             msg.color = font_color;
+            msg.scrollFactor = new FlxPoint(0, 0);
             msg.size = font_size;
             FlxG.state.add(msg);
             msg.alpha = 0;
@@ -53,6 +56,7 @@ package{
 
             truncated_msg = new FlxText(list_pos.x, list_pos.y, inbox_ref.width, msg_text.slice(0,sent_by.length + 10) + "...");
             truncated_msg.color = font_color;
+            truncated_msg.scrollFactor = new FlxPoint(0, 0);
             truncated_msg.size = font_size;
             FlxG.state.add(truncated_msg);
             truncated_msg.alpha = 0;
@@ -60,6 +64,7 @@ package{
             exit_msg = new FlxText(inbox_ref.x+110, inbox_ref.y+(inbox_ref.height-25), inbox_ref.width, "| Back")
             exit_msg.color = font_color;
             exit_msg.size = font_size;
+            exit_msg.scrollFactor = new FlxPoint(0, 0);
             FlxG.state.add(exit_msg);
             exit_msg.alpha = 0;
 
@@ -68,22 +73,13 @@ package{
             reply_to_msg = new FlxText(inbox_ref.x+172, inbox_ref.y+(inbox_ref.height-25), inbox_ref.width, "| Reply")
             reply_to_msg.color = font_color;
             reply_to_msg.size = font_size;
+            reply_to_msg.scrollFactor = new FlxPoint(0, 0);
             FlxG.state.add(reply_to_msg);
             reply_to_msg.alpha = 0;
 
-            reply_to_box = new FlxRect(reply_to_msg.x, reply_to_msg.y, 50, 50);
+            reply_box = new FlxRect(reply_to_msg.x, reply_to_msg.y, 50, 50);
 
             list_hitbox = new FlxRect(truncated_msg.x, truncated_msg.y, inbox_ref.width, list_offset);
-
-            msg.text = msg_text;
-            truncated_msg.scrollFactor.x = 0;
-            truncated_msg.scrollFactor.y = 0;
-            msg.scrollFactor.x = 0;
-            msg.scrollFactor.y = 0;
-            exit_msg.scrollFactor.x = 0;
-            exit_msg.scrollFactor.y = 0;
-            reply_to_msg.scrollFactor.x = 0;
-            reply_to_msg.scrollFactor.y = 0;
         }
 
         public function update():void {
@@ -91,10 +87,18 @@ package{
             truncated_msg.y = list_pos.y;
             list_hitbox.x = truncated_msg.x;
             list_hitbox.y = truncated_msg.y;
+
+            if (this._messages == null) {
+                this._messages = MessageManager.getInstance();
+            }
+
+            if(this._messages.timeAlive > this.send_time && !this.sent) {
+                this.sendMsg();
+            }
         }
 
         public function setListPos(new_pos:DHPoint):void {
-            list_pos.y = new_pos.y+list_offset;
+            list_pos.y = new_pos.y + list_offset;
         }
 
         public function hideMessage():void {
@@ -108,7 +112,7 @@ package{
             sent = true;
         }
 
-        public function viewingList():void {
+        public function showPreview():void {
             msg.alpha = 0;
             viewing = false;
             exit_msg.alpha = 0;
@@ -125,12 +129,12 @@ package{
             }
         }
 
-        public function hideUnviewedMsgs():void {
+        public function hidePreview():void {
             truncated_msg.alpha = 0;
             msg.alpha = 0;
         }
 
-        public function showCurrentlyViewedMsg():void {
+        public function showThread():void {
             viewing = true;
             truncated_msg.alpha = 0;
             msg.alpha = 1;
@@ -142,7 +146,7 @@ package{
             read = true;
         }
 
-        public function exitCurrentlyViewedMsg():void {
+        public function hideFull():void {
             viewing = false;
             msg.alpha = 0;
         }

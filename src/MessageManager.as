@@ -20,7 +20,7 @@ package{
         public var exit_inbox_rect:FlxRect;
 
         public var messages:Array;
-        public var currently_viewing:Message;
+        public var cur_viewing:Message;
 
         public var debugText:FlxText;
         public var _screen:ScreenManager = ScreenManager.getInstance();
@@ -46,6 +46,9 @@ package{
             for(var i:int = 0; i < this.messages.length; i++) {
                 if(!this.messages[i].read) {
                     this.unread_count += 1;
+                }
+                if(i != 0){
+                    this.messages[i].setListPos(this.messages[i - 1].list_pos);
                 }
             }
         }
@@ -127,6 +130,32 @@ package{
             }
         }
 
+        public function showPreviews():void {
+            for(var i:int = 0; i < this.messages.length; i++) {
+                this.messages[i].showPreview();
+            }
+        }
+
+        public function openThread(thread:Message):void {
+            this.cur_viewing = thread;
+            if(!this.cur_viewing.read) {
+                this.cur_viewing.markAsRead();
+                this.unread_count -= 1;
+            }
+            this.cur_viewing.showThread();
+            if(!this.cur_viewing.read) {
+                this.cur_viewing.markAsRead();
+                this.unread_count -= 1;
+            }
+            this._state = STATE_VIEW_MESSAGE;
+
+            for(var i:int = 0; i < this.messages.length; i++) {
+                if(this.messages[i] != cur_viewing){
+                    this.messages[i].hidePreview();
+                }
+            }
+        }
+
         public function update():void {
             this.currentTime = new Date().valueOf();
             this.timeAlive = this.currentTime - this.bornTime;
@@ -143,61 +172,41 @@ package{
             var cur_message:Message;
             for(var i:int = 0; i < this.messages.length; i++) {
                 cur_message = this.messages[i];
-                if(this._state == STATE_HIDE_INBOX) {
-                    cur_message.hideMessage();
-                } else {
-                    cur_message.update();
+                cur_message.update();
 
-                    if(this.timeAlive > cur_message.send_time && !cur_message.sent) {
-                        if(i != 0){
-                            cur_message.setListPos(this.messages[i-1].list_pos);
-                        }
-                        cur_message.sendMsg();
-                    }
-                    if(cur_message.sent){
-                        viewingInbox();
-                        if(this._state == STATE_VIEW_LIST) {
-                            cur_message.viewingList();
-                            if(FlxG.mouse.justPressed() && this.mouse_rect.overlaps(cur_message.list_hitbox)){
-                                currently_viewing = cur_message;
-                                this._state = STATE_VIEW_MESSAGE;
-                            }
-                        }
-                        if(this._state == STATE_VIEW_MESSAGE) {
-                            if(cur_message != currently_viewing){
-                                cur_message.hideUnviewedMsgs();
-                            }
-
-                            currently_viewing.showCurrentlyViewedMsg();
-
-                            if(!currently_viewing.read) {
-                                currently_viewing.markAsRead();
-                                this.unread_count -= 1;
-                            }
-
-                            if(FlxG.mouse.justPressed() && currently_viewing != null && this.mouse_rect.overlaps(currently_viewing.exit_box)){
-                                currently_viewing.exitCurrentlyViewedMsg();
-                                currently_viewing = null;
-                                this._state = STATE_VIEW_LIST;
-                            }
-
-                            if(FlxG.mouse.justPressed() && currently_viewing != null && this.mouse_rect.overlaps(currently_viewing.reply_to_box)){
-                                currently_viewing.showReply();
-                            }
-                        }
+                if(!cur_message.sent){
+                    if(this._state == STATE_VIEW_LIST &&
+                        FlxG.mouse.justPressed() &&
+                        this.mouse_rect.overlaps(cur_message.list_hitbox))
+                    {
+                        this.openThread(cur_message);
                     }
                 }
             }
 
             if(FlxG.mouse.justPressed()) {
-                if(this._state != STATE_HIDE_INBOX) {
+                if(this._state == STATE_HIDE_INBOX) {
+                    if (this.mouse_rect.overlaps(this.notifications_box)) {
+                        this._state = STATE_VIEW_LIST;
+                        this.showPreviews();
+                        this.openInbox();
+                    }
+                } else {
+                    if (this._state == STATE_VIEW_MESSAGE) {
+                        if(cur_viewing != null) {
+                            if(this.mouse_rect.overlaps(cur_viewing.exit_box)) {
+                                cur_viewing.hideFull();
+                                cur_viewing = null;
+                                this.showPreviews();
+                                this._state = STATE_VIEW_LIST;
+                            } else if(this.mouse_rect.overlaps(cur_viewing.reply_box)) {
+                                cur_viewing.showReply();
+                            }
+                        }
+                    }
                     if (this.mouse_rect.overlaps(this.exit_inbox_rect)){
                         this._state = STATE_HIDE_INBOX;
                         this.exitInbox();
-                    }
-                } else {
-                    if (this.mouse_rect.overlaps(this.notifications_box)) {
-                        this._state = STATE_VIEW_LIST;
                     }
                 }
             }
@@ -206,9 +215,12 @@ package{
         public function exitInbox():void {
             this.exit_inbox.alpha = 0;
             this.img_inbox.alpha = 0;
+            for(var i:int = 0; i < this.messages.length; i++) {
+                this.messages[i].hideMessage();
+            }
         }
 
-        public function viewingInbox():void {
+        public function openInbox():void {
             this.exit_inbox.alpha = 1;
             this.img_inbox.alpha = 1;
         }
