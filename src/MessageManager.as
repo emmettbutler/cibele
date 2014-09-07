@@ -7,24 +7,23 @@ package{
 
         public static var _instance:MessageManager = null;
 
-        public var notifications_text:FlxText;
-        public var unread_count:Number = 0;
-        public var notifications_box:FlxRect;
-
-        public var bornTime:Number = -1;
-        public var timeAlive:Number = 0;
-        public var currentTime:Number = -1;
+        public var notifications_text:FlxText, exit_inbox:FlxText,
+                   debugText:FlxText;
 
         public var img_inbox:FlxSprite;
-        public var exit_inbox:FlxText;
-        public var exit_inbox_rect:FlxRect;
+
+        public var notifications_box:FlxRect, exit_inbox_rect:FlxRect,
+                   mouse_rect:FlxRect;
 
         public var messages:Array;
         public var cur_viewing:Message;
 
-        public var debugText:FlxText;
+        public var unread_count:Number = 0;
+        public var bornTime:Number = -1;
+        public var timeAlive:Number = 0;
+        public var currentTime:Number = -1;
+
         public var _screen:ScreenManager = ScreenManager.getInstance();
-        public var mouse_rect:FlxRect;
 
         public static const STATE_HIDE_INBOX:Number = 0;
         public static const STATE_VIEW_LIST:Number = 1;
