@@ -16,7 +16,7 @@ package{
                    mouse_rect:FlxRect, exit_box:FlxRect, reply_box:FlxRect;
 
         public var messages:Array;
-        public var cur_viewing:Message;
+        public var cur_viewing:Thread;
 
         public var unread_count:Number = 0;
         public var bornTime:Number = -1;
@@ -35,9 +35,9 @@ package{
             this.initNotifications();
 
             this.messages = new Array(
-                new Message("did you get that link i sent you on aim last night? its an anime you might like :D", "yeah! the fairies were very very cute and i think that VA was in sailor moon??", 1, this.img_inbox, "Rusher"),
-                new Message("hey giiiiiirl how are things? you never chat with me anymore </3", ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", 1, this.img_inbox, "GuyverGuy"),
-                new Message("Cib! Wanna do a euryale run w/ me on friday?", "ok! <3 see you then girl~", 1, this.img_inbox, "Airia")
+                new Thread("did you get that link i sent you on aim last night? its an anime you might like :D", "yeah! the fairies were very very cute and i think that VA was in sailor moon??", 1, this.img_inbox, "Rusher"),
+                new Thread("hey giiiiiirl how are things? you never chat with me anymore </3", ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", 1, this.img_inbox, "GuyverGuy"),
+                new Thread("Cib! Wanna do a euryale run w/ me on friday?", "ok! <3 see you then girl~", 1, this.img_inbox, "Airia")
             );
 
             this.loadVisibleMessageObjects();
@@ -160,7 +160,7 @@ package{
             this.exit_msg.alpha = 0;
         }
 
-        public function openThread(thread:Message):void {
+        public function openThread(thread:Thread):void {
             this.cur_viewing = thread;
             if(!this.cur_viewing.read) {
                 this.cur_viewing.markAsRead();
@@ -195,17 +195,17 @@ package{
             this.mouse_rect.x = FlxG.mouse.screenX;
             this.mouse_rect.y = FlxG.mouse.screenY;
 
-            var cur_message:Message;
+            var cur_thread:Thread;
             for(var i:int = 0; i < this.messages.length; i++) {
-                cur_message = this.messages[i];
-                cur_message.update();
+                cur_thread = this.messages[i];
+                cur_thread.update();
 
-                if(cur_message.sent){
+                if(cur_thread.sent){
                     if(this._state == STATE_VIEW_LIST &&
                         FlxG.mouse.justPressed() &&
-                        this.mouse_rect.overlaps(cur_message.list_hitbox))
+                        this.mouse_rect.overlaps(cur_thread.list_hitbox))
                     {
-                        this.openThread(cur_message);
+                        this.openThread(cur_thread);
                     }
                 }
             }

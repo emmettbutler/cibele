@@ -1,13 +1,17 @@
 package{
     import org.flixel.*;
 
-    public class Message {
+    public class Thread {
         public var display_text:String, sent_by:String;
 
-        public var read:Boolean = false, sent:Boolean = false;
+        public var viewing:Boolean = false, read:Boolean = false,
+                   sent:Boolean = false;
 
         public var inbox_ref:FlxSprite;
-        public var textbox:FlxText;
+        public var list_hitbox:FlxRect;
+        public var truncated_textbox:FlxText, textbox:FlxText;
+
+        public var pos:DHPoint;
 
         public var send_time:Number, font_size:Number = 16, list_offset:Number = 30;
 
@@ -16,7 +20,10 @@ package{
 
         public var _messages:MessageManager = null;
 
-        public function Message(txt:String, rep:String, sec:Number,
+        public var reply_text:String;
+        public var reply_sent:Boolean = false;
+
+        public function Thread(txt:String, rep:String, sec:Number,
                                 inbox:FlxSprite, sender:String) {
             this.inbox_ref = inbox;
             this.sent_by = sender;
