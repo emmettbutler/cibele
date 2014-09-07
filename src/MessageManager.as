@@ -59,9 +59,6 @@ package{
             this.loadVisibleMessageObjects();
 
             for(var i:int = 0; i < this.threads.length; i++) {
-                if(this.threads[i].unread) {
-                    this.unread_count += 1;
-                }
                 if(i != 0){
                     this.threads[i].setListPos(this.threads[i - 1].pos);
                 }
@@ -178,9 +175,6 @@ package{
 
         public function openThread(thread:Thread):void {
             this.cur_viewing = thread;
-            if(this.cur_viewing.unread) {
-                this.unread_count -= 1;
-            }
             this.cur_viewing.markAsRead();
             this.cur_viewing.show();
             this.reply_to_msg.alpha = 1;
@@ -206,9 +200,13 @@ package{
             this.mouse_rect.y = FlxG.mouse.screenY;
 
             var cur_thread:Thread;
+            this.unread_count = 0;
             for(var i:int = 0; i < this.threads.length; i++) {
                 cur_thread = this.threads[i];
                 cur_thread.update();
+                if (cur_thread.unread) {
+                    this.unread_count++;
+                }
 
                 if(this._state == STATE_VIEW_LIST &&
                     FlxG.mouse.justPressed() &&
@@ -241,6 +239,9 @@ package{
                     if (this.mouse_rect.overlaps(this.exit_inbox_rect)){
                         this._state = STATE_HIDE_INBOX;
                         this.exitInbox();
+                        if (this.cur_viewing != null) {
+                            this.cur_viewing.viewing = false;
+                        }
                     }
                 }
             }

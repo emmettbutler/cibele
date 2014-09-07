@@ -22,7 +22,7 @@ package{
             this.sent_by = sender;
             this.pos = new DHPoint(inbox_ref.x + 5, inbox_ref.y + 10);
 
-            this.display_text = sent_by + " >> " + txt + "\n";
+            this.display_text = txt + "\n";
             this.send_time = sec;
 
             this.initVisibleObjects();
@@ -31,7 +31,7 @@ package{
         public function initVisibleObjects():void {
             this.textbox = new FlxText(this.pos.x, this.pos.y,
                                        this.inbox_ref.width - 50,
-                                       this.display_text);
+                                       this.sent_by + " >> " + this.display_text);
             this.textbox.color = this.font_color;
             this.textbox.scrollFactor = new FlxPoint(0, 0);
             this.textbox.size = this.font_size;

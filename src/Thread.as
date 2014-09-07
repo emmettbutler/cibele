@@ -36,7 +36,7 @@ package{
                                                inbox, cur_message[0]));
             }
 
-            this.display_text = sent_by + " >> " + messages[0][1] + "\n";
+            this.display_text = messages[0][1];
         }
 
         public function initVisibleObjects():void {
@@ -67,11 +67,18 @@ package{
                     this.messages[i].send();
                     if (this.viewing) {
                         this.messages[i].show();
+                    } else {
+                        this.unread = true;
                     }
                     if (i != 0) {
                         this.messages[i].pos.y = this.messages[i - 1].pos.y + 50;
                     }
                     this.last_send_time = this._messages.timeAlive;
+                    this.display_text = this.messages[i].display_text;
+                    this.truncated_textbox.color = this.unread_color;
+                    this.truncated_textbox.text = this.sent_by + " >> " +
+                        this.display_text.slice(0, this.sent_by.length + 10) +
+                        "...";
                 }
             }
         }
