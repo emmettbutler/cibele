@@ -2,6 +2,9 @@ package {
     import org.flixel.*;
 
     import flash.display.StageDisplayState;
+    import flash.display.StageQuality;
+    import flash.display.StageScaleMode;
+    import flash.geom.Rectangle;
     import flash.events.KeyboardEvent;
     import flash.ui.Keyboard;
 
@@ -16,8 +19,14 @@ package {
         public static var _instance:ScreenManager = null;
 
         public function ScreenManager() {
+
+            FlxG.stage.frameRate = 60;
+            //this needs to be set in order to scale using gpu instead of in the software
+            //needs to be set before put in full screen
+            screenWidth = FlxG.stage.fullScreenWidth;
+            screenHeight = FlxG.stage.fullScreenHeight;
+            FlxG.stage.fullScreenSourceRect = new Rectangle(0,0,screenWidth,screenHeight); //fix these dimensions
             FlxG.stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
-            FlxG.stage.frameRate = 50;
 
             FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN,
                 function(e:KeyboardEvent):void {
@@ -27,8 +36,6 @@ package {
                 });
 
             applet_dimensions = new FlxPoint(640/2, 480/2);
-            screenWidth = FlxG.stage.fullScreenWidth;
-            screenHeight = FlxG.stage.fullScreenHeight;
             trace("SCREEN DIMENSIONS: " + screenWidth + "x" + screenHeight);
             FlxG.width = screenWidth;
             FlxG.height = screenHeight;
