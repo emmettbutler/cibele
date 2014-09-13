@@ -28,6 +28,12 @@ package {
             if (this.updateMessages) {
                 MessageManager.getInstance().update();
             }
+
+            if (FlxG.keys.justPressed("P")) {
+                SoundManager.getInstance().increaseVolume();
+            } else if (FlxG.keys.justPressed("O")) {
+                SoundManager.getInstance().decreaseVolume();
+            }
         }
     }
 }

@@ -6,9 +6,13 @@ package {
 
         public var runningSounds:Array;
         public var newSound:GameSound;
+        public var globalVolume:Number;
+
+        public static const VOLUME_STEP:Number = .1;
 
         public function SoundManager() {
             this.runningSounds = new Array();
+            this.globalVolume = .5;
         }
 
         public function playSound(embeddedSound:Class, dur:Number,
@@ -33,6 +37,30 @@ package {
             for(var i:int = 0; i < this.runningSounds.length; i++) {
                 snd = this.runningSounds[i];
                 snd.update();
+            }
+        }
+
+        public function increaseVolume():void {
+            if (this.globalVolume < 1) {
+                this.globalVolume += VOLUME_STEP;
+            }
+            this.applyVolumeToRunningSounds();
+        }
+
+        public function decreaseVolume():void {
+            if (this.globalVolume > 0) {
+                this.globalVolume -= VOLUME_STEP;
+            }
+            this.applyVolumeToRunningSounds(true);
+        }
+
+        public function applyVolumeToRunningSounds(dec:Boolean=false):void {
+            for(var i:Number = 0; i < runningSounds.length; i++){
+                if (dec) {
+                    this.runningSounds[i].decreaseVolume();
+                } else {
+                    this.runningSounds[i].increaseVolume();
+                }
             }
         }
 

@@ -12,6 +12,7 @@ package
         public var soundObject:FlxSound;
         public var endCallback:Function;
         public var callbackLock:Boolean = false;
+        public var virtualVolume:Number;
 
         public static const MSEC_PER_SEC:Number = 1000;
 
@@ -20,6 +21,7 @@ package
                                   _loop:Boolean=false, _vol:Number=1) {
             this.bornTime = new Date().valueOf();
             this.timeAlive = 0;
+            this.virtualVolume = _vol;
 
             this.totalSeconds = dur;
             this.embeddedSound = embeddedSound;
@@ -32,6 +34,20 @@ package
             soundObject.loadEmbedded(embeddedSound, _loop);
             soundObject.volume = _vol;
             soundObject.play();
+        }
+
+        public function increaseVolume():void {
+            this.virtualVolume += SoundManager.VOLUME_STEP;
+            this.applyVolume();
+        }
+
+        public function decreaseVolume():void {
+            this.virtualVolume -= SoundManager.VOLUME_STEP;
+            this.applyVolume();
+        }
+
+        public function applyVolume():void {
+            this.soundObject.volume = Math.min(Math.max(virtualVolume, 0), 1);
         }
 
         public function update():void {

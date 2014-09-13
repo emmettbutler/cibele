@@ -38,6 +38,10 @@ package {
             FlxG.stage.addChild(video);
         }
 
+        override public function update():void {
+            super.update();
+        }
+
         private function netStatusHandler(evt:NetStatusEvent):void {
             if (evt.info.code == "NetStream.Play.Stop") {
                 FlxG.stage.removeChild(video);  // kill video
