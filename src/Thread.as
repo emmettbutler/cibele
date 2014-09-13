@@ -176,7 +176,7 @@ package{
         public function reply():void {
             for (var i:int = 0; i < messages.length; i++) {
                 if (!this.messages[i].sent &&
-                    this.messages[i].sent_by == MessageManager.SENT_BY_CIBELE)
+                    this.messages[i].sent_by != this.messages[i - 1].sent_by)
                 {
                     this.messages[i].send();
                     this.messages[i].show();
