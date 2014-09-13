@@ -1,9 +1,7 @@
 package{
     import org.flixel.*;
 
-    public class IkuTursoTeleportRoom extends FlxState {
-        public var player:Player;
-
+    public class IkuTursoTeleportRoom extends PlayerState {
         public var bg:FlxSprite;
         public var door:FlxSprite;
         public var runningSound:GameSound;
@@ -16,6 +14,10 @@ package{
         }
 
         override public function create():void {
+            this.startPos = new DHPoint(_screen.screenWidth * .4,
+                                        _screen.screenHeight * .6);
+            super.create();
+
             (new BackgroundLoader()).loadSingleTileBG("../assets/it_teleport_640_480.png");
             ScreenManager.getInstance().setupCamera(null, 1);
 
@@ -25,16 +27,11 @@ package{
             door.alpha = 0;
             add(door);
 
-            player = new Player(_screen.screenWidth * .4, _screen.screenHeight * .6);
-            add(player);
-            player.addAttackAnim();
+            this.postCreate();
         }
 
         override public function update():void{
             super.update();
-
-            MessageManager.getInstance().update();
-            SoundManager.getInstance().update();
 
             if (player.mapHitbox.overlaps(door)){
                 FlxG.switchState(new IkuTurso(this.runningSound));

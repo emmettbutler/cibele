@@ -1,7 +1,7 @@
 package{
     import org.flixel.*;
 
-    public class Desktop extends FlxState {
+    public class Desktop extends GameState {
         [Embed(source="../assets/valtameri_icon.png")] private var ImgIcon:Class;
         public var timeFrame:Number = 0;
         public var timer:Number = 0;
@@ -13,6 +13,10 @@ package{
         public var mouse_rect:FlxRect;
 
         public var img_height:Number = 357;
+
+        public function Desktop() {
+            super(true, false, false);
+        }
 
         override public function create():void {
             FlxG.bgColor = 0x00000000;

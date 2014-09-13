@@ -1,16 +1,19 @@
 package{
     import org.flixel.*;
 
-    public class Fern extends FlxState {
+    public class Fern extends PlayerState {
         [Embed(source="../assets/voc_ikuturso.mp3")] private var Convo:Class;
 
-        public var player:Player;
         public var ikutursodoor:FlxSprite;
         public var euryaledoor:FlxSprite;
         public var hiisidoor:FlxSprite;
         public var convoSound:GameSound;
 
         override public function create():void {
+            var _screen:ScreenManager = ScreenManager.getInstance();
+            this.startPos = new DHPoint(_screen.screenWidth * .5,
+                                        _screen.screenHeight * .5);
+            super.create();
             FlxG.bgColor = 0x00000000;
             FlxG.mouse.show();
 
@@ -26,7 +29,6 @@ package{
             (new BackgroundLoader()).loadSingleTileBG("../assets/fern_640_480.png");
             ScreenManager.getInstance().setupCamera(null, 1);
 
-            var _screen:ScreenManager = ScreenManager.getInstance();
             ikutursodoor = new FlxSprite(_screen.screenWidth * .2, _screen.screenHeight * .1);
             ikutursodoor.makeGraphic(200, 300, 0xffff0000);
             ikutursodoor.alpha = 0;
@@ -42,16 +44,11 @@ package{
             hiisidoor.alpha = 0;
             add(hiisidoor);
 
-            player = new Player(_screen.screenWidth * .5, _screen.screenHeight * .5);
-            add(player);
-            player.addAttackAnim();
+            this.postCreate();
         }
 
         override public function update():void{
             super.update();
-            MessageManager.getInstance().update();
-            SoundManager.getInstance().update();
-            PopUpManager.getInstance().update();
 
             if(player.mapHitbox.overlaps(ikutursodoor)){
                 FlxG.switchState(new IkuTursoTeleportRoom(this.convoSound));

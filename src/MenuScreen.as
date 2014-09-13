@@ -1,7 +1,7 @@
 package{
     import org.flixel.*;
 
-    public class MenuScreen extends FlxState {
+    public class MenuScreen extends GameState {
         [Embed(source="../assets/login.png")] private var ImgLogin:Class;
         [Embed(source="../assets/quit.png")] private var ImgQuit:Class;
         [Embed(source="../assets/play.png")] private var ImgPlay:Class;
@@ -24,6 +24,10 @@ package{
         public var mouse_rect:FlxRect;
 
         public var img_height:Number = 357;
+
+        public function MenuScreen() {
+            super(true, false, false);
+        }
 
         override public function create():void {
             FlxG.bgColor = 0x00000000;

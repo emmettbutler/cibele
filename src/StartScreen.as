@@ -1,7 +1,7 @@
 package{
     import org.flixel.*;
 
-    public class StartScreen extends FlxState {
+    public class StartScreen extends GameState {
         public var startText:FlxText;
 
         override public function create():void {

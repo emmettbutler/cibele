@@ -6,7 +6,7 @@ package {
     import flash.media.Video;
     import flash.events.NetStatusEvent;
 
-    public class PlayVideoState extends FlxState {
+    public class PlayVideoState extends GameState {
         public var videoStream:NetStream;
         public var video:Video;
         public var endCallback:Function;
