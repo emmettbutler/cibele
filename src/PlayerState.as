@@ -1,6 +1,7 @@
 package {
     public class PlayerState extends GameState {
         protected var player:Player;
+        protected var startPos:DHPoint;
 
         public function PlayerState() {
         }
@@ -8,8 +9,14 @@ package {
         override public function create():void {
             super.create();
 
-            this.player = new Player(4600, 7565);
+            this.player = new Player(this.startPos.x, this.startPos.y);
             this.add(this.player.mapHitbox)
+        }
+
+        public function postCreate():void {
+            add(this.player);
+            this.player.addAttackAnim();
+            add(this.player.debugText);
         }
 
         override public function update():void {

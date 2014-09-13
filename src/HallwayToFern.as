@@ -1,12 +1,11 @@
 package{
     import org.flixel.*;
 
-    public class HallwayToFern extends FlxState {
+    public class HallwayToFern extends PlayerState {
         [Embed(source="../assets/hallway sprite.png")] private var ImgBG:Class;
         [Embed(source="../assets/incomingcall.png")] private var ImgCall:Class;
         [Embed(source="../assets/voc_firstconvo.mp3")] private var Convo1:Class;
 
-        public var player:Player;
         public var timer:Number = 0;
 
         public var call_button:FlxSprite;
@@ -22,19 +21,25 @@ package{
 
         public static const STATE_PRE_IT:Number = 0;
         public var _state:Number = 0;
+
+        public var _screen:ScreenManager;
         public var runSpeed:Number = 5;
 
         public var popupmgr:PopUpManager;
 
         public function HallwayToFern(state:Number = 0){
+            _screen = ScreenManager.getInstance();
+            this.startPos = new DHPoint(_screen.screenWidth * .5,
+                                        _screen.screenHeight * .5);
             _state = state;
         }
 
         override public function create():void {
+            super.create();
+
             FlxG.mouse.show();
             FlxG.bgColor = 0xff000000;
 
-            var _screen:ScreenManager = ScreenManager.getInstance();
             var originX:Number = (_screen.screenWidth * .5) - 1422/2;
 
             bg1 = new FlxSprite(originX, -img_height);
@@ -55,14 +60,8 @@ package{
 
             ScreenManager.getInstance().setupCamera(null, 1);
 
-            var debugText:FlxText = new FlxText(_screen.screenWidth * .2, _screen.screenHeight * .2,200,"placeholder for hallway\nthat player will run down\nduring this sequence");
-            //add(debugText);
-            //debugText.size = 12;
+            this.postCreate();
 
-            player = new Player(_screen.screenWidth * .5, _screen.screenHeight * .5);
-            player.inhibitY = true;
-            add(player);
-            player.testAttackAnim();
             if(_state == STATE_PRE_IT){
                 call_button = new FlxSprite(_screen.screenWidth * .3, _screen.screenHeight * .3);
                 call_button.loadGraphic(ImgCall,false,false,500,230);
@@ -70,10 +69,19 @@ package{
             }
         }
 
+        override public function postCreate():void {
+            super.postCreate();
+            player.inhibitY = true;
+        }
+
+        override public function restrictPlayerMovement():void {
+            super.restrictPlayerMovement();
+            this.player.inhibitY = true;
+        }
+
         override public function update():void{
             super.update();
             popupmgr = PopUpManager.getInstance();
-            popupmgr.update();
 
             if(_state == STATE_PRE_IT){
                 if(FlxG.mouse.justPressed() && !accept_call){
@@ -89,10 +97,7 @@ package{
                 }
             }
 
-            SoundManager.getInstance().update();
-            MessageManager.getInstance().update();
-
-            if(PopUpManager.getInstance()._state == 2){
+            if(PopUpManager.getInstance()._state == PopUpManager.SHOWING_NOTHING){
                 if(FlxG.keys.UP){
                     bg1.y += runSpeed;
                     bg2.y += runSpeed;

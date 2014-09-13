@@ -27,7 +27,7 @@ package{
 
             player = new Player(_screen.screenWidth * .4, _screen.screenHeight * .6);
             add(player);
-            player.testAttackAnim();
+            player.addAttackAnim();
         }
 
         override public function update():void{

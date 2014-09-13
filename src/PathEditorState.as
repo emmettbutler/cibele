@@ -29,7 +29,7 @@ package
             super.create();
         }
 
-        public function create_(player:Player):void
+        override public function postCreate():void
         {
             this.dataFile = File.applicationDirectory.resolvePath(
                 "assets/" + this.filename);
@@ -85,10 +85,9 @@ package
 
             add(pathWalker);
             pathWalker.tempAttackAnim();
-            add(player);
-            player.testAttackAnim();
 
-            add(player.debugText);
+            super.postCreate();
+
             add(pathWalker.debugText);
         }
 

@@ -12,6 +12,7 @@ package {
         public static const LEVEL_ID:int = 9234876592837465;
 
         override public function create():void {
+            this.startPos = new DHPoint(4600, 7565);
             super.create();
 
             FlxG.bgColor = 0xffffffff;
@@ -25,7 +26,7 @@ package {
             ScreenManager.getInstance().setupCamera(player);
             FlxG.camera.setBounds(0, 0, bgLoader.cols * bgLoader.estTileWidth,
                                   bgLoader.rows * bgLoader.estTileHeight);
-            super.create_(this.player);
+            super.postCreate();
         }
 
         override public function update():void {

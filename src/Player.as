@@ -13,8 +13,7 @@ package{
         public var hitboxOffset:DHPoint, hitboxDim:DHPoint;
         public var collisionDirection:Array;
         public var popupmgr:PopUpManager;
-        public var inhibitY:Boolean = false;
-        public static const NO_POP_UP:Number = 2;
+        public var inhibitY:Boolean = false, inhibitX:Boolean = false;
         public var splash_sprites:FlxSprite;
 
         public function Player(x:Number, y:Number):void{
@@ -42,60 +41,51 @@ package{
             this.hitbox_rect.x = this.pos.x;
             this.hitbox_rect.y = this.pos.y;
 
-            popupmgr = PopUpManager.getInstance();
-            popupmgr.update();
-
-            if(popupmgr._state == NO_POP_UP){
-                if (FlxG.keys.LEFT || FlxG.keys.RIGHT || FlxG.keys.UP || FlxG.keys.DOWN) {
-                    if (FlxG.keys.UP) {
-                        play("walk_u");
-                    } else if (FlxG.keys.DOWN) {
-                        play("walk_d");
-                    } else if(FlxG.keys.LEFT) {
-                        play("walk_l");
-                    } else if (FlxG.keys.RIGHT) {
-                        play("walk_r");
-                    }
-                    if(FlxG.keys.LEFT || FlxG.keys.RIGHT) {
-                        if(FlxG.keys.LEFT) {
-                            this.dir.x = -1 * runSpeed;
-                            if (!(FlxG.keys.UP || FlxG.keys.DOWN)) {
-                                this.offset.x = 63;
-                                this.hitboxOffset.x = 10;
-                                this.footstepOffset.x = 2;
-                            }
-                        }
-                        if(FlxG.keys.RIGHT){
-                            this.dir.x = runSpeed;
-                            if (!(FlxG.keys.UP || FlxG.keys.DOWN)) {
-                                this.offset.x = 0;
-                                this.hitboxOffset.x = 30;
-                                this.footstepOffset.x = 20;
-                            }
-                        }
-                    } else {
-                        this.dir.x = 0;
-                    }
-
-                    if(!this.inhibitY && (FlxG.keys.UP || FlxG.keys.DOWN)) {
-                        if (!(FlxG.keys.LEFT || FlxG.keys.RIGHT)) {
+            if (FlxG.keys.LEFT || FlxG.keys.RIGHT || FlxG.keys.UP || FlxG.keys.DOWN) {
+                if (FlxG.keys.UP) {
+                    play("walk_u");
+                } else if (FlxG.keys.DOWN) {
+                    play("walk_d");
+                } else if(FlxG.keys.LEFT) {
+                    play("walk_l");
+                } else if (FlxG.keys.RIGHT) {
+                    play("walk_r");
+                }
+                if(!this.inhibitX && (FlxG.keys.LEFT || FlxG.keys.RIGHT)) {
+                    if(FlxG.keys.LEFT) {
+                        this.dir.x = -1 * runSpeed;
+                        if (!(FlxG.keys.UP || FlxG.keys.DOWN)) {
                             this.offset.x = 63;
                             this.hitboxOffset.x = 10;
                             this.footstepOffset.x = 2;
                         }
-                        if(FlxG.keys.UP){
-                            this.dir.y = -1 * runSpeed;
+                    }
+                    if(FlxG.keys.RIGHT){
+                        this.dir.x = runSpeed;
+                        if (!(FlxG.keys.UP || FlxG.keys.DOWN)) {
+                            this.offset.x = 0;
+                            this.hitboxOffset.x = 30;
+                            this.footstepOffset.x = 20;
                         }
-                        if(FlxG.keys.DOWN){
-                            this.dir.y = runSpeed;
-                        }
-                    } else {
-                        this.dir.y = 0;
                     }
                 } else {
                     this.dir.x = 0;
+                }
+
+                if(!this.inhibitY && (FlxG.keys.UP || FlxG.keys.DOWN)) {
+                    if (!(FlxG.keys.LEFT || FlxG.keys.RIGHT)) {
+                        this.offset.x = 63;
+                        this.hitboxOffset.x = 10;
+                        this.footstepOffset.x = 2;
+                    }
+                    if(FlxG.keys.UP){
+                        this.dir.y = -1 * runSpeed;
+                    }
+                    if(FlxG.keys.DOWN){
+                        this.dir.y = runSpeed;
+                    }
+                } else {
                     this.dir.y = 0;
-                    play("idle");
                 }
             } else {
                 this.dir.x = 0;
@@ -153,7 +143,7 @@ package{
             }
         }
 
-        public function testAttackAnim():void {
+        public function addAttackAnim():void {
             this.splash_sprites = new FlxSprite(this.x, this.y);
             this.splash_sprites.loadGraphic(ImgAttack, true, false, 640/10, 64);
             this.splash_sprites.addAnimation("attack", [0, 1, 2, 3, 4, 5, 6, 7, 8], 15, false);

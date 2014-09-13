@@ -20,8 +20,8 @@ package{
 
         public static const SHOWING_POP_UP:Number = 0;
         public static const SHOWING_PROGRAM_PICKER:Number = 1;
-        public static const SHOWING_NOTHING:Number = 2;
-        public var _state:Number = 2;
+        public static const SHOWING_NOTHING:Number = -699999999;
+        public var _state:Number = SHOWING_NOTHING;
 
         public var bornTime:Number = -1;
         public var timeAlive:Number = -1;
