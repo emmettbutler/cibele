@@ -20,6 +20,9 @@ package{
         public var popupmgr:PopUpManager;
         public var inhibitY:Boolean = false, inhibitX:Boolean = false;
         public var splash_sprites:FlxSprite;
+        public var targetEnemy:Enemy;
+
+        public static const STATE_WALK:Number = 2398476188;
 
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
@@ -38,6 +41,8 @@ package{
             addAnimation("idle", [11], 7, false);
             addAnimation("attack", [0, 1], 7, true);
 
+            this.splash_sprites = new FlxSprite(this.x, this.y);
+
             this.hitboxOffset = new DHPoint(60, 100);
             this.hitboxDim = new DHPoint(40, 50);
             this.mapHitbox = new FlxSprite(x, y);
@@ -52,32 +57,66 @@ package{
         }
 
         public function clickCallback(pos:DHPoint, group:Array=null):void {
-            var clickedObject:GameObject = null;
+            this.targetEnemy = null;
             if (group != null) {
-                var cur:GameObject, rect:FlxRect;
+                var cur:Enemy, rect:FlxRect;
                 var mouseRect:FlxRect = new FlxRect(pos.x, pos.y, 5, 5);
                 for (var i:int = 0; i < group.length; i++) {
-                    cur = group[i] as GameObject;
+                    cur = group[i] as Enemy;
                     rect = new FlxRect(cur.x, cur.y, cur.width, cur.height);
                     if (mouseRect.overlaps(rect)) {
-                        clickedObject = cur;
+                        this.targetEnemy = cur;
                         break;
                     }
                 }
             }
 
-            if (clickedObject == null) {
+            if (this.targetEnemy == null) {
+                this._state = STATE_WALK;
                 this.walkTarget = new DHPoint(FlxG.mouse.x, FlxG.mouse.y);
-                this.walking = true;
-                this.walkDistance = walkTarget.sub(footPos)._length();
-                this.dir = walkTarget.sub(footPos).normalized();
                 this.splash_sprites.x = this.walkTarget.x - this.splash_sprites.width/2;
                 this.splash_sprites.y = this.walkTarget.y - this.splash_sprites.height/2;
                 this.splash_sprites.alpha = 1;
                 this.splash_sprites.play("attack");
             } else {
+                this._state = STATE_MOVE_TO_ENEMY;
+                this.walkTarget = this.targetEnemy.pos;
                 this.splash_sprites.alpha = 1;
                 this.splash_sprites.play("attack");
+            }
+            this.dir = this.walkTarget.sub(footPos).normalized();
+            this.walkDistance = this.walkTarget.sub(footPos)._length();
+        }
+
+        public function setFacing():void {
+            if(this.dir != null){
+                if(Math.abs(this.dir.y) > Math.abs(this.dir.x)){
+                    if(this.dir.y < 0){
+                        this.facing = UP;
+                    } else {
+                        this.facing = DOWN;
+                    }
+                } else {
+                    if(this.dir.x > 0){
+                        this.facing = RIGHT;
+                    } else {
+                        this.facing = LEFT;
+                    }
+                }
+            }
+        }
+
+        public function walk():void {
+            this.walkDirection = walkTarget.sub(footPos).normalized();
+            this.dir = this.walkDirection.mulScl(this.walkSpeed);
+            if(this.facing == LEFT){
+                this.play("walk_l");
+            } else if (this.facing == RIGHT){
+                this.play("walk_r");
+            } else if(this.facing == UP){
+                this.play("walk_u");
+            } else if(this.facing == DOWN){
+                this.play("walk_d");
             }
         }
 
@@ -85,42 +124,29 @@ package{
             this.hitbox_rect.x = this.pos.x;
             this.hitbox_rect.y = this.pos.y;
 
-            footPos = new DHPoint(this.pos.x + this.width/2,
+            this.setFacing();
+            this.footPos = new DHPoint(this.pos.x + this.width/2,
                                   this.pos.y + this.height);
 
-            if(this.walking) {
-                this.walkDirection = walkTarget.sub(footPos).normalized();
-                this.dir = this.walkDirection.mulScl(this.walkSpeed);
-                if(this.facing == LEFT){
-                    this.play("walk_l");
-                } else if (this.facing == RIGHT){
-                    this.play("walk_r");
-                } else if(this.facing == UP){
-                    this.play("walk_u");
-                } else if(this.facing == DOWN){
-                    this.play("walk_d");
+            if (this._state == STATE_WALK) {
+                this.walk();
+                if (this.walkTarget.sub(this.footPos)._length() < 10) {
+                    this._state = STATE_IDLE;
+                    this.dir = ZERO_POINT;
                 }
-            }
-
-            if (this.walkTarget.sub(this.footPos)._length() < 10) {
-                this.walking = false;
-                this.dir.x = 0;
-                this.dir.y = 0;
-            }
-
-            if(walkDirection != null){
-                if(Math.abs(walkDirection.y) > Math.abs(walkDirection.x)){
-                    if(walkDirection.y < 0){
-                        this.facing = UP;
-                    } else {
-                        this.facing = DOWN;
-                    }
-                } else {
-                    if(walkDirection.x > 0){
-                        this.facing = RIGHT;
-                    } else {
-                        this.facing = LEFT;
-                    }
+            } else if (this._state == STATE_MOVE_TO_ENEMY) {
+                this.walk();
+                if (this.enemyIsInAttackRange(this.targetEnemy)) {
+                    this._state = STATE_AT_ENEMY;
+                }
+            } else if (this._state == STATE_AT_ENEMY) {
+                this.attack();
+                this.dir = ZERO_POINT;
+            } else if (this._state == STATE_IN_ATTACK) {
+                this.splash_sprites.x = this.pos.x;
+                this.splash_sprites.y = this.pos.y;
+                if (this.timeSinceLastAttack() > 100) {
+                    this.resolveStatePostAttack();
                 }
             }
 
@@ -150,29 +176,26 @@ package{
             }
             super.update();
 
-            if(FlxG.keys.justPressed("SPACE")){
-                this.attack();
+            if(this.splash_sprites.frame == 8) {
+                this.splash_sprites.alpha = 0;
+                this.splash_sprites.play("idle");
             }
+        }
 
-            if (this.splash_sprites != null) {
-                if (this._state == STATE_IN_ATTACK) {
-                    this.splash_sprites.x = this.pos.x;
-                    this.splash_sprites.y = this.pos.y;
-                    if (timeSinceLastAttack() > 100) {
-                        play("idle");
-                        this._state = STATE_IDLE;
-                    }
+        override public function resolveStatePostAttack():void {
+            super.resolveStatePostAttack();
+            if (this.targetEnemy != null && !this.targetEnemy.dead){
+                if(this.enemyIsInAttackRange(this.targetEnemy)) {
+                    this._state = STATE_AT_ENEMY;
                 } else {
-                    if(this.splash_sprites.frame == 8) {
-                        this.splash_sprites.alpha = 0;
-                        this.splash_sprites.play("idle");
-                    }
+                    this._state = STATE_MOVE_TO_ENEMY;;
                 }
+            } else {
+                this._state = STATE_IDLE;
             }
         }
 
         public function addAttackAnim():void {
-            this.splash_sprites = new FlxSprite(this.x, this.y);
             this.splash_sprites.loadGraphic(ImgAttack, true, false, 640/10, 64);
             this.splash_sprites.addAnimation("attack",
                 [0, 1, 2, 3, 4, 5, 6, 7, 8], 15, false);
