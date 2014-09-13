@@ -37,6 +37,10 @@ package {
             this.resolveAttacks();
         }
 
+        override public function clickCallback():void {
+            this.player.clickCallback(this.enemies.enemies);
+        }
+
         public function resolveAttacksHelper(obj:PartyMember):void {
             if (!obj.isAttacking()) {
                 return;

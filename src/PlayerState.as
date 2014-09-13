@@ -1,4 +1,6 @@
 package {
+    import org.flixel.*;
+
     public class PlayerState extends GameState {
         protected var player:Player;
         protected var startPos:DHPoint;
@@ -26,6 +28,14 @@ package {
             }
 
             this.restrictPlayerMovement();
+
+            if(FlxG.mouse.justPressed()) {
+                this.clickCallback();
+            }
+        }
+
+        public function clickCallback():void {
+            this.player.clickCallback();
         }
 
         public function restrictPlayerMovement():void {
