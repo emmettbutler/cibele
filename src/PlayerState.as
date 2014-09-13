@@ -21,6 +21,9 @@ package {
 
         override public function update():void {
             super.update();
+            if(PopUpManager.getInstance()._player == null) {
+                PopUpManager.getInstance()._player = this.player;
+            }
 
             this.restrictPlayerMovement();
         }

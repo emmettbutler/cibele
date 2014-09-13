@@ -171,7 +171,7 @@ package{
         }
 
         public function updateUnreadNotification():void {
-            this.notifications_text.text = this.unread_count + " unread messages.\n\nN to emote.";
+            this.notifications_text.text = this.unread_count + " unread messages.";
             if(this.unread_count > 0) {
                 this.notifications_text.color = 0xff982708;
             } else {

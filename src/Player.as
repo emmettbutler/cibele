@@ -122,9 +122,6 @@ package{
             if(FlxG.keys.justPressed("SPACE")){
                 this.attack();
             }
-            if(FlxG.keys.justPressed("N")) {
-                this.emote();
-            }
 
             if (this.splash_sprites != null) {
                 if (this._state == STATE_IN_ATTACK) {
@@ -150,10 +147,6 @@ package{
             this.splash_sprites.addAnimation("idle", [0], 20, false);
             FlxG.state.add(this.splash_sprites);
             this.splash_sprites.alpha = 0;
-        }
-
-        public function emote():void {
-            new Emote(this.pos);
         }
 
         override public function setPos(pos:DHPoint):void {

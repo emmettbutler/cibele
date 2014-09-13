@@ -6,8 +6,10 @@ package{
         [Embed(source="../assets/bulldoghell.png")] private var ImgBulldogHell:Class;
         [Embed(source="../assets/cib_selfies_1.png")] private var ImgCibSelfie1:Class;
         [Embed(source="../assets/forum_selfies_1.png")] private var ImgForumSelfie1:Class;
+        [Embed(source="../assets/emojipanel.png")] private var ImgEmojiPanel:Class;
 
         public static var _instance:PopUpManager = null;
+        public var _player:Player;
 
         public var program_picker:FlxSprite = null;
         public var bulldog_hell:PopUp;
@@ -34,6 +36,9 @@ package{
 
         public var mouse_rect:FlxRect;
         public var blink:Boolean = false;
+
+        public var emoji_panel:FlxSprite;
+        public var emoji_rect:FlxRect;
 
         public function PopUpManager() {
             this.bornTime = new Date().valueOf();
@@ -69,8 +74,11 @@ package{
                 } else {
                     checkForNextPopUp();
                 }
+
+                this.emote();
             } else if(this._state == FLASH_PROGRAM_PICKER) {
                 showBlinker();
+                this.emote();
                 if(mouse_rect.overlaps(this.blinker_rect) && FlxG.mouse.justPressed()) {
                     this.blinker.alpha = 0;
                     this.next_popup.alpha = 1;
@@ -113,6 +121,12 @@ package{
 
         public function loadPopUps():void {
             var _screen:ScreenManager = ScreenManager.getInstance();
+
+            this.emoji_panel = new FlxSprite(_screen.screenWidth * .9, _screen.screenWidth * .01);
+            this.emoji_panel.loadGraphic(ImgEmojiPanel,false,false,108,29);
+            FlxG.state.add(emoji_panel);
+
+            this.emoji_rect = new FlxRect(this.emoji_panel.x, this.emoji_panel.y, this.emoji_panel.width, this.emoji_panel.height);
 
             this.blinker = new FlxSprite(0,0);
             this.blinker.makeGraphic(150,50,0xffff0000);
@@ -164,6 +178,12 @@ package{
                     this.open_popup_time = this.timeAlive;
                     break;
                 }
+            }
+        }
+
+        public function emote():void {
+            if(this.mouse_rect.overlaps(emoji_rect) && FlxG.mouse.justPressed()) {
+                new Emote(_player.pos);
             }
         }
 
