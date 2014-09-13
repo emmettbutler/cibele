@@ -55,10 +55,6 @@ package
             player.initFootsteps();
             pathWalker.initFootsteps();
 
-            mouseImg = new FlxSprite(FlxG.mouse.x, FlxG.mouse.y);
-            mouseImg.makeGraphic(10, 10, 0xff000000);
-            add(mouseImg);
-
             _path = new Path(player);
             pathWalker.setPath(_path);
             pathWalker.setPlayerReference(player);
@@ -84,11 +80,15 @@ package
             this.enemies.addEnemy(this.boss);
 
             add(pathWalker);
-            pathWalker.tempAttackAnim();
+            this.pathWalker.tempAttackAnim();
 
             super.postCreate();
 
             add(pathWalker.debugText);
+
+            this.mouseImg = new FlxSprite(FlxG.mouse.x, FlxG.mouse.y);
+            this.mouseImg.makeGraphic(10, 10, 0xff000000);
+            add(this.mouseImg);
         }
 
         override public function destroy():void {
