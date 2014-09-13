@@ -73,7 +73,7 @@ package{
         public function initNotifications():void {
             this.mouse_rect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 5, 5);
             var notifications_pos:DHPoint = new DHPoint(
-                _screen.screenWidth * .001, _screen.screenHeight * .85);
+                _screen.screenWidth * .001, _screen.screenHeight * .75);
             var img_msg:FlxSprite = new FlxSprite(
                 notifications_pos.x, notifications_pos.y);
             img_msg.loadGraphic(ImgMsg, false, false, 197, 71);

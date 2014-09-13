@@ -41,6 +41,7 @@ package{
             this.timeAlive = this.currentTime - this.bornTime;
 
             if(this._state == ARROW_THROUGH) {
+                //TODO change this it won't work with point and click
                 if(FlxG.keys.justPressed("LEFT") || FlxG.keys.justPressed("RIGHT") ||
                     FlxG.keys.justPressed("UP") || FlxG.keys.justPressed("DOWN")) {
                     if(this.cur_anim == 1) {

@@ -6,7 +6,9 @@ package{
         [Embed(source="../assets/bulldoghell.png")] private var ImgBulldogHell:Class;
         [Embed(source="../assets/cib_selfies_1.png")] private var ImgCibSelfie1:Class;
         [Embed(source="../assets/forum_selfies_1.png")] private var ImgForumSelfie1:Class;
-        [Embed(source="../assets/emojipanel.png")] private var ImgEmojiPanel:Class;
+        [Embed(source="../assets/happy_emoji.png")] private var ImgEmojiHappy:Class;
+        [Embed(source="../assets/sad_emoji.png")] private var ImgEmojiSad:Class;
+        [Embed(source="../assets/angry_emoji.png")] private var ImgEmojiAngry:Class;
 
         public static var _instance:PopUpManager = null;
         public var _player:Player;
@@ -37,8 +39,12 @@ package{
         public var mouse_rect:FlxRect;
         public var blink:Boolean = false;
 
-        public var emoji_panel:FlxSprite;
-        public var emoji_rect:FlxRect;
+        public var emoji_happy:FlxSprite;
+        public var emoji_sad:FlxSprite;
+        public var emoji_angry:FlxSprite;
+        public var emoji_happy_rect:FlxRect;
+        public var emoji_sad_rect:FlxRect;
+        public var emoji_angry_rect:FlxRect;
 
         public function PopUpManager() {
             this.bornTime = new Date().valueOf();
@@ -54,8 +60,8 @@ package{
         }
 
         public function update():void {
-            this.mouse_rect.x = FlxG.mouse.x;
-            this.mouse_rect.y = FlxG.mouse.y;
+            this.mouse_rect.x = FlxG.mouse.screenX;
+            this.mouse_rect.y = FlxG.mouse.screenY;
 
             if(this.debugText._textField == null) {
                 loadPopUps();
@@ -122,27 +128,46 @@ package{
         public function loadPopUps():void {
             var _screen:ScreenManager = ScreenManager.getInstance();
 
-            this.emoji_panel = new FlxSprite(_screen.screenWidth * .9, _screen.screenWidth * .01);
-            this.emoji_panel.loadGraphic(ImgEmojiPanel,false,false,108,29);
-            FlxG.state.add(emoji_panel);
+            this.emoji_happy = new FlxSprite(_screen.screenWidth * .7, _screen.screenWidth * .01);
+            this.emoji_happy.loadGraphic(ImgEmojiHappy,false,false,85,45);
+            FlxG.state.add(emoji_happy);
+            this.emoji_happy_rect = new FlxRect(this.emoji_happy.x, this.emoji_happy.y, this.emoji_happy.width, this.emoji_happy.height);
+            this.emoji_happy.scrollFactor.x = 0;
+            this.emoji_happy.scrollFactor.y = 0;
 
-            this.emoji_rect = new FlxRect(this.emoji_panel.x, this.emoji_panel.y, this.emoji_panel.width, this.emoji_panel.height);
+            this.emoji_sad = new FlxSprite(_screen.screenWidth * .8, _screen.screenWidth * .01);
+            this.emoji_sad.loadGraphic(ImgEmojiSad,false,false,71,45);
+            FlxG.state.add(emoji_sad);
+            this.emoji_sad_rect = new FlxRect(this.emoji_sad.x, this.emoji_sad.y, this.emoji_sad.width, this.emoji_sad.height);
+            this.emoji_sad.scrollFactor.x = 0;
+            this.emoji_sad.scrollFactor.y = 0;
+
+            this.emoji_angry = new FlxSprite(_screen.screenWidth * .9, _screen.screenWidth * .01);
+            this.emoji_angry.loadGraphic(ImgEmojiAngry,false,false,93,45);
+            FlxG.state.add(emoji_angry);
+            this.emoji_angry_rect = new FlxRect(this.emoji_angry.x, this.emoji_angry.y, this.emoji_angry.width, this.emoji_angry.height);
+            this.emoji_angry.scrollFactor.x = 0;
+            this.emoji_angry.scrollFactor.y = 0;
 
             this.blinker = new FlxSprite(0,0);
-            this.blinker.makeGraphic(150,50,0xffff0000);
+            this.blinker.makeGraphic(227,43,0xffff0000);
             FlxG.state.add(this.blinker);
             this.blinker.alpha = 0;
+            this.blinker.scrollFactor.x = 0;
+            this.blinker.scrollFactor.y = 0;
 
             this.mouse_rect = new FlxRect(FlxG.mouse.x,FlxG.mouse.y,5,5);
 
-            this.program_picker = new FlxSprite(_screen.screenWidth * .01, _screen.screenHeight * .96);
-            this.program_picker.loadGraphic(ImgPrograms,false,false,150,28);
+            this.program_picker = new FlxSprite(_screen.screenWidth * .001, _screen.screenHeight * .9);
+            this.program_picker.loadGraphic(ImgPrograms,false,false,227,43);
             this.program_picker.alpha = 1;
+            this.program_picker.scrollFactor.x = 0;
+            this.program_picker.scrollFactor.y = 0;
             FlxG.state.add(this.program_picker);
 
             this.blinker.x = program_picker.x;
             this.blinker.y = program_picker.y;
-            this.blinker_rect = new FlxRect(blinker.x,blinker.y,150,50);
+            this.blinker_rect = new FlxRect(blinker.x,blinker.y,program_picker.width,program_picker.height);
 
             for(i = 0; i < this.popup_order.length; i++) {
                 if(i == 0) {
@@ -182,8 +207,16 @@ package{
         }
 
         public function emote():void {
-            if(this.mouse_rect.overlaps(emoji_rect) && FlxG.mouse.justPressed()) {
-                new Emote(_player.pos);
+            if(FlxG.mouse.justPressed()){
+                if(this.mouse_rect.overlaps(emoji_happy_rect)) {
+                    new Emote(_player.pos, Emote.HAPPY);
+                }
+                if(this.mouse_rect.overlaps(emoji_sad_rect)) {
+                    new Emote(_player.pos, Emote.SAD);
+                }
+                if(this.mouse_rect.overlaps(emoji_angry_rect)) {
+                    new Emote(_player.pos, Emote.ANGRY);
+                }
             }
         }
 
