@@ -8,7 +8,7 @@ package
     import flash.filesystem.FileMode;
     import flash.net.FileReference;
 
-    public class PathEditorState extends FlxState
+    public class PathEditorState extends PlayerState
     {
         public var pathWalker:PathFollower;
         public var _path:Path;
@@ -24,6 +24,10 @@ package
         public static const MODE_READONLY:Number = 0;
         public static const MODE_EDIT:Number = 1;
         public var editorMode:Number;
+
+        override public function create():void {
+            super.create();
+        }
 
         public function create_(player:Player):void
         {
