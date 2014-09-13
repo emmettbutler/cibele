@@ -97,7 +97,7 @@ package{
                 }
             }
 
-            if(PopUpManager.getInstance()._state == PopUpManager.SHOWING_NOTHING){
+            if(PopUpManager.getInstance()._state != PopUpManager.SHOWING_POP_UP){
                 if(FlxG.keys.UP){
                     bg1.y += runSpeed;
                     bg2.y += runSpeed;

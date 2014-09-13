@@ -26,7 +26,7 @@ package {
         }
 
         public function restrictPlayerMovement():void {
-            if(PopUpManager.getInstance()._state != PopUpManager.SHOWING_NOTHING){
+            if(PopUpManager.getInstance()._state == PopUpManager.SHOWING_POP_UP){
                 this.player.inhibitX = this.player.inhibitY = true;
             } else {
                 this.player.inhibitX = this.player.inhibitY = false;

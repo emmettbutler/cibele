@@ -14,6 +14,7 @@ package{
         }
 
         override public function create():void {
+            var _screen:ScreenManager = ScreenManager.getInstance();
             this.startPos = new DHPoint(_screen.screenWidth * .4,
                                         _screen.screenHeight * .6);
             super.create();
@@ -21,7 +22,6 @@ package{
             (new BackgroundLoader()).loadSingleTileBG("../assets/it_teleport_640_480.png");
             ScreenManager.getInstance().setupCamera(null, 1);
 
-            var _screen:ScreenManager = ScreenManager.getInstance();
             door = new FlxSprite(_screen.screenWidth * .3, _screen.screenHeight * .4);
             door.makeGraphic(500, 20, 0xffff0000);
             door.alpha = 0;

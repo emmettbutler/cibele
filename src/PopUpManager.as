@@ -14,6 +14,7 @@ package{
         public var cib_selfies_1:PopUp;
         public var forum_selfies_1:PopUp;
         public var blinker:FlxSprite;
+        public var blinker_rect:FlxRect;
 
         public var popup_order:Array;
         public var next_popup:PopUp = null;
@@ -31,6 +32,9 @@ package{
         public var debugText:FlxText;
         public var i:Number = 0;
 
+        public var mouse_rect:FlxRect;
+        public var blink:Boolean = false;
+
         public function PopUpManager() {
             this.bornTime = new Date().valueOf();
             this.timeAlive = 0;
@@ -45,6 +49,9 @@ package{
         }
 
         public function update():void {
+            this.mouse_rect.x = FlxG.mouse.x;
+            this.mouse_rect.y = FlxG.mouse.y;
+
             if(this.debugText._textField == null) {
                 loadPopUps();
                 this.debugText = new FlxText(FlxG.mouse.x,FlxG.mouse.y,500,"");
@@ -64,6 +71,11 @@ package{
                 }
             } else if(this._state == FLASH_PROGRAM_PICKER) {
                 showBlinker();
+                if(mouse_rect.overlaps(this.blinker_rect) && FlxG.mouse.justPressed()) {
+                    this.blinker.alpha = 0;
+                    this.next_popup.alpha = 1;
+                    this._state = SHOWING_POP_UP;
+                }
             } else if(this._state == SHOWING_POP_UP) {
                 if(FlxG.mouse.justPressed()) {
                     this._state = SHOWING_NOTHING;
@@ -103,17 +115,20 @@ package{
             var _screen:ScreenManager = ScreenManager.getInstance();
 
             this.blinker = new FlxSprite(0,0);
-            this.blinker.makeGraphic(20,20,0xffff0000);
+            this.blinker.makeGraphic(150,50,0xffff0000);
             FlxG.state.add(this.blinker);
             this.blinker.alpha = 0;
 
-            this.program_picker = new FlxSprite(_screen.screenWidth * .01, _screen.screenHeight * .7);
+            this.mouse_rect = new FlxRect(FlxG.mouse.x,FlxG.mouse.y,5,5);
+
+            this.program_picker = new FlxSprite(_screen.screenWidth * .01, _screen.screenHeight * .96);
             this.program_picker.loadGraphic(ImgPrograms,false,false,150,28);
             this.program_picker.alpha = 1;
             FlxG.state.add(this.program_picker);
 
             this.blinker.x = program_picker.x;
             this.blinker.y = program_picker.y;
+            this.blinker_rect = new FlxRect(blinker.x,blinker.y,150,50);
 
             for(i = 0; i < this.popup_order.length; i++) {
                 if(i == 0) {
@@ -129,11 +144,15 @@ package{
         }
 
         public function showBlinker():void {
-            this.blinker.alpha = 1;
-            if(FlxG.mouse.justReleased()) {
-                this.blinker.alpha = 0;
-                this.next_popup.alpha = 1;
-                this._state = SHOWING_POP_UP;
+            if(this.blinker.alpha == 1) {
+                this.blink = false;
+            } else if(this.blinker.alpha == 0) {
+                this.blink = true;
+            }
+            if(this.blink) {
+                this.blinker.alpha += .1;
+            } else {
+                this.blinker.alpha -= .1;
             }
         }
 

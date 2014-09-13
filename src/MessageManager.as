@@ -92,7 +92,7 @@ package{
 
             this.notifications_box = new FlxRect(this.notifications_text.x,
                                                  this.notifications_text.y,
-                                                 img_msg.width, 100);
+                                                 img_msg.width, 50);
             this.notifications_box.x = this.notifications_text.x;
             this.notifications_box.y = this.notifications_text.y;
 
