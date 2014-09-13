@@ -30,12 +30,12 @@ package {
             this.restrictPlayerMovement();
 
             if(FlxG.mouse.justPressed()) {
-                this.clickCallback();
+                this.clickCallback(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
             }
         }
 
-        public function clickCallback():void {
-            this.player.clickCallback();
+        public function clickCallback(pos:DHPoint):void {
+            this.player.clickCallback(pos);
         }
 
         public function restrictPlayerMovement():void {

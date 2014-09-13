@@ -37,8 +37,8 @@ package {
             this.resolveAttacks();
         }
 
-        override public function clickCallback():void {
-            this.player.clickCallback(this.enemies.enemies);
+        override public function clickCallback(pos:DHPoint):void {
+            this.player.clickCallback(pos, this.enemies.enemies);
         }
 
         public function resolveAttacksHelper(obj:PartyMember):void {

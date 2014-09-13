@@ -51,15 +51,34 @@ package{
             this.walkTarget = new DHPoint(0, 0);
         }
 
-        public function clickCallback(group:Array=null):void {
-            this.walkTarget = new DHPoint(FlxG.mouse.x, FlxG.mouse.y);
-            this.walking = true;
-            this.walkDistance = walkTarget.sub(footPos)._length();
-            this.dir = walkTarget.sub(footPos).normalized();
-            this.splash_sprites.x = this.walkTarget.x - this.splash_sprites.width/2;
-            this.splash_sprites.y = this.walkTarget.y - this.splash_sprites.height/2;
-            this.splash_sprites.alpha = 1;
-            this.splash_sprites.play("attack");
+        public function clickCallback(pos:DHPoint, group:Array=null):void {
+            var clickedObject:GameObject = null;
+            if (group != null) {
+                var cur:GameObject, rect:FlxRect;
+                var mouseRect:FlxRect = new FlxRect(pos.x, pos.y, 5, 5);
+                for (var i:int = 0; i < group.length; i++) {
+                    cur = group[i] as GameObject;
+                    rect = new FlxRect(cur.x, cur.y, cur.width, cur.height);
+                    if (mouseRect.overlaps(rect)) {
+                        clickedObject = cur;
+                        break;
+                    }
+                }
+            }
+
+            if (clickedObject == null) {
+                this.walkTarget = new DHPoint(FlxG.mouse.x, FlxG.mouse.y);
+                this.walking = true;
+                this.walkDistance = walkTarget.sub(footPos)._length();
+                this.dir = walkTarget.sub(footPos).normalized();
+                this.splash_sprites.x = this.walkTarget.x - this.splash_sprites.width/2;
+                this.splash_sprites.y = this.walkTarget.y - this.splash_sprites.height/2;
+                this.splash_sprites.alpha = 1;
+                this.splash_sprites.play("attack");
+            } else {
+                this.splash_sprites.alpha = 1;
+                this.splash_sprites.play("attack");
+            }
         }
 
         override public function update():void{
