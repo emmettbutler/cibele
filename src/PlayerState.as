@@ -8,8 +8,9 @@ package {
         public function PlayerState() {
         }
 
-        override public function create():void {
+        public function __create(pos:DHPoint):void {
             super.create();
+            this.startPos = pos;
 
             this.player = new Player(this.startPos.x, this.startPos.y);
             this.add(this.player.mapHitbox)

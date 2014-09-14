@@ -11,9 +11,8 @@ package{
 
         override public function create():void {
             var _screen:ScreenManager = ScreenManager.getInstance();
-            this.startPos = new DHPoint(_screen.screenWidth * .5,
-                                        _screen.screenHeight * .5);
-            super.create();
+            super.__create(new DHPoint(
+                _screen.screenWidth * .5, _screen.screenHeight * .5));
             FlxG.bgColor = 0x00000000;
             FlxG.mouse.show();
 

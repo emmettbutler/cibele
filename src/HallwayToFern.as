@@ -28,14 +28,13 @@ package{
         public var popupmgr:PopUpManager;
 
         public function HallwayToFern(state:Number = 0){
-            _screen = ScreenManager.getInstance();
-            this.startPos = new DHPoint(_screen.screenWidth * .5,
-                                        _screen.screenHeight * .5);
             _state = state;
         }
 
         override public function create():void {
-            super.create();
+            _screen = ScreenManager.getInstance();
+            super.__create(new DHPoint(
+                _screen.screenWidth * .5, _screen.screenHeight * .5));
 
             FlxG.mouse.show();
             FlxG.bgColor = 0xff000000;

@@ -12,8 +12,7 @@ package {
         public static const LEVEL_ID:int = 9234876592837465;
 
         override public function create():void {
-            this.startPos = new DHPoint(4600, 7565);
-            super.create();
+            super.__create(new DHPoint(4600, 7565));
 
             FlxG.bgColor = 0xffffffff;
             this.bornTime = new Date().valueOf();

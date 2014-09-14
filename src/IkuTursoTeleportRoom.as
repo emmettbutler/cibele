@@ -15,9 +15,8 @@ package{
 
         override public function create():void {
             var _screen:ScreenManager = ScreenManager.getInstance();
-            this.startPos = new DHPoint(_screen.screenWidth * .4,
-                                        _screen.screenHeight * .6);
-            super.create();
+            super.__create(new DHPoint(
+                _screen.screenWidth * .4, _screen.screenHeight * .6));
 
             (new BackgroundLoader()).loadSingleTileBG("../assets/it_teleport_640_480.png");
             ScreenManager.getInstance().setupCamera(null, 1);
