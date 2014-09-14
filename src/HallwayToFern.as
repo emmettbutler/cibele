@@ -78,23 +78,25 @@ package{
             this.player.inhibitY = true;
         }
 
+        override public function clickCallback(pos:DHPoint):void {
+            if (this._state == STATE_PRE_IT && !this.accept_call) {
+                accept_call = true;
+                call_button.kill();
+                function _callback():void {
+                    FlxG.switchState(new Fern());
+                }
+                SoundManager.getInstance().playSound(Convo1, 24000,
+                                                     _callback, false, 1);
+                for(var i:int = 1; i <= 3; i++) {
+                    PopUpManager.getInstance().createNewPopUp(i);
+                }
+            } else {
+                this.player.clickCallback(pos);
+            }
+        }
+
         override public function update():void{
             super.update();
-            popupmgr = PopUpManager.getInstance();
-
-            if(_state == STATE_PRE_IT){
-                if(FlxG.mouse.justPressed() && !accept_call){
-                    accept_call = true;
-                    call_button.kill();
-                    function _callback():void {
-                        FlxG.switchState(new Fern());
-                    }
-                    SoundManager.getInstance().playSound(Convo1, 24000, _callback, false, 1);
-                    popupmgr.createNewPopUp(1);
-                    popupmgr.createNewPopUp(2);
-                    popupmgr.createNewPopUp(3);
-                }
-            }
 
             if(PopUpManager.getInstance()._state != PopUpManager.SHOWING_POP_UP){
                 if(FlxG.keys.UP){

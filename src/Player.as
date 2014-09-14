@@ -59,14 +59,16 @@ package{
         public function clickCallback(pos:DHPoint, group:Array=null):void {
             this.targetEnemy = null;
             if (group != null) {
-                var cur:Enemy, rect:FlxRect;
+                var cur:GameObject, rect:FlxRect;
                 var mouseRect:FlxRect = new FlxRect(pos.x, pos.y, 5, 5);
                 for (var i:int = 0; i < group.length; i++) {
-                    cur = group[i] as Enemy;
+                    cur = group[i];
                     rect = new FlxRect(cur.x, cur.y, cur.width, cur.height);
-                    if (mouseRect.overlaps(rect)) {
-                        this.targetEnemy = cur;
-                        break;
+                    if (cur is Enemy) {
+                        if (mouseRect.overlaps(rect)) {
+                            this.targetEnemy = cur as Enemy;
+                            break;
+                        }
                     }
                 }
             }
