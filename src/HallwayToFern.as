@@ -11,11 +11,7 @@ package{
         public var call_button:FlxSprite;
         public var accept_call:Boolean = false;
 
-        public var bg1:FlxSprite;
-        public var bg2:FlxSprite;
-        public var bg3:FlxSprite;
-
-        public var enemy:SmallEnemy;
+        public var bgs:Array;
 
         public var img_height:Number = 480;
 
@@ -32,38 +28,65 @@ package{
         }
 
         override public function create():void {
+            bgs = new Array();
+
+            var bottomY:Number = 10000;
             _screen = ScreenManager.getInstance();
             super.__create(new DHPoint(
-                _screen.screenWidth * .5, _screen.screenHeight * .5));
+                _screen.screenWidth * .5, bottomY - _screen.screenHeight * .5));
 
             FlxG.bgColor = 0xff000000;
 
-            var originX:Number = (_screen.screenWidth * .5) - 1422/2;
+            this.initTiles(bottomY);
 
-            bg1 = new FlxSprite(originX, -img_height);
-            bg1.loadGraphic(ImgBG,false,false,1422,800);
-            bg1.addAnimation("run", [0, 1, 2, 3, 4], 12, true);
-            bg1.play("run");
-            add(bg1);
-            bg2 = new FlxSprite(originX, 0);
-            bg2.loadGraphic(ImgBG,false,false,1422,800);
-            bg2.addAnimation("run", [0, 1, 2, 3, 4], 12, true);
-            bg2.play("run");
-            add(bg2);
-            bg3 = new FlxSprite(originX, img_height);
-            bg3.loadGraphic(ImgBG,false,false,1422,800);
-            bg3.addAnimation("run", [0, 1, 2, 3, 4], 12, true);
-            bg3.play("run");
-            add(bg3);
-
-            ScreenManager.getInstance().setupCamera(null, 1);
+            ScreenManager.getInstance().setupCamera(player, 1);
+            FlxG.camera.setBounds(0, 0, _screen.screenWidth, bottomY);
 
             this.postCreate();
 
             if(_state == STATE_PRE_IT){
-                call_button = new FlxSprite(_screen.screenWidth * .3, _screen.screenHeight * .3);
+                call_button = new FlxSprite(_screen.screenWidth * .3,
+                                            _screen.screenHeight * .3);
                 call_button.loadGraphic(ImgCall,false,false,500,230);
+                call_button.scrollFactor = new DHPoint(0, 0);
                 FlxG.state.add(call_button);
+            }
+        }
+
+        public function initTiles(startY:Number):void {
+            var originX:Number = (_screen.screenWidth * .5) - 1422 / 2;
+            var cur:FlxSprite;
+            for (var i:int = 0; i < 3; i++) {
+                cur = new FlxSprite(
+                    originX, startY - (i * img_height)
+                );
+                cur.loadGraphic(ImgBG, false, false, 1422, 800);
+                cur.addAnimation("run", [0, 1, 2, 3, 4], 12, true);
+                cur.play("run");
+                add(cur);
+                this.bgs.push(cur);
+            }
+        }
+
+        override public function update():void {
+            super.update();
+            var highestTile:FlxSprite = this.bgs[0];
+            var lowestTile:FlxSprite = this.bgs[0];
+            for (var i:int = 0; i < this.bgs.length; i++) {
+                if (this.bgs[i].y < highestTile.y) {
+                    highestTile = this.bgs[i];
+                }
+                if (this.bgs[i].y > lowestTile.y) {
+                    lowestTile = this.bgs[i];
+                }
+            }
+
+            if (this.player.dir.y < 0 &&
+                this.player.y < highestTile.y + highestTile.height) {
+                lowestTile.y = highestTile.y - lowestTile.height;
+            } else if (this.player.dir.y > 0 &&
+                this.player.y > lowestTile.y + lowestTile.height) {
+                highestTile.y = lowestTile.y + highestTile.height;
             }
         }
 
@@ -91,22 +114,6 @@ package{
                 }
             } else {
                 super.clickCallback(screenPos, worldPos);
-            }
-        }
-
-        override public function update():void{
-            super.update();
-
-            var bgs:Array = [bg1, bg2, bg3];
-            var prev:int;
-            for (var i:int = 0; i < bgs.length; i++) {
-                prev = i - 1;
-                if (i <= 0) {
-                    prev = bgs.length - 1;
-                }
-                if (bgs[i].y == 0) {
-                    bgs[i].y = bgs[prev].y - bgs[prev].height;
-                }
             }
         }
     }
