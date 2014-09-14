@@ -13,11 +13,11 @@ package{
         public static var _instance:PopUpManager = null;
         public var _player:Player;
 
-        public var program_picker:FlxSprite = null;
+        public var program_picker:UIElement = null;
         public var bulldog_hell:PopUp;
         public var cib_selfies_1:PopUp;
         public var forum_selfies_1:PopUp;
-        public var blinker:FlxSprite;
+        public var blinker:UIElement;
         public var blinker_rect:FlxRect;
 
         public var popup_order:Array;
@@ -39,18 +39,21 @@ package{
         public var mouse_rect:FlxRect;
         public var blink:Boolean = false;
 
-        public var emoji_happy:FlxSprite;
-        public var emoji_sad:FlxSprite;
-        public var emoji_angry:FlxSprite;
+        public var emoji_happy:UIElement;
+        public var emoji_sad:UIElement;
+        public var emoji_angry:UIElement;
         public var emoji_happy_rect:FlxRect;
         public var emoji_sad_rect:FlxRect;
         public var emoji_angry_rect:FlxRect;
+
+        public var elements:Array;
 
         public function PopUpManager() {
             this.bornTime = new Date().valueOf();
             this.timeAlive = 0;
 
             this.popup_order = new Array();
+            this.elements = new Array();
 
             loadPopUps();
             this.debugText = new FlxText(FlxG.mouse.x,FlxG.mouse.y,500,"");
@@ -128,42 +131,47 @@ package{
         public function loadPopUps():void {
             var _screen:ScreenManager = ScreenManager.getInstance();
 
-            this.emoji_happy = new FlxSprite(_screen.screenWidth * .7, _screen.screenWidth * .01);
+            this.emoji_happy = new UIElement(_screen.screenWidth * .7, _screen.screenWidth * .01);
             this.emoji_happy.loadGraphic(ImgEmojiHappy,false,false,85,45);
             FlxG.state.add(emoji_happy);
             this.emoji_happy_rect = new FlxRect(this.emoji_happy.x, this.emoji_happy.y, this.emoji_happy.width, this.emoji_happy.height);
             this.emoji_happy.scrollFactor.x = 0;
             this.emoji_happy.scrollFactor.y = 0;
+            this.elements.push(this.emoji_happy);
 
-            this.emoji_sad = new FlxSprite(_screen.screenWidth * .8, _screen.screenWidth * .01);
+            this.emoji_sad = new UIElement(_screen.screenWidth * .8, _screen.screenWidth * .01);
             this.emoji_sad.loadGraphic(ImgEmojiSad,false,false,71,45);
             FlxG.state.add(emoji_sad);
             this.emoji_sad_rect = new FlxRect(this.emoji_sad.x, this.emoji_sad.y, this.emoji_sad.width, this.emoji_sad.height);
             this.emoji_sad.scrollFactor.x = 0;
             this.emoji_sad.scrollFactor.y = 0;
+            this.elements.push(this.emoji_sad);
 
-            this.emoji_angry = new FlxSprite(_screen.screenWidth * .9, _screen.screenWidth * .01);
+            this.emoji_angry = new UIElement(_screen.screenWidth * .9, _screen.screenWidth * .01);
             this.emoji_angry.loadGraphic(ImgEmojiAngry,false,false,93,45);
             FlxG.state.add(emoji_angry);
             this.emoji_angry_rect = new FlxRect(this.emoji_angry.x, this.emoji_angry.y, this.emoji_angry.width, this.emoji_angry.height);
             this.emoji_angry.scrollFactor.x = 0;
             this.emoji_angry.scrollFactor.y = 0;
+            this.elements.push(this.emoji_angry);
 
-            this.blinker = new FlxSprite(0,0);
+            this.blinker = new UIElement(0,0);
             this.blinker.makeGraphic(227,43,0xffff0000);
             FlxG.state.add(this.blinker);
             this.blinker.alpha = 0;
             this.blinker.scrollFactor.x = 0;
             this.blinker.scrollFactor.y = 0;
+            this.elements.push(this.blinker);
 
             this.mouse_rect = new FlxRect(FlxG.mouse.x,FlxG.mouse.y,5,5);
 
-            this.program_picker = new FlxSprite(_screen.screenWidth * .001, _screen.screenHeight * .9);
+            this.program_picker = new UIElement(_screen.screenWidth * .001, _screen.screenHeight * .9);
             this.program_picker.loadGraphic(ImgPrograms,false,false,227,43);
             this.program_picker.alpha = 1;
             this.program_picker.scrollFactor.x = 0;
             this.program_picker.scrollFactor.y = 0;
             FlxG.state.add(this.program_picker);
+            this.elements.push(this.program_picker);
 
             this.blinker.x = program_picker.x;
             this.blinker.y = program_picker.y;

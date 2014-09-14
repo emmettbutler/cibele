@@ -31,14 +31,12 @@ package {
             }
 
             this.restrictPlayerMovement();
-
-            if(FlxG.mouse.justPressed()) {
-                this.clickCallback(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
-            }
         }
 
-        public function clickCallback(pos:DHPoint):void {
-            this.player.clickCallback(pos);
+        override public function clickCallback(screenPos:DHPoint,
+                                               worldPos:DHPoint):void
+        {
+            this.player.clickCallback(screenPos, worldPos);
         }
 
         public function restrictPlayerMovement():void {

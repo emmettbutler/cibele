@@ -42,11 +42,20 @@ package {
                 MessageManager.getInstance().update();
             }
 
+            if(FlxG.mouse.justPressed()) {
+                this.clickCallback(
+                    new DHPoint(FlxG.mouse.screenX, FlxG.mouse.screenY),
+                    new DHPoint(FlxG.mouse.x, FlxG.mouse.y)
+                );
+            }
+
             if (FlxG.keys.justPressed("P")) {
                 SoundManager.getInstance().increaseVolume();
             } else if (FlxG.keys.justPressed("O")) {
                 SoundManager.getInstance().decreaseVolume();
             }
         }
+
+        public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {}
     }
 }

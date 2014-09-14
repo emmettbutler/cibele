@@ -49,7 +49,8 @@ package{
             this.hitboxOffset = new DHPoint(60, 100);
             this.hitboxDim = new DHPoint(40, 50);
             this.mapHitbox = new FlxSprite(x, y);
-            this.mapHitbox.makeGraphic(this.hitboxDim.x, this.hitboxDim.y, 0xffff0000);
+            this.mapHitbox.makeGraphic(this.hitboxDim.x, this.hitboxDim.y,
+                                       0xffff0000);
             this.hitbox_rect = new FlxRect(this.pos.x, this.pos.y,
                                            this.mapHitbox.width,
                                            this.mapHitbox.height);
@@ -59,35 +60,54 @@ package{
             this.walkTarget = new DHPoint(0, 0);
         }
 
-        public function clickCallback(pos:DHPoint, group:Array=null):void {
+        public function clickCallback(screenPos:DHPoint, worldPos:DHPoint,
+                                      group:Array=null):void
+        {
             this.targetEnemy = null;
+            var ui_clicked:Boolean = false;
             if (group != null) {
-                var cur:GameObject, rect:FlxRect;
-                var mouseRect:FlxRect = new FlxRect(pos.x, pos.y, 5, 5);
+                var cur:GameObject, screenRect:FlxRect, worldRect:FlxRect;
+                var mouseScreenRect:FlxRect = new FlxRect(screenPos.x, screenPos.y,
+                                                          5, 5);
+                var mouseWorldRect:FlxRect = new FlxRect(worldPos.x, worldPos.y,
+                                                         5, 5);
+                var curScreenPos:DHPoint = new DHPoint(0, 0);
                 for (var i:int = 0; i < group.length; i++) {
                     cur = group[i];
-                    rect = new FlxRect(cur.x, cur.y, cur.width, cur.height);
-                    if (cur is Enemy) {
-                        if (mouseRect.overlaps(rect)) {
-                            this.targetEnemy = cur as Enemy;
-                            break;
-                        }
+                    cur.getScreenXY(curScreenPos);
+                    screenRect = new FlxRect(curScreenPos.x, curScreenPos.y,
+                                             cur.width, cur.height);
+                    worldRect = new FlxRect(cur.x, cur.y,
+                                            cur.width, cur.height);
+                    if (mouseScreenRect.overlaps(screenRect) &&
+                        cur is UIElement && cur.visible)
+                    {
+                        ui_clicked = true;
+                    } else if (mouseWorldRect.overlaps(worldRect) &&
+                        cur is Enemy)
+                    {
+
+                        this.targetEnemy = cur as Enemy;
                     }
                 }
             }
 
+            if (ui_clicked) {
+                return;
+            }
+
             if (this.targetEnemy == null) {
                 this._state = STATE_WALK;
-                this.walkTarget = new DHPoint(FlxG.mouse.x, FlxG.mouse.y);
-                this.splash_sprites.x = this.walkTarget.x - this.splash_sprites.width/2;
-                this.splash_sprites.y = this.walkTarget.y - this.splash_sprites.height/2;
+                this.walkTarget = worldPos;
+                this.splash_sprites.x = this.walkTarget.x -
+                    this.splash_sprites.width/2;
+                this.splash_sprites.y = this.walkTarget.y -
+                    this.splash_sprites.height/2;
                 this.splash_sprites.alpha = 1;
                 this.splash_sprites.play("attack");
             } else {
                 this._state = STATE_MOVE_TO_ENEMY;
                 this.walkTarget = this.targetEnemy.pos;
-                this.splash_sprites.alpha = 1;
-                this.splash_sprites.play("attack");
             }
             this.dir = this.walkTarget.sub(footPos).normalized();
             this.walkDistance = this.walkTarget.sub(footPos)._length();

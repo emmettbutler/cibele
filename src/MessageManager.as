@@ -10,7 +10,7 @@ package{
         public var notifications_text:FlxText, exit_inbox:FlxText,
                    debugText:FlxText, exit_msg:FlxText, reply_to_msg:FlxText;
 
-        public var img_inbox:FlxSprite;
+        public var img_inbox:UIElement;
 
         public var notifications_box:FlxRect, exit_inbox_rect:FlxRect,
                    mouse_rect:FlxRect, exit_box:FlxRect, reply_box:FlxRect;
@@ -32,7 +32,10 @@ package{
 
         public static const SENT_BY_CIBELE:String = "Cibele";
 
+        public var elements:Array;
+
         public function MessageManager() {
+            this.elements = new Array();
             this.bornTime = new Date().valueOf();
             this.initNotifications();
 
@@ -74,12 +77,13 @@ package{
             this.mouse_rect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 5, 5);
             var notifications_pos:DHPoint = new DHPoint(
                 _screen.screenWidth * .001, _screen.screenHeight * .75);
-            var img_msg:FlxSprite = new FlxSprite(
+            var img_msg:UIElement = new UIElement(
                 notifications_pos.x, notifications_pos.y);
             img_msg.loadGraphic(ImgMsg, false, false, 197, 71);
             img_msg.scrollFactor = new FlxPoint(0, 0);
             img_msg.active = false;
             FlxG.state.add(img_msg);
+            this.elements.push(img_msg);
 
             this.notifications_text = new FlxText(
                 notifications_pos.x, notifications_pos.y,
@@ -98,11 +102,12 @@ package{
 
             var inbox_pos:DHPoint = new DHPoint(_screen.screenWidth * .05,
                                                 _screen.screenHeight * .3);
-            this.img_inbox = new FlxSprite(inbox_pos.x, inbox_pos.y);
+            this.img_inbox = new UIElement(inbox_pos.x, inbox_pos.y);
             this.img_inbox.loadGraphic(ImgInbox, false, false, 500, 230);
             this.img_inbox.scrollFactor = new FlxPoint(0, 0);
             this.img_inbox.active = false;
             FlxG.state.add(this.img_inbox);
+            this.elements.push(this.img_inbox);
 
             this.exit_inbox = new FlxText(
                 inbox_pos.x + 5, inbox_pos.y + (this.img_inbox.height-25),
@@ -119,7 +124,7 @@ package{
             this.exit_inbox_rect.y = this.exit_inbox.y;
 
             this.exit_inbox.alpha = 0;
-            this.img_inbox.alpha = 0;
+            this.img_inbox.visible = false;
 
             this.exit_msg = new FlxText(this.img_inbox.x + 110,
                 this.img_inbox.y + (this.img_inbox.height-25),
@@ -266,7 +271,7 @@ package{
             this.exit_inbox.alpha = 0;
             this.exit_msg.alpha = 0;
             this.reply_to_msg.alpha = 0;
-            this.img_inbox.alpha = 0;
+            this.img_inbox.visible = false;
             for(var i:int = 0; i < this.threads.length; i++) {
                 this.threads[i].hide();
             }
@@ -274,7 +279,7 @@ package{
 
         public function openInbox():void {
             this.exit_inbox.alpha = 1;
-            this.img_inbox.alpha = 1;
+            this.img_inbox.visible = true;
         }
 
         public static function getInstance():MessageManager {
