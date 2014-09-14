@@ -22,6 +22,7 @@ package {
             add(this.player.debugText);
 
             super.postCreate();
+            this.game_cursor.setGameMouse();
         }
 
         override public function update():void {

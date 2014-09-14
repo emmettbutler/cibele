@@ -33,6 +33,8 @@ package{
 
             debugText = new FlxText(0,0,100,"");
             add(debugText);
+
+            super.postCreate();
         }
 
         override public function update():void{

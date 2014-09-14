@@ -63,6 +63,9 @@ package{
                 SoundManager.getInstance().playSound(FernBGMLoop, 0, null, true, .2);
             }
             SoundManager.getInstance().playSound(FernBGMIntro, 12631, _musicCallback, false, .2);
+
+            super.postCreate();
+            this.game_cursor.setGameMouse();
         }
 
         override public function update():void{
@@ -77,6 +80,8 @@ package{
                     quit.kill();
                     add(login);
                     add(char_select);
+                    super.postCreate();
+                    this.game_cursor.setGameMouse();
                 }
                 if (mouse_rect.overlaps(login_rect)){
                     FlxG.switchState(new HallwayToFern());
