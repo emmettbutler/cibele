@@ -240,7 +240,12 @@ package
         }
 
         public function warpToPlayer():void {
-            var targetPoint:DHPoint = this.playerRef.pos.add(this.playerRef.dir.normalized().mulScl(555));
+            var dir:DHPoint = this.playerRef.dir;
+            if (dir.x == 0 && dir.y == 0) {
+                dir.x = 10;
+                dir.y = 10;
+            }
+            var targetPoint:DHPoint = this.playerRef.pos.add(dir.normalized().mulScl(555));
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint);
             this.setPos(warpNode.pos);
             this._state = STATE_IDLE_AT_MAP_NODE;
