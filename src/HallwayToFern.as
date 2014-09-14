@@ -90,7 +90,7 @@ package{
                     PopUpManager.getInstance().createNewPopUp(i);
                 }
             } else {
-                this.player.clickCallback(screenPos, worldPos);
+                super.clickCallback(screenPos, worldPos);
             }
         }
 
