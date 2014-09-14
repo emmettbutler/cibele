@@ -240,7 +240,7 @@ package
         }
 
         public function warpToPlayer():void {
-            var dir:DHPoint = this.playerRef.dir;
+            var dir:DHPoint = new DHPoint(this.playerRef.dir.x, this.playerRef.dir.y);
             if (dir.x == 0 && dir.y == 0) {
                 dir.x = 10;
                 dir.y = 10;
