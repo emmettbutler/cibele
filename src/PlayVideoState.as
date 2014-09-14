@@ -3,6 +3,7 @@ package {
 
     import flash.net.NetConnection;
     import flash.net.NetStream;
+    import flash.media.SoundTransform;
     import flash.media.Video;
     import flash.events.NetStatusEvent;
 
@@ -34,6 +35,8 @@ package {
             video.x = origin.x;
             video.y = origin.y;
             video.attachNetStream(videoStream);
+            // mute videos for now
+            videoStream.soundTransform = new SoundTransform(0);
 
             FlxG.stage.addChild(video);
         }
