@@ -20,6 +20,7 @@ package {
             add(this.player);
             this.player.addAttackAnim();
             add(this.player.debugText);
+            add(this.player.shadow_sprite);
 
             super.postCreate();
             this.game_cursor.setGameMouse();

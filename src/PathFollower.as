@@ -9,6 +9,7 @@ package
     {
         [Embed(source="../assets/ichi.png")] private var ImgIchi:Class;
         [Embed(source="../assets/fire_explosion.png")] private var ImgAttack:Class;
+        [Embed(source="../assets/cib_shadow.png")] private var ImgShadow:Class;
         public var _path:Path;
         public var _mapnodes:MapNodeContainer;
         public var _enemies:EnemyGroup;
@@ -27,6 +28,8 @@ package
         public static const STATE_MOVE_TO_MAP_NODE:Number = 6;
         public static const STATE_IDLE_AT_MAP_NODE:Number = 7;
 
+        public var shadow_sprite:FlxSprite;
+
         public static const ATTACK_RANGE:Number = 150;
 
         {
@@ -43,6 +46,9 @@ package
 
         public function PathFollower(pos:DHPoint) {
             super(pos);
+            this.shadow_sprite = new FlxSprite(pos.x,pos.y);
+            this.shadow_sprite.loadGraphic(ImgShadow,false,false,41,14);
+
             loadGraphic(ImgIchi, true, false, 72, 126);
             addAnimation("idle",[0],7,false);
             addAnimation("walk",[0],7,false);
@@ -58,7 +64,8 @@ package
         override public function update():void {
             super.update();
 
-            //this.debugText.text = stateMap[this._state];
+            this.shadow_sprite.x = this.x + 20;
+            this.shadow_sprite.y = this.y + (this.height-10);
 
             this.closestEnemy = this.getClosestEnemy();
             if (this.inViewOfPlayer()) {
@@ -241,10 +248,11 @@ package
 
         public function warpToPlayer():void {
             var dir:DHPoint = new DHPoint(this.playerRef.dir.x, this.playerRef.dir.y);
-            if (dir.x == 0 && dir.y == 0) {
-                dir.x = 10;
-                dir.y = 10;
-            }
+            //if (dir.x == 0 && dir.y == 0) {
+            //    dir.x = 10;
+            //    dir.y = 10;
+            //}
+            //TODO if you're standing still for too long, he should walk to you
             var targetPoint:DHPoint = this.playerRef.pos.add(dir.normalized().mulScl(555));
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint);
             this.setPos(warpNode.pos);

@@ -5,6 +5,7 @@ package{
         [Embed(source="../assets/c_walk.png")] private var ImgCibWalk:Class;
         [Embed(source="../assets/splash_sprites.png")] private var ImgWalkTo:Class;
         [Embed(source="../assets/testattack.png")] private var ImgAttack:Class;
+        [Embed(source="../assets/cib_shadow.png")] private var ImgShadow:Class;
 
         private var walkDistance:Number = 0;
         private var walkTarget:DHPoint;
@@ -23,11 +24,15 @@ package{
         public var splash_sprites:FlxSprite;
         public var targetEnemy:Enemy;
         public var attack_sprite:FlxSprite;
+        public var shadow_sprite:FlxSprite;
 
         public static const STATE_WALK:Number = 2398476188;
 
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
+
+            this.shadow_sprite = new FlxSprite(x, y);
+            this.shadow_sprite.loadGraphic(ImgShadow,false,false,41,14);
 
             loadGraphic(ImgCibWalk, true, false, 143, 150);
             addAnimation("walk_u",
@@ -58,6 +63,9 @@ package{
             this.lastPos = new DHPoint(this.pos.x, this.pos.y);
             this.footstepOffset = new DHPoint(80, this.height);
             this.walkTarget = new DHPoint(0, 0);
+
+            this.shadow_sprite.x = this.x + (this.width/3);
+            this.shadow_sprite.y = this.y + (this.height-10);
         }
 
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint,
@@ -136,12 +144,20 @@ package{
             this.dir = this.walkDirection.mulScl(this.walkSpeed);
             if(this.facing == LEFT){
                 this.play("walk_l");
+                this.shadow_sprite.x = this.x + (this.width/2);
+                this.shadow_sprite.y = this.y + (this.height-10);
             } else if (this.facing == RIGHT){
                 this.play("walk_r");
+                this.shadow_sprite.x = this.x + (this.width/4);
+                this.shadow_sprite.y = this.y + (this.height-10);
             } else if(this.facing == UP){
                 this.play("walk_u");
+                this.shadow_sprite.x = this.x + (this.width/3);
+                this.shadow_sprite.y = this.y + (this.height-10);
             } else if(this.facing == DOWN){
                 this.play("walk_d");
+                this.shadow_sprite.x = this.x + (this.width/3);
+                this.shadow_sprite.y = this.y + (this.height-10);
             }
         }
 
@@ -150,6 +166,7 @@ package{
             this.hitbox_rect.y = this.pos.y;
 
             this.setFacing();
+
             this.footPos = new DHPoint(this.pos.x + this.width/2,
                                   this.pos.y + this.height);
 

@@ -80,6 +80,7 @@ package
 
             add(pathWalker);
             this.pathWalker.tempAttackAnim();
+            add(pathWalker.shadow_sprite);
 
             super.postCreate();
 
