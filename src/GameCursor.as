@@ -15,11 +15,44 @@ package
         public static const GAME:Number = 1;
         public static const PC:Number = 2;
 
+        public var spritesActive:Boolean = false;
+
         public function GameCursor() {
             super(new DHPoint(0,0));
             this.mouse_rect = new FlxRect(0,0,5,5);
             this._state = PC;
 
+            this.addCursorSprites();
+        }
+
+        override public function update():void {
+            if(this.game_mouse != null) {
+                this.mouse_rect.x = FlxG.mouse.x;
+                this.mouse_rect.y = FlxG.mouse.y;
+                this.game_mouse.x = FlxG.mouse.x;
+                this.game_mouse.y = FlxG.mouse.y;
+                this.enemy_mouse.x = FlxG.mouse.x;
+                this.enemy_mouse.y = FlxG.mouse.y;
+                this.pc_mouse.x = FlxG.mouse.x;
+                this.pc_mouse.y = FlxG.mouse.y;
+
+                if(this._state == GAME) {
+                    this.game_mouse.alpha = 1;
+                    this.enemy_mouse.alpha = 0;
+                    this.pc_mouse.alpha = 0;
+                } else if (this._state == ENEMY) {
+                    this.enemy_mouse.alpha = 1;
+                    this.game_mouse.alpha = 0;
+                    this.pc_mouse.alpha = 0;
+                } else if (this._state == PC) {
+                    this.pc_mouse.alpha = 1;
+                    this.game_mouse.alpha = 0;
+                    this.enemy_mouse.alpha = 0;
+                }
+            }
+        }
+
+        public function addCursorSprites():void {
             this.enemy_mouse = new FlxSprite(0,0);
             this.enemy_mouse.loadGraphic(ImgEnemy,false,false,22,56);
             FlxG.state.add(enemy_mouse);
@@ -36,33 +69,21 @@ package
             this.pc_mouse.alpha = 1;
         }
 
-        override public function update():void {
-            this.mouse_rect.x = FlxG.mouse.x;
-            this.mouse_rect.y = FlxG.mouse.y;
-            this.game_mouse.x = FlxG.mouse.x;
-            this.game_mouse.y = FlxG.mouse.y;
-            this.enemy_mouse.x = FlxG.mouse.x;
-            this.enemy_mouse.y = FlxG.mouse.y;
-            this.pc_mouse.x = FlxG.mouse.x;
-            this.pc_mouse.y = FlxG.mouse.y;
-
-            if(this._state == GAME) {
-                this.game_mouse.alpha = 1;
-                this.enemy_mouse.alpha = 0;
-                this.pc_mouse.alpha = 0;
-            } else if (this._state == ENEMY) {
-                this.enemy_mouse.alpha = 1;
-                this.game_mouse.alpha = 0;
-                this.pc_mouse.alpha = 0;
-            } else if (this._state == PC) {
-                this.pc_mouse.alpha = 1;
-                this.game_mouse.alpha = 0;
-                this.enemy_mouse.alpha = 0;
-            }
+        public function resetCursor():void {
+            FlxG.state.remove(this.enemy_mouse);
+            FlxG.state.remove(this.pc_mouse);
+            FlxG.state.remove(this.game_mouse);
+            FlxG.state.add(game_mouse);
+            FlxG.state.add(pc_mouse);
+            FlxG.state.add(enemy_mouse);
         }
 
         public function setGameMouse():void {
             this._state = GAME;
+        }
+
+        public function setPCMouse():void {
+            this._state = PC;
         }
 
         public function checkObjectOverlap(group:Array=null):void {

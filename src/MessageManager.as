@@ -34,6 +34,8 @@ package{
 
         public var elements:Array;
 
+        public var ui_loaded:Boolean = false;
+
         public function MessageManager() {
             this.elements = new Array();
             this.bornTime = new Date().valueOf();
@@ -157,6 +159,8 @@ package{
             this.debugText.color = 0xff0000ff;
             this.debugText.active = false;
             FlxG.state.add(this.debugText);
+
+            this.ui_loaded = true;
         }
 
         public function loadVisibleMessageObjects():void {

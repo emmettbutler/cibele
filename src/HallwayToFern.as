@@ -37,8 +37,6 @@ package{
             ScreenManager.getInstance().setupCamera(player, 1);
             FlxG.camera.setBounds(0, 0, _screen.screenWidth, bottomY);
 
-            this.postCreate();
-
             if(_state == STATE_PRE_IT){
                 call_button = new FlxSprite(_screen.screenWidth * .3,
                                             _screen.screenHeight * .3);
@@ -46,6 +44,7 @@ package{
                 call_button.scrollFactor = new DHPoint(0, 0);
                 FlxG.state.add(call_button);
             }
+            this.postCreate();
         }
 
         public function initTiles(startY:Number):void {
@@ -105,9 +104,6 @@ package{
                 }
                 SoundManager.getInstance().playSound(Convo1, 24000,
                                                      _callback, false, 1);
-                for(var i:int = 1; i <= 3; i++) {
-                    PopUpManager.getInstance().createNewPopUp(i);
-                }
             } else {
                 super.clickCallback(screenPos, worldPos);
             }

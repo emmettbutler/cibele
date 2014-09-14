@@ -6,6 +6,8 @@ package {
                     updateMessages:Boolean;
         protected var game_cursor:GameCursor;
 
+        public var cursorResetFlag:Boolean = false;
+
         public function GameState(snd:Boolean=true, popup:Boolean=true,
                                   messages:Boolean=true){
             this.updateSound = snd;
@@ -24,6 +26,13 @@ package {
         public function updateCursor():void {
             if (this.game_cursor != null) {
                 this.game_cursor.update();
+                if(!this.cursorResetFlag &&
+                    PopUpManager.getInstance().ui_loaded &&
+                    MessageManager.getInstance().ui_loaded) {
+                    this.game_cursor.resetCursor();
+                    this.game_cursor.setPCMouse();
+                    this.cursorResetFlag = true;
+                }
             }
         }
 

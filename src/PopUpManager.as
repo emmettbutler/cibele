@@ -47,6 +47,7 @@ package{
         public var emoji_angry_rect:FlxRect;
 
         public var elements:Array;
+        public var ui_loaded:Boolean = false;
 
         public function PopUpManager() {
             this.bornTime = new Date().valueOf();
@@ -55,22 +56,22 @@ package{
             this.popup_order = new Array();
             this.elements = new Array();
 
-            loadPopUps();
+            for(var i:int = 1; i <= 3; i++) {
+                this.createNewPopUp(i);
+            }
+
             this.debugText = new FlxText(FlxG.mouse.x,FlxG.mouse.y,500,"");
             FlxG.state.add(this.debugText);
-
-            this.program_picker.scrollFactor = new FlxPoint(0, 0);
         }
 
         public function update():void {
-            this.mouse_rect.x = FlxG.mouse.screenX;
-            this.mouse_rect.y = FlxG.mouse.screenY;
-
-            if(this.debugText._textField == null) {
+            if(this.mouse_rect == null) {
                 loadPopUps();
                 this.debugText = new FlxText(FlxG.mouse.x,FlxG.mouse.y,500,"");
                 FlxG.state.add(this.debugText);
             }
+            this.mouse_rect.x = FlxG.mouse.x;
+            this.mouse_rect.y = FlxG.mouse.y;
 
             this.currentTime = new Date().valueOf();
             this.timeAlive = this.currentTime - this.bornTime;
@@ -112,19 +113,16 @@ package{
                 //18000
                 this.bulldog_hell = new PopUp(ImgBulldogHell, 1030, 510, 1000);
                 this.popup_order.push(this.bulldog_hell);
-                FlxG.state.add(bulldog_hell);
             }
             if(this_popup == 2) {
                 //165000
                 this.cib_selfies_1 = new PopUp(ImgCibSelfie1, 645, 457, 5000, 1);
                 this.popup_order.push(this.cib_selfies_1);
-                FlxG.state.add(cib_selfies_1);
             }
             if(this_popup == 3) {
                 //185000
                 this.forum_selfies_1 = new PopUp(ImgForumSelfie1, 1174, 585, 10000);
                 this.popup_order.push(this.forum_selfies_1);
-                FlxG.state.add(forum_selfies_1);
             }
         }
 
@@ -188,6 +186,7 @@ package{
                     FlxG.state.add(forum_selfies_1);
                 }
             }
+            this.ui_loaded = true;
         }
 
         public function showBlinker():void {
