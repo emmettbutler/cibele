@@ -6,22 +6,17 @@ package{
         [Embed(source="../assets/incomingcall.png")] private var ImgCall:Class;
         [Embed(source="../assets/voc_firstconvo.mp3")] private var Convo1:Class;
 
-        public var timer:Number = 0;
-
         public var call_button:FlxSprite;
         public var accept_call:Boolean = false;
 
         public var bgs:Array;
 
-        public var img_height:Number = 480;
+        public var img_height:Number = 800;
 
         public static const STATE_PRE_IT:Number = 0;
         public var _state:Number = 0;
 
         public var _screen:ScreenManager;
-        public var runSpeed:Number = 5;
-
-        public var popupmgr:PopUpManager;
 
         public function HallwayToFern(state:Number = 0){
             _state = state;
@@ -60,7 +55,7 @@ package{
                 cur = new FlxSprite(
                     originX, startY - (i * img_height)
                 );
-                cur.loadGraphic(ImgBG, false, false, 1422, 800);
+                cur.loadGraphic(ImgBG, false, false, 1422, img_height);
                 cur.addAnimation("run", [0, 1, 2, 3, 4], 12, true);
                 cur.play("run");
                 add(cur);
@@ -100,7 +95,8 @@ package{
             this.player.inhibitY = true;
         }
 
-        override public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
+        override public function clickCallback(screenPos:DHPoint,
+                                               worldPos:DHPoint):void {
             if (this._state == STATE_PRE_IT && !this.accept_call) {
                 accept_call = true;
                 call_button.kill();
