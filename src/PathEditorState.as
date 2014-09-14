@@ -16,7 +16,6 @@ package
         public var enemies:EnemyGroup;
         public var boss:BossEnemy;
         public var showNodes:Boolean;
-        public var mouseImg:FlxSprite;
         public var filename:String;
         public var dataFile:File, backupFile:File, writeFile:File;
         public var fpsCounter:FPSCounter;
@@ -85,10 +84,6 @@ package
             super.postCreate();
 
             add(pathWalker.debugText);
-
-            this.mouseImg = new FlxSprite(FlxG.mouse.x, FlxG.mouse.y);
-            this.mouseImg.makeGraphic(10, 10, 0xff000000);
-            add(this.mouseImg);
         }
 
         override public function destroy():void {
@@ -98,9 +93,6 @@ package
 
         override public function update():void {
             super.update();
-
-            mouseImg.x = FlxG.mouse.x;
-            mouseImg.y = FlxG.mouse.y;
 
             this._mapnodes.update();
             this._path.update();

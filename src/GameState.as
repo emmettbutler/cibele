@@ -4,6 +4,7 @@ package {
     public class GameState extends FlxState {
         private var updateSound:Boolean, updatePopup:Boolean,
                     updateMessages:Boolean;
+        protected var game_cursor:GameCursor;
 
         public function GameState(snd:Boolean=true, popup:Boolean=true,
                                   messages:Boolean=true){
@@ -16,8 +17,20 @@ package {
             super.create();
         }
 
+        public function postCreate():void {
+            this.game_cursor = new GameCursor();
+        }
+
+        public function updateCursor():void {
+            if (this.game_cursor != null) {
+                this.game_cursor.update();
+            }
+        }
+
         override public function update():void {
             super.update();
+
+            this.updateCursor();
 
             if (this.updateSound) {
                 SoundManager.getInstance().update();

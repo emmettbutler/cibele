@@ -16,10 +16,12 @@ package {
             this.add(this.player.mapHitbox)
         }
 
-        public function postCreate():void {
+        override public function postCreate():void {
             add(this.player);
             this.player.addAttackAnim();
             add(this.player.debugText);
+
+            super.postCreate();
         }
 
         override public function update():void {

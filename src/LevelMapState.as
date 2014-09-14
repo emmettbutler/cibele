@@ -36,6 +36,13 @@ package {
             this.resolveAttacks();
         }
 
+        override public function updateCursor():void {
+            super.updateCursor();
+            if (this.game_cursor != null) {
+                this.game_cursor.checkObjectOverlap(this.enemies.enemies);
+            }
+        }
+
         override public function clickCallback(pos:DHPoint):void {
             this.player.clickCallback(pos, this.enemies.enemies);
         }
