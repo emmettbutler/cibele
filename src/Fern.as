@@ -14,7 +14,6 @@ package{
             super.__create(new DHPoint(
                 _screen.screenWidth * .5, _screen.screenHeight * .5));
             FlxG.bgColor = 0x00000000;
-            FlxG.mouse.show();
 
             this.convoSound = SoundManager.getInstance().playSound(Convo, 319632,
                 function():void {

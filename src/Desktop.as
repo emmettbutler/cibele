@@ -20,7 +20,6 @@ package{
 
         override public function create():void {
             FlxG.bgColor = 0x00000000;
-            FlxG.mouse.show();
             (new BackgroundLoader()).loadSingleTileBG("../assets/desktop.png");
             ScreenManager.getInstance().setupCamera(null, 1);
 
