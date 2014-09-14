@@ -9,19 +9,24 @@ package
         public var currentTime:Number = -1;
         public var totalSeconds:Number = 0;
         public var embeddedSound:Class;
-        public var soundObject:FlxSound;
+        private var soundObject:FlxSound;
         public var endCallback:Function;
         public var callbackLock:Boolean = false;
         public var virtualVolume:Number;
+
+        public static const VOCAL:Number = 0;
+        public static const BGM:Number = 1;
+        public var _type:Number = VOCAL;
 
         public static const MSEC_PER_SEC:Number = 1000;
 
         public function GameSound(embeddedSound:Class, dur:Number,
                                   endCallback:Function=null,
-                                  _loop:Boolean=false, _vol:Number=1) {
+                                  _loop:Boolean=false, _vol:Number=1, _kind:Number=0) {
             this.bornTime = new Date().valueOf();
             this.timeAlive = 0;
             this.virtualVolume = _vol;
+            this._type = _kind;
 
             this.totalSeconds = dur;
             this.embeddedSound = embeddedSound;
@@ -69,5 +74,9 @@ package
         }
 
         public function defaultEnd():void { }
+
+        public function stopSound():void {
+            soundObject.stop();
+        }
     }
 }

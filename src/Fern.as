@@ -3,6 +3,7 @@ package{
 
     public class Fern extends PlayerState {
         [Embed(source="../assets/voc_ikuturso.mp3")] private var Convo:Class;
+        [Embed(source="../assets/sexyselfie_wip.mp3")] private var VidBGMLoop:Class;
 
         public var ikutursodoor:FlxSprite;
         public var euryaledoor:FlxSprite;
@@ -17,12 +18,13 @@ package{
 
             this.convoSound = SoundManager.getInstance().playSound(Convo, 319632,
                 function():void {
+                    SoundManager.getInstance().playSound(VidBGMLoop, 0, null, true, .2, GameSound.BGM);
                     FlxG.switchState(
                         new PlayVideoState("../assets/selfie.flv",
                             function():void {
                                 FlxG.switchState(new StartScreen());
                             }));
-                }, false, 1);
+                }, false, 1, GameSound.VOCAL);
 
             (new BackgroundLoader()).loadSingleTileBG("../assets/fern_640_480.png");
             ScreenManager.getInstance().setupCamera(null, 1);

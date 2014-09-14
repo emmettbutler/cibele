@@ -103,7 +103,10 @@ package{
                     FlxG.switchState(new Fern());
                 }
                 SoundManager.getInstance().playSound(Convo1, 24000,
-                                                     _callback, false, 1);
+                                                     _callback, false, 1, GameSound.VOCAL);
+                for(var i:int = 1; i <= 3; i++) {
+                    PopUpManager.getInstance().createNewPopUp(i);
+                }
             } else {
                 super.clickCallback(screenPos, worldPos);
             }

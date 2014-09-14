@@ -2,6 +2,7 @@ package{
     import org.flixel.*;
 
     public class IkuTurso extends LevelMapState {
+        [Embed(source="../assets/ikuturso_wip.mp3")] private var ITBGMLoop:Class;
         public var runningSound:GameSound;
         public var bossHasAppeared:Boolean;
 
@@ -14,6 +15,7 @@ package{
             this.filename = "ikuturso_path.txt";
 
             super.create();
+            SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true, .2, GameSound.BGM);
 
             debugText = new FlxText(0,0,100,"");
             debugText.color = 0xff000000;

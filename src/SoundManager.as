@@ -17,16 +17,17 @@ package {
 
         public function playSound(embeddedSound:Class, dur:Number,
                                   endCallback:Function=null,
-                                  _loop:Boolean=false, _vol:Number=1):GameSound {
+                                  _loop:Boolean=false, _vol:Number=1, _kind:Number=0):GameSound {
             if(runningSounds.length > 0){
+                this.clearSoundsByType(_kind);
                 for(var i:Number = 0; i < runningSounds.length; i++){
                     if(embeddedSound != runningSounds[i].embeddedSound){
-                        newSound = new GameSound(embeddedSound, dur, endCallback, _loop, _vol);
+                        newSound = new GameSound(embeddedSound, dur, endCallback, _loop, _vol, _kind);
                         this.runningSounds.push(newSound);
                     }
                 }
             } else {
-                newSound = new GameSound(embeddedSound, dur, endCallback, _loop, _vol);
+                newSound = new GameSound(embeddedSound, dur, endCallback, _loop, _vol, _kind);
                 this.runningSounds.push(newSound);
             }
             return newSound;
@@ -37,6 +38,14 @@ package {
             for(var i:int = 0; i < this.runningSounds.length; i++) {
                 snd = this.runningSounds[i];
                 snd.update();
+            }
+        }
+
+        public function clearSoundsByType(_kind:Number):void {
+            for(var i:int = 0; i < this.runningSounds.length; i++) {
+                if(this.runningSounds[i]._type == _kind) {
+                    this.runningSounds[i].stopSound();
+                }
             }
         }
 

@@ -2,12 +2,13 @@ package{
     import org.flixel.*;
 
     public class StartScreen extends GameState {
+        [Embed(source="../assets/sexyselfie_wip.mp3")] private var VidBGMLoop:Class;
         public var startText:FlxText;
 
         override public function create():void {
             FlxG.bgColor = 0xff000000;
 
-            startText = new FlxText(100,100,500,"Cibele // This build ends after the first world.\n\nARROWS to move.\nSPACE to attack.\nMake sure your sound is on.\n\nSPACE to start.");
+            startText = new FlxText(100,100,500,"Cibele // This build ends after the first world.\n\nCLICK to move and interact with objects.\nMake sure your sound is on.\n\nSPACE to start.");
             add(startText);
             startText.size = 16;
 
@@ -25,6 +26,7 @@ package{
         override public function update():void{
             super.update();
             if(FlxG.keys.SPACE) {
+                SoundManager.getInstance().playSound(VidBGMLoop, 0, null, true, .2, GameSound.BGM);
                 startGame();
             }
         }
