@@ -3,7 +3,8 @@ package{
 
     public class Player extends PartyMember {
         [Embed(source="../assets/c_walk.png")] private var ImgCibWalk:Class;
-        [Embed(source="../assets/splash_sprites.png")] private var ImgAttack:Class;
+        [Embed(source="../assets/splash_sprites.png")] private var ImgWalkTo:Class;
+        [Embed(source="../assets/testattack.png")] private var ImgAttack:Class;
 
         private var walkDistance:Number = 0;
         private var walkTarget:DHPoint;
@@ -21,6 +22,7 @@ package{
         public var inhibitY:Boolean = false, inhibitX:Boolean = false;
         public var splash_sprites:FlxSprite;
         public var targetEnemy:Enemy;
+        public var attack_sprite:FlxSprite;
 
         public static const STATE_WALK:Number = 2398476188;
 
@@ -42,6 +44,7 @@ package{
             addAnimation("attack", [0, 1], 7, true);
 
             this.splash_sprites = new FlxSprite(this.x, this.y);
+            this.attack_sprite = new FlxSprite(this.x, this.y);
 
             this.hitboxOffset = new DHPoint(60, 100);
             this.hitboxDim = new DHPoint(40, 50);
@@ -145,8 +148,8 @@ package{
                 this.attack();
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_IN_ATTACK) {
-                this.splash_sprites.x = this.pos.x;
-                this.splash_sprites.y = this.pos.y;
+                this.attack_sprite.x = this.pos.x;
+                this.attack_sprite.y = this.pos.y;
                 if (this.timeSinceLastAttack() > 100) {
                     this.resolveStatePostAttack();
                 }
@@ -182,6 +185,9 @@ package{
                 this.splash_sprites.alpha = 0;
                 this.splash_sprites.play("idle");
             }
+            if(this.attack_sprite.frame == 3) {
+                this.attack_sprite.alpha = 0;
+            }
         }
 
         override public function resolveStatePostAttack():void {
@@ -198,12 +204,19 @@ package{
         }
 
         public function addAttackAnim():void {
-            this.splash_sprites.loadGraphic(ImgAttack, true, false, 640/10, 64);
+            //this sprite is being used for walk target anim
+            this.splash_sprites.loadGraphic(ImgWalkTo, true, false, 640/10, 64);
             this.splash_sprites.addAnimation("attack",
                 [0, 1, 2, 3, 4, 5, 6, 7, 8], 15, false);
             this.splash_sprites.addAnimation("idle", [0], 20, false);
             FlxG.state.add(this.splash_sprites);
             this.splash_sprites.alpha = 0;
+
+            //test attack sprite
+            this.attack_sprite.loadGraphic(ImgAttack,true,false,454/6,95);
+            this.attack_sprite.addAnimation("attack",[0,1,2,3,4,5],10,false);
+            FlxG.state.add(attack_sprite);
+            this.attack_sprite.alpha = 0;
         }
 
         override public function setPos(pos:DHPoint):void {
@@ -216,8 +229,8 @@ package{
         override public function attack():void {
             super.attack();
             if (this._state == STATE_IN_ATTACK) {
-                this.splash_sprites.alpha = 1;
-                this.splash_sprites.play("attack");
+                this.attack_sprite.alpha = 1;
+                this.attack_sprite.play("attack");
                 play("attack");
             }
         }
