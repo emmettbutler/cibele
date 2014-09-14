@@ -28,7 +28,7 @@ package {
 
         override public function update():void {
             super.update();
-            if(PopUpManager.getInstance()._player == null) {
+            if(PopUpManager.getInstance()._player != this.player) {
                 PopUpManager.getInstance()._player = this.player;
             }
 
