@@ -66,9 +66,11 @@ package{
 
         public function update():void {
             if(this.mouse_rect == null) {
+                ui_loaded = false;
                 loadPopUps();
                 this.debugText = new FlxText(FlxG.mouse.x,FlxG.mouse.y,500,"");
                 FlxG.state.add(this.debugText);
+                ui_loaded = true;
             }
             this.mouse_rect.x = FlxG.mouse.x;
             this.mouse_rect.y = FlxG.mouse.y;

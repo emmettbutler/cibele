@@ -28,9 +28,9 @@ package {
                 this.game_cursor.update();
                 if(!this.cursorResetFlag &&
                     PopUpManager.getInstance().ui_loaded &&
-                    MessageManager.getInstance().ui_loaded) {
+                    MessageManager.getInstance().ui_loaded)
+                {
                     this.game_cursor.resetCursor();
-                    this.game_cursor.setPCMouse();
                     this.cursorResetFlag = true;
                 }
             }

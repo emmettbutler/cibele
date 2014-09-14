@@ -169,26 +169,29 @@ package org.flixel
 		 *
 		 * @return	The same <code>FlxBasic</code> object that was passed in.
 		 */
-		public function add(Object:FlxBasic):FlxBasic
+		public function add(Object:FlxBasic, last:Boolean=false):FlxBasic
 		{
 			//Don't bother adding an object twice.
 			if(members.indexOf(Object) >= 0)
 				return Object;
 			
 			//First, look for a null entry where we can add the object.
-			var i:uint = 0;
-			var l:uint = members.length;
-			while(i < l)
-			{
-				if(members[i] == null)
-				{
-					members[i] = Object;
-					if(i >= length)
-						length = i+1;
-					return Object;
-				}
-				i++;
-			}
+			var i:uint = last ? members.length : 0;
+			var l:uint = last ? 0 : members.length;
+            while(last ? (i > l) : (i < l)) {
+                if(members[i] == null)
+                {
+                    members[i] = Object;
+                    if(i >= length)
+                        length = i+1;
+                    return Object;
+                }
+                if (last) {
+                    i--;
+                } else {
+                    i++;
+                }
+            }
 			
 			//Failing that, expand the array (if we can) and add the object.
 			if(_maxSize > 0)

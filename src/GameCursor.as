@@ -73,9 +73,9 @@ package
             FlxG.state.remove(this.enemy_mouse);
             FlxG.state.remove(this.pc_mouse);
             FlxG.state.remove(this.game_mouse);
-            FlxG.state.add(game_mouse);
-            FlxG.state.add(pc_mouse);
-            FlxG.state.add(enemy_mouse);
+            FlxG.state.add(this.enemy_mouse, true);
+            FlxG.state.add(this.pc_mouse, true);
+            FlxG.state.add(this.game_mouse, true);
         }
 
         public function setGameMouse():void {

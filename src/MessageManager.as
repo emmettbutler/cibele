@@ -170,6 +170,7 @@ package{
         }
 
         public function reloadPersistentObjects():void {
+            this.ui_loaded = false;
             this.initNotifications();
             this.loadVisibleMessageObjects();
             for(var i:int = 1; i < this.threads.length; i++){
@@ -177,6 +178,7 @@ package{
             }
             this._state = STATE_HIDE_INBOX;
             this.exitInbox();
+            this.ui_loaded = true;
         }
 
         public function updateUnreadNotification():void {
