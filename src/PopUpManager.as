@@ -72,8 +72,8 @@ package{
                 FlxG.state.add(this.debugText);
                 ui_loaded = true;
             }
-            this.mouse_rect.x = FlxG.mouse.x;
-            this.mouse_rect.y = FlxG.mouse.y;
+            this.mouse_rect.x = FlxG.mouse.screenX;
+            this.mouse_rect.y = FlxG.mouse.screenY;
 
             this.currentTime = new Date().valueOf();
             this.timeAlive = this.currentTime - this.bornTime;
