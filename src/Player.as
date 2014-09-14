@@ -192,7 +192,7 @@ package{
                         this.dir.y = 0;
                     }
                 } else {
-                    this.dir = this.lastPos.sub(this.pos).mulScl(1.1);
+                    //this.dir = this.lastPos.sub(this.pos).mulScl(1.1);
                 }
             }
 
