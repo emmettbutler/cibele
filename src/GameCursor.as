@@ -94,7 +94,7 @@ package
                     cur = group[i];
                     rect = new FlxRect(cur.x, cur.y, cur.width, cur.height);
                     if (cur is Enemy) {
-                        if (this.mouse_rect.overlaps(rect)) {
+                        if (this.mouse_rect.overlaps(rect) && !(cur as Enemy).dead) {
                             on_enemy = true;
                         }
                     }
