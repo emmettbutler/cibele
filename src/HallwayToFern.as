@@ -36,7 +36,6 @@ package{
             super.__create(new DHPoint(
                 _screen.screenWidth * .5, _screen.screenHeight * .5));
 
-            FlxG.mouse.show();
             FlxG.bgColor = 0xff000000;
 
             var originX:Number = (_screen.screenWidth * .5) - 1422/2;
@@ -78,7 +77,7 @@ package{
             this.player.inhibitY = true;
         }
 
-        override public function clickCallback(pos:DHPoint):void {
+        override public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
             if (this._state == STATE_PRE_IT && !this.accept_call) {
                 accept_call = true;
                 call_button.kill();
@@ -91,33 +90,22 @@ package{
                     PopUpManager.getInstance().createNewPopUp(i);
                 }
             } else {
-                this.player.clickCallback(pos);
+                this.player.clickCallback(screenPos, worldPos);
             }
         }
 
         override public function update():void{
             super.update();
 
-            if(PopUpManager.getInstance()._state != PopUpManager.SHOWING_POP_UP){
-                if(FlxG.keys.UP){
-                    bg1.y += runSpeed;
-                    bg2.y += runSpeed;
-                    bg3.y += runSpeed;
+            var bgs:Array = [bg1, bg2, bg3];
+            var prev:int;
+            for (var i:int = 0; i < bgs.length; i++) {
+                prev = i - 1;
+                if (i <= 0) {
+                    prev = bgs.length - 1;
                 }
-                if(FlxG.keys.DOWN){
-                    bg1.y -= runSpeed;
-                    bg2.y -= runSpeed;
-                    bg3.y -= runSpeed;
-                }
-
-                if(bg2.y == 0){
-                    bg1.y = bg2.y-bg2.height;
-                }
-                if(bg1.y == 0){
-                    bg3.y = bg2.y-bg1.height;
-                }
-                if(bg3.y == 0){
-                    bg2.y = bg3.y-bg3.height;
+                if (bgs[i].y == 0) {
+                    bgs[i].y = bgs[prev].y - bgs[prev].height;
                 }
             }
         }
