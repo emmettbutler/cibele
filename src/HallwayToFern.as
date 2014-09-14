@@ -27,12 +27,12 @@ package{
 
             var bottomY:Number = 10000;
             _screen = ScreenManager.getInstance();
+            this.initTiles(bottomY);
+
             super.__create(new DHPoint(
                 _screen.screenWidth * .5, bottomY - _screen.screenHeight * .5));
 
             FlxG.bgColor = 0xff000000;
-
-            this.initTiles(bottomY);
 
             ScreenManager.getInstance().setupCamera(player, 1);
             FlxG.camera.setBounds(0, 0, _screen.screenWidth, bottomY);

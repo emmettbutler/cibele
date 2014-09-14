@@ -52,9 +52,10 @@ package{
         public function PopUpManager() {
             this.bornTime = new Date().valueOf();
             this.timeAlive = 0;
-
             this.popup_order = new Array();
             this.elements = new Array();
+
+            this.loadPopUps();
 
             for(var i:int = 1; i <= 3; i++) {
                 this.createNewPopUp(i);
@@ -65,7 +66,7 @@ package{
         }
 
         public function update():void {
-            if(this.mouse_rect == null) {
+            if(this.debugText._textField == null) {
                 ui_loaded = false;
                 loadPopUps();
                 this.debugText = new FlxText(FlxG.mouse.x,FlxG.mouse.y,500,"");
