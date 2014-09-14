@@ -13,6 +13,7 @@ package {
         public var endCallback:Function;
 
         public function PlayVideoState(filename:String, endCallback:Function) {
+            super(true, false, false);
             this.loadVideo(filename);
             this.endCallback = endCallback;
         }
