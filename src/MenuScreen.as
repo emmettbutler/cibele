@@ -60,9 +60,9 @@ package{
 
             //todo this should probs not trigger every time if there's other music playing
             function _musicCallback():void {
-                SoundManager.getInstance().playSound(FernBGMLoop, 0, null, true, .2, GameSound.BGM);
+                SoundManager.getInstance().playSound(FernBGMLoop, 0, null, true, .05, GameSound.BGM);
             }
-            SoundManager.getInstance().playSound(FernBGMIntro, 12631, _musicCallback, false, .2, GameSound.BGM);
+            SoundManager.getInstance().playSound(FernBGMIntro, 12631, _musicCallback, false, .1, GameSound.BGM);
 
             super.postCreate();
             this.game_cursor.setGameMouse();

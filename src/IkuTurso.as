@@ -15,7 +15,7 @@ package{
             this.filename = "ikuturso_path.txt";
 
             super.create();
-            SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true, .2, GameSound.BGM);
+            SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true, .08, GameSound.BGM);
 
             debugText = new FlxText(0,0,100,"");
             debugText.color = 0xff000000;

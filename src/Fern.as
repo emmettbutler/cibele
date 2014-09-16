@@ -24,7 +24,7 @@ package{
                             function():void {
                                 FlxG.switchState(new StartScreen());
                             }));
-                }, false, 1, GameSound.VOCAL);
+                }, false, .6, GameSound.VOCAL);
 
             (new BackgroundLoader()).loadSingleTileBG("../assets/fern_640_480.png");
             ScreenManager.getInstance().setupCamera(null, 1);
