@@ -11,6 +11,7 @@ package{
                    debugText:FlxText, exit_msg:FlxText, reply_to_msg:FlxText;
 
         public var img_inbox:UIElement;
+        public var exit_ui:UIElement;
 
         public var notifications_box:FlxRect, exit_inbox_rect:FlxRect,
                    mouse_rect:FlxRect, exit_box:FlxRect, reply_box:FlxRect;
@@ -112,11 +113,16 @@ package{
             this.elements.push(this.img_inbox);
 
             this.exit_inbox = new FlxText(
-                inbox_pos.x + 5, inbox_pos.y + (this.img_inbox.height-25),
+                _screen.screenWidth * .06, _screen.screenHeight * .59,
                 250, "Exit Inbox");
+            this.exit_ui = new UIElement(this.exit_inbox.x, this.exit_inbox.y);
+            this.exit_ui.makeGraphic(100, 50, 0xff0000ff);
+            this.exit_ui.alpha = 1;
+            this.elements.push(this.exit_ui);
             this.exit_inbox.size = 16;
             this.exit_inbox.color = 0xff000000;
             this.exit_inbox.scrollFactor = new FlxPoint(0, 0);
+            this.exit_ui.scrollFactor = new FlxPoint(0, 0);
             this.exit_inbox.active = false;
             FlxG.state.add(this.exit_inbox);
 
