@@ -27,7 +27,7 @@ package {
                 ScreenManager.getInstance().screenHeight,
                 0xaa000000
             );
-            this.pauseLayer.visible = GlobalTimer.getInstance().paused;
+            this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
         }
 
         public function postCreate():void {
@@ -81,7 +81,7 @@ package {
             } else if (FlxG.keys.justPressed("S")) {
                 GlobalTimer.getInstance().pause();
                 SoundManager.getInstance().pause();
-                this.pauseLayer.visible = GlobalTimer.getInstance().paused;
+                this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
             }
         }
 

@@ -9,7 +9,6 @@ package
         public var timeRemaining:Number = -1;
         public var currentTime:Number = -1;
         public var totalSeconds:Number = 0;
-        public var paused:Boolean;
         public var embeddedSound:Class;
         private var soundObject:FlxSound;
         public var callbackLock:Boolean = false;
@@ -23,14 +22,12 @@ package
 
         public function GameSound(embeddedSound:Class, dur:Number,
                                   _loop:Boolean=false, _vol:Number=1,
-                                  _kind:Number=0, name:String=null,
-                                  paused:Boolean=false) {
+                                  _kind:Number=0, name:String=null) {
             this.name = name;
             this.bornTime = new Date().valueOf();
             this.timeAlive = 0;
             this.virtualVolume = _vol;
             this._type = _kind;
-            this.paused = paused;
 
             this.totalSeconds = dur;
             this.embeddedSound = embeddedSound;
@@ -39,7 +36,7 @@ package
             soundObject.loadEmbedded(embeddedSound, _loop);
             soundObject.volume = _vol;
             soundObject.play();
-            if (this.paused) {
+            if (GlobalTimer.getInstance().isPaused()) {
                 soundObject.pause();
             }
         }
@@ -59,8 +56,7 @@ package
         }
 
         public function pause():void {
-            this.paused = !this.paused;
-            if (!this.paused) {
+            if (!GlobalTimer.getInstance().isPaused()) {
                 this.soundObject.resume();
             } else {
                 this.soundObject.pause();

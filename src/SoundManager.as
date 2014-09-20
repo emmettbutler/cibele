@@ -7,7 +7,6 @@ package {
         public var runningSounds:Array;
         public var newSound:GameSound;
         public var globalVolume:Number;
-        public var paused:Boolean;
 
         public static const VOLUME_STEP:Number = .1;
 
@@ -26,13 +25,13 @@ package {
                 for(var i:Number = 0; i < runningSounds.length; i++){
                     if(embeddedSound != runningSounds[i].embeddedSound){
                         newSound = new GameSound(embeddedSound, dur, _loop,
-                                                 _vol, _kind, name, this.paused);
+                                                 _vol, _kind, name);
                         this.runningSounds.push(newSound);
                     }
                 }
             } else {
                 newSound = new GameSound(embeddedSound, dur, _loop,
-                                         _vol, _kind, name, this.paused);
+                                         _vol, _kind, name);
                 this.runningSounds.push(newSound);
             }
 
@@ -54,7 +53,6 @@ package {
         }
 
         public function pause():void {
-            this.paused = !this.paused;
             for(var i:int = 0; i < this.runningSounds.length; i++) {
                 this.runningSounds[i].pause();
             }

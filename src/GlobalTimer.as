@@ -11,17 +11,21 @@ package {
         private var totalPausedTime:Number = 0;
         private var pauseStart:Number = -1;
 
-        public var paused:Boolean = false;
+        private var paused:Boolean = false;
 
         public function GlobalTimer() {
             this.startTime = new Date().valueOf();
             this.marks = new Dictionary();
         }
 
+        public function isPaused():Boolean {
+            return this.paused;
+        }
+
         public function setMark(name:String, time:Number,
                                 callback:Function=null):void {
             this.marks[name] = new GlobalTimerMark(name, time, new Date().valueOf(),
-                                                   0, callback, this.paused);
+                                                   0, callback);
         }
 
         public function hasPassed(name:String):Boolean {

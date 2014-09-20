@@ -5,18 +5,16 @@ package {
         public var start:Number, end:Number, pauseTime:Number;
         public var callback:Function;
         public var name:String;
-        public var finished:Boolean, paused:Boolean;
+        public var finished:Boolean;
 
         public function GlobalTimerMark(name:String, start:Number, end:Number,
-                                        pauseTime:Number, callback:Function,
-                                        paused:Boolean) {
+                                        pauseTime:Number, callback:Function) {
             this.name = name;
             this.start = start;
             this.end = end;
             this.pauseTime = pauseTime;
             this.callback = callback;
             this.finished = new Date().valueOf() - this.start >= this.end;
-            this.paused = paused;
         }
 
         public function timeIsUp():Boolean {
@@ -35,7 +33,7 @@ package {
         }
 
         public function update():void {
-            if (!this.paused && this.timeIsUp()) {
+            if (!GlobalTimer.getInstance().isPaused() && this.timeIsUp()) {
                 this.finish();
             }
         }
@@ -44,7 +42,6 @@ package {
             if (pauseStart != -1) {
                 this.pauseTime += cur - pauseStart;
             }
-            this.paused = !this.paused;
         }
     }
 }
