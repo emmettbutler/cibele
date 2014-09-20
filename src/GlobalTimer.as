@@ -16,23 +16,18 @@ package {
             this.marks = new Dictionary();
         }
 
-        public function setMark(name:String, time:Number):void {
-            // time to stop, start time, total pause between the two
-            this.marks[name] = [time, new Date().valueOf(), 0];
+        public function setMark(name:String, time:Number,
+                                callback:Function=null):void {
+            this.marks[name] = new GlobalTimerMark(name, time, new Date().valueOf(),
+                                                   0, callback);
         }
 
-        public function hasPassed(name:String, start:Number=-1, end:Number=-1):Boolean {
-            if (start == -1 || end == -1) {
-                var thisMark:String, markData:Array;
-                for (var key:Object in this.marks) {
-                    thisMark = key as String;
-                    if (thisMark == name) {
-                        markData = this.marks[key];
-                    }
-                }
-                start = markData[1];
-                end = markData[0];
-            }
+        public function hasPassed(name:String):Boolean {
+            return this.marks[name].finished;
+
+            var markData:GlobalTimerMark = this.marks[name];
+            start = markData.start;
+            end = markData.end;
 
             var cur:Number = new Date().valueOf();
             if (cur - start >= end) {
@@ -47,15 +42,11 @@ package {
                 this.pauseStart = cur;
             } else {
                 this.totalPausedTime += cur - this.pauseStart;
-            }
-
-            var thisMark:String, markData:Array;
-            for (var key:Object in this.marks) {
-                thisMark = key as String;
-                if (thisMark == name) {
-                    markData = this.marks[key];
-                    if (!this.hasPassed(markData[1], markData[0])) {
-                        markData[2] += cur - this.pauseStart;
+                var markData:GlobalTimerMark;
+                for (var key:Object in this.marks) {
+                    markData = this.marks[key as String];
+                    if (!markData.finished) {
+                        markData.pauseTime += cur - this.pauseStart;
                     }
                 }
             }
@@ -65,6 +56,12 @@ package {
 
         public function getTotalTime():Number {
             return new Date().valueOf() - this.startTime;
+        }
+
+        public function update():void {
+            for (var key:Object in this.marks) {
+                (this.marks[key as String] as GlobalTimerMark).update();
+            }
         }
 
         public static function getInstance():GlobalTimer {
