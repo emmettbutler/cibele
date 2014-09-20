@@ -101,17 +101,20 @@ package{
 
                 this.emote();
             } else if(this._state == FLASH_PROGRAM_PICKER) {
+                if(this.next_popup.shown){
+                    this._state = SHOWING_NOTHING;
+                }
                 showBlinker();
                 this.emote();
                 if(mouse_rect.overlaps(this.blinker_rect) && FlxG.mouse.justPressed()) {
                     this.blinker.alpha = 0;
+                    this.next_popup.shown = true;
                     this.next_popup.visible = true;
                     this._state = SHOWING_POP_UP;
                 }
             } else if(this._state == SHOWING_POP_UP) {
                 if(FlxG.mouse.justPressed()) {
                     this._state = SHOWING_NOTHING;
-                    this.next_popup.shown = true;
                     this.open_popup_time = 1000;
                 }
             }
@@ -201,11 +204,7 @@ package{
                 }
             }
             this.ui_loaded = true;
-            for(i = 0; i < popup_order.length; i++) {
-                if(this.popup_order[i].timeAlive >= this.popup_order[i].timer && !this.popup_order[i].shown) {
-                    this.next_popup = this.popup_order[i];
-                }
-            }
+            checkForNextPopUp();
         }
 
         public function showBlinker():void {
@@ -224,9 +223,10 @@ package{
         public function checkForNextPopUp():void {
             for(i = 0; i < popup_order.length; i++) {
                 if(this.popup_order[i].timeAlive >= this.popup_order[i].timer && !this.popup_order[i].shown) {
-                    this._state = FLASH_PROGRAM_PICKER;
+                    if(this.next_popup != null && !this.next_popup.shown){
+                        this._state = FLASH_PROGRAM_PICKER;
+                    }
                     this.next_popup = this.popup_order[i];
-                    //this.open_popup_time = this.timeAlive;
                     break;
                 }
             }
