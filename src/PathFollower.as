@@ -63,6 +63,13 @@ package
             this.attackRange = 90;
         }
 
+        override public function addVisibleObjects():void {
+            FlxG.state.add(this);
+            this.tempAttackAnim();
+            FlxG.state.add(this.shadow_sprite);
+            FlxG.state.add(this..nameText);
+        }
+
         override public function update():void {
             super.update();
 
