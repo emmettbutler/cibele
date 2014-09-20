@@ -18,8 +18,6 @@ package {
             super(pos);
             this.nameText = new FlxText(pos.x, pos.y, 500, "My Name");
             this.nameText.setFormat("NexaBold-Regular",16,0xff000000,"left");
-            this.nameText.scrollFactor.x = 0;
-            this.nameText.scrollFactor.y = 0;
         }
 
         public function initFootsteps():void {
@@ -32,7 +30,7 @@ package {
                 this.footsteps.update();
             }
 
-            this.nameText.x = this.pos.x;
+            this.nameText.x = this.pos.x+15;
             this.nameText.y = this.pos.y;
         }
 

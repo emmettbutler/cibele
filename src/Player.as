@@ -31,7 +31,7 @@ package{
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
 
-            this.nameText = "Cibele";
+            this.nameText.text = "Cibele";
 
             this.shadow_sprite = new FlxSprite(x, y);
             this.shadow_sprite.loadGraphic(ImgShadow,false,false,41,14);

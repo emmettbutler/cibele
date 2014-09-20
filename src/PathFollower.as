@@ -47,7 +47,7 @@ package
         public function PathFollower(pos:DHPoint) {
             super(pos);
 
-            this.nameText = "Ichi";
+            this.nameText.text = "Ichi";
             this.shadow_sprite = new FlxSprite(pos.x,pos.y);
             this.shadow_sprite.loadGraphic(ImgShadow,false,false,41,14);
 
