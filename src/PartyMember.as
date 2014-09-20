@@ -25,6 +25,8 @@ package {
             this.footsteps = new FootstepTrail(this);
         }
 
+        public function addVisibleObjects():void { }
+
         override public function update():void {
             super.update();
             if (this.footsteps != null) {

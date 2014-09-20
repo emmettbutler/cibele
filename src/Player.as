@@ -167,6 +167,14 @@ package{
             }
         }
 
+        override public function addVisibleObjects():void {
+            FlxG.state.add(this);
+            this.addAttackAnim();
+            FlxG.state.add(this.debugText);
+            FlxG.state.add(this.shadow_sprite);
+            FlxG.state.add(this.nameText);
+        }
+
         override public function update():void{
             this.hitbox_rect.x = this.pos.x;
             this.hitbox_rect.y = this.pos.y;

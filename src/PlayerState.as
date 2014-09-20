@@ -17,11 +17,7 @@ package {
         }
 
         override public function postCreate():void {
-            add(this.player);
-            this.player.addAttackAnim();
-            add(this.player.debugText);
-            add(this.player.shadow_sprite);
-            add(this.player.nameText);
+            this.player.addVisibleObjects();
             super.postCreate();
             this.game_cursor.setGameMouse();
         }

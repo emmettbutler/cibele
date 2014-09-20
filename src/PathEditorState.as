@@ -78,10 +78,7 @@ package
             this.boss._mapnodes = this._mapnodes;
             this.enemies.addEnemy(this.boss);
 
-            add(pathWalker);
-            this.pathWalker.tempAttackAnim();
-            add(pathWalker.shadow_sprite);
-            add(pathWalker.nameText);
+            this.pathWalker.addVisibleObjects();
 
             super.postCreate();
 
