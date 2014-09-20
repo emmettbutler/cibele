@@ -67,7 +67,7 @@ package
             FlxG.state.add(this);
             this.tempAttackAnim();
             FlxG.state.add(this.shadow_sprite);
-            FlxG.state.add(this..nameText);
+            FlxG.state.add(this.nameText);
         }
 
         override public function update():void {

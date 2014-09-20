@@ -39,14 +39,18 @@ package{
             loadGraphic(ImgCibWalk, true, false, 143, 150);
             addAnimation("walk_u",
                 [0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10], 20, false);
+            addAnimation("idle_u", [9], 20, false);
             addAnimation("walk_d",
                 [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21], 20, false);
+            addAnimation("idle_d", [12], 20, false);
             addAnimation("walk_l",
                 [35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22],
                 20, false);
+            addAnimation("idle_l", [26], 20, false);
             addAnimation("walk_r",
                 [49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36],
                 20, false);
+            addAnimation("idle_r", [40], 20, false);
             addAnimation("idle", [11], 7, false);
             addAnimation("attack", [0, 1], 7, true);
 
@@ -178,10 +182,7 @@ package{
         }
 
         override public function update():void{
-            if(this.targetEnemy != null) {
-                FlxG.log(this.targetEnemy.dead);
-            }
-
+            FlxG.log(this.dir);
             this.hitbox_rect.x = this.pos.x;
             this.hitbox_rect.y = this.pos.y;
 
@@ -209,6 +210,16 @@ package{
                 this.attack_sprite.y = this.pos.y;
                 if (this.timeSinceLastAttack() > 100) {
                     this.resolveStatePostAttack();
+                }
+            } else if (this._state == STATE_IDLE) {
+                if(this.text_facing == "up") {
+                    this.play("idle_u");
+                } else if(this.text_facing == "down") {
+                    this.play("idle_d");
+                } else if(this.text_facing == "left") {
+                    this.play("idle_l");
+                } else if(this.text_facing == "right") {
+                    this.play("idle_r");
                 }
             }
 
