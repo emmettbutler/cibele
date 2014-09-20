@@ -2,6 +2,8 @@ package{
     import org.flixel.*;
 
     public class Message {
+        [Embed(source="../assets/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
+
         public var display_text:String, sent_by:String;
 
         public var read:Boolean = false, sent:Boolean = false;
@@ -32,11 +34,10 @@ package{
             this.textbox = new FlxText(this.pos.x, this.pos.y,
                                        this.inbox_ref.width - 50,
                                        this.sent_by + " >> " + this.display_text);
-            this.textbox.color = this.font_color;
             this.textbox.scrollFactor = new FlxPoint(0, 0);
-            this.textbox.size = this.font_size;
             this.textbox.alpha = 0;
             this.textbox.active = false;
+            this.textbox.setFormat("NexaBold-Regular",this.font_size,this.font_color,"left");
             FlxG.state.add(this.textbox);
         }
 

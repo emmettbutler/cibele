@@ -4,6 +4,7 @@ package{
     public class MessageManager {
         [Embed(source="../assets/messages.png")] private var ImgMsg:Class;
         [Embed(source="../assets/inbox.png")] private var ImgInbox:Class;
+        [Embed(source="../assets/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
         public static var _instance:MessageManager = null;
 
@@ -91,8 +92,7 @@ package{
             this.notifications_text = new FlxText(
                 notifications_pos.x, notifications_pos.y,
                 img_msg.width, this.unread_count.toString() + " unread messages.\n\nN to emote.");
-            this.notifications_text.size = 14;
-            this.notifications_text.color = 0xff000000;
+            this.notifications_text.setFormat("NexaBold-Regular",16,0xff000000,"left");
             this.notifications_text.scrollFactor = new FlxPoint(0, 0);
             this.notifications_text.active = false;
             FlxG.state.add(this.notifications_text);
@@ -119,8 +119,7 @@ package{
             this.exit_ui.makeGraphic(100, 50, 0xff0000ff);
             this.exit_ui.alpha = 1;
             this.elements.push(this.exit_ui);
-            this.exit_inbox.size = 16;
-            this.exit_inbox.color = 0xff000000;
+            this.exit_inbox.setFormat("NexaBold-Regular",16,0xff000000,"left");
             this.exit_inbox.scrollFactor = new FlxPoint(0, 0);
             this.exit_ui.scrollFactor = new FlxPoint(0, 0);
             this.exit_inbox.active = false;
@@ -137,8 +136,7 @@ package{
             this.exit_msg = new FlxText(this.img_inbox.x + 110,
                 this.img_inbox.y + (this.img_inbox.height-25),
                 this.img_inbox.width, "| Back");
-            this.exit_msg.size = 14;
-            this.exit_msg.color = 0xff000000;
+            this.exit_msg.setFormat("NexaBold-Regular",16,0xff000000,"left");
             this.exit_msg.scrollFactor = new FlxPoint(0, 0);
             this.exit_msg.alpha = 0;
             this.exit_msg.active = false;
@@ -149,8 +147,7 @@ package{
             this.reply_to_msg = new FlxText(this.img_inbox.x + 172,
                 this.img_inbox.y + (this.img_inbox.height - 25),
                 this.img_inbox.width, "| Reply");
-            this.reply_to_msg.size = 14;
-            this.reply_to_msg.color = 0xff000000;
+            this.reply_to_msg.setFormat("NexaBold-Regular",16,0xff000000,"left");
             this.reply_to_msg.scrollFactor = new FlxPoint(0, 0);
             this.reply_to_msg.alpha = 0;
             this.reply_to_msg.active = false;

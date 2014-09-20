@@ -2,6 +2,8 @@ package{
     import org.flixel.*;
 
     public class Thread {
+        [Embed(source="../assets/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
+
         public var display_text:String, sent_by:String;
 
         public var viewing:Boolean = false, unread:Boolean = true;
@@ -46,9 +48,8 @@ package{
                 this.sent_by + " >> " +
                 this.display_text.slice(0, this.sent_by.length + 10) +
                 "...");
-            this.truncated_textbox.color = this.font_color;
+            this.truncated_textbox.setFormat("NexaBold-Regular",this.font_size,this.font_color,"left");
             this.truncated_textbox.scrollFactor = new FlxPoint(0, 0);
-            this.truncated_textbox.size = this.font_size;
             this.truncated_textbox.alpha = 0;
             this.truncated_textbox.active = false;
             FlxG.state.add(truncated_textbox);

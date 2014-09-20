@@ -3,6 +3,8 @@ package{
 
     public class StartScreen extends GameState {
         [Embed(source="../assets/sexyselfie_wip.mp3")] private var VidBGMLoop:Class;
+        [Embed(source="../assets/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
+
         public var startText:FlxText;
 
         override public function create():void {
@@ -10,6 +12,7 @@ package{
 
             startText = new FlxText(100,100,500,"Cibele // This build ends after the first world.\n\nCLICK to move and interact with objects.\nMake sure your sound is on.\n\nSPACE to start.");
             add(startText);
+            startText.setFormat("NexaBold-Regular",8,0xffffffff,"left");
             startText.size = 16;
 
             ScreenManager.getInstance();
