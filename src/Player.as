@@ -250,8 +250,8 @@ package{
             this.splash_sprites.alpha = 0;
 
             //test attack sprite
-            this.attack_sprite.loadGraphic(ImgAttack,true,false,454/6,95);
-            this.attack_sprite.addAnimation("attack",[0,1,2,3,4,5],10,false);
+            this.attack_sprite.loadGraphic(ImgAttack,true,false,692/5,140);
+            this.attack_sprite.addAnimation("attack",[0,1,2,3,4],10,false);
             FlxG.state.add(attack_sprite);
             this.attack_sprite.alpha = 0;
         }
