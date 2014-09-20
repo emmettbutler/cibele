@@ -146,18 +146,22 @@ package{
             this.dir = this.walkDirection.mulScl(this.walkSpeed);
             if(this.facing == LEFT){
                 this.play("walk_l");
+                this.text_facing = "left";
                 this.shadow_sprite.x = this.x + (this.width/2);
                 this.shadow_sprite.y = this.y + (this.height-10);
             } else if (this.facing == RIGHT){
                 this.play("walk_r");
+                this.text_facing = "right";
                 this.shadow_sprite.x = this.x + (this.width/4);
                 this.shadow_sprite.y = this.y + (this.height-10);
             } else if(this.facing == UP){
                 this.play("walk_u");
+                this.text_facing = "up";
                 this.shadow_sprite.x = this.x + (this.width/3);
                 this.shadow_sprite.y = this.y + (this.height-10);
             } else if(this.facing == DOWN){
                 this.play("walk_d");
+                this.text_facing = "down";
                 this.shadow_sprite.x = this.x + (this.width/3);
                 this.shadow_sprite.y = this.y + (this.height-10);
             }

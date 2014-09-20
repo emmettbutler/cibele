@@ -13,6 +13,7 @@ package {
         public var footstepOffset:DHPoint;
         public var attackRange:Number = 150;
         public var nameText:FlxText;
+        public var text_facing:String = "up";
 
         public function PartyMember(pos:DHPoint) {
             super(pos);
@@ -30,8 +31,15 @@ package {
                 this.footsteps.update();
             }
 
-            this.nameText.x = this.pos.x+15;
-            this.nameText.y = this.pos.y;
+            if(this.text_facing == "up" || this.text_facing == "down"){
+                this.nameText.x = this.pos.x+50;
+            } else if(this.text_facing == "left") {
+                this.nameText.x = this.pos.x+75;
+            } else if(this.text_facing == "right") {
+                this.nameText.x = this.pos.x+20;
+            }
+
+            this.nameText.y = this.pos.y-30;
         }
 
         public function isAttacking():Boolean{
