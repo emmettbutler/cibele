@@ -5,6 +5,7 @@ package {
         private var updateSound:Boolean, updatePopup:Boolean,
                     updateMessages:Boolean;
         protected var game_cursor:GameCursor;
+        private var pauseLayer:FlxSprite;
 
         public var cursorResetFlag:Boolean = false;
 
@@ -17,10 +18,23 @@ package {
 
         override public function create():void {
             super.create();
+
+            this.pauseLayer = new FlxSprite(0, 0);
+            this.pauseLayer.scrollFactor = new DHPoint(0, 0);
+            this.pauseLayer.active = false;
+            this.pauseLayer.makeGraphic(
+                ScreenManager.getInstance().screenWidth,
+                ScreenManager.getInstance().screenHeight,
+                0xaa000000
+            );
+            this.pauseLayer.visible = GlobalTimer.getInstance().paused;
         }
 
         public function postCreate():void {
+            PopUpManager.getInstance();
+            MessageManager.getInstance();
             this.game_cursor = new GameCursor();
+            FlxG.state.add(this.pauseLayer);
         }
 
         public function updateCursor():void {
@@ -67,6 +81,7 @@ package {
             } else if (FlxG.keys.justPressed("S")) {
                 GlobalTimer.getInstance().pause();
                 SoundManager.getInstance().pause();
+                this.pauseLayer.visible = GlobalTimer.getInstance().paused;
             }
         }
 
