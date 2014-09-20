@@ -41,6 +41,8 @@ package {
 
             this.updateCursor();
 
+            GlobalTimer.getInstance().update();
+
             if (this.updateSound) {
                 SoundManager.getInstance().update();
             }
@@ -62,6 +64,9 @@ package {
                 SoundManager.getInstance().increaseVolume();
             } else if (FlxG.keys.justPressed("O")) {
                 SoundManager.getInstance().decreaseVolume();
+            } else if (FlxG.keys.justPressed("S")) {
+                GlobalTimer.getInstance().pause();
+                SoundManager.getInstance().pause();
             }
         }
 

@@ -7,6 +7,7 @@ package {
         public var runningSounds:Array;
         public var newSound:GameSound;
         public var globalVolume:Number;
+        public var paused:Boolean;
 
         public static const VOLUME_STEP:Number = .1;
 
@@ -17,19 +18,30 @@ package {
 
         public function playSound(embeddedSound:Class, dur:Number,
                                   endCallback:Function=null,
-                                  _loop:Boolean=false, _vol:Number=1, _kind:Number=0):GameSound {
+                                  _loop:Boolean=false, _vol:Number=1,
+                                  _kind:Number=0, name:String=null):GameSound
+        {
             if(runningSounds.length > 0){
                 this.clearSoundsByType(_kind);
                 for(var i:Number = 0; i < runningSounds.length; i++){
                     if(embeddedSound != runningSounds[i].embeddedSound){
-                        newSound = new GameSound(embeddedSound, dur, endCallback, _loop, _vol, _kind);
+                        newSound = new GameSound(embeddedSound, dur, _loop,
+                                                 _vol, _kind, name, this.paused);
                         this.runningSounds.push(newSound);
                     }
                 }
             } else {
-                newSound = new GameSound(embeddedSound, dur, endCallback, _loop, _vol, _kind);
+                newSound = new GameSound(embeddedSound, dur, _loop,
+                                         _vol, _kind, name, this.paused);
                 this.runningSounds.push(newSound);
             }
+
+            function _callback():void {
+                newSound.stopSound();
+                endCallback();
+            }
+            GlobalTimer.getInstance().setMark(name, dur, _callback);
+
             return newSound;
         }
 
@@ -38,6 +50,13 @@ package {
             for(var i:int = 0; i < this.runningSounds.length; i++) {
                 snd = this.runningSounds[i];
                 snd.update();
+            }
+        }
+
+        public function pause():void {
+            this.paused = !this.paused;
+            for(var i:int = 0; i < this.runningSounds.length; i++) {
+                this.runningSounds[i].pause();
             }
         }
 

@@ -1,4 +1,6 @@
 package {
+    import org.flixel.*;
+
     import flash.utils.Dictionary;
 
     public class GlobalTimer {
@@ -9,7 +11,7 @@ package {
         private var totalPausedTime:Number = 0;
         private var pauseStart:Number = -1;
 
-        private var paused:Boolean = false;
+        public var paused:Boolean = false;
 
         public function GlobalTimer() {
             this.startTime = new Date().valueOf();
@@ -19,21 +21,11 @@ package {
         public function setMark(name:String, time:Number,
                                 callback:Function=null):void {
             this.marks[name] = new GlobalTimerMark(name, time, new Date().valueOf(),
-                                                   0, callback);
+                                                   0, callback, this.paused);
         }
 
         public function hasPassed(name:String):Boolean {
             return this.marks[name].finished;
-
-            var markData:GlobalTimerMark = this.marks[name];
-            start = markData.start;
-            end = markData.end;
-
-            var cur:Number = new Date().valueOf();
-            if (cur - start >= end) {
-                return true;
-            }
-            return false;
         }
 
         public function pause():void {
@@ -42,13 +34,10 @@ package {
                 this.pauseStart = cur;
             } else {
                 this.totalPausedTime += cur - this.pauseStart;
-                var markData:GlobalTimerMark;
-                for (var key:Object in this.marks) {
-                    markData = this.marks[key as String];
-                    if (!markData.finished) {
-                        markData.pauseTime += cur - this.pauseStart;
-                    }
-                }
+            }
+
+            for (var key:Object in this.marks) {
+                this.marks[key].pause(cur, this.paused ? this.pauseStart : -1);
             }
 
             this.paused = !this.paused;
@@ -59,8 +48,10 @@ package {
         }
 
         public function update():void {
+            var curMark:GlobalTimerMark;
             for (var key:Object in this.marks) {
-                (this.marks[key as String] as GlobalTimerMark).update();
+                curMark = this.marks[key as String];
+                curMark.update();
             }
         }
 

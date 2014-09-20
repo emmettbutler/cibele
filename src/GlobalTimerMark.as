@@ -1,21 +1,25 @@
 package {
+    import org.flixel.*;
+
     public class GlobalTimerMark {
         public var start:Number, end:Number, pauseTime:Number;
         public var callback:Function;
         public var name:String;
-        public var finished:Boolean;
+        public var finished:Boolean, paused:Boolean;
 
         public function GlobalTimerMark(name:String, start:Number, end:Number,
-                                        pauseTime:Number, callback:Function) {
+                                        pauseTime:Number, callback:Function,
+                                        paused:Boolean) {
             this.name = name;
             this.start = start;
             this.end = end;
             this.pauseTime = pauseTime;
             this.callback = callback;
             this.finished = new Date().valueOf() - this.start >= this.end;
+            this.paused = paused;
         }
 
-        public function timeIsUp():void {
+        public function timeIsUp():Boolean {
             var cur:Number = new Date().valueOf();
             if (cur - this.start - this.pauseTime >= this.end) {
                 return true;
@@ -31,9 +35,16 @@ package {
         }
 
         public function update():void {
-            if (this.timeIsUp()) {
+            if (!this.paused && this.timeIsUp()) {
                 this.finish();
             }
+        }
+
+        public function pause(cur:Number, pauseStart:Number=-1):void {
+            if (pauseStart != -1) {
+                this.pauseTime += cur - pauseStart;
+            }
+            this.paused = !this.paused;
         }
     }
 }
