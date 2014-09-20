@@ -43,7 +43,9 @@ package{
 
         public function initVisibleObjects():void {
             this.truncated_textbox = new FlxText(pos.x, pos.y, inbox_ref.width,
-                this.display_text.slice(0, this.sent_by.length + 10) + "...");
+                this.sent_by + " >> " +
+                this.display_text.slice(0, this.sent_by.length + 10) +
+                "...");
             this.truncated_textbox.color = this.font_color;
             this.truncated_textbox.scrollFactor = new FlxPoint(0, 0);
             this.truncated_textbox.size = this.font_size;
