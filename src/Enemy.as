@@ -60,12 +60,6 @@ package
             this.attacker = p;
             this._state = STATE_RECOIL;
             this.hitpoints -= damage;
-            if(this.hitpoints < 0){
-                FlxG.state.remove(this);
-                this.dead = true;
-                this.visible = false;
-                this.destroy();
-            }
         }
 
         public function setIdle():void {
@@ -117,6 +111,13 @@ package
                 }
                 this.disp = this.attacker.pos.sub(this.pos);
                 this.dir = disp.normalized().mulScl(7).reverse();
+            }
+
+            if(this.hitpoints < 0){
+                FlxG.state.remove(this);
+                this.dead = true;
+                this.visible = false;
+                this.destroy();
             }
         }
     }

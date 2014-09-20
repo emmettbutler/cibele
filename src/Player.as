@@ -96,8 +96,10 @@ package{
                     } else if (mouseWorldRect.overlaps(worldRect) &&
                         cur is Enemy)
                     {
-
                         this.targetEnemy = cur as Enemy;
+                        if(this.targetEnemy.dead) {
+                            this.targetEnemy = null;
+                        }
                     }
                 }
             }
@@ -176,6 +178,10 @@ package{
         }
 
         override public function update():void{
+            if(this.targetEnemy != null) {
+                FlxG.log(this.targetEnemy.dead);
+            }
+
             this.hitbox_rect.x = this.pos.x;
             this.hitbox_rect.y = this.pos.y;
 

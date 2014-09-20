@@ -45,6 +45,8 @@ package{
                 FlxG.state.add(call_button);
             }
             this.postCreate();
+
+            this.player.nameText.color = 0xffffffff;
         }
 
         public function initTiles(startY:Number):void {
