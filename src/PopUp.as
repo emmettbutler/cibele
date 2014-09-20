@@ -1,15 +1,11 @@
 package{
     import org.flixel.*;
 
-    public class PopUp extends FlxSprite {
+    public class PopUp extends UIElement {
         public var timer:Number;
         public var shown:Boolean = false;
-        public var bornTime:Number = -1;
-        public var timeAlive:Number = -1;
-        public var currentTime:Number = -1;
 
         public static const ARROW_THROUGH:Number = 1;
-        public var _state:Number = 0;
         public var cur_anim:Number = 0;
 
         public function PopUp(img:Class, w:Number, h:Number, time:Number, functionality:Number = 0) {
@@ -30,7 +26,7 @@ package{
             } else {
                 this.loadGraphic(img,false,false,w,h);
             }
-            this.alpha = 0;
+            this.visible = false;
             this.scrollFactor.x = 0;
             this.scrollFactor.y = 0;
 

@@ -88,21 +88,30 @@ package{
                     checkForNextPopUp();
                 }
 
+                if(this.next_popup != null){
+                    this.next_popup.visible = false;
+                }
+
+                if(mouse_rect.overlaps(this.blinker_rect) && FlxG.mouse.justPressed()) {
+                    this.next_popup.shown = true;
+                    this.next_popup.visible = true;
+                    this.open_popup_time = 1000;
+                    this._state = SHOWING_POP_UP
+                }
+
                 this.emote();
             } else if(this._state == FLASH_PROGRAM_PICKER) {
                 showBlinker();
                 this.emote();
                 if(mouse_rect.overlaps(this.blinker_rect) && FlxG.mouse.justPressed()) {
                     this.blinker.alpha = 0;
-                    this.next_popup.alpha = 1;
+                    this.next_popup.visible = true;
                     this._state = SHOWING_POP_UP;
                 }
             } else if(this._state == SHOWING_POP_UP) {
                 if(FlxG.mouse.justPressed()) {
                     this._state = SHOWING_NOTHING;
                     this.next_popup.shown = true;
-                    this.next_popup.alpha = 0;
-                    this.next_popup = null;
                     this.open_popup_time = 1000;
                 }
             }
@@ -113,19 +122,21 @@ package{
             //associated convo starts
             //don't forget to add new pop ups to loadpopups too! in order!
             if(this_popup == 1) {
-                //18000
-                this.bulldog_hell = new PopUp(ImgBulldogHell, 1030, 510, 1000);
+                this.bulldog_hell = new PopUp(ImgBulldogHell, 1030, 510, 1);
                 this.popup_order.push(this.bulldog_hell);
+                this.elements.push(this.bulldog_hell);
             }
             if(this_popup == 2) {
                 //165000
-                this.cib_selfies_1 = new PopUp(ImgCibSelfie1, 645, 457, 5000, 1);
+                this.cib_selfies_1 = new PopUp(ImgCibSelfie1, 645, 457, 165000, 1000);
                 this.popup_order.push(this.cib_selfies_1);
+                this.elements.push(this.cib_selfies_1);
             }
             if(this_popup == 3) {
                 //185000
-                this.forum_selfies_1 = new PopUp(ImgForumSelfie1, 1174, 585, 10000);
+                this.forum_selfies_1 = new PopUp(ImgForumSelfie1, 1174, 585, 185000);
                 this.popup_order.push(this.forum_selfies_1);
+                this.elements.push(this.forum_selfies_1);
             }
         }
 
@@ -190,6 +201,11 @@ package{
                 }
             }
             this.ui_loaded = true;
+            for(i = 0; i < popup_order.length; i++) {
+                if(this.popup_order[i].timeAlive >= this.popup_order[i].timer && !this.popup_order[i].shown) {
+                    this.next_popup = this.popup_order[i];
+                }
+            }
         }
 
         public function showBlinker():void {
@@ -210,7 +226,7 @@ package{
                 if(this.popup_order[i].timeAlive >= this.popup_order[i].timer && !this.popup_order[i].shown) {
                     this._state = FLASH_PROGRAM_PICKER;
                     this.next_popup = this.popup_order[i];
-                    this.open_popup_time = this.timeAlive;
+                    //this.open_popup_time = this.timeAlive;
                     break;
                 }
             }
