@@ -10,7 +10,7 @@ package
             loadGraphic(ImgBoss, false, false, 5613/11, 600);
             enemyType = "boss";
             hitpoints = 300;
-            damage = 5;
+            damage = 0;
 
             addAnimation("run", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 12, true);
             play("run");
