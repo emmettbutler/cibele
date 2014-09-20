@@ -104,8 +104,7 @@ package{
                 function _callback():void {
                     FlxG.switchState(new Fern());
                 }
-                // 24000
-                SoundManager.getInstance().playSound(Convo1, 10000,
+                SoundManager.getInstance().playSound(Convo1, 24000,
                                                      _callback, false, 1, GameSound.VOCAL);
                 for(var i:int = 1; i <= 3; i++) {
                     PopUpManager.getInstance().createNewPopUp(i);
