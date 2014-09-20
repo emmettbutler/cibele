@@ -268,7 +268,6 @@ package{
             if (this._state == STATE_IN_ATTACK) {
                 this.attack_sprite.alpha = 1;
                 this.attack_sprite.play("attack");
-                play("attack");
             }
         }
     }
