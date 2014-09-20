@@ -31,6 +31,8 @@ package{
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
 
+            this.nameText = "Cibele";
+
             this.shadow_sprite = new FlxSprite(x, y);
             this.shadow_sprite.loadGraphic(ImgShadow,false,false,41,14);
 
@@ -229,7 +231,7 @@ package{
 
         override public function resolveStatePostAttack():void {
             super.resolveStatePostAttack();
-            if (this.targetEnemy != null && !this.targetEnemy.dead){
+            if (this.targetEnemy != null && !this.targetEnemy.dead && this.targetEnemy.visible == true){
                 if(this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
                 } else {

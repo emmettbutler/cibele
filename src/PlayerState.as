@@ -21,7 +21,7 @@ package {
             this.player.addAttackAnim();
             add(this.player.debugText);
             add(this.player.shadow_sprite);
-
+            add(this.player.nameText);
             super.postCreate();
             this.game_cursor.setGameMouse();
         }

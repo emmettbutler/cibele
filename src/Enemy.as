@@ -63,6 +63,7 @@ package
             if(this.hitpoints < 0){
                 FlxG.state.remove(this);
                 this.dead = true;
+                this.visible = false;
                 this.destroy();
             }
         }
