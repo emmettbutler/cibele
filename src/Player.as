@@ -174,11 +174,11 @@ package{
         }
 
         override public function addVisibleObjects():void {
-            FlxG.state.add(this);
             this.addAttackAnim();
-            FlxG.state.add(this.debugText);
             FlxG.state.add(this.shadow_sprite);
+            FlxG.state.add(this);
             FlxG.state.add(this.nameText);
+            FlxG.state.add(this.debugText);
         }
 
         override public function update():void{
