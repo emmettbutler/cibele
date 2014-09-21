@@ -20,20 +20,14 @@ package {
                                   _loop:Boolean=false, _vol:Number=1,
                                   _kind:Number=0, name:String=null):GameSound
         {
-            if(runningSounds.length > 0){
-                this.clearSoundsByType(_kind);
-                for(var i:Number = 0; i < runningSounds.length; i++){
-                    if(embeddedSound != runningSounds[i].embeddedSound){
-                        newSound = new GameSound(embeddedSound, dur, _loop,
-                                                 _vol, _kind, name);
-                        this.runningSounds.push(newSound);
-                    }
-                }
-            } else {
-                newSound = new GameSound(embeddedSound, dur, _loop,
-                                         _vol, _kind, name);
-                this.runningSounds.push(newSound);
+            if (name == null) {
+                name = "" + Math.random();
             }
+
+            this.clearSoundsByType(_kind);
+            var newSound:GameSound = new GameSound(embeddedSound, dur, _loop,
+                                                   _vol, _kind, name);
+            this.runningSounds.push(newSound);
 
             function _callback():void {
                 newSound.stopSound();
@@ -42,7 +36,6 @@ package {
                 }
             }
             GlobalTimer.getInstance().setMark(name, dur, _callback);
-
             return newSound;
         }
 

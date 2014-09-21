@@ -27,9 +27,11 @@ package {
         }
 
         private function finish():void {
-            this.finished = true;
-            if (this.callback != null) {
-                this.callback();
+            if (!this.finished) {
+                this.finished = true;
+                if (this.callback != null) {
+                    this.callback();
+                }
             }
         }
 

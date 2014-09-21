@@ -6,8 +6,9 @@ package
         public var name:String;
         public var embeddedSound:Class;
         private var soundObject:FlxSound;
-        public var callbackLock:Boolean = false;
+        private var callbackLock:Boolean = false;
         public var virtualVolume:Number;
+        public var running:Boolean = false;
 
         public static const VOCAL:Number = 0;
         public static const BGM:Number = 1;
@@ -21,6 +22,7 @@ package
             this.name = name;
             this.virtualVolume = _vol;
             this._type = _kind;
+            this.running = true;
 
             this.embeddedSound = embeddedSound;
 
@@ -62,6 +64,7 @@ package
 
         public function stopSound():void {
             soundObject.stop();
+            this.running = false;
         }
     }
 }
