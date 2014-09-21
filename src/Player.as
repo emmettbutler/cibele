@@ -182,7 +182,6 @@ package{
         }
 
         override public function update():void{
-            FlxG.log(this.dir);
             this.hitbox_rect.x = this.pos.x;
             this.hitbox_rect.y = this.pos.y;
 
