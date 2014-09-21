@@ -23,8 +23,13 @@ package {
         }
 
         public function setMark(name:String, time:Number,
-                                callback:Function=null):void {
-            this.marks[name] = new GlobalTimerMark(name, time, new Date().valueOf(),
+                                callback:Function=null, overwrite:Boolean=false):void {
+            var existing:GlobalTimerMark = this.marks[name];
+            if (existing != null && !overwrite) {
+                return;
+            }
+            this.marks[name] = new GlobalTimerMark(name, time,
+                                                   new Date().valueOf(),
                                                    0, callback);
         }
 

@@ -15,7 +15,10 @@ package{
             this.filename = "ikuturso_path.txt";
 
             super.create();
-            SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true, .08, GameSound.BGM);
+            SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true,
+                                                 .08, GameSound.BGM);
+
+            GlobalTimer.getInstance().setMark(Fern.BOSS_MARK, 319632 - 60 * 1000);
 
             debugText = new FlxText(0,0,100,"");
             debugText.color = 0xff000000;
@@ -26,8 +29,10 @@ package{
             super.update();
             this.boss.update();
 
-            if (this.runningSound != null && this.runningSound.timeRemaining < 60*1000 &&
-                !this.bossHasAppeared && FlxG.state.ID == LevelMapState.LEVEL_ID) {
+            if (this.runningSound != null &&
+                GlobalTimer.getInstance().hasPassed(Fern.BOSS_MARK) &&
+                !this.bossHasAppeared && FlxG.state.ID == LevelMapState.LEVEL_ID)
+            {
                 this.bossHasAppeared = true;
                 this.boss.warpToPlayer();
                 this.boss.visible = true;

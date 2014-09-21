@@ -10,12 +10,15 @@ package{
         public var hiisidoor:GameObject;
         public var convoSound:GameSound;
 
+        public static const BOSS_MARK:String = "boss_iku_turso";
+
         override public function create():void {
             var _screen:ScreenManager = ScreenManager.getInstance();
             super.__create(new DHPoint(
                 _screen.screenWidth * .5, _screen.screenHeight * .5));
             FlxG.bgColor = 0x00000000;
 
+            GlobalTimer.getInstance().setMark(BOSS_MARK, 319632 - 60 * 1000);
             this.convoSound = SoundManager.getInstance().playSound(Convo, 319632,
                 function():void {
                     SoundManager.getInstance().playSound(VidBGMLoop, 0, null, true, .2, GameSound.BGM);
