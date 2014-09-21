@@ -182,10 +182,6 @@ package{
         }
 
         override public function update():void{
-            if(this.targetEnemy != null) {
-                FlxG.log(this.targetEnemy.pos.center(this.targetEnemy));
-            }
-
             this.hitbox_rect.x = this.pos.x;
             this.hitbox_rect.y = this.pos.y;
 
