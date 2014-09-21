@@ -30,6 +30,7 @@ package
         public static const STATE_IDLE_AT_PATH_NODE:Number = 3;
         public static const STATE_MOVE_TO_MAP_NODE:Number = 6;
         public static const STATE_IDLE_AT_MAP_NODE:Number = 7;
+        public static const STATE_MOVE_TO_PLAYER:Number = 8;
 
         public var shadow_sprite:GameObject;
 
@@ -45,6 +46,7 @@ package
             stateMap[STATE_MOVE_TO_ENEMY] = "STATE_MOVE_TO_ENEMY";
             stateMap[STATE_MOVE_TO_MAP_NODE] = "STATE_MOVE_TO_MAP_NODE";
             stateMap[STATE_IDLE_AT_MAP_NODE] = "STATE_IDLE_AT_MAP_NODE";
+            stateMap[STATE_MOVE_TO_PLAYER] = "STATE_MOVE_TO_PLAYER";
         }
 
         public function PathFollower(pos:DHPoint) {
@@ -174,6 +176,15 @@ package
                     this.resolveStatePostAttack();
                 }
                 this.dir = ZERO_POINT;
+            } else if (this._state == STATE_MOVE_TO_PLAYER) {
+                play("walk");
+                this.footPos.x = this.x + this.width/2;
+                this.footPos.y = this.y + this.height;
+                this.disp = this.playerRef.pos.sub(this.footPos).normalized();
+                this.dir = this.disp.mulScl(this.runSpeed);
+                if (this.playerIsInMovementRange()) {
+                    this.moveToNextNode();
+                }
             }
 
             if(this.attackAnim.frame == 8) {
@@ -283,7 +294,7 @@ package
             var targetPoint:DHPoint = this.playerRef.pos.add(dir.normalized().mulScl(555));
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint, null, false);
             this.setPos(warpNode.pos);
-            this._state = STATE_IDLE_AT_MAP_NODE;
+            this._state = STATE_MOVE_TO_PLAYER;
         }
 
         public function shouldWarpToPlayer():Boolean {
