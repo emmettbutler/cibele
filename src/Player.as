@@ -122,8 +122,8 @@ package{
                 this.splash_sprites.alpha = 1;
                 this.splash_sprites.play("attack");
             } else {
-                this._state = STATE_MOVE_TO_ENEMY;
                 this.walkTarget = this.targetEnemy.pos.center(this.targetEnemy, true);
+                this._state = STATE_MOVE_TO_ENEMY;
             }
             this.dir = this.walkTarget.sub(footPos).normalized();
             this.walkDistance = this.walkTarget.sub(footPos)._length();
@@ -263,8 +263,10 @@ package{
                 if(this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
                 } else {
-                    this._state = STATE_MOVE_TO_ENEMY;
                     this.walkTarget = this.targetEnemy.pos.center(this.targetEnemy, true);
+                    this.dir = this.walkTarget.sub(footPos).normalized();
+                    this.walkDistance = this.walkTarget.sub(footPos)._length();
+                    this._state = STATE_MOVE_TO_ENEMY;
                 }
             } else {
                 this._state = STATE_IDLE;

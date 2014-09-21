@@ -246,13 +246,13 @@ package
 
         public function moveToNextNode():void {
             this.targetMapNode = this._mapnodes.getClosestNode(this.pos, this.targetMapNode);
-            if(this.targetMapNode._type == MapNode.TYPE_PATH) {
+            if(this.targetMapNode._type == MapNode.TYPE_MAP) {
+                this._state = STATE_MOVE_TO_MAP_NODE;
+                this.targetMapNode = this.targetMapNode;
+            } else if(this.targetMapNode._type == MapNode.TYPE_PATH) {
                 this._state = STATE_MOVE_TO_PATH_NODE;
                 this.targetPathNode = this.targetMapNode as PathNode;
                 this._path.setCurrentNode(this.targetPathNode);
-            } else if(this.targetMapNode._type == MapNode.TYPE_MAP) {
-                this._state = STATE_MOVE_TO_MAP_NODE;
-                this.targetMapNode = this.targetMapNode;
             }
         }
 
