@@ -8,23 +8,21 @@ package{
 
         public var viewing:Boolean = false, unread:Boolean = true;
 
-        public var inbox_ref:FlxSprite;
+        public var inbox_ref:GameObject;
         public var list_hitbox:FlxRect;
         public var truncated_textbox:FlxText;
 
         public var pos:DHPoint;
 
         public var font_size:Number = 16, list_offset:Number = 30,
-                   last_send_time:Number = 0, sent_count:Number = 0;
+                   sent_count:Number = 0;
 
         public var font_color:uint = 0xff000000;
         public var unread_color:uint = 0xff982708;
 
-        public var _messages:MessageManager = null;
-
         public var messages:Array;
 
-        public function Thread(inbox:FlxSprite,
+        public function Thread(inbox:GameObject,
                                ... messages) {
             this.inbox_ref = inbox;
             this.sent_by = messages[0][0];
@@ -39,6 +37,9 @@ package{
             }
 
             this.display_text = messages[0][1];
+
+            GlobalTimer.getInstance().setMark(this.messages[0].display_text,
+                                              this.messages[0].send_time);
 
             this.initVisibleObjects();
         }
@@ -62,7 +63,7 @@ package{
             }
         }
 
-        public function send(cur:Message, prev:Message, first:Boolean=false):void {
+        private function send(cur:Message, prev:Message, next:Message, first:Boolean=false):void {
             cur.send();
             if (this.viewing) {
                 cur.show();
@@ -73,7 +74,7 @@ package{
                 cur.pos.y = prev.pos.y + 50;
             }
             this.sent_count++;
-            this.last_send_time = this._messages.timeAlive;
+            GlobalTimer.getInstance().setMark(next.display_text, next.send_time);
             this.display_text = cur.display_text;
             this.truncated_textbox.color = this.unread_color;
             this.truncated_textbox.text = this.sent_by + " >> " +
@@ -101,21 +102,24 @@ package{
         }
 
         public function update():void {
-            if (this._messages == null) {
-                this._messages = MessageManager.getInstance();
-            }
-
-            var time_since_last_send:Number = this._messages.timeAlive - this.last_send_time;
-
+            var passed:Boolean;
             for (var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].update();
 
-                if(this.messages[i].send_time != -1 &&
-                    time_since_last_send > this.messages[i].send_time &&
+                passed = GlobalTimer.getInstance().hasPassed(
+                    this.messages[i].display_text
+                );
+
+                if(this.messages[i].send_time != -1 && passed &&
                     (i == 0 || (i > 0 && this.messages[i - 1].sent)) &&
                     !this.messages[i].sent)
                 {
-                    this.send(this.messages[i], this.messages[i - 1], i == 0);
+                    this.send(
+                        this.messages[i],
+                        this.messages[i - 1],
+                        this.messages[i + 1],
+                        i == 0
+                    );
                 }
             }
         }
@@ -177,14 +181,20 @@ package{
         }
 
         public function reply():void {
-            for (var i:int = 0; i < messages.length; i++) {
+            var next:Message;
+            for (var i:int = 0; i < this.messages.length; i++) {
+                next = this.messages[i + 1];
                 if (!this.messages[i].sent &&
                     this.messages[i].sent_by != this.messages[i - 1].sent_by)
                 {
                     this.messages[i].send();
                     this.messages[i].show();
                     this.messages[i].pos.y = this.messages[i - 1].pos.y + 50;
-                    this.last_send_time = this._messages.timeAlive;
+                    if (next != null) {
+                        GlobalTimer.getInstance().setMark(
+                            next.display_text, next.send_time
+                        );
+                    }
                     this.sent_count++;
                     if (this.sent_count > 3) {
                         this.rotate();

@@ -10,7 +10,7 @@ package{
 
         public var pos:DHPoint;
 
-        public var inbox_ref:FlxSprite;
+        public var inbox_ref:GameObject;
         public var textbox:FlxText;
 
         public var send_time:Number, font_size:Number = 16, list_offset:Number = 30;
@@ -19,7 +19,7 @@ package{
         public var unread_color:uint = 0xff982708;
 
         public function Message(txt:String, sec:Number,
-                                inbox:FlxSprite, sender:String) {
+                                inbox:GameObject, sender:String) {
             this.inbox_ref = inbox;
             this.sent_by = sender;
             this.pos = new DHPoint(inbox_ref.x + 5, inbox_ref.y + 10);

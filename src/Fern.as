@@ -5,9 +5,9 @@ package{
         [Embed(source="../assets/voc_ikuturso.mp3")] private var Convo:Class;
         [Embed(source="../assets/sexyselfie_wip.mp3")] private var VidBGMLoop:Class;
 
-        public var ikutursodoor:FlxSprite;
-        public var euryaledoor:FlxSprite;
-        public var hiisidoor:FlxSprite;
+        public var ikutursodoor:GameObject;
+        public var euryaledoor:GameObject;
+        public var hiisidoor:GameObject;
         public var convoSound:GameSound;
 
         override public function create():void {
@@ -29,17 +29,17 @@ package{
             (new BackgroundLoader()).loadSingleTileBG("../assets/fern_640_480.png");
             ScreenManager.getInstance().setupCamera(null, 1);
 
-            ikutursodoor = new FlxSprite(_screen.screenWidth * .2, _screen.screenHeight * .1);
+            ikutursodoor = new GameObject(new DHPoint(_screen.screenWidth * .2, _screen.screenHeight * .1));
             ikutursodoor.makeGraphic(200, 300, 0xffff0000);
             ikutursodoor.alpha = 0;
             add(ikutursodoor);
 
-            euryaledoor = new FlxSprite(_screen.screenWidth * .4, _screen.screenHeight * .1);
+            euryaledoor = new GameObject(new DHPoint(_screen.screenWidth * .4, _screen.screenHeight * .1));
             euryaledoor.makeGraphic(200, 300, 0xffff0000);
             euryaledoor.alpha = 0;
             add(euryaledoor);
 
-            hiisidoor = new FlxSprite(_screen.screenWidth * .7, _screen.screenHeight * .1);
+            hiisidoor = new GameObject(new DHPoint(_screen.screenWidth * .7, _screen.screenHeight * .1));
             hiisidoor.makeGraphic(200, 300, 0xffff0000);
             hiisidoor.alpha = 0;
             add(hiisidoor);
