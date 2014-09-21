@@ -79,7 +79,6 @@ package
 
         override public function update():void {
             super.update();
-            FlxG.log(this._state);
 
             this.shadow_sprite.x = this.x + 20;
             this.shadow_sprite.y = this.y + (this.height-10);
@@ -282,7 +281,7 @@ package
             //}
             //TODO if you're standing still for too long, he should walk to you
             var targetPoint:DHPoint = this.playerRef.pos.add(dir.normalized().mulScl(555));
-            var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint);
+            var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint, null, false);
             this.setPos(warpNode.pos);
             this._state = STATE_IDLE_AT_MAP_NODE;
         }

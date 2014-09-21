@@ -41,21 +41,34 @@ package
         public function update():void {
         }
 
-        public function getClosestNode(pos:DHPoint, exclude:MapNode=null):MapNode {
+        public function getClosestNode(pos:DHPoint, exclude:MapNode=null, on_screen:Boolean = true):MapNode {
             this.closestPathNode = this.path.getClosestNode(pos);
             currentClosestNode = this.nodes[0];
             var curNode:MapNode;
             for(var i:Number = 0; i < this.nodes.length; i++){
                 curNode = this.nodes[i];
-                if(exclude != null && curNode != exclude &&
-                   pos.sub(curNode.pos)._length() <
-                   pos.sub(currentClosestNode.pos)._length())
-                {
-                    this.currentClosestNode = curNode;
+                if(on_screen) {
+                    if(exclude != null && curNode != exclude &&
+                       pos.sub(curNode.pos)._length() <
+                       pos.sub(currentClosestNode.pos)._length())
+                    {
+                        this.currentClosestNode = curNode;
+                    }
+                } else {
+                    var screenPos:DHPoint = new DHPoint(0, 0);
+                    curNode.getScreenXY(screenPos);
+                    if((screenPos.x < ScreenManager.getInstance().screenWidth && screenPos.x > 0 && screenPos.y > 0 && screenPos.y < ScreenManager.getInstance().screenHeight) == false)
+                    {
+                        if(pos.sub(curNode.pos)._length() <
+                           pos.sub(currentClosestNode.pos)._length())
+                        {
+                            this.currentClosestNode = curNode;
+                        }
+                    }
                 }
             }
             if(this.closestPathNode != null && pos.sub(this.closestPathNode.pos)._length() <
-                pos.sub(this.currentClosestNode.pos)._length()){
+                pos.sub(this.currentClosestNode.pos)._length() && on_screen){
                 return this.closestPathNode;
             } else {
                 return this.currentClosestNode;
