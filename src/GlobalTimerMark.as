@@ -22,11 +22,11 @@ package {
             return this.end - (cur - this.start - this.pauseTime);
         }
 
-        public function timeIsUp():Boolean {
+        private function timeIsUp():Boolean {
             return this.timeRemaining() <= 0;
         }
 
-        public function finish():void {
+        private function finish():void {
             this.finished = true;
             if (this.callback != null) {
                 this.callback();
