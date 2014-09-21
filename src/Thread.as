@@ -20,8 +20,6 @@ package{
         public var font_color:uint = 0xff000000;
         public var unread_color:uint = 0xff982708;
 
-        public var _messages:MessageManager = null;
-
         public var messages:Array;
 
         public function Thread(inbox:GameObject,
@@ -104,23 +102,24 @@ package{
         }
 
         public function update():void {
-            if (this._messages == null) {
-                this._messages = MessageManager.getInstance();
-            }
-
+            var passed:Boolean;
             for (var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].update();
 
-                if (i == 0) {
-                    FlxG.log(GlobalTimer.getInstance().timeRemaining(this.messages[i].display_text));
-                }
+                passed = GlobalTimer.getInstance().hasPassed(
+                    this.messages[i].display_text
+                );
 
-                if(this.messages[i].send_time != -1 &&
-                    GlobalTimer.getInstance().hasPassed(this.messages[i].display_text) &&
+                if(this.messages[i].send_time != -1 && passed &&
                     (i == 0 || (i > 0 && this.messages[i - 1].sent)) &&
                     !this.messages[i].sent)
                 {
-                    this.send(this.messages[i], this.messages[i - 1], this.messages[i + 1], i == 0);
+                    this.send(
+                        this.messages[i],
+                        this.messages[i - 1],
+                        this.messages[i + 1],
+                        i == 0
+                    );
                 }
             }
         }
