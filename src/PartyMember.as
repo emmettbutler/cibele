@@ -14,11 +14,13 @@ package {
         public var attackRange:Number = 50;
         public var nameText:FlxText;
         public var text_facing:String = "up";
+        public var footPos:DHPoint;
 
         public function PartyMember(pos:DHPoint) {
             super(pos);
             this.nameText = new FlxText(pos.x, pos.y, 500, "My Name");
             this.nameText.setFormat("NexaBold-Regular",16,0xff000000,"left");
+            this.footPos = new DHPoint(0, 0);
         }
 
         public function initFootsteps():void {
@@ -42,6 +44,9 @@ package {
             }
 
             this.nameText.y = this.pos.y-30;
+
+            this.footPos.x = this.x + this.width/2;
+            this.footPos.y = this.y + this.height;
         }
 
         public function isAttacking():Boolean{

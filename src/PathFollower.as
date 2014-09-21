@@ -21,7 +21,6 @@ package
         public var closestEnemy:Enemy;
         public var playerRef:Player;
         public var walkTarget:DHPoint;
-        public var footPos:DHPoint;
         public var disp:DHPoint;
 
         public var attackAnim:GameObject;
@@ -68,7 +67,6 @@ package
             this.attackRange = 90;
 
             this.walkTarget = new DHPoint(0, 0);
-            this.footPos = new DHPoint(this.x + this.width/2, this.y + this.height);
             this.disp = new DHPoint(0, 0);
         }
 
@@ -162,8 +160,6 @@ package
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_MOVE_TO_ENEMY){
                 play("walk");
-                this.footPos.x = this.x + this.width/2;
-                this.footPos.y = this.y + this.height;
                 this.disp = this.walkTarget.sub(this.footPos).normalized();
                 this.dir = this.disp.mulScl(this.runSpeed);
                 if (this.enemyIsInAttackRange(this.closestEnemy)) {
@@ -178,8 +174,6 @@ package
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_MOVE_TO_PLAYER) {
                 play("walk");
-                this.footPos.x = this.x + this.width/2;
-                this.footPos.y = this.y + this.height;
                 this.disp = this.playerRef.pos.sub(this.footPos).normalized();
                 this.dir = this.disp.mulScl(this.runSpeed);
                 if (this.playerIsInMovementRange()) {

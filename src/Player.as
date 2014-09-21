@@ -10,7 +10,6 @@ package{
         private var walkDistance:Number = 0;
         private var walkTarget:DHPoint;
         private var walkDirection:DHPoint = null;
-        private var footPos:DHPoint;
         private var walkSpeed:Number = 8;
         private var walking:Boolean = false;
         public var colliding:Boolean = false;
@@ -186,9 +185,6 @@ package{
             this.hitbox_rect.y = this.pos.y;
 
             this.setFacing();
-
-            this.footPos = new DHPoint(this.pos.x + this.width/2,
-                                  this.pos.y + this.height);
 
             if (this._state == STATE_WALK) {
                 this.walk();
