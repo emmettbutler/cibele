@@ -7,9 +7,9 @@ package
         [Embed(source="../assets/gamemouse.png")] private var ImgGameCursor:Class;
         [Embed(source="../assets/computermouse.png")] private var ImgPCCursor:Class;
         public var mouse_rect:FlxRect;
-        public var enemy_mouse:FlxSprite;
-        public var game_mouse:FlxSprite;
-        public var pc_mouse:FlxSprite;
+        public var enemy_mouse:GameObject;
+        public var game_mouse:GameObject;
+        public var pc_mouse:GameObject;
 
         public static const ENEMY:Number = 0;
         public static const GAME:Number = 1;
@@ -54,17 +54,17 @@ package
         }
 
         public function addCursorSprites():void {
-            this.enemy_mouse = new FlxSprite(0,0);
+            this.enemy_mouse = new GameObject(new DHPoint(0,0));
             this.enemy_mouse.loadGraphic(ImgEnemy,false,false,22,56);
             FlxG.state.add(enemy_mouse);
             this.enemy_mouse.alpha = 0;
 
-            this.game_mouse = new FlxSprite(0,0);
+            this.game_mouse = new GameObject(new DHPoint(0,0));
             this.game_mouse.loadGraphic(ImgGameCursor,false,false,39,39);
             FlxG.state.add(game_mouse);
             this.game_mouse.alpha = 0;
 
-            this.pc_mouse = new FlxSprite(0,0);
+            this.pc_mouse = new GameObject(new DHPoint(0, 0));
             this.pc_mouse.loadGraphic(ImgPCCursor,false,false,15,16);
             FlxG.state.add(pc_mouse);
             this.pc_mouse.alpha = 1;

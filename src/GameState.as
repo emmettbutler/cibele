@@ -5,7 +5,7 @@ package {
         private var updateSound:Boolean, updatePopup:Boolean,
                     updateMessages:Boolean;
         protected var game_cursor:GameCursor;
-        private var pauseLayer:FlxSprite;
+        private var pauseLayer:GameObject;
 
         public var cursorResetFlag:Boolean = false;
 
@@ -19,7 +19,7 @@ package {
         override public function create():void {
             super.create();
 
-            this.pauseLayer = new FlxSprite(0, 0);
+            this.pauseLayer = new GameObject(new DHPoint(0, 0));
             this.pauseLayer.scrollFactor = new DHPoint(0, 0);
             this.pauseLayer.active = false;
             this.pauseLayer.makeGraphic(

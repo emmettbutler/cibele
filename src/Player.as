@@ -16,15 +16,15 @@ package{
         public var colliding:Boolean = false;
         public var hitbox_rect:FlxRect;
         public var lastPos:DHPoint;
-        public var mapHitbox:FlxSprite;
+        public var mapHitbox:GameObject;
         public var hitboxOffset:DHPoint, hitboxDim:DHPoint;
         public var collisionDirection:Array;
         public var popupmgr:PopUpManager;
         public var inhibitY:Boolean = false, inhibitX:Boolean = false;
         public var splash_sprites:GameObject;
         public var targetEnemy:Enemy;
-        public var attack_sprite:FlxSprite;
-        public var shadow_sprite:FlxSprite;
+        public var attack_sprite:GameObject;
+        public var shadow_sprite:GameObject;
 
         public static const STATE_WALK:Number = 2398476188;
 
@@ -33,7 +33,7 @@ package{
 
             this.nameText.text = "Cibele";
 
-            this.shadow_sprite = new FlxSprite(x, y);
+            this.shadow_sprite = new GameObject(this.pos);
             this.shadow_sprite.loadGraphic(ImgShadow,false,false,41,14);
 
             loadGraphic(ImgCibWalk, true, false, 143, 150);
@@ -55,11 +55,11 @@ package{
             addAnimation("attack", [0, 1], 7, true);
 
             this.splash_sprites = new GameObject(this.pos);
-            this.attack_sprite = new FlxSprite(this.x, this.y);
+            this.attack_sprite = new GameObject(this.pos);
 
             this.hitboxOffset = new DHPoint(60, 100);
             this.hitboxDim = new DHPoint(40, 50);
-            this.mapHitbox = new FlxSprite(x, y);
+            this.mapHitbox = new GameObject(this.pos);
             this.mapHitbox.makeGraphic(this.hitboxDim.x, this.hitboxDim.y,
                                        0xffff0000);
             this.hitbox_rect = new FlxRect(this.pos.x, this.pos.y,

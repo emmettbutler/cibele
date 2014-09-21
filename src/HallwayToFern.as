@@ -6,7 +6,7 @@ package{
         [Embed(source="../assets/incomingcall.png")] private var ImgCall:Class;
         [Embed(source="../assets/voc_firstconvo.mp3")] private var Convo1:Class;
 
-        public var call_button:FlxSprite;
+        public var call_button:GameObject;
         public var accept_call:Boolean = false;
 
         public var bgs:Array;
@@ -38,8 +38,8 @@ package{
             FlxG.camera.setBounds(0, 0, _screen.screenWidth, bottomY);
 
             if(_state == STATE_PRE_IT){
-                call_button = new FlxSprite(_screen.screenWidth * .3,
-                                            _screen.screenHeight * .3);
+                call_button = new GameObject(new DHPoint(_screen.screenWidth * .3,
+                                            _screen.screenHeight * .3));
                 call_button.loadGraphic(ImgCall,false,false,500,230);
                 call_button.scrollFactor = new DHPoint(0, 0);
                 FlxG.state.add(call_button);
@@ -51,10 +51,11 @@ package{
 
         public function initTiles(startY:Number):void {
             var originX:Number = (_screen.screenWidth * .5) - 1422 / 2;
-            var cur:FlxSprite;
+            var cur:GameObject;
             for (var i:int = 0; i < 3; i++) {
-                cur = new FlxSprite(
-                    originX, startY - (i * img_height)
+                cur = new GameObject(new DHPoint(
+                        originX, startY - (i * img_height)
+                    )
                 );
                 cur.loadGraphic(ImgBG, false, false, 1422, img_height);
                 cur.addAnimation("run", [0, 1, 2, 3, 4], 12, true);
@@ -66,8 +67,8 @@ package{
 
         override public function update():void {
             super.update();
-            var highestTile:FlxSprite = this.bgs[0];
-            var lowestTile:FlxSprite = this.bgs[0];
+            var highestTile:GameObject = this.bgs[0];
+            var lowestTile:GameObject = this.bgs[0];
             for (var i:int = 0; i < this.bgs.length; i++) {
                 if (this.bgs[i].y < highestTile.y) {
                     highestTile = this.bgs[i];

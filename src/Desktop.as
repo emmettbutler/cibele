@@ -7,9 +7,9 @@ package{
         public var timer:Number = 0;
         public var debugText:FlxText;
 
-        public var bg:FlxSprite;
+        public var bg:GameObject;
         public var valtameri:FlxRect;
-        public var valtameri_icon:FlxSprite;
+        public var valtameri_icon:GameObject;
         public var mouse_rect:FlxRect;
 
         public var img_height:Number = 357;
@@ -24,7 +24,7 @@ package{
             ScreenManager.getInstance().setupCamera(null, 1);
 
             var _screen:ScreenManager = ScreenManager.getInstance();
-            valtameri_icon = new FlxSprite(_screen.screenWidth * .7, _screen.screenHeight * .4);
+            valtameri_icon = new GameObject(new DHPoint(_screen.screenWidth * .7, _screen.screenHeight * .4));
             valtameri_icon.loadGraphic(ImgIcon,false,false,64,57);
             add(valtameri_icon);
             valtameri = new FlxRect(valtameri_icon.x,valtameri_icon.y,valtameri_icon.width,valtameri_icon.height);

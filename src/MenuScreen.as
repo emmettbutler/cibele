@@ -12,11 +12,11 @@ package{
         public var timer:Number = 0;
         public var debugText:FlxText;
 
-        public var bg:FlxSprite;
-        public var login:FlxSprite;
-        public var quit:FlxSprite;
-        public var play_game:FlxSprite;
-        public var char_select:FlxSprite;
+        public var bg:GameObject;
+        public var login:GameObject;
+        public var quit:GameObject;
+        public var play_game:GameObject;
+        public var char_select:GameObject;
 
         public var play_game_rect:FlxRect;
         public var login_rect:FlxRect;
@@ -36,21 +36,21 @@ package{
             ScreenManager.getInstance().setupCamera(null, 1);
 
             var _screen:ScreenManager = ScreenManager.getInstance();
-            play_game = new FlxSprite(_screen.screenWidth * .45, _screen.screenHeight * .55);
+            play_game = new GameObject(new DHPoint(_screen.screenWidth * .45, _screen.screenHeight * .55));
             play_game.loadGraphic(ImgPlay,false,false,121,17);
             add(play_game);
             play_game_rect = new FlxRect(play_game.x,play_game.y,play_game.width,play_game.height);
 
-            quit = new FlxSprite(_screen.screenWidth * .45, _screen.screenHeight * .65);
+            quit = new GameObject(new DHPoint(_screen.screenWidth * .45, _screen.screenHeight * .65));
             quit.loadGraphic(ImgQuit,false,false,121,17);
             add(quit);
             quit_rect = new FlxRect(quit.x,quit.y,quit.width,quit.height);
 
-            login = new FlxSprite(_screen.screenWidth * .45, _screen.screenHeight * .93);
+            login = new GameObject(new DHPoint(_screen.screenWidth * .45, _screen.screenHeight * .93));
             login.loadGraphic(ImgLogin,false,false,121,17);
             login_rect = new FlxRect(login.x,login.y,login.width,login.height);
 
-            char_select = new FlxSprite(_screen.screenWidth * .35, _screen.screenHeight * .15)
+            char_select = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .15));
             char_select.loadGraphic(ImgChar,false,false,400,494);
 
             mouse_rect = new FlxRect(FlxG.mouse.x,FlxG.mouse.y,1,1);

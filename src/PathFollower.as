@@ -21,14 +21,14 @@ package
         public var closestEnemy:Enemy;
         public var playerRef:Player;
 
-        public var attackAnim:FlxSprite;
+        public var attackAnim:GameObject;
 
         public static const STATE_MOVE_TO_PATH_NODE:Number = 2;
         public static const STATE_IDLE_AT_PATH_NODE:Number = 3;
         public static const STATE_MOVE_TO_MAP_NODE:Number = 6;
         public static const STATE_IDLE_AT_MAP_NODE:Number = 7;
 
-        public var shadow_sprite:FlxSprite;
+        public var shadow_sprite:GameObject;
 
         public static const ATTACK_RANGE:Number = 150;
 
@@ -48,7 +48,7 @@ package
             super(pos);
 
             this.nameText.text = "Ichi";
-            this.shadow_sprite = new FlxSprite(pos.x,pos.y);
+            this.shadow_sprite = new GameObject(this.pos);
             this.shadow_sprite.loadGraphic(ImgShadow,false,false,41,14);
 
             loadGraphic(ImgIchi, true, false, 72, 126);
@@ -170,7 +170,7 @@ package
         }
 
         public function tempAttackAnim():void {
-            attackAnim = new FlxSprite(this.x, this.y);
+            attackAnim = new GameObject(this.pos);
             attackAnim.loadGraphic(ImgAttack, true, false, 1152/9, 128);
             attackAnim.addAnimation("attack", [0, 1, 2, 3, 4, 5, 6, 7, 8], 15, false);
             attackAnim.addAnimation("idle", [0], 15, false);

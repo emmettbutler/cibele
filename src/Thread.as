@@ -8,7 +8,7 @@ package{
 
         public var viewing:Boolean = false, unread:Boolean = true;
 
-        public var inbox_ref:FlxSprite;
+        public var inbox_ref:GameObject;
         public var list_hitbox:FlxRect;
         public var truncated_textbox:FlxText;
 
@@ -24,7 +24,7 @@ package{
 
         public var messages:Array;
 
-        public function Thread(inbox:FlxSprite,
+        public function Thread(inbox:GameObject,
                                ... messages) {
             this.inbox_ref = inbox;
             this.sent_by = messages[0][0];
