@@ -9,6 +9,7 @@ package
         public var timeAlive:Number = -1;
         public var currentTime:Number = -1;
         public var debugText:FlxText;
+        public var observeGlobalPause:Boolean = true;
         {
             public static var ZERO_POINT:DHPoint = new DHPoint(0, 0);
         }

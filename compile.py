@@ -18,7 +18,7 @@ package {{
     [SWF(width="640", height="480", backgroundColor="#000000")]
     [Frame(factoryClass="{preloader_class}")]
 
-    public class {entry_point_class} extends FlxGame{{
+    public class {entry_point_class} extends GameMain {{
         public function {entry_point_class}(){{
             super(640, 480, {main_class}, 1);
         }}

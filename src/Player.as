@@ -21,7 +21,7 @@ package{
         public var collisionDirection:Array;
         public var popupmgr:PopUpManager;
         public var inhibitY:Boolean = false, inhibitX:Boolean = false;
-        public var splash_sprites:FlxSprite;
+        public var splash_sprites:GameObject;
         public var targetEnemy:Enemy;
         public var attack_sprite:FlxSprite;
         public var shadow_sprite:FlxSprite;
@@ -54,7 +54,7 @@ package{
             addAnimation("idle", [11], 7, false);
             addAnimation("attack", [0, 1], 7, true);
 
-            this.splash_sprites = new FlxSprite(this.x, this.y);
+            this.splash_sprites = new GameObject(this.pos);
             this.attack_sprite = new FlxSprite(this.x, this.y);
 
             this.hitboxOffset = new DHPoint(60, 100);

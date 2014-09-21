@@ -51,7 +51,23 @@ package {
         }
 
         override public function update():void {
-            super.update();
+            // DO NOT call super here, since that breaks pausing
+            // the following loop is copypasta from FlxGroup update, altered to
+            // support pausing
+            var basic:GameObject, i:uint = 0;
+            while(i < length) {
+                basic = members[i++] as GameObject;
+                if((basic != null) && basic.exists && basic.active) {
+                    if ((GlobalTimer.getInstance().isPaused() &&
+                         !basic.observeGlobalPause) ||
+                        !GlobalTimer.getInstance().isPaused())
+                    {
+                        basic.preUpdate();
+                        basic.update();
+                        basic.postUpdate();
+                    }
+                }
+            }
 
             this.updateCursor();
 

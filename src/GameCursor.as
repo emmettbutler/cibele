@@ -21,6 +21,7 @@ package
             super(new DHPoint(0,0));
             this.mouse_rect = new FlxRect(0,0,5,5);
             this._state = PC;
+            this.observeGlobalPause = false;
 
             this.addCursorSprites();
         }
