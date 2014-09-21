@@ -23,6 +23,7 @@ package
         public var path_follower:PathFollower;
         public var attacker:PartyMember;
         public var _mapnodes:MapNodeContainer;
+        public var footPos:DHPoint;
 
         {
             public static var stateMap:Dictionary = new Dictionary();
@@ -40,6 +41,7 @@ package
             play("run");
             disp = new DHPoint(0, 0);
             followerDisp = new DHPoint(0, 0);
+            footPos = new DHPoint(0, 0);
         }
 
         public function warpToPlayer():void {
@@ -72,20 +74,22 @@ package
 
         override public function update():void{
             super.update();
+            this.footPos.x = this.x + this.width/2;
+            this.footPos.y = this.y + this.height;
 
             if (this.player == null) {
                 this.playerDisp = new DHPoint(0, 0);
             } else {
-                this.playerDisp = this.player.pos.sub(this.pos);
+                this.playerDisp = this.player.pos.center(this.player).sub(this.footPos);
             }
             if (this.path_follower == null) {
                 this.followerDisp = new DHPoint(0, 0);
             } else {
-                this.followerDisp = this.path_follower.pos.sub(this.pos);
+                this.followerDisp = this.path_follower.pos.center(this.path_follower).sub(this.footPos);
             }
 
             if(this.attacker != null){
-                this.attackerDisp = this.attacker.pos.sub(this.pos);
+                this.attackerDisp = this.attacker.pos.center(this.attacker).sub(this.footPos);
             }
 
             var str:String = stateMap[this._state] + "\n" + hitpoints;
@@ -102,14 +106,14 @@ package
                 {
                     this._state = STATE_IDLE;
                 }
-                this.disp = this.player.pos.sub(this.pos);
+                this.disp = this.player.pos.center(this.player).sub(this.footPos);
                 this.dir = disp.normalized();
             } else if (this._state == STATE_RECOIL) {
                 if (this.attackerDisp._length() > 120)
                 {
                     this._state = STATE_TRACKING;
                 }
-                this.disp = this.attacker.pos.sub(this.pos);
+                this.disp = this.attacker.pos.center(this.attacker).sub(this.footPos);
                 this.dir = disp.normalized().mulScl(7).reverse();
             }
 
