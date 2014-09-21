@@ -20,12 +20,13 @@ package{
         public function IkuTurso() {
             this.bossHasAppeared = false;
 
+            // embedded sound, length in ms
             this.conversationPieces = [
-                [Convo1, 132000],
-                [Convo2, 25000],
-                [Convo3, 107000],
-                [Convo4, 15000],
-                [Convo5, 30000]
+                [Convo1, 132*GameSound.MSEC_PER_SEC],
+                [Convo2, 25*GameSound.MSEC_PER_SEC],
+                [Convo3, 107*GameSound.MSEC_PER_SEC],
+                [Convo4, 15*GameSound.MSEC_PER_SEC],
+                [Convo5, 30*GameSound.MSEC_PER_SEC]
             ];
         }
 
@@ -51,9 +52,7 @@ package{
                     true, .2, GameSound.BGM);
                 FlxG.switchState(
                     new PlayVideoState("../assets/selfie.flv",
-                        function():void {
-                            FlxG.switchState(new StartScreen());
-                        }
+                        function():void { FlxG.switchState(new StartScreen()); }
                     )
                 );
             }

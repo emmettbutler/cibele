@@ -23,7 +23,9 @@ package {
         }
 
         public function setMark(name:String, time:Number,
-                                callback:Function=null, overwrite:Boolean=false):void {
+                                callback:Function=null,
+                                overwrite:Boolean=false):void
+        {
             var existing:GlobalTimerMark = this.marks[name];
             if (existing != null && !overwrite) {
                 return;

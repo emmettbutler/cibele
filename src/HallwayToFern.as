@@ -6,6 +6,7 @@ package{
         [Embed(source="../assets/incomingcall.png")] private var ImgCall:Class;
         [Embed(source="../assets/voc_firstconvo.mp3")] private var Convo1:Class;
         [Embed(source="../assets/voc_ikuturso_start.mp3")] private var Convo2:Class;
+        [Embed(source="../assets/voc_extra_wannaduo.mp3")] private var SndHurryUp:Class;
 
         public var call_button:GameObject;
         public var accept_call:Boolean = false;
@@ -108,24 +109,37 @@ package{
                 accept_call = true;
                 call_button.kill();
 
-                function convo2Callback():void {
+                function convo2Done():void {
                     if (!(FlxG.state is IkuTurso)) {
-                        // wait, play "hey are you coming", unlock
                     } else {
                         (FlxG.state as IkuTurso).playFirstConvo();
                     }
                 }
 
-                function convo1Callback():void {
+                function playConvo2():void {
                     SoundManager.getInstance().playSound(
-                        Convo2, 24000, convo2Callback, false, 1, GameSound.VOCAL,
+                        Convo2, 24000, convo2Done, false, 1, GameSound.VOCAL,
                         "convo_2_hall"
                     );
                 }
+
+                function playWannaDuo():void {
+                    SoundManager.getInstance().playSound(
+                        SndHurryUp, 4*GameSound.MSEC_PER_SEC, playConvo2,
+                        false, 1, GameSound.VOCAL
+                    );
+                }
+
+                function convo1Done():void {
+                    GlobalTimer.getInstance().setMark("delayed_wannaduo",
+                        10*GameSound.MSEC_PER_SEC, playWannaDuo);
+                }
+
                 SoundManager.getInstance().playSound(
-                    Convo1, 29000, convo1Callback, false, 1, GameSound.VOCAL,
+                    Convo1, 29000, convo1Done, false, 1, GameSound.VOCAL,
                     "convo_1_hall"
                 );
+
                 for(var i:int = 1; i <= 3; i++) {
                     PopUpManager.getInstance().createNewPopUp(i);
                 }
