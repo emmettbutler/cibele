@@ -107,15 +107,23 @@ package{
             if (this._state == STATE_PRE_IT && !this.accept_call) {
                 accept_call = true;
                 call_button.kill();
-                function _callback():void {
-                    FlxG.log("callback");
+
+                function convo2Callback():void {
+                    if (!(FlxG.state is IkuTurso)) {
+                        (FlxG.state as GameState).newAudioLock = false;
+                    } else {
+                        (FlxG.state as IkuTurso).playFirstConvo();
+                    }
+                }
+
+                function convo1Callback():void {
                     SoundManager.getInstance().playSound(
-                        Convo2, 24000, null, false, 1, GameSound.VOCAL,
+                        Convo2, 24000, convo2Callback, false, 1, GameSound.VOCAL,
                         "convo_2_hall"
                     );
                 }
                 SoundManager.getInstance().playSound(
-                    Convo1, 29000, _callback, false, 1, GameSound.VOCAL,
+                    Convo1, 29000, convo1Callback, false, 1, GameSound.VOCAL,
                     "convo_1_hall"
                 );
                 for(var i:int = 1; i <= 3; i++) {

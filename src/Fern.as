@@ -8,7 +8,6 @@ package{
         public var ikutursodoor:GameObject;
         public var euryaledoor:GameObject;
         public var hiisidoor:GameObject;
-        public var convoSound:GameSound;
 
         public static const BOSS_MARK:String = "boss_iku_turso";
 
@@ -19,7 +18,8 @@ package{
             FlxG.bgColor = 0x00000000;
 
             GlobalTimer.getInstance().setMark(BOSS_MARK, 319632 - 60 * 1000);
-            this.convoSound = SoundManager.getInstance().playSound(Convo, 319632,
+            /*
+            SoundManager.getInstance().playSound(Convo, 319632,
                 function():void {
                     SoundManager.getInstance().playSound(VidBGMLoop, 0, null, true, .2, GameSound.BGM);
                     FlxG.switchState(
@@ -28,6 +28,7 @@ package{
                                 FlxG.switchState(new StartScreen());
                             }));
                 }, false, .6, GameSound.VOCAL);
+            */
 
             (new BackgroundLoader()).loadSingleTileBG("../assets/fern_640_480.png");
             ScreenManager.getInstance().setupCamera(null, 1);

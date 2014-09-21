@@ -29,8 +29,9 @@ package {
                                                    _vol, _kind, name);
             this.runningSounds.push(newSound);
 
+            var that:SoundManager = this;
             function _callback():void {
-                newSound.stopSound();
+                that.stopSound(newSound);
                 if (endCallback != null) {
                     endCallback();
                 }
@@ -56,9 +57,23 @@ package {
         public function clearSoundsByType(_kind:Number):void {
             for(var i:int = 0; i < this.runningSounds.length; i++) {
                 if(this.runningSounds[i]._type == _kind) {
-                    this.runningSounds[i].stopSound();
+                    this.stopSound(runningSounds[i]);
                 }
             }
+        }
+
+        private function stopSound(sound:GameSound):void {
+            sound.stopSound();
+            this.runningSounds.splice(this.runningSounds.indexOf(sound), 1);
+        }
+
+        public function soundOfTypeIsPlaying(_kind:Number):Boolean {
+            for(var i:int = 0; i < this.runningSounds.length; i++) {
+                if(this.runningSounds[i]._type == _kind) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public function increaseVolume():void {
