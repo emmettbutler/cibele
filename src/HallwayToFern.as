@@ -5,6 +5,7 @@ package{
         [Embed(source="../assets/hallway sprite.png")] private var ImgBG:Class;
         [Embed(source="../assets/incomingcall.png")] private var ImgCall:Class;
         [Embed(source="../assets/voc_firstconvo.mp3")] private var Convo1:Class;
+        [Embed(source="../assets/voc_ikuturso_start.mp3")] private var Convo2:Class;
 
         public var call_button:GameObject;
         public var accept_call:Boolean = false;
@@ -85,6 +86,10 @@ package{
                 this.player.y > lowestTile.y + lowestTile.height) {
                 highestTile.y = lowestTile.y + highestTile.height;
             }
+
+            if (this.player.pos.y < ScreenManager.getInstance().screenHeight / 2) {
+                FlxG.switchState(new Fern());
+            }
         }
 
         override public function postCreate():void {
@@ -103,10 +108,16 @@ package{
                 accept_call = true;
                 call_button.kill();
                 function _callback():void {
-                    FlxG.switchState(new Fern());
+                    FlxG.log("callback");
+                    SoundManager.getInstance().playSound(
+                        Convo2, 24000, null, false, 1, GameSound.VOCAL,
+                        "convo_2_hall"
+                    );
                 }
-                SoundManager.getInstance().playSound(Convo1, 24000,
-                                                     _callback, false, 1, GameSound.VOCAL);
+                SoundManager.getInstance().playSound(
+                    Convo1, 29000, _callback, false, 1, GameSound.VOCAL,
+                    "convo_1_hall"
+                );
                 for(var i:int = 1; i <= 3; i++) {
                     PopUpManager.getInstance().createNewPopUp(i);
                 }

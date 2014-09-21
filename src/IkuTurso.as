@@ -11,16 +11,10 @@ package{
 
         override public function create():void {
             this.filename = "ikuturso_path.txt";
-
             super.create();
             SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true,
                                                  .08, GameSound.BGM);
-
             GlobalTimer.getInstance().setMark(Fern.BOSS_MARK, 319632 - 60 * 1000);
-
-            debugText = new FlxText(0,0,100,"");
-            debugText.color = 0xff000000;
-            add(debugText);
         }
 
         override public function update():void{
