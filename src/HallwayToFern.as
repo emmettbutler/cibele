@@ -110,7 +110,7 @@ package{
 
                 function convo2Callback():void {
                     if (!(FlxG.state is IkuTurso)) {
-                        (FlxG.state as GameState).newAudioLock = false;
+                        // wait, play "hey are you coming", unlock
                     } else {
                         (FlxG.state as IkuTurso).playFirstConvo();
                     }

@@ -33,8 +33,7 @@ package{
             this.boss.update();
 
             if (this.convo1Sound == null) {
-                if (!this.newAudioLock ||
-                    !SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL))
+                if (!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL))
                 {
                     this.playFirstConvo();
                 }

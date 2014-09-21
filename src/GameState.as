@@ -7,7 +7,6 @@ package {
         protected var game_cursor:GameCursor;
         private var pauseLayer:GameObject;
 
-        public var newAudioLock:Boolean = true;
         public var cursorResetFlag:Boolean = false;
 
         public function GameState(snd:Boolean=true, popup:Boolean=true,
