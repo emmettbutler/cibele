@@ -206,7 +206,7 @@ package
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
             } else {
-                this._state = STATE_MOVE_TO_PATH_NODE;
+                this.moveToNextNode();
             }
         }
 
