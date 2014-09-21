@@ -161,13 +161,13 @@ package
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_MOVE_TO_ENEMY){
                 play("walk");
-                this.footPos.x = this.x + this.width/2
+                this.footPos.x = this.x + this.width/2;
                 this.footPos.y = this.y + this.height;
                 this.disp = this.walkTarget.sub(this.footPos).normalized();
                 this.dir = this.disp.mulScl(this.runSpeed);
                 if (this.enemyIsInAttackRange(this.closestEnemy)) {
                     this._state = STATE_AT_ENEMY;
-                } else if (this.closestEnemy.pos.sub(this.pos)._length() > 500) {
+                } else if (this.closestEnemy.pos.sub(this.footPos)._length() > 500) {
                     this.moveToNextNode();
                 }
             } else if (this._state == STATE_IN_ATTACK) {

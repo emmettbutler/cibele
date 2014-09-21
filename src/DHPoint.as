@@ -54,7 +54,7 @@ package
 
         public function center(obj:GameObject, bottom_center:Boolean = false):DHPoint {
             if(bottom_center == true) {
-                return new DHPoint(this.x + obj.width/2, this.y + obj.height);
+                return new DHPoint(this.x + obj.width/2, this.y + obj.height + 30);
             } else {
                 return new DHPoint(this.x + obj.width/2, this.y + obj.height/2);
             }
