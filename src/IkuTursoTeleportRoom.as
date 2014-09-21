@@ -4,14 +4,8 @@ package{
     public class IkuTursoTeleportRoom extends PlayerState {
         public var bg:GameObject;
         public var door:GameObject;
-        public var runningSound:GameSound;
 
         public var img_height:Number = 357;
-
-        public function IkuTursoTeleportRoom(runningSound:GameSound) {
-            super();
-            this.runningSound = runningSound;
-        }
 
         override public function create():void {
             var _screen:ScreenManager = ScreenManager.getInstance();
@@ -33,7 +27,7 @@ package{
             super.update();
 
             if (player.mapHitbox.overlaps(door)){
-                FlxG.switchState(new IkuTurso(this.runningSound));
+                FlxG.switchState(new IkuTurso());
             }
         }
     }

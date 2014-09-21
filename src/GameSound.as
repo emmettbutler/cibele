@@ -4,11 +4,6 @@ package
 
     public class GameSound {
         public var name:String;
-        public var bornTime:Number = -1;
-        public var timeAlive:Number = -1;
-        public var timeRemaining:Number = -1;
-        public var currentTime:Number = -1;
-        public var totalSeconds:Number = 0;
         public var embeddedSound:Class;
         private var soundObject:FlxSound;
         public var callbackLock:Boolean = false;
@@ -24,12 +19,9 @@ package
                                   _loop:Boolean=false, _vol:Number=1,
                                   _kind:Number=0, name:String=null) {
             this.name = name;
-            this.bornTime = new Date().valueOf();
-            this.timeAlive = 0;
             this.virtualVolume = _vol;
             this._type = _kind;
 
-            this.totalSeconds = dur;
             this.embeddedSound = embeddedSound;
 
             soundObject = new FlxSound();
@@ -64,9 +56,6 @@ package
         }
 
         public function update():void {
-            this.currentTime = new Date().valueOf();
-            this.timeAlive = this.currentTime - this.bornTime;
-            this.timeRemaining = this.totalSeconds - this.timeAlive;
         }
 
         public function defaultEnd():void { }

@@ -54,14 +54,14 @@ package{
             super.update();
 
             if(player.mapHitbox.overlaps(ikutursodoor)){
-                FlxG.switchState(new IkuTursoTeleportRoom(this.convoSound));
+                FlxG.switchState(new IkuTursoTeleportRoom());
             }
 
             if(player.mapHitbox.overlaps(euryaledoor)){
-                FlxG.switchState(new IkuTursoTeleportRoom(this.convoSound));
+                FlxG.switchState(new IkuTursoTeleportRoom());
             }
             if(player.mapHitbox.overlaps(hiisidoor)){
-                FlxG.switchState(new IkuTursoTeleportRoom(this.convoSound));
+                FlxG.switchState(new IkuTursoTeleportRoom());
             }
         }
     }

@@ -3,11 +3,9 @@ package{
 
     public class IkuTurso extends LevelMapState {
         [Embed(source="../assets/ikuturso_wip.mp3")] private var ITBGMLoop:Class;
-        public var runningSound:GameSound;
         public var bossHasAppeared:Boolean;
 
-        public function IkuTurso(runningSound:GameSound=null) {
-            this.runningSound = runningSound;
+        public function IkuTurso() {
             this.bossHasAppeared = false;
         }
 
@@ -29,8 +27,7 @@ package{
             super.update();
             this.boss.update();
 
-            if (this.runningSound != null &&
-                GlobalTimer.getInstance().hasPassed(Fern.BOSS_MARK) &&
+            if (GlobalTimer.getInstance().hasPassed(Fern.BOSS_MARK) &&
                 !this.bossHasAppeared && FlxG.state.ID == LevelMapState.LEVEL_ID)
             {
                 this.bossHasAppeared = true;
