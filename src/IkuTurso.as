@@ -3,14 +3,30 @@ package{
 
     public class IkuTurso extends LevelMapState {
         [Embed(source="../assets/ikuturso_wip.mp3")] private var ITBGMLoop:Class;
+        [Embed(source="../assets/sexyselfie_wip.mp3")] private var VidBGMLoop:Class;
         [Embed(source="../assets/voc_ikuturso_bulldog.mp3")] private var Convo1:Class;
+        [Embed(source="../assets/voc_ikuturso_photogenic.mp3")] private var Convo2:Class;
+        [Embed(source="../assets/voc_ikuturso_attractive.mp3")] private var Convo3:Class;
+        [Embed(source="../assets/voc_ikuturso_picture.mp3")] private var Convo4:Class;
+        [Embed(source="../assets/voc_ikuturso_whattowear.mp3")] private var Convo5:Class;
 
         public var bossHasAppeared:Boolean;
         private var convo1Sound:GameSound;
         private var convo1Ready:Boolean;
 
+        private var conversationPieces:Array;
+        private var conversationCounter:Number = 1;
+
         public function IkuTurso() {
             this.bossHasAppeared = false;
+
+            this.conversationPieces = [
+                [Convo1, 132000],
+                [Convo2, 25000],
+                [Convo3, 107000],
+                [Convo4, 15000],
+                [Convo5, 30000]
+            ];
         }
 
         override public function create():void {
@@ -22,9 +38,31 @@ package{
             this.convo1Sound = null;
         }
 
+        public function playNextConvoPiece():void {
+            this.conversationCounter += 1;
+            var nextInfo:Array = this.conversationPieces[this.conversationCounter];
+            if (nextInfo != null) {
+                SoundManager.getInstance().playSound(
+                    nextInfo[0], nextInfo[1], this.playNextConvoPiece, false, 1,
+                    GameSound.VOCAL
+                )
+            } else {
+                SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
+                    true, .2, GameSound.BGM);
+                FlxG.switchState(
+                    new PlayVideoState("../assets/selfie.flv",
+                        function():void {
+                            FlxG.switchState(new StartScreen());
+                        }
+                    )
+                );
+            }
+        }
+
         public function playFirstConvo():void {
+            this.conversationCounter = 0;
             this.convo1Sound = SoundManager.getInstance().playSound(
-                Convo1, 132000, null, false, 1, GameSound.VOCAL
+                Convo1, 132000, this.playNextConvoPiece, false, 1, GameSound.VOCAL
             );
         }
 
