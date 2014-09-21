@@ -37,7 +37,9 @@ package {
 
             function _callback():void {
                 newSound.stopSound();
-                endCallback();
+                if (endCallback != null) {
+                    endCallback();
+                }
             }
             GlobalTimer.getInstance().setMark(name, dur, _callback);
 
