@@ -65,7 +65,7 @@ package {
 
         public function enemyIsInAttackRange(en:Enemy):Boolean {
             if (en == null) { return false; }
-            return en.pos.sub(this.pos)._length() < this.attackRange;
+            return en.pos.center(en, true).sub(this.pos.center(this, true))._length() < this.attackRange;
         }
 
         public function enemyIsInMoveTowardsRange(en:Enemy):Boolean{

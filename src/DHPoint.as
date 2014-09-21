@@ -51,5 +51,13 @@ package
         public function toString():String {
             return "DHPoint(" + this.x + ", " + this.y + ")";
         }
+
+        public function center(obj:GameObject, bottom_center:Boolean = false):DHPoint {
+            if(bottom_center == true) {
+                return new DHPoint(this.x + obj.width/2, this.y + obj.height);
+            } else {
+                return new DHPoint(this.x + obj.width/2, this.y + obj.height/2);
+            }
+        }
     }
 }

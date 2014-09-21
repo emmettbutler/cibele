@@ -18,7 +18,6 @@ package
 
         override public function update():void{
             super.update();
-            debugText.text = "BOSS";
         }
     }
 }

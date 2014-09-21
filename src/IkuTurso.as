@@ -26,8 +26,9 @@ package{
             super.update();
             this.boss.update();
 
-            if (this.runningSound != null && this.runningSound.timeRemaining < 60*1000 &&
-                !this.bossHasAppeared && FlxG.state.ID == LevelMapState.LEVEL_ID)
+            //if (this.runningSound != null && this.runningSound.timeRemaining < 60*1000 &&
+            //    !this.bossHasAppeared && FlxG.state.ID == LevelMapState.LEVEL_ID)
+            if (!this.bossHasAppeared)
             {
                 this.bossHasAppeared = true;
                 this.boss.warpToPlayer();

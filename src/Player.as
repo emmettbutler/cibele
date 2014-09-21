@@ -123,7 +123,7 @@ package{
                 this.splash_sprites.play("attack");
             } else {
                 this._state = STATE_MOVE_TO_ENEMY;
-                this.walkTarget = this.targetEnemy.pos;
+                this.walkTarget = this.targetEnemy.pos.center(this.targetEnemy, true);
             }
             this.dir = this.walkTarget.sub(footPos).normalized();
             this.walkDistance = this.walkTarget.sub(footPos)._length();
@@ -132,13 +132,13 @@ package{
         public function setFacing():void {
             if(this.dir != null){
                 if(Math.abs(this.dir.y) > Math.abs(this.dir.x)){
-                    if(this.dir.y < 0){
+                    if(this.dir.y <= 0){
                         this.facing = UP;
                     } else {
                         this.facing = DOWN;
                     }
                 } else {
-                    if(this.dir.x > 0){
+                    if(this.dir.x >= 0){
                         this.facing = RIGHT;
                     } else {
                         this.facing = LEFT;
@@ -182,7 +182,10 @@ package{
         }
 
         override public function update():void{
-            FlxG.log(this.dir);
+            if(this.targetEnemy != null) {
+                FlxG.log(this.targetEnemy.pos.center(this.targetEnemy));
+            }
+
             this.hitbox_rect.x = this.pos.x;
             this.hitbox_rect.y = this.pos.y;
 
@@ -264,7 +267,8 @@ package{
                 if(this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
                 } else {
-                    this._state = STATE_MOVE_TO_ENEMY;;
+                    this._state = STATE_MOVE_TO_ENEMY;
+                    this.walkTarget = this.targetEnemy.pos.center(this.targetEnemy, true);
                 }
             } else {
                 this._state = STATE_IDLE;
