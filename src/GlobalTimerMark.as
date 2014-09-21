@@ -17,12 +17,13 @@ package {
             this.finished = new Date().valueOf() - this.start >= this.end;
         }
 
-        public function timeIsUp():Boolean {
+        public function timeRemaining():Number {
             var cur:Number = new Date().valueOf();
-            if (cur - this.start - this.pauseTime >= this.end) {
-                return true;
-            }
-            return false;
+            return this.end - (cur - this.start - this.pauseTime);
+        }
+
+        public function timeIsUp():Boolean {
+            return this.timeRemaining() <= 0;
         }
 
         public function finish():void {

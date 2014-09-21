@@ -28,8 +28,16 @@ package {
                                                    0, callback);
         }
 
+        public function timeRemaining(name:String):Number {
+            return this.marks[name].timeRemaining();
+        }
+
         public function hasPassed(name:String):Boolean {
-            return this.marks[name].finished;
+            var mark:GlobalTimerMark = this.marks[name];
+            if (mark != null) {
+                return mark.finished;
+            }
+            return false;
         }
 
         public function pause():void {
