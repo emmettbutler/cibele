@@ -139,10 +139,6 @@ package{
                     Convo1, 29000, convo1Done, false, 1, GameSound.VOCAL,
                     "convo_1_hall"
                 );
-
-                for(var i:int = 1; i <= 3; i++) {
-                    PopUpManager.getInstance().createNewPopUp(i);
-                }
             } else {
                 super.clickCallback(screenPos, worldPos);
             }

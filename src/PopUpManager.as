@@ -16,9 +16,6 @@ package{
 
         public var _player:Player;
         public var program_picker:UIElement = null;
-        public var bulldog_hell:PopUp;
-        public var cib_selfies_1:PopUp;
-        public var forum_selfies_1:PopUp;
         public var blinker:UIElement;
 
         private var emojiButtons:Dictionary;
@@ -49,10 +46,6 @@ package{
             this.elements = new Array();
 
             this.loadPopUps();
-
-            for(var i:int = 1; i <= 3; i++) {
-                this.createNewPopUp(i);
-            }
 
             this.flagText = new FlxText(0, 0, 500, "");
             FlxG.state.add(this.flagText);
@@ -86,11 +79,10 @@ package{
 
         public function update():void {
             if(this.flagText._textField == null) {
-                ui_loaded = false;
+                this.ui_loaded = false;
                 this.loadPopUps();
                 this.flagText = new FlxText(0, 0, 500, "");
                 FlxG.state.add(this.flagText);
-                ui_loaded = true;
             }
 
             this.timeAlive = new Date().valueOf() - this.bornTime;
@@ -120,29 +112,6 @@ package{
                     this._state = SHOWING_NOTHING;
                     this.open_popup_time = 1000;
                 }
-            }
-        }
-
-        public function createNewPopUp(this_popup:Number):void {
-            //this should get called in whatever state the pop ups
-            //associated convo starts
-            //don't forget to add new pop ups to loadpopups too! in order!
-            if(this_popup == 1) {
-                this.bulldog_hell = new PopUp(ImgBulldogHell, 1030, 510, 1);
-                this.popup_order.push(this.bulldog_hell);
-                this.elements.push(this.bulldog_hell);
-            }
-            if(this_popup == 2) {
-                //165000
-                this.cib_selfies_1 = new PopUp(ImgCibSelfie1, 645, 457, 165000, 1000);
-                this.popup_order.push(this.cib_selfies_1);
-                this.elements.push(this.cib_selfies_1);
-            }
-            if(this_popup == 3) {
-                //185000
-                this.forum_selfies_1 = new PopUp(ImgForumSelfie1, 1174, 585, 185000);
-                this.popup_order.push(this.forum_selfies_1);
-                this.elements.push(this.forum_selfies_1);
             }
         }
 
@@ -197,17 +166,16 @@ package{
             this.blinker.x = program_picker.x;
             this.blinker.y = program_picker.y;
 
-            for(var i:int = 0; i < this.popup_order.length; i++) {
-                if(i == 0) {
-                    FlxG.state.add(bulldog_hell);
-                }
-                if(i == 1) {
-                    FlxG.state.add(cib_selfies_1);
-                }
-                if(i == 2) {
-                    FlxG.state.add(forum_selfies_1);
-                }
+            this.popup_order = [
+                new PopUp(ImgBulldogHell, 1030, 510, 1),
+                new PopUp(ImgCibSelfie1, 645, 457, 165000, 1000),
+                new PopUp(ImgForumSelfie1, 1174, 585, 185000)
+            ];
+            for (var i:int = 0; i < this.popup_order.length; i++) {
+                this.elements.push(this.popup_order[i]);
+                FlxG.state.add(this.popup_order[i]);
             }
+
             this.ui_loaded = true;
             this.checkForNextPopUp();
         }
