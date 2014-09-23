@@ -76,6 +76,7 @@ package{
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint,
                                       group:Array=null):void
         {
+            FlxG.log("clicked in player");
             this.targetEnemy = null;
             var ui_clicked:Boolean = false;
             if (group != null) {

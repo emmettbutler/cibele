@@ -1,6 +1,8 @@
 package{
     import org.flixel.*;
 
+    import flash.utils.Dictionary;
+
     public class PopUpManager {
         [Embed(source="../assets/programpanel.png")] private var ImgPrograms:Class;
         [Embed(source="../assets/bulldoghell.png")] private var ImgBulldogHell:Class;
@@ -18,7 +20,8 @@ package{
         public var cib_selfies_1:PopUp;
         public var forum_selfies_1:PopUp;
         public var blinker:UIElement;
-        public var blinker_rect:FlxRect;
+
+        private var emojiButtons:Dictionary;
 
         public var popup_order:Array;
         public var next_popup:PopUp = null;
@@ -37,13 +40,6 @@ package{
         public var flagText:FlxText;
 
         public var blink:Boolean = false;
-
-        public var emoji_happy:UIElement;
-        public var emoji_sad:UIElement;
-        public var emoji_angry:UIElement;
-        public var emoji_happy_rect:FlxRect;
-        public var emoji_sad_rect:FlxRect;
-        public var emoji_angry_rect:FlxRect;
 
         public var elements:Array;
         public var ui_loaded:Boolean = false;
@@ -69,15 +65,19 @@ package{
                                                       5, 5);
             this.emote(mouseScreenRect);
 
+            var blinker_rect:FlxRect = new FlxRect(blinker.x, blinker.y,
+                                                   program_picker.width,
+                                                   program_picker.height);
+
             if(this._state == SHOWING_NOTHING) {
-                if(mouseScreenRect.overlaps(this.blinker_rect)) {
+                if(mouseScreenRect.overlaps(blinker_rect)) {
                     this.next_popup.shown = true;
                     this.next_popup.visible = true;
                     this.open_popup_time = 1000;
                     this._state = SHOWING_POP_UP
                 }
             } else if(this._state == FLASH_PROGRAM_PICKER) {
-                if(mouseScreenRect.overlaps(this.blinker_rect)) {
+                if(mouseScreenRect.overlaps(blinker_rect)) {
                     this.blinker.alpha = 0;
                     this.next_popup.shown = true;
                     this.next_popup.visible = true;
@@ -147,29 +147,34 @@ package{
         public function loadPopUps():void {
             var _screen:ScreenManager = ScreenManager.getInstance();
 
-            this.emoji_happy = new UIElement(_screen.screenWidth * .7, _screen.screenWidth * .01);
-            this.emoji_happy.loadGraphic(ImgEmojiHappy,false,false,85,45);
+            this.emojiButtons = new Dictionary();
+
+            var emoji_happy:UIElement = new UIElement(_screen.screenWidth * .7,
+                                                      _screen.screenWidth * .01);
+            emoji_happy.loadGraphic(ImgEmojiHappy,false,false,85,45);
             FlxG.state.add(emoji_happy);
-            this.emoji_happy_rect = new FlxRect(this.emoji_happy.x, this.emoji_happy.y, this.emoji_happy.width, this.emoji_happy.height);
-            this.emoji_happy.scrollFactor.x = 0;
-            this.emoji_happy.scrollFactor.y = 0;
-            this.elements.push(this.emoji_happy);
+            emoji_happy.scrollFactor.x = 0;
+            emoji_happy.scrollFactor.y = 0;
+            this.elements.push(emoji_happy);
+            emojiButtons[emoji_happy] = Emote.HAPPY;
 
-            this.emoji_sad = new UIElement(_screen.screenWidth * .8, _screen.screenWidth * .01);
-            this.emoji_sad.loadGraphic(ImgEmojiSad,false,false,71,45);
+            var emoji_sad:UIElement = new UIElement(_screen.screenWidth * .8,
+                                                    _screen.screenWidth * .01);
+            emoji_sad.loadGraphic(ImgEmojiSad,false,false,71,45);
             FlxG.state.add(emoji_sad);
-            this.emoji_sad_rect = new FlxRect(this.emoji_sad.x, this.emoji_sad.y, this.emoji_sad.width, this.emoji_sad.height);
-            this.emoji_sad.scrollFactor.x = 0;
-            this.emoji_sad.scrollFactor.y = 0;
-            this.elements.push(this.emoji_sad);
+            emoji_sad.scrollFactor.x = 0;
+            emoji_sad.scrollFactor.y = 0;
+            this.elements.push(emoji_sad);
+            this.emojiButtons[emoji_sad] = Emote.SAD;
 
-            this.emoji_angry = new UIElement(_screen.screenWidth * .9, _screen.screenWidth * .01);
-            this.emoji_angry.loadGraphic(ImgEmojiAngry,false,false,93,45);
+            var emoji_angry:UIElement = new UIElement(_screen.screenWidth * .9,
+                                                      _screen.screenWidth * .01);
+            emoji_angry.loadGraphic(ImgEmojiAngry,false,false,93,45);
             FlxG.state.add(emoji_angry);
-            this.emoji_angry_rect = new FlxRect(this.emoji_angry.x, this.emoji_angry.y, this.emoji_angry.width, this.emoji_angry.height);
-            this.emoji_angry.scrollFactor.x = 0;
-            this.emoji_angry.scrollFactor.y = 0;
-            this.elements.push(this.emoji_angry);
+            emoji_angry.scrollFactor.x = 0;
+            emoji_angry.scrollFactor.y = 0;
+            this.elements.push(emoji_angry);
+            this.emojiButtons[emoji_angry] = Emote.ANGRY;
 
             this.blinker = new UIElement(0,0);
             this.blinker.makeGraphic(227,43,0xffff0000);
@@ -189,7 +194,6 @@ package{
 
             this.blinker.x = program_picker.x;
             this.blinker.y = program_picker.y;
-            this.blinker_rect = new FlxRect(blinker.x,blinker.y,program_picker.width,program_picker.height);
 
             for(var i:int = 0; i < this.popup_order.length; i++) {
                 if(i == 0) {
@@ -232,14 +236,15 @@ package{
         }
 
         public function emote(mouseScreenRect:FlxRect):void {
-            if(mouseScreenRect.overlaps(emoji_happy_rect)) {
-                new Emote(_player.pos, Emote.HAPPY);
-            }
-            if(mouseScreenRect.overlaps(emoji_sad_rect)) {
-                new Emote(_player.pos, Emote.SAD);
-            }
-            if(mouseScreenRect.overlaps(emoji_angry_rect)) {
-                new Emote(_player.pos, Emote.ANGRY);
+            var overlap:Boolean, element:UIElement;
+            for (var key:Object in this.emojiButtons) {
+                element = key as UIElement;
+                overlap = mouseScreenRect.overlaps(
+                    new FlxRect(element.x, element.y, element.width, element.height)
+                );
+                if (overlap) {
+                    new Emote(_player.pos, this.emojiButtons[key]);
+                }
             }
         }
 
