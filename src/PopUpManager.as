@@ -39,8 +39,6 @@ package{
         // and need to be re-created
         public var flagText:FlxText;
 
-        public var blink:Boolean = false;
-
         public var elements:Array;
         public var ui_loaded:Boolean = false;
 
@@ -89,7 +87,7 @@ package{
         public function update():void {
             if(this.flagText._textField == null) {
                 ui_loaded = false;
-                loadPopUps();
+                this.loadPopUps();
                 this.flagText = new FlxText(0, 0, 500, "");
                 FlxG.state.add(this.flagText);
                 ui_loaded = true;
@@ -112,7 +110,11 @@ package{
                 if(this.next_popup.shown){
                     this._state = SHOWING_NOTHING;
                 }
-                this.showBlinker();
+                if(this.blinker.alpha >= 1) {
+                    this.blinker.alpha -= .1;
+                } else if(this.blinker.alpha <= 0) {
+                    this.blinker.alpha += .1;
+                }
             } else if(this._state == SHOWING_POP_UP) {
                 if(FlxG.mouse.justPressed()) {
                     this._state = SHOWING_NOTHING;
@@ -207,20 +209,7 @@ package{
                 }
             }
             this.ui_loaded = true;
-            checkForNextPopUp();
-        }
-
-        public function showBlinker():void {
-            if(this.blinker.alpha == 1) {
-                this.blink = false;
-            } else if(this.blinker.alpha == 0) {
-                this.blink = true;
-            }
-            if(this.blink) {
-                this.blinker.alpha += .1;
-            } else {
-                this.blinker.alpha -= .1;
-            }
+            this.checkForNextPopUp();
         }
 
         public function checkForNextPopUp():void {
