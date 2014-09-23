@@ -22,7 +22,6 @@ package{
 
         public var popup_order:Array;
         public var next_popup:PopUp = null;
-        public var open_popup_time:Number = 0;
 
         public static const SHOWING_POP_UP:Number = 0;
         public static const FLASH_PROGRAM_PICKER:Number = 1;
@@ -33,7 +32,9 @@ package{
         public var timeAlive:Number = 0;
 
         // this text is used to detect when state elements have been destroyed
-        // and need to be re-created
+        // and need to be re-created. it is never displayed, but
+        // flagText._textField == null indicates that destroy() was called on
+        // the containing state
         public var flagText:FlxText;
 
         public var elements:Array;
@@ -64,7 +65,8 @@ package{
                 if(mouseScreenRect.overlaps(blinker_rect)) {
                     this.next_popup.shown = true;
                     this.next_popup.visible = true;
-                    this.open_popup_time = 1000;
+                    GlobalTimer.getInstance().setMark("closed_popup",
+                                                      GameSound.MSEC_PER_SEC);
                     this._state = SHOWING_POP_UP
                 }
             } else if(this._state == FLASH_PROGRAM_PICKER) {
@@ -74,6 +76,10 @@ package{
                     this.next_popup.visible = true;
                     this._state = SHOWING_POP_UP;
                 }
+            } else if(this._state == SHOWING_POP_UP) {
+                this._state = SHOWING_NOTHING;
+                GlobalTimer.getInstance().setMark("closed_popup",
+                                                  GameSound.MSEC_PER_SEC);
             }
         }
 
@@ -90,10 +96,8 @@ package{
             if(this._state == SHOWING_NOTHING) {
                 //do this check in case it's already time for the next popup
                 //bc if it is, that popup will open immediately which is bad
-                if(this.open_popup_time > 0) {
-                    this.open_popup_time--;
-                } else {
-                    checkForNextPopUp();
+                if (GlobalTimer.getInstance().hasPassed("closed_popup")) {
+                    this.checkForNextPopUp();
                 }
                 if(this.next_popup != null){
                     this.next_popup.visible = false;
@@ -106,11 +110,6 @@ package{
                     this.blinker.alpha -= .1;
                 } else if(this.blinker.alpha <= 0) {
                     this.blinker.alpha += .1;
-                }
-            } else if(this._state == SHOWING_POP_UP) {
-                if(FlxG.mouse.justPressed()) {
-                    this._state = SHOWING_NOTHING;
-                    this.open_popup_time = 1000;
                 }
             }
         }
