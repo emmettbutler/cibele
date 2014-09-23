@@ -4,6 +4,7 @@ package {
     public class PlayerState extends GameState {
         protected var player:Player;
         protected var startPos:DHPoint;
+        protected var clickObjectGroups:Array;
 
         public function PlayerState() {
         }
@@ -20,6 +21,11 @@ package {
             this.player.addVisibleObjects();
             super.postCreate();
             this.game_cursor.setGameMouse();
+
+            this.clickObjectGroups = [
+                PopUpManager.getInstance().elements,
+                MessageManager.getInstance().elements
+            ];
         }
 
         override public function update():void {
@@ -33,14 +39,11 @@ package {
 
         override public function clickCallback(screenPos:DHPoint,
                                                worldPos:DHPoint):void {
+            super.clickCallback(screenPos, worldPos);
             var objects:Array = new Array();
-            var groups:Array = [
-                PopUpManager.getInstance().elements,
-                MessageManager.getInstance().elements
-            ];
-            for (var i:int = 0; i < groups.length; i++) {
-                for (var j:int = 0; j < groups[i].length; j++) {
-                    objects.push(groups[i][j]);
+            for (var i:int = 0; i < this.clickObjectGroups.length; i++) {
+                for (var j:int = 0; j < this.clickObjectGroups[i].length; j++) {
+                    objects.push(this.clickObjectGroups[i][j]);
                 }
             }
             this.player.clickCallback(screenPos, worldPos, objects);

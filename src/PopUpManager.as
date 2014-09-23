@@ -11,8 +11,8 @@ package{
         [Embed(source="../assets/angry_emoji.png")] private var ImgEmojiAngry:Class;
 
         public static var _instance:PopUpManager = null;
-        public var _player:Player;
 
+        public var _player:Player;
         public var program_picker:UIElement = null;
         public var bulldog_hell:PopUp;
         public var cib_selfies_1:PopUp;
@@ -30,13 +30,12 @@ package{
         public var _state:Number = SHOWING_NOTHING;
 
         public var bornTime:Number = -1;
-        public var timeAlive:Number = -1;
-        public var currentTime:Number = -1;
+        public var timeAlive:Number = 0;
 
-        public var debugText:FlxText;
-        public var i:Number = 0;
+        // this text is used to detect when state elements have been destroyed
+        // and need to be re-created
+        public var flagText:FlxText;
 
-        public var mouse_rect:FlxRect;
         public var blink:Boolean = false;
 
         public var emoji_happy:UIElement;
@@ -51,7 +50,7 @@ package{
 
         public function PopUpManager() {
             this.bornTime = new Date().valueOf();
-            this.timeAlive = 0;
+
             this.popup_order = new Array();
             this.elements = new Array();
 
@@ -61,23 +60,42 @@ package{
                 this.createNewPopUp(i);
             }
 
-            this.debugText = new FlxText(FlxG.mouse.x,FlxG.mouse.y,500,"");
-            FlxG.state.add(this.debugText);
+            this.flagText = new FlxText(0, 0, 500, "");
+            FlxG.state.add(this.flagText);
+        }
+
+        public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
+            var mouseScreenRect:FlxRect = new FlxRect(screenPos.x, screenPos.y,
+                                                      5, 5);
+            this.emote(mouseScreenRect);
+
+            if(this._state == SHOWING_NOTHING) {
+                if(mouseScreenRect.overlaps(this.blinker_rect)) {
+                    this.next_popup.shown = true;
+                    this.next_popup.visible = true;
+                    this.open_popup_time = 1000;
+                    this._state = SHOWING_POP_UP
+                }
+            } else if(this._state == FLASH_PROGRAM_PICKER) {
+                if(mouseScreenRect.overlaps(this.blinker_rect)) {
+                    this.blinker.alpha = 0;
+                    this.next_popup.shown = true;
+                    this.next_popup.visible = true;
+                    this._state = SHOWING_POP_UP;
+                }
+            }
         }
 
         public function update():void {
-            if(this.debugText._textField == null) {
+            if(this.flagText._textField == null) {
                 ui_loaded = false;
                 loadPopUps();
-                this.debugText = new FlxText(FlxG.mouse.x,FlxG.mouse.y,500,"");
-                FlxG.state.add(this.debugText);
+                this.flagText = new FlxText(0, 0, 500, "");
+                FlxG.state.add(this.flagText);
                 ui_loaded = true;
             }
-            this.mouse_rect.x = FlxG.mouse.screenX;
-            this.mouse_rect.y = FlxG.mouse.screenY;
 
-            this.currentTime = new Date().valueOf();
-            this.timeAlive = this.currentTime - this.bornTime;
+            this.timeAlive = new Date().valueOf() - this.bornTime;
 
             if(this._state == SHOWING_NOTHING) {
                 //do this check in case it's already time for the next popup
@@ -87,31 +105,14 @@ package{
                 } else {
                     checkForNextPopUp();
                 }
-
                 if(this.next_popup != null){
                     this.next_popup.visible = false;
                 }
-
-                if(mouse_rect.overlaps(this.blinker_rect) && FlxG.mouse.justPressed()) {
-                    this.next_popup.shown = true;
-                    this.next_popup.visible = true;
-                    this.open_popup_time = 1000;
-                    this._state = SHOWING_POP_UP
-                }
-
-                this.emote();
             } else if(this._state == FLASH_PROGRAM_PICKER) {
                 if(this.next_popup.shown){
                     this._state = SHOWING_NOTHING;
                 }
-                showBlinker();
-                this.emote();
-                if(mouse_rect.overlaps(this.blinker_rect) && FlxG.mouse.justPressed()) {
-                    this.blinker.alpha = 0;
-                    this.next_popup.shown = true;
-                    this.next_popup.visible = true;
-                    this._state = SHOWING_POP_UP;
-                }
+                this.showBlinker();
             } else if(this._state == SHOWING_POP_UP) {
                 if(FlxG.mouse.justPressed()) {
                     this._state = SHOWING_NOTHING;
@@ -178,8 +179,6 @@ package{
             this.blinker.scrollFactor.y = 0;
             this.elements.push(this.blinker);
 
-            this.mouse_rect = new FlxRect(FlxG.mouse.x,FlxG.mouse.y,5,5);
-
             this.program_picker = new UIElement(_screen.screenWidth * .001, _screen.screenHeight * .9);
             this.program_picker.loadGraphic(ImgPrograms,false,false,227,43);
             this.program_picker.alpha = 1;
@@ -192,7 +191,7 @@ package{
             this.blinker.y = program_picker.y;
             this.blinker_rect = new FlxRect(blinker.x,blinker.y,program_picker.width,program_picker.height);
 
-            for(i = 0; i < this.popup_order.length; i++) {
+            for(var i:int = 0; i < this.popup_order.length; i++) {
                 if(i == 0) {
                     FlxG.state.add(bulldog_hell);
                 }
@@ -221,7 +220,7 @@ package{
         }
 
         public function checkForNextPopUp():void {
-            for(i = 0; i < popup_order.length; i++) {
+            for(var i:int = 0; i < popup_order.length; i++) {
                 if(this.popup_order[i].timeAlive >= this.popup_order[i].timer && !this.popup_order[i].shown) {
                     if(this.next_popup != null && !this.next_popup.shown){
                         this._state = FLASH_PROGRAM_PICKER;
@@ -232,17 +231,15 @@ package{
             }
         }
 
-        public function emote():void {
-            if(FlxG.mouse.justPressed()){
-                if(this.mouse_rect.overlaps(emoji_happy_rect)) {
-                    new Emote(_player.pos, Emote.HAPPY);
-                }
-                if(this.mouse_rect.overlaps(emoji_sad_rect)) {
-                    new Emote(_player.pos, Emote.SAD);
-                }
-                if(this.mouse_rect.overlaps(emoji_angry_rect)) {
-                    new Emote(_player.pos, Emote.ANGRY);
-                }
+        public function emote(mouseScreenRect:FlxRect):void {
+            if(mouseScreenRect.overlaps(emoji_happy_rect)) {
+                new Emote(_player.pos, Emote.HAPPY);
+            }
+            if(mouseScreenRect.overlaps(emoji_sad_rect)) {
+                new Emote(_player.pos, Emote.SAD);
+            }
+            if(mouseScreenRect.overlaps(emoji_angry_rect)) {
+                new Emote(_player.pos, Emote.ANGRY);
             }
         }
 

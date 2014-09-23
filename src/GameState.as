@@ -101,6 +101,10 @@ package {
             }
         }
 
-        public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {}
+        public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
+            if (this.updatePopup) {
+                PopUpManager.getInstance().clickCallback(screenPos, worldPos);
+            }
+        }
     }
 }

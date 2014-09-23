@@ -45,18 +45,12 @@ package {
 
         override public function clickCallback(screenPos:DHPoint,
                                                worldPos:DHPoint):void {
-            var objects:Array = new Array();
-            var groups:Array = [
+            this.clickObjectGroups = [
                 this.enemies.enemies,
                 PopUpManager.getInstance().elements,
                 MessageManager.getInstance().elements
             ];
-            for (var i:int = 0; i < groups.length; i++) {
-                for (var j:int = 0; j < groups[i].length; j++) {
-                    objects.push(groups[i][j]);
-                }
-            }
-            this.player.clickCallback(screenPos, worldPos, objects);
+            super.clickCallback(screenPos, worldPos);
         }
 
         public function resolveAttacksHelper(obj:PartyMember):void {
