@@ -75,7 +75,6 @@ package{
         }
 
         public function update():void {
-            FlxG.log(_state);
             if(this.flagText._textField == null) {
                 this.loadPopUps();
                 this.flagText = new FlxText(0, 0, 500, "");

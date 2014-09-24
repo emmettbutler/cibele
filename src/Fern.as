@@ -42,6 +42,8 @@ package{
         }
 
         override public function update():void{
+            FlxG.log(GlobalTimer.getInstance().hasPassed(DOOR_MARK));
+            GlobalTimer.getInstance().hasPassed(DOOR_MARK)
             super.update();
 
             if(player.mapHitbox.overlaps(ikutursodoor)){
@@ -58,14 +60,13 @@ package{
 
         override public function clickCallback(screenPos:DHPoint,
                                                worldPos:DHPoint):void {
-            if(GlobalTimer.getInstance().hasPassed(DOOR_MARK)) {
-                super.clickCallback(screenPos, worldPos);
-                var objects:Array = new Array();
-                for (var i:int = 0; i < this.clickObjectGroups.length; i++) {
-                    for (var j:int = 0; j < this.clickObjectGroups[i].length; j++) {
-                        objects.push(this.clickObjectGroups[i][j]);
-                    }
+            var objects:Array = new Array();
+            for (var i:int = 0; i < this.clickObjectGroups.length; i++) {
+                for (var j:int = 0; j < this.clickObjectGroups[i].length; j++) {
+                    objects.push(this.clickObjectGroups[i][j]);
                 }
+            }
+            if(GlobalTimer.getInstance().hasPassed(DOOR_MARK) == true) {
                 this.player.clickCallback(screenPos, worldPos, objects);
             }
         }
