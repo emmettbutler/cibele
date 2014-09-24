@@ -23,6 +23,7 @@ package{
         public var popup_order:Array;
         public var elements:Array;
         public var next_popup:PopUp = null;
+        public var popup_active:Boolean = false;
 
         private static const CLOSED_POPUP:String = "closed_popup";
         public static const SHOWING_POP_UP:Number = 0;
@@ -97,6 +98,8 @@ package{
                 } else if(this.blinker.alpha <= 0) {
                     this.blinker.alpha += .1;
                 }
+            } else if(this._state == SHOWING_POP_UP) {
+                this.popup_active = true;
             }
         }
 
