@@ -42,8 +42,6 @@ package{
         }
 
         override public function update():void{
-            FlxG.log(GlobalTimer.getInstance().hasPassed(DOOR_MARK));
-            GlobalTimer.getInstance().hasPassed(DOOR_MARK)
             super.update();
 
             if(player.mapHitbox.overlaps(ikutursodoor)){
