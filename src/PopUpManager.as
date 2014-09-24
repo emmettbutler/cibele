@@ -39,7 +39,6 @@ package{
         public var flagText:FlxText;
 
         public var elements:Array;
-        public var ui_loaded:Boolean = false;
 
         public function PopUpManager() {
             this.bornTime = new Date().valueOf();
@@ -86,7 +85,6 @@ package{
 
         public function update():void {
             if(this.flagText._textField == null) {
-                this.ui_loaded = false;
                 this.loadPopUps();
                 this.flagText = new FlxText(0, 0, 500, "");
                 FlxG.state.add(this.flagText);
@@ -177,7 +175,6 @@ package{
                 FlxG.state.add(this.popup_order[i]);
             }
 
-            this.ui_loaded = true;
             this.checkForNextPopUp();
         }
 
