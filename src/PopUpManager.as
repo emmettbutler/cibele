@@ -21,6 +21,7 @@ package{
         private var emojiButtons:Dictionary;
 
         public var popup_order:Array;
+        public var elements:Array;
         public var next_popup:PopUp = null;
 
         private static const CLOSED_POPUP:String = "closed_popup";
@@ -29,25 +30,14 @@ package{
         public static const SHOWING_NOTHING:Number = -699999999;
         public var _state:Number = SHOWING_NOTHING;
 
-        public var bornTime:Number = -1;
-        public var timeAlive:Number = 0;
-
         // this text is used to detect when state elements have been destroyed
         // and need to be re-created. it is never displayed, but
         // flagText._textField == null indicates that destroy() was called on
         // the containing state
         public var flagText:FlxText;
 
-        public var elements:Array;
-
         public function PopUpManager() {
-            this.bornTime = new Date().valueOf();
-
-            this.popup_order = new Array();
-            this.elements = new Array();
-
             this.loadPopUps();
-
             this.flagText = new FlxText(0, 0, 500, "");
             FlxG.state.add(this.flagText);
         }
@@ -90,8 +80,6 @@ package{
                 FlxG.state.add(this.flagText);
             }
 
-            this.timeAlive = new Date().valueOf() - this.bornTime;
-
             if(this._state == SHOWING_NOTHING) {
                 //do this check in case it's already time for the next popup
                 //bc if it is, that popup will open immediately which is bad
@@ -114,6 +102,7 @@ package{
         }
 
         public function loadPopUps():void {
+            this.elements = new Array();
             var _screen:ScreenManager = ScreenManager.getInstance();
 
             this.emojiButtons = new Dictionary();
