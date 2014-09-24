@@ -7,11 +7,14 @@ package{
 
         public static const ARROW_THROUGH:Number = 1;
         public var cur_anim:Number = 0;
+        public var timer_key:String;
 
-        public function PopUp(img:Class, w:Number, h:Number, time:Number, functionality:Number = 0) {
-            timer = time;
+        public function PopUp(img:Class, w:Number, h:Number, timer:Number,
+                              functionality:Number=0) {
+            this.timer_key = Math.random() + "";
+            this.timer = timer;
             this.bornTime = new Date().valueOf();
-            this.timeAlive = 0;
+            GlobalTimer.getInstance().setMark(this.timer_key, this.timer);
             var _screen:ScreenManager = ScreenManager.getInstance();
             super(_screen.screenWidth * .1, _screen.screenHeight * .1);
             this._state = functionality;
@@ -29,13 +32,14 @@ package{
             this.visible = false;
             this.scrollFactor.x = 0;
             this.scrollFactor.y = 0;
+        }
 
+        public function shouldShow():Boolean {
+            return GlobalTimer.getInstance().hasPassed(this.timer_key) &&
+                !this.shown;
         }
 
         override public function update():void {
-            this.currentTime = new Date().valueOf();
-            this.timeAlive = this.currentTime - this.bornTime;
-
             if(this._state == ARROW_THROUGH) {
                 //TODO change this it won't work with point and click
                 if(FlxG.keys.justPressed("LEFT") || FlxG.keys.justPressed("RIGHT") ||
@@ -54,8 +58,6 @@ package{
             }
         }
 
-        override public function destroy():void {
-
-        }
+        override public function destroy():void { }
     }
 }

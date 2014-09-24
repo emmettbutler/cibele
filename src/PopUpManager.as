@@ -169,9 +169,7 @@ package{
 
         public function checkForNextPopUp():void {
             for(var i:int = 0; i < popup_order.length; i++) {
-                if(this.popup_order[i].timeAlive >= this.popup_order[i].timer &&
-                   !this.popup_order[i].shown)
-                {
+                if(this.popup_order[i].shouldShow()) {
                     if(this.next_popup != null && !this.next_popup.shown){
                         this._state = FLASH_PROGRAM_PICKER;
                     }
