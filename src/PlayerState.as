@@ -21,6 +21,8 @@ package {
             this.player.addVisibleObjects();
             super.postCreate();
             this.game_cursor.setGameMouse();
+            FlxG.mouse.x = this.player.pos.x;
+            FlxG.mouse.y = this.player.pos.y;
 
             this.clickObjectGroups = [
                 PopUpManager.getInstance().elements,
