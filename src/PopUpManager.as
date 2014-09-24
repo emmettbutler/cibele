@@ -23,6 +23,7 @@ package{
         public var popup_order:Array;
         public var next_popup:PopUp = null;
 
+        private static const CLOSED_POPUP:String = "closed_popup";
         public static const SHOWING_POP_UP:Number = 0;
         public static const FLASH_PROGRAM_PICKER:Number = 1;
         public static const SHOWING_NOTHING:Number = -699999999;
@@ -65,7 +66,7 @@ package{
                 if(mouseScreenRect.overlaps(blinker_rect)) {
                     this.next_popup.shown = true;
                     this.next_popup.visible = true;
-                    GlobalTimer.getInstance().setMark("closed_popup",
+                    GlobalTimer.getInstance().setMark(CLOSED_POPUP,
                                                       GameSound.MSEC_PER_SEC);
                     this._state = SHOWING_POP_UP
                 }
@@ -78,7 +79,7 @@ package{
                 }
             } else if(this._state == SHOWING_POP_UP) {
                 this._state = SHOWING_NOTHING;
-                GlobalTimer.getInstance().setMark("closed_popup",
+                GlobalTimer.getInstance().setMark(CLOSED_POPUP,
                                                   GameSound.MSEC_PER_SEC);
             }
         }
@@ -96,7 +97,7 @@ package{
             if(this._state == SHOWING_NOTHING) {
                 //do this check in case it's already time for the next popup
                 //bc if it is, that popup will open immediately which is bad
-                if (GlobalTimer.getInstance().hasPassed("closed_popup")) {
+                if (GlobalTimer.getInstance().hasPassed(CLOSED_POPUP)) {
                     this.checkForNextPopUp();
                 }
                 if(this.next_popup != null){
@@ -154,7 +155,8 @@ package{
             this.blinker.scrollFactor.y = 0;
             this.elements.push(this.blinker);
 
-            this.program_picker = new UIElement(_screen.screenWidth * .001, _screen.screenHeight * .9);
+            this.program_picker = new UIElement(_screen.screenWidth * .001,
+                                                _screen.screenHeight * .9);
             this.program_picker.loadGraphic(ImgPrograms,false,false,227,43);
             this.program_picker.alpha = 1;
             this.program_picker.scrollFactor.x = 0;
@@ -181,7 +183,9 @@ package{
 
         public function checkForNextPopUp():void {
             for(var i:int = 0; i < popup_order.length; i++) {
-                if(this.popup_order[i].timeAlive >= this.popup_order[i].timer && !this.popup_order[i].shown) {
+                if(this.popup_order[i].timeAlive >= this.popup_order[i].timer &&
+                   !this.popup_order[i].shown)
+                {
                     if(this.next_popup != null && !this.next_popup.shown){
                         this._state = FLASH_PROGRAM_PICKER;
                     }
@@ -196,7 +200,8 @@ package{
             for (var key:Object in this.emojiButtons) {
                 element = key as UIElement;
                 overlap = mouseScreenRect.overlaps(
-                    new FlxRect(element.x, element.y, element.width, element.height)
+                    new FlxRect(element.x, element.y, element.width,
+                                element.height)
                 );
                 if (overlap) {
                     new Emote(_player.pos, this.emojiButtons[key]);
