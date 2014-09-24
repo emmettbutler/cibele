@@ -81,8 +81,6 @@ package{
             }
 
             if(this._state == SHOWING_NOTHING) {
-                //do this check in case it's already time for the next popup
-                //bc if it is, that popup will open immediately which is bad
                 if (GlobalTimer.getInstance().hasPassed(CLOSED_POPUP)) {
                     this.checkForNextPopUp();
                 }

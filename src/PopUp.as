@@ -13,8 +13,8 @@ package{
                               functionality:Number=0) {
             this.timer_key = Math.random() + "";
             this.timer = timer;
-            this.bornTime = new Date().valueOf();
             GlobalTimer.getInstance().setMark(this.timer_key, this.timer);
+
             var _screen:ScreenManager = ScreenManager.getInstance();
             super(_screen.screenWidth * .1, _screen.screenHeight * .1);
             this._state = functionality;
