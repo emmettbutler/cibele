@@ -161,7 +161,9 @@ package{
                 this.elements.push(this.popup_order[i]);
                 FlxG.state.add(this.popup_order[i]);
             }
-
+            if(this.next_popup == null) {
+                this.next_popup = this.popup_order[0];
+            }
             this.checkForNextPopUp();
         }
 
