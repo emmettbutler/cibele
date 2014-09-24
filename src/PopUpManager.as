@@ -108,8 +108,8 @@ package{
 
             this.emojiButtons = new Dictionary();
 
-            var emoji_happy:UIElement = new UIElement(_screen.screenWidth * .7,
-                                                      _screen.screenWidth * .01);
+            var emoji_happy:UIElement = new UIElement(_screen.screenWidth * .2,
+                                                _screen.screenHeight * .01);
             emoji_happy.loadGraphic(ImgEmojiHappy,false,false,85,45);
             FlxG.state.add(emoji_happy);
             emoji_happy.scrollFactor.x = 0;
@@ -117,8 +117,8 @@ package{
             this.elements.push(emoji_happy);
             emojiButtons[emoji_happy] = Emote.HAPPY;
 
-            var emoji_sad:UIElement = new UIElement(_screen.screenWidth * .8,
-                                                    _screen.screenWidth * .01);
+            var emoji_sad:UIElement = new UIElement(_screen.screenWidth * .27,
+                                                _screen.screenHeight * .01);
             emoji_sad.loadGraphic(ImgEmojiSad,false,false,71,45);
             FlxG.state.add(emoji_sad);
             emoji_sad.scrollFactor.x = 0;
@@ -126,8 +126,8 @@ package{
             this.elements.push(emoji_sad);
             this.emojiButtons[emoji_sad] = Emote.SAD;
 
-            var emoji_angry:UIElement = new UIElement(_screen.screenWidth * .9,
-                                                      _screen.screenWidth * .01);
+            var emoji_angry:UIElement = new UIElement(_screen.screenWidth * .32,
+                                                _screen.screenHeight * .01);
             emoji_angry.loadGraphic(ImgEmojiAngry,false,false,93,45);
             FlxG.state.add(emoji_angry);
             emoji_angry.scrollFactor.x = 0;
@@ -143,8 +143,8 @@ package{
             this.blinker.scrollFactor.y = 0;
             this.elements.push(this.blinker);
 
-            this.program_picker = new UIElement(_screen.screenWidth * .001,
-                                                _screen.screenHeight * .9);
+            this.program_picker = new UIElement(_screen.screenWidth * .4,
+                                                _screen.screenHeight * .94);
             this.program_picker.loadGraphic(ImgPrograms,false,false,227,43);
             this.program_picker.alpha = 1;
             this.program_picker.scrollFactor.x = 0;

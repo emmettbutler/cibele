@@ -80,26 +80,26 @@ package{
         public function initNotifications():void {
             this.mouse_rect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 5, 5);
             var notifications_pos:DHPoint = new DHPoint(
-                _screen.screenWidth * .001, _screen.screenHeight * .75);
+                _screen.screenWidth * .001, _screen.screenHeight * .001);
             var img_msg:UIElement = new UIElement(
                 notifications_pos.x, notifications_pos.y);
-            img_msg.loadGraphic(ImgMsg, false, false, 197, 71);
+            img_msg.loadGraphic(ImgMsg, false, false, 520, 82);
             img_msg.scrollFactor = new FlxPoint(0, 0);
             img_msg.active = false;
             FlxG.state.add(img_msg);
             this.elements.push(img_msg);
 
             this.notifications_text = new FlxText(
-                notifications_pos.x, notifications_pos.y,
+                notifications_pos.x, notifications_pos.y+20,
                 img_msg.width, this.unread_count.toString() + " unread messages.\n\nN to emote.");
-            this.notifications_text.setFormat("NexaBold-Regular",16,0xff000000,"left");
+            this.notifications_text.setFormat("NexaBold-Regular",24,0xff000000,"left");
             this.notifications_text.scrollFactor = new FlxPoint(0, 0);
             this.notifications_text.active = false;
             FlxG.state.add(this.notifications_text);
 
             this.notifications_box = new FlxRect(this.notifications_text.x,
                                                  this.notifications_text.y,
-                                                 img_msg.width, 50);
+                                                 img_msg.width/2, 50);
             this.notifications_box.x = this.notifications_text.x;
             this.notifications_box.y = this.notifications_text.y;
 
