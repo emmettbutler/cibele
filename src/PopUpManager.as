@@ -74,6 +74,7 @@ package{
         }
 
         public function update():void {
+            FlxG.log(_state);
             if(this.flagText._textField == null) {
                 this.loadPopUps();
                 this.flagText = new FlxText(0, 0, 500, "");
@@ -153,7 +154,7 @@ package{
             this.blinker.y = program_picker.y;
 
             this.popup_order = [
-                new PopUp(ImgBulldogHell, 1030, 510, 1),
+                new PopUp(ImgBulldogHell, 1030, 510, 0),
                 new PopUp(ImgCibSelfie1, 645, 457, 165000, 1000),
                 new PopUp(ImgForumSelfie1, 1174, 585, 185000)
             ];
@@ -161,16 +162,13 @@ package{
                 this.elements.push(this.popup_order[i]);
                 FlxG.state.add(this.popup_order[i]);
             }
-            if(this.next_popup == null) {
-                this.next_popup = this.popup_order[0];
-            }
             this.checkForNextPopUp();
         }
 
         public function checkForNextPopUp():void {
             for(var i:int = 0; i < popup_order.length; i++) {
                 if(this.popup_order[i].shouldShow()) {
-                    if(this.next_popup != null && !this.next_popup.shown){
+                    if(!this.popup_order[i].shown){
                         this._state = FLASH_PROGRAM_PICKER;
                     }
                     this.next_popup = this.popup_order[i];
