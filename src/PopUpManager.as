@@ -4,7 +4,10 @@ package{
     import flash.utils.Dictionary;
 
     public class PopUpManager {
-        [Embed(source="../assets/programpanel.png")] private var ImgPrograms:Class;
+        [Embed(source="../assets/game_button.png")] private var ImgGameButton:Class;
+        [Embed(source="../assets/file_button.png")] private var ImgFileButton:Class;
+        [Embed(source="../assets/photo_button.png")] private var ImgPhotoButton:Class;
+        [Embed(source="../assets/internet_button.png")] private var ImgInternetButton:Class;
         [Embed(source="../assets/bulldoghell.png")] private var ImgBulldogHell:Class;
         [Embed(source="../assets/cib_selfies_1.png")] private var ImgCibSelfie1:Class;
         [Embed(source="../assets/forum_selfies_1.png")] private var ImgForumSelfie1:Class;
@@ -15,10 +18,14 @@ package{
         public static var _instance:PopUpManager = null;
 
         public var _player:Player;
-        public var program_picker:UIElement = null;
+        public var internet_button:UIElement = null;
+        public var game_button:UIElement = null;
+        public var file_button:UIElement = null;
+        public var photo_button:UIElement = null;
         public var blinker:UIElement;
 
         private var emojiButtons:Dictionary;
+        private var programButtons:Dictionary;
 
         public var popup_order:Array;
         public var elements:Array;
@@ -48,12 +55,8 @@ package{
                                                       5, 5);
             this.emote(mouseScreenRect);
 
-            var blinker_rect:FlxRect = new FlxRect(blinker.x, blinker.y,
-                                                   program_picker.width,
-                                                   program_picker.height);
-
             if(this._state == SHOWING_NOTHING) {
-                if(mouseScreenRect.overlaps(blinker_rect)) {
+                if(this.programPicker(mouseScreenRect)) {
                     this.next_popup.shown = true;
                     this.next_popup.visible = true;
                     GlobalTimer.getInstance().setMark(CLOSED_POPUP,
@@ -61,7 +64,7 @@ package{
                     this._state = SHOWING_POP_UP
                 }
             } else if(this._state == FLASH_PROGRAM_PICKER) {
-                if(mouseScreenRect.overlaps(blinker_rect)) {
+                if(this.programPicker(mouseScreenRect)) {
                     this.blinker.alpha = 0;
                     this.next_popup.shown = true;
                     this.next_popup.visible = true;
@@ -72,6 +75,22 @@ package{
                 GlobalTimer.getInstance().setMark(CLOSED_POPUP,
                                                   GameSound.MSEC_PER_SEC);
             }
+        }
+
+        public function programPicker(mouseScreenRect:FlxRect):Boolean {
+            var overlap:Boolean, element:UIElement;
+            for (var key:Object in this.programButtons) {
+                element = key as UIElement;
+                overlap = mouseScreenRect.overlaps(
+                    new FlxRect(element.x, element.y, element.width,
+                                element.height)
+                );
+                if (overlap) {
+                    return true;
+                    break;
+                }
+            }
+            return false;
         }
 
         public function update():void {
@@ -107,6 +126,7 @@ package{
             var _screen:ScreenManager = ScreenManager.getInstance();
 
             this.emojiButtons = new Dictionary();
+            this.programButtons = new Dictionary();
 
             var emoji_happy:UIElement = new UIElement(_screen.screenWidth * .2,
                                                 _screen.screenHeight * .01);
@@ -136,24 +156,55 @@ package{
             this.emojiButtons[emoji_angry] = Emote.ANGRY;
 
             this.blinker = new UIElement(0,0);
-            this.blinker.makeGraphic(227,43,0xffff0000);
+            this.blinker.makeGraphic(237,43,0xffff0000);
             FlxG.state.add(this.blinker);
             this.blinker.alpha = 0;
             this.blinker.scrollFactor.x = 0;
             this.blinker.scrollFactor.y = 0;
             this.elements.push(this.blinker);
 
-            this.program_picker = new UIElement(_screen.screenWidth * .4,
+            this.game_button = new UIElement(_screen.screenWidth * .4,
                                                 _screen.screenHeight * .94);
-            this.program_picker.loadGraphic(ImgPrograms,false,false,227,43);
-            this.program_picker.alpha = 1;
-            this.program_picker.scrollFactor.x = 0;
-            this.program_picker.scrollFactor.y = 0;
-            FlxG.state.add(this.program_picker);
-            this.elements.push(this.program_picker);
+            this.game_button.loadGraphic(ImgGameButton,false,false,62,43);
+            this.game_button.alpha = 1;
+            this.game_button.scrollFactor.x = 0;
+            this.game_button.scrollFactor.y = 0;
+            FlxG.state.add(this.game_button);
+            this.elements.push(this.game_button);
+            this.programButtons[this.game_button] = 1111;
 
-            this.blinker.x = program_picker.x;
-            this.blinker.y = program_picker.y;
+            this.internet_button = new UIElement(_screen.screenWidth * .45,
+                                                _screen.screenHeight * .94);
+            this.internet_button.loadGraphic(ImgInternetButton,false,false,52,43);
+            this.internet_button.alpha = 1;
+            this.internet_button.scrollFactor.x = 0;
+            this.internet_button.scrollFactor.y = 0;
+            FlxG.state.add(this.internet_button);
+            this.elements.push(this.internet_button);
+            this.programButtons[this.internet_button] = 1112;
+
+            this.file_button = new UIElement(_screen.screenWidth * .5,
+                                                _screen.screenHeight * .94);
+            this.file_button.loadGraphic(ImgFileButton,false,false,54,43);
+            this.file_button.alpha = 1;
+            this.file_button.scrollFactor.x = 0;
+            this.file_button.scrollFactor.y = 0;
+            FlxG.state.add(this.file_button);
+            this.elements.push(this.file_button);
+            this.programButtons[this.file_button] = 1113;
+
+            this.photo_button = new UIElement(_screen.screenWidth * .55,
+                                                _screen.screenHeight * .94);
+            this.photo_button.loadGraphic(ImgPhotoButton,false,false,44,43);
+            this.photo_button.alpha = 1;
+            this.photo_button.scrollFactor.x = 0;
+            this.photo_button.scrollFactor.y = 0;
+            FlxG.state.add(this.photo_button);
+            this.elements.push(this.photo_button);
+            this.programButtons[this.photo_button] = 1114;
+
+            this.blinker.x = game_button.x;
+            this.blinker.y = game_button.y;
 
             this.popup_order = [
                 new PopUp(ImgBulldogHell, 1030, 510, 0),
