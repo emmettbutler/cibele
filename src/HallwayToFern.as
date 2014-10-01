@@ -124,15 +124,22 @@ package{
                 }
 
                 function playWannaDuo():void {
-                    SoundManager.getInstance().playSound(
-                        SndHurryUp, 4*GameSound.MSEC_PER_SEC, playConvo2,
-                        false, 1, GameSound.VOCAL
-                    );
+                    if (!(FlxG.state is IkuTurso)) {
+                        SoundManager.getInstance().playSound(
+                            SndHurryUp, 4*GameSound.MSEC_PER_SEC, playConvo2,
+                            false, 1, GameSound.VOCAL
+                        );
+                    } else {
+                        SoundManager.getInstance().playSound(
+                            Convo2, 24000, convo2Done, false, 1, GameSound.VOCAL,
+                            "convo_2_hall"
+                        );
+                    }
                 }
 
                 function convo1Done():void {
                     GlobalTimer.getInstance().setMark("delayed_wannaduo",
-                        10*GameSound.MSEC_PER_SEC, playWannaDuo);
+                        1, playWannaDuo);
                 }
 
                 SoundManager.getInstance().playSound(
