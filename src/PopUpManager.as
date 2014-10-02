@@ -26,8 +26,8 @@ package{
 
         private var emojiButtons:Dictionary;
         private var programButtons:Dictionary;
+        public var popups:Dictionary;
 
-        public var popup_order:Array;
         public var elements:Array;
         public var next_popup:PopUp = null;
         public var popup_active:Boolean = false;
@@ -37,6 +37,9 @@ package{
         public static const FLASH_PROGRAM_PICKER:Number = 1;
         public static const SHOWING_NOTHING:Number = -699999999;
         public var _state:Number = SHOWING_NOTHING;
+        public static const BULLDOG_HELL:String = "bulldoghell";
+        public static const SELFIES_1:String = "selfies1";
+        public static const FORUM_1:String = "forum1";
 
         // this text is used to detect when state elements have been destroyed
         // and need to be re-created. it is never displayed, but
@@ -57,23 +60,25 @@ package{
 
             if(this._state == SHOWING_NOTHING) {
                 if(this.programPicker(mouseScreenRect)) {
-                    this.next_popup.shown = true;
-                    this.next_popup.visible = true;
-                    GlobalTimer.getInstance().setMark(CLOSED_POPUP,
-                                                      GameSound.MSEC_PER_SEC);
-                    this._state = SHOWING_POP_UP
+                    if (this.next_popup != null) {
+                        this.next_popup.shown = true;
+                        this.next_popup.visible = true;
+                        GlobalTimer.getInstance().setMark(CLOSED_POPUP,
+                                                        GameSound.MSEC_PER_SEC);
+                        this._state = SHOWING_POP_UP
+                    }
                 }
             } else if(this._state == FLASH_PROGRAM_PICKER) {
                 if(this.programPicker(mouseScreenRect)) {
-                    this.blinker.alpha = 0;
-                    this.next_popup.shown = true;
-                    this.next_popup.visible = true;
-                    this._state = SHOWING_POP_UP;
+                    if (this.next_popup != null) {
+                        this.blinker.alpha = 0;
+                        this.next_popup.shown = true;
+                        this.next_popup.visible = true;
+                        this._state = SHOWING_POP_UP;
+                    }
                 }
             } else if(this._state == SHOWING_POP_UP) {
                 this._state = SHOWING_NOTHING;
-                GlobalTimer.getInstance().setMark(CLOSED_POPUP,
-                                                  GameSound.MSEC_PER_SEC);
             }
         }
 
@@ -101,24 +106,20 @@ package{
             }
 
             if(this._state == SHOWING_NOTHING) {
-                if (GlobalTimer.getInstance().hasPassed(CLOSED_POPUP)) {
-                    this.checkForNextPopUp();
-                }
                 if(this.next_popup != null){
                     this.next_popup.visible = false;
                 }
             } else if(this._state == FLASH_PROGRAM_PICKER) {
-                if(this.next_popup.shown){
-                    this._state = SHOWING_NOTHING;
-                }
-                if(this.blinker.alpha >= 1) {
-                    this.blinker.alpha -= .1;
-                } else if(this.blinker.alpha <= 0) {
-                    this.blinker.alpha += .1;
-                }
+                this.blinker.alpha = Math.sin(.1 *
+                    GlobalTimer.getInstance().pausingTimer());
             } else if(this._state == SHOWING_POP_UP) {
                 this.popup_active = true;
             }
+        }
+
+        public function sendPopup(key:String):void {
+            this._state = FLASH_PROGRAM_PICKER;
+            this.next_popup = this.popups[key];
         }
 
         public function loadPopUps():void {
@@ -206,27 +207,14 @@ package{
             this.blinker.x = game_button.x;
             this.blinker.y = game_button.y;
 
-            this.popup_order = [
-                new PopUp(ImgBulldogHell, 1030, 510, 0),
-                new PopUp(ImgCibSelfie1, 645, 457, 165000, 1000),
-                new PopUp(ImgForumSelfie1, 1174, 585, 185000)
-            ];
-            for (var i:int = 0; i < this.popup_order.length; i++) {
-                this.elements.push(this.popup_order[i]);
-                FlxG.state.add(this.popup_order[i]);
-            }
-            this.checkForNextPopUp();
-        }
+            this.popups = new Dictionary();
+            this.popups[BULLDOG_HELL] = new PopUp(ImgBulldogHell, 1030, 510, 1);
+            this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 645, 457, 165000, 1000);
+            this.popups[FORUM_1] = new PopUp(ImgForumSelfie1, 1174, 585, 185000);
 
-        public function checkForNextPopUp():void {
-            for(var i:int = 0; i < popup_order.length; i++) {
-                if(this.popup_order[i].shouldShow()) {
-                    if(!this.popup_order[i].shown){
-                        this._state = FLASH_PROGRAM_PICKER;
-                    }
-                    this.next_popup = this.popup_order[i];
-                    break;
-                }
+            for (var key:Object in this.popups) {
+                this.elements.push(this.popups[key]);
+                FlxG.state.add(this.popups[key]);
             }
         }
 

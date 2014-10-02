@@ -139,7 +139,8 @@ package{
 
                 function convo1Done():void {
                     GlobalTimer.getInstance().setMark("delayed_wannaduo",
-                        1, playWannaDuo);
+                        10*GameSound.MSEC_PER_SEC, playWannaDuo);
+                    PopUpManager.getInstance().sendPopup(PopUpManager.BULLDOG_HELL);
                 }
 
                 SoundManager.getInstance().playSound(
