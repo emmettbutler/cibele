@@ -62,8 +62,15 @@ package {
             this.paused = !this.paused;
         }
 
+        public function pausingTimer():Number {
+            if (this.paused) {
+                return this.pauseStart;
+            }
+            return this.getTotalTime();
+        }
+
         public function getTotalTime():Number {
-            return new Date().valueOf() - this.startTime;
+            return new Date().valueOf() - this.startTime - this.totalPausedTime;
         }
 
         public function update():void {
