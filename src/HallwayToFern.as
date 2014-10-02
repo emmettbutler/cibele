@@ -7,6 +7,7 @@ package{
         [Embed(source="../assets/voc_firstconvo.mp3")] private var Convo1:Class;
         [Embed(source="../assets/voc_ikuturso_start.mp3")] private var Convo2:Class;
         [Embed(source="../assets/voc_extra_wannaduo.mp3")] private var SndHurryUp:Class;
+        [Embed(source="../assets/voc_extra_ichiareyouthere.mp3")] private var SndRUThere:Class;
 
         public var call_button:GameObject;
         public var accept_call:Boolean = false;
@@ -137,9 +138,16 @@ package{
                     }
                 }
 
+                function playRUThere():void {
+                    SoundManager.getInstance().playSound(
+                        SndRUThere, 1.5*GameSound.MSEC_PER_SEC, playWannaDuo,
+                        false, 1, GameSound.VOCAL
+                    );
+                }
+
                 function convo1Done():void {
                     GlobalTimer.getInstance().setMark("delayed_wannaduo",
-                        10*GameSound.MSEC_PER_SEC, playWannaDuo);
+                        10*GameSound.MSEC_PER_SEC, playRUThere);
                     PopUpManager.getInstance().sendPopup(PopUpManager.BULLDOG_HELL);
                 }
 
