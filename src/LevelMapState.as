@@ -108,37 +108,25 @@ package {
         public function playBitDialogue():void {
             if(player.isAttacking()) {
                 if(pathWalker.inViewOfPlayer()){
-                    SoundManager.getInstance().playSound(
-                        bitDialoguePieces[ICHI_NICEHIT][FILE], 4*GameSound.MSEC_PER_SEC, null,
-                        false, 1, GameSound.VOCAL
-                    );
-                    bitDialoguePieces[ICHI_NICEHIT][HAS_PLAYED] = true;
+                    GlobalTimer.getInstance().setMark("delayed_ichinicehit",
+                        10*GameSound.MSEC_PER_SEC, this.playIchiNiceHit);
                 }
             } else if(!pathWalker.inViewOfPlayer()) {
                 var rand:Number = Math.random() * 2;
                 if(!this.dirDialgueLock) {
                     this.dirDialgueLock = true;
                     if(rand > 1) {
-                        SoundManager.getInstance().playSound(
-                            bitDialoguePieces[CIB_WHICHWAY][FILE], 2*GameSound.MSEC_PER_SEC, this.npcDirectionalDialogue,
-                            false, 1, GameSound.VOCAL
-                        );
-                        bitDialoguePieces[CIB_WHICHWAY][HAS_PLAYED] = true;
+                        GlobalTimer.getInstance().setMark("delayed_cibwhichway",
+                        1*GameSound.MSEC_PER_SEC, this.playCibWhichWay);
                     } else {
-                        SoundManager.getInstance().playSound(
-                            bitDialoguePieces[ICHI_WHICHWAY][FILE], 2*GameSound.MSEC_PER_SEC, this.playerDirectionalDialogue,
-                            false, 1, GameSound.VOCAL
-                        );
-                        bitDialoguePieces[ICHI_WHICHWAY][HAS_PLAYED] = true;
+                        GlobalTimer.getInstance().setMark("delayed_ichiwhichway",
+                        1*GameSound.MSEC_PER_SEC, this.playIchiWhichWay);
                     }
                 }
 
             } else if(pathWalker.isAttacking()) {
-                SoundManager.getInstance().playSound(
-                    bitDialoguePieces[CIB_NICEHIT][FILE], 4*GameSound.MSEC_PER_SEC, null,
-                    false, 1, GameSound.VOCAL
-                );
-                bitDialoguePieces[CIB_NICEHIT][HAS_PLAYED] = true;
+                GlobalTimer.getInstance().setMark("delayed_cibnicehit",
+                        1*GameSound.MSEC_PER_SEC, this.playCibNiceHit);
             }
         }
 
@@ -209,6 +197,38 @@ package {
                     this.dirForDialogue = NORTH;
                 }
             }
+        }
+
+        public function playIchiNiceHit():void {
+            SoundManager.getInstance().playSound(
+                bitDialoguePieces[ICHI_NICEHIT][FILE], 4*GameSound.MSEC_PER_SEC, null,
+                false, 1, GameSound.VOCAL
+            );
+            bitDialoguePieces[ICHI_NICEHIT][HAS_PLAYED] = true;
+        }
+
+        public function playCibWhichWay():void {
+            SoundManager.getInstance().playSound(
+                bitDialoguePieces[CIB_WHICHWAY][FILE], 2*GameSound.MSEC_PER_SEC, this.npcDirectionalDialogue,
+                false, 1, GameSound.VOCAL
+            );
+            bitDialoguePieces[CIB_WHICHWAY][HAS_PLAYED] = true;
+        }
+
+        public function playIchiWhichWay():void {
+            SoundManager.getInstance().playSound(
+                bitDialoguePieces[ICHI_WHICHWAY][FILE], 2*GameSound.MSEC_PER_SEC, this.playerDirectionalDialogue,
+                false, 1, GameSound.VOCAL
+            );
+            bitDialoguePieces[ICHI_WHICHWAY][HAS_PLAYED] = true;
+        }
+
+        public function playCibNiceHit():void {
+            SoundManager.getInstance().playSound(
+                bitDialoguePieces[CIB_NICEHIT][FILE], 4*GameSound.MSEC_PER_SEC, null,
+                false, 1, GameSound.VOCAL
+            );
+            bitDialoguePieces[CIB_NICEHIT][HAS_PLAYED] = true;
         }
 
         override public function updateCursor():void {
