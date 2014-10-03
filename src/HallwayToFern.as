@@ -146,8 +146,15 @@ package{
                 }
 
                 function convo1Done():void {
-                    GlobalTimer.getInstance().setMark("delayed_wannaduo",
-                        10*GameSound.MSEC_PER_SEC, playRUThere);
+                    if(!(FlxG.state is IkuTurso)){
+                        GlobalTimer.getInstance().setMark("delayed_wannaduo",
+                            10*GameSound.MSEC_PER_SEC, playRUThere);
+                    } else {
+                        SoundManager.getInstance().playSound(
+                            Convo2, 24000, null, false, 1, GameSound.VOCAL,
+                            "convo_2_hall"
+                        );
+                    }
                     PopUpManager.getInstance().sendPopup(PopUpManager.BULLDOG_HELL);
                 }
 

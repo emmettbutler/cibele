@@ -23,10 +23,10 @@ package{
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 [Convo1, 132*GameSound.MSEC_PER_SEC],
-                [Convo2, 25*GameSound.MSEC_PER_SEC, 1000*GameSound.MSEC_PER_SEC],
-                [Convo3, 107*GameSound.MSEC_PER_SEC, 5*GameSound.MSEC_PER_SEC],
-                [Convo4, 15*GameSound.MSEC_PER_SEC, 5*GameSound.MSEC_PER_SEC],
-                [Convo5, 30*GameSound.MSEC_PER_SEC, 5*GameSound.MSEC_PER_SEC]
+                [Convo2, 25*GameSound.MSEC_PER_SEC, 500*GameSound.MSEC_PER_SEC],
+                [Convo3, 107*GameSound.MSEC_PER_SEC, 500*GameSound.MSEC_PER_SEC],
+                [Convo4, 15*GameSound.MSEC_PER_SEC, 500*GameSound.MSEC_PER_SEC],
+                [Convo5, 30*GameSound.MSEC_PER_SEC, 500*GameSound.MSEC_PER_SEC]
             ];
         }
 
@@ -67,8 +67,7 @@ package{
         public function playFirstConvo():void {
             this.conversationCounter = 0;
             this.convo1Sound = SoundManager.getInstance().playSound(
-                //TEST
-                Convo2, 25000, this.playNextConvoPiece, false, 1, GameSound.VOCAL
+                Convo1, 132000, this.playNextConvoPiece, false, 1, GameSound.VOCAL
             );
         }
 
