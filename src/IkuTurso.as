@@ -67,7 +67,7 @@ package{
         public function playFirstConvo():void {
             this.conversationCounter = 0;
             this.convo1Sound = SoundManager.getInstance().playSound(
-                Convo1, 132000, this.playNextConvoPiece, false, 1, GameSound.VOCAL
+                Convo2, 1000, this.playNextConvoPiece, false, 1, GameSound.VOCAL
             );
         }
 

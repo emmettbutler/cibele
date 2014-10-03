@@ -14,6 +14,8 @@ package {
         [Embed(source="../assets/voc_extra_ichinorth.mp3")] private var IchiNorth:Class;
         [Embed(source="../assets/voc_extra_ichiwest.mp3")] private var IchiWest:Class;
         [Embed(source="../assets/voc_extra_ichisouth.mp3")] private var IchiSouth:Class;
+        [Embed(source="../assets/voc_extra_ciblost.mp3")] private var CibWhichWay:Class;
+
         public var debugText:FlxText;
         public var bgLoader:BackgroundLoader;
 
@@ -42,9 +44,10 @@ package {
         public static const ICHI_NORTH:int = 8;
         public static const ICHI_WEST:int = 9;
         public static const ICHI_SOUTH:int = 10;
+        public static const CIB_WHICHWAY:int = 11;
 
         public var dirForDialogue:Number;
-        //public var bitDialoguePieces:Array;
+        public var dirDialgueLock:Boolean = false;
         public static var bitDialoguePieces:Dictionary = new Dictionary();
 
         override public function create():void {
@@ -54,13 +57,14 @@ package {
             bitDialoguePieces[CIB_EAST] = [CibEast, false, true];
             bitDialoguePieces[CIB_SOUTH] = [CibSouth, false, true];
             bitDialoguePieces[CIB_NORTH] = [CibNorth, false, true];
-            bitDialoguePieces[CIB_SOUTH] = [CibSouth, false, true];
+            bitDialoguePieces[CIB_WEST] = [CibWest, false, true];
             bitDialoguePieces[ICHI_NICEHIT] = [IchiNiceHit, false, false];
             bitDialoguePieces[ICHI_WHICHWAY] = [IchiWhichWay, false, true];
             bitDialoguePieces[ICHI_NORTH] = [IchiNorth, false, true];
             bitDialoguePieces[ICHI_SOUTH] = [IchiSouth, false, true];
             bitDialoguePieces[ICHI_WEST] = [IchiWest, false, true];
             bitDialoguePieces[ICHI_EAST] = [IchiEast, false, true];
+            bitDialoguePieces[CIB_WHICHWAY] = [CibWhichWay, false, false];
 
             FlxG.bgColor = 0xffffffff;
             this.bornTime = new Date().valueOf();
@@ -74,19 +78,6 @@ package {
             FlxG.camera.setBounds(0, 0, bgLoader.cols * bgLoader.estTileWidth,
                                   bgLoader.rows * bgLoader.estTileHeight);
             super.postCreate();
-
-            //name of dialogue and
-            //whether or not it can repeat in bit dialogue sequence and
-            //if it has played at least once
-            /*bitDialoguePieces = [
-                [CibNiceHit, false, false],
-                [IchiWhichWay, true, false],
-                [IchiNiceHit, false, false],
-                [CibNorth, true, false],
-                [CibSouth, true, false],
-                [CibEast, true, false],
-                [CibWest, true, false]
-            ];*/
         }
 
         override public function update():void {
@@ -124,11 +115,24 @@ package {
                     bitDialoguePieces[ICHI_NICEHIT][HAS_PLAYED] = true;
                 }
             } else if(!pathWalker.inViewOfPlayer()) {
-                SoundManager.getInstance().playSound(
-                    bitDialoguePieces[ICHI_WHICHWAY][FILE], 2*GameSound.MSEC_PER_SEC, this.playerDirectionalDialogue,
-                    false, 1, GameSound.VOCAL
-                );
-                bitDialoguePieces[ICHI_WHICHWAY][HAS_PLAYED] = true;
+                var rand:Number = Math.random() * 2;
+                if(!this.dirDialgueLock) {
+                    this.dirDialgueLock = true;
+                    if(rand > 1) {
+                        SoundManager.getInstance().playSound(
+                            bitDialoguePieces[CIB_WHICHWAY][FILE], 2*GameSound.MSEC_PER_SEC, this.npcDirectionalDialogue,
+                            false, 1, GameSound.VOCAL
+                        );
+                        bitDialoguePieces[CIB_WHICHWAY][HAS_PLAYED] = true;
+                    } else {
+                        SoundManager.getInstance().playSound(
+                            bitDialoguePieces[ICHI_WHICHWAY][FILE], 2*GameSound.MSEC_PER_SEC, this.playerDirectionalDialogue,
+                            false, 1, GameSound.VOCAL
+                        );
+                        bitDialoguePieces[ICHI_WHICHWAY][HAS_PLAYED] = true;
+                    }
+                }
+
             } else if(pathWalker.isAttacking()) {
                 SoundManager.getInstance().playSound(
                     bitDialoguePieces[CIB_NICEHIT][FILE], 4*GameSound.MSEC_PER_SEC, null,
@@ -161,6 +165,33 @@ package {
                     false, 1, GameSound.VOCAL
                 );
             }
+            this.dirDialgueLock = false;
+        }
+
+        public function npcDirectionalDialogue():void {
+            this.objDirectionalDialogue(player, pathWalker);
+            if(this.dirForDialogue == EAST) {
+                SoundManager.getInstance().playSound(
+                    bitDialoguePieces[ICHI_EAST][FILE], 4*GameSound.MSEC_PER_SEC, null,
+                    false, 1, GameSound.VOCAL
+                );
+            } else if(this.dirForDialogue == WEST) {
+                SoundManager.getInstance().playSound(
+                    bitDialoguePieces[ICHI_WEST][FILE], 4*GameSound.MSEC_PER_SEC, null,
+                    false, 1, GameSound.VOCAL
+                );
+            } else if(this.dirForDialogue == SOUTH) {
+                SoundManager.getInstance().playSound(
+                    bitDialoguePieces[ICHI_SOUTH][FILE], 4*GameSound.MSEC_PER_SEC, null,
+                    false, 1, GameSound.VOCAL
+                );
+            } else if(this.dirForDialogue == NORTH) {
+                SoundManager.getInstance().playSound(
+                    bitDialoguePieces[ICHI_NORTH][FILE], 4*GameSound.MSEC_PER_SEC, null,
+                    false, 1, GameSound.VOCAL
+                );
+            }
+            this.dirDialgueLock = false;
         }
 
         public function objDirectionalDialogue(from_obj:PartyMember, to_obj:PartyMember):void {
