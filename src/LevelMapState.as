@@ -1,5 +1,6 @@
 package {
     import org.flixel.*;
+    import flash.utils.Dictionary;
 
     public class LevelMapState extends PathEditorState {
         [Embed(source="../assets/voc_extra_cibnicehit.mp3")] private var CibNiceHit:Class;
@@ -9,6 +10,10 @@ package {
         [Embed(source="../assets/voc_extra_cibnorth.mp3")] private var CibNorth:Class;
         [Embed(source="../assets/voc_extra_cibwest.mp3")] private var CibWest:Class;
         [Embed(source="../assets/voc_extra_cibsouth.mp3")] private var CibSouth:Class;
+        [Embed(source="../assets/voc_extra_ichieast.mp3")] private var IchiEast:Class;
+        [Embed(source="../assets/voc_extra_ichinorth.mp3")] private var IchiNorth:Class;
+        [Embed(source="../assets/voc_extra_ichiwest.mp3")] private var IchiWest:Class;
+        [Embed(source="../assets/voc_extra_ichisouth.mp3")] private var IchiSouth:Class;
         public var debugText:FlxText;
         public var bgLoader:BackgroundLoader;
 
@@ -22,11 +27,40 @@ package {
         public static const EAST:int = 9987;
         public static const WEST:int = 3447;
 
-        public var bitDialoguePieces:Array;
+        public static const CAN_REPEAT:int = 2;
+        public static const HAS_PLAYED:int = 1;
+        public static const FILE:int = 0;
+
+        public static const CIB_NICEHIT:int = 0;
+        public static const CIB_EAST:int = 1;
+        public static const CIB_NORTH:int = 2;
+        public static const CIB_WEST:int = 3;
+        public static const CIB_SOUTH:int = 4;
+        public static const ICHI_NICEHIT:int = 5;
+        public static const ICHI_WHICHWAY:int = 6;
+        public static const ICHI_EAST:int = 7;
+        public static const ICHI_NORTH:int = 8;
+        public static const ICHI_WEST:int = 9;
+        public static const ICHI_SOUTH:int = 10;
+
         public var dirForDialogue:Number;
+        //public var bitDialoguePieces:Array;
+        public static var bitDialoguePieces:Dictionary = new Dictionary();
 
         override public function create():void {
             super.__create(new DHPoint(4600, 7565));
+
+            bitDialoguePieces[CIB_NICEHIT] = [CibNiceHit, false, false];
+            bitDialoguePieces[CIB_EAST] = [CibEast, false, true];
+            bitDialoguePieces[CIB_SOUTH] = [CibSouth, false, true];
+            bitDialoguePieces[CIB_NORTH] = [CibNorth, false, true];
+            bitDialoguePieces[CIB_SOUTH] = [CibSouth, false, true];
+            bitDialoguePieces[ICHI_NICEHIT] = [IchiNiceHit, false, false];
+            bitDialoguePieces[ICHI_WHICHWAY] = [IchiWhichWay, false, true];
+            bitDialoguePieces[ICHI_NORTH] = [IchiNorth, false, true];
+            bitDialoguePieces[ICHI_SOUTH] = [IchiSouth, false, true];
+            bitDialoguePieces[ICHI_WEST] = [IchiWest, false, true];
+            bitDialoguePieces[ICHI_EAST] = [IchiEast, false, true];
 
             FlxG.bgColor = 0xffffffff;
             this.bornTime = new Date().valueOf();
@@ -44,7 +78,7 @@ package {
             //name of dialogue and
             //whether or not it can repeat in bit dialogue sequence and
             //if it has played at least once
-            bitDialoguePieces = [
+            /*bitDialoguePieces = [
                 [CibNiceHit, false, false],
                 [IchiWhichWay, true, false],
                 [IchiNiceHit, false, false],
@@ -52,7 +86,7 @@ package {
                 [CibSouth, true, false],
                 [CibEast, true, false],
                 [CibWest, true, false]
-            ];
+            ];*/
         }
 
         override public function update():void {
@@ -71,10 +105,10 @@ package {
 
         public function controlBitDialogue():void {
             FlxG.log("should play bit stuff");
-            for(var i:Number = 0; i < bitDialoguePieces.length; i++){
-                if(bitDialoguePieces[i][1] == true) { //if it can be played infinitely
+            for(var key:Object in bitDialoguePieces){
+                if(bitDialoguePieces[key][CAN_REPEAT] == true) { //if it can be played infinitely
                     playBitDialogue();
-                } else if(bitDialoguePieces[i][2] == false) { //if it can be played once
+                } else if(bitDialoguePieces[key][HAS_PLAYED] == false) { //if it can be played once
                     playBitDialogue();
                 }
             }
@@ -82,23 +116,25 @@ package {
 
         public function playBitDialogue():void {
             if(player.isAttacking()) {
+                if(pathWalker.inViewOfPlayer()){
+                    SoundManager.getInstance().playSound(
+                        bitDialoguePieces[ICHI_NICEHIT][FILE], 4*GameSound.MSEC_PER_SEC, null,
+                        false, 1, GameSound.VOCAL
+                    );
+                    bitDialoguePieces[ICHI_NICEHIT][HAS_PLAYED] = true;
+                }
+            } else if(!pathWalker.inViewOfPlayer()) {
                 SoundManager.getInstance().playSound(
-                    bitDialoguePieces[2][0], 4*GameSound.MSEC_PER_SEC, null,
+                    bitDialoguePieces[ICHI_WHICHWAY][FILE], 2*GameSound.MSEC_PER_SEC, this.playerDirectionalDialogue,
                     false, 1, GameSound.VOCAL
                 );
-                bitDialoguePieces[2][2] = true;
-            } else if(pathWalker.shouldWarpToPlayer()) {
-                SoundManager.getInstance().playSound(
-                    bitDialoguePieces[1][0], 4*GameSound.MSEC_PER_SEC, this.playerDirectionalDialogue,
-                    false, 1, GameSound.VOCAL
-                );
-                bitDialoguePieces[1][2] = true;
+                bitDialoguePieces[ICHI_WHICHWAY][HAS_PLAYED] = true;
             } else if(pathWalker.isAttacking()) {
                 SoundManager.getInstance().playSound(
-                    bitDialoguePieces[0][0], 4*GameSound.MSEC_PER_SEC, null,
+                    bitDialoguePieces[CIB_NICEHIT][FILE], 4*GameSound.MSEC_PER_SEC, null,
                     false, 1, GameSound.VOCAL
                 );
-                bitDialoguePieces[0][2] = true;
+                bitDialoguePieces[CIB_NICEHIT][HAS_PLAYED] = true;
             }
         }
 
@@ -106,22 +142,22 @@ package {
             this.objDirectionalDialogue(pathWalker, player);
             if(this.dirForDialogue == EAST) {
                 SoundManager.getInstance().playSound(
-                    bitDialoguePieces[5][0], 4*GameSound.MSEC_PER_SEC, null,
+                    bitDialoguePieces[CIB_EAST][FILE], 4*GameSound.MSEC_PER_SEC, null,
                     false, 1, GameSound.VOCAL
                 );
             } else if(this.dirForDialogue == WEST) {
                 SoundManager.getInstance().playSound(
-                    bitDialoguePieces[6][0], 4*GameSound.MSEC_PER_SEC, null,
-                    false, 1, GameSound.VOCAL
-                );
-            } else if(this.dirForDialogue == NORTH) {
-                SoundManager.getInstance().playSound(
-                    bitDialoguePieces[3][0], 4*GameSound.MSEC_PER_SEC, null,
+                    bitDialoguePieces[CIB_WEST][FILE], 4*GameSound.MSEC_PER_SEC, null,
                     false, 1, GameSound.VOCAL
                 );
             } else if(this.dirForDialogue == SOUTH) {
                 SoundManager.getInstance().playSound(
-                    bitDialoguePieces[4][0], 4*GameSound.MSEC_PER_SEC, null,
+                    bitDialoguePieces[CIB_SOUTH][FILE], 4*GameSound.MSEC_PER_SEC, null,
+                    false, 1, GameSound.VOCAL
+                );
+            } else if(this.dirForDialogue == NORTH) {
+                SoundManager.getInstance().playSound(
+                    bitDialoguePieces[CIB_NORTH][FILE], 4*GameSound.MSEC_PER_SEC, null,
                     false, 1, GameSound.VOCAL
                 );
             }
@@ -137,9 +173,9 @@ package {
                 }
             } else {
                 if(dir.y > 0) {
-                    this.dirForDialogue = NORTH;
-                } else {
                     this.dirForDialogue = SOUTH;
+                } else {
+                    this.dirForDialogue = NORTH;
                 }
             }
         }
