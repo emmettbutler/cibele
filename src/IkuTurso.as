@@ -20,13 +20,13 @@ package{
         public function IkuTurso() {
             this.bossHasAppeared = false;
 
-            // embedded sound, length in ms
+            // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 [Convo1, 132*GameSound.MSEC_PER_SEC],
-                [Convo2, 25*GameSound.MSEC_PER_SEC],
-                [Convo3, 107*GameSound.MSEC_PER_SEC],
-                [Convo4, 15*GameSound.MSEC_PER_SEC],
-                [Convo5, 30*GameSound.MSEC_PER_SEC]
+                [Convo2, 25*GameSound.MSEC_PER_SEC, 1000*GameSound.MSEC_PER_SEC],
+                [Convo3, 107*GameSound.MSEC_PER_SEC, 5*GameSound.MSEC_PER_SEC],
+                [Convo4, 15*GameSound.MSEC_PER_SEC, 5*GameSound.MSEC_PER_SEC],
+                [Convo5, 30*GameSound.MSEC_PER_SEC, 5*GameSound.MSEC_PER_SEC]
             ];
         }
 
@@ -41,12 +41,18 @@ package{
 
         public function playNextConvoPiece():void {
             this.conversationCounter += 1;
-            var nextInfo:Array = this.conversationPieces[this.conversationCounter];
-            if (nextInfo != null) {
-                SoundManager.getInstance().playSound(
-                    nextInfo[0], nextInfo[1], this.playNextConvoPiece, false, 1,
-                    GameSound.VOCAL
-                )
+            var that:IkuTurso = this;
+            var nextAudioInfo:Array = this.conversationPieces[this.conversationCounter];
+            if (nextAudioInfo != null) {
+                GlobalTimer.getInstance().setMark(
+                    Math.random().toString(),
+                    nextAudioInfo[2],
+                    function():void {
+                        SoundManager.getInstance().playSound(
+                            nextAudioInfo[0], nextAudioInfo[1], that.playNextConvoPiece, false, 1,
+                            GameSound.VOCAL
+                        );
+                    });
             } else {
                 SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
                     true, .2, GameSound.BGM);
@@ -61,7 +67,7 @@ package{
         public function playFirstConvo():void {
             this.conversationCounter = 0;
             this.convo1Sound = SoundManager.getInstance().playSound(
-                Convo1, 132000, this.playNextConvoPiece, false, 1, GameSound.VOCAL
+                Convo2, 25000, this.playNextConvoPiece, false, 1, GameSound.VOCAL
             );
         }
 
