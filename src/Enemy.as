@@ -42,6 +42,8 @@ package
             disp = new DHPoint(0, 0);
             followerDisp = new DHPoint(0, 0);
             footPos = new DHPoint(0, 0);
+            this.zSorted = true;
+            this.basePos = new DHPoint(this.x, this.y + this.height);
         }
 
         public function warpToPlayer():void {
@@ -76,6 +78,7 @@ package
             super.update();
             this.footPos.x = this.x + this.width/2;
             this.footPos.y = this.y + this.height;
+            this.basePos.y = this.y + this.height;
 
             if (this.player == null) {
                 this.playerDisp = new DHPoint(0, 0);
@@ -118,10 +121,9 @@ package
             }
 
             if(this.hitpoints < 0){
-                FlxG.state.remove(this);
+                // don't destroy() or state.remove() here. doing so breaks z-sorting
                 this.dead = true;
                 this.visible = false;
-                this.destroy();
             }
         }
     }

@@ -53,7 +53,12 @@ package
 
             this.nameText.text = "Ichi";
             this.shadow_sprite = new GameObject(this.pos);
+            this.shadow_sprite.zSorted = true;
             this.shadow_sprite.loadGraphic(ImgShadow,false,false,41,14);
+
+            this.basePos = new DHPoint(this.x, this.y + (this.height-10));
+
+            this.zSorted = true;
 
             loadGraphic(ImgIchi, true, false, 72, 126);
             addAnimation("idle",[0],7,false);
@@ -82,6 +87,8 @@ package
 
             this.shadow_sprite.x = this.x + 20;
             this.shadow_sprite.y = this.y + (this.height-10);
+
+            this.basePos.y = this.y + (this.height-10);
 
             this.closestEnemy = this.getClosestEnemy();
             if (this.inViewOfPlayer()) {

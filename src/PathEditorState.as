@@ -1,5 +1,4 @@
-package
-{
+package {
     import org.flixel.*;
 
     import flash.display.StageDisplayState;
@@ -8,8 +7,7 @@ package
     import flash.filesystem.FileMode;
     import flash.net.FileReference;
 
-    public class PathEditorState extends PlayerState
-    {
+    public class PathEditorState extends PlayerState {
         public var pathWalker:PathFollower;
         public var _path:Path;
         public var _mapnodes:MapNodeContainer;

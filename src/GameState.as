@@ -6,6 +6,7 @@ package {
                     updateMessages:Boolean;
         protected var game_cursor:GameCursor;
         private var pauseLayer:GameObject;
+        private var sortedObjects:Array;
 
         public var cursorResetFlag:Boolean = false;
 
@@ -14,6 +15,8 @@ package {
             this.updateSound = snd;
             this.updatePopup = popup;
             this.updateMessages = messages;
+
+            this.sortedObjects = new Array();
         }
 
         override public function create():void {
@@ -49,12 +52,47 @@ package {
             }
         }
 
+        private function sortByBasePos(a:GameObject, b:GameObject):Number {
+            var aY:Number = a.basePos != null ? a.basePos.y : a.y;
+            var bY:Number = b.basePos != null ? b.basePos.y : b.y;
+
+            if (aY > bY) {
+                return 1;
+            }
+            if (aY < bY) {
+                return -1;
+            }
+            return 0;
+        }
+
+        /*
+         * Loop over sorted objects and insert them at appropriate positions in
+         * members array. This maintains z-indexing based on y position
+         */
+        private function insertSortedObjects():void {
+            var sortedObjectsCounter:int = 0;
+            var cur:GameObject;
+            for (var i:int = 0; i < this.members.length; i++) {
+                if (this.members[i] != null && this.members[i] is GameObject){
+                    cur = this.members[i] as GameObject;
+                    if (cur.zSorted) {
+                        this.members[i] = this.sortedObjects[sortedObjectsCounter++];
+                    }
+                }
+            }
+        }
+
         override public function update():void {
             // DO NOT call super here, since that breaks pausing
             // the following loop is copypasta from FlxGroup update, altered to
             // support pausing
+            this.sortedObjects.length = 0;
             var basic:GameObject, i:uint = 0;
             while(i < length) {
+                // maintain a list of GameObjects to be z-sorted by their foot position
+                if (members[i] is GameObject && (members[i] as GameObject).zSorted) {
+                    this.sortedObjects.push(members[i]);
+                }
                 basic = members[i++] as GameObject;
                 if((basic != null) && basic.exists && basic.active) {
                     if ((GlobalTimer.getInstance().isPaused() &&
@@ -67,6 +105,9 @@ package {
                     }
                 }
             }
+
+            this.sortedObjects.sort(sortByBasePos);
+            this.insertSortedObjects();
 
             this.updateCursor();
 

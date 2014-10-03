@@ -32,6 +32,8 @@ package{
 
             this.nameText.text = "Cibele";
 
+            this.zSorted = true;
+
             this.shadow_sprite = new GameObject(this.pos);
             this.shadow_sprite.loadGraphic(ImgShadow,false,false,41,14);
 
@@ -71,6 +73,9 @@ package{
 
             this.shadow_sprite.x = this.x + (this.width/3);
             this.shadow_sprite.y = this.y + (this.height-10);
+            this.shadow_sprite.zSorted = true;
+
+            this.basePos = new DHPoint(this.x, this.y + (this.height-10));
         }
 
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint,
@@ -183,6 +188,8 @@ package{
         override public function update():void{
             this.hitbox_rect.x = this.pos.x;
             this.hitbox_rect.y = this.pos.y;
+
+            this.basePos.y = this.y + (this.height-10);
 
             this.setFacing();
 
