@@ -71,7 +71,7 @@ package{
                 SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
                     true, .2, GameSound.BGM);
                 FlxG.switchState(
-                    new PlayVideoState("../assets/selfie.flv",
+                    new PlayVideoState("../assets/sexy_selfie.flv",
                         function():void { FlxG.switchState(new StartScreen()); }
                     )
                 );
