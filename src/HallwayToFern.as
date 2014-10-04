@@ -142,7 +142,7 @@ package{
 
                 function playConvo2NullCallback():void {
                     SoundManager.getInstance().playSound(
-                        Convo2, 24000, null, false, 1, GameSound.VOCAL,
+                        Convo2, 24000, convo2Done, false, 1, GameSound.VOCAL,
                         "convo_2_hall"
                     );
                 }

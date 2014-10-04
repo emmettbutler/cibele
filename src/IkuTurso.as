@@ -24,7 +24,7 @@ package{
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {"audio": Convo1, "len": 56*GameSound.MSEC_PER_SEC, "delay": 0, "endfn": null},
-                {"audio": Convo2, "len": 70*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": this.showSelfiesWindow},
+                {"audio": Convo2, "len": 76*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": this.showSelfiesWindow},
                 {"audio": Convo3, "len": 25*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": this.showForumWindow},
                 {"audio": Convo4, "len": 107*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null},
                 {"audio": Convo5, "len": 15*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null},

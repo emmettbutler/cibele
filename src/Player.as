@@ -151,7 +151,7 @@ package{
                         }
                     }
                 }
-            } else {
+            } else if(at_enemy == true && this.targetEnemy != null){
                 this.enemy_dir = this.targetEnemy.pos.sub(footPos).normalized();
                 if(Math.abs(this.enemy_dir.y) > Math.abs(this.enemy_dir.x)){
                     if(this.enemy_dir.y <= 0){
