@@ -171,7 +171,7 @@ package{
                 }
 
                 SoundManager.getInstance().playSound(
-                    Convo1, 29000, convo1Done, false, 1, GameSound.VOCAL,
+                    Convo1, 29*GameSound.MSEC_PER_SEC, convo1Done, false, 1, GameSound.VOCAL,
                     "convo_1_hall"
                 );
             } else {
