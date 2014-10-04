@@ -39,7 +39,15 @@ package{
             this.convo1Sound = null;
         }
 
+        public function showSelfiesWindow():void {
+            PopUpManager.getInstance().sendPopup(PopUpManager.SELFIES_1);
+        }
+
         public function playNextConvoPiece():void {
+            var thisAudioInfo:Array = this.conversationPieces[this.conversationCounter];
+            if (thisAudioInfo[3] != null) {
+                thisAudioInfo[3]();
+            }
             this.conversationCounter += 1;
             var that:IkuTurso = this;
             var nextAudioInfo:Array = this.conversationPieces[this.conversationCounter];
@@ -67,7 +75,8 @@ package{
         public function playFirstConvo():void {
             this.conversationCounter = 0;
             this.convo1Sound = SoundManager.getInstance().playSound(
-                Convo2, 1000, this.playNextConvoPiece, false, 1, GameSound.VOCAL
+                Convo1, 132*GameSound.MSEC_PER_SEC, this.playNextConvoPiece,
+                false, 1, GameSound.VOCAL
             );
         }
 

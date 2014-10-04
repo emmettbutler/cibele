@@ -209,7 +209,7 @@ package{
 
             this.popups = new Dictionary();
             this.popups[BULLDOG_HELL] = new PopUp(ImgBulldogHell, 1030, 510, 1);
-            this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 645, 457, 165000, 1000);
+            this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 645, 457, 165000, PopUp.ARROW_THROUGH);
             this.popups[FORUM_1] = new PopUp(ImgForumSelfie1, 1174, 585, 185000);
 
             for (var key:Object in this.popups) {
