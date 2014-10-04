@@ -59,7 +59,7 @@ package{
             this.emote(mouseScreenRect);
 
             if(this._state == SHOWING_NOTHING) {
-                if(this.programPicker(mouseScreenRect)) {
+                if(this.overlapsProgramPicker(mouseScreenRect)) {
                     if (this.next_popup != null) {
                         this.next_popup.shown = true;
                         this.next_popup.visible = true;
@@ -69,7 +69,7 @@ package{
                     }
                 }
             } else if(this._state == FLASH_PROGRAM_PICKER) {
-                if(this.programPicker(mouseScreenRect)) {
+                if(this.overlapsProgramPicker(mouseScreenRect)) {
                     if (this.next_popup != null) {
                         this.blinker.alpha = 0;
                         this.next_popup.shown = true;
@@ -82,7 +82,7 @@ package{
             }
         }
 
-        public function programPicker(mouseScreenRect:FlxRect):Boolean {
+        public function overlapsProgramPicker(mouseScreenRect:FlxRect):Boolean {
             var overlap:Boolean, element:UIElement;
             for (var key:Object in this.programButtons) {
                 element = key as UIElement;

@@ -22,11 +22,11 @@ package{
 
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
-                [Convo1, 132*GameSound.MSEC_PER_SEC],
-                [Convo2, 25*GameSound.MSEC_PER_SEC, 500*GameSound.MSEC_PER_SEC],
-                [Convo3, 107*GameSound.MSEC_PER_SEC, 500*GameSound.MSEC_PER_SEC],
-                [Convo4, 15*GameSound.MSEC_PER_SEC, 500*GameSound.MSEC_PER_SEC],
-                [Convo5, 30*GameSound.MSEC_PER_SEC, 500*GameSound.MSEC_PER_SEC]
+                [Convo1, 132*GameSound.MSEC_PER_SEC, 0, this.showSelfiesWindow],
+                [Convo2, 25*GameSound.MSEC_PER_SEC, 20*GameSound.MSEC_PER_SEC, null],
+                [Convo3, 107*GameSound.MSEC_PER_SEC, 20*GameSound.MSEC_PER_SEC, null],
+                [Convo4, 15*GameSound.MSEC_PER_SEC, 20*GameSound.MSEC_PER_SEC, null],
+                [Convo5, 30*GameSound.MSEC_PER_SEC, 20*GameSound.MSEC_PER_SEC, null]
             ];
         }
 
