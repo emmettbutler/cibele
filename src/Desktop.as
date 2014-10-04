@@ -15,7 +15,8 @@ package{
         public var img_height:Number = 357;
 
         public function Desktop() {
-            super(true, false, false);
+            super(true, true, false);
+            this.showEmoji = false;
         }
 
         override public function create():void {
@@ -47,11 +48,6 @@ package{
             }
 
             timeFrame++;
-            debugText.x = FlxG.mouse.x;
-            debugText.y = FlxG.mouse.y;
-
-
-            //debugText.text = "Desktop";
 
             if(timeFrame%30 == 0){
                 timer++;

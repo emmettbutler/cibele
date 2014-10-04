@@ -24,6 +24,7 @@ package{
         public var game_button:UIElement = null;
         public var file_button:UIElement = null;
         public var photo_button:UIElement = null;
+        public var showEmoji:Boolean;
 
         private var emojiButtons:Dictionary;
         private var programButtons:Dictionary;
@@ -136,11 +137,15 @@ package{
             ring.scrollFactor.x = 0;
             ring.scrollFactor.y = 0;
             this.elements.push(ring);
-            FlxG.state.add(ring);
+            if (this.showEmoji) {
+                FlxG.state.add(ring);
+            }
 
             var emoji_happy:UIElement = new UIElement(ring.x + 140, ring.y - 10);
             emoji_happy.loadGraphic(ImgEmojiHappy, false, false, 96, 98);
-            FlxG.state.add(emoji_happy);
+            if (this.showEmoji) {
+                FlxG.state.add(emoji_happy);
+            }
             emoji_happy.scrollFactor.x = 0;
             emoji_happy.scrollFactor.y = 0;
             this.elements.push(emoji_happy);
@@ -148,7 +153,9 @@ package{
 
             var emoji_sad:UIElement = new UIElement(ring.x + 205, ring.y + 90);
             emoji_sad.loadGraphic(ImgEmojiSad, false, false, 94, 99);
-            FlxG.state.add(emoji_sad);
+            if (this.showEmoji) {
+                FlxG.state.add(emoji_sad);
+            }
             emoji_sad.scrollFactor.x = 0;
             emoji_sad.scrollFactor.y = 0;
             this.elements.push(emoji_sad);
@@ -156,7 +163,9 @@ package{
 
             var emoji_angry:UIElement = new UIElement(ring.x + 140, ring.y + 200);
             emoji_angry.loadGraphic(ImgEmojiAngry, false, false, 100, 99);
-            FlxG.state.add(emoji_angry);
+            if (this.showEmoji) {
+                FlxG.state.add(emoji_angry);
+            }
             emoji_angry.scrollFactor.x = 0;
             emoji_angry.scrollFactor.y = 0;
             this.elements.push(emoji_angry);

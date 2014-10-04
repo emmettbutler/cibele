@@ -3,7 +3,7 @@ package {
 
     public class GameState extends FlxState {
         protected var updateSound:Boolean, updatePopup:Boolean,
-                    updateMessages:Boolean;
+                      updateMessages:Boolean, showEmoji:Boolean = true;
         protected var game_cursor:GameCursor;
         private var pauseLayer:GameObject;
         private var sortedObjects:Array;
@@ -34,8 +34,12 @@ package {
         }
 
         public function postCreate():void {
-            PopUpManager.getInstance();
-            MessageManager.getInstance();
+            if (this.updatePopup) {
+                PopUpManager.getInstance().showEmoji = this.showEmoji;
+            }
+            if (this.updateMessages) {
+                MessageManager.getInstance();
+            }
             this.game_cursor = new GameCursor();
             FlxG.state.add(this.pauseLayer);
         }
@@ -43,9 +47,7 @@ package {
         public function updateCursor():void {
             if (this.game_cursor != null) {
                 this.game_cursor.update();
-                if(!this.cursorResetFlag &&
-                    MessageManager.getInstance().ui_loaded)
-                {
+                if(!this.cursorResetFlag) {
                     this.game_cursor.resetCursor();
                     this.cursorResetFlag = true;
                 }
@@ -117,6 +119,7 @@ package {
                 SoundManager.getInstance().update();
             }
             if (this.updatePopup) {
+                PopUpManager.getInstance().showEmoji = this.showEmoji;
                 PopUpManager.getInstance().update();
             }
             if (this.updateMessages) {
