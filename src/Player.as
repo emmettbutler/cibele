@@ -24,6 +24,7 @@ package{
         public var targetEnemy:Enemy;
         public var attack_sprite:GameObject;
         public var shadow_sprite:GameObject;
+        public var enemy_dir:DHPoint;
 
         public static const STATE_WALK:Number = 2398476188;
 
@@ -133,16 +134,33 @@ package{
             this.walkDistance = this.walkTarget.sub(footPos)._length();
         }
 
-        public function setFacing():void {
-            if(this.dir != null){
-                if(Math.abs(this.dir.y) > Math.abs(this.dir.x)){
-                    if(this.dir.y <= 0){
+        public function setFacing(at_enemy:Boolean = false):void {
+            if(!at_enemy){
+                if(this.dir != null){
+                    if(Math.abs(this.dir.y) > Math.abs(this.dir.x)){
+                        if(this.dir.y <= 0){
+                            this.facing = UP;
+                        } else {
+                            this.facing = DOWN;
+                        }
+                    } else {
+                        if(this.dir.x >= 0){
+                            this.facing = RIGHT;
+                        } else {
+                            this.facing = LEFT;
+                        }
+                    }
+                }
+            } else {
+                this.enemy_dir = this.targetEnemy.pos.sub(footPos).normalized();
+                if(Math.abs(this.enemy_dir.y) > Math.abs(this.enemy_dir.x)){
+                    if(this.enemy_dir.y <= 0){
                         this.facing = UP;
                     } else {
                         this.facing = DOWN;
                     }
                 } else {
-                    if(this.dir.x >= 0){
+                    if(this.enemy_dir.x >= 0){
                         this.facing = RIGHT;
                     } else {
                         this.facing = LEFT;
@@ -191,7 +209,9 @@ package{
 
             this.basePos.y = this.y + (this.height-10);
 
-            this.setFacing();
+            if(this._state != STATE_AT_ENEMY) {
+                this.setFacing(false);
+            }
 
             if (this._state == STATE_WALK) {
                 this.walk();
@@ -210,19 +230,13 @@ package{
             } else if (this._state == STATE_IN_ATTACK) {
                 this.attack_sprite.x = this.pos.x;
                 this.attack_sprite.y = this.pos.y;
+                this.setFacing(true);
+                this.setIdleAnim();
                 if (this.timeSinceLastAttack() > 100) {
                     this.resolveStatePostAttack();
                 }
             } else if (this._state == STATE_IDLE) {
-                if(this.text_facing == "up") {
-                    this.play("idle_u");
-                } else if(this.text_facing == "down") {
-                    this.play("idle_d");
-                } else if(this.text_facing == "left") {
-                    this.play("idle_l");
-                } else if(this.text_facing == "right") {
-                    this.play("idle_r");
-                }
+                this.setIdleAnim();
             }
 
             if (this.colliding) {
@@ -273,6 +287,18 @@ package{
                 }
             } else {
                 this._state = STATE_IDLE;
+            }
+        }
+
+        public function setIdleAnim():void {
+            if(this.text_facing == "up") {
+                this.play("idle_u");
+            } else if(this.text_facing == "down") {
+                this.play("idle_d");
+            } else if(this.text_facing == "left") {
+                this.play("idle_l");
+            } else if(this.text_facing == "right") {
+                this.play("idle_r");
             }
         }
 

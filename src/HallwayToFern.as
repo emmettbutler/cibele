@@ -3,6 +3,7 @@ package{
 
     public class HallwayToFern extends PlayerState {
         [Embed(source="../assets/hallway sprite.png")] private var ImgBG:Class;
+        [Embed(source="../assets/hallwaylight.png")] private var ImgLight:Class;
         [Embed(source="../assets/incomingcall.png")] private var ImgCall:Class;
         [Embed(source="../assets/voc_firstconvo.mp3")] private var Convo1:Class;
         [Embed(source="../assets/voc_ikuturso_start.mp3")] private var Convo2:Class;
@@ -13,6 +14,7 @@ package{
         public var accept_call:Boolean = false;
 
         public var bgs:Array;
+        public var light:GameObject;
 
         public var img_height:Number = 800;
 
@@ -97,6 +99,15 @@ package{
         override public function postCreate():void {
             super.postCreate();
             player.inhibitY = true;
+
+            /*this.light = new GameObject(new DHPoint(0,0));
+            this.light.loadGraphic(ImgLight, false, false, 640, 480);
+            FlxG.state.add(this.light);
+            this.light.alpha = 1;
+            this.light.scrollFactor.x = 0;
+            this.light.scrollFactor.y = 0;*/
+
+            (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
         }
 
         override public function restrictPlayerMovement():void {
