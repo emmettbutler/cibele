@@ -22,11 +22,11 @@ package{
 
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
-                [Convo1, 132*GameSound.MSEC_PER_SEC, 0, this.showSelfiesWindow],
-                [Convo2, 25*GameSound.MSEC_PER_SEC, 20*GameSound.MSEC_PER_SEC, null],
-                [Convo3, 107*GameSound.MSEC_PER_SEC, 20*GameSound.MSEC_PER_SEC, null],
-                [Convo4, 15*GameSound.MSEC_PER_SEC, 20*GameSound.MSEC_PER_SEC, null],
-                [Convo5, 30*GameSound.MSEC_PER_SEC, 20*GameSound.MSEC_PER_SEC, null]
+                {"audio": Convo1, "len": 132*GameSound.MSEC_PER_SEC, "delay": 0, "endfn": this.showSelfiesWindow},
+                {"audio": Convo2, "len": 25*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null},
+                {"audio": Convo3, "len": 107*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null},
+                {"audio": Convo4, "len": 15*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null},
+                {"audio": Convo5, "len": 30*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null}
             ];
         }
 
@@ -44,21 +44,21 @@ package{
         }
 
         public function playNextConvoPiece():void {
-            var thisAudioInfo:Array = this.conversationPieces[this.conversationCounter];
-            if (thisAudioInfo[3] != null) {
-                thisAudioInfo[3]();
+            var thisAudioInfo:Object = this.conversationPieces[this.conversationCounter];
+            if (thisAudioInfo["endfn"] != null) {
+                thisAudioInfo["endfn"]();
             }
             this.conversationCounter += 1;
             var that:IkuTurso = this;
-            var nextAudioInfo:Array = this.conversationPieces[this.conversationCounter];
+            var nextAudioInfo:Object = this.conversationPieces[this.conversationCounter];
             if (nextAudioInfo != null) {
                 GlobalTimer.getInstance().setMark(
                     Math.random().toString(),
-                    nextAudioInfo[2],
+                    nextAudioInfo["delay"],
                     function():void {
                         SoundManager.getInstance().playSound(
-                            nextAudioInfo[0], nextAudioInfo[1], that.playNextConvoPiece, false, 1,
-                            GameSound.VOCAL
+                            nextAudioInfo["audio"], nextAudioInfo["len"],
+                            that.playNextConvoPiece, false, 1, GameSound.VOCAL
                         );
                     });
             } else {
@@ -74,8 +74,9 @@ package{
 
         public function playFirstConvo():void {
             this.conversationCounter = 0;
+            var sndInfo:Object = this.conversationPieces[0];
             this.convo1Sound = SoundManager.getInstance().playSound(
-                Convo1, 132*GameSound.MSEC_PER_SEC, this.playNextConvoPiece,
+                sndInfo["audio"], sndInfo["len"], this.playNextConvoPiece,
                 false, 1, GameSound.VOCAL
             );
         }

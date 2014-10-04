@@ -21,7 +21,7 @@ package{
             function _innerCallback():void {
                 FlxG.switchState(new Desktop());
             }
-            FlxG.switchState(new PlayVideoState("../assets/test_video.flv",
+            FlxG.switchState(new PlayVideoState("../assets/test_video_hi.flv",
                                                 _innerCallback));
         }
 
