@@ -2,7 +2,7 @@ package {
     import org.flixel.*;
 
     public class GameState extends FlxState {
-        private var updateSound:Boolean, updatePopup:Boolean,
+        protected var updateSound:Boolean, updatePopup:Boolean,
                     updateMessages:Boolean;
         protected var game_cursor:GameCursor;
         private var pauseLayer:GameObject;
