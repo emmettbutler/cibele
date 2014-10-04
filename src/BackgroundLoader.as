@@ -258,7 +258,7 @@ package {
             this.playerRef = pl;
         }
 
-        public function loadSingleTileBG(path:String):void {
+        public function loadSingleTileBG(path:String):FlxExtSprite {
             var _screen:ScreenManager = ScreenManager.getInstance();
             var bg:FlxExtSprite = new FlxExtSprite(0, 0);
             FlxG.state.add(bg);
@@ -283,6 +283,7 @@ package {
                 }
             );
             receivingMachine.load(new URLRequest(path));
+            return bg;
         }
     }
 }
