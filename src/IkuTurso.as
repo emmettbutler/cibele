@@ -23,7 +23,7 @@ package{
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {"audio": Convo1, "len": 132*GameSound.MSEC_PER_SEC, "delay": 0, "endfn": this.showSelfiesWindow},
-                {"audio": Convo2, "len": 25*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null},
+                {"audio": Convo2, "len": 25*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": this.showForumWindow},
                 {"audio": Convo3, "len": 107*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null},
                 {"audio": Convo4, "len": 15*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null},
                 {"audio": Convo5, "len": 30*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null}
@@ -41,6 +41,10 @@ package{
 
         public function showSelfiesWindow():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.SELFIES_1);
+        }
+
+        public function showForumWindow():void {
+            PopUpManager.getInstance().sendPopup(PopUpManager.FORUM_1);
         }
 
         public function playNextConvoPiece():void {
