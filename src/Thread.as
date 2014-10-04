@@ -26,14 +26,14 @@ package{
                                ... messages) {
             this.inbox_ref = inbox;
             this.sent_by = messages[0][0];
-            this.pos = new DHPoint(this.inbox_ref.x + 5, this.inbox_ref.y + 10);
+            this.pos = new DHPoint(this.inbox_ref.x + 20, this.inbox_ref.y + 30);
 
             this.messages = new Array();
             var cur_message:Array;
             for (var i:int = 0; i < messages.length; i++) {
                 cur_message = messages[i];
                 this.messages.push(new Message(cur_message[1], cur_message[2],
-                                               inbox, cur_message[0]));
+                                               inbox, cur_message[0], this));
             }
 
             this.display_text = messages[0][1];

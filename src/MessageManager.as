@@ -3,13 +3,14 @@ package{
 
     public class MessageManager {
         [Embed(source="../assets/UI_letter.png")] private var ImgMsg:Class;
-        [Embed(source="../assets/inbox.png")] private var ImgInbox:Class;
+        [Embed(source="../assets/UI_text_box.png")] private var ImgInbox:Class;
+        [Embed(source="../assets/UI_text_box_x_blue.png")] private var ImgInboxX:Class;
         [Embed(source="../assets/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
         public static var _instance:MessageManager = null;
 
-        public var notifications_text:FlxText, exit_inbox:FlxText,
-                   debugText:FlxText, exit_msg:FlxText, reply_to_msg:FlxText;
+        public var notifications_text:FlxText, debugText:FlxText,
+                   exit_msg:FlxText, reply_to_msg:FlxText;
 
         public var img_inbox:UIElement;
         public var exit_ui:UIElement;
@@ -111,33 +112,31 @@ package{
             this.notifications_box.y = this.img_msg.y;
 
             var inbox_pos:DHPoint = new DHPoint(_screen.screenWidth * .05,
-                                                _screen.screenHeight * .3);
+                                                _screen.screenHeight * .5);
             this.img_inbox = new UIElement(inbox_pos.x, inbox_pos.y);
-            this.img_inbox.loadGraphic(ImgInbox, false, false, 500, 230);
+            this.img_inbox.loadGraphic(ImgInbox, false, false, 406, 260);
             this.img_inbox.scrollFactor = new FlxPoint(0, 0);
             this.img_inbox.active = false;
             FlxG.state.add(this.img_inbox);
             this.elements.push(this.img_inbox);
 
-            this.exit_inbox = new FlxText(
-                _screen.screenWidth * .06, _screen.screenHeight * .59,
-                250, "Exit Inbox");
-            this.exit_ui = new UIElement(this.exit_inbox.x, this.exit_inbox.y);
-            this.exit_ui.makeGraphic(100, 50, 0xff0000ff);
-            this.exit_ui.alpha = 1;
+            this.exit_ui = new UIElement(
+                this.img_inbox.x + (this.img_inbox.width - 24),
+                this.img_inbox.y + 7
+            );
+            this.exit_ui.loadGraphic(ImgInboxX, false, false, 13, 12);
             this.elements.push(this.exit_ui);
-            this.exit_inbox.setFormat("NexaBold-Regular",16,0xff000000,"left");
-            this.exit_inbox.scrollFactor = new FlxPoint(0, 0);
             this.exit_ui.scrollFactor = new FlxPoint(0, 0);
-            this.exit_inbox.active = false;
-            FlxG.state.add(this.exit_inbox);
+            FlxG.state.add(this.exit_ui);
 
-            this.exit_inbox_rect = new FlxRect(this.exit_inbox.x,
-                                               this.exit_inbox.y, 70, 20);
-            this.exit_inbox_rect.x = this.exit_inbox.x;
-            this.exit_inbox_rect.y = this.exit_inbox.y;
+            this.exit_inbox_rect = new FlxRect(this.exit_ui.x,
+                                               this.exit_ui.y,
+                                               this.exit_ui.width,
+                                               this.exit_ui.height);
+            this.exit_inbox_rect.x = this.exit_ui.x;
+            this.exit_inbox_rect.y = this.exit_ui.y;
 
-            this.exit_inbox.alpha = 0;
+            this.exit_ui.alpha = 0;
             this.img_inbox.visible = false;
 
             this.exit_msg = new FlxText(this.img_inbox.x + 110,
@@ -286,7 +285,7 @@ package{
         }
 
         public function exitInbox():void {
-            this.exit_inbox.alpha = 0;
+            this.exit_ui.alpha = 0;
             this.exit_msg.alpha = 0;
             this.reply_to_msg.alpha = 0;
             this.img_inbox.visible = false;
@@ -296,7 +295,7 @@ package{
         }
 
         public function openInbox():void {
-            this.exit_inbox.alpha = 1;
+            this.exit_ui.alpha = 1;
             this.img_inbox.visible = true;
         }
 

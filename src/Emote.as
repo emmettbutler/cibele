@@ -2,7 +2,6 @@ package {
     import org.flixel.*;
 
     public class Emote extends GameObject {
-        [Embed(source="../assets/emote1.png")] private var ImgEmote1:Class;
         [Embed(source="../assets/UI_happy face_blue.png")] private var ImgEmojiHappy:Class;
         [Embed(source="../assets/UI_Sad Face_blue.png")] private var ImgEmojiSad:Class;
         [Embed(source="../assets/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;

@@ -19,10 +19,10 @@ package{
         public var unread_color:uint = 0xff982708;
 
         public function Message(txt:String, sec:Number,
-                                inbox:GameObject, sender:String) {
+                                inbox:GameObject, sender:String, parent:Thread) {
             this.inbox_ref = inbox;
             this.sent_by = sender;
-            this.pos = new DHPoint(inbox_ref.x + 5, inbox_ref.y + 10);
+            this.pos = new DHPoint(parent.pos.x, parent.pos.y);
 
             this.display_text = txt;
             this.send_time = sec;
