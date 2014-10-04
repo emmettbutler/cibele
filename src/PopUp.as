@@ -21,11 +21,11 @@ package{
 
             if(this._state == ARROW_THROUGH) {
                 this.loadGraphic(img,true,false,w,h);
-                this.addAnimation("one",[0],1,false);
-                this.addAnimation("two",[1],1,false);
-                this.addAnimation("three",[2],1,false);
+                for (var i:int = 0; i < 3; i++) {
+                    this.addAnimation(i.toString(),[i],1,false);
+                }
                 this.cur_anim = 1;
-                this.play("two");
+                this.play("2");
             } else {
                 this.loadGraphic(img,false,false,w,h);
             }
@@ -43,17 +43,15 @@ package{
             if(this._state == ARROW_THROUGH) {
                 //TODO change this it won't work with point and click
                 if(FlxG.keys.justPressed("LEFT") || FlxG.keys.justPressed("RIGHT") ||
-                    FlxG.keys.justPressed("UP") || FlxG.keys.justPressed("DOWN")) {
+                   FlxG.keys.justPressed("UP") || FlxG.keys.justPressed("DOWN")) {
                     if(this.cur_anim == 1) {
                         this.cur_anim = 2;
-                        play("two");
                     } else if(this.cur_anim == 2) {
                         this.cur_anim = 3;
-                        play("three");
                     } else if(this.cur_anim == 3) {
                         this.cur_anim = 1;
-                        play("one");
                     }
+                    this.play((this.cur_anim - 1).toString());
                 }
             }
         }
