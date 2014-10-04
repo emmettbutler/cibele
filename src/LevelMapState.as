@@ -15,6 +15,8 @@ package {
         [Embed(source="../assets/voc_extra_ichiwest.mp3")] private var IchiWest:Class;
         [Embed(source="../assets/voc_extra_ichisouth.mp3")] private var IchiSouth:Class;
         [Embed(source="../assets/voc_extra_ciblost.mp3")] private var CibWhichWay:Class;
+        [Embed(source="../assets/voc_extra_cibhere.mp3")] private var CibHere:Class;
+        [Embed(source="../assets/voc_extra_ichirighthere.mp3")] private var IchiHere:Class;
 
         public var debugText:FlxText;
         public var bgLoader:BackgroundLoader;
@@ -45,6 +47,8 @@ package {
         public static const ICHI_WEST:int = 9;
         public static const ICHI_SOUTH:int = 10;
         public static const CIB_WHICHWAY:int = 11;
+        public static const CIB_HERE:int = 12;
+        public static const ICHI_HERE:int = 13;
 
         public var dirForDialogue:Number;
         public var dirDialgueLock:Boolean = false;
@@ -67,6 +71,8 @@ package {
             bitDialoguePieces[ICHI_WEST] = [IchiWest, false, true];
             bitDialoguePieces[ICHI_EAST] = [IchiEast, false, true];
             bitDialoguePieces[CIB_WHICHWAY] = [CibWhichWay, false, false];
+            bitDialoguePieces[CIB_HERE] = [CibHere, false, false];
+            bitDialoguePieces[ICHI_HERE] = [IchiHere, false, false];
 
             FlxG.bgColor = 0xffffffff;
             this.bornTime = new Date().valueOf();
@@ -117,10 +123,10 @@ package {
                     this.dirDialgueLock = true;
                     if(rand > 1) {
                         GlobalTimer.getInstance().setMark("delayed_cibwhichway",
-                        7*GameSound.MSEC_PER_SEC, this.playCibWhichWay);
+                        1*GameSound.MSEC_PER_SEC, this.playCibWhichWay);
                     } else {
                         GlobalTimer.getInstance().setMark("delayed_ichiwhichway",
-                        7*GameSound.MSEC_PER_SEC, this.playIchiWhichWay);
+                        1*GameSound.MSEC_PER_SEC, this.playIchiWhichWay);
                     }
                 }
 
@@ -134,52 +140,64 @@ package {
 
         public function playerDirectionalDialogue():void {
             this.objDirectionalDialogue(pathWalker, player);
-            if(this.dirForDialogue == EAST) {
+            if(pathWalker.inViewOfPlayer()){
                 SoundManager.getInstance().playSound(
-                    bitDialoguePieces[CIB_EAST][FILE], 7*GameSound.MSEC_PER_SEC, null,
-                    false, 1, GameSound.VOCAL
+                    bitDialoguePieces[CIB_HERE][FILE], 7*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.VOCAL
                 );
-            } else if(this.dirForDialogue == WEST) {
-                SoundManager.getInstance().playSound(
-                    bitDialoguePieces[CIB_WEST][FILE], 7*GameSound.MSEC_PER_SEC, null,
-                    false, 1, GameSound.VOCAL
-                );
-            } else if(this.dirForDialogue == SOUTH) {
-                SoundManager.getInstance().playSound(
-                    bitDialoguePieces[CIB_SOUTH][FILE], 7*GameSound.MSEC_PER_SEC, null,
-                    false, 1, GameSound.VOCAL
-                );
-            } else if(this.dirForDialogue == NORTH) {
-                SoundManager.getInstance().playSound(
-                    bitDialoguePieces[CIB_NORTH][FILE], 7*GameSound.MSEC_PER_SEC, null,
-                    false, 1, GameSound.VOCAL
-                );
+            } else {
+                if(this.dirForDialogue == EAST) {
+                    SoundManager.getInstance().playSound(
+                        bitDialoguePieces[CIB_EAST][FILE], 7*GameSound.MSEC_PER_SEC, null,
+                        false, 1, GameSound.VOCAL
+                    );
+                } else if(this.dirForDialogue == WEST) {
+                    SoundManager.getInstance().playSound(
+                        bitDialoguePieces[CIB_WEST][FILE], 7*GameSound.MSEC_PER_SEC, null,
+                        false, 1, GameSound.VOCAL
+                    );
+                } else if(this.dirForDialogue == SOUTH) {
+                    SoundManager.getInstance().playSound(
+                        bitDialoguePieces[CIB_SOUTH][FILE], 7*GameSound.MSEC_PER_SEC, null,
+                        false, 1, GameSound.VOCAL
+                    );
+                } else if(this.dirForDialogue == NORTH) {
+                    SoundManager.getInstance().playSound(
+                        bitDialoguePieces[CIB_NORTH][FILE], 7*GameSound.MSEC_PER_SEC, null,
+                        false, 1, GameSound.VOCAL
+                    );
+                }
             }
             this.dirDialgueLock = false;
         }
 
         public function npcDirectionalDialogue():void {
             this.objDirectionalDialogue(player, pathWalker);
-            if(this.dirForDialogue == EAST) {
+            if(pathWalker.inViewOfPlayer()) {
                 SoundManager.getInstance().playSound(
-                    bitDialoguePieces[ICHI_EAST][FILE], 7*GameSound.MSEC_PER_SEC, null,
-                    false, 1, GameSound.VOCAL
+                    bitDialoguePieces[ICHI_HERE][FILE], 7*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.VOCAL
                 );
-            } else if(this.dirForDialogue == WEST) {
-                SoundManager.getInstance().playSound(
-                    bitDialoguePieces[ICHI_WEST][FILE], 7*GameSound.MSEC_PER_SEC, null,
-                    false, 1, GameSound.VOCAL
-                );
-            } else if(this.dirForDialogue == SOUTH) {
-                SoundManager.getInstance().playSound(
-                    bitDialoguePieces[ICHI_SOUTH][FILE], 7*GameSound.MSEC_PER_SEC, null,
-                    false, 1, GameSound.VOCAL
-                );
-            } else if(this.dirForDialogue == NORTH) {
-                SoundManager.getInstance().playSound(
-                    bitDialoguePieces[ICHI_NORTH][FILE], 7*GameSound.MSEC_PER_SEC, null,
-                    false, 1, GameSound.VOCAL
-                );
+            } else {
+                if(this.dirForDialogue == EAST) {
+                    SoundManager.getInstance().playSound(
+                        bitDialoguePieces[ICHI_EAST][FILE], 7*GameSound.MSEC_PER_SEC, null,
+                        false, 1, GameSound.VOCAL
+                    );
+                } else if(this.dirForDialogue == WEST) {
+                    SoundManager.getInstance().playSound(
+                        bitDialoguePieces[ICHI_WEST][FILE], 7*GameSound.MSEC_PER_SEC, null,
+                        false, 1, GameSound.VOCAL
+                    );
+                } else if(this.dirForDialogue == SOUTH) {
+                    SoundManager.getInstance().playSound(
+                        bitDialoguePieces[ICHI_SOUTH][FILE], 7*GameSound.MSEC_PER_SEC, null,
+                        false, 1, GameSound.VOCAL
+                    );
+                } else if(this.dirForDialogue == NORTH) {
+                    SoundManager.getInstance().playSound(
+                        bitDialoguePieces[ICHI_NORTH][FILE], 7*GameSound.MSEC_PER_SEC, null,
+                        false, 1, GameSound.VOCAL
+                    );
+                }
             }
             this.dirDialgueLock = false;
         }
