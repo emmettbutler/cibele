@@ -7,7 +7,7 @@ package
 
     public class PathFollower extends PartyMember
     {
-        [Embed(source="../assets/ichi.png")] private var ImgIchi:Class;
+        [Embed(source="../assets/Sprite_Ichi_Walk_Cycle.png")] private var ImgIchi:Class;
         [Embed(source="../assets/fire_explosion.png")] private var ImgAttack:Class;
         [Embed(source="../assets/cib_shadow.png")] private var ImgShadow:Class;
         public var _path:Path;
@@ -60,11 +60,23 @@ package
 
             this.zSorted = true;
 
-            loadGraphic(ImgIchi, true, false, 72, 126);
-            addAnimation("idle",[0],7,false);
-            addAnimation("walk",[0],7,false);
+            loadGraphic(ImgIchi, true, false, 151, 175);
+
+            addAnimation("walk_u", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 20, false);
+            addAnimation("idle_u", [0], 20, false);
+            addAnimation("walk_l",
+                [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+                20, false);
+            addAnimation("idle_l", [10], 20, false);
+            addAnimation("walk_r",
+                [25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38],
+                20, false);
+            addAnimation("idle_r", [25], 20, false);
+            addAnimation("walk_d",
+                [39, 40, 41, 42, 43, 44, 45, 46, 47, 48],
+                20, false);
+            addAnimation("idle_d", [39], 20, false);
             addAnimation("attack",[0,1],7,true);
-            play("walk");
             this.targetPathNode = null;
             this._state = STATE_NULL;
 
@@ -82,6 +94,45 @@ package
             FlxG.state.add(this.nameText);
         }
 
+        public function walk():void {
+            if(this.facing == LEFT){
+                this.play("walk_l");
+                this.shadow_sprite.x = this.x + (this.width/2);
+                this.shadow_sprite.y = this.y + (this.height-10);
+            } else if (this.facing == RIGHT){
+                this.play("walk_r");
+                this.shadow_sprite.x = this.x + (this.width/4);
+                this.shadow_sprite.y = this.y + (this.height-10);
+            } else if(this.facing == UP){
+                this.play("walk_u");
+                this.shadow_sprite.x = this.x + (this.width/3);
+                this.shadow_sprite.y = this.y + (this.height-10);
+            } else if(this.facing == DOWN){
+                this.play("walk_d");
+                this.shadow_sprite.x = this.x + (this.width/3);
+                this.shadow_sprite.y = this.y + (this.height-10);
+            }
+        }
+
+        public function setFacing():void {
+            if(this.dir != null){
+                if(Math.abs(this.dir.y) > Math.abs(this.dir.x)){
+                    if(this.dir.y <= 0){
+                        this.facing = UP;
+                    } else {
+                        this.facing = DOWN;
+                    }
+                } else {
+                    if(this.dir.x >= 0){
+                        this.facing = RIGHT;
+                    } else {
+                        this.facing = LEFT;
+                    }
+                }
+            }
+        }
+
+
         override public function update():void {
             super.update();
 
@@ -98,8 +149,10 @@ package
                 this.warpToPlayer();
             }
 
+            this.setFacing();
+
             if (this._state == STATE_MOVE_TO_PATH_NODE) {
-                play("walk");
+                this.walk();
                 if (!this._path.hasNodes()) {
                     this._state = STATE_NULL;
                 } else {
@@ -117,7 +170,7 @@ package
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
             } else if (this._state == STATE_MOVE_TO_MAP_NODE) {
-                play("walk");
+                this.walk();
                 if (!this._mapnodes.hasNodes()) {
                     this._state = STATE_NULL;
                 } else {
@@ -166,7 +219,7 @@ package
                 this.attack();
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_MOVE_TO_ENEMY){
-                play("walk");
+                this.walk();
                 this.disp = this.walkTarget.sub(this.footPos).normalized();
                 this.dir = this.disp.mulScl(this.runSpeed);
                 if (this.enemyIsInAttackRange(this.closestEnemy)) {
@@ -180,7 +233,7 @@ package
                 }
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_MOVE_TO_PLAYER) {
-                play("walk");
+                this.walk();
                 this.disp = this.playerRef.pos.sub(this.footPos).normalized();
                 this.dir = this.disp.mulScl(this.runSpeed);
                 if (this.playerIsInMovementRange()) {
