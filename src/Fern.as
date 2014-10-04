@@ -58,6 +58,7 @@ package{
 
         override public function clickCallback(screenPos:DHPoint,
                                                worldPos:DHPoint):void {
+            super.clickCallback(screenPos, worldPos);
             var objects:Array = new Array();
             for (var i:int = 0; i < this.clickObjectGroups.length; i++) {
                 for (var j:int = 0; j < this.clickObjectGroups[i].length; j++) {

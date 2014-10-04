@@ -30,7 +30,7 @@ package{
         public var popups:Dictionary;
 
         public var elements:Array;
-        public var next_popup:PopUp = null, cur_popup:PopUp = null;
+        public var cur_popup:PopUp = null, cur_tag:String = null;
         public var popup_active:Boolean = false;
 
         {
@@ -57,6 +57,7 @@ package{
             this.flagText = new FlxText(0, 0, 500, "");
             FlxG.state.add(this.flagText);
             this.cur_popup = this.popups[BULLDOG_HELL];
+            this.cur_tag = BULLDOG_HELL;
         }
 
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
@@ -67,16 +68,14 @@ package{
             if(this._state == SHOWING_NOTHING) {
                 if(this.overlapsProgramPicker(mouseScreenRect)) {
                     if (this.cur_popup != null) {
-                        this.cur_popup.shown = true;
                         this.cur_popup.visible = true;
                         this._state = SHOWING_POP_UP
                     }
                 }
             } else if(this._state == FLASH_PROGRAM_PICKER) {
                 if(this.overlapsProgramPicker(mouseScreenRect)) {
-                    if (this.next_popup != null) {
-                        this.next_popup.shown = true;
-                        this.next_popup.visible = true;
+                    if (this.cur_popup != null) {
+                        this.cur_popup.visible = true;
                         this._state = SHOWING_POP_UP;
                     }
                 }
@@ -109,9 +108,6 @@ package{
             }
 
             if(this._state == SHOWING_NOTHING) {
-                if(this.next_popup != null){
-                    this.next_popup.visible = false;
-                }
                 if(this.cur_popup != null){
                     this.cur_popup.visible = false;
                 }
@@ -124,8 +120,8 @@ package{
 
         public function sendPopup(key:String):void {
             this._state = FLASH_PROGRAM_PICKER;
-            this.next_popup = this.popups[key];
             this.cur_popup = this.popups[key];
+            this.cur_tag = key;
         }
 
         public function loadPopUps():void {
@@ -213,9 +209,10 @@ package{
             this.programButtons[this.photo_button] = 1114;
 
             this.popups = new Dictionary();
-            this.popups[BULLDOG_HELL] = new PopUp(ImgBulldogHell, 1030, 510, 1);
-            this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 645, 457, 165000, PopUp.ARROW_THROUGH);
-            this.popups[FORUM_1] = new PopUp(ImgForumSelfie1, 1174, 585, 185000);
+            this.popups[BULLDOG_HELL] = new PopUp(ImgBulldogHell, 1030, 510);
+            this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 645, 457, PopUp.ARROW_THROUGH);
+            this.popups[FORUM_1] = new PopUp(ImgForumSelfie1, 1174, 585);
+            this.cur_popup = this.popups[this.cur_tag];
 
             for (var key:Object in this.popups) {
                 this.elements.push(this.popups[key]);
