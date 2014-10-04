@@ -109,11 +109,13 @@ package org.flixel.plugin.photonstorm
             overlapArea.draw(testB, matrixB, new ColorTransform(1, 1, 1, 1, 255, 255, 255, alphaTolerance), BlendMode.DIFFERENCE);
 
             //    Developers: If you'd like to see how this works, display it in your game somewhere. Or you can comment it out to save a tiny bit of performance
+            /*
             debug = overlapArea;
             var spr:FlxExtSprite = new FlxExtSprite(contact.x, contact.y);
             var bmp:Bitmap = new Bitmap(overlapArea, PixelSnapping.NEVER, true);
             spr.loadExtGraphic(bmp, false, false, bmp.width, bmp.height, true);
             FlxG.state.add(spr);
+            */
 
             var overlap:Rectangle = overlapArea.getColorBoundsRect(0xffffffff, 0xff00ffff);
             overlap.offset(intersect.x, intersect.y);
