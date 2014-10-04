@@ -14,7 +14,7 @@ package{
         public var accept_call:Boolean = false;
 
         public var bgs:Array;
-        public var light:GameObject;
+        public var light:FlxExtSprite;
 
         public var img_height:Number = 800;
 
@@ -23,14 +23,17 @@ package{
 
         public var _screen:ScreenManager;
 
+        private var bottomY:Number;
+
         public function HallwayToFern(state:Number = 0){
             _state = state;
         }
 
         override public function create():void {
             bgs = new Array();
+            this.light = new FlxExtSprite(0,0);
 
-            var bottomY:Number = 10000;
+            bottomY = 10000;
             _screen = ScreenManager.getInstance();
             super.__create(new DHPoint(
                 _screen.screenWidth * .5, bottomY - _screen.screenHeight * .5));
@@ -42,6 +45,9 @@ package{
             ScreenManager.getInstance().setupCamera(player, 1);
             FlxG.camera.setBounds(0, 0, _screen.screenWidth, bottomY);
 
+            this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
+            this.light.alpha = .1;
+
             if(_state == STATE_PRE_IT){
                 call_button = new GameObject(new DHPoint(_screen.screenWidth * .3,
                                             _screen.screenHeight * .3));
@@ -49,6 +55,7 @@ package{
                 call_button.scrollFactor = new DHPoint(0, 0);
                 FlxG.state.add(call_button);
             }
+
             this.postCreate();
 
             this.player.nameText.color = 0xffffffff;
@@ -72,6 +79,9 @@ package{
 
         override public function update():void {
             super.update();
+
+            this.light.alpha = 1-(player.pos.y/bottomY);
+
             var highestTile:GameObject = this.bgs[0];
             var lowestTile:GameObject = this.bgs[0];
             for (var i:int = 0; i < this.bgs.length; i++) {
@@ -99,15 +109,6 @@ package{
         override public function postCreate():void {
             super.postCreate();
             player.inhibitY = true;
-
-            /*this.light = new GameObject(new DHPoint(0,0));
-            this.light.loadGraphic(ImgLight, false, false, 640, 480);
-            FlxG.state.add(this.light);
-            this.light.alpha = 1;
-            this.light.scrollFactor.x = 0;
-            this.light.scrollFactor.y = 0;*/
-
-            (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
         }
 
         override public function restrictPlayerMovement():void {

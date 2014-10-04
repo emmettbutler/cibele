@@ -5,10 +5,11 @@ package{
         [Embed(source="../assets/ikuturso_wip.mp3")] private var ITBGMLoop:Class;
         [Embed(source="../assets/sexyselfie_wip.mp3")] private var VidBGMLoop:Class;
         [Embed(source="../assets/voc_ikuturso_bulldog.mp3")] private var Convo1:Class;
-        [Embed(source="../assets/voc_ikuturso_photogenic.mp3")] private var Convo2:Class;
-        [Embed(source="../assets/voc_ikuturso_attractive.mp3")] private var Convo3:Class;
-        [Embed(source="../assets/voc_ikuturso_picture.mp3")] private var Convo4:Class;
-        [Embed(source="../assets/voc_ikuturso_whattowear.mp3")] private var Convo5:Class;
+        [Embed(source="../assets/voc_ikuturso_ampule.mp3")] private var Convo2:Class;
+        [Embed(source="../assets/voc_ikuturso_photogenic.mp3")] private var Convo3:Class;
+        [Embed(source="../assets/voc_ikuturso_attractive.mp3")] private var Convo4:Class;
+        [Embed(source="../assets/voc_ikuturso_picture.mp3")] private var Convo5:Class;
+        [Embed(source="../assets/voc_ikuturso_whattowear.mp3")] private var Convo6:Class;
 
         public var bossHasAppeared:Boolean;
         private var convo1Sound:GameSound;
@@ -22,11 +23,12 @@ package{
 
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
-                {"audio": Convo1, "len": 132*GameSound.MSEC_PER_SEC, "delay": 0, "endfn": this.showSelfiesWindow},
-                {"audio": Convo2, "len": 25*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": this.showForumWindow},
-                {"audio": Convo3, "len": 107*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null},
-                {"audio": Convo4, "len": 15*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null},
-                {"audio": Convo5, "len": 30*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null}
+                {"audio": Convo1, "len": 132*GameSound.MSEC_PER_SEC, "delay": 0, "endfn": null},
+                {"audio": Convo2, "len": 70*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": this.showSelfiesWindow},
+                {"audio": Convo3, "len": 25*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": this.showForumWindow},
+                {"audio": Convo4, "len": 107*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null},
+                {"audio": Convo5, "len": 15*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null},
+                {"audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null}
             ];
         }
 

@@ -332,6 +332,10 @@ package{
                 this.attack_sprite.play("attack");
             }
         }
+
+        public function isMoving():Boolean {
+            return this._state == STATE_WALK;
+        }
     }
 }
 

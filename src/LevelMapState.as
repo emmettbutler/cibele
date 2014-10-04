@@ -50,6 +50,8 @@ package {
         public var dirDialgueLock:Boolean = false;
         public static var bitDialoguePieces:Dictionary = new Dictionary();
 
+        public var testcount:Number = 0;
+
         override public function create():void {
             super.__create(new DHPoint(4600, 7565));
 
@@ -90,6 +92,7 @@ package {
             if (SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
 
             } else {
+                FlxG.log(testcount++);
                 controlBitDialogue();
             }
         }
@@ -182,7 +185,7 @@ package {
         }
 
         public function objDirectionalDialogue(from_obj:PartyMember, to_obj:PartyMember):void {
-            var dir:DHPoint = from_obj.directionToObj(to_obj);
+            var dir:DHPoint = from_obj.directionToObj(to_obj.pos);
             if(Math.abs(dir.x) > Math.abs(dir.y)) {
                 if(dir.x > 0) {
                     this.dirForDialogue = EAST;

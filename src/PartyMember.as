@@ -53,8 +53,8 @@ package {
             return this._state == STATE_IN_ATTACK;
         }
 
-        public function directionToObj(obj:PartyMember):DHPoint {
-            return obj.pos.sub(this.pos);
+        public function directionToObj(obj:DHPoint):DHPoint {
+            return obj.sub(this.pos);
         }
 
         public function attack():void {
