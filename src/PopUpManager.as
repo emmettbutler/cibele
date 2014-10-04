@@ -33,6 +33,11 @@ package{
         public var next_popup:PopUp = null, cur_popup:PopUp = null;
         public var popup_active:Boolean = false;
 
+        {
+            public static const RING_INSET_X:Number = ScreenManager.getInstance().screenWidth * .03;
+            public static const RING_INSET_Y:Number = ScreenManager.getInstance().screenHeight * .03;
+        }
+
         public static const SHOWING_POP_UP:Number = 0;
         public static const FLASH_PROGRAM_PICKER:Number = 1;
         public static const SHOWING_NOTHING:Number = -699999999;
@@ -132,8 +137,7 @@ package{
             this.emojiButtons = new Dictionary();
             this.programButtons = new Dictionary();
 
-            var ring:UIElement = new UIElement(_screen.screenWidth * .03,
-                                               _screen.screenHeight * .03);
+            var ring:UIElement = new UIElement(RING_INSET_X, RING_INSET_Y);
             ring.loadGraphic(ImgRing, false, false, 291, 300);
             ring.scrollFactor.x = 0;
             ring.scrollFactor.y = 0;
@@ -148,7 +152,7 @@ package{
             this.elements.push(emoji_happy);
             emojiButtons[emoji_happy] = Emote.HAPPY;
 
-            var emoji_sad:UIElement = new UIElement(ring.x + 190, ring.y + 90);
+            var emoji_sad:UIElement = new UIElement(ring.x + 205, ring.y + 90);
             emoji_sad.loadGraphic(ImgEmojiSad, false, false, 94, 99);
             FlxG.state.add(emoji_sad);
             emoji_sad.scrollFactor.x = 0;

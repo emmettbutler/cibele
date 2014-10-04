@@ -2,7 +2,7 @@ package{
     import org.flixel.*;
 
     public class MessageManager {
-        [Embed(source="../assets/messages.png")] private var ImgMsg:Class;
+        [Embed(source="../assets/UI_letter.png")] private var ImgMsg:Class;
         [Embed(source="../assets/inbox.png")] private var ImgInbox:Class;
         [Embed(source="../assets/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
@@ -13,6 +13,7 @@ package{
 
         public var img_inbox:UIElement;
         public var exit_ui:UIElement;
+        public var img_msg:UIElement;
 
         public var notifications_box:FlxRect, exit_inbox_rect:FlxRect,
                    mouse_rect:FlxRect, exit_box:FlxRect, reply_box:FlxRect;
@@ -80,28 +81,34 @@ package{
         public function initNotifications():void {
             this.mouse_rect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 5, 5);
             var notifications_pos:DHPoint = new DHPoint(
-                _screen.screenWidth * .001, _screen.screenHeight * .001);
-            var img_msg:UIElement = new UIElement(
+                PopUpManager.RING_INSET_X + 55,
+                PopUpManager.RING_INSET_Y + 75
+            );
+            img_msg = new UIElement(
                 notifications_pos.x, notifications_pos.y);
-            img_msg.loadGraphic(ImgMsg, false, false, 520, 82);
+            img_msg.loadGraphic(ImgMsg, false, false, 143, 143);
             img_msg.scrollFactor = new FlxPoint(0, 0);
             img_msg.active = false;
+            img_msg.addAnimation("new", [0], 1, false);
+            img_msg.addAnimation("open", [1], 1, false);
+            img_msg.addAnimation("closed", [2], 1, false);
             FlxG.state.add(img_msg);
             this.elements.push(img_msg);
 
             this.notifications_text = new FlxText(
-                notifications_pos.x, notifications_pos.y+20,
-                img_msg.width, this.unread_count.toString() + " unread messages.\n\nN to emote.");
+                notifications_pos.x - 30, notifications_pos.y - 17,
+                img_msg.width, this.unread_count.toString()
+            );
             this.notifications_text.setFormat("NexaBold-Regular",24,0xff000000,"left");
             this.notifications_text.scrollFactor = new FlxPoint(0, 0);
             this.notifications_text.active = false;
             FlxG.state.add(this.notifications_text);
 
-            this.notifications_box = new FlxRect(this.notifications_text.x,
-                                                 this.notifications_text.y,
-                                                 img_msg.width/2, 50);
-            this.notifications_box.x = this.notifications_text.x;
-            this.notifications_box.y = this.notifications_text.y;
+            this.notifications_box = new FlxRect(this.img_msg.x,
+                                                 this.img_msg.y,
+                                                 this.img_msg.width, this.img_msg.height);
+            this.notifications_box.x = this.img_msg.x;
+            this.notifications_box.y = this.img_msg.y;
 
             var inbox_pos:DHPoint = new DHPoint(_screen.screenWidth * .05,
                                                 _screen.screenHeight * .3);
@@ -185,11 +192,13 @@ package{
         }
 
         public function updateUnreadNotification():void {
-            this.notifications_text.text = this.unread_count + " unread messages.";
+            this.notifications_text.text = this.unread_count.toString();
             if(this.unread_count > 0) {
                 this.notifications_text.color = 0xff982708;
+                this.img_msg.play("new");
             } else {
                 this.notifications_text.color = 0xff000000;
+                this.img_msg.play("closed");
             }
         }
 
