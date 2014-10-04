@@ -16,8 +16,8 @@ package{
 
             ScreenManager.getInstance();
 
-            this.updatePopup = false;
-            this.updateMessages = false;
+            //this.updatePopup = false;
+            //this.updateMessages = false;
         }
 
         public function startGame():void {

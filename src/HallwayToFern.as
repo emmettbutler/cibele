@@ -9,6 +9,7 @@ package{
         [Embed(source="../assets/voc_ikuturso_start.mp3")] private var Convo2:Class;
         [Embed(source="../assets/voc_extra_wannaduo.mp3")] private var SndHurryUp:Class;
         [Embed(source="../assets/voc_extra_ichiareyouthere.mp3")] private var SndRUThere:Class;
+        [Embed(source="../assets/voc_extra_cibichi.mp3")] private var CibIchi:Class;
 
         public var call_button:GameObject;
         public var accept_call:Boolean = false;
@@ -139,6 +140,13 @@ package{
                     );
                 }
 
+                function playConvo2NullCallback():void {
+                    SoundManager.getInstance().playSound(
+                        Convo2, 24000, null, false, 1, GameSound.VOCAL,
+                        "convo_2_hall"
+                    );
+                }
+
                 function playWannaDuo():void {
                     if (!(FlxG.state is IkuTurso)) {
                         SoundManager.getInstance().playSound(
@@ -146,6 +154,7 @@ package{
                             false, 1, GameSound.VOCAL
                         );
                     } else {
+
                         SoundManager.getInstance().playSound(
                             Convo2, 24000, convo2Done, false, 1, GameSound.VOCAL,
                             "convo_2_hall"
@@ -166,7 +175,7 @@ package{
                             10*GameSound.MSEC_PER_SEC, playRUThere);
                     } else {
                         SoundManager.getInstance().playSound(
-                            Convo2, 24000, null, false, 1, GameSound.VOCAL,
+                            CibIchi, 3*GameSound.MSEC_PER_SEC, playConvo2NullCallback, false, 1, GameSound.VOCAL,
                             "convo_2_hall"
                         );
                     }

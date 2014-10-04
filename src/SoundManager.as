@@ -37,6 +37,7 @@ package {
                 }
             }
             GlobalTimer.getInstance().setMark(name, dur, _callback);
+
             return newSound;
         }
 
