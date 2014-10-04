@@ -15,6 +15,9 @@ package{
             startText.setFormat("NexaBold-Regular",16,0xffffffff,"left");
 
             ScreenManager.getInstance();
+
+            this.updatePopup = false;
+            this.updateMessages = false;
         }
 
         public function startGame():void {
