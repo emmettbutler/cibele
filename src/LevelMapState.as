@@ -90,9 +90,9 @@ package {
             this.resolveAttacks();
 
             if (SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
-
+                FlxG.log("not bit");
             } else {
-                FlxG.log(testcount++);
+                FlxG.log("bit");
                 controlBitDialogue();
             }
         }
