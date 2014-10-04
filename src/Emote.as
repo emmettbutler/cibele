@@ -3,9 +3,9 @@ package {
 
     public class Emote extends GameObject {
         [Embed(source="../assets/emote1.png")] private var ImgEmote1:Class;
-        [Embed(source="../assets/happy_emoji.png")] private var ImgEmojiHappy:Class;
-        [Embed(source="../assets/sad_emoji.png")] private var ImgEmojiSad:Class;
-        [Embed(source="../assets/angry_emoji.png")] private var ImgEmojiAngry:Class;
+        [Embed(source="../assets/UI_happy face_blue.png")] private var ImgEmojiHappy:Class;
+        [Embed(source="../assets/UI_Sad Face_blue.png")] private var ImgEmojiSad:Class;
+        [Embed(source="../assets/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;
 
         public static const STATE_RISE:Number = 938476;
         public static const STATE_HANG:Number = 938477;
@@ -19,11 +19,11 @@ package {
         public function Emote(pos:DHPoint,mood:Number) {
             super(pos);
             if(mood == HAPPY) {
-                this.loadGraphic(ImgEmojiHappy, false, false, 85, 45, true);
+                this.loadGraphic(ImgEmojiHappy, false, false, 96, 98, true);
             } else if(mood == SAD) {
-                this.loadGraphic(ImgEmojiSad, false, false, 71, 45, true);
+                this.loadGraphic(ImgEmojiSad, false, false, 94, 99, true);
             } else if(mood == ANGRY) {
-                this.loadGraphic(ImgEmojiAngry, false, false, 93, 45, true);
+                this.loadGraphic(ImgEmojiAngry, false, false, 100, 99, true);
             }
             this.scale.x = .5;
             this.scale.y = .5;
@@ -38,7 +38,7 @@ package {
 
             if (this._state == STATE_RISE) {
                 this.y -= 5;
-                this.alpha += .05;
+                this.alpha += .2;
                 if (this.timeAlive > .2*1000) {
                     this._state = STATE_HANG;
                     this.lastStateChangeTime = this.timeAlive;

@@ -11,9 +11,10 @@ package{
         [Embed(source="../assets/bulldoghell.png")] private var ImgBulldogHell:Class;
         [Embed(source="../assets/cib_selfies_1.png")] private var ImgCibSelfie1:Class;
         [Embed(source="../assets/forum_selfies_1.png")] private var ImgForumSelfie1:Class;
-        [Embed(source="../assets/happy_emoji.png")] private var ImgEmojiHappy:Class;
-        [Embed(source="../assets/sad_emoji.png")] private var ImgEmojiSad:Class;
-        [Embed(source="../assets/angry_emoji.png")] private var ImgEmojiAngry:Class;
+        [Embed(source="../assets/UI_happy face_blue.png")] private var ImgEmojiHappy:Class;
+        [Embed(source="../assets/UI_Sad Face_blue.png")] private var ImgEmojiSad:Class;
+        [Embed(source="../assets/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;
+        [Embed(source="../assets/UI_Outer Ring.png")] private var ImgRing:Class;
 
         public static var _instance:PopUpManager = null;
 
@@ -131,27 +132,32 @@ package{
             this.emojiButtons = new Dictionary();
             this.programButtons = new Dictionary();
 
-            var emoji_happy:UIElement = new UIElement(_screen.screenWidth * .2,
-                                                _screen.screenHeight * .01);
-            emoji_happy.loadGraphic(ImgEmojiHappy,false,false,85,45);
+            var ring:UIElement = new UIElement(_screen.screenWidth * .03,
+                                               _screen.screenHeight * .03);
+            ring.loadGraphic(ImgRing, false, false, 291, 300);
+            ring.scrollFactor.x = 0;
+            ring.scrollFactor.y = 0;
+            this.elements.push(ring);
+            FlxG.state.add(ring);
+
+            var emoji_happy:UIElement = new UIElement(ring.x + 140, ring.y - 10);
+            emoji_happy.loadGraphic(ImgEmojiHappy, false, false, 96, 98);
             FlxG.state.add(emoji_happy);
             emoji_happy.scrollFactor.x = 0;
             emoji_happy.scrollFactor.y = 0;
             this.elements.push(emoji_happy);
             emojiButtons[emoji_happy] = Emote.HAPPY;
 
-            var emoji_sad:UIElement = new UIElement(_screen.screenWidth * .27,
-                                                _screen.screenHeight * .01);
-            emoji_sad.loadGraphic(ImgEmojiSad,false,false,71,45);
+            var emoji_sad:UIElement = new UIElement(ring.x + 190, ring.y + 90);
+            emoji_sad.loadGraphic(ImgEmojiSad, false, false, 94, 99);
             FlxG.state.add(emoji_sad);
             emoji_sad.scrollFactor.x = 0;
             emoji_sad.scrollFactor.y = 0;
             this.elements.push(emoji_sad);
             this.emojiButtons[emoji_sad] = Emote.SAD;
 
-            var emoji_angry:UIElement = new UIElement(_screen.screenWidth * .32,
-                                                _screen.screenHeight * .01);
-            emoji_angry.loadGraphic(ImgEmojiAngry,false,false,93,45);
+            var emoji_angry:UIElement = new UIElement(ring.x + 140, ring.y + 200);
+            emoji_angry.loadGraphic(ImgEmojiAngry, false, false, 100, 99);
             FlxG.state.add(emoji_angry);
             emoji_angry.scrollFactor.x = 0;
             emoji_angry.scrollFactor.y = 0;
