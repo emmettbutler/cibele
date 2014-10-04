@@ -22,6 +22,7 @@ package{
         public var _state:Number = 0;
 
         public var _screen:ScreenManager;
+        public var frameCount:int = 0;
 
         private var bottomY:Number;
 
@@ -80,7 +81,9 @@ package{
         override public function update():void {
             super.update();
 
-            this.light.alpha = 1-(player.pos.y/bottomY);
+            if(this.frameCount++ % 25 == 0) {
+                this.light.alpha = 1-(player.pos.y/bottomY);
+            }
 
             var highestTile:GameObject = this.bgs[0];
             var lowestTile:GameObject = this.bgs[0];
