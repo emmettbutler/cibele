@@ -29,10 +29,9 @@ package{
         public var popups:Dictionary;
 
         public var elements:Array;
-        public var next_popup:PopUp = null;
+        public var next_popup:PopUp = null, cur_popup:PopUp = null;
         public var popup_active:Boolean = false;
 
-        private static const CLOSED_POPUP:String = "closed_popup";
         public static const SHOWING_POP_UP:Number = 0;
         public static const FLASH_PROGRAM_PICKER:Number = 1;
         public static const SHOWING_NOTHING:Number = -699999999;
@@ -51,6 +50,7 @@ package{
             this.loadPopUps();
             this.flagText = new FlxText(0, 0, 500, "");
             FlxG.state.add(this.flagText);
+            this.cur_popup = this.popups[BULLDOG_HELL];
         }
 
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
@@ -60,11 +60,9 @@ package{
 
             if(this._state == SHOWING_NOTHING) {
                 if(this.overlapsProgramPicker(mouseScreenRect)) {
-                    if (this.next_popup != null) {
-                        this.next_popup.shown = true;
-                        this.next_popup.visible = true;
-                        GlobalTimer.getInstance().setMark(CLOSED_POPUP,
-                                                        GameSound.MSEC_PER_SEC);
+                    if (this.cur_popup != null) {
+                        this.cur_popup.shown = true;
+                        this.cur_popup.visible = true;
                         this._state = SHOWING_POP_UP
                     }
                 }
@@ -109,6 +107,9 @@ package{
                 if(this.next_popup != null){
                     this.next_popup.visible = false;
                 }
+                if(this.cur_popup != null){
+                    this.cur_popup.visible = false;
+                }
             } else if(this._state == FLASH_PROGRAM_PICKER) {
                 this.blinker.alpha = Math.sin(.1 *
                     GlobalTimer.getInstance().pausingTimer());
@@ -120,6 +121,7 @@ package{
         public function sendPopup(key:String):void {
             this._state = FLASH_PROGRAM_PICKER;
             this.next_popup = this.popups[key];
+            this.cur_popup = this.popups[key];
         }
 
         public function loadPopUps():void {

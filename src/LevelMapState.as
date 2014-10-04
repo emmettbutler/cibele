@@ -95,7 +95,6 @@ package {
         }
 
         public function controlBitDialogue():void {
-            FlxG.log("should play bit stuff");
             for(var key:Object in bitDialoguePieces){
                 if(bitDialoguePieces[key][CAN_REPEAT] == true) { //if it can be played infinitely
                     playBitDialogue();
