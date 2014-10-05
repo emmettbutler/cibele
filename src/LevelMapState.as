@@ -97,7 +97,6 @@ package {
 
             if (SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
                 for(var i:Number = 0; i < SoundManager.getInstance().runningSounds.length; i++) {
-                    FlxG.log(SoundManager.getInstance().runningSounds[i].embeddedSound);
                 }
 
             } else {
@@ -106,7 +105,6 @@ package {
         }
 
         public function controlBitDialogue():void {
-            FlxG.log("controlBitDialogue");
             for(var key:Object in bitDialoguePieces){
                 if(bitDialoguePieces[key][CAN_REPEAT] == true) { //if it can be played infinitely
                     playBitDialogue();
@@ -117,7 +115,6 @@ package {
         }
 
         public function playBitDialogue():void {
-            FlxG.log("playBitDialogue");
             if(player.isAttacking()) {
                 if(pathWalker.inViewOfPlayer()){
                     GlobalTimer.getInstance().setMark("delayed_ichinicehit",
