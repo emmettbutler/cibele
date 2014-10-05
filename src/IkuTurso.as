@@ -58,6 +58,7 @@ package{
             var that:IkuTurso = this;
             var nextAudioInfo:Object = this.conversationPieces[this.conversationCounter];
             if (nextAudioInfo != null) {
+
                 GlobalTimer.getInstance().setMark(
                     Math.random().toString(),
                     nextAudioInfo["delay"],

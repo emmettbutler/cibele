@@ -81,7 +81,7 @@ package{
                     }
                 }
             } else if(this._state == SHOWING_POP_UP) {
-                this._state = SHOWING_NOTHING;
+                this.dismissCurrentPopup();
             }
         }
 
@@ -109,9 +109,6 @@ package{
             }
 
             if(this._state == SHOWING_NOTHING) {
-                if(this.cur_popup != null){
-                    this.cur_popup.visible = false;
-                }
             } else if(this._state == FLASH_PROGRAM_PICKER) {
                 this.internet_button.alert();
             } else if(this._state == SHOWING_POP_UP) {
@@ -123,6 +120,13 @@ package{
             this._state = FLASH_PROGRAM_PICKER;
             this.cur_popup = this.popups[key];
             this.cur_tag = key;
+        }
+
+        public function dismissCurrentPopup():void {
+            this._state = SHOWING_NOTHING;
+            if(this.cur_popup != null){
+                this.cur_popup.visible = false;
+            }
         }
 
         public function loadPopUps():void {
@@ -219,7 +223,8 @@ package{
 
             this.popups = new Dictionary();
             this.popups[BULLDOG_HELL] = new PopUp(ImgBulldogHell, 1030, 510);
-            this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 645, 457, PopUp.ARROW_THROUGH);
+            this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 645, 457,
+                                               PopUp.ARROW_THROUGH);
             this.popups[FORUM_1] = new PopUp(ImgForumSelfie1, 1174, 585);
             this.cur_popup = this.popups[this.cur_tag];
 

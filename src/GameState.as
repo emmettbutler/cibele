@@ -10,6 +10,8 @@ package {
 
         public var cursorResetFlag:Boolean = false;
 
+        public static const EVENT_POPUP_CLOSED:Number = 103857135918375;
+
         public function GameState(snd:Boolean=true, popup:Boolean=true,
                                   messages:Boolean=true){
             this.updateSound = snd;
@@ -148,6 +150,10 @@ package {
             if (this.updatePopup) {
                 PopUpManager.getInstance().clickCallback(screenPos, worldPos);
             }
+        }
+
+        public function addEventListener(event:Number, callback:Function):void {
+            FlxG.stage.addEventListener(event, callback);
         }
     }
 }
