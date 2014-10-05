@@ -10,7 +10,7 @@ package {
 
         public var cursorResetFlag:Boolean = false;
 
-        public static const EVENT_POPUP_CLOSED:Number = 103857135918375;
+        public static const EVENT_POPUP_CLOSED:String = "popup_closed";
 
         public function GameState(snd:Boolean=true, popup:Boolean=true,
                                   messages:Boolean=true){
@@ -152,7 +152,7 @@ package {
             }
         }
 
-        public function addEventListener(event:Number, callback:Function):void {
+        public function addEventListener(event:String, callback:Function):void {
             FlxG.stage.addEventListener(event, callback);
         }
     }
