@@ -277,7 +277,9 @@ package{
                             }
                         }
                     }
-                    if (this.mouse_rect.overlaps(this.exit_inbox_rect)){
+                    if (this.mouse_rect.overlaps(this.exit_inbox_rect) ||
+                        this.mouse_rect.overlaps(this.notifications_box))
+                    {
                         this._state = STATE_HIDE_INBOX;
                         this.exitInbox();
                         if (this.cur_viewing != null) {
