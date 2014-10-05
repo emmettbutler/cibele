@@ -13,6 +13,7 @@ package {
         public var cursorResetFlag:Boolean = false;
 
         public static const EVENT_POPUP_CLOSED:String = "popup_closed";
+        public static const EVENT_CHAT_RECEIVED:String = "chat_received";
 
         public function GameState(snd:Boolean=true, popup:Boolean=true,
                                   messages:Boolean=true){
