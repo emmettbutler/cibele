@@ -1,6 +1,8 @@
 package {
     import org.flixel.*;
 
+    import flash.events.Event;
+
     public class GameState extends FlxState {
         protected var updateSound:Boolean, updatePopup:Boolean,
                       updateMessages:Boolean, showEmoji:Boolean = true;
@@ -33,6 +35,12 @@ package {
                 0xaa000000
             );
             this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
+
+            this.addEventListener(GameState.EVENT_POPUP_CLOSED, this.popupClosed);
+        }
+
+        public function popupClosed(event:Event):void {
+            FlxG.log("popup event caught");
         }
 
         public function postCreate():void {
@@ -154,6 +162,10 @@ package {
 
         public function addEventListener(event:String, callback:Function):void {
             FlxG.stage.addEventListener(event, callback);
+        }
+
+        public function dispatchEvent(event:String):void {
+            FlxG.stage.dispatchEvent(new Event(event, true, true));
         }
     }
 }

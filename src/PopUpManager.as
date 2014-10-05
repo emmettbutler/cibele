@@ -1,6 +1,7 @@
 package{
     import org.flixel.*;
 
+    import flash.events.Event;
     import flash.utils.Dictionary;
 
     public class PopUpManager {
@@ -84,6 +85,7 @@ package{
                 }
             } else if(this._state == SHOWING_POP_UP) {
                 this._state = SHOWING_NOTHING;
+                FlxG.stage.dispatchEvent(new Event(GameState.EVENT_POPUP_CLOSED, true, true));
                 for (i = 0; i < this.programButtons.length; i++) {
                     curButton = this.programButtons[i];
                     if(curButton.getCurPopup() != null) {

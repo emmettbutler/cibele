@@ -1,6 +1,8 @@
 package{
     import org.flixel.*;
 
+    import flash.events.*;
+
     public class IkuTurso extends LevelMapState {
         [Embed(source="../assets/ikuturso_wip.mp3")] private var ITBGMLoop:Class;
         [Embed(source="../assets/sexyselfie_wip.mp3")] private var VidBGMLoop:Class;
@@ -58,7 +60,6 @@ package{
             var that:IkuTurso = this;
             var nextAudioInfo:Object = this.conversationPieces[this.conversationCounter];
             if (nextAudioInfo != null) {
-
                 GlobalTimer.getInstance().setMark(
                     Math.random().toString(),
                     nextAudioInfo["delay"],
