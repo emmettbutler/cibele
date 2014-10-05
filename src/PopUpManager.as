@@ -58,6 +58,7 @@ package{
             this.flagText._textField = null;
             FlxG.state.add(this.flagText);
             this.cur_tag = BULLDOG_HELL;
+            this.elements = new Array();
         }
 
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
@@ -125,7 +126,7 @@ package{
         }
 
         public function loadPopUps():void {
-            this.elements = new Array();
+            this.elements.length = 0;
             var _screen:ScreenManager = ScreenManager.getInstance();
 
             this.emojiButtons = new Dictionary();

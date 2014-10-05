@@ -80,6 +80,8 @@ package{
         }
 
         public function initNotifications():void {
+            this.elements.length = 0;
+
             this.mouse_rect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 5, 5);
             var notifications_pos:DHPoint = new DHPoint(
                 PopUpManager.RING_INSET_X + 55,
@@ -185,8 +187,11 @@ package{
             for(var i:int = 1; i < this.threads.length; i++){
                 this.threads[i].setListPos(this.threads[i - 1].pos);
             }
-            this._state = STATE_HIDE_INBOX;
-            this.exitInbox();
+            if (this._state == STATE_HIDE_INBOX) {
+                this.exitInbox();
+            } else {
+                this.openInbox();
+            }
             this.ui_loaded = true;
         }
 
@@ -257,7 +262,6 @@ package{
                 if(this._state == STATE_HIDE_INBOX) {
                     if (this.mouse_rect.overlaps(this.notifications_box)) {
                         this._state = STATE_VIEW_LIST;
-                        this.showPreviews();
                         this.openInbox();
                     }
                 } else {
