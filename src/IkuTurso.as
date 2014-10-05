@@ -60,14 +60,14 @@ package{
             var that:IkuTurso = this;
             var nextAudioInfo:Object = this.conversationPieces[this.conversationCounter];
             if (nextAudioInfo != null) {
-                GlobalTimer.getInstance().setMark(
-                    Math.random().toString(),
-                    nextAudioInfo["delay"],
+                this.addEventListener(GameState.EVENT_POPUP_CLOSED,
                     function():void {
                         SoundManager.getInstance().playSound(
                             nextAudioInfo["audio"], nextAudioInfo["len"],
                             that.playNextConvoPiece, false, 1, GameSound.VOCAL
                         );
+                        FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
+                                                       arguments.callee);
                     });
             } else {
                 SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
