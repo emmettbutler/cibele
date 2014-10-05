@@ -35,12 +35,6 @@ package {
                 0xaa000000
             );
             this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
-
-            this.addEventListener(GameState.EVENT_POPUP_CLOSED, this.popupClosed);
-        }
-
-        public function popupClosed(event:Event):void {
-            FlxG.log("popup event caught");
         }
 
         public function postCreate():void {

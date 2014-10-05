@@ -16,9 +16,6 @@ package {
 
         override public function update():void {
             super.update();
-            if (!this.hasOpened) {
-                this.alert();
-            }
         }
 
         public function ownsKey(key:String):Boolean {
@@ -28,10 +25,12 @@ package {
         public function sendPopup(popup:PopUp):void {
             this.setCurPopup(popup);
             this.hasOpened = false;
+            this.alerting = true;
         }
 
         public function open():void {
             this.hasOpened = true;
+            this.alerting = false;
             if (this.cur_popup != null) {
                 this.cur_popup.visible = true;
             }
