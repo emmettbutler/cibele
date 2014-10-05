@@ -191,6 +191,7 @@ package{
                 this.exitInbox();
             } else {
                 this.openInbox();
+                this.openThread(this.cur_viewing);
             }
             this.ui_loaded = true;
         }
@@ -215,15 +216,16 @@ package{
         }
 
         public function openThread(thread:Thread):void {
-            this.cur_viewing = thread;
-            this.cur_viewing.markAsRead();
-            this.cur_viewing.show();
-            this.reply_to_msg.visible = true;
-            this.exit_msg.visible = true;
-            this._state = STATE_VIEW_MESSAGE;
-
-            for(var i:int = 0; i < this.threads.length; i++) {
-                this.threads[i].hidePreview();
+            if (thread != null) {
+                this.cur_viewing = thread;
+                this.cur_viewing.markAsRead();
+                this.cur_viewing.show();
+                this.reply_to_msg.visible = true;
+                this.exit_msg.visible = true;
+                this._state = STATE_VIEW_MESSAGE;
+                for(var i:int = 0; i < this.threads.length; i++) {
+                    this.threads[i].hidePreview();
+                }
             }
         }
 
