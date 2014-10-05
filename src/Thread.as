@@ -122,7 +122,7 @@ package{
                         this.messages[i + 1],
                         i == 0
                     );
-                    FlxG.stage.dispatchEvent(new Event(GameState.EVENT_MESSAGE_RECEIVED));
+                    FlxG.stage.dispatchEvent(new Event(GameState.EVENT_CHAT_RECEIVED));
                 }
             }
         }
