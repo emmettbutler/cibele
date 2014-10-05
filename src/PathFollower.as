@@ -192,7 +192,6 @@ package
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
             } else if (this._state == STATE_IDLE_AT_PATH_NODE) {
-                play("idle");
                 this.markCurrentNode();
                 if(this.playerIsInMovementRange()){
                     this.moveToNextPathNode();
@@ -205,7 +204,6 @@ package
                 }
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_IDLE_AT_MAP_NODE) {
-                play("idle");
                 if(this.playerIsInMovementRange()){
                     this.moveToNextNode();
                 }

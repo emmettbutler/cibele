@@ -25,6 +25,8 @@ package {
         public var timeAlive:Number = 0;
         public var currentTime:Number = -1;
 
+        public var bitDialogueLock:Boolean = true;
+
         public static const LEVEL_ID:int = 9234876592837465;
         public static const NORTH:int = 948409;
         public static const SOUTH:int = 94876;
@@ -95,9 +97,11 @@ package {
             this.bgLoader.update();
             this.resolveAttacks();
 
-            if (SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
-            } else {
-                controlBitDialogue();
+            if (!this.bitDialogueLock) {
+                if (SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
+                } else {
+                    controlBitDialogue();
+                }
             }
         }
 

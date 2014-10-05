@@ -18,7 +18,7 @@ package{
         private var convo1Ready:Boolean;
 
         private var conversationPieces:Array;
-        private var conversationCounter:Number = 1;
+        private var conversationCounter:Number = 0;
 
         public function IkuTurso() {
             this.bossHasAppeared = false;
@@ -99,6 +99,7 @@ package{
                 sndInfo["audio"], sndInfo["len"], this.playNextConvoPiece,
                 false, 1, GameSound.VOCAL
             );
+            this.bitDialogueLock = false;
         }
 
         override public function update():void{
