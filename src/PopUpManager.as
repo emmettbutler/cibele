@@ -184,7 +184,8 @@ package{
             this.elements.push(dock);
             FlxG.state.add(dock);
 
-            this.game_button = new DockButton(dock.x + dockOffset + 10, dock.y - 60, [], null);
+            this.game_button = new DockButton(
+                dock.x + dockOffset + 10, dock.y - 60, [], null);
             this.game_button.loadGraphic(ImgGameButton, false, false, 62, 95);
             this.game_button.alpha = 1;
             this.game_button.scrollFactor.x = 0;
@@ -193,8 +194,11 @@ package{
             this.elements.push(this.game_button);
             this.programButtons.push(this.game_button);
 
-            this.internet_button = new DockButton(this.game_button.x+ this.game_button.width + 30, dock.y - 50, [BULLDOG_HELL, FORUM_1], BUTTON_INTERNET);
-            this.internet_button.loadGraphic(ImgInternetButton, false, false, 88, 75);
+            this.internet_button = new DockButton(
+                this.game_button.x + this.game_button.width + 30,
+                dock.y - 50, [BULLDOG_HELL, FORUM_1], BUTTON_INTERNET);
+            this.internet_button.loadGraphic(ImgInternetButton, false, false,
+                                             88, 75);
             this.internet_button.alpha = 1;
             this.internet_button.scrollFactor.x = 0;
             this.internet_button.scrollFactor.y = 0;
@@ -202,7 +206,9 @@ package{
             this.elements.push(this.internet_button);
             this.programButtons.push(this.internet_button);
 
-            this.file_button = new DockButton(this.internet_button.x + this.internet_button.width + 30, dock.y - 30, [], BUTTON_FILES);
+            this.file_button = new DockButton(
+                this.internet_button.x + this.internet_button.width + 30,
+                dock.y - 30, [], BUTTON_FILES);
             this.file_button.loadGraphic(ImgFileButton, false, false, 88, 60);
             this.file_button.alpha = 1;
             this.file_button.scrollFactor.x = 0;
@@ -211,7 +217,9 @@ package{
             this.elements.push(this.file_button);
             this.programButtons.push(this.file_button);
 
-            this.photo_button = new DockButton(this.file_button.x + this.file_button.width + 30, dock.y - 25, [SELFIES_1], BUTTON_PHOTO);
+            this.photo_button = new DockButton(
+                this.file_button.x + this.file_button.width + 30,
+                dock.y - 25, [SELFIES_1], BUTTON_PHOTO);
             this.photo_button.loadGraphic(ImgPhotoButton, false, false, 82, 65);
             this.photo_button.alpha = 1;
             this.photo_button.scrollFactor.x = 0;
