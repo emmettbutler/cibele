@@ -24,7 +24,7 @@ package{
         public var game_button:UIElement = null;
         public var file_button:UIElement = null;
         public var photo_button:UIElement = null;
-        public var showEmoji:Boolean;
+        public var showEmoji:Boolean = true;
 
         private var emojiButtons:Dictionary;
         private var programButtons:Dictionary;
@@ -54,10 +54,9 @@ package{
         public var flagText:FlxText;
 
         public function PopUpManager() {
-            this.loadPopUps();
             this.flagText = new FlxText(0, 0, 500, "");
+            this.flagText._textField = null;
             FlxG.state.add(this.flagText);
-            this.cur_popup = this.popups[BULLDOG_HELL];
             this.cur_tag = BULLDOG_HELL;
         }
 
