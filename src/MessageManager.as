@@ -127,6 +127,7 @@ package{
             this.exit_ui.loadGraphic(ImgInboxX, false, false, 13, 12);
             this.elements.push(this.exit_ui);
             this.exit_ui.scrollFactor = new FlxPoint(0, 0);
+            this.exit_ui.visible = false;
             FlxG.state.add(this.exit_ui);
 
             this.exit_inbox_rect = new FlxRect(this.exit_ui.x,
@@ -136,7 +137,6 @@ package{
             this.exit_inbox_rect.x = this.exit_ui.x;
             this.exit_inbox_rect.y = this.exit_ui.y;
 
-            this.exit_ui.alpha = 0;
             this.img_inbox.visible = false;
 
             this.exit_msg = new FlxText(this.img_inbox.x + 110,
@@ -144,7 +144,7 @@ package{
                 this.img_inbox.width, "| Back");
             this.exit_msg.setFormat("NexaBold-Regular",16,0xff000000,"left");
             this.exit_msg.scrollFactor = new FlxPoint(0, 0);
-            this.exit_msg.alpha = 0;
+            this.exit_msg.visible = false;
             this.exit_msg.active = false;
             FlxG.state.add(this.exit_msg);
 
@@ -155,7 +155,7 @@ package{
                 this.img_inbox.width, "| Reply");
             this.reply_to_msg.setFormat("NexaBold-Regular",16,0xff000000,"left");
             this.reply_to_msg.scrollFactor = new FlxPoint(0, 0);
-            this.reply_to_msg.alpha = 0;
+            this.reply_to_msg.visible = false;
             this.reply_to_msg.active = false;
             FlxG.state.add(this.reply_to_msg);
 
@@ -205,16 +205,16 @@ package{
             for(var i:int = 0; i < this.threads.length; i++) {
                 this.threads[i].showPreview();
             }
-            this.reply_to_msg.alpha = 0;
-            this.exit_msg.alpha = 0;
+            this.reply_to_msg.visible = false;
+            this.exit_msg.visible = false;
         }
 
         public function openThread(thread:Thread):void {
             this.cur_viewing = thread;
             this.cur_viewing.markAsRead();
             this.cur_viewing.show();
-            this.reply_to_msg.alpha = 1;
-            this.exit_msg.alpha = 1;
+            this.reply_to_msg.visible = true;
+            this.exit_msg.visible = true;
             this._state = STATE_VIEW_MESSAGE;
 
             for(var i:int = 0; i < this.threads.length; i++) {
@@ -285,9 +285,10 @@ package{
         }
 
         public function exitInbox():void {
-            this.exit_ui.alpha = 0;
-            this.exit_msg.alpha = 0;
-            this.reply_to_msg.alpha = 0;
+            this._state = STATE_HIDE_INBOX;
+            this.exit_ui.visible = false;
+            this.exit_msg.visible = false;
+            this.reply_to_msg.visible = false;
             this.img_inbox.visible = false;
             for(var i:int = 0; i < this.threads.length; i++) {
                 this.threads[i].hide();
@@ -295,7 +296,8 @@ package{
         }
 
         public function openInbox():void {
-            this.exit_ui.alpha = 1;
+            this.showPreviews();
+            this.exit_ui.visible = true;
             this.img_inbox.visible = true;
         }
 

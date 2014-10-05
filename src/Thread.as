@@ -51,7 +51,7 @@ package{
                 "...");
             this.truncated_textbox.setFormat("NexaBold-Regular",this.font_size,this.font_color,"left");
             this.truncated_textbox.scrollFactor = new FlxPoint(0, 0);
-            this.truncated_textbox.alpha = 0;
+            this.truncated_textbox.visible = false;
             this.truncated_textbox.active = false;
             FlxG.state.add(truncated_textbox);
 
@@ -132,7 +132,7 @@ package{
         }
 
         public function hide():void {
-            this.truncated_textbox.alpha = 0;
+            this.truncated_textbox.visible = false;
             for (var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].hide();
             }
@@ -149,7 +149,7 @@ package{
                 this.messages[i].hide();
             }
             this.viewing = false;
-            this.truncated_textbox.alpha = 1;
+            this.truncated_textbox.visible = true;
 
             if(this.unread == false){
                 this.truncated_textbox.color = this.font_color;
@@ -159,13 +159,13 @@ package{
         }
 
         public function hidePreview():void {
-            this.truncated_textbox.alpha = 0;
+            this.truncated_textbox.visible = false;
         }
 
         public function show():void {
             this.viewing = true;
             this.unread = false;
-            this.truncated_textbox.alpha = 0;
+            this.truncated_textbox.visible = false;
             for (var i:int = 0; i < this.messages.length; i++) {
                 if (this.messages[i].sent) {
                     this.messages[i].show();
