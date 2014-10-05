@@ -111,8 +111,6 @@ package {
             this.sortedObjects.sort(sortByBasePos);
             this.insertSortedObjects();
 
-            this.updateCursor();
-
             GlobalTimer.getInstance().update();
 
             if (this.updateSound) {
@@ -125,6 +123,8 @@ package {
             if (this.updateMessages) {
                 MessageManager.getInstance().update();
             }
+
+            this.updateCursor();
 
             if(FlxG.mouse.justPressed()) {
                 this.clickCallback(
