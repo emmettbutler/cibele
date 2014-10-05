@@ -5,7 +5,7 @@ package {
         private var cur_popup:PopUp;
         public var cur_popup_tag:String;
         private var ownedKeys:Array;
-        public var hasOpened:Boolean = false;
+        public var hasOpened:Boolean = true;
         public var tag:String;
 
         public function DockButton(x:Number, y:Number, ownedKeys:Array, tag:String) {

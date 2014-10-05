@@ -32,7 +32,6 @@ package{
         public var popupTags:Object;
 
         public var elements:Array;
-        public var cur_popup:PopUp = null, cur_tag:String = null;
         public var popup_active:Boolean = false;
 
         public static const BUTTON_INTERNET:String = "innernet";
@@ -62,11 +61,10 @@ package{
             this.flagText._textField = null;
             FlxG.state.add(this.flagText);
 
-            this.popupTags = {
-                BUTTON_INTERNET: BULLDOG_HELL,
-                BUTTON_FILES: null,
-                BUTTON_PHOTO: SELFIES_1
-            };
+            this.popupTags = {};
+            this.popupTags[BUTTON_INTERNET] = BULLDOG_HELL;
+            this.popupTags[BUTTON_FILES] = null;
+            this.popupTags[BUTTON_PHOTO] = SELFIES_1;
         }
 
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
@@ -74,18 +72,23 @@ package{
                                                       5, 5);
             this.emote(mouseScreenRect);
 
-            var curButton:DockButton;
-            for (var i:int = 0; i < this.programButtons.length; i++) {
-                curButton = this.programButtons[i];
-                if(this.overlaps(mouseScreenRect, curButton)) {
-                    this._state = SHOWING_POP_UP;
-                    curButton.open();
-                }
-            }
-
             if(this._state != SHOWING_POP_UP) {
+                var curButton:DockButton;
+                for (var i:int = 0; i < this.programButtons.length; i++) {
+                    curButton = this.programButtons[i];
+                    if(this.overlaps(mouseScreenRect, curButton)) {
+                        this._state = SHOWING_POP_UP;
+                        curButton.open();
+                    }
+                }
             } else if(this._state == SHOWING_POP_UP) {
                 this._state = SHOWING_NOTHING;
+                for (i = 0; i < this.programButtons.length; i++) {
+                    curButton = this.programButtons[i];
+                    if(curButton.getCurPopup() != null) {
+                        curButton.getCurPopup().visible = false;
+                    }
+                }
             }
         }
 
@@ -108,9 +111,7 @@ package{
             }
 
             if(this._state == SHOWING_NOTHING) {
-                if(this.cur_popup != null){
-                    this.cur_popup.visible = false;
-                }
+                this.popup_active = false;
             } else if(this._state == SHOWING_POP_UP) {
                 this.popup_active = true;
             }
