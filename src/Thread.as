@@ -1,6 +1,8 @@
 package{
     import org.flixel.*;
 
+    import flash.events.Event;
+
     public class Thread {
         [Embed(source="../assets/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
