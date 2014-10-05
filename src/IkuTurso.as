@@ -55,6 +55,14 @@ package{
             PopUpManager.getInstance().sendPopup(PopUpManager.ICHI_DOWNLOAD);
         }
 
+        public function showIchiSelfie1():void {
+            PopUpManager.getInstance().sendPopup(PopUpManager.ICHI_SELFIE1);
+        }
+
+        public function showCibSelfieFolder():void {
+            PopUpManager.getInstance().sendPopup(PopUpManager.CIB_SELFIE_FOLDER);
+        }
+
         public function playNextConvoPiece():void {
             var thisAudioInfo:Object = this.conversationPieces[this.conversationCounter];
             if (thisAudioInfo["endfn"] != null) {

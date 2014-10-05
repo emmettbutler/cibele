@@ -18,6 +18,8 @@ package{
         [Embed(source="../assets/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;
         [Embed(source="../assets/UI_Outer Ring.png")] private var ImgRing:Class;
         [Embed(source="../assets/ichidownloads.png")] private var ImgIchiDownload:Class;
+        [Embed(source="../assets/ichiselfie1.png")] private var ImgIchiSelfie1:Class;
+        [Embed(source="../assets/cibselfiefolder.png")] private var ImgCibSelfieFolder:Class;
 
         public static var _instance:PopUpManager = null;
 
@@ -52,6 +54,8 @@ package{
         public static const SELFIES_1:String = "selfies1";
         public static const FORUM_1:String = "forum1";
         public static const ICHI_DOWNLOAD:String = "ichidownload";
+        public static const ICHI_SELFIE1:String = "ichiselfie1";
+        public static const CIB_SELFIE_FOLDER:String = "cibselfiefolder";
 
         // this text is used to detect when state elements have been destroyed
         // and need to be re-created. it is never displayed, but
@@ -208,7 +212,7 @@ package{
             this.elements.push(this.internet_button);
             this.programButtons.push(this.internet_button);
 
-            this.file_button = new DockButton(this.internet_button.x + this.internet_button.width + 30, dock.y - 30, [ICHI_DOWNLOAD], BUTTON_FILES);
+            this.file_button = new DockButton(this.internet_button.x + this.internet_button.width + 30, dock.y - 30, [ICHI_DOWNLOAD, CIB_SELFIE_FOLDER], BUTTON_FILES);
             this.file_button.loadGraphic(ImgFileButton, false, false, 88, 60);
             this.file_button.alpha = 1;
             this.file_button.scrollFactor.x = 0;
@@ -219,7 +223,7 @@ package{
 
             this.photo_button = new DockButton(
                 this.file_button.x + this.file_button.width + 30,
-                dock.y - 25, [SELFIES_1], BUTTON_PHOTO);
+                dock.y - 25, [SELFIES_1, ICHI_SELFIE1], BUTTON_PHOTO);
             this.photo_button.loadGraphic(ImgPhotoButton, false, false, 82, 65);
             this.photo_button.alpha = 1;
             this.photo_button.scrollFactor.x = 0;
@@ -233,6 +237,8 @@ package{
             this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 645, 457, PopUp.ARROW_THROUGH, SELFIES_1);
             this.popups[FORUM_1] = new PopUp(ImgForumSelfie1, 1174, 585, 0, FORUM_1);
             this.popups[ICHI_DOWNLOAD] = new PopUp(ImgIchiDownload, 897, 477, 0, ICHI_DOWNLOAD);
+            this.popups[ICHI_SELFIE1] = new PopUp(ImgIchiSelfie1, 438, 615, 0, ICHI_SELFIE1);
+            this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibSelfieFolder, 765, 427, 0, CIB_SELFIE_FOLDER);
 
             var curButton:DockButton;
             for (var i:int = 0; i < this.programButtons.length; i++){
