@@ -36,7 +36,7 @@ package{
             bgs = new Array();
             this.light = new FlxExtSprite(0,0);
 
-            bottomY = 1000;
+            bottomY = 10000;
             _screen = ScreenManager.getInstance();
             super.__create(new DHPoint(
                 _screen.screenWidth * .5, bottomY - _screen.screenHeight * .5));
