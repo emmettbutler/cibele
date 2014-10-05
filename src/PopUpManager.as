@@ -17,6 +17,7 @@ package{
         [Embed(source="../assets/UI_Sad Face_blue.png")] private var ImgEmojiSad:Class;
         [Embed(source="../assets/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;
         [Embed(source="../assets/UI_Outer Ring.png")] private var ImgRing:Class;
+        [Embed(source="../assets/ichidownloads.png")] private var ImgIchiDownload:Class;
 
         public static var _instance:PopUpManager = null;
 
@@ -50,6 +51,7 @@ package{
         public static const BULLDOG_HELL:String = "bulldoghell";
         public static const SELFIES_1:String = "selfies1";
         public static const FORUM_1:String = "forum1";
+        public static const ICHI_DOWNLOAD:String = "ichidownload";
 
         // this text is used to detect when state elements have been destroyed
         // and need to be re-created. it is never displayed, but
@@ -65,7 +67,7 @@ package{
 
             this.popupTags = {};
             this.popupTags[BUTTON_INTERNET] = BULLDOG_HELL;
-            this.popupTags[BUTTON_FILES] = null;
+            this.popupTags[BUTTON_FILES] = ICHI_DOWNLOAD;
             this.popupTags[BUTTON_PHOTO] = SELFIES_1;
         }
 
@@ -206,9 +208,7 @@ package{
             this.elements.push(this.internet_button);
             this.programButtons.push(this.internet_button);
 
-            this.file_button = new DockButton(
-                this.internet_button.x + this.internet_button.width + 30,
-                dock.y - 30, [], BUTTON_FILES);
+            this.file_button = new DockButton(this.internet_button.x + this.internet_button.width + 30, dock.y - 30, [ICHI_DOWNLOAD], BUTTON_FILES);
             this.file_button.loadGraphic(ImgFileButton, false, false, 88, 60);
             this.file_button.alpha = 1;
             this.file_button.scrollFactor.x = 0;
@@ -232,6 +232,7 @@ package{
             this.popups[BULLDOG_HELL] = new PopUp(ImgBulldogHell, 1030, 510, 0, BULLDOG_HELL);
             this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 645, 457, PopUp.ARROW_THROUGH, SELFIES_1);
             this.popups[FORUM_1] = new PopUp(ImgForumSelfie1, 1174, 585, 0, FORUM_1);
+            this.popups[ICHI_DOWNLOAD] = new PopUp(ImgIchiDownload, 897, 477, 0, ICHI_DOWNLOAD);
 
             var curButton:DockButton;
             for (var i:int = 0; i < this.programButtons.length; i++){
