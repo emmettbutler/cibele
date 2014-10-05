@@ -5,14 +5,16 @@ package{
         public static const ARROW_THROUGH:Number = 1;
         public var cur_anim:Number = 0;
         public var timer_key:String;
+        public var tag:String;
 
         public function PopUp(img:Class, w:Number, h:Number,
-                              functionality:Number=0) {
+                              functionality:Number=0, tag:String=null) {
             this.timer_key = Math.random() + "";
 
             var _screen:ScreenManager = ScreenManager.getInstance();
             super(_screen.screenWidth * .1, _screen.screenHeight * .1);
             this._state = functionality;
+            this.tag = tag;
 
             if(this._state == ARROW_THROUGH) {
                 this.loadGraphic(img,true,false,w,h);
