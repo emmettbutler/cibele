@@ -170,18 +170,18 @@ package{
             this.elements.push(emoji_angry);
             this.emojiButtons[emoji_angry] = Emote.ANGRY;
 
-            var dockOffset:Number = 400;
+            var dockOffset:Number = 100;
             var dock:UIElement = new UIElement(
-                -dockOffset, _screen.screenHeight - 91
+                -dockOffset, _screen.screenHeight - 71
             );
             dock.alpha = 1;
-            dock.loadGraphic(ImgDock, false, false, 1000, 91);
+            dock.loadGraphic(ImgDock, false, false, 570, 52);
             dock.scrollFactor = new FlxPoint(0, 0);
             this.elements.push(dock);
             FlxG.state.add(dock);
 
-            this.game_button = new UIElement(dock.x + dockOffset + 10, dock.y - 80);
-            this.game_button.loadGraphic(ImgGameButton, false, false, 97, 149);
+            this.game_button = new UIElement(dock.x + dockOffset + 10, dock.y - 60);
+            this.game_button.loadGraphic(ImgGameButton, false, false, 62, 95);
             this.game_button.alpha = 1;
             this.game_button.scrollFactor.x = 0;
             this.game_button.scrollFactor.y = 0;
@@ -189,8 +189,8 @@ package{
             this.elements.push(this.game_button);
             this.programButtons[this.game_button] = 1111;
 
-            this.internet_button = new UIElement(dock.x + dockOffset + 110, dock.y - 50);
-            this.internet_button.loadGraphic(ImgInternetButton, false, false, 136, 116);
+            this.internet_button = new UIElement(this.game_button.x+ this.game_button.width + 30, dock.y - 50);
+            this.internet_button.loadGraphic(ImgInternetButton, false, false, 88, 75);
             this.internet_button.alpha = 1;
             this.internet_button.scrollFactor.x = 0;
             this.internet_button.scrollFactor.y = 0;
@@ -198,8 +198,8 @@ package{
             this.elements.push(this.internet_button);
             this.programButtons[this.internet_button] = 1112;
 
-            this.file_button = new UIElement(dock.x + dockOffset + 260, dock.y - 30);
-            this.file_button.loadGraphic(ImgFileButton, false, false, 136, 93);
+            this.file_button = new UIElement(this.internet_button.x + this.internet_button.width + 30, dock.y - 30);
+            this.file_button.loadGraphic(ImgFileButton, false, false, 88, 60);
             this.file_button.alpha = 1;
             this.file_button.scrollFactor.x = 0;
             this.file_button.scrollFactor.y = 0;
@@ -207,8 +207,8 @@ package{
             this.elements.push(this.file_button);
             this.programButtons[this.file_button] = 1113;
 
-            this.photo_button = new UIElement(dock.x + dockOffset + 400, dock.y - 25);
-            this.photo_button.loadGraphic(ImgPhotoButton, false, false, 118, 93);
+            this.photo_button = new UIElement(this.file_button.x + this.file_button.width + 30, dock.y - 25);
+            this.photo_button.loadGraphic(ImgPhotoButton, false, false, 82, 65);
             this.photo_button.alpha = 1;
             this.photo_button.scrollFactor.x = 0;
             this.photo_button.scrollFactor.y = 0;
