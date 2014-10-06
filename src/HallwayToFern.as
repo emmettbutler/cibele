@@ -136,7 +136,7 @@ package{
 
                 function playConvo2():void {
                     SoundManager.getInstance().playSound(
-                        Convo2, 24000, convo2Done, false, 1, GameSound.VOCAL,
+                        Convo2, 24*GameSound.MSEC_PER_SEC, convo2Done, false, 1, GameSound.VOCAL,
                         "convo_2_hall"
                     );
                 }

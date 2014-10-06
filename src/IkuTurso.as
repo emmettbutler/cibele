@@ -28,8 +28,8 @@ package{
                 {"audio": Convo1, "len": 56*GameSound.MSEC_PER_SEC, "delay": 0, "endfn": this.showIchiDownloadWindow},
                 {"audio": Convo2, "len": 76*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": this.showSelfiesWindow},
                 {"audio": Convo3, "len": 25*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": this.showForumWindow},
-                {"audio": Convo4, "len": 107*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null},
-                {"audio": Convo5, "len": 15*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null},
+                {"audio": Convo4, "len": 107*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": this.showIchiSelfie1},
+                {"audio": Convo5, "len": 15*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": this.showCibSelfieFolder},
                 {"audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null}
             ];
         }
@@ -94,7 +94,7 @@ package{
 
         public function playFirstConvo():void {
             this.conversationCounter = 0;
-            var sndInfo:Object = this.conversationPieces[0];
+            var sndInfo:Object = this.conversationPieces[this.conversationCounter];
             this.convo1Sound = SoundManager.getInstance().playSound(
                 sndInfo["audio"], sndInfo["len"], this.playNextConvoPiece,
                 false, 1, GameSound.VOCAL

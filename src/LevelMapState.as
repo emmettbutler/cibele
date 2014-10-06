@@ -98,15 +98,13 @@ package {
             this.resolveAttacks();
 
             if (!this.bitDialogueLock) {
-                if (SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
-                } else {
+                if (!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
                     controlBitDialogue();
                 }
             }
         }
 
         public function controlBitDialogue():void {
-            FlxG.log("bit");
             for(var key:Object in bitDialoguePieces){
                 if(bitDialoguePieces[key][CAN_REPEAT] == true) { //if it can be played infinitely
                     playBitDialogue();
