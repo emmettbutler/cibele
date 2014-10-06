@@ -21,7 +21,7 @@ package{
 
         override public function create():void {
             FlxG.bgColor = 0x00000000;
-            (new BackgroundLoader()).loadSingleTileBG("../assets/desktop.png");
+            (new BackgroundLoader()).loadSingleTileBG("../assets/UI_Desktop.png");
             ScreenManager.getInstance().setupCamera(null, 1);
 
             var _screen:ScreenManager = ScreenManager.getInstance();
