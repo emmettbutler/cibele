@@ -1,4 +1,5 @@
 import argparse
+import datetime as dt
 import os
 import subprocess
 try:
@@ -68,9 +69,12 @@ def compile_main(entry_point_class, libpath, debug_level):
         stacktraces = "false"
         debug = "false"
         test_flag = "false"
+    swfpath = "src/{entry_point_class}-{ts}.swf".format(
+        entry_point_class=entry_point_class,
+        ts=dt.datetime.now().strftime("%Y.%m.%d.%H.%M.%S"))
     command = ["mxmlc", "src/{entry_point_class}.as".format(entry_point_class=entry_point_class), "-o",
-               "src/{entry_point_class}.swf".format(entry_point_class=entry_point_class),
-               "-use-network=false", "-verbose-stacktraces={}".format(stacktraces),
+               swfpath,
+               "-use-network=false", "-verbose-stacktraces=true",
                "-compiler.include-libraries", libpath,
                "-static-link-runtime-shared-libraries",
                "-debug={}".format(debug),
@@ -79,7 +83,7 @@ def compile_main(entry_point_class, libpath, debug_level):
                "-define=CONFIG::test,{}".format(test_flag), ]
     print " ".join(command)
     subprocess.check_call(command)
-    return "src/{entry_point_class}.swf".format(entry_point_class=entry_point_class)
+    return swfpath
 
 
 def get_conf_path(entry_point_class):
@@ -94,7 +98,7 @@ def write_conf_file(swf_path, entry_point_class, main_class):
 <application xmlns="http://ns.adobe.com/air/application/3.1">
     <id>com.starmaid.Cibele</id>
     <versionNumber>1.0</versionNumber>
-    <filename>{main_class}</filename>
+    <filename>{main_class}{rand}</filename>
     <initialWindow>
         <content>{swf_path}</content>
         <visible>true</visible>
@@ -102,7 +106,8 @@ def write_conf_file(swf_path, entry_point_class, main_class):
         <height>480</height>
     </initialWindow>
 </application>
-""".format(main_class=main_class, swf_path=swf_path)
+""".format(main_class=main_class, rand="",
+           swf_path=swf_path)
         )
     return conf_path
 
@@ -113,12 +118,13 @@ def run_main(conf_file):
     subprocess.call(command.split())
 
 
-def package_application(entry_point_class):
+def package_application(entry_point_class, swf_path):
     """
     To generate cibelecert.pfx:
         adt -certificate -cn SelfSign -ou QE -o "Star Maid Games" -c US 2048-RSA cibelecert.pfx AmanoJyakku!
     """
-    command = "adt -package -storetype pkcs12 -keystore cibelecert.pfx CibeleBeta.air {entry_point_class}.xml src/{entry_point_class}.swf assets".format(entry_point_class=entry_point_class)
+    command = "adt -package -storetype pkcs12 -keystore cibelecert.pfx CibeleBeta.air {entry_point_class}.xml {swf_path} assets".format(
+        entry_point_class=entry_point_class, swf_path=swf_path)
     print command
     subprocess.call(command.split())
 
@@ -146,7 +152,7 @@ def main():
         conf_path = write_conf_file(swf_path, entry_point_class, args.mainclass[0])
 
         if args.package:
-            package_application(entry_point_class)
+            package_application(entry_point_class, swf_path)
         else:
             run_main(conf_path)
 
