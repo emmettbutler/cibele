@@ -91,7 +91,7 @@ package{
                 notifications_pos.x, notifications_pos.y);
             img_msg.loadGraphic(ImgMsg, false, false, 143, 143);
             img_msg.scrollFactor = new FlxPoint(0, 0);
-            img_msg.active = false;
+            img_msg.active = true;
             img_msg.addAnimation("new", [0], 1, false);
             img_msg.addAnimation("open", [1], 1, false);
             img_msg.addAnimation("closed", [2], 1, false);
@@ -199,9 +199,11 @@ package{
         public function updateUnreadNotification():void {
             this.notifications_text.text = this.unread_count.toString();
             if(this.unread_count > 0) {
+                this.img_msg.alertOn();
                 this.notifications_text.color = 0xff982708;
                 this.img_msg.play("new");
             } else {
+                this.img_msg.alertOff();
                 this.notifications_text.color = 0xff000000;
                 this.img_msg.play("closed");
             }

@@ -10,10 +10,18 @@ package {
             super(this.anchor);
         }
 
+        public function alertOn():void {
+            this.alerting = true;
+        }
+
+        public function alertOff():void {
+            this.alerting = false;
+        }
+
         override public function update():void {
             super.update();
             if (this.alerting) {
-                this.y = this.anchor.y + 30 * Math.sin(.01 * GlobalTimer.getInstance().pausingTimer());
+                this.y = this.anchor.y + 10 * Math.sin(.01 * GlobalTimer.getInstance().pausingTimer());
             } else {
                 this.y = this.anchor.y;
             }
