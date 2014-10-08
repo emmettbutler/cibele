@@ -25,6 +25,7 @@ package{
         public var attack_sprite:GameObject;
         public var shadow_sprite:GameObject;
         public var enemy_dir:DHPoint;
+        public var splash_sprites_lock:Boolean = false;
 
         public static const STATE_WALK:Number = 2398476188;
 
@@ -118,14 +119,7 @@ package{
             }
 
             if (this.targetEnemy == null) {
-                this._state = STATE_WALK;
-                this.walkTarget = worldPos;
-                this.splash_sprites.x = this.walkTarget.x -
-                    this.splash_sprites.width/2;
-                this.splash_sprites.y = this.walkTarget.y -
-                    this.splash_sprites.height/2;
-                this.splash_sprites.alpha = 1;
-                this.splash_sprites.play("attack");
+                this.initWalk(worldPos);
             } else {
                 this.walkTarget = this.targetEnemy.pos.center(this.targetEnemy, true);
                 this._state = STATE_MOVE_TO_ENEMY;
@@ -169,6 +163,20 @@ package{
             }
         }
 
+        public function initWalk(worldPos:DHPoint):void {
+            this._state = STATE_WALK;
+            this.walkTarget = worldPos;
+            if(!this.splash_sprites_lock) {
+                this.splash_sprites_lock = true;
+                this.splash_sprites.x = this.walkTarget.x -
+                    this.splash_sprites.width/2;
+                this.splash_sprites.y = this.walkTarget.y -
+                    this.splash_sprites.height/2;
+                this.splash_sprites.alpha = 1;
+                this.splash_sprites.play("attack");
+            }
+        }
+
         public function walk():void {
             this.walkDirection = walkTarget.sub(footPos).normalized();
             this.dir = this.walkDirection.mulScl(this.walkSpeed);
@@ -204,6 +212,13 @@ package{
         }
 
         override public function update():void{
+            if(FlxG.mouse.pressed()) {
+                this.initWalk(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
+                this.walk();
+            } else if(FlxG.mouse.justReleased()) {
+                this.splash_sprites_lock = false;
+            }
+
             this.hitbox_rect.x = this.pos.x;
             this.hitbox_rect.y = this.pos.y;
 
