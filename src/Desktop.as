@@ -9,14 +9,11 @@ package{
         public var debugText:FlxText;
 
         public var bg:GameObject;
-        public var mouse_rect:FlxRect;
 
         public var img_height:Number = 357;
 
         public var selfie_folder:GameObject;
         public var untitled_folder:GameObject;
-        public var selfie_folder_rect:FlxRect;
-        public var untitled_folder_rect:FlxRect;
 
         public function Desktop() {
             super(true, true, false);
@@ -28,10 +25,6 @@ package{
             (new BackgroundLoader()).loadSingleTileBG("../assets/UI_Desktop.png");
             ScreenManager.getInstance().setupCamera(null, 1);
             var _screen:ScreenManager = ScreenManager.getInstance();
-
-            mouse_rect = new FlxRect(FlxG.mouse.x,FlxG.mouse.y,50,50);
-            untitled_folder_rect = new FlxRect(_screen.screenWidth * .85, _screen.screenHeight * .31, 100, 80);
-            selfie_folder_rect = new FlxRect(_screen.screenWidth * .88, _screen.screenHeight * .09, 100, 80);
 
             debugText = new FlxText(0,0,100,"");
             add(debugText);
@@ -51,10 +44,13 @@ package{
 
         override public function update():void{
             super.update();
-            mouse_rect.x = FlxG.mouse.x;
-            mouse_rect.y = FlxG.mouse.y;
 
             if(FlxG.mouse.justPressed()) {
+                var _screen:ScreenManager = ScreenManager.getInstance();
+                var untitled_folder_rect:FlxRect = new FlxRect(_screen.screenWidth * .85, _screen.screenHeight * .31, 100, 80);
+                var selfie_folder_rect:FlxRect = new FlxRect(_screen.screenWidth * .88, _screen.screenHeight * .09, 100, 80);
+                var mouse_rect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
+
                 if(mouse_rect.overlaps(untitled_folder_rect)) {
                     selfie_folder.alpha = 0;
                     if(untitled_folder.alpha == 1){
