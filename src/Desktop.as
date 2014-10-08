@@ -13,33 +13,67 @@ package{
 
         public var img_height:Number = 357;
 
-        public var selfie_folder:PopUp;
-        public var untitled_folder:PopUp;
+        public var selfie_folder:GameObject;
+        public var untitled_folder:GameObject;
+        public var selfie_folder_rect:FlxRect;
+        public var untitled_folder_rect:FlxRect;
 
         public function Desktop() {
             super(true, true, false);
             this.showEmoji = false;
-            this.untitled_folder = new PopUp(ImgFolder,765,407,0,"untitled_folder");
-            this.selfie_folder = new PopUp(ImgSelfies,769,411,0,"selfie_folder");
         }
 
         override public function create():void {
             FlxG.bgColor = 0x00000000;
             (new BackgroundLoader()).loadSingleTileBG("../assets/UI_Desktop.png");
             ScreenManager.getInstance().setupCamera(null, 1);
+            var _screen:ScreenManager = ScreenManager.getInstance();
 
             mouse_rect = new FlxRect(FlxG.mouse.x,FlxG.mouse.y,50,50);
+            untitled_folder_rect = new FlxRect(_screen.screenWidth * .85, _screen.screenHeight * .31, 100, 80);
+            selfie_folder_rect = new FlxRect(_screen.screenWidth * .88, _screen.screenHeight * .09, 100, 80);
 
             debugText = new FlxText(0,0,100,"");
             add(debugText);
 
             super.postCreate();
+
+            this.untitled_folder = new GameObject(new DHPoint(_screen.screenWidth * .2, _screen.screenHeight * .1));
+            this.untitled_folder.loadGraphic(ImgFolder,false,false,765,407);
+            FlxG.state.add(this.untitled_folder);
+            this.untitled_folder.alpha = 0;
+
+            this.selfie_folder = new GameObject(new DHPoint(_screen.screenWidth * .2, _screen.screenHeight * .1));
+            this.selfie_folder.loadGraphic(ImgSelfies,false,false,769,411);
+            FlxG.state.add(this.selfie_folder);
+            this.selfie_folder.alpha = 0;
         }
 
         override public function update():void{
             super.update();
             mouse_rect.x = FlxG.mouse.x;
             mouse_rect.y = FlxG.mouse.y;
+
+            if(FlxG.mouse.justPressed()) {
+                if(mouse_rect.overlaps(untitled_folder_rect)) {
+                    selfie_folder.alpha = 0;
+                    if(untitled_folder.alpha == 1){
+                        untitled_folder.alpha = 0;
+                    } else {
+                        untitled_folder.alpha = 1;
+                    }
+                } else if(mouse_rect.overlaps(selfie_folder_rect)) {
+                    untitled_folder.alpha = 0;
+                    if(selfie_folder.alpha == 1) {
+                        selfie_folder.alpha = 0;
+                    } else {
+                        selfie_folder.alpha = 1;
+                    }
+                } else {
+                    untitled_folder.alpha = 0;
+                    selfie_folder.alpha = 0;
+                }
+            }
 
             timeFrame++;
 
