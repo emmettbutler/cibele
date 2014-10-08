@@ -36,6 +36,13 @@ package {
             }
         }
 
+        public function toggleGame():void {
+            if(PopUpManager.GAME_ACTIVE == false) {
+                FlxG.switchState(new MenuScreen());
+                PopUpManager.GAME_ACTIVE = true;
+            }
+        }
+
         public function setCurPopup(popup:PopUp):void {
             this.cur_popup = popup;
             if (this.cur_popup != null) {

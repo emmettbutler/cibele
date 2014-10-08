@@ -24,12 +24,6 @@ package{
             (new BackgroundLoader()).loadSingleTileBG("../assets/UI_Desktop.png");
             ScreenManager.getInstance().setupCamera(null, 1);
 
-            var _screen:ScreenManager = ScreenManager.getInstance();
-            valtameri_icon = new GameObject(new DHPoint(_screen.screenWidth * .7, _screen.screenHeight * .4));
-            valtameri_icon.loadGraphic(ImgIcon,false,false,64,57);
-            add(valtameri_icon);
-            valtameri = new FlxRect(valtameri_icon.x,valtameri_icon.y,valtameri_icon.width,valtameri_icon.height);
-
             mouse_rect = new FlxRect(FlxG.mouse.x,FlxG.mouse.y,50,50);
 
             debugText = new FlxText(0,0,100,"");
@@ -42,10 +36,6 @@ package{
             super.update();
             mouse_rect.x = FlxG.mouse.x;
             mouse_rect.y = FlxG.mouse.y;
-            FlxG.collide();
-            if (mouse_rect.overlaps(valtameri) && FlxG.mouse.justPressed()){
-                FlxG.switchState(new MenuScreen());
-            }
 
             timeFrame++;
 

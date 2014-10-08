@@ -41,6 +41,7 @@ package{
         public static const BUTTON_INTERNET:String = "innernet";
         public static const BUTTON_PHOTO:String = "photototot";
         public static const BUTTON_FILES:String = "philesz";
+        public static const BUTTON_GAME:String = "gamez";
 
         {
             public static const RING_INSET_X:Number = ScreenManager.getInstance().screenWidth * .03;
@@ -56,6 +57,8 @@ package{
         public static const ICHI_DOWNLOAD:String = "ichidownload";
         public static const ICHI_SELFIE1:String = "ichiselfie1";
         public static const CIB_SELFIE_FOLDER:String = "cibselfiefolder";
+        //set this to false again if player exits game screen
+        public static var GAME_ACTIVE:Boolean = false;
 
         // this text is used to detect when state elements have been destroyed
         // and need to be re-created. it is never displayed, but
@@ -86,7 +89,11 @@ package{
                     curButton = this.programButtons[i];
                     if(this.overlaps(mouseScreenRect, curButton)) {
                         this._state = SHOWING_POP_UP;
-                        curButton.open();
+                        if(curButton.tag == BUTTON_GAME) {
+                            curButton.toggleGame();
+                        } else {
+                            curButton.open();
+                        }
                     }
                 }
             } else if(this._state == SHOWING_POP_UP) {
@@ -191,7 +198,7 @@ package{
             FlxG.state.add(dock);
 
             this.game_button = new DockButton(
-                dock.x + dockOffset + 10, dock.y - 60, [], null);
+                dock.x + dockOffset + 10, dock.y - 60, [], BUTTON_GAME);
             this.game_button.loadGraphic(ImgGameButton, false, false, 62, 95);
             this.game_button.alpha = 1;
             this.game_button.scrollFactor.x = 0;
