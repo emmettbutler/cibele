@@ -212,13 +212,6 @@ package{
         }
 
         override public function update():void{
-            if(FlxG.mouse.pressed()) {
-                this.initWalk(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
-                this.walk();
-            } else if(FlxG.mouse.justReleased()) {
-                this.splash_sprites_lock = false;
-            }
-
             this.hitbox_rect.x = this.pos.x;
             this.hitbox_rect.y = this.pos.y;
 
@@ -230,6 +223,12 @@ package{
 
             if (this._state == STATE_WALK) {
                 this.walk();
+                if(FlxG.mouse.pressed()) {
+                    this.initWalk(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
+                    this.walk();
+                } else if(FlxG.mouse.justReleased()) {
+                    this.splash_sprites_lock = false;
+                }
                 if (this.walkTarget.sub(this.footPos)._length() < 10) {
                     this._state = STATE_IDLE;
                     this.dir = ZERO_POINT;

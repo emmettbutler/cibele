@@ -2,21 +2,25 @@ package{
     import org.flixel.*;
 
     public class Desktop extends GameState {
-        [Embed(source="../assets/valtameri_icon.png")] private var ImgIcon:Class;
+        [Embed(source="../assets/selfiedesktop.png")] private var ImgSelfies:Class;
+        [Embed(source="../assets/untitledfolder.png")] private var ImgFolder:Class;
         public var timeFrame:Number = 0;
         public var timer:Number = 0;
         public var debugText:FlxText;
 
         public var bg:GameObject;
-        public var valtameri:FlxRect;
-        public var valtameri_icon:GameObject;
         public var mouse_rect:FlxRect;
 
         public var img_height:Number = 357;
 
+        public var selfie_folder:PopUp;
+        public var untitled_folder:PopUp;
+
         public function Desktop() {
             super(true, true, false);
             this.showEmoji = false;
+            this.untitled_folder = new PopUp(ImgFolder,765,407,0,"untitled_folder");
+            this.selfie_folder = new PopUp(ImgSelfies,769,411,0,"selfie_folder");
         }
 
         override public function create():void {
