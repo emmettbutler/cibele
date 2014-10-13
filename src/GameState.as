@@ -143,10 +143,14 @@ package {
             } else if (FlxG.keys.justPressed("O")) {
                 SoundManager.getInstance().decreaseVolume();
             } else if (FlxG.keys.justPressed("S")) {
-                GlobalTimer.getInstance().pause();
-                SoundManager.getInstance().pause();
-                this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
+                this.pause();
             }
+        }
+
+        public function pause():void {
+            GlobalTimer.getInstance().pause();
+            SoundManager.getInstance().pause();
+            this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
         }
 
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
