@@ -16,6 +16,10 @@ package {
         public var text_facing:String = "up";
         public var footPos:DHPoint;
 
+        public var tag:String;
+        public static const cib:String = "cibelelele";
+        public static const ichi:String = "ichichichi";
+
         public function PartyMember(pos:DHPoint) {
             super(pos);
             this.nameText = new FlxText(pos.x, pos.y, 500, "My Name");

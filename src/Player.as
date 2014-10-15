@@ -35,6 +35,7 @@ package{
             this.cameraPos = new GameObject(new DHPoint(x, y));
 
             this.nameText.text = "Cibele";
+            this.tag = PartyMember.cib;
 
             this.zSorted = true;
 
@@ -262,6 +263,14 @@ package{
                 }
             } else if (this._state == STATE_IDLE) {
                 this.setIdleAnim();
+            }
+
+            if(this.targetEnemy != null) {
+                if (this._state == STATE_IN_ATTACK  || this._state == STATE_AT_ENEMY || this._state == STATE_MOVE_TO_ENEMY) {
+                    this.targetEnemy.activeTarget();
+                } else {
+                    this.targetEnemy.inactiveTarget();
+                }
             }
 
             if (this.colliding) {

@@ -56,6 +56,8 @@ package
             this.shadow_sprite.zSorted = true;
             this.shadow_sprite.loadGraphic(ImgShadow,false,false,41,14);
 
+            this.tag = PartyMember.ichi;
+
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
 
             this.zSorted = true;
@@ -236,6 +238,14 @@ package
                 this.dir = this.disp.mulScl(this.runSpeed);
                 if (this.playerIsInMovementRange()) {
                     this.moveToNextNode();
+                }
+            }
+
+            if(this.closestEnemy != null) {
+                if (this._state == STATE_IN_ATTACK  || this._state == STATE_AT_ENEMY || this._state == STATE_MOVE_TO_ENEMY) {
+                    this.closestEnemy.activeTarget();
+                } else {
+                    this.closestEnemy.inactiveTarget();
                 }
             }
 

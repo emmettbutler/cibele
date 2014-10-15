@@ -5,6 +5,8 @@ package
 
     public class Enemy extends GameObject {
         [Embed(source="../assets/squid_baby.png")] private var ImgIT1:Class;
+        [Embed(source="../assets/enemy_highlight.png")] private var ImgActive:Class;
+        [Embed(source="../assets/enemy_highlight_2.png")] private var ImgActive2:Class;
         public var enemyType:String = "enemy";
         public var hitpoints:Number = 100;
         public var damage:Number = 5;
@@ -24,6 +26,10 @@ package
         public var attacker:PartyMember;
         public var _mapnodes:MapNodeContainer;
         public var footPos:DHPoint;
+        public var cib_target_sprite:GameObject;
+        public var ichi_target_sprite:GameObject;
+        public var fade_active:Boolean = false;
+        public var fade:Boolean = false;
 
         {
             public static var stateMap:Dictionary = new Dictionary();
@@ -36,6 +42,17 @@ package
         public function Enemy(pos:DHPoint) {
             super(pos);
             this._state = STATE_IDLE;
+
+            this.cib_target_sprite = new GameObject(pos);
+            this.cib_target_sprite.loadGraphic(ImgActive,false,false,142,18);
+            FlxG.state.add(this.cib_target_sprite);
+            this.cib_target_sprite.alpha = 0;
+
+            this.ichi_target_sprite = new GameObject(pos);
+            this.ichi_target_sprite.loadGraphic(ImgActive,false,false,142,18);
+            FlxG.state.add(this.ichi_target_sprite);
+            this.ichi_target_sprite.alpha = 0;
+
             loadGraphic(ImgIT1, false, false, 152, 104);
             addAnimation("run", [0, 1, 2, 3, 4, 5], 12, true);
             play("run");
@@ -74,11 +91,46 @@ package
             return this._state == STATE_TRACKING;
         }
 
+        public function activeTarget():void {
+            if(this.fade_active != true) {
+                this.fade_active = true;
+            }
+        }
+
+        public function inactiveTarget():void {
+            if(this.fade_active != false) {
+                this.fade_active = false;
+                this.cib_target_sprite.alpha = 0;
+                this.ichi_target_sprite.alpha = 0;
+            }
+        }
+
+        public function fadeTarget(obj:GameObject):void {
+            if(obj.alpha == 1) {
+                this.fade = true;
+            } else if(obj.alpha == 0) {
+                this.fade = false;
+            }
+
+            if(this.fade) {
+                obj.alpha -= .1;
+            } else {
+                obj.alpha += .1;
+            }
+        }
+
         override public function update():void{
             super.update();
+
             this.footPos.x = this.x + this.width/2;
             this.footPos.y = this.y + this.height;
             this.basePos.y = this.y + this.height;
+
+            this.cib_target_sprite.x = this.x;
+            this.cib_target_sprite.y = this.footPos.y-10;
+            this.ichi_target_sprite.x = this.x;
+            this.ichi_target_sprite.y = this.footPos.y-10;
+
 
             if (this.player == null) {
                 this.playerDisp = new DHPoint(0, 0);
@@ -124,6 +176,19 @@ package
                 // don't destroy() or state.remove() here. doing so breaks z-sorting
                 this.dead = true;
                 this.visible = false;
+                this.ichi_target_sprite.alpha = 0;
+                this.cib_target_sprite.alpha = 0;
+            } else {
+                if(fade_active) {
+                    if(this.attacker != null) {
+                        if(this.attacker.tag == PartyMember.cib) {
+                            FlxG.log("fade");
+                            this.fadeTarget(this.cib_target_sprite);
+                        } else if(this.attacker.tag == PartyMember.ichi) {
+                            this.fadeTarget(this.ichi_target_sprite);
+                        }
+                    }
+                }
             }
         }
     }
