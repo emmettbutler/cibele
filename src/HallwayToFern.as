@@ -45,7 +45,7 @@ package{
 
             this.initTiles(bottomY);
 
-            ScreenManager.getInstance().setupCamera(player, 1);
+            ScreenManager.getInstance().setupCamera(player.cameraPos, 1);
             FlxG.camera.setBounds(0, 0, _screen.screenWidth, bottomY);
 
             this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");

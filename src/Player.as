@@ -26,11 +26,13 @@ package{
         public var shadow_sprite:GameObject;
         public var enemy_dir:DHPoint;
         public var splash_sprites_lock:Boolean = false;
+        public var cameraPos:GameObject;
 
         public static const STATE_WALK:Number = 2398476188;
 
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
+            this.cameraPos = new GameObject(new DHPoint(x, y));
 
             this.nameText.text = "Cibele";
 
@@ -211,7 +213,16 @@ package{
             FlxG.state.add(this.debugText);
         }
 
+        public static function interpolate(normValue:Number, minimum:Number, maximum:Number):Number {
+            return minimum + (maximum - minimum) * normValue;
+        }
+
         override public function update():void{
+            if(this.walkTarget != null) {
+                this.cameraPos.x = interpolate(.1, this.cameraPos.x, this.pos.center(this).x);
+                this.cameraPos.y = interpolate(.1, this.cameraPos.y, this.pos.center(this).y);
+            }
+
             this.hitbox_rect.x = this.pos.x;
             this.hitbox_rect.y = this.pos.y;
 

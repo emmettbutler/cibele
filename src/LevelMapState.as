@@ -32,7 +32,7 @@ package {
                 "paths", this.editorMode == PathEditorState.MODE_EDIT);
             this.bgLoader.setPlayerReference(player);
 
-            ScreenManager.getInstance().setupCamera(player);
+            ScreenManager.getInstance().setupCamera(player.cameraPos);
             FlxG.camera.setBounds(0, 0, bgLoader.cols * bgLoader.estTileWidth,
                                   bgLoader.rows * bgLoader.estTileHeight);
             super.postCreate();

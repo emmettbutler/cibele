@@ -76,11 +76,11 @@ package {
             return new DHPoint((screenWidth - dim.x) / 2, (screenHeight - dim.y) / 2);
         }
 
-        public function setupCamera(player:Player, zoomFactor:Number=1.2):void {
+        public function setupCamera(playerCamera:GameObject, zoomFactor:Number=1.2):void {
             cam = new FlxCamera(0, 0, screenWidth, screenHeight);
             FlxG.resetCameras(cam);
-            if (player != null) {
-                cam.target = player;
+            if (playerCamera != null) {
+                cam.target = playerCamera;
             }
             //zoomcam.targetZoom = zoomFactor;
         }
