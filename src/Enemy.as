@@ -5,6 +5,7 @@ package
 
     public class Enemy extends GameObject {
         [Embed(source="../assets/squid_baby.png")] private var ImgIT1:Class;
+        [Embed(source="../assets/Enemy2_sprite.png")] private var ImgIT2:Class;
         [Embed(source="../assets/enemy_highlight.png")] private var ImgActive:Class;
         [Embed(source="../assets/enemy_highlight_2.png")] private var ImgActive2:Class;
         public var enemyType:String = "enemy";
@@ -54,7 +55,12 @@ package
             FlxG.state.add(this.ichi_target_sprite);
             this.ichi_target_sprite.alpha = 0;
 
-            loadGraphic(ImgIT1, false, false, 152, 104);
+            var rand:Number = Math.random() * 2;
+            if(rand > 1) {
+                loadGraphic(ImgIT1, false, false, 152, 104);
+            } else {
+                loadGraphic(ImgIT2, false, false, 70, 160);
+            }
             addAnimation("run", [0, 1, 2, 3, 4, 5], 12, true);
             play("run");
             disp = new DHPoint(0, 0);
