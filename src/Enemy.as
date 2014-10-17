@@ -30,6 +30,7 @@ package
         public var ichi_target_sprite:GameObject;
         public var fade_active:Boolean = false;
         public var fade:Boolean = false;
+        public var bar:GameObject;
 
         {
             public static var stateMap:Dictionary = new Dictionary();
@@ -61,6 +62,11 @@ package
             footPos = new DHPoint(0, 0);
             this.zSorted = true;
             this.basePos = new DHPoint(this.x, this.y + this.height);
+
+            this.bar = new GameObject(new DHPoint(pos.x,pos.y));
+            this.bar.makeGraphic(1,8,0xffe2678e);
+            this.bar.scale.x = this.hitpoints;
+            FlxG.state.add(bar);
         }
 
         public function warpToPlayer():void {
@@ -81,6 +87,7 @@ package
             this.attacker = p;
             this._state = STATE_RECOIL;
             this.hitpoints -= damage;
+            this.bar.scale.x = this.hitpoints;
         }
 
         public function setIdle():void {
@@ -131,6 +138,8 @@ package
             this.ichi_target_sprite.x = this.x;
             this.ichi_target_sprite.y = this.footPos.y-10;
 
+            this.bar.x = this.x + (this.width * .5);
+            this.bar.y = this.pos.y-30;
 
             if (this.player == null) {
                 this.playerDisp = new DHPoint(0, 0);
@@ -178,11 +187,11 @@ package
                 this.visible = false;
                 this.ichi_target_sprite.alpha = 0;
                 this.cib_target_sprite.alpha = 0;
+                this.bar.alpha = 0;
             } else {
                 if(fade_active) {
                     if(this.attacker != null) {
                         if(this.attacker.tag == PartyMember.cib) {
-                            FlxG.log("fade");
                             this.fadeTarget(this.cib_target_sprite);
                         } else if(this.attacker.tag == PartyMember.ichi) {
                             this.fadeTarget(this.ichi_target_sprite);
