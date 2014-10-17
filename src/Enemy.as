@@ -102,6 +102,7 @@ package
             if(this.fade_active != true) {
                 this.fade_active = true;
             }
+            this.bar.alpha = 1;
         }
 
         public function inactiveTarget():void {
@@ -110,6 +111,7 @@ package
                 this.cib_target_sprite.alpha = 0;
                 this.ichi_target_sprite.alpha = 0;
             }
+            this.bar.alpha = 0;
         }
 
         public function fadeTarget(obj:GameObject):void {
