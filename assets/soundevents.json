@@ -7,7 +7,7 @@
 				"startTime": 0,
 				"loop": false,
 				"bpm": 95
-			}
+			},
 			{
 				"file": "bgm_fern_loop.mp3",
 				"startTime": 12.631,
@@ -15,7 +15,23 @@
 				"bpm": 95
 			}
 		]
-	}
+	},
+	"bgm_ikuturso": {
+		"behavior": "sequence",
+		"subevents": [
+			{
+				"file": "bgm_ikuturso_intro.mp3",
+				"startTime": 0,
+				"loop": false,
+				"bpm": 67
+			},
+                        {
+                                "file": "bgm_ikuturso_loop.mp3",
+                                "startTime": 3.582,
+                                "loop": false,
+                                "bpm": 67
+                        }
+	},
 	"bgm_euryale": {
 		"behavior": "sequence",
 		"subevents": [
@@ -24,7 +40,7 @@
 				"startTime": 0,
 				"loop": false,
 				"bpm": 95
-			}
+			},
 			{
 				"file": "bgm_euryale_intro.mp3",
 				"startTime": 4.421,
