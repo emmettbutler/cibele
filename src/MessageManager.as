@@ -282,7 +282,7 @@ package{
                         }
                     }
                     if (this.mouse_rect.overlaps(this.exit_inbox_rect) ||
-                        this.mouse_rect.overlaps(this.notifications_box))
+                        this.mouse_rect.overlaps(this.notifications_box) || !this.mouse_rect.overlaps(new FlxRect(this.img_inbox.x, this.img_inbox.y, this.img_inbox.width, this.img_inbox.height)))
                     {
                         this._state = STATE_HIDE_INBOX;
                         this.exitInbox();
