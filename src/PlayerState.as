@@ -9,6 +9,10 @@ package {
         public function PlayerState() {
         }
 
+        public function getPlayer():Player {
+            return this.player;
+        }
+
         public function __create(pos:DHPoint):void {
             super.create();
             this.startPos = pos;

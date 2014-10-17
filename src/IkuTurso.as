@@ -1,32 +1,36 @@
 package{
     import org.flixel.*;
 
+    import flash.events.*;
+
     public class IkuTurso extends LevelMapState {
         [Embed(source="../assets/ikuturso_wip.mp3")] private var ITBGMLoop:Class;
         [Embed(source="../assets/sexyselfie_wip.mp3")] private var VidBGMLoop:Class;
         [Embed(source="../assets/voc_ikuturso_bulldog.mp3")] private var Convo1:Class;
-        [Embed(source="../assets/voc_ikuturso_photogenic.mp3")] private var Convo2:Class;
-        [Embed(source="../assets/voc_ikuturso_attractive.mp3")] private var Convo3:Class;
-        [Embed(source="../assets/voc_ikuturso_picture.mp3")] private var Convo4:Class;
-        [Embed(source="../assets/voc_ikuturso_whattowear.mp3")] private var Convo5:Class;
+        [Embed(source="../assets/voc_ikuturso_ampule.mp3")] private var Convo2:Class;
+        [Embed(source="../assets/voc_ikuturso_photogenic.mp3")] private var Convo3:Class;
+        [Embed(source="../assets/voc_ikuturso_attractive.mp3")] private var Convo4:Class;
+        [Embed(source="../assets/voc_ikuturso_picture.mp3")] private var Convo5:Class;
+        [Embed(source="../assets/voc_ikuturso_whattowear.mp3")] private var Convo6:Class;
 
         public var bossHasAppeared:Boolean;
         private var convo1Sound:GameSound;
         private var convo1Ready:Boolean;
 
         private var conversationPieces:Array;
-        private var conversationCounter:Number = 1;
+        private var conversationCounter:Number = 0;
 
         public function IkuTurso() {
             this.bossHasAppeared = false;
 
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
-                {"audio": Convo1, "len": 132*GameSound.MSEC_PER_SEC, "delay": 0, "endfn": this.showSelfiesWindow},
-                {"audio": Convo2, "len": 25*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": this.showForumWindow},
-                {"audio": Convo3, "len": 107*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null},
-                {"audio": Convo4, "len": 15*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null},
-                {"audio": Convo5, "len": 30*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null}
+                {"audio": Convo1, "len": 56*GameSound.MSEC_PER_SEC, "delay": 0, "endfn": this.showIchiDownloadWindow},
+                {"audio": Convo2, "len": 76*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": this.showSelfiesWindow},
+                {"audio": Convo3, "len": 25*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": this.showForumWindow},
+                {"audio": Convo4, "len": 107*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": this.showIchiSelfie1},
+                {"audio": Convo5, "len": 15*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": this.showCibSelfieFolder},
+                {"audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC, "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null}
             ];
         }
 
@@ -47,6 +51,18 @@ package{
             PopUpManager.getInstance().sendPopup(PopUpManager.FORUM_1);
         }
 
+        public function showIchiDownloadWindow():void {
+            PopUpManager.getInstance().sendPopup(PopUpManager.ICHI_DOWNLOAD);
+        }
+
+        public function showIchiSelfie1():void {
+            PopUpManager.getInstance().sendPopup(PopUpManager.ICHI_SELFIE1);
+        }
+
+        public function showCibSelfieFolder():void {
+            PopUpManager.getInstance().sendPopup(PopUpManager.CIB_SELFIE_FOLDER);
+        }
+
         public function playNextConvoPiece():void {
             var thisAudioInfo:Object = this.conversationPieces[this.conversationCounter];
             if (thisAudioInfo["endfn"] != null) {
@@ -56,20 +72,20 @@ package{
             var that:IkuTurso = this;
             var nextAudioInfo:Object = this.conversationPieces[this.conversationCounter];
             if (nextAudioInfo != null) {
-                GlobalTimer.getInstance().setMark(
-                    Math.random().toString(),
-                    nextAudioInfo["delay"],
+                this.addEventListener(GameState.EVENT_POPUP_CLOSED,
                     function():void {
                         SoundManager.getInstance().playSound(
                             nextAudioInfo["audio"], nextAudioInfo["len"],
                             that.playNextConvoPiece, false, 1, GameSound.VOCAL
                         );
+                        FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
+                                                       arguments.callee);
                     });
             } else {
                 SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
                     true, .2, GameSound.BGM);
                 FlxG.switchState(
-                    new PlayVideoState("../assets/selfie.flv",
+                    new PlayVideoState("../assets/sexy_selfie.flv",
                         function():void { FlxG.switchState(new StartScreen()); }
                     )
                 );
@@ -78,11 +94,12 @@ package{
 
         public function playFirstConvo():void {
             this.conversationCounter = 0;
-            var sndInfo:Object = this.conversationPieces[0];
+            var sndInfo:Object = this.conversationPieces[this.conversationCounter];
             this.convo1Sound = SoundManager.getInstance().playSound(
                 sndInfo["audio"], sndInfo["len"], this.playNextConvoPiece,
                 false, 1, GameSound.VOCAL
             );
+            this.bitDialogueLock = false;
         }
 
         override public function update():void{

@@ -25,13 +25,17 @@ package{
         public var attack_sprite:GameObject;
         public var shadow_sprite:GameObject;
         public var enemy_dir:DHPoint;
+        public var splash_sprites_lock:Boolean = false;
+        public var cameraPos:GameObject;
 
         public static const STATE_WALK:Number = 2398476188;
 
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
+            this.cameraPos = new GameObject(new DHPoint(x, y));
 
             this.nameText.text = "Cibele";
+            this.tag = PartyMember.cib;
 
             this.zSorted = true;
 
@@ -118,14 +122,7 @@ package{
             }
 
             if (this.targetEnemy == null) {
-                this._state = STATE_WALK;
-                this.walkTarget = worldPos;
-                this.splash_sprites.x = this.walkTarget.x -
-                    this.splash_sprites.width/2;
-                this.splash_sprites.y = this.walkTarget.y -
-                    this.splash_sprites.height/2;
-                this.splash_sprites.alpha = 1;
-                this.splash_sprites.play("attack");
+                this.initWalk(worldPos);
             } else {
                 this.walkTarget = this.targetEnemy.pos.center(this.targetEnemy, true);
                 this._state = STATE_MOVE_TO_ENEMY;
@@ -151,7 +148,7 @@ package{
                         }
                     }
                 }
-            } else {
+            } else if(at_enemy == true && this.targetEnemy != null){
                 this.enemy_dir = this.targetEnemy.pos.sub(footPos).normalized();
                 if(Math.abs(this.enemy_dir.y) > Math.abs(this.enemy_dir.x)){
                     if(this.enemy_dir.y <= 0){
@@ -166,6 +163,20 @@ package{
                         this.facing = LEFT;
                     }
                 }
+            }
+        }
+
+        public function initWalk(worldPos:DHPoint):void {
+            this._state = STATE_WALK;
+            this.walkTarget = worldPos;
+            if(!this.splash_sprites_lock) {
+                this.splash_sprites_lock = true;
+                this.splash_sprites.x = this.walkTarget.x -
+                    this.splash_sprites.width/2;
+                this.splash_sprites.y = this.walkTarget.y -
+                    this.splash_sprites.height/2;
+                this.splash_sprites.alpha = 1;
+                this.splash_sprites.play("attack");
             }
         }
 
@@ -203,7 +214,16 @@ package{
             FlxG.state.add(this.debugText);
         }
 
+        public static function interpolate(normValue:Number, minimum:Number, maximum:Number):Number {
+            return minimum + (maximum - minimum) * normValue;
+        }
+
         override public function update():void{
+            if(this.walkTarget != null) {
+                this.cameraPos.x = interpolate(.1, this.cameraPos.x, this.pos.center(this).x);
+                this.cameraPos.y = interpolate(.1, this.cameraPos.y, this.pos.center(this).y);
+            }
+
             this.hitbox_rect.x = this.pos.x;
             this.hitbox_rect.y = this.pos.y;
 
@@ -215,6 +235,12 @@ package{
 
             if (this._state == STATE_WALK) {
                 this.walk();
+                if(FlxG.mouse.pressed()) {
+                    this.initWalk(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
+                    this.walk();
+                } else if(FlxG.mouse.justReleased()) {
+                    this.splash_sprites_lock = false;
+                }
                 if (this.walkTarget.sub(this.footPos)._length() < 10) {
                     this._state = STATE_IDLE;
                     this.dir = ZERO_POINT;
@@ -237,6 +263,14 @@ package{
                 }
             } else if (this._state == STATE_IDLE) {
                 this.setIdleAnim();
+            }
+
+            if(this.targetEnemy != null) {
+                if (this._state == STATE_IN_ATTACK  || this._state == STATE_AT_ENEMY || this._state == STATE_MOVE_TO_ENEMY) {
+                    this.targetEnemy.activeTarget();
+                } else {
+                    this.targetEnemy.inactiveTarget();
+                }
             }
 
             if (this.colliding) {
@@ -331,6 +365,10 @@ package{
                 this.attack_sprite.alpha = 1;
                 this.attack_sprite.play("attack");
             }
+        }
+
+        public function isMoving():Boolean {
+            return this._state == STATE_WALK;
         }
     }
 }

@@ -7,14 +7,16 @@ package{
         [Embed(source="../assets/incomingcall.png")] private var ImgCall:Class;
         [Embed(source="../assets/voc_firstconvo.mp3")] private var Convo1:Class;
         [Embed(source="../assets/voc_ikuturso_start.mp3")] private var Convo2:Class;
-        [Embed(source="../assets/voc_extra_wannaduo.mp3")] private var SndHurryUp:Class;
+        [Embed(source="../assets/voc_extra_wannaduo.mp3")] private var SndWannaDuo:Class;
+        [Embed(source="../assets/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
         [Embed(source="../assets/voc_extra_ichiareyouthere.mp3")] private var SndRUThere:Class;
+        [Embed(source="../assets/voc_extra_cibichi.mp3")] private var CibIchi:Class;
 
         public var call_button:GameObject;
         public var accept_call:Boolean = false;
 
         public var bgs:Array;
-        public var light:GameObject;
+        public var light:FlxExtSprite;
 
         public var img_height:Number = 800;
 
@@ -22,6 +24,9 @@ package{
         public var _state:Number = 0;
 
         public var _screen:ScreenManager;
+        public var frameCount:int = 0;
+
+        private var bottomY:Number;
 
         public function HallwayToFern(state:Number = 0){
             _state = state;
@@ -29,8 +34,9 @@ package{
 
         override public function create():void {
             bgs = new Array();
+            this.light = new FlxExtSprite(0,0);
 
-            var bottomY:Number = 10000;
+            bottomY = 10000;
             _screen = ScreenManager.getInstance();
             super.__create(new DHPoint(
                 _screen.screenWidth * .5, bottomY - _screen.screenHeight * .5));
@@ -39,8 +45,11 @@ package{
 
             this.initTiles(bottomY);
 
-            ScreenManager.getInstance().setupCamera(player, 1);
+            ScreenManager.getInstance().setupCamera(player.cameraPos, 1);
             FlxG.camera.setBounds(0, 0, _screen.screenWidth, bottomY);
+
+            this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
+            this.light.alpha = .1;
 
             if(_state == STATE_PRE_IT){
                 call_button = new GameObject(new DHPoint(_screen.screenWidth * .3,
@@ -49,6 +58,7 @@ package{
                 call_button.scrollFactor = new DHPoint(0, 0);
                 FlxG.state.add(call_button);
             }
+
             this.postCreate();
 
             this.player.nameText.color = 0xffffffff;
@@ -72,6 +82,11 @@ package{
 
         override public function update():void {
             super.update();
+
+            if(this.frameCount++ % 25 == 0) {
+                this.light.alpha = 1-(player.pos.y/bottomY);
+            }
+
             var highestTile:GameObject = this.bgs[0];
             var lowestTile:GameObject = this.bgs[0];
             for (var i:int = 0; i < this.bgs.length; i++) {
@@ -99,15 +114,6 @@ package{
         override public function postCreate():void {
             super.postCreate();
             player.inhibitY = true;
-
-            /*this.light = new GameObject(new DHPoint(0,0));
-            this.light.loadGraphic(ImgLight, false, false, 640, 480);
-            FlxG.state.add(this.light);
-            this.light.alpha = 1;
-            this.light.scrollFactor.x = 0;
-            this.light.scrollFactor.y = 0;*/
-
-            (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
         }
 
         override public function restrictPlayerMovement():void {
@@ -130,7 +136,7 @@ package{
 
                 function playConvo2():void {
                     SoundManager.getInstance().playSound(
-                        Convo2, 24000, convo2Done, false, 1, GameSound.VOCAL,
+                        Convo2, 24*GameSound.MSEC_PER_SEC, convo2Done, false, 1, GameSound.VOCAL,
                         "convo_2_hall"
                     );
                 }
@@ -138,39 +144,34 @@ package{
                 function playWannaDuo():void {
                     if (!(FlxG.state is IkuTurso)) {
                         SoundManager.getInstance().playSound(
-                            SndHurryUp, 4*GameSound.MSEC_PER_SEC, playConvo2,
+                            SndWannaDuo, 4*GameSound.MSEC_PER_SEC, playConvo2,
                             false, 1, GameSound.VOCAL
                         );
                     } else {
                         SoundManager.getInstance().playSound(
-                            Convo2, 24000, convo2Done, false, 1, GameSound.VOCAL,
-                            "convo_2_hall"
+                            SndYeahSorry, 2*GameSound.MSEC_PER_SEC, convo2Done,
+                            false, 1, GameSound.VOCAL, "convo_2_hall"
                         );
                     }
                 }
 
                 function playRUThere():void {
-                    SoundManager.getInstance().playSound(
-                        SndRUThere, 1.5*GameSound.MSEC_PER_SEC, playWannaDuo,
-                        false, 1, GameSound.VOCAL
-                    );
+                    if(!(FlxG.state is IkuTurso)){
+                        SoundManager.getInstance().playSound(
+                            SndRUThere, 1.5*GameSound.MSEC_PER_SEC, playWannaDuo,
+                            false, 1, GameSound.VOCAL
+                        );
+                    }
                 }
 
                 function convo1Done():void {
-                    if(!(FlxG.state is IkuTurso)){
-                        GlobalTimer.getInstance().setMark("delayed_wannaduo",
-                            10*GameSound.MSEC_PER_SEC, playRUThere);
-                    } else {
-                        SoundManager.getInstance().playSound(
-                            Convo2, 24000, null, false, 1, GameSound.VOCAL,
-                            "convo_2_hall"
-                        );
-                    }
+                    GlobalTimer.getInstance().setMark("delayed_wannaduo",
+                        10*GameSound.MSEC_PER_SEC, playRUThere);
                     PopUpManager.getInstance().sendPopup(PopUpManager.BULLDOG_HELL);
                 }
 
                 SoundManager.getInstance().playSound(
-                    Convo1, 29000, convo1Done, false, 1, GameSound.VOCAL,
+                    Convo1, 29*GameSound.MSEC_PER_SEC, convo1Done, false, 1, GameSound.VOCAL,
                     "convo_1_hall"
                 );
             } else {

@@ -46,6 +46,15 @@ package {
             super.update();
         }
 
+        override public function pause():void {
+            super.pause();
+            if (GlobalTimer.getInstance().isPaused()) {
+                this.videoStream.pause();
+            } else {
+                this.videoStream.resume();
+            }
+        }
+
         private function netStatusHandler(evt:NetStatusEvent):void {
             if (evt.info.code == "NetStream.Play.Stop") {
                 FlxG.stage.removeChild(video);  // kill video

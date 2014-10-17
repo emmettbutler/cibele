@@ -65,8 +65,12 @@ def compile_main(entry_point_class, libpath):
     return "src/{entry_point_class}.swf".format(entry_point_class=entry_point_class)
 
 
+def get_conf_path(entry_point_class):
+    return "{}.xml".format(entry_point_class)
+
+
 def write_conf_file(swf_path, entry_point_class, main_class):
-    conf_path = "{}.xml".format(entry_point_class)
+    conf_path = get_conf_path(entry_point_class)
     with open(conf_path, "w") as f:
         f.write(
 """
@@ -112,14 +116,18 @@ def main():
         return
 
     entry_point_class = write_entry_point()
-    preloader_class = write_preloader()
-    swf_path = compile_main(entry_point_class, libpath)
-    conf_path = write_conf_file(swf_path, entry_point_class, args.mainclass[0])
 
-    if args.package:
-        package_application(entry_point_class)
+    if args.run_only:
+        run_main(get_conf_path(entry_point_class))
     else:
-        run_main(conf_path)
+        preloader_class = write_preloader()
+        swf_path = compile_main(entry_point_class, libpath)
+        conf_path = write_conf_file(swf_path, entry_point_class, args.mainclass[0])
+
+        if args.package:
+            package_application(entry_point_class)
+        else:
+            run_main(conf_path)
 
 
 if __name__ == "__main__":
@@ -137,6 +145,8 @@ if __name__ == "__main__":
                         help="Build an Adobe AIR application")
     parser.add_argument('--copy_path', '-a', action="store_true",
                         help="Copy editor path files to source control")
+    parser.add_argument('--run_only', '-r', action="store_true",
+                        help="Don't compile, just run")
     args = parser.parse_args()
 
     config = configparser.ConfigParser()

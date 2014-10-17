@@ -87,6 +87,7 @@ package{
                     FlxG.switchState(new HallwayToFern());
                 }
                 if (mouse_rect.overlaps(quit_rect)){
+                    PopUpManager.GAME_ACTIVE = false;
                     FlxG.switchState(new Desktop());
                 }
             }

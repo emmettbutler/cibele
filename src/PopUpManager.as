@@ -1,13 +1,15 @@
 package{
     import org.flixel.*;
 
+    import flash.events.Event;
     import flash.utils.Dictionary;
 
     public class PopUpManager {
-        [Embed(source="../assets/game_button.png")] private var ImgGameButton:Class;
-        [Embed(source="../assets/file_button.png")] private var ImgFileButton:Class;
-        [Embed(source="../assets/photo_button.png")] private var ImgPhotoButton:Class;
-        [Embed(source="../assets/internet_button.png")] private var ImgInternetButton:Class;
+        [Embed(source="../assets/UI_icon_game.png")] private var ImgGameButton:Class;
+        [Embed(source="../assets/UI_icon_folder.png")] private var ImgFileButton:Class;
+        [Embed(source="../assets/UI_icon_photo.png")] private var ImgPhotoButton:Class;
+        [Embed(source="../assets/UI_icon_internet.png")] private var ImgInternetButton:Class;
+        [Embed(source="../assets/UI_dock.png")] private var ImgDock:Class;
         [Embed(source="../assets/bulldoghell.png")] private var ImgBulldogHell:Class;
         [Embed(source="../assets/cib_selfies_1.png")] private var ImgCibSelfie1:Class;
         [Embed(source="../assets/forum_selfies_1.png")] private var ImgForumSelfie1:Class;
@@ -15,23 +17,31 @@ package{
         [Embed(source="../assets/UI_Sad Face_blue.png")] private var ImgEmojiSad:Class;
         [Embed(source="../assets/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;
         [Embed(source="../assets/UI_Outer Ring.png")] private var ImgRing:Class;
+        [Embed(source="../assets/ichidownloads.png")] private var ImgIchiDownload:Class;
+        [Embed(source="../assets/ichiselfie1.png")] private var ImgIchiSelfie1:Class;
+        [Embed(source="../assets/cibselfiefolder.png")] private var ImgCibSelfieFolder:Class;
 
         public static var _instance:PopUpManager = null;
 
         public var _player:Player;
-        public var internet_button:UIElement = null;
-        public var game_button:UIElement = null;
-        public var file_button:UIElement = null;
-        public var photo_button:UIElement = null;
-        public var blinker:UIElement;
+        public var internet_button:DockButton = null;
+        public var game_button:DockButton = null;
+        public var file_button:DockButton = null;
+        public var photo_button:DockButton = null;
+        public var showEmoji:Boolean = true;
 
         private var emojiButtons:Dictionary;
-        private var programButtons:Dictionary;
+        private var programButtons:Array;
         public var popups:Dictionary;
+        public var popupTags:Object;
 
         public var elements:Array;
-        public var next_popup:PopUp = null, cur_popup:PopUp = null;
         public var popup_active:Boolean = false;
+
+        public static const BUTTON_INTERNET:String = "innernet";
+        public static const BUTTON_PHOTO:String = "photototot";
+        public static const BUTTON_FILES:String = "philesz";
+        public static const BUTTON_GAME:String = "gamez";
 
         {
             public static const RING_INSET_X:Number = ScreenManager.getInstance().screenWidth * .03;
@@ -39,12 +49,16 @@ package{
         }
 
         public static const SHOWING_POP_UP:Number = 0;
-        public static const FLASH_PROGRAM_PICKER:Number = 1;
         public static const SHOWING_NOTHING:Number = -699999999;
         public var _state:Number = SHOWING_NOTHING;
         public static const BULLDOG_HELL:String = "bulldoghell";
         public static const SELFIES_1:String = "selfies1";
         public static const FORUM_1:String = "forum1";
+        public static const ICHI_DOWNLOAD:String = "ichidownload";
+        public static const ICHI_SELFIE1:String = "ichiselfie1";
+        public static const CIB_SELFIE_FOLDER:String = "cibselfiefolder";
+        //set this to false again if player exits game screen
+        public static var GAME_ACTIVE:Boolean = false;
 
         // this text is used to detect when state elements have been destroyed
         // and need to be re-created. it is never displayed, but
@@ -53,10 +67,15 @@ package{
         public var flagText:FlxText;
 
         public function PopUpManager() {
-            this.loadPopUps();
             this.flagText = new FlxText(0, 0, 500, "");
+            this.flagText._textField = null;
             FlxG.state.add(this.flagText);
-            this.cur_popup = this.popups[BULLDOG_HELL];
+            this.elements = new Array();
+
+            this.popupTags = {};
+            this.popupTags[BUTTON_INTERNET] = BULLDOG_HELL;
+            this.popupTags[BUTTON_FILES] = ICHI_DOWNLOAD;
+            this.popupTags[BUTTON_PHOTO] = SELFIES_1;
         }
 
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
@@ -64,40 +83,38 @@ package{
                                                       5, 5);
             this.emote(mouseScreenRect);
 
-            if(this._state == SHOWING_NOTHING) {
-                if(this.overlapsProgramPicker(mouseScreenRect)) {
-                    if (this.cur_popup != null) {
-                        this.cur_popup.shown = true;
-                        this.cur_popup.visible = true;
-                        this._state = SHOWING_POP_UP
-                    }
-                }
-            } else if(this._state == FLASH_PROGRAM_PICKER) {
-                if(this.overlapsProgramPicker(mouseScreenRect)) {
-                    if (this.next_popup != null) {
-                        this.blinker.alpha = 0;
-                        this.next_popup.shown = true;
-                        this.next_popup.visible = true;
+            if(this._state != SHOWING_POP_UP) {
+                var curButton:DockButton;
+                for (var i:int = 0; i < this.programButtons.length; i++) {
+                    curButton = this.programButtons[i];
+                    if(this.overlaps(mouseScreenRect, curButton)) {
                         this._state = SHOWING_POP_UP;
+                        if(curButton.tag == BUTTON_GAME) {
+                            curButton.toggleGame();
+                        } else {
+                            curButton.open();
+                        }
                     }
                 }
             } else if(this._state == SHOWING_POP_UP) {
                 this._state = SHOWING_NOTHING;
+                FlxG.stage.dispatchEvent(new Event(GameState.EVENT_POPUP_CLOSED));
+                for (i = 0; i < this.programButtons.length; i++) {
+                    curButton = this.programButtons[i];
+                    if(curButton.getCurPopup() != null) {
+                        curButton.getCurPopup().visible = false;
+                    }
+                }
             }
         }
 
-        public function overlapsProgramPicker(mouseScreenRect:FlxRect):Boolean {
-            var overlap:Boolean, element:UIElement;
-            for (var key:Object in this.programButtons) {
-                element = key as UIElement;
-                overlap = mouseScreenRect.overlaps(
-                    new FlxRect(element.x, element.y, element.width,
-                                element.height)
-                );
-                if (overlap) {
-                    return true;
-                    break;
-                }
+        public function overlaps(mouseScreenRect:FlxRect, button:DockButton):Boolean {
+            var overlap:Boolean = mouseScreenRect.overlaps(
+                new FlxRect(button.x, button.y, button.width,
+                            button.height)
+            );
+            if (overlap) {
+                return true;
             }
             return false;
         }
@@ -110,43 +127,41 @@ package{
             }
 
             if(this._state == SHOWING_NOTHING) {
-                if(this.next_popup != null){
-                    this.next_popup.visible = false;
-                }
-                if(this.cur_popup != null){
-                    this.cur_popup.visible = false;
-                }
-            } else if(this._state == FLASH_PROGRAM_PICKER) {
-                this.blinker.alpha = Math.sin(.1 *
-                    GlobalTimer.getInstance().pausingTimer());
+                this.popup_active = false;
             } else if(this._state == SHOWING_POP_UP) {
                 this.popup_active = true;
             }
         }
 
         public function sendPopup(key:String):void {
-            this._state = FLASH_PROGRAM_PICKER;
-            this.next_popup = this.popups[key];
-            this.cur_popup = this.popups[key];
+            for (var i:int = 0; i < this.programButtons.length; i++) {
+                if (this.programButtons[i].ownsKey(key)) {
+                    this.programButtons[i].sendPopup(this.popups[key]);
+                }
+            }
         }
 
         public function loadPopUps():void {
-            this.elements = new Array();
+            this.elements.length = 0;
             var _screen:ScreenManager = ScreenManager.getInstance();
 
             this.emojiButtons = new Dictionary();
-            this.programButtons = new Dictionary();
+            this.programButtons = new Array();
 
             var ring:UIElement = new UIElement(RING_INSET_X, RING_INSET_Y);
             ring.loadGraphic(ImgRing, false, false, 291, 300);
             ring.scrollFactor.x = 0;
             ring.scrollFactor.y = 0;
             this.elements.push(ring);
-            FlxG.state.add(ring);
+            if (this.showEmoji) {
+                FlxG.state.add(ring);
+            }
 
             var emoji_happy:UIElement = new UIElement(ring.x + 140, ring.y - 10);
             emoji_happy.loadGraphic(ImgEmojiHappy, false, false, 96, 98);
-            FlxG.state.add(emoji_happy);
+            if (this.showEmoji) {
+                FlxG.state.add(emoji_happy);
+            }
             emoji_happy.scrollFactor.x = 0;
             emoji_happy.scrollFactor.y = 0;
             this.elements.push(emoji_happy);
@@ -154,7 +169,9 @@ package{
 
             var emoji_sad:UIElement = new UIElement(ring.x + 205, ring.y + 90);
             emoji_sad.loadGraphic(ImgEmojiSad, false, false, 94, 99);
-            FlxG.state.add(emoji_sad);
+            if (this.showEmoji) {
+                FlxG.state.add(emoji_sad);
+            }
             emoji_sad.scrollFactor.x = 0;
             emoji_sad.scrollFactor.y = 0;
             this.elements.push(emoji_sad);
@@ -162,67 +179,79 @@ package{
 
             var emoji_angry:UIElement = new UIElement(ring.x + 140, ring.y + 200);
             emoji_angry.loadGraphic(ImgEmojiAngry, false, false, 100, 99);
-            FlxG.state.add(emoji_angry);
+            if (this.showEmoji) {
+                FlxG.state.add(emoji_angry);
+            }
             emoji_angry.scrollFactor.x = 0;
             emoji_angry.scrollFactor.y = 0;
             this.elements.push(emoji_angry);
             this.emojiButtons[emoji_angry] = Emote.ANGRY;
 
-            this.blinker = new UIElement(0,0);
-            this.blinker.makeGraphic(237,43,0xffff0000);
-            FlxG.state.add(this.blinker);
-            this.blinker.alpha = 0;
-            this.blinker.scrollFactor.x = 0;
-            this.blinker.scrollFactor.y = 0;
-            this.elements.push(this.blinker);
+            var dockOffset:Number = 100;
+            var dock:UIElement = new UIElement(
+                -dockOffset, _screen.screenHeight - 71
+            );
+            dock.alpha = 1;
+            dock.loadGraphic(ImgDock, false, false, 570, 52);
+            dock.scrollFactor = new FlxPoint(0, 0);
+            this.elements.push(dock);
+            FlxG.state.add(dock);
 
-            this.game_button = new UIElement(_screen.screenWidth * .4,
-                                                _screen.screenHeight * .94);
-            this.game_button.loadGraphic(ImgGameButton,false,false,62,43);
+            this.game_button = new DockButton(
+                dock.x + dockOffset + 10, dock.y - 60, [], BUTTON_GAME);
+            this.game_button.loadGraphic(ImgGameButton, false, false, 62, 95);
             this.game_button.alpha = 1;
             this.game_button.scrollFactor.x = 0;
             this.game_button.scrollFactor.y = 0;
             FlxG.state.add(this.game_button);
             this.elements.push(this.game_button);
-            this.programButtons[this.game_button] = 1111;
+            this.programButtons.push(this.game_button);
 
-            this.internet_button = new UIElement(_screen.screenWidth * .45,
-                                                _screen.screenHeight * .94);
-            this.internet_button.loadGraphic(ImgInternetButton,false,false,52,43);
+            this.internet_button = new DockButton(
+                this.game_button.x + this.game_button.width + 30,
+                dock.y - 50, [BULLDOG_HELL, FORUM_1], BUTTON_INTERNET);
+            this.internet_button.loadGraphic(ImgInternetButton, false, false,
+                                             88, 75);
             this.internet_button.alpha = 1;
             this.internet_button.scrollFactor.x = 0;
             this.internet_button.scrollFactor.y = 0;
             FlxG.state.add(this.internet_button);
             this.elements.push(this.internet_button);
-            this.programButtons[this.internet_button] = 1112;
+            this.programButtons.push(this.internet_button);
 
-            this.file_button = new UIElement(_screen.screenWidth * .5,
-                                                _screen.screenHeight * .94);
-            this.file_button.loadGraphic(ImgFileButton,false,false,54,43);
+            this.file_button = new DockButton(this.internet_button.x + this.internet_button.width + 30, dock.y - 30, [ICHI_DOWNLOAD, CIB_SELFIE_FOLDER], BUTTON_FILES);
+            this.file_button.loadGraphic(ImgFileButton, false, false, 88, 60);
             this.file_button.alpha = 1;
             this.file_button.scrollFactor.x = 0;
             this.file_button.scrollFactor.y = 0;
             FlxG.state.add(this.file_button);
             this.elements.push(this.file_button);
-            this.programButtons[this.file_button] = 1113;
+            this.programButtons.push(this.file_button);
 
-            this.photo_button = new UIElement(_screen.screenWidth * .55,
-                                                _screen.screenHeight * .94);
-            this.photo_button.loadGraphic(ImgPhotoButton,false,false,44,43);
+            this.photo_button = new DockButton(
+                this.file_button.x + this.file_button.width + 30,
+                dock.y - 25, [SELFIES_1, ICHI_SELFIE1], BUTTON_PHOTO);
+            this.photo_button.loadGraphic(ImgPhotoButton, false, false, 82, 65);
             this.photo_button.alpha = 1;
             this.photo_button.scrollFactor.x = 0;
             this.photo_button.scrollFactor.y = 0;
             FlxG.state.add(this.photo_button);
             this.elements.push(this.photo_button);
-            this.programButtons[this.photo_button] = 1114;
-
-            this.blinker.x = game_button.x;
-            this.blinker.y = game_button.y;
+            this.programButtons.push(this.photo_button);
 
             this.popups = new Dictionary();
-            this.popups[BULLDOG_HELL] = new PopUp(ImgBulldogHell, 1030, 510, 1);
-            this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 645, 457, 165000, PopUp.ARROW_THROUGH);
-            this.popups[FORUM_1] = new PopUp(ImgForumSelfie1, 1174, 585, 185000);
+            this.popups[BULLDOG_HELL] = new PopUp(ImgBulldogHell, 1030, 510, 0, BULLDOG_HELL);
+            this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 645, 457, PopUp.ARROW_THROUGH, SELFIES_1);
+            this.popups[FORUM_1] = new PopUp(ImgForumSelfie1, 1174, 585, 0, FORUM_1);
+            this.popups[ICHI_DOWNLOAD] = new PopUp(ImgIchiDownload, 897, 477, 0, ICHI_DOWNLOAD);
+            this.popups[ICHI_SELFIE1] = new PopUp(ImgIchiSelfie1, 438, 615, 0, ICHI_SELFIE1);
+            this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibSelfieFolder, 765, 427, 0, CIB_SELFIE_FOLDER);
+
+            var curButton:DockButton;
+            for (var i:int = 0; i < this.programButtons.length; i++){
+                curButton = this.programButtons[i];
+                curButton.setCurPopup(this.popups[this.popupTags[curButton.tag]]);
+            }
 
             for (var key:Object in this.popups) {
                 this.elements.push(this.popups[key]);

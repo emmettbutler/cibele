@@ -417,7 +417,8 @@ package org.flixel
 				y = 0;
 			}
 			flash.ui.Mouse.show();
-			_lostFocus = _focus.visible = true;
+			_lostFocus = true;
+            _focus.visible = false;
 			stage.frameRate = 10;
 			FlxG.pauseSounds();
 		}

@@ -1,14 +1,19 @@
 package {
     import org.flixel.*;
 
+    import flash.events.Event;
+
     public class GameState extends FlxState {
-        private var updateSound:Boolean, updatePopup:Boolean,
-                    updateMessages:Boolean;
+        protected var updateSound:Boolean, updatePopup:Boolean,
+                      updateMessages:Boolean, showEmoji:Boolean = true;
         protected var game_cursor:GameCursor;
         private var pauseLayer:GameObject;
         private var sortedObjects:Array;
 
         public var cursorResetFlag:Boolean = false;
+
+        public static const EVENT_POPUP_CLOSED:String = "popup_closed";
+        public static const EVENT_CHAT_RECEIVED:String = "chat_received";
 
         public function GameState(snd:Boolean=true, popup:Boolean=true,
                                   messages:Boolean=true){
@@ -34,8 +39,12 @@ package {
         }
 
         public function postCreate():void {
-            PopUpManager.getInstance();
-            MessageManager.getInstance();
+            if (this.updatePopup) {
+                PopUpManager.getInstance().showEmoji = this.showEmoji;
+            }
+            if (this.updateMessages) {
+                MessageManager.getInstance();
+            }
             this.game_cursor = new GameCursor();
             FlxG.state.add(this.pauseLayer);
         }
@@ -43,9 +52,7 @@ package {
         public function updateCursor():void {
             if (this.game_cursor != null) {
                 this.game_cursor.update();
-                if(!this.cursorResetFlag &&
-                    MessageManager.getInstance().ui_loaded)
-                {
+                if(!this.cursorResetFlag) {
                     this.game_cursor.resetCursor();
                     this.cursorResetFlag = true;
                 }
@@ -109,19 +116,20 @@ package {
             this.sortedObjects.sort(sortByBasePos);
             this.insertSortedObjects();
 
-            this.updateCursor();
-
             GlobalTimer.getInstance().update();
 
             if (this.updateSound) {
                 SoundManager.getInstance().update();
             }
             if (this.updatePopup) {
+                PopUpManager.getInstance().showEmoji = this.showEmoji;
                 PopUpManager.getInstance().update();
             }
             if (this.updateMessages) {
                 MessageManager.getInstance().update();
             }
+
+            this.updateCursor();
 
             if(FlxG.mouse.justPressed()) {
                 this.clickCallback(
@@ -135,16 +143,28 @@ package {
             } else if (FlxG.keys.justPressed("O")) {
                 SoundManager.getInstance().decreaseVolume();
             } else if (FlxG.keys.justPressed("S")) {
-                GlobalTimer.getInstance().pause();
-                SoundManager.getInstance().pause();
-                this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
+                this.pause();
             }
+        }
+
+        public function pause():void {
+            GlobalTimer.getInstance().pause();
+            SoundManager.getInstance().pause();
+            this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
         }
 
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
             if (this.updatePopup) {
                 PopUpManager.getInstance().clickCallback(screenPos, worldPos);
             }
+        }
+
+        public function addEventListener(event:String, callback:Function):void {
+            FlxG.stage.addEventListener(event, callback);
+        }
+
+        public function dispatchEvent(event:String):void {
+            FlxG.stage.dispatchEvent(new Event(event, true, true));
         }
     }
 }

@@ -2,22 +2,19 @@ package{
     import org.flixel.*;
 
     public class PopUp extends UIElement {
-        public var timer:Number;
-        public var shown:Boolean = false;
-
         public static const ARROW_THROUGH:Number = 1;
         public var cur_anim:Number = 0;
         public var timer_key:String;
+        public var tag:String;
 
-        public function PopUp(img:Class, w:Number, h:Number, timer:Number,
-                              functionality:Number=0) {
+        public function PopUp(img:Class, w:Number, h:Number,
+                              functionality:Number=0, tag:String=null) {
             this.timer_key = Math.random() + "";
-            this.timer = timer;
-            GlobalTimer.getInstance().setMark(this.timer_key, this.timer);
 
             var _screen:ScreenManager = ScreenManager.getInstance();
             super(_screen.screenWidth * .1, _screen.screenHeight * .1);
             this._state = functionality;
+            this.tag = tag;
 
             if(this._state == ARROW_THROUGH) {
                 this.loadGraphic(img,true,false,w,h);
@@ -32,11 +29,6 @@ package{
             this.visible = false;
             this.scrollFactor.x = 0;
             this.scrollFactor.y = 0;
-        }
-
-        public function shouldShow():Boolean {
-            return GlobalTimer.getInstance().hasPassed(this.timer_key) &&
-                !this.shown;
         }
 
         override public function update():void {

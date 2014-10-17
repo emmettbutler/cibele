@@ -16,6 +16,10 @@ package {
         public var text_facing:String = "up";
         public var footPos:DHPoint;
 
+        public var tag:String;
+        public static const cib:String = "cibelelele";
+        public static const ichi:String = "ichichichi";
+
         public function PartyMember(pos:DHPoint) {
             super(pos);
             this.nameText = new FlxText(pos.x, pos.y, 500, "My Name");
@@ -53,8 +57,8 @@ package {
             return this._state == STATE_IN_ATTACK;
         }
 
-        public function directionToObj(obj:PartyMember):DHPoint {
-            return obj.pos.sub(this.pos);
+        public function directionToObj(obj:DHPoint):DHPoint {
+            return obj.sub(this.pos);
         }
 
         public function attack():void {

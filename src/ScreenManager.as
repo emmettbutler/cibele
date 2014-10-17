@@ -5,7 +5,7 @@ package {
     import flash.display.StageQuality;
     import flash.display.StageScaleMode;
     import flash.geom.Rectangle;
-    import flash.events.KeyboardEvent;
+    import flash.events.*;
     import flash.ui.Keyboard;
 
     public class ScreenManager {
@@ -34,6 +34,9 @@ package {
                         e.preventDefault();
                     }
                 });
+
+            FlxG.stage.addEventListener(Event.DEACTIVATE, this.onFocusLost);
+            FlxG.stage.addEventListener(Event.ACTIVATE, this.onFocus);
 
             applet_dimensions = new FlxPoint(640/2, 480/2);
             trace("SCREEN DIMENSIONS: " + screenWidth + "x" + screenHeight);
@@ -73,11 +76,11 @@ package {
             return new DHPoint((screenWidth - dim.x) / 2, (screenHeight - dim.y) / 2);
         }
 
-        public function setupCamera(player:Player, zoomFactor:Number=1.2):void {
+        public function setupCamera(playerCamera:GameObject, zoomFactor:Number=1.2):void {
             cam = new FlxCamera(0, 0, screenWidth, screenHeight);
             FlxG.resetCameras(cam);
-            if (player != null) {
-                cam.target = player;
+            if (playerCamera != null) {
+                cam.target = playerCamera;
             }
             //zoomcam.targetZoom = zoomFactor;
         }
@@ -100,6 +103,14 @@ package {
             letterbox4 = new FlxSprite(zero_point.x + applet_dimensions.x, 0);
             letterbox4.makeGraphic(screenWidth - (zero_point.x + applet_dimensions.x), screenHeight, _color);
             FlxG.state.add(letterbox4);
+        }
+
+        public function onFocus(e:Event):void {
+            (FlxG.state as GameState).pause();
+        }
+
+        public function onFocusLost(e:Event):void {
+            (FlxG.state as GameState).pause();
         }
 
         public static function getInstance():ScreenManager {

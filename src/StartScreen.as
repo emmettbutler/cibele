@@ -10,18 +10,21 @@ package{
         override public function create():void {
             FlxG.bgColor = 0xff000000;
 
-            startText = new FlxText(100,100,500,"Cibele // This build ends after the first world.\n\nCLICK to move and interact with objects.\nMake sure your sound is on.\n\nSPACE to start.");
+            startText = new FlxText(100,100,500,"Cibele // This build ends after the first world.\n\nCLICK to move and interact with objects.\nMake sure your sound is on.\n\nSPACE to start.\n\n COMMAND + Q to Quit.");
             add(startText);
             startText.setFormat("NexaBold-Regular",16,0xffffffff,"left");
 
             ScreenManager.getInstance();
+
+            this.updatePopup = false;
+            this.updateMessages = false;
         }
 
         public function startGame():void {
             function _innerCallback():void {
                 FlxG.switchState(new Desktop());
             }
-            FlxG.switchState(new PlayVideoState("../assets/test_video_hi.flv",
+            FlxG.switchState(new PlayVideoState("../assets/computer_open.flv",
                                                 _innerCallback));
         }
 
