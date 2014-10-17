@@ -7,7 +7,7 @@ package
         [Embed(source="../assets/squid_baby.png")] private var ImgIT1:Class;
         [Embed(source="../assets/Enemy2_sprite.png")] private var ImgIT2:Class;
         [Embed(source="../assets/enemy_highlight.png")] private var ImgActive:Class;
-        [Embed(source="../assets/enemy_highlight_2.png")] private var ImgActive2:Class;
+        [Embed(source="../assets/enemy2_highlight.png")] private var ImgActive2:Class;
         public var enemyType:String = "enemy";
         public var hitpoints:Number = 100;
         public var damage:Number = 5;
@@ -45,20 +45,29 @@ package
             super(pos);
             this._state = STATE_IDLE;
 
-            this.cib_target_sprite = new GameObject(pos);
-            this.cib_target_sprite.loadGraphic(ImgActive,false,false,142,18);
-            FlxG.state.add(this.cib_target_sprite);
-            this.cib_target_sprite.alpha = 0;
-
-            this.ichi_target_sprite = new GameObject(pos);
-            this.ichi_target_sprite.loadGraphic(ImgActive,false,false,142,18);
-            FlxG.state.add(this.ichi_target_sprite);
-            this.ichi_target_sprite.alpha = 0;
-
             var rand:Number = Math.random() * 2;
             if(rand > 1) {
+                this.cib_target_sprite = new GameObject(pos);
+                this.cib_target_sprite.loadGraphic(ImgActive,false,false,147,24);
+                FlxG.state.add(this.cib_target_sprite);
+                this.cib_target_sprite.alpha = 0;
+
+                this.ichi_target_sprite = new GameObject(pos);
+                this.ichi_target_sprite.loadGraphic(ImgActive,false,false,147,24);
+                FlxG.state.add(this.ichi_target_sprite);
+                this.ichi_target_sprite.alpha = 0;
+
                 loadGraphic(ImgIT1, false, false, 152, 104);
             } else {
+                this.cib_target_sprite = new GameObject(pos);
+                this.cib_target_sprite.loadGraphic(ImgActive2,false,false,67,15);
+                FlxG.state.add(this.cib_target_sprite);
+                this.cib_target_sprite.alpha = 0;
+
+                this.ichi_target_sprite = new GameObject(pos);
+                this.ichi_target_sprite.loadGraphic(ImgActive2,false,false,67,15);
+                FlxG.state.add(this.ichi_target_sprite);
+                this.ichi_target_sprite.alpha = 0;
                 loadGraphic(ImgIT2, false, false, 70, 160);
             }
             addAnimation("run", [0, 1, 2, 3, 4, 5], 12, true);
@@ -120,11 +129,19 @@ package
             this.bar.alpha = 0;
         }
 
-        public function fadeTarget(obj:GameObject):void {
-            if(obj.alpha == 1) {
-                this.fade = true;
-            } else if(obj.alpha == 0) {
-                this.fade = false;
+        public function fadeTarget(obj:GameObject, soften:Boolean=false):void {
+            if(!soften) {
+                if(obj.alpha == 1) {
+                    this.fade = true;
+                } else if(obj.alpha == 0) {
+                    this.fade = false;
+                }
+            } else {
+                if(obj.alpha == .6) {
+                    this.fade = true;
+                } else if(obj.alpha == 0) {
+                    this.fade = false;
+                }
             }
 
             if(this.fade) {
@@ -202,7 +219,7 @@ package
                         if(this.attacker.tag == PartyMember.cib) {
                             this.fadeTarget(this.cib_target_sprite);
                         } else if(this.attacker.tag == PartyMember.ichi) {
-                            this.fadeTarget(this.ichi_target_sprite);
+                            this.fadeTarget(this.ichi_target_sprite, true);
                         }
                     }
                 }
