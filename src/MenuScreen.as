@@ -36,6 +36,8 @@ package{
             (new BackgroundLoader()).loadSingleTileBG("../assets/menuscreen.png");
             ScreenManager.getInstance().setupCamera(null, 1);
 
+            super.postCreate();
+
             var _screen:ScreenManager = ScreenManager.getInstance();
             play_game = new GameObject(new DHPoint(_screen.screenWidth * .45, _screen.screenHeight * .55));
             play_game.loadGraphic(ImgPlay,false,false,121,17);
@@ -64,8 +66,6 @@ package{
                 SoundManager.getInstance().playSound(FernBGMLoop, 0, null, true, .05, GameSound.BGM);
             }
             SoundManager.getInstance().playSound(FernBGMIntro, 12631, _musicCallback, false, .1, GameSound.BGM);
-
-            super.postCreate();
         }
 
         override public function update():void{
