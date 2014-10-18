@@ -41,6 +41,11 @@ package{
             this.postCreate();
         }
 
+        override public function postCreate():void {
+            super.postCreate();
+            player.setBlueShadow();
+        }
+
         override public function update():void{
             super.update();
 

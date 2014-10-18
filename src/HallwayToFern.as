@@ -114,6 +114,7 @@ package{
         override public function postCreate():void {
             super.postCreate();
             player.inhibitY = true;
+            player.setBlueShadow();
         }
 
         override public function restrictPlayerMovement():void {

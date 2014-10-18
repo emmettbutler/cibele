@@ -6,6 +6,7 @@ package{
         [Embed(source="../assets/click_anim.png")] private var ImgWalkTo:Class;
         [Embed(source="../assets/testattack.png")] private var ImgAttack:Class;
         [Embed(source="../assets/cib_shadow.png")] private var ImgShadow:Class;
+        [Embed(source="../assets/cib_shadow_blue.png")] private var ImgShadowBlue:Class;
 
         private var walkDistance:Number = 0;
         private var walkTarget:DHPoint;
@@ -42,6 +43,7 @@ package{
             this.shadow_sprite = new GameObject(this.pos);
             this.shadow_sprite.loadGraphic(ImgShadow,false,false,70,42);
             this.shadow_sprite.alpha = .7;
+            this.shadow_sprite.zSorted = true;
 
             loadGraphic(ImgCibWalk, true, false, 143, 150);
             addAnimation("walk_u",
@@ -76,9 +78,6 @@ package{
             this.lastPos = new DHPoint(this.pos.x, this.pos.y);
             this.footstepOffset = new DHPoint(80, this.height);
             this.walkTarget = new DHPoint(0, 0);
-
-            this.shadow_sprite.pos = this.pos.center(this);
-            this.shadow_sprite.zSorted = true;
 
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
         }
@@ -375,6 +374,11 @@ package{
 
         public function isMoving():Boolean {
             return this._state == STATE_WALK;
+        }
+
+        public function setBlueShadow():void {
+            this.shadow_sprite.loadGraphic(ImgShadow,false,false,70,42);
+            this.shadow_sprite.alpha = .7;
         }
     }
 }
