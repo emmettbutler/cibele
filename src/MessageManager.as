@@ -3,6 +3,7 @@ package{
 
     public class MessageManager {
         [Embed(source="../assets/UI_letter.png")] private var ImgMsg:Class;
+        [Embed(source="../assets/UI_letter_pink.png")] private var ImgMsgPink:Class;
         [Embed(source="../assets/UI_text_box.png")] private var ImgInbox:Class;
         [Embed(source="../assets/UI_text_box_x_blue.png")] private var ImgInboxX:Class;
         [Embed(source="../assets/UI_pink_msg_box.png")] private var ImgInboxPink:Class;
@@ -94,9 +95,17 @@ package{
                 PopUpManager.RING_INSET_X + 55,
                 PopUpManager.RING_INSET_Y + 75
             );
+
+            imgClass = ImgMsg;
+            imgSize = new DHPoint(143, 143);
+            if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
+            {
+                imgClass = ImgMsgPink;
+                imgSize = new DHPoint(144, 144);
+            }
             img_msg = new UIElement(
                 notifications_pos.x, notifications_pos.y);
-            img_msg.loadGraphic(ImgMsg, false, false, 143, 143);
+            img_msg.loadGraphic(imgClass, false, false, imgSize.x, imgSize.y);
             img_msg.scrollFactor = new FlxPoint(0, 0);
             img_msg.active = true;
             img_msg.addAnimation("new", [0], 1, false);
