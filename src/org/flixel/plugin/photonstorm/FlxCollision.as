@@ -25,6 +25,7 @@ package org.flixel.plugin.photonstorm
     import flash.geom.Rectangle;
     import flash.display.BlendMode;
     import flash.utils.setTimeout;
+    import flash.utils.clearTimeout;
 
     import org.flixel.*;
 
@@ -116,9 +117,14 @@ package org.flixel.plugin.photonstorm
                 var spr:FlxExtSprite = new FlxExtSprite(contact.x, contact.y);
                 var bmp:Bitmap = new Bitmap(overlapArea, PixelSnapping.NEVER, true);
                 spr.loadExtGraphic(bmp, false, false, bmp.width, bmp.height, true);
+                spr.active = false;
                 FlxG.state.add(spr);
-                setTimeout(function():void {
+                var tid:Number;
+                tid = setTimeout(function():void {
                     FlxG.state.remove(spr);
+                    spr.kill();
+                    spr = null;
+                    clearTimeout(tid);
                 }, 500);
             }
 
@@ -139,7 +145,7 @@ package org.flixel.plugin.photonstorm
                 if (overlap.width > collisionWidthThreshold) {
                     ret[2] = overlapOffsetY > 0 ? 1 : 0;
                     ret[3] = overlapOffsetY < 0 ? 1 : 0;
-                    if (overlap.height == contact.height) {
+                    if (overlap.height >= contact.height - 5) {
                         ret[2] = 1;
                         ret[3] = 1;
                     }
@@ -147,7 +153,7 @@ package org.flixel.plugin.photonstorm
                 if (overlap.height > collisionHeightThreshold) {
                     ret[0] = overlapOffsetX > 0 ? 1 : 0;
                     ret[1] = overlapOffsetX < 0 ? 1 : 0;
-                    if (overlap.width == contact.width) {
+                    if (overlap.width >= contact.width - 5) {
                         ret[0] = 1;
                         ret[1] = 1;
                     }

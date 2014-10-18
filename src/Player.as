@@ -31,6 +31,7 @@ package{
         public var cameraPos:GameObject;
 
         public static const STATE_WALK:Number = 2398476188;
+        public static const STATE_WALK_HARD:Number = 23981333333;
 
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
@@ -246,7 +247,7 @@ package{
                 this.setFacing(false);
             }
 
-            if (this._state == STATE_WALK) {
+            if (this._state == STATE_WALK || this._state == STATE_WALK_HARD) {
                 this.walk();
                 if(FlxG.mouse.pressed()) {
                     this.initWalk(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
@@ -286,9 +287,9 @@ package{
                         this.collisionDirection[3] == 1 && this._mapnodes != null)
                     {
                         // stuck!
-                        this._state = STATE_WALK;
+                        this._state = STATE_WALK_HARD;
                         this.walkTarget = this._mapnodes.getClosestNode(this.pos).pos;
-                    } else {
+                    } else if (this._state != STATE_WALK_HARD){
                         if (this.dir.x > 0 && this.collisionDirection[1] == 1) {
                             // right
                             this.dir.x = 0;
@@ -381,7 +382,7 @@ package{
         }
 
         public function isMoving():Boolean {
-            return this._state == STATE_WALK;
+            return this._state == STATE_WALK || this._state == STATE_WALK_HARD;
         }
 
         public function setBlueShadow():void {
