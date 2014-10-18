@@ -24,10 +24,13 @@ package{
         public var quit_rect:FlxRect;
         public var mouse_rect:FlxRect;
 
+        public var play_screen:Boolean = false;
+
         public var img_height:Number = 357;
 
         public function MenuScreen() {
-            super(true, false, false);
+            super(true, true, false);
+            this.showEmoji = false;
         }
 
         override public function create():void {
@@ -49,9 +52,9 @@ package{
             add(quit);
             quit_rect = new FlxRect(quit.x,quit.y,quit.width,quit.height);
 
+//
             login = new GameObject(new DHPoint(_screen.screenWidth * .45, _screen.screenHeight * .93));
             login.loadGraphic(ImgLogin,false,false,121,17);
-            login_rect = new FlxRect(login.x,login.y,login.width,login.height);
 
             char_select = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .15));
             char_select.loadGraphic(ImgChar,false,false,400,494);
@@ -73,20 +76,27 @@ package{
             mouse_rect.x = FlxG.mouse.x;
             mouse_rect.y = FlxG.mouse.y;
             if(FlxG.mouse.justPressed()){
-                if(mouse_rect.overlaps(play_game_rect)){
+                if(mouse_rect.overlaps(play_game_rect) && !play_screen){
                     (new BackgroundLoader()).loadSingleTileBG("../assets/charselectbg.png");
                     ScreenManager.getInstance().setupCamera(null, 1);
                     play_game.kill();
                     quit.kill();
+                    play_game_rect.x = login.x;
+                    play_game_rect.y = login.y;
+                    play_game_rect.width = login.width;
+                    play_game_rect.height = login.height;
+                    quit_rect.x = login.x;
+                    quit_rect.y = login.y
+                    quit_rect.width = login.width;
+                    quit_rect.height = login.height;
                     add(login);
                     add(char_select);
-                    super.postCreate();
-                    this.game_cursor.setGameMouse();
+                    play_screen = true;
                 }
-                if (mouse_rect.overlaps(login_rect)){
+                if (mouse_rect.overlaps(quit_rect || play_game_rect) && play_screen){
                     FlxG.switchState(new HallwayToFern());
                 }
-                if (mouse_rect.overlaps(quit_rect)){
+                if (mouse_rect.overlaps(quit_rect) && !play_screen){
                     PopUpManager.GAME_ACTIVE = false;
                     FlxG.switchState(new Desktop());
                 }
