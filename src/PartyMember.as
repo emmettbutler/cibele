@@ -23,7 +23,7 @@ package {
         public function PartyMember(pos:DHPoint) {
             super(pos);
             this.nameText = new FlxText(pos.x, pos.y, 500, "My Name");
-            this.nameText.setFormat("NexaBold-Regular",16,0xff000000,"left");
+            this.nameText.setFormat("NexaBold-Regular",16,0xff616161,"left");
             this.footPos = new DHPoint(0, 0);
         }
 

@@ -168,10 +168,10 @@ package{
 
             this.img_inbox.visible = false;
 
-            this.exit_msg = new FlxText(this.img_inbox.x + 110,
-                this.img_inbox.y + (this.img_inbox.height-25),
-                this.img_inbox.width, "| Back");
-            this.exit_msg.setFormat("NexaBold-Regular",16,0xff000000,"left");
+            this.exit_msg = new FlxText(this.img_inbox.x + 20,
+                this.img_inbox.y + (this.img_inbox.height-40),
+                this.img_inbox.width, "Back");
+            this.exit_msg.setFormat("NexaBold-Regular",16,0xff616161,"left");
             this.exit_msg.scrollFactor = new FlxPoint(0, 0);
             this.exit_msg.visible = false;
             this.exit_msg.active = false;
@@ -181,10 +181,10 @@ package{
 
             this.exit_box = new FlxRect(this.exit_msg.x, this.exit_msg.y, 50, 50);
 
-            this.reply_to_msg = new FlxText(this.img_inbox.x + 172,
-                this.img_inbox.y + (this.img_inbox.height - 25),
+            this.reply_to_msg = new FlxText(this.img_inbox.x + 60,
+                this.img_inbox.y + (this.img_inbox.height - 40),
                 this.img_inbox.width, "| Reply");
-            this.reply_to_msg.setFormat("NexaBold-Regular",16,0xff000000,"left");
+            this.reply_to_msg.setFormat("NexaBold-Regular",16,0xff616161,"left");
             this.reply_to_msg.scrollFactor = new FlxPoint(0, 0);
             this.reply_to_msg.visible = false;
             this.reply_to_msg.active = false;
@@ -205,7 +205,7 @@ package{
             }
 
             this.notifications_text = new FlxText(img_msg.x-28, img_msg.y-20, img_msg.width, this.unread_count.toString());
-            this.notifications_text.setFormat("NexaBold-Regular",24,0xff000000,"left");
+            this.notifications_text.setFormat("NexaBold-Regular",24,0xff616161,"left");
             this.notifications_text.scrollFactor = new FlxPoint(0, 0);
             this.notifications_text.active = false;
             if (addToState) {

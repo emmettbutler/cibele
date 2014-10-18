@@ -16,11 +16,11 @@ package{
 
         public var pos:DHPoint;
 
-        public var font_size:Number = 16, list_offset:Number = 30,
+        public var font_size:Number = 17, list_offset:Number = 30,
                    sent_count:Number = 0;
 
-        public var font_color:uint = 0xff000000;
-        public var unread_color:uint = 0xff982708;
+        public var font_color:uint = 0xff616161;
+        public var unread_color:uint = 0xffc1698a;
 
         public var messages:Array;
 
