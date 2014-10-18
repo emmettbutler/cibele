@@ -3,7 +3,7 @@ package{
 
     public class Player extends PartyMember {
         [Embed(source="../assets/c_walk.png")] private var ImgCibWalk:Class;
-        [Embed(source="../assets/splash_sprites.png")] private var ImgWalkTo:Class;
+        [Embed(source="../assets/click_anim.png")] private var ImgWalkTo:Class;
         [Embed(source="../assets/testattack.png")] private var ImgAttack:Class;
         [Embed(source="../assets/cib_shadow.png")] private var ImgShadow:Class;
 
@@ -20,12 +20,12 @@ package{
         public var collisionDirection:Array;
         public var popupmgr:PopUpManager;
         public var inhibitY:Boolean = false, inhibitX:Boolean = false;
-        public var splash_sprites:GameObject;
+        public var click_anim:GameObject;
         public var targetEnemy:Enemy;
         public var attack_sprite:GameObject;
         public var shadow_sprite:GameObject;
         public var enemy_dir:DHPoint;
-        public var splash_sprites_lock:Boolean = false;
+        public var click_anim_lock:Boolean = false;
         public var cameraPos:GameObject;
 
         public static const STATE_WALK:Number = 2398476188;
@@ -40,7 +40,8 @@ package{
             this.zSorted = true;
 
             this.shadow_sprite = new GameObject(this.pos);
-            this.shadow_sprite.loadGraphic(ImgShadow,false,false,41,14);
+            this.shadow_sprite.loadGraphic(ImgShadow,false,false,70,42);
+            this.shadow_sprite.alpha = .7;
 
             loadGraphic(ImgCibWalk, true, false, 143, 150);
             addAnimation("walk_u",
@@ -60,7 +61,7 @@ package{
             addAnimation("idle", [11], 7, false);
             addAnimation("attack", [0, 1], 7, true);
 
-            this.splash_sprites = new GameObject(this.pos);
+            this.click_anim = new GameObject(this.pos);
             this.attack_sprite = new GameObject(this.pos);
 
             this.hitboxOffset = new DHPoint(60, 100);
@@ -76,8 +77,7 @@ package{
             this.footstepOffset = new DHPoint(80, this.height);
             this.walkTarget = new DHPoint(0, 0);
 
-            this.shadow_sprite.x = this.x + (this.width/3);
-            this.shadow_sprite.y = this.y + (this.height-10);
+            this.shadow_sprite.pos = this.pos.center(this);
             this.shadow_sprite.zSorted = true;
 
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
@@ -169,14 +169,14 @@ package{
         public function initWalk(worldPos:DHPoint):void {
             this._state = STATE_WALK;
             this.walkTarget = worldPos;
-            if(!this.splash_sprites_lock) {
-                this.splash_sprites_lock = true;
-                this.splash_sprites.x = this.walkTarget.x -
-                    this.splash_sprites.width/2;
-                this.splash_sprites.y = this.walkTarget.y -
-                    this.splash_sprites.height/2;
-                this.splash_sprites.alpha = 1;
-                this.splash_sprites.play("attack");
+            if(!this.click_anim_lock) {
+                this.click_anim_lock = true;
+                this.click_anim.x = this.walkTarget.x -
+                    this.click_anim.width/2;
+                this.click_anim.y = this.walkTarget.y -
+                    this.click_anim.height/2;
+                this.click_anim.alpha = 1;
+                this.click_anim.play("click");
             }
         }
 
@@ -186,23 +186,15 @@ package{
             if(this.facing == LEFT){
                 this.play("walk_l");
                 this.text_facing = "left";
-                this.shadow_sprite.x = this.x + (this.width/2);
-                this.shadow_sprite.y = this.y + (this.height-10);
             } else if (this.facing == RIGHT){
                 this.play("walk_r");
                 this.text_facing = "right";
-                this.shadow_sprite.x = this.x + (this.width/4);
-                this.shadow_sprite.y = this.y + (this.height-10);
             } else if(this.facing == UP){
                 this.play("walk_u");
                 this.text_facing = "up";
-                this.shadow_sprite.x = this.x + (this.width/3);
-                this.shadow_sprite.y = this.y + (this.height-10);
             } else if(this.facing == DOWN){
                 this.play("walk_d");
                 this.text_facing = "down";
-                this.shadow_sprite.x = this.x + (this.width/3);
-                this.shadow_sprite.y = this.y + (this.height-10);
             }
         }
 
@@ -224,6 +216,20 @@ package{
                 this.cameraPos.y = interpolate(.1, this.cameraPos.y, this.pos.center(this).y);
             }
 
+            if(this.text_facing == "left") {
+                this.shadow_sprite.x = this.pos.center(this).x - 15;
+                this.shadow_sprite.y = this.pos.center(this).y + 50;
+            } else if(this.text_facing == "right") {
+                this.shadow_sprite.x = this.pos.center(this).x - 60;
+                this.shadow_sprite.y = this.pos.center(this).y + 50;
+            } else if(this.text_facing == "up") {
+                this.shadow_sprite.x = this.pos.center(this).x - 35;
+                this.shadow_sprite.y = this.pos.center(this).y + 50;
+            } else if(this.text_facing == "down") {
+                this.shadow_sprite.x = this.pos.center(this).x - 35;
+                this.shadow_sprite.y = this.pos.center(this).y + 50;
+            }
+
             this.hitbox_rect.x = this.pos.x;
             this.hitbox_rect.y = this.pos.y;
 
@@ -239,7 +245,7 @@ package{
                     this.initWalk(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
                     this.walk();
                 } else if(FlxG.mouse.justReleased()) {
-                    this.splash_sprites_lock = false;
+                    this.click_anim_lock = false;
                 }
                 if (this.walkTarget.sub(this.footPos)._length() < 10) {
                     this._state = STATE_IDLE;
@@ -299,9 +305,9 @@ package{
             }
             super.update();
 
-            if(this.splash_sprites.frame == 8) {
-                this.splash_sprites.alpha = 0;
-                this.splash_sprites.play("idle");
+            if(this.click_anim.frame == 10) {
+                this.click_anim.alpha = 0;
+                this.click_anim.play("idle");
             }
             if(this.attack_sprite.frame == 3) {
                 this.attack_sprite.alpha = 0;
@@ -338,12 +344,12 @@ package{
 
         public function addAttackAnim():void {
             //this sprite is being used for walk target anim
-            this.splash_sprites.loadGraphic(ImgWalkTo, true, false, 640/10, 64);
-            this.splash_sprites.addAnimation("attack",
-                [0, 1, 2, 3, 4, 5, 6, 7, 8], 15, false);
-            this.splash_sprites.addAnimation("idle", [0], 20, false);
-            FlxG.state.add(this.splash_sprites);
-            this.splash_sprites.alpha = 0;
+            this.click_anim.loadGraphic(ImgWalkTo, true, false, 275*.7, 164*.7);
+            this.click_anim.addAnimation("click",
+                [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 30, false);
+            this.click_anim.addAnimation("idle", [0], 20, false);
+            FlxG.state.add(this.click_anim);
+            this.click_anim.alpha = 0;
 
             //test attack sprite
             this.attack_sprite.loadGraphic(ImgAttack,true,false,692/5,140);

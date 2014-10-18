@@ -54,7 +54,8 @@ package
             this.nameText.text = "Ichi";
             this.shadow_sprite = new GameObject(this.pos);
             this.shadow_sprite.zSorted = true;
-            this.shadow_sprite.loadGraphic(ImgShadow,false,false,41,14);
+            this.shadow_sprite.loadGraphic(ImgShadow,false,false,70,42);
+            this.shadow_sprite.alpha = .7;
 
             this.tag = PartyMember.ichi;
 
@@ -99,20 +100,12 @@ package
         public function walk():void {
             if(this.facing == LEFT){
                 this.play("walk_l");
-                this.shadow_sprite.x = this.x + (this.width/2);
-                this.shadow_sprite.y = this.y + (this.height-10);
             } else if (this.facing == RIGHT){
                 this.play("walk_r");
-                this.shadow_sprite.x = this.x + (this.width/4);
-                this.shadow_sprite.y = this.y + (this.height-10);
             } else if(this.facing == UP){
                 this.play("walk_u");
-                this.shadow_sprite.x = this.x + (this.width/3);
-                this.shadow_sprite.y = this.y + (this.height-10);
             } else if(this.facing == DOWN){
                 this.play("walk_d");
-                this.shadow_sprite.x = this.x + (this.width/3);
-                this.shadow_sprite.y = this.y + (this.height-10);
             }
         }
 
@@ -138,8 +131,19 @@ package
         override public function update():void {
             super.update();
 
-            this.shadow_sprite.x = this.x + 20;
-            this.shadow_sprite.y = this.y + (this.height-10);
+            if(this.facing == LEFT) {
+                this.shadow_sprite.x = this.pos.center(this).x - 15;
+                this.shadow_sprite.y = this.pos.center(this).y + 60;
+            } else if(this.facing == RIGHT) {
+                this.shadow_sprite.x = this.pos.center(this).x - 35;
+                this.shadow_sprite.y = this.pos.center(this).y + 60;
+            } else if(this.facing == UP) {
+                this.shadow_sprite.x = this.pos.center(this).x - 35;
+                this.shadow_sprite.y = this.pos.center(this).y + 60;
+            } else if(this.facing == DOWN) {
+                this.shadow_sprite.x = this.pos.center(this).x - 35;
+                this.shadow_sprite.y = this.pos.center(this).y + 60;
+            }
 
             this.basePos.y = this.y + (this.height-10);
 
