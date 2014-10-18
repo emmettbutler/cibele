@@ -40,8 +40,7 @@ package{
             super.create();
             SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true,
                                                  .08, GameSound.BGM);
-            GlobalTimer.getInstance().setMark(Fern.BOSS_MARK, 0);
-            //GlobalTimer.getInstance().setMark(Fern.BOSS_MARK, 319632 - 60 * 1000);
+            GlobalTimer.getInstance().setMark(Fern.BOSS_MARK, 319632 - 60 * 1000);
             this.convo1Sound = null;
         }
 
@@ -119,6 +118,7 @@ package{
                 !this.bossHasAppeared && FlxG.state.ID == LevelMapState.LEVEL_ID)
             {
                 this.bossHasAppeared = true;
+                this.boss.hasAppeared = true;
                 this.boss.warpToPlayer();
                 this.boss.visible = true;
             }

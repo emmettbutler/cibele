@@ -15,6 +15,8 @@ package {
         public var nameText:FlxText;
         public var text_facing:String = "up";
         public var footPos:DHPoint;
+        public var sightRange:Number;
+        public var bossSightRange:Number;
 
         public var tag:String;
         public static const cib:String = "cibelelele";
@@ -25,6 +27,8 @@ package {
             this.nameText = new FlxText(pos.x, pos.y, 500, "My Name");
             this.nameText.setFormat("NexaBold-Regular",16,0xff616161,"left");
             this.footPos = new DHPoint(0, 0);
+            this.sightRange = 280;
+            this.bossSightRange = 1200;
         }
 
         public function initFootsteps():void {
@@ -84,7 +88,11 @@ package {
 
         public function enemyIsInMoveTowardsRange(en:Enemy):Boolean{
             if (en == null) { return false; }
-            return en.pos.sub(this.pos)._length() < 280;
+            var range:Number = this.sightRange;
+            if (en is BossEnemy) {
+                range = this.bossSightRange;
+            }
+            return en.pos.sub(this.pos)._length() < range;
         }
 
         public function resolveStatePostAttack():void {}

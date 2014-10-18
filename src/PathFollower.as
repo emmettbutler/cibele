@@ -16,8 +16,10 @@ package
         public var lastInViewTime:Number = 0;
 
         public var runSpeed:Number = 8;
+        public var bossRef:BossEnemy;
 
         public var closestEnemy:Enemy;
+        public var targetEnemy:Enemy;
         public var playerRef:Player;
         public var walkTarget:DHPoint;
         public var disp:DHPoint;
@@ -130,6 +132,8 @@ package
         override public function update():void {
             super.update();
 
+            FlxG.log(stateMap[this._state] + " " + new Date().valueOf());
+
             if(this.facing == LEFT) {
                 this.shadow_sprite.x = this.pos.center(this).x - 15;
                 this.shadow_sprite.y = this.pos.center(this).y + 60;
@@ -147,6 +151,11 @@ package
             this.basePos.y = this.y + (this.height-10);
 
             this.closestEnemy = this.getClosestEnemy();
+            if (this.bossRef != null && this.bossRef.hasAppeared) {
+                this.targetEnemy = this.bossRef;
+            } else {
+                this.targetEnemy = this.closestEnemy;
+            }
             if (this.inViewOfPlayer()) {
                 lastInViewTime = this.currentTime;
             }
@@ -168,11 +177,11 @@ package
                         this.dir = disp.normalized().mulScl(this.runSpeed);
                     }
                 }
-                if (this.enemyIsInAttackRange(this.closestEnemy)) {
+                if (this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
-                    this.closestEnemy.activeTarget();
-                } else if(this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
-                    this.walkTarget = this.closestEnemy.pos.center(this.closestEnemy, true);
+                    this.targetEnemy.activeTarget();
+                } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
+                    this.walkTarget = this.targetEnemy.footPos.add(this.targetEnemy.attackOffset);
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
             } else if (this._state == STATE_MOVE_TO_MAP_NODE) {
@@ -191,11 +200,11 @@ package
                         this.dir = disp.normalized().mulScl(this.runSpeed);
                     }
                 }
-                if (this.enemyIsInAttackRange(this.closestEnemy)) {
+                if (this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
-                    this.closestEnemy.activeTarget();
-                } else if(this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
-                    this.walkTarget = this.closestEnemy.pos.center(this.closestEnemy, true);
+                    this.targetEnemy.activeTarget();
+                } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
+                    this.walkTarget = this.targetEnemy.footPos.add(this.targetEnemy.attackOffset);
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
             } else if (this._state == STATE_IDLE_AT_PATH_NODE) {
@@ -203,11 +212,11 @@ package
                 if(this.playerIsInMovementRange()){
                     this.moveToNextPathNode();
                 }
-                if (this.enemyIsInAttackRange(this.closestEnemy)) {
+                if (this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
-                    this.closestEnemy.activeTarget();
-                } else if(this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
-                    this.walkTarget = this.closestEnemy.pos.center(this.closestEnemy, true);
+                    this.targetEnemy.activeTarget();
+                } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
+                    this.walkTarget = this.targetEnemy.footPos.add(this.targetEnemy.attackOffset);
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
                 this.dir = ZERO_POINT;
@@ -215,9 +224,9 @@ package
                 if(this.playerIsInMovementRange()){
                     this.moveToNextNode();
                 }
-                //if (this.enemyIsInAttackRange(this.closestEnemy)) {
+                //if (this.enemyIsInAttackRange(this.targetEnemy)) {
                 //    this._state = STATE_AT_ENEMY;
-                //} else if(this.enemyIsInMoveTowardsRange(this.closestEnemy)) {
+                //} else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
                 //    this._state = STATE_MOVE_TO_ENEMY;
                 //}
                 this.dir = ZERO_POINT;
@@ -226,12 +235,17 @@ package
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_MOVE_TO_ENEMY){
                 this.walk();
+                this.walkTarget = this.targetEnemy.footPos.add(this.targetEnemy.attackOffset);
                 this.disp = this.walkTarget.sub(this.footPos).normalized();
+                FlxG.log(this.disp.x + "x" + this.disp.y);
                 this.dir = this.disp.mulScl(this.runSpeed);
-                if (this.enemyIsInAttackRange(this.closestEnemy)) {
+                if (this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
-                    this.closestEnemy.activeTarget();
-                } else if (this.closestEnemy.pos.sub(this.footPos)._length() > 500) {
+                    this.targetEnemy.activeTarget();
+                } else if (this.targetEnemy.footPos.add(this.targetEnemy.attackOffset)
+                    .sub(this.footPos)._length() >
+                    (this.targetEnemy is BossEnemy ? this.bossSightRange : this.sightRange))
+                {
                     this.moveToNextNode();
                 }
             } else if (this._state == STATE_IN_ATTACK) {
@@ -267,14 +281,14 @@ package
         override public function resolveStatePostAttack():void {
             super.resolveStatePostAttack();
             // TODO - which state were you in before attacking? go back to that one
-            if (this.closestEnemy != null && !this.closestEnemy.dead && this.closestEnemy.visible == true)
+            if (this.targetEnemy != null && !this.targetEnemy.dead && this.targetEnemy.visible == true)
             {
-                if (this.enemyIsInAttackRange(this.closestEnemy))
+                if (this.enemyIsInAttackRange(this.targetEnemy))
                 {
                     this._state = STATE_AT_ENEMY;
-                    this.closestEnemy.activeTarget();
+                    this.targetEnemy.activeTarget();
                 } else {
-                    this.walkTarget = this.closestEnemy.pos.center(this.closestEnemy, true);
+                    this.walkTarget = this.targetEnemy.footPos.add(this.targetEnemy.attackOffset);
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
             } else {
@@ -357,7 +371,7 @@ package
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint, null, false);
             this.setPos(warpNode.pos);
             this._state = STATE_MOVE_TO_PLAYER;
-            this.closestEnemy.inactiveTarget();
+            this.targetEnemy.inactiveTarget();
         }
 
         public function shouldWarpToPlayer():Boolean {

@@ -156,6 +156,15 @@ package
             }
         }
 
+        public function die():void {
+            // don't destroy() or state.remove() here. doing so breaks z-sorting
+            this.dead = true;
+            this.visible = false;
+            this.ichi_target_sprite.alpha = 0;
+            this.cib_target_sprite.alpha = 0;
+            this.bar.alpha = 0;
+        }
+
         override public function update():void{
             super.update();
 
@@ -207,12 +216,7 @@ package
             }
 
             if(this.hitpoints < 0){
-                // don't destroy() or state.remove() here. doing so breaks z-sorting
-                this.dead = true;
-                this.visible = false;
-                this.ichi_target_sprite.alpha = 0;
-                this.cib_target_sprite.alpha = 0;
-                this.bar.alpha = 0;
+                this.die();
             } else {
                 if(fade_active) {
                     if(this.attacker != null) {
