@@ -66,7 +66,6 @@ package{
             SoundManager.getInstance().playSound(FernBGMIntro, 12631, _musicCallback, false, .1, GameSound.BGM);
 
             super.postCreate();
-            this.game_cursor.setGameMouse();
         }
 
         override public function update():void{

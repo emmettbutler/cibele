@@ -18,6 +18,15 @@ package
 
         override public function update():void{
             super.update();
+            if (this.playerDisp._length() > 208 ||
+                this.playerDisp._length() < 10)
+            {
+                this._state = STATE_IDLE;
+            } else {
+                this._state = STATE_TRACKING;
+            }
+            this.disp = this.player.footPos.sub(this.pos.add(new DHPoint(this.width, this.height/2)));
+            this.dir = this.disp.normalized().mulScl(2);
         }
     }
 }

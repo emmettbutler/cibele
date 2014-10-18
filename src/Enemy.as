@@ -19,8 +19,8 @@ package
         public var dead:Boolean = false;
 
         public var player:Player;
-        private var playerDisp:DHPoint;
-        private var disp:DHPoint;
+        public var playerDisp:DHPoint;
+        public var disp:DHPoint;
         private var followerDisp:DHPoint;
         private var attackerDisp:DHPoint;
         public var path_follower:PathFollower;
@@ -198,7 +198,7 @@ package
                 {
                     this._state = STATE_IDLE;
                 }
-                this.disp = this.player.pos.center(this.player).sub(this.footPos);
+                this.disp = this.player.footPos.sub(this.footPos);
                 this.dir = disp.normalized();
             } else if (this._state == STATE_RECOIL) {
                 if (this.attackerDisp._length() > 120) {
