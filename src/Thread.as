@@ -16,7 +16,7 @@ package{
 
         public var pos:DHPoint;
 
-        public var font_size:Number = 17, list_offset:Number = 30,
+        public var font_size:Number = 17, list_offset:Number = 40,
                    sent_count:Number = 0;
 
         public var font_color:uint = 0xff616161;
@@ -58,7 +58,7 @@ package{
             FlxG.state.add(truncated_textbox);
 
             this.list_hitbox = new FlxRect(this.truncated_textbox.x,
-                this.truncated_textbox.y, this.inbox_ref.width, 10);
+                this.truncated_textbox.y, 404, 40);
 
             for (var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].initVisibleObjects();
