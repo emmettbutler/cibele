@@ -8,6 +8,7 @@ package{
         public var startText:FlxText;
 
         override public function create():void {
+            super.create();
             FlxG.bgColor = 0xff000000;
 
             startText = new FlxText(100,100,500,"Cibele // This build ends after the first world.\n\nCLICK to move and interact with objects.\nMake sure your sound is on.\n\nSPACE to start.\n\n COMMAND + Q to Quit.");
