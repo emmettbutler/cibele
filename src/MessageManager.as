@@ -42,6 +42,7 @@ package{
         public var elements:Array;
 
         public var ui_loaded:Boolean = false;
+        public var minimizeFlag:Boolean = false;
 
         public function MessageManager() {
             this.elements = new Array();
@@ -286,6 +287,11 @@ package{
             var cur_thread:Thread;
             this.unread_count = 0;
 
+            if(this.minimizeFlag) {
+                this.minimizeWindow(this.img_inbox);
+                this.minimizeWindow(this.exit_ui);
+            }
+
             for(var i:int = 0; i < this.threads.length; i++) {
                 cur_thread = this.threads[i];
                 cur_thread.update();
@@ -320,11 +326,11 @@ package{
                             }
                         }
                     }
-                    if (this.mouse_rect.overlaps(this.exit_inbox_rect) ||
-                        this.mouse_rect.overlaps(this.notifications_box) || !this.mouse_rect.overlaps(new FlxRect(this.img_inbox.x, this.img_inbox.y, this.img_inbox.width, this.img_inbox.height)))
+                    if (!this.mouse_rect.overlaps(new FlxRect(this.img_inbox.x, this.img_inbox.y, this.img_inbox.width, this.img_inbox.height)))
                     {
+                        FlxG.log("exit");
                         this._state = STATE_HIDE_INBOX;
-                        this.exitInbox();
+                        this.exitInbox(true);
                         if (this.cur_viewing != null) {
                             this.cur_viewing.viewing = false;
                         }
@@ -333,14 +339,30 @@ package{
             }
         }
 
-        public function exitInbox():void {
+        public function exitInbox(minimize:Boolean=false):void {
             this._state = STATE_HIDE_INBOX;
-            this.exit_ui.visible = false;
+            if(!minimize) {
+                this.img_inbox.visible = false;
+                this.exit_ui.visible = false;
+            } else {
+                this.minimizeFlag = true;
+            }
             this.exit_msg.visible = false;
             this.reply_to_msg.visible = false;
-            this.img_inbox.visible = false;
             for(var i:int = 0; i < this.threads.length; i++) {
                 this.threads[i].hide();
+            }
+        }
+
+        public function minimizeWindow(obj:UIElement):void {
+            if(obj.scale.x > 0) {
+                obj.scale.x -= .1;
+                obj.scale.y -= .1;
+            } else {
+                obj.visible = false;
+                this.minimizeFlag = false;
+                obj.scale.x = 1;
+                obj.scale.y = 1;
             }
         }
 

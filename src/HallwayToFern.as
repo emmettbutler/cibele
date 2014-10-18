@@ -109,6 +109,15 @@ package{
             if (this.player.pos.y < ScreenManager.getInstance().screenHeight / 2) {
                 FlxG.switchState(new Fern());
             }
+
+            if(accept_call) {
+                if(call_button.scale.x > 0) {
+                    call_button.scale.x -= .2;
+                    call_button.scale.y -= .2;
+                } else {
+                    call_button.kill();
+                }
+            }
         }
 
         override public function postCreate():void {
@@ -126,7 +135,6 @@ package{
                                                worldPos:DHPoint):void {
             if (this._state == STATE_PRE_IT && !this.accept_call) {
                 accept_call = true;
-                call_button.kill();
 
                 function convo2Done():void {
                     if (!(FlxG.state is IkuTurso)) {
