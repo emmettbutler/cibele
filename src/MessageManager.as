@@ -84,7 +84,6 @@ package{
         }
 
         public function initNotifications(addToState:Boolean=false):void {
-            FlxG.log("Message UI loading...");
             var imgClass:Class;
             var imgSize:DHPoint;
 
@@ -203,8 +202,6 @@ package{
             if (addToState) {
                 FlxG.state.add(this.notifications_text);
             }
-
-            FlxG.log("Message UI loaded");
 
             this.ui_loaded = true;
         }

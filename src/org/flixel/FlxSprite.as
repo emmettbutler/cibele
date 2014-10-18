@@ -7,19 +7,19 @@ package org.flixel
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	
+
 	import org.flixel.system.FlxAnim;
-	
+
 	/**
 	 * The main "game object" class, the sprite is a <code>FlxObject</code>
 	 * with a bunch of graphics options and abilities, like animation and stamping.
-	 * 
+	 *
 	 * @author	Adam Atomic
 	 */
 	public class FlxSprite extends FlxObject
 	{
 		[Embed(source="data/default.png")] protected var ImgDefault:Class;
-		
+
 		/**
 		 * WARNING: The origin of the sprite will default to its center.
 		 * If you change this, the visuals and the collisions will likely be
@@ -31,7 +31,7 @@ package org.flixel
 		* you might need to offset the graphic away from the bound box to center it the way you want.
 		*/
 		public var offset:FlxPoint;
-		
+
 		/**
 		 * Change the size of your sprite's graphic.
 		 * NOTE: Scale doesn't currently affect collisions automatically,
@@ -77,7 +77,7 @@ package org.flixel
 		 * NOTE: Rarely if ever necessary, most sprite operations will flip this flag automatically.
 		 */
 		public var dirty:Boolean;
-		
+
 		/**
 		 * Internal, stores all the animations that were added to this sprite.
 		 */
@@ -129,7 +129,7 @@ package org.flixel
 		 * Internal, stores the entire source graphic (not the current displayed animation frame), used with Flash getter/setter.
 		 */
 		protected var _pixels:BitmapData;
-		
+
 		/**
 		 * Internal, reused frequently during drawing and animating.
 		 */
@@ -154,11 +154,11 @@ package org.flixel
 		 * Internal, helps with animation, caching and drawing.
 		 */
 		protected var _matrix:Matrix;
-		
+
 		/**
 		 * Creates a white 8x8 square <code>FlxSprite</code> at the specified position.
 		 * Optionally can load a simple, one-frame graphic instead.
-		 * 
+		 *
 		 * @param	X				The initial X position of the sprite.
 		 * @param	Y				The initial Y position of the sprite.
 		 * @param	SimpleGraphic	The graphic you want to display (OPTIONAL - for simple stuff only, do NOT use for animated images!).
@@ -166,7 +166,7 @@ package org.flixel
 		public function FlxSprite(X:Number=0,Y:Number=0,SimpleGraphic:Class=null)
 		{
 			super(X,Y);
-			
+
 			health = 1;
 
 			_flashPoint = new Point();
@@ -175,14 +175,14 @@ package org.flixel
 			_flashPointZero = new Point();
 			offset = new FlxPoint();
 			origin = new FlxPoint();
-			
+
 			scale = new FlxPoint(1.0,1.0);
 			_alpha = 1;
 			_color = 0x00ffffff;
 			blend = null;
 			antialiasing = false;
 			cameras = null;
-			
+
 			finished = false;
 			_facing = RIGHT;
 			_animations = new Array();
@@ -194,17 +194,18 @@ package org.flixel
 
 			_matrix = new Matrix();
 			_callback = null;
-			
+
 			if(SimpleGraphic == null)
 				SimpleGraphic = ImgDefault;
 			loadGraphic(SimpleGraphic);
 		}
-		
+
 		/**
 		 * Clean up memory.
 		 */
 		override public function destroy():void
 		{
+			FlxG.log("DETROYEDEDEDEDD");
 			if(_animations != null)
 			{
 				var a:FlxAnim;
@@ -218,7 +219,7 @@ package org.flixel
 				}
 				_animations = null;
 			}
-			
+
 			_flashPoint = null;
 			_flashRect = null;
 			_flashRect2 = null;
@@ -231,17 +232,17 @@ package org.flixel
 			_callback = null;
 			framePixels = null;
 		}
-		
+
 		/**
 		 * Load an image from an embedded graphic file.
-		 * 
+		 *
 		 * @param	Graphic		The image you want to use.
 		 * @param	Animated	Whether the Graphic parameter is a single sprite or a row of sprites.
 		 * @param	Reverse		Whether you need this class to generate horizontally flipped versions of the animation frames.
 		 * @param	Width		Optional, specify the width of your sprite (helps FlxSprite figure out what to do with non-square sprites or sprite sheets).
 		 * @param	Height		Optional, specify the height of your sprite (helps FlxSprite figure out what to do with non-square sprites or sprite sheets).
 		 * @param	Unique		Optional, whether the graphic should be a unique instance in the graphics cache.  Default is false.
-		 * 
+		 *
 		 * @return	This FlxSprite instance (nice for chaining stuff together, if you're into that).
 		 */
 		public function loadGraphic(Graphic:Class,Animated:Boolean=false,Reverse:Boolean=false,Width:uint=0,Height:uint=0,Unique:Boolean=false):FlxSprite
@@ -273,17 +274,17 @@ package org.flixel
 			resetHelpers();
 			return this;
 		}
-		
+
 		/**
 		 * Create a pre-rotated sprite sheet from a simple sprite.
 		 * This can make a huge difference in graphical performance!
-		 * 
+		 *
 		 * @param	Graphic			The image you want to rotate and stamp.
 		 * @param	Rotations		The number of rotation frames the final sprite should have.  For small sprites this can be quite a large number (360 even) without any problems.
 		 * @param	Frame			If the Graphic has a single row of square animation frames on it, you can specify which of the frames you want to use here.  Default is -1, or "use whole graphic."
 		 * @param	AntiAliasing	Whether to use high quality rotations when creating the graphic.  Default is false.
 		 * @param	AutoBuffer		Whether to automatically increase the image size to accomodate rotated corners.  Default is false.  Will create frames that are 150% larger on each axis than the original frame or graphic.
-		 * 
+		 *
 		 * @return	This FlxSprite instance (nice for chaining stuff together, if you're into that).
 		 */
 		public function loadRotatedGraphic(Graphic:Class, Rotations:uint=16, Frame:int=-1, AntiAliasing:Boolean=false, AutoBuffer:Boolean=false):FlxSprite
@@ -310,7 +311,7 @@ package org.flixel
 				_flashRect.height = brush.height;
 				brush.copyPixels(full,_flashRect,_flashPointZero);
 			}
-			
+
 			var max:uint = brush.width;
 			if(brush.height > max)
 				max = brush.height;
@@ -325,7 +326,7 @@ package org.flixel
 			width = frameWidth = _pixels.width;
 			height = frameHeight = _pixels.height;
 			_bakedRotation = 360/Rotations;
-			
+
 			//Generate a new sheet if necessary, then fix up the width and height
 			if(!skipGen)
 			{
@@ -363,16 +364,16 @@ package org.flixel
 			}
 			return this;
 		}
-		
+
 		/**
 		 * This function creates a flat colored square image dynamically.
-		 * 
+		 *
 		 * @param	Width		The width of the sprite you want to generate.
 		 * @param	Height		The height of the sprite you want to generate.
 		 * @param	Color		Specifies the color of the generated block.
 		 * @param	Unique		Whether the graphic should be a unique instance in the graphics cache.  Default is false.
 		 * @param	Key			Optional parameter - specify a string key to identify this graphic in the cache.  Trumps Unique flag.
-		 * 
+		 *
 		 * @return	This FlxSprite instance (nice for chaining stuff together, if you're into that).
 		 */
 		public function makeGraphic(Width:uint,Height:uint,Color:uint=0xffffffff,Unique:Boolean=false,Key:String=null):FlxSprite
@@ -384,7 +385,7 @@ package org.flixel
 			resetHelpers();
 			return this;
 		}
-		
+
 		/**
 		 * Resets some important variables for sprite optimization and rendering.
 		 */
@@ -406,7 +407,7 @@ package org.flixel
 			if(_colorTransform != null) framePixels.colorTransform(_flashRect,_colorTransform);
 			_curIndex = 0;
 		}
-		
+
 		/**
 		 * Automatically called after update() by the game loop,
 		 * this function just calls updateAnimation().
@@ -416,7 +417,7 @@ package org.flixel
 			super.postUpdate();
 			updateAnimation();
 		}
-		
+
 		/**
 		 * Called by game loop, updates then blits or renders current frame of animation to the screen
 		 */
@@ -428,10 +429,10 @@ package org.flixel
 				if(_flicker)
 					return;
 			}
-			
-			if(dirty)	//rarely 
+
+			if(dirty)	//rarely
 				calcFrame();
-			
+
 			if(cameras == null)
 				cameras = FlxG.cameras;
 			var camera:FlxCamera;
@@ -467,11 +468,11 @@ package org.flixel
 					drawDebug(camera);
 			}
 		}
-		
+
 		/**
 		 * This function draws or stamps one <code>FlxSprite</code> onto another.
 		 * This function is NOT intended to replace <code>draw()</code>!
-		 * 
+		 *
 		 * @param	Brush		The image you want to use as a brush or stamp or pen or whatever.
 		 * @param	X			The X coordinate of the brush's top left corner on this sprite.
 		 * @param	Y			They Y coordinate of the brush's top left corner on this sprite.
@@ -480,7 +481,7 @@ package org.flixel
 		{
 			Brush.drawFrame();
 			var bitmapData:BitmapData = Brush.framePixels;
-			
+
 			//Simple draw
 			if(((Brush.angle == 0) || (Brush._bakedRotation > 0)) && (Brush.scale.x == 1) && (Brush.scale.y == 1) && (Brush.blend == null))
 			{
@@ -494,7 +495,7 @@ package org.flixel
 				calcFrame();
 				return;
 			}
-			
+
 			//Advanced draw
 			_matrix.identity();
 			_matrix.translate(-Brush.origin.x,-Brush.origin.y);
@@ -505,11 +506,11 @@ package org.flixel
 			_pixels.draw(bitmapData,_matrix,null,Brush.blend,null,Brush.antialiasing);
 			calcFrame();
 		}
-		
+
 		/**
 		 * This function draws a line on this sprite from position X1,Y1
 		 * to position X2,Y2 with the specified color.
-		 * 
+		 *
 		 * @param	StartX		X coordinate of the line's start point.
 		 * @param	StartY		Y coordinate of the line's start point.
 		 * @param	EndX		X coordinate of the line's end point.
@@ -528,15 +529,15 @@ package org.flixel
 				alphaComponent = 1;
 			gfx.lineStyle(Thickness,Color,alphaComponent);
 			gfx.lineTo(EndX,EndY);
-			
+
 			//Cache line to bitmap
 			_pixels.draw(FlxG.flashGfxSprite);
 			dirty = true;
 		}
-		
+
 		/**
 		 * Fills this sprite's graphic with a specific color.
-		 * 
+		 *
 		 * @param	Color		The color with which to fill the graphic, format 0xAARRGGBB.
 		 */
 		public function fill(Color:uint):void
@@ -545,7 +546,7 @@ package org.flixel
 			if(_pixels != framePixels)
 				dirty = true;
 		}
-		
+
 		/**
 		 * Internal function for updating the sprite's animation.
 		 * Useful for cases when you need to update this but are buried down in too many supers.
@@ -581,15 +582,15 @@ package org.flixel
 					dirty = true;
 				}
 			}
-			
+
 			if(dirty)
 				calcFrame();
 		}
-		
+
 		/**
 		 * Request (or force) that the sprite update the frame before rendering.
 		 * Useful if you are doing procedural generation or other weirdness!
-		 * 
+		 *
 		 * @param	Force	Force the frame to redraw, even if its not flagged as necessary.
 		 */
 		public function drawFrame(Force:Boolean=false):void
@@ -597,10 +598,10 @@ package org.flixel
 			if(Force || dirty)
 				calcFrame();
 		}
-		
+
 		/**
 		 * Adds a new animation to the sprite.
-		 * 
+		 *
 		 * @param	Name		What this animation should be called (e.g. "run").
 		 * @param	Frames		An array of numbers indicating what frames to play in what order (e.g. 1, 2, 3).
 		 * @param	FrameRate	The speed in frames per second that the animation should play at (e.g. 40 fps).
@@ -610,21 +611,21 @@ package org.flixel
 		{
 			_animations.push(new FlxAnim(Name,Frames,FrameRate,Looped));
 		}
-		
+
 		/**
 		 * Pass in a function to be called whenever this sprite's animation changes.
-		 * 
+		 *
 		 * @param	AnimationCallback		A function that has 3 parameters: a string name, a uint frame number, and a uint frame index.
 		 */
 		public function addAnimationCallback(AnimationCallback:Function):void
 		{
 			_callback = AnimationCallback;
 		}
-		
+
 		/**
 		 * Plays an existing animation (e.g. "run").
 		 * If you call an animation that is already playing it will be ignored.
-		 * 
+		 *
 		 * @param	AnimName	The string name of the animation you want to play.
 		 * @param	Force		Whether to force the animation to restart.
 		 */
@@ -653,7 +654,7 @@ package org.flixel
 			}
 			FlxG.log("WARNING: No animation called \""+AnimName+"\"");
 		}
-		
+
 		/**
 		 * Tell the sprite to change to a random frame of animation
 		 * Useful for instantiating particles or other weird things.
@@ -664,7 +665,7 @@ package org.flixel
 			_curIndex = int(FlxG.random()*(_pixels.width/frameWidth));
 			dirty = true;
 		}
-		
+
 		/**
 		 * Helper function that just sets origin to (0,0)
 		 */
@@ -672,10 +673,10 @@ package org.flixel
 		{
 			origin.x = origin.y = 0;
 		}
-		
+
 		/**
 		 * Helper function that adjusts the offset automatically to center the bounding box within the graphic.
-		 * 
+		 *
 		 * @param	AdjustPosition		Adjusts the actual X and Y position just once to match the offset change. Default is false.
 		 */
 		public function centerOffsets(AdjustPosition:Boolean=false):void
@@ -688,13 +689,13 @@ package org.flixel
 				y += offset.y;
 			}
 		}
-		
+
 		public function replaceColor(Color:uint,NewColor:uint,FetchPositions:Boolean=false):Array
 		{
 			var positions:Array = null;
 			if(FetchPositions)
 				positions = new Array();
-			
+
 			var row:uint = 0;
 			var column:uint;
 			var rows:uint = _pixels.height;
@@ -715,10 +716,10 @@ package org.flixel
 				}
 				row++;
 			}
-			
+
 			return positions;
 		}
-		
+
 		/**
 		 * Set <code>pixels</code> to any <code>BitmapData</code> object.
 		 * Automatically adjust graphic size and render helpers.
@@ -727,7 +728,7 @@ package org.flixel
 		{
 			return _pixels;
 		}
-		
+
 		/**
 		 * @private
 		 */
@@ -738,7 +739,7 @@ package org.flixel
 			height = frameHeight = _pixels.height;
 			resetHelpers();
 		}
-		
+
 		/**
 		 * Set <code>facing</code> using <code>FlxSprite.LEFT</code>,<code>RIGHT</code>,
 		 * <code>UP</code>, and <code>DOWN</code> to take advantage of
@@ -748,7 +749,7 @@ package org.flixel
 		{
 			return _facing;
 		}
-		
+
 		/**
 		 * @private
 		 */
@@ -758,7 +759,7 @@ package org.flixel
 				dirty = true;
 			_facing = Direction;
 		}
-		
+
 		/**
 		 * Set <code>alpha</code> to a number between 0 and 1 to change the opacity of the sprite.
 		 */
@@ -766,7 +767,7 @@ package org.flixel
 		{
 			return _alpha;
 		}
-		
+
 		/**
 		 * @private
 		 */
@@ -785,7 +786,7 @@ package org.flixel
 				_colorTransform = null;
 			dirty = true;
 		}
-		
+
 		/**
 		 * Set <code>color</code> to a number in this format: 0xRRGGBB.
 		 * <code>color</code> IGNORES ALPHA.  To change the opacity use <code>alpha</code>.
@@ -795,7 +796,7 @@ package org.flixel
 		{
 			return _color;
 		}
-		
+
 		/**
 		 * @private
 		 */
@@ -811,17 +812,17 @@ package org.flixel
 				_colorTransform = null;
 			dirty = true;
 		}
-		
+
 		/**
 		 * Tell the sprite to change to a specific frame of animation.
-		 * 
+		 *
 		 * @param	Frame	The frame you want to display.
 		 */
 		public function get frame():uint
 		{
 			return _curIndex;
 		}
-		
+
 		/**
 		 * @private
 		 */
@@ -831,15 +832,15 @@ package org.flixel
 			_curIndex = Frame;
 			dirty = true;
 		}
-		
+
 		/**
 		 * Check and see if this object is currently on screen.
 		 * Differs from <code>FlxObject</code>'s implementation
 		 * in that it takes the actual graphic into account,
 		 * not just the hitbox or bounding box or whatever.
-		 * 
+		 *
 		 * @param	Camera		Specify which game camera you want.  If null getScreenXY() will just grab the first global camera.
-		 * 
+		 *
 		 * @return	Whether the object is on screen or not.
 		 */
 		override public function onScreen(Camera:FlxCamera=null):Boolean
@@ -852,7 +853,7 @@ package org.flixel
 
 			if(((angle == 0) || (_bakedRotation > 0)) && (scale.x == 1) && (scale.y == 1))
 				return ((_point.x + frameWidth > 0) && (_point.x < Camera.width) && (_point.y + frameHeight > 0) && (_point.y < Camera.height));
-			
+
 			var halfWidth:Number = frameWidth/2;
 			var halfHeight:Number = frameHeight/2;
 			var absScaleX:Number = (scale.x>0)?scale.x:-scale.x;
@@ -862,15 +863,15 @@ package org.flixel
 			_point.y += halfHeight;
 			return ((_point.x + radius > 0) && (_point.x - radius < Camera.width) && (_point.y + radius > 0) && (_point.y - radius < Camera.height));
 		}
-		
+
 		/**
 		 * Checks to see if a point in 2D world space overlaps this <code>FlxSprite</code> object's current displayed pixels.
 		 * This check is ALWAYS made in screen space, and always takes scroll factors into account.
-		 * 
+		 *
 		 * @param	Point		The point in world space you want to check.
 		 * @param	Mask		Used in the pixel hit test to determine what counts as solid.
 		 * @param	Camera		Specify which game camera you want.  If null getScreenXY() will just grab the first global camera.
-		 * 
+		 *
 		 * @return	Whether or not the point overlaps this object.
 		 */
 		public function pixelsOverlapPoint(Point:FlxPoint,Mask:uint=0xFF,Camera:FlxCamera=null):Boolean
@@ -884,7 +885,7 @@ package org.flixel
 			_flashPoint.y = (Point.y - Camera.scroll.y) - _point.y;
 			return framePixels.hitTest(_flashPointZero,Mask,_flashPoint);
 		}
-		
+
 		/**
 		 * Internal function to update the current animation frame.
 		 */
@@ -900,11 +901,11 @@ package org.flixel
 				indexY = uint(indexX/widthHelper)*frameHeight;
 				indexX %= widthHelper;
 			}
-			
+
 			//handle reversed sprites
 			if(_flipped && (_facing == LEFT))
 				indexX = (_flipped<<1)-indexX-frameWidth;
-			
+
 			//Update display bitmap
 			_flashRect.x = indexX;
 			_flashRect.y = indexY;

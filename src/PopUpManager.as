@@ -290,8 +290,6 @@ package{
                 this.elements.push(this.popups[key]);
                 FlxG.state.add(this.popups[key]);
             }
-
-            FlxG.log("Popup UI loaded");
         }
 
         public function emote(mouseScreenRect:FlxRect):void {
