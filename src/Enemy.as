@@ -175,14 +175,16 @@ package
             if (this.path_follower == null) {
                 this.followerDisp = new DHPoint(0, 0);
             } else {
-                this.followerDisp = this.path_follower.pos.center(this.path_follower).sub(this.footPos);
+                this.followerDisp = this.path_follower.footPos.sub(this.footPos);
             }
 
             if(this.attacker != null){
-                this.attackerDisp = this.attacker.pos.center(this.attacker).sub(this.footPos);
+                if (this.attacker == this.player) {
+                    this.attackerDisp = this.playerDisp;
+                } else if (this.attacker == this.path_follower) {
+                    this.attackerDisp = this.followerDisp;
+                }
             }
-
-            var str:String = stateMap[this._state] + "\n" + hitpoints;
 
             if (this._state == STATE_IDLE) {
                 if (this.playerDisp._length() < 308 &&
