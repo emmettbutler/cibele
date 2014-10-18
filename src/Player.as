@@ -110,12 +110,15 @@ package{
                         cur is UIElement && cur.visible)
                     {
                         ui_clicked = true;
-                    } else if (mouseWorldRect.overlaps(worldRect) &&
-                        cur is Enemy)
-                    {
-                        this.targetEnemy = cur as Enemy;
-                        if(this.targetEnemy.dead) {
-                            this.targetEnemy = null;
+                    } else if (cur is Enemy) {
+                        if (mouseWorldRect.overlaps(worldRect)) {
+                            this.targetEnemy = cur as Enemy;
+                            this.targetEnemy.activeTarget();
+                            if(this.targetEnemy.dead) {
+                                this.targetEnemy = null;
+                            }
+                        } else {
+                            (cur as Enemy).inactiveTarget();
                         }
                     }
                 }
@@ -273,14 +276,6 @@ package{
                 }
             } else if (this._state == STATE_IDLE) {
                 this.setIdleAnim();
-            }
-
-            if(this.targetEnemy != null) {
-                if (this._state == STATE_IN_ATTACK  || this._state == STATE_AT_ENEMY || this._state == STATE_MOVE_TO_ENEMY) {
-                    this.targetEnemy.activeTarget();
-                } else {
-                    this.targetEnemy.inactiveTarget();
-                }
             }
 
             if (this.colliding) {
