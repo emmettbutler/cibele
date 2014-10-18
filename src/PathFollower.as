@@ -242,7 +242,7 @@ package
                 if (this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
                     this.targetEnemy.activeTarget();
-                } else if (this.targetEnemy.getAttackPos())
+                } else if (this.targetEnemy.getAttackPos()
                     .sub(this.footPos)._length() >
                     (this.targetEnemy is BossEnemy ? this.bossSightRange : this.sightRange))
                 {
