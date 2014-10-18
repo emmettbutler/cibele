@@ -15,13 +15,16 @@ package {
         public var applet_dimensions:FlxPoint, letterbox_dimensions:FlxPoint, zero_point:FlxPoint;
 
         // global debug flag
-        public static const DEBUG:Boolean = false;
+        public var DEBUG:Boolean = false;
 
         public var letterbox1:FlxSprite = null, letterbox2:FlxSprite = null, letterbox3:FlxSprite = null, letterbox4:FlxSprite = null;
 
         public static var _instance:ScreenManager = null;
 
         public function ScreenManager() {
+            CONFIG::debug {
+                this.DEBUG = true;
+            }
 
             FlxG.stage.frameRate = 60;
             //this needs to be set in order to scale using gpu instead of in the software

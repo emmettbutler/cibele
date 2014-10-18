@@ -188,7 +188,7 @@ package {
             }
             return FlxCollision.pixelPerfectCheck(playerRef.mapHitbox,
                                                   colliderTile, 255, null, 6, 4,
-                                                  ScreenManager.DEBUG);
+                                                  ScreenManager.getInstance().DEBUG);
         }
 
         public function update():void {
@@ -235,7 +235,7 @@ package {
                 col = adjacentCoords[i][1];
                 // load background tiles
                 if (!this.tileHasLoaded(row, col)) {
-                    if (!ScreenManager.DEBUG) {
+                    if (!ScreenManager.getInstance().DEBUG) {
                         this.loadTile(row, col, null, null, this.macroImageName);
                     }
                 }

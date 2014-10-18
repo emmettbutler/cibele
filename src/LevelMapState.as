@@ -30,7 +30,8 @@ package {
 
             this.bgLoader = new BackgroundLoader("full-map-iggo-turso", 10, 5,
                 "paths",
-                ScreenManager.DEBUG || this.editorMode == PathEditorState.MODE_EDIT);
+                ScreenManager.getInstance().DEBUG ||
+                    this.editorMode == PathEditorState.MODE_EDIT);
             this.bgLoader.setPlayerReference(player);
 
             ScreenManager.getInstance().setupCamera(player.cameraPos);

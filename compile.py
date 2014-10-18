@@ -53,13 +53,26 @@ package
     return preloader_class
 
 
-def compile_main(entry_point_class, libpath):
+def compile_main(entry_point_class, libpath, debug_level):
+    stacktraces = "true"
+    omit_trace = "false"
+    debug = "true"
+    debug_flag = "true"
+    if debug_level == "test":
+        debug_flag = "false"
+    elif debug_level == "release":
+        debug_flag = "false"
+        omit_trace = "true"
+        stacktraces = "false"
+        debug = "false"
     command = ["mxmlc", "src/{entry_point_class}.as".format(entry_point_class=entry_point_class), "-o",
                "src/{entry_point_class}.swf".format(entry_point_class=entry_point_class),
-               "-use-network=false", "-verbose-stacktraces=true",
+               "-use-network=false", "-verbose-stacktraces={}".format(stacktraces),
                "-compiler.include-libraries", libpath,
                "-static-link-runtime-shared-libraries",
-               "-debug=true", "-omit-trace-statements=false"]
+               "-debug={}".format(debug),
+               "-omit-trace-statements={}".format(omit_trace),
+               "-define=CONFIG::debug,{}".format(debug_flag)]
     print " ".join(command)
     subprocess.check_call(command)
     return "src/{entry_point_class}.swf".format(entry_point_class=entry_point_class)
@@ -121,7 +134,7 @@ def main():
         run_main(get_conf_path(entry_point_class))
     else:
         preloader_class = write_preloader()
-        swf_path = compile_main(entry_point_class, libpath)
+        swf_path = compile_main(entry_point_class, libpath, args.debug_level[0])
         conf_path = write_conf_file(swf_path, entry_point_class, args.mainclass[0])
 
         if args.package:
@@ -141,6 +154,9 @@ if __name__ == "__main__":
     parser.add_argument('--config', '-c', metavar="CONFIG", type=str,
                         default="settings.ini", nargs=1,
                         help="The config file to use")
+    parser.add_argument('--debug_level', '-d', metavar="DBGLEVEL", type=str,
+                        default=["test"], nargs=1,
+                        help="Debug level to compile under. One of [debug|test|release]")
     parser.add_argument('--package', '-p', action="store_true",
                         help="Build an Adobe AIR application")
     parser.add_argument('--copy_path', '-a', action="store_true",
