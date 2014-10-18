@@ -46,6 +46,8 @@ package{
             this.elements = new Array();
             this.bornTime = new Date().valueOf();
             this.initNotifications();
+            // forgive me
+            this.notifications_text._textField = null
 
             this.threads = new Array(
                 new Thread(this.img_inbox,
@@ -81,7 +83,8 @@ package{
             }
         }
 
-        public function initNotifications():void {
+        public function initNotifications(addToState:Boolean=false):void {
+            FlxG.log("Message UI loading...");
             var imgClass:Class;
             var imgSize:DHPoint;
 
@@ -100,17 +103,10 @@ package{
             img_msg.addAnimation("new", [0], 1, false);
             img_msg.addAnimation("open", [1], 1, false);
             img_msg.addAnimation("closed", [2], 1, false);
-            FlxG.state.add(img_msg);
+            if (addToState) {
+                FlxG.state.add(img_msg);
+            }
             this.elements.push(img_msg);
-
-            this.notifications_text = new FlxText(
-                notifications_pos.x - 30, notifications_pos.y - 17,
-                img_msg.width, this.unread_count.toString()
-            );
-            this.notifications_text.setFormat("NexaBold-Regular",24,0xff000000,"left");
-            this.notifications_text.scrollFactor = new FlxPoint(0, 0);
-            this.notifications_text.active = false;
-            FlxG.state.add(this.notifications_text);
 
             this.notifications_box = new FlxRect(this.img_msg.x,
                                                  this.img_msg.y,
@@ -132,7 +128,9 @@ package{
             this.img_inbox.loadGraphic(imgClass, false, false, imgSize.x, imgSize.y);
             this.img_inbox.scrollFactor = new FlxPoint(0, 0);
             this.img_inbox.active = false;
-            FlxG.state.add(this.img_inbox);
+            if (addToState) {
+                FlxG.state.add(this.img_inbox);
+            }
             this.elements.push(this.img_inbox);
 
             imgClass = ImgInboxX;
@@ -149,7 +147,9 @@ package{
             this.elements.push(this.exit_ui);
             this.exit_ui.scrollFactor = new FlxPoint(0, 0);
             this.exit_ui.visible = false;
-            FlxG.state.add(this.exit_ui);
+            if (addToState){
+                FlxG.state.add(this.exit_ui);
+            }
 
             this.exit_inbox_rect = new FlxRect(this.exit_ui.x,
                                                this.exit_ui.y,
@@ -167,7 +167,9 @@ package{
             this.exit_msg.scrollFactor = new FlxPoint(0, 0);
             this.exit_msg.visible = false;
             this.exit_msg.active = false;
-            FlxG.state.add(this.exit_msg);
+            if (addToState) {
+                FlxG.state.add(this.exit_msg);
+            }
 
             this.exit_box = new FlxRect(this.exit_msg.x, this.exit_msg.y, 50, 50);
 
@@ -178,7 +180,9 @@ package{
             this.reply_to_msg.scrollFactor = new FlxPoint(0, 0);
             this.reply_to_msg.visible = false;
             this.reply_to_msg.active = false;
-            FlxG.state.add(this.reply_to_msg);
+            if (addToState) {
+                FlxG.state.add(this.reply_to_msg);
+            }
 
             this.reply_box = new FlxRect(this.reply_to_msg.x, this.reply_to_msg.y,
                                          50, 50);
@@ -188,7 +192,19 @@ package{
             this.debugText.scrollFactor = new FlxPoint(0, 0);
             this.debugText.color = 0xff0000ff;
             this.debugText.active = false;
-            FlxG.state.add(this.debugText);
+            if (addToState) {
+                FlxG.state.add(this.debugText);
+            }
+
+            this.notifications_text = new FlxText(img_msg.x-28, img_msg.y-20, img_msg.width, this.unread_count.toString());
+            this.notifications_text.setFormat("NexaBold-Regular",24,0xff000000,"left");
+            this.notifications_text.scrollFactor = new FlxPoint(0, 0);
+            this.notifications_text.active = false;
+            if (addToState) {
+                FlxG.state.add(this.notifications_text);
+            }
+
+            FlxG.log("Message UI loaded");
 
             this.ui_loaded = true;
         }
@@ -201,7 +217,7 @@ package{
 
         public function reloadPersistentObjects():void {
             this.ui_loaded = false;
-            this.initNotifications();
+            this.initNotifications(true);
             this.loadVisibleMessageObjects();
             for(var i:int = 1; i < this.threads.length; i++){
                 this.threads[i].setListPos(this.threads[i - 1].pos);
@@ -219,11 +235,9 @@ package{
             this.notifications_text.text = this.unread_count.toString();
             if(this.unread_count > 0) {
                 this.img_msg.alertOn();
-                this.notifications_text.color = 0xff982708;
                 this.img_msg.play("new");
             } else {
                 this.img_msg.alertOff();
-                this.notifications_text.color = 0xff000000;
                 this.img_msg.play("closed");
             }
         }
