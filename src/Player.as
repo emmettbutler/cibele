@@ -23,6 +23,7 @@ package{
         public var inhibitY:Boolean = false, inhibitX:Boolean = false;
         public var click_anim:GameObject;
         public var targetEnemy:Enemy;
+        public var _mapnodes:MapNodeContainer;
         public var attack_sprite:GameObject;
         public var shadow_sprite:GameObject;
         public var enemy_dir:DHPoint;
@@ -80,6 +81,10 @@ package{
             this.walkTarget = new DHPoint(0, 0);
 
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
+        }
+
+        public function setMapNodes(nodes:MapNodeContainer):void {
+            this._mapnodes = nodes;
         }
 
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint,
@@ -280,22 +285,30 @@ package{
 
             if (this.colliding) {
                 if (this.collisionDirection != null) {
-                    if (this.dir.x > 0 && this.collisionDirection[1] == 1) {
-                        // right
-                        this.dir.x = 0;
-                    } else if (this.dir.x < 0 && this.collisionDirection[0] == 1) {
-                        // left
-                        this.dir.x = 0;
+                    if (this.collisionDirection[0] == 1 &&
+                        this.collisionDirection[1] == 1 &&
+                        this.collisionDirection[2] == 1 &&
+                        this.collisionDirection[3] == 1 && this._mapnodes != null)
+                    {
+                        // stuck!
+                        this._state = STATE_WALK;
+                        this.walkTarget = this._mapnodes.getClosestNode(this.pos).pos;
+                    } else {
+                        if (this.dir.x > 0 && this.collisionDirection[1] == 1) {
+                            // right
+                            this.dir.x = 0;
+                        } else if (this.dir.x < 0 && this.collisionDirection[0] == 1) {
+                            // left
+                            this.dir.x = 0;
+                        }
+                        if (this.dir.y > 0 && this.collisionDirection[3] == 1) {
+                            // down
+                            this.dir.y = 0;
+                        } else if (this.dir.y < 0 && this.collisionDirection[2] == 1) {
+                            // up
+                            this.dir.y = 0;
+                        }
                     }
-                    if (this.dir.y > 0 && this.collisionDirection[3] == 1) {
-                        // down
-                        this.dir.y = 0;
-                    } else if (this.dir.y < 0 && this.collisionDirection[2] == 1) {
-                        // up
-                        this.dir.y = 0;
-                    }
-                } else {
-                    //this.dir = this.lastPos.sub(this.pos).mulScl(1.1);
                 }
             }
 

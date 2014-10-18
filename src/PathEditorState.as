@@ -57,7 +57,8 @@ package {
             pathWalker.setPlayerReference(player);
 
             _mapnodes = new MapNodeContainer(_path, player);
-            pathWalker.setMapNodes(_mapnodes);
+            this.pathWalker.setMapNodes(this._mapnodes);
+            this.player.setMapNodes(this._mapnodes);
 
             this.enemies = new EnemyGroup(player, pathWalker);
             pathWalker.setEnemyGroupReference(this.enemies);

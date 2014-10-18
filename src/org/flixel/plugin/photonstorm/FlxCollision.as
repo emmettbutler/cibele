@@ -24,6 +24,7 @@ package org.flixel.plugin.photonstorm
     import flash.geom.Point;
     import flash.geom.Rectangle;
     import flash.display.BlendMode;
+    import flash.utils.setTimeout;
 
     import org.flixel.*;
 
@@ -115,6 +116,9 @@ package org.flixel.plugin.photonstorm
             var bmp:Bitmap = new Bitmap(overlapArea, PixelSnapping.NEVER, true);
             spr.loadExtGraphic(bmp, false, false, bmp.width, bmp.height, true);
             FlxG.state.add(spr);
+            setTimeout(function():void {
+                FlxG.state.remove(spr);
+            }, 500);
             */
 
             var overlap:Rectangle = overlapArea.getColorBoundsRect(0xffffffff, 0xff00ffff);
