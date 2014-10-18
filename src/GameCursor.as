@@ -3,7 +3,7 @@ package
     import org.flixel.*;
 
     public class GameCursor extends GameObject {
-        [Embed(source="../assets/attack_cursor.png")] private var ImgEnemy:Class;
+        [Embed(source="../assets/attack_cursor_small.png")] private var ImgEnemy:Class;
         [Embed(source="../assets/gamemouse.png")] private var ImgGameCursor:Class;
         [Embed(source="../assets/computermouse.png")] private var ImgPCCursor:Class;
         public var mouse_rect:FlxRect;
