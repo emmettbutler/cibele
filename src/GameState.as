@@ -4,6 +4,10 @@ package {
     import flash.events.Event;
 
     public class GameState extends FlxState {
+        [Embed(source="../assets/sfx_mouseclick.mp3")] private var SfxClick:Class;
+        [Embed(source="../assets/sfx_mouseclick2.mp3")] private var SfxClick2:Class;
+        //[Embed(source="../assets/sfx_uigeneral.mp3")] private var SfxUI:Class;
+
         protected var updateSound:Boolean, updatePopup:Boolean,
                       updateMessages:Boolean, showEmoji:Boolean = true;
         protected var game_cursor:GameCursor;
@@ -138,6 +142,7 @@ package {
             this.updateCursor();
 
             if(FlxG.mouse.justPressed()) {
+                this.playClick();
                 this.clickCallback(
                     new DHPoint(FlxG.mouse.screenX, FlxG.mouse.screenY),
                     new DHPoint(FlxG.mouse.x, FlxG.mouse.y)
@@ -150,6 +155,21 @@ package {
                 SoundManager.getInstance().decreaseVolume();
             } else if (FlxG.keys.justPressed("S")) {
                 this.pause();
+            }
+        }
+
+        public function playClick():void {
+            var rand:Number = Math.random() * 2;
+            if(rand > 1) {
+                SoundManager.getInstance().playSound(
+                    SfxClick, 1*GameSound.MSEC_PER_SEC, null, false, .3, GameSound.SFX,
+                    "click"
+                );
+            } else {
+                SoundManager.getInstance().playSound(
+                    SfxClick2, 1*GameSound.MSEC_PER_SEC, null, false, .3, GameSound.SFX,
+                    "click2"
+                );
             }
         }
 

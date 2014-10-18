@@ -4,6 +4,7 @@ package{
     public class Desktop extends GameState {
         [Embed(source="../assets/selfiedesktop.png")] private var ImgSelfies:Class;
         [Embed(source="../assets/untitledfolder.png")] private var ImgFolder:Class;
+
         public var timeFrame:Number = 0;
         public var timer:Number = 0;
         public var debugText:FlxText;

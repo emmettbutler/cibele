@@ -8,6 +8,7 @@ package{
         [Embed(source="../assets/charselect.png")] private var ImgChar:Class;
         [Embed(source="../assets/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
         [Embed(source="../assets/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
+
         public var timeFrame:Number = 0;
         public var timer:Number = 0;
         public var debugText:FlxText;

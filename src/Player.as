@@ -7,9 +7,6 @@ package{
         [Embed(source="../assets/testattack.png")] private var ImgAttack:Class;
         [Embed(source="../assets/cib_shadow.png")] private var ImgShadow:Class;
         [Embed(source="../assets/cib_shadow_blue.png")] private var ImgShadowBlue:Class;
-        [Embed(source="../assets/sfx_mouseclick.mp3")] private var SfxClick:Class;
-        [Embed(source="../assets/sfx_mouseclick2.mp3")] private var SfxClick2:Class;
-        //[Embed(source="../assets/sfx_uigeneral.mp3")] private var SfxUI:Class;
 
         private var walkDistance:Number = 0;
         private var walkTarget:DHPoint;
@@ -114,10 +111,7 @@ package{
                         cur is UIElement && cur.visible)
                     {
                         ui_clicked = true;
-                        SoundManager.getInstance().playSound(
-                            SfxClick, 1*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.SFX,
-                            "click"
-                        );
+
                     } else if (cur is Enemy) {
                         if (mouseWorldRect.overlaps(worldRect)) {
                             this.targetEnemy = cur as Enemy;
