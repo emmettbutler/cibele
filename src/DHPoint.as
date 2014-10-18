@@ -44,6 +44,22 @@ package
             return new DHPoint(this.x * -1, this.y * -1);
         }
 
+        public function dot(other:DHPoint):Number {
+            return other.x * this.x + other.y * this.y;
+        }
+
+        public function reflectY():DHPoint {
+            return this.reflect(new DHPoint(0, 1));
+        }
+
+        public function reflectX():DHPoint {
+            return this.reflect(new DHPoint(1, 0));
+        }
+
+        public function reflect(axis:DHPoint):DHPoint {
+            return axis.mulScl(this.dot(axis)).mulScl(2).sub(this);
+        }
+
         public function eq(other:DHPoint):Boolean {
             return this.x == other.x && this.y == other.y;
         }
