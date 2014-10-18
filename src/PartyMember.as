@@ -78,7 +78,8 @@ package {
 
         public function enemyIsInAttackRange(en:Enemy):Boolean {
             if (en == null) { return false; }
-            return en.pos.center(en, true).sub(this.pos.center(this, true))._length() < this.attackRange;
+            var disp:Number = en.pos.center(en, true).sub(this.footPos)._length();
+            return disp < this.attackRange;
         }
 
         public function enemyIsInMoveTowardsRange(en:Enemy):Boolean{
