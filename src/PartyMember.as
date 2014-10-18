@@ -79,9 +79,6 @@ package {
         public function enemyIsInAttackRange(en:Enemy):Boolean {
             if (en == null) { return false; }
             var disp:Number = en.pos.center(en, true).sub(this.footPos)._length();
-            if (this.attackRange == 50) {
-                FlxG.log("disp: " + disp + "\nrange: " + this.attackRange + "\n" + new Date().valueOf());
-            }
             return disp < this.attackRange;
         }
 
