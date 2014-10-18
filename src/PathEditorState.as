@@ -80,6 +80,10 @@ package {
 
             this.pathWalker.addVisibleObjects();
 
+            for (var i:int = 0; i < this.enemies.length(); i++) {
+                FlxG.state.add(this.enemies.get_(i).bar);
+            }
+
             super.postCreate();
 
             add(pathWalker.debugText);
