@@ -102,6 +102,8 @@ package
             this._state = STATE_RECOIL;
             this.hitpoints -= damage;
             this.bar.scale.x = this.hitpoints;
+            this.disp = this.attacker.footPos.sub(this.footPos);
+            this.dir = this.disp.normalized().mulScl(5).reflectX();
         }
 
         public function setIdle():void {
@@ -168,7 +170,7 @@ package
             if (this.player == null) {
                 this.playerDisp = new DHPoint(0, 0);
             } else {
-                this.playerDisp = this.player.pos.center(this.player).sub(this.footPos);
+                this.playerDisp = this.player.footPos.sub(this.footPos);
             }
             if (this.path_follower == null) {
                 this.followerDisp = new DHPoint(0, 0);
@@ -197,12 +199,9 @@ package
                 this.disp = this.player.pos.center(this.player).sub(this.footPos);
                 this.dir = disp.normalized();
             } else if (this._state == STATE_RECOIL) {
-                if (this.attackerDisp._length() > 120)
-                {
+                if (this.attackerDisp._length() > 120) {
                     this._state = STATE_TRACKING;
                 }
-                this.disp = this.attacker.pos.center(this.attacker).sub(this.footPos);
-                this.dir = disp.normalized().mulScl(7).reverse();
             }
 
             if(this.hitpoints < 0){

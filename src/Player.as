@@ -1,6 +1,8 @@
 package{
     import org.flixel.*;
 
+    import flash.utils.Dictionary;
+
     public class Player extends PartyMember {
         [Embed(source="../assets/c_walk.png")] private var ImgCibWalk:Class;
         [Embed(source="../assets/click_anim.png")] private var ImgWalkTo:Class;
@@ -32,6 +34,17 @@ package{
 
         public static const STATE_WALK:Number = 2398476188;
         public static const STATE_WALK_HARD:Number = 23981333333;
+
+        {
+            public static var stateMap:Dictionary = new Dictionary();
+            stateMap[STATE_NULL] = "STATE_NULL";
+            stateMap[STATE_AT_ENEMY] = "STATE_AT_ENEMY";
+            stateMap[STATE_IN_ATTACK] = "STATE_IN_ATTACK";
+            stateMap[STATE_MOVE_TO_ENEMY] = "STATE_MOVE_TO_ENEMY";
+            stateMap[STATE_WALK] = "STATE_WALK";
+            stateMap[STATE_WALK_HARD] = "STATE_WALK_HARD";
+        }
+
 
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
@@ -328,7 +341,9 @@ package{
 
         override public function resolveStatePostAttack():void {
             super.resolveStatePostAttack();
-            if (this.targetEnemy != null && !this.targetEnemy.dead && this.targetEnemy.visible == true){
+            if (this.targetEnemy != null && !this.targetEnemy.dead &&
+                this.targetEnemy.visible == true)
+            {
                 if(this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
                 } else {
