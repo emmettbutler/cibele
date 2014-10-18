@@ -181,7 +181,7 @@ package
                     this._state = STATE_AT_ENEMY;
                     this.targetEnemy.activeTarget();
                 } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
-                    this.walkTarget = this.targetEnemy.footPos.add(this.targetEnemy.attackOffset);
+                    this.walkTarget = this.targetEnemy.getAttackPos();
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
             } else if (this._state == STATE_MOVE_TO_MAP_NODE) {
@@ -204,7 +204,7 @@ package
                     this._state = STATE_AT_ENEMY;
                     this.targetEnemy.activeTarget();
                 } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
-                    this.walkTarget = this.targetEnemy.footPos.add(this.targetEnemy.attackOffset);
+                    this.walkTarget = this.targetEnemy.getAttackPos();
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
             } else if (this._state == STATE_IDLE_AT_PATH_NODE) {
@@ -216,7 +216,7 @@ package
                     this._state = STATE_AT_ENEMY;
                     this.targetEnemy.activeTarget();
                 } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
-                    this.walkTarget = this.targetEnemy.footPos.add(this.targetEnemy.attackOffset);
+                    this.walkTarget = this.targetEnemy.getAttackPos();
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
                 this.dir = ZERO_POINT;
@@ -235,14 +235,14 @@ package
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_MOVE_TO_ENEMY){
                 this.walk();
-                this.walkTarget = this.targetEnemy.footPos.add(this.targetEnemy.attackOffset);
+                this.walkTarget = this.targetEnemy.getAttackPos();
                 this.disp = this.walkTarget.sub(this.footPos).normalized();
                 FlxG.log(this.disp.x + "x" + this.disp.y);
                 this.dir = this.disp.mulScl(this.runSpeed);
                 if (this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
                     this.targetEnemy.activeTarget();
-                } else if (this.targetEnemy.footPos.add(this.targetEnemy.attackOffset)
+                } else if (this.targetEnemy.getAttackPos())
                     .sub(this.footPos)._length() >
                     (this.targetEnemy is BossEnemy ? this.bossSightRange : this.sightRange))
                 {
@@ -288,7 +288,7 @@ package
                     this._state = STATE_AT_ENEMY;
                     this.targetEnemy.activeTarget();
                 } else {
-                    this.walkTarget = this.targetEnemy.footPos.add(this.targetEnemy.attackOffset);
+                    this.walkTarget = this.targetEnemy.getAttackPos();
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
             } else {

@@ -146,7 +146,7 @@ package{
             if (this.targetEnemy == null) {
                 this.initWalk(worldPos);
             } else {
-                this.walkTarget = this.targetEnemy.footPos.add(this.targetEnemy.attackOffset);
+                this.walkTarget = this.targetEnemy.getAttackPos();
                 this._state = STATE_MOVE_TO_ENEMY;
             }
             this.dir = this.walkTarget.sub(footPos).normalized();
@@ -347,7 +347,7 @@ package{
                 if(this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
                 } else {
-                    this.walkTarget = this.targetEnemy.footPos.add(this.targetEnemy.attackOffset);
+                    this.walkTarget = this.targetEnemy.getAttackPos();
                     this.dir = this.walkTarget.sub(footPos).normalized();
                     this.walkDistance = this.walkTarget.sub(footPos)._length();
                     this._state = STATE_MOVE_TO_ENEMY;

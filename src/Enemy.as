@@ -106,7 +106,7 @@ package
             this._state = STATE_RECOIL;
             this.hitpoints -= damage;
             this.bar.scale.x = this.hitpoints;
-            this.disp = this.attacker.footPos.sub(this.footPos.add(this.attackOffset));
+            this.disp = this.attacker.footPos.sub(this.getAttackPos());
             this.dir = this.disp.normalized().mulScl(this.recoilPower).reflectX();
         }
 
@@ -165,6 +165,10 @@ package
             this.bar.alpha = 0;
         }
 
+        public function getAttackPos():DHPoint {
+            return this.footPos.add(this.attackOffset);
+        }
+
         override public function update():void{
             super.update();
 
@@ -183,15 +187,14 @@ package
             if (this.player == null) {
                 this.playerDisp = new DHPoint(0, 0);
             } else {
-                this.playerDisp = this.player.footPos.sub(this.footPos.add(this.attackOffset));
+                this.playerDisp = this.player.footPos.sub(this.getAttackPos());
             }
 
             if(this.attacker != null){
                 if (this.attacker == this.player) {
                     this.attackerDisp = this.playerDisp;
                 } else if (this.attacker == this.path_follower) {
-                    this.attackerDisp = this.path_follower.footPos.sub(
-                        this.footPos.add(this.attackOffset));
+                    this.attackerDisp = this.path_follower.footPos.sub(this.getAttackPos());
                 }
             }
 
@@ -207,7 +210,7 @@ package
                 {
                     this._state = STATE_IDLE;
                 }
-                this.disp = this.player.footPos.sub(this.footPos.add(this.attackOffset));
+                this.disp = this.player.footPos.sub(this.getAttackPos());
                 this.dir = disp.normalized();
             } else if (this._state == STATE_RECOIL) {
                 if (this.attackerDisp._length() > 120) {
