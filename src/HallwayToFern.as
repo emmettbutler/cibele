@@ -51,15 +51,15 @@ package{
             this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
             this.light.alpha = .1;
 
+            this.postCreate();
+
             if(_state == STATE_PRE_IT){
-                call_button = new GameObject(new DHPoint(_screen.screenWidth * .3,
+                call_button = new GameObject(new DHPoint(_screen.screenWidth * .35,
                                             _screen.screenHeight * .3));
-                call_button.loadGraphic(ImgCall,false,false,500,230);
+                call_button.loadGraphic(ImgCall,false,false,406,260);
                 call_button.scrollFactor = new DHPoint(0, 0);
                 FlxG.state.add(call_button);
             }
-
-            this.postCreate();
 
             this.player.nameText.color = 0xffffffff;
         }
