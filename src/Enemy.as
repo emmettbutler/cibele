@@ -19,7 +19,9 @@ package
         public var dead:Boolean = false;
 
         public var player:Player;
+        public var recoilPower:Number = 5;
         public var playerDisp:DHPoint;
+        public var attackOffset:DHPoint;
         public var disp:DHPoint;
         private var followerDisp:DHPoint;
         private var attackerDisp:DHPoint;
@@ -32,6 +34,7 @@ package
         public var fade_active:Boolean = false;
         public var fade:Boolean = false;
         public var bar:GameObject;
+        public var sightRange:Number = 308;
 
         {
             public static var stateMap:Dictionary = new Dictionary();
@@ -44,6 +47,8 @@ package
         public function Enemy(pos:DHPoint) {
             super(pos);
             this._state = STATE_IDLE;
+
+            this.attackOffset = new DHPoint(0, 0);
 
             var rand:Number = Math.random() * 2;
             if(rand > 1) {
@@ -73,7 +78,6 @@ package
             addAnimation("run", [0, 1, 2, 3, 4, 5], 12, true);
             play("run");
             disp = new DHPoint(0, 0);
-            followerDisp = new DHPoint(0, 0);
             footPos = new DHPoint(0, 0);
             this.zSorted = true;
             this.basePos = new DHPoint(this.x, this.y + this.height);
@@ -102,8 +106,8 @@ package
             this._state = STATE_RECOIL;
             this.hitpoints -= damage;
             this.bar.scale.x = this.hitpoints;
-            this.disp = this.attacker.footPos.sub(this.footPos);
-            this.dir = this.disp.normalized().mulScl(5).reflectX();
+            this.disp = this.attacker.footPos.sub(this.footPos.add(this.attackOffset));
+            this.dir = this.disp.normalized().mulScl(this.recoilPower).reflectX();
         }
 
         public function setIdle():void {
@@ -159,10 +163,10 @@ package
             this.footPos.y = this.y + this.height;
             this.basePos.y = this.y + this.height;
 
-            this.cib_target_sprite.x = this.x;
-            this.cib_target_sprite.y = this.footPos.y-10;
-            this.ichi_target_sprite.x = this.x;
-            this.ichi_target_sprite.y = this.footPos.y-10;
+            this.cib_target_sprite.x = this.footPos.x - this.cib_target_sprite.width / 2;
+            this.cib_target_sprite.y = this.footPos.y - 10;
+            this.ichi_target_sprite.x = this.footPos.x - this.ichi_target_sprite.width / 2;
+            this.ichi_target_sprite.y = this.footPos.y - 10;
 
             this.bar.x = this.x + (this.width * .5);
             this.bar.y = this.pos.y-30;
@@ -170,35 +174,31 @@ package
             if (this.player == null) {
                 this.playerDisp = new DHPoint(0, 0);
             } else {
-                this.playerDisp = this.player.footPos.sub(this.footPos);
-            }
-            if (this.path_follower == null) {
-                this.followerDisp = new DHPoint(0, 0);
-            } else {
-                this.followerDisp = this.path_follower.footPos.sub(this.footPos);
+                this.playerDisp = this.player.footPos.sub(this.footPos.add(this.attackOffset));
             }
 
             if(this.attacker != null){
                 if (this.attacker == this.player) {
                     this.attackerDisp = this.playerDisp;
                 } else if (this.attacker == this.path_follower) {
-                    this.attackerDisp = this.followerDisp;
+                    this.attackerDisp = this.path_follower.footPos.sub(
+                        this.footPos.add(this.attackOffset));
                 }
             }
 
             if (this._state == STATE_IDLE) {
-                if (this.playerDisp._length() < 308 &&
+                if (this.playerDisp._length() < this.sightRange &&
                     this.playerDisp._length() > 100) {
                     this._state = STATE_TRACKING;
                 }
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_TRACKING) {
-                if (this.playerDisp._length() > 208 ||
+                if (this.playerDisp._length() > this.sightRange - 100 ||
                     this.playerDisp._length() < 10)
                 {
                     this._state = STATE_IDLE;
                 }
-                this.disp = this.player.footPos.sub(this.footPos);
+                this.disp = this.player.footPos.sub(this.footPos.add(this.attackOffset));
                 this.dir = disp.normalized();
             } else if (this._state == STATE_RECOIL) {
                 if (this.attackerDisp._length() > 120) {
