@@ -71,7 +71,6 @@ package
         }
 
         public function resetCursor():void {
-            FlxG.log("reset");
             FlxG.state.remove(this.enemy_mouse);
             FlxG.state.remove(this.pc_mouse);
             FlxG.state.remove(this.game_mouse);

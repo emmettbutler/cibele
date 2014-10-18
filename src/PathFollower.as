@@ -2,7 +2,6 @@ package
 {
     import org.flixel.*;
 
-    import flash.utils.setTimeout;
     import flash.utils.Dictionary;
 
     public class PathFollower extends PartyMember

@@ -140,7 +140,7 @@ package{
             this.walkDistance = this.walkTarget.sub(footPos)._length();
         }
 
-        public function setFacing(at_enemy:Boolean = false):void {
+        public function setFacing(at_enemy:Boolean=false):void {
             if(!at_enemy){
                 if(this.dir != null){
                     if(Math.abs(this.dir.y) > Math.abs(this.dir.x)){
@@ -215,14 +215,17 @@ package{
             FlxG.state.add(this.debugText);
         }
 
-        public static function interpolate(normValue:Number, minimum:Number, maximum:Number):Number {
+        public static function interpolate(normValue:Number, minimum:Number,
+                                           maximum:Number):Number {
             return minimum + (maximum - minimum) * normValue;
         }
 
         override public function update():void{
             if(this.walkTarget != null) {
-                this.cameraPos.x = interpolate(.1, this.cameraPos.x, this.pos.center(this).x);
-                this.cameraPos.y = interpolate(.1, this.cameraPos.y, this.pos.center(this).y);
+                this.cameraPos.x = interpolate(.1, this.cameraPos.x,
+                                               this.pos.center(this).x);
+                this.cameraPos.y = interpolate(.1, this.cameraPos.y,
+                                               this.pos.center(this).y);
             }
 
             if(this.text_facing == "left") {
@@ -329,7 +332,8 @@ package{
                 if(this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
                 } else {
-                    this.walkTarget = this.targetEnemy.pos.center(this.targetEnemy, true);
+                    this.walkTarget = this.targetEnemy.pos.center(this.targetEnemy,
+                                                                  true);
                     this.dir = this.walkTarget.sub(footPos).normalized();
                     this.walkDistance = this.walkTarget.sub(footPos)._length();
                     this._state = STATE_MOVE_TO_ENEMY;
