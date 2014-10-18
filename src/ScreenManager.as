@@ -14,6 +14,9 @@ package {
         public var screenWidth:Number, screenHeight:Number, aspect_ratio:Number;
         public var applet_dimensions:FlxPoint, letterbox_dimensions:FlxPoint, zero_point:FlxPoint;
 
+        // global debug flag
+        public static const DEBUG:Boolean = false;
+
         public var letterbox1:FlxSprite = null, letterbox2:FlxSprite = null, letterbox3:FlxSprite = null, letterbox4:FlxSprite = null;
 
         public static var _instance:ScreenManager = null;

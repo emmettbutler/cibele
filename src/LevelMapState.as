@@ -29,7 +29,8 @@ package {
             this.bitDialogue = new ProceduralDialogueGenerator(this);
 
             this.bgLoader = new BackgroundLoader("full-map-iggo-turso", 10, 5,
-                "paths", this.editorMode == PathEditorState.MODE_EDIT);
+                "paths",
+                ScreenManager.DEBUG || this.editorMode == PathEditorState.MODE_EDIT);
             this.bgLoader.setPlayerReference(player);
 
             ScreenManager.getInstance().setupCamera(player.cameraPos);

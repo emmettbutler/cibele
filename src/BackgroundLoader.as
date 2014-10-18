@@ -187,7 +187,8 @@ package {
                 return [false, null];
             }
             return FlxCollision.pixelPerfectCheck(playerRef.mapHitbox,
-                                                  colliderTile, 255, null, 6, 4);
+                                                  colliderTile, 255, null, 6, 4,
+                                                  ScreenManager.DEBUG);
         }
 
         public function update():void {
@@ -234,7 +235,9 @@ package {
                 col = adjacentCoords[i][1];
                 // load background tiles
                 if (!this.tileHasLoaded(row, col)) {
-                    this.loadTile(row, col, null, null, this.macroImageName);
+                    if (!ScreenManager.DEBUG) {
+                        this.loadTile(row, col, null, null, this.macroImageName);
+                    }
                 }
                 // load tile colliders
                 if (!this.tileHasLoaded(row, col, this.colliderTiles)) {

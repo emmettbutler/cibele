@@ -45,7 +45,7 @@ package {
             //this.editorMode = MODE_EDIT; //turn this on in order to edit
             //compile with -a flag if I edit or make new path
 
-            this.showNodes = this.editorMode == MODE_EDIT;
+            this.showNodes = ScreenManager.DEBUG || this.editorMode == MODE_EDIT;
 
             pathWalker = new PathFollower(new DHPoint(player.x-10, player.y-100));
 

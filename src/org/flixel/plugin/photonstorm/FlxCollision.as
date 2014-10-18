@@ -55,7 +55,8 @@ package org.flixel.plugin.photonstorm
                                                  alphaTolerance:int = 255,
                                                  camera:FlxCamera = null,
                                                  collisionWidthThreshold:Number=0,
-                                                 collisionHeightThreshold:Number=0):Array
+                                                 collisionHeightThreshold:Number=0,
+                                                 showCollider:Boolean=false):Array
         {
             var pointA:Point = new Point;
             var pointB:Point = new Point;
@@ -110,16 +111,16 @@ package org.flixel.plugin.photonstorm
             overlapArea.draw(testB, matrixB, new ColorTransform(1, 1, 1, 1, 255, 255, 255, alphaTolerance), BlendMode.DIFFERENCE);
 
             //    Developers: If you'd like to see how this works, display it in your game somewhere. Or you can comment it out to save a tiny bit of performance
-            /*
-            debug = overlapArea;
-            var spr:FlxExtSprite = new FlxExtSprite(contact.x, contact.y);
-            var bmp:Bitmap = new Bitmap(overlapArea, PixelSnapping.NEVER, true);
-            spr.loadExtGraphic(bmp, false, false, bmp.width, bmp.height, true);
-            FlxG.state.add(spr);
-            setTimeout(function():void {
-                FlxG.state.remove(spr);
-            }, 500);
-            */
+            if (showCollider) {
+                debug = overlapArea;
+                var spr:FlxExtSprite = new FlxExtSprite(contact.x, contact.y);
+                var bmp:Bitmap = new Bitmap(overlapArea, PixelSnapping.NEVER, true);
+                spr.loadExtGraphic(bmp, false, false, bmp.width, bmp.height, true);
+                FlxG.state.add(spr);
+                setTimeout(function():void {
+                    FlxG.state.remove(spr);
+                }, 500);
+            }
 
             var overlap:Rectangle = overlapArea.getColorBoundsRect(0xffffffff, 0xff00ffff);
             overlap.offset(intersect.x, intersect.y);
