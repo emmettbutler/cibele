@@ -22,6 +22,7 @@ package{
 
         public function IkuTurso() {
             this.bossHasAppeared = false;
+            this.ui_color_flag = GameState.UICOLOR_PINK;
 
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [

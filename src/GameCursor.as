@@ -55,7 +55,7 @@ package
 
         public function addCursorSprites():void {
             this.enemy_mouse = new GameObject(new DHPoint(0,0));
-            this.enemy_mouse.loadGraphic(ImgEnemy,false,false,22,56);
+            this.enemy_mouse.loadGraphic(ImgEnemy,false,false,28,63);
             FlxG.state.add(enemy_mouse);
             this.enemy_mouse.alpha = 0;
 

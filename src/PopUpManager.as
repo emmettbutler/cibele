@@ -17,9 +17,14 @@ package{
         [Embed(source="../assets/UI_Sad Face_blue.png")] private var ImgEmojiSad:Class;
         [Embed(source="../assets/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;
         [Embed(source="../assets/UI_Outer Ring.png")] private var ImgRing:Class;
+        [Embed(source="../assets/UI_Outer_Ring_pink.png")] private var ImgRingPink:Class;
         [Embed(source="../assets/ichidownloads.png")] private var ImgIchiDownload:Class;
         [Embed(source="../assets/ichiselfie1.png")] private var ImgIchiSelfie1:Class;
         [Embed(source="../assets/cibselfiefolder.png")] private var ImgCibSelfieFolder:Class;
+        [Embed(source="../assets/UI_happy_face_pink.png")] private var ImgEmojiHappyPink:Class;
+        [Embed(source="../assets/UI_sad_face_pink.png")] private var ImgEmojiSadPink:Class;
+        [Embed(source="../assets/UI_Angry_face_pink.png")] private var ImgEmojiAngryPink:Class;
+
 
         public static var _instance:PopUpManager = null;
 
@@ -142,14 +147,22 @@ package{
         }
 
         public function loadPopUps():void {
+            var imgClass:Class;
+            var imgSize:DHPoint;
+
             this.elements.length = 0;
             var _screen:ScreenManager = ScreenManager.getInstance();
 
             this.emojiButtons = new Dictionary();
             this.programButtons = new Array();
 
+            imgClass = ImgRing;
+            if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
+            {
+                imgClass = ImgRingPink;
+            }
             var ring:UIElement = new UIElement(RING_INSET_X, RING_INSET_Y);
-            ring.loadGraphic(ImgRing, false, false, 291, 300);
+            ring.loadGraphic(imgClass, false, false, 291, 300);
             ring.scrollFactor.x = 0;
             ring.scrollFactor.y = 0;
             this.elements.push(ring);
@@ -157,8 +170,15 @@ package{
                 FlxG.state.add(ring);
             }
 
+            imgClass = ImgEmojiHappy;
+            imgSize = new DHPoint(96, 98);
+            if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
+            {
+                imgClass = ImgEmojiHappyPink;
+                imgSize = new DHPoint(100, 99);
+            }
             var emoji_happy:UIElement = new UIElement(ring.x + 140, ring.y - 10);
-            emoji_happy.loadGraphic(ImgEmojiHappy, false, false, 96, 98);
+            emoji_happy.loadGraphic(imgClass, false, false, imgSize.x, imgSize.y);
             if (this.showEmoji) {
                 FlxG.state.add(emoji_happy);
             }
@@ -167,8 +187,15 @@ package{
             this.elements.push(emoji_happy);
             emojiButtons[emoji_happy] = Emote.HAPPY;
 
+            imgClass = ImgEmojiSad;
+            imgSize = new DHPoint(94, 99);
+            if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
+            {
+                imgClass = ImgEmojiSadPink;
+                imgSize = new DHPoint(100, 99);
+            }
             var emoji_sad:UIElement = new UIElement(ring.x + 205, ring.y + 90);
-            emoji_sad.loadGraphic(ImgEmojiSad, false, false, 94, 99);
+            emoji_sad.loadGraphic(imgClass, false, false, imgSize.x, imgSize.y);
             if (this.showEmoji) {
                 FlxG.state.add(emoji_sad);
             }
@@ -177,8 +204,14 @@ package{
             this.elements.push(emoji_sad);
             this.emojiButtons[emoji_sad] = Emote.SAD;
 
+            imgClass = ImgEmojiAngry;
+            imgSize = new DHPoint(100, 99);
+            if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
+            {
+                imgClass = ImgEmojiAngryPink;
+            }
             var emoji_angry:UIElement = new UIElement(ring.x + 140, ring.y + 200);
-            emoji_angry.loadGraphic(ImgEmojiAngry, false, false, 100, 99);
+            emoji_angry.loadGraphic(imgClass, false, false, imgSize.x, imgSize.y);
             if (this.showEmoji) {
                 FlxG.state.add(emoji_angry);
             }
@@ -268,7 +301,8 @@ package{
                                 element.height)
                 );
                 if (overlap) {
-                    new Emote(_player.pos, this.emojiButtons[key]);
+                    new Emote(new DHPoint(_player.pos.x + (_player.width/4), _player.pos.y), this.emojiButtons[key],
+                              (FlxG.state as GameState).ui_color_flag);
                 }
             }
         }

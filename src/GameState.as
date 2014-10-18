@@ -10,6 +10,10 @@ package {
         private var pauseLayer:GameObject;
         private var sortedObjects:Array;
 
+        public var ui_color_flag:Number;
+        public static const UICOLOR_DEFAULT:Number = 0;
+        public static const UICOLOR_PINK:Number = 1;
+
         public var cursorResetFlag:Boolean = false;
 
         public static const EVENT_POPUP_CLOSED:String = "popup_closed";
@@ -20,6 +24,8 @@ package {
             this.updateSound = snd;
             this.updatePopup = popup;
             this.updateMessages = messages;
+
+            this.ui_color_flag = UICOLOR_DEFAULT;
 
             this.sortedObjects = new Array();
         }

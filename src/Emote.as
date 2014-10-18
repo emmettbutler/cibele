@@ -5,6 +5,9 @@ package {
         [Embed(source="../assets/UI_happy face_blue.png")] private var ImgEmojiHappy:Class;
         [Embed(source="../assets/UI_Sad Face_blue.png")] private var ImgEmojiSad:Class;
         [Embed(source="../assets/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;
+        [Embed(source="../assets/UI_happy_face_pink.png")] private var ImgEmojiHappyPink:Class;
+        [Embed(source="../assets/UI_sad_face_pink.png")] private var ImgEmojiSadPink:Class;
+        [Embed(source="../assets/UI_Angry_face_pink.png")] private var ImgEmojiAngryPink:Class;
 
         public static const STATE_RISE:Number = 938476;
         public static const STATE_HANG:Number = 938477;
@@ -15,14 +18,24 @@ package {
 
         public var lastStateChangeTime:Number = -1;
 
-        public function Emote(pos:DHPoint,mood:Number) {
+        public function Emote(pos:DHPoint,mood:Number,col:Number=GameState.UICOLOR_DEFAULT) {
             super(pos);
-            if(mood == HAPPY) {
-                this.loadGraphic(ImgEmojiHappy, false, false, 96, 98, true);
-            } else if(mood == SAD) {
-                this.loadGraphic(ImgEmojiSad, false, false, 94, 99, true);
-            } else if(mood == ANGRY) {
-                this.loadGraphic(ImgEmojiAngry, false, false, 100, 99, true);
+            if(col == GameState.UICOLOR_DEFAULT) {
+                if(mood == HAPPY) {
+                    this.loadGraphic(ImgEmojiHappy, false, false, 96, 98, true);
+                } else if(mood == SAD) {
+                    this.loadGraphic(ImgEmojiSad, false, false, 94, 99, true);
+                } else if(mood == ANGRY) {
+                    this.loadGraphic(ImgEmojiAngry, false, false, 100, 99, true);
+                }
+            } else if(col == GameState.UICOLOR_PINK) {
+                if(mood == HAPPY) {
+                    this.loadGraphic(ImgEmojiHappyPink, false, false, 100, 99, true);
+                } else if(mood == SAD) {
+                    this.loadGraphic(ImgEmojiSadPink, false, false, 100, 99, true);
+                } else if(mood == ANGRY) {
+                    this.loadGraphic(ImgEmojiAngryPink, false, false, 100, 99, true);
+                }
             }
             this.scale.x = .5;
             this.scale.y = .5;

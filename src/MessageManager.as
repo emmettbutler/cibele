@@ -5,6 +5,8 @@ package{
         [Embed(source="../assets/UI_letter.png")] private var ImgMsg:Class;
         [Embed(source="../assets/UI_text_box.png")] private var ImgInbox:Class;
         [Embed(source="../assets/UI_text_box_x_blue.png")] private var ImgInboxX:Class;
+        [Embed(source="../assets/UI_pink_msg_box.png")] private var ImgInboxPink:Class;
+        [Embed(source="../assets/UI_pink_x.png")] private var ImgInboxXPink:Class;
         [Embed(source="../assets/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
         public static var _instance:MessageManager = null;
@@ -80,6 +82,9 @@ package{
         }
 
         public function initNotifications():void {
+            var imgClass:Class;
+            var imgSize:DHPoint;
+
             this.elements.length = 0;
 
             this.mouse_rect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 5, 5);
@@ -113,20 +118,34 @@ package{
             this.notifications_box.x = this.img_msg.x;
             this.notifications_box.y = this.img_msg.y;
 
-            var inbox_pos:DHPoint = new DHPoint(_screen.screenWidth * .05,
-                                                _screen.screenHeight * .5);
+            var inbox_pos:DHPoint = new DHPoint(_screen.screenWidth * .4,
+                                                _screen.screenHeight * .4);
+
+            imgClass = ImgInbox;
+            imgSize = new DHPoint(406, 260);
+            if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
+            {
+                imgClass = ImgInboxPink;
+                imgSize = new DHPoint(404, 258);
+            }
             this.img_inbox = new UIElement(inbox_pos.x, inbox_pos.y);
-            this.img_inbox.loadGraphic(ImgInbox, false, false, 406, 260);
+            this.img_inbox.loadGraphic(imgClass, false, false, imgSize.x, imgSize.y);
             this.img_inbox.scrollFactor = new FlxPoint(0, 0);
             this.img_inbox.active = false;
             FlxG.state.add(this.img_inbox);
             this.elements.push(this.img_inbox);
 
-            this.exit_ui = new UIElement(
-                this.img_inbox.x + (this.img_inbox.width - 24),
-                this.img_inbox.y + 7
-            );
-            this.exit_ui.loadGraphic(ImgInboxX, false, false, 13, 12);
+            imgClass = ImgInboxX;
+            imgSize = new DHPoint(13, 12);
+            var imgPos:DHPoint = new DHPoint(this.img_inbox.x + (this.img_inbox.width - 24), this.img_inbox.y + 7);
+            if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
+            {
+                imgClass = ImgInboxXPink;
+                imgSize = new DHPoint(23, 18);
+                imgPos = new DHPoint(imgPos.x-5, imgPos.y-5);
+            }
+            this.exit_ui = new UIElement(imgPos.x, imgPos.y);
+            this.exit_ui.loadGraphic(imgClass, false, false, imgSize.x, imgSize.y);
             this.elements.push(this.exit_ui);
             this.exit_ui.scrollFactor = new FlxPoint(0, 0);
             this.exit_ui.visible = false;
