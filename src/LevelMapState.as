@@ -76,7 +76,7 @@ package {
             var current_enemy:Enemy;
             for (var i:int = 0; i < this.enemies.length(); i++) {
                 current_enemy = this.enemies.get_(i);
-                if (current_enemy.pos.sub(obj.pos)._length() < obj.attackRange) {
+                if (obj.enemyIsInAttackRange(current_enemy)) {
                     current_enemy.takeDamage(obj);
                 }
             }
