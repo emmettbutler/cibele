@@ -12,6 +12,7 @@ package
 
         public static const VOCAL:Number = 0;
         public static const BGM:Number = 1;
+        public static const SFX:Number = 2;
         public var _type:Number = VOCAL;
 
         public static const MSEC_PER_SEC:Number = 1000;
