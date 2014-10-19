@@ -284,6 +284,9 @@ package {
                     bg.loadExtGraphic(bmp, false, false, bmp.width, bmp.height, true);
                     bg.x = origin.x;
                     bg.y = origin.y;
+                    FlxG.stage.dispatchEvent(
+                        new DataEvent(GameState.EVENT_SINGLETILE_BG_LOADED,
+                                      {'bg_scale': bgScale}));
                 }
             );
             receivingMachine.load(new URLRequest(path));

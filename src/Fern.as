@@ -26,6 +26,13 @@ package{
             (new BackgroundLoader()).loadSingleTileBG("../assets/fern.jpg");
             ScreenManager.getInstance().setupCamera(null, 1);
 
+            this.addEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
+                function(event:DataEvent):void {
+                    FlxG.log("got event data: " + event.userData['bg_scale']);
+                    FlxG.stage.removeEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
+                                                    arguments.callee);
+                });
+
             ikutursodoor = new GameObject(new DHPoint(_screen.screenWidth * .15, 0));
             var imgDim:DHPoint = new DHPoint(1804/8, 567);
             ikutursodoor.loadGraphic(ImgWater1, true, false, imgDim.x * _screen.calcFullscreenScale(imgDim), imgDim.y * _screen.calcFullscreenScale(imgDim));
