@@ -53,6 +53,13 @@ package{
             var bg:FlxExtSprite = (new BackgroundLoader()).loadSingleTileBG("../assets/fern.jpg");
             ScreenManager.getInstance().setupCamera(null, 1);
 
+            var cur:Object;
+            for (var i:int = 0; i < doors.length; i++) {
+                cur = doors[i];
+                cur["object"] = new GameObject(new DHPoint(cur["xPos"], bg.y));
+                add(cur["object"]);
+            }
+
             var that:Fern = this;
             this.addEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
                 function(event:DataEvent):void {
@@ -88,8 +95,6 @@ package{
             var cur:Object;
             for (var i:int = 0; i < doors.length; i++) {
                 cur = doors[i];
-                cur["object"] = new GameObject(new DHPoint(cur["xPos"], bg.y));
-                add(cur["object"]);
                 receivingMachines[i].contentLoaderInfo.addEventListener(Event.COMPLETE,
                     this.buildScalerFunction(cur["object"], cur["frame"], scaleFactor));
                 receivingMachines[i].load(new URLRequest(cur["image"]));
