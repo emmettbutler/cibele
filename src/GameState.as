@@ -6,7 +6,6 @@ package {
     public class GameState extends FlxState {
         [Embed(source="../assets/sfx_mouseclick.mp3")] private var SfxClick:Class;
         [Embed(source="../assets/sfx_mouseclick2.mp3")] private var SfxClick2:Class;
-        //[Embed(source="../assets/sfx_uigeneral.mp3")] private var SfxUI:Class;
 
         protected var updateSound:Boolean, updatePopup:Boolean,
                       updateMessages:Boolean, showEmoji:Boolean = true;
