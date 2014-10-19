@@ -11,9 +11,6 @@ package{
 
     public class Fern extends PlayerState {
         [Embed(source="../assets/voc_ikuturso.mp3")] private var Convo:Class;
-        [Embed(source="../assets/waterfall1.png")] private var ImgWater1:Class;
-        [Embed(source="../assets/waterfall2.png")] private var ImgWater2:Class;
-        [Embed(source="../assets/waterfall3.png")] private var ImgWater3:Class;
 
         public var ikutursodoor:FlxExtSprite, euryaledoor:FlxExtSprite,
                    hiisidoor:FlxExtSprite;
@@ -50,9 +47,9 @@ package{
                 var bmp:Bitmap = new Bitmap(event_load.target.content.bitmapData);
                 var matrix:Matrix = new Matrix();
                 matrix.scale(scaleFactor, scaleFactor);
-                var scaledBMD:BitmapData = new BitmapData(bmp.width * scaleFactor,
-                                                        bmp.height * scaleFactor,
-                                                        true, 0x000000);
+                var scaledBMD:BitmapData = new BitmapData(Math.ceil(bmp.width * scaleFactor),
+                                                          bmp.height * scaleFactor,
+                                                          true, 0x000000);
                 scaledBMD.draw(bmp, matrix, null, null, null, true);
                 bmp = new Bitmap(scaledBMD, PixelSnapping.NEVER, true);
                 spr.loadExtGraphic(bmp, true, true, frameDim.x*scaleFactor,
@@ -66,23 +63,23 @@ package{
             var receivingMachines:Array = [new Loader(), new Loader(), new Loader()];
             var _screen:ScreenManager = ScreenManager.getInstance();
 
-            ikutursodoor = new GameObject(new DHPoint(_screen.screenWidth * .185, bg.y));
+            ikutursodoor = new GameObject(new DHPoint(_screen.screenWidth * .165, bg.y));
             add(ikutursodoor);
             receivingMachines[0].contentLoaderInfo.addEventListener(Event.COMPLETE,
-                this.buildScalerFunction(ikutursodoor, new DHPoint(458, 1128), scaleFactor));
-            receivingMachines[0].load(new URLRequest("../assets/waterfall1.png"));
+                this.buildScalerFunction(ikutursodoor, new DHPoint(526, 1172), scaleFactor));
+            receivingMachines[0].load(new URLRequest("../assets/waterfall_l.png"));
 
             euryaledoor = new GameObject(new DHPoint(_screen.screenWidth * .395, bg.y));
             add(euryaledoor);
             receivingMachines[1].contentLoaderInfo.addEventListener(Event.COMPLETE,
-                this.buildScalerFunction(euryaledoor, new DHPoint(628, 1024), scaleFactor));
-            receivingMachines[1].load(new URLRequest("../assets/waterfall2.png"));
+                this.buildScalerFunction(euryaledoor, new DHPoint(629, 940), scaleFactor));
+            receivingMachines[1].load(new URLRequest("../assets/waterfall_m.png"));
 
             hiisidoor = new GameObject(new DHPoint(_screen.screenWidth * .65, bg.y));
             add(hiisidoor);
             receivingMachines[2].contentLoaderInfo.addEventListener(Event.COMPLETE,
                 this.buildScalerFunction(hiisidoor, new DHPoint(526, 1172), scaleFactor));
-            receivingMachines[2].load(new URLRequest("../assets/waterfall3.png"));
+            receivingMachines[2].load(new URLRequest("../assets/waterfall_r.png"));
 
             this.startCollisions = true;
         }
