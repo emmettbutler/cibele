@@ -3,13 +3,14 @@ package{
 
     public class Fern extends PlayerState {
         [Embed(source="../assets/voc_ikuturso.mp3")] private var Convo:Class;
-        [Embed(source="../assets/waterfall 1.png")] private var ImgWater1:Class;
-        [Embed(source="../assets/waterfall 2.png")] private var ImgWater2:Class;
-        [Embed(source="../assets/waterfall 3.png")] private var ImgWater3:Class;
+        [Embed(source="../assets/waterfall1.png")] private var ImgWater1:Class;
+        [Embed(source="../assets/waterfall2.png")] private var ImgWater2:Class;
+        [Embed(source="../assets/waterfall3.png")] private var ImgWater3:Class;
 
         public var ikutursodoor:GameObject;
         public var euryaledoor:GameObject;
         public var hiisidoor:GameObject;
+        public var startCollisions:Boolean = false;
 
         public static const BOSS_MARK:String = "boss_iku_turso";
         public static const DOOR_MARK:String = "fern_door_lock";
@@ -26,38 +27,51 @@ package{
             (new BackgroundLoader()).loadSingleTileBG("../assets/fern.jpg");
             ScreenManager.getInstance().setupCamera(null, 1);
 
+            var that:Fern = this;
             this.addEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
                 function(event:DataEvent):void {
                     FlxG.log("got event data: " + event.userData['bg_scale']);
+                    that.addDoors(event.userData['bg_scale']);
                     FlxG.stage.removeEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
                                                     arguments.callee);
                 });
 
-            ikutursodoor = new GameObject(new DHPoint(_screen.screenWidth * .15, 0));
-            var imgDim:DHPoint = new DHPoint(1804/8, 567);
-            ikutursodoor.loadGraphic(ImgWater1, true, false, imgDim.x * _screen.calcFullscreenScale(imgDim), imgDim.y * _screen.calcFullscreenScale(imgDim));
+            this.postCreate();
+        }
+
+        public function addDoors(scaleFactor:Number=1):void {
+            var _screen:ScreenManager = ScreenManager.getInstance();
+            ikutursodoor = new GameObject(new DHPoint(_screen.screenWidth * .02, 0));
+            var imgDim:DHPoint = new DHPoint(526, 1258);
+            ikutursodoor.loadGraphic(ImgWater1, true, false, imgDim.x, imgDim.y);
             ikutursodoor.addAnimation("flow",
                [0,  1,  2,  3,  4,  5,  6,  7], 20, true);
             ikutursodoor.play("flow");
+            ikutursodoor.scale.x = scaleFactor;
+            ikutursodoor.scale.y = scaleFactor;
             add(ikutursodoor);
 
-            euryaledoor = new GameObject(new DHPoint(_screen.screenWidth * .4, _screen.screenHeight * .4));
-            imgDim = new DHPoint(221, 579);
-            //euryaledoor.loadGraphic(ImgWater2, true, false, imgDim.x * _screen.calcFullscreenScale(imgDim), imgDim.y * _screen.calcFullscreenScale(imgDim));
-            //euryaledoor.addAnimation("flow",
-             //  [0,  1,  2,  3,  4,  5,  6,  7], 20, true);
-            //euryaledoor.play("flow");
+            euryaledoor = new GameObject(new DHPoint(_screen.screenWidth * .2, 0));
+            imgDim = new DHPoint(628, 1024);
+            euryaledoor.loadGraphic(ImgWater2, true, false, imgDim.x, imgDim.y);
+            euryaledoor.addAnimation("flow",
+               [0,  1,  2,  3,  4,  5,  6,  7], 20, true);
+            euryaledoor.play("flow");
+            euryaledoor.scale.x = scaleFactor;
+            euryaledoor.scale.y = scaleFactor;
             add(euryaledoor);
 
-            hiisidoor = new GameObject(new DHPoint(_screen.screenWidth * .7, _screen.screenHeight * .7));
-            imgDim = new DHPoint(221, 579);
-            //hiisidoor.loadGraphic(ImgWater3, true, false, imgDim.x * _screen.calcFullscreenScale(imgDim), imgDim.y * _screen.calcFullscreenScale(imgDim));
-            //hiisidoor.addAnimation("flow",
-            //   [0,  1,  2,  3,  4,  5,  6,  7], 20, true);
-            //hiisidoor.play("flow");
+            hiisidoor = new GameObject(new DHPoint(_screen.screenWidth * .5, 0));
+            imgDim = new DHPoint(526, 1354);
+            hiisidoor.loadGraphic(ImgWater3, true, false, imgDim.x * _screen.calcFullscreenScale(imgDim), imgDim.y * _screen.calcFullscreenScale(imgDim));
+            hiisidoor.addAnimation("flow",
+               [0,  1,  2,  3,  4,  5,  6,  7], 20, true);
+            hiisidoor.play("flow");
+            hiisidoor.scale.x = scaleFactor;
+            hiisidoor.scale.y = scaleFactor;
             add(hiisidoor);
 
-            this.postCreate();
+            this.startCollisions = true;
         }
 
         override public function postCreate():void {
@@ -68,15 +82,17 @@ package{
         override public function update():void{
             super.update();
 
-            if(player.mapHitbox.overlaps(ikutursodoor)){
-                FlxG.switchState(new IkuTursoTeleportRoom());
-            }
+            if(this.startCollisions) {
+                /*if(player.mapHitbox.overlaps(ikutursodoor)){
+                    FlxG.switchState(new IkuTursoTeleportRoom());
+                }
 
-            if(player.mapHitbox.overlaps(euryaledoor)){
-                FlxG.switchState(new IkuTursoTeleportRoom());
-            }
-            if(player.mapHitbox.overlaps(hiisidoor)){
-                FlxG.switchState(new IkuTursoTeleportRoom());
+                if(player.mapHitbox.overlaps(euryaledoor)){
+                    FlxG.switchState(new IkuTursoTeleportRoom());
+                }
+                if(player.mapHitbox.overlaps(hiisidoor)){
+                    FlxG.switchState(new IkuTursoTeleportRoom());
+                }*/
             }
         }
 

@@ -43,6 +43,7 @@ package{
 
         public var ui_loaded:Boolean = false;
         public var minimizeFlag:Boolean = false;
+        public var maximizeFlag:Boolean = false;
 
         public function MessageManager() {
             this.elements = new Array();
@@ -289,6 +290,10 @@ package{
                 this.minimizeWindow(this.img_inbox);
                 this.minimizeWindow(this.exit_ui);
             }
+            if(this.maximizeFlag) {
+                this.maximizeWindow(this.img_inbox);
+                this.maximizeWindow(this.exit_ui);
+            }
 
             for(var i:int = 0; i < this.threads.length; i++) {
                 cur_thread = this.threads[i];
@@ -310,6 +315,7 @@ package{
                     if (this.mouse_rect.overlaps(this.notifications_box)) {
                         this._state = STATE_VIEW_LIST;
                         this.openInbox();
+                        this.maximizeFlag = true;
                     }
                 } else {
                     if (this._state == STATE_VIEW_MESSAGE) {
@@ -363,10 +369,22 @@ package{
             }
         }
 
+        public function maximizeWindow(obj:UIElement):void {
+            if(obj.scale.x < 1) {
+                obj.scale.x += .1;
+                obj.scale.y += .1;
+            } else {
+                this.maximizeFlag = false;
+            }
+        }
+
         public function openInbox():void {
             this.showPreviews();
             this.exit_ui.visible = true;
             this.img_inbox.visible = true;
+            this.exit_ui.scale.x = 0;
+            this.img_inbox.scale.y = 0;
+            this.maximizeFlag = true;
         }
 
         public static function getInstance():MessageManager {
