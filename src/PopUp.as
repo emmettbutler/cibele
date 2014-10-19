@@ -12,7 +12,7 @@ package{
             this.timer_key = Math.random() + "";
 
             var _screen:ScreenManager = ScreenManager.getInstance();
-            super(_screen.screenWidth * .1, _screen.screenHeight * .1);
+            super(_screen.screenWidth - w - 100, _screen.screenHeight * .1);
             this._state = functionality;
             this.tag = tag;
 
