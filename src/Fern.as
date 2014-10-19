@@ -95,6 +95,7 @@ package{
             var cur:Object;
             for (var i:int = 0; i < doors.length; i++) {
                 cur = doors[i];
+                cur["object"].y = bg.y;
                 receivingMachines[i].contentLoaderInfo.addEventListener(Event.COMPLETE,
                     this.buildScalerFunction(cur["object"], cur["frame"], scaleFactor));
                 receivingMachines[i].load(new URLRequest(cur["image"]));
