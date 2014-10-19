@@ -45,7 +45,7 @@ package {
                 Math.min((ScreenManager.getInstance().screenWidth) /
                     this.estTileWidth, .5),
                 Math.min((ScreenManager.getInstance().screenHeight) /
-                    this.estTileHeight, .5));
+                    this.estTileHeight, .7));
             this.adjacentCoords = new Array();
             this.receivingMachines = new Array();
             this.colliderReceivingMachines = new Array();
