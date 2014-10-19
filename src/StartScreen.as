@@ -11,7 +11,7 @@ package{
             super.create();
             FlxG.bgColor = 0xff000000;
 
-            startText = new FlxText(100,100,500,"Cibele // This build ends after the first world.\n\nCLICK to move and interact with objects.\nMake sure your sound is on.\n\nSPACE to start.\n\n COMMAND + Q to Quit.");
+            startText = new FlxText(100,100,500,"Cibele // This build ends after the first world.\n\nCLICK to move and interact with objects.\nMake sure your sound is on.\n\nSPACE to start.\n\n COMMAND+Q or Alt+F4 to Quit.");
             add(startText);
             startText.setFormat("NexaBold-Regular",16,0xffffffff,"left");
 
