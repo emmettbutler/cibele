@@ -58,13 +58,16 @@ def compile_main(entry_point_class, libpath, debug_level):
     omit_trace = "false"
     debug = "true"
     debug_flag = "true"
+    test_flag = "true"
     if debug_level == "test":
         debug_flag = "false"
+        test_flag = "true"
     elif debug_level == "release":
         debug_flag = "false"
         omit_trace = "true"
         stacktraces = "false"
         debug = "false"
+        test_flag = "false"
     command = ["mxmlc", "src/{entry_point_class}.as".format(entry_point_class=entry_point_class), "-o",
                "src/{entry_point_class}.swf".format(entry_point_class=entry_point_class),
                "-use-network=false", "-verbose-stacktraces={}".format(stacktraces),
@@ -72,7 +75,8 @@ def compile_main(entry_point_class, libpath, debug_level):
                "-static-link-runtime-shared-libraries",
                "-debug={}".format(debug),
                "-omit-trace-statements={}".format(omit_trace),
-               "-define=CONFIG::debug,{}".format(debug_flag)]
+               "-define=CONFIG::debug,{}".format(debug_flag),
+               "-define=CONFIG::test,{}".format(test_flag), ]
     print " ".join(command)
     subprocess.check_call(command)
     return "src/{entry_point_class}.swf".format(entry_point_class=entry_point_class)

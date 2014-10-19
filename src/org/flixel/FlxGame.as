@@ -243,48 +243,49 @@ package org.flixel
 		{
 			if(_debuggerUp && _debugger.watch.editing)
 				return;
-			if(!FlxG.mobile)
-			{
-				if((_debugger != null) && ((FlashEvent.keyCode == 192) || (FlashEvent.keyCode == 220)))
-				{
-					_debugger.visible = !_debugger.visible;
-					_debuggerUp = _debugger.visible;
-					if(_debugger.visible)
-						flash.ui.Mouse.show();
-					else if(!useSystemCursor)
-						flash.ui.Mouse.hide();
-					//_console.toggle();
-					return;
-				}
-				if(useSoundHotKeys)
-				{
-					var c:int = FlashEvent.keyCode;
-					var code:String = String.fromCharCode(FlashEvent.charCode);
-					switch(c)
-					{
-						case 48:
-						case 96:
-							FlxG.mute = !FlxG.mute;
-							if(FlxG.volumeHandler != null)
-								FlxG.volumeHandler(FlxG.mute?0:FlxG.volume);
-							showSoundTray();
-							return;
-						case 109:
-						case 189:
-							FlxG.mute = false;
-				    		FlxG.volume = FlxG.volume - 0.1;
-				    		showSoundTray();
-							return;
-						case 107:
-						case 187:
-							FlxG.mute = false;
-				    		FlxG.volume = FlxG.volume + 0.1;
-				    		showSoundTray();
-							return;
-						default:
-							break;
-					}
-				}
+            CONFIG::test {
+                if(!FlxG.mobile) {
+                    if((_debugger != null) && ((FlashEvent.keyCode == 192) || (FlashEvent.keyCode == 220)))
+                    {
+                        _debugger.visible = !_debugger.visible;
+                        _debuggerUp = _debugger.visible;
+                        if(_debugger.visible)
+                            flash.ui.Mouse.show();
+                        else if(!useSystemCursor)
+                            flash.ui.Mouse.hide();
+                        //_console.toggle();
+                        return;
+                    }
+                    if(useSoundHotKeys)
+                    {
+                        var c:int = FlashEvent.keyCode;
+                        var code:String = String.fromCharCode(FlashEvent.charCode);
+                        switch(c)
+                        {
+                            case 48:
+                            case 96:
+                                FlxG.mute = !FlxG.mute;
+                                if(FlxG.volumeHandler != null)
+                                    FlxG.volumeHandler(FlxG.mute?0:FlxG.volume);
+                                showSoundTray();
+                                return;
+                            case 109:
+                            case 189:
+                                FlxG.mute = false;
+                                FlxG.volume = FlxG.volume - 0.1;
+                                showSoundTray();
+                                return;
+                            case 107:
+                            case 187:
+                                FlxG.mute = false;
+                                FlxG.volume = FlxG.volume + 0.1;
+                                showSoundTray();
+                                return;
+                            default:
+                                break;
+                        }
+                    }
+                }
 			}
 			if(_replaying)
 				return;
@@ -295,7 +296,7 @@ package org.flixel
 		 * Internal event handler for input and focus.
 		 *
 		 * @param	FlashEvent	Flash keyboard event.
-		 */
+            */
 		protected function onKeyDown(FlashEvent:KeyboardEvent):void
 		{
 			if(_debuggerUp && _debugger.watch.editing)
