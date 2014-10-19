@@ -15,6 +15,7 @@ package{
         public var ikutursodoor:FlxExtSprite, euryaledoor:FlxExtSprite,
                    hiisidoor:FlxExtSprite;
         public var startCollisions:Boolean = false;
+        public var doors:Array;
 
         public static const BOSS_MARK:String = "boss_iku_turso";
         public static const DOOR_MARK:String = "fern_door_lock";
@@ -24,6 +25,27 @@ package{
             super.__create(new DHPoint(
                 _screen.screenWidth * .5, _screen.screenHeight * .7));
             FlxG.bgColor = 0x00000000;
+
+            doors = [
+                {
+                    "xPos": _screen.screenWidth * .165,
+                    "frame": new DHPoint(526, 1172),
+                    "image": "../assets/waterfall_l.png",
+                    "object": null
+                },
+                {
+                    "xPos": _screen.screenWidth * .395,
+                    "frame": new DHPoint(629, 940),
+                    "image": "../assets/waterfall_m.png",
+                    "object": null
+                },
+                {
+                    "xPos": _screen.screenWidth * .65,
+                    "frame": new DHPoint(526, 1172),
+                    "image": "../assets/waterfall_r.png",
+                    "object": null
+                }
+            ];
 
             GlobalTimer.getInstance().setMark(BOSS_MARK, 319632 - 60 * 1000);
             GlobalTimer.getInstance().setMark(DOOR_MARK, .5 * GameSound.MSEC_PER_SEC);
@@ -63,23 +85,15 @@ package{
             var receivingMachines:Array = [new Loader(), new Loader(), new Loader()];
             var _screen:ScreenManager = ScreenManager.getInstance();
 
-            ikutursodoor = new GameObject(new DHPoint(_screen.screenWidth * .165, bg.y));
-            add(ikutursodoor);
-            receivingMachines[0].contentLoaderInfo.addEventListener(Event.COMPLETE,
-                this.buildScalerFunction(ikutursodoor, new DHPoint(526, 1172), scaleFactor));
-            receivingMachines[0].load(new URLRequest("../assets/waterfall_l.png"));
-
-            euryaledoor = new GameObject(new DHPoint(_screen.screenWidth * .395, bg.y));
-            add(euryaledoor);
-            receivingMachines[1].contentLoaderInfo.addEventListener(Event.COMPLETE,
-                this.buildScalerFunction(euryaledoor, new DHPoint(629, 940), scaleFactor));
-            receivingMachines[1].load(new URLRequest("../assets/waterfall_m.png"));
-
-            hiisidoor = new GameObject(new DHPoint(_screen.screenWidth * .65, bg.y));
-            add(hiisidoor);
-            receivingMachines[2].contentLoaderInfo.addEventListener(Event.COMPLETE,
-                this.buildScalerFunction(hiisidoor, new DHPoint(526, 1172), scaleFactor));
-            receivingMachines[2].load(new URLRequest("../assets/waterfall_r.png"));
+            var cur:Object;
+            for (var i:int = 0; i < doors.length; i++) {
+                cur = doors[i];
+                cur["object"] = new GameObject(new DHPoint(cur["xPos"], bg.y));
+                add(cur["object"]);
+                receivingMachines[i].contentLoaderInfo.addEventListener(Event.COMPLETE,
+                    this.buildScalerFunction(cur["object"], cur["frame"], scaleFactor));
+                receivingMachines[i].load(new URLRequest(cur["image"]));
+            }
 
             this.startCollisions = true;
         }
@@ -93,14 +107,10 @@ package{
             super.update();
 
             if(this.startCollisions) {
-                if(player.mapHitbox.overlaps(ikutursodoor)){
-                    FlxG.switchState(new IkuTursoTeleportRoom());
-                }
-                if(player.mapHitbox.overlaps(euryaledoor)){
-                    FlxG.switchState(new IkuTursoTeleportRoom());
-                }
-                if(player.mapHitbox.overlaps(hiisidoor)){
-                    FlxG.switchState(new IkuTursoTeleportRoom());
+                for (var i:int = 0; i < doors.length; i++) {
+                    if(player.mapHitbox.overlaps(doors[i]["object"])){
+                        FlxG.switchState(new IkuTursoTeleportRoom());
+                    }
                 }
             }
         }
