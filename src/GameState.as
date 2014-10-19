@@ -163,7 +163,7 @@ package {
                 SoundManager.getInstance().increaseVolume();
             } else if (FlxG.keys.justPressed("O")) {
                 SoundManager.getInstance().decreaseVolume();
-            } else if (FlxG.keys.justPressed("S")) {
+            } else if (FlxG.keys.justPressed("ESCAPE")) {
                 this.pause();
             }
         }
