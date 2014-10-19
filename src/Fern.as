@@ -99,7 +99,6 @@ package{
                 if(player.mapHitbox.overlaps(ikutursodoor)){
                     FlxG.switchState(new IkuTursoTeleportRoom());
                 }
-
                 if(player.mapHitbox.overlaps(euryaledoor)){
                     FlxG.switchState(new IkuTursoTeleportRoom());
                 }

@@ -10,7 +10,7 @@ package {
         protected var updateSound:Boolean, updatePopup:Boolean,
                       updateMessages:Boolean, showEmoji:Boolean = true;
         protected var game_cursor:GameCursor;
-        private var pauseLayer:GameObject;
+        private var pauseLayer:GameObject, baseLayer:GameObject;
         private var sortedObjects:Array;
 
         public var ui_color_flag:Number;
@@ -36,6 +36,16 @@ package {
 
         override public function create():void {
             super.create();
+
+            this.baseLayer = new GameObject(new DHPoint(0, 0));
+            this.baseLayer.scrollFactor = new DHPoint(0, 0);
+            this.baseLayer.active = false;
+            this.baseLayer.makeGraphic(
+                ScreenManager.getInstance().screenWidth,
+                ScreenManager.getInstance().screenHeight,
+                0xff000000
+            );
+            this.add(this.baseLayer);
 
             this.pauseLayer = new GameObject(new DHPoint(0, 0));
             this.pauseLayer.scrollFactor = new DHPoint(0, 0);
