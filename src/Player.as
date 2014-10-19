@@ -286,10 +286,14 @@ package{
                     this.dir = this.dir.mulScl(.7);
                 }
             } else if (this._state == STATE_MOVE_TO_ENEMY) {
-                this.walkTarget = this.targetEnemy.getAttackPos();
-                this.walk();
-                if (this.enemyIsInAttackRange(this.targetEnemy)) {
-                    this._state = STATE_AT_ENEMY;
+                if(this.targetEnemy != null) {
+                    this.walkTarget = this.targetEnemy.getAttackPos();
+                    this.walk();
+                    if (this.enemyIsInAttackRange(this.targetEnemy)) {
+                        this._state = STATE_AT_ENEMY;
+                    }
+                } else {
+                    this.walk();
                 }
             } else if (this._state == STATE_AT_ENEMY) {
                 this.attack();

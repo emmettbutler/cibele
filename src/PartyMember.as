@@ -11,7 +11,7 @@ package {
         public var lastAttackTime:Number = 0;
         public var footsteps:FootstepTrail = null;
         public var footstepOffset:DHPoint;
-        public var attackRange:Number = 50;
+        public var attackRange:Number = 70;
         public var nameText:FlxText;
         public var text_facing:String = "up";
         public var footPos:DHPoint;

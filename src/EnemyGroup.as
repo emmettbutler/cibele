@@ -16,6 +16,7 @@ package
         public function addEnemy(en:Enemy):void {
             en.setPlayerRef(this.player);
             en.setFollowerRef(this.path_follower);
+            en.setPath(this.path_follower._path);
             this.enemies.push(en);
         }
 
