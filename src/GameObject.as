@@ -2,7 +2,7 @@ package
 {
     import org.flixel.*;
 
-    public class GameObject extends FlxSprite {
+    public class GameObject extends FlxExtSprite {
         public var pos:DHPoint;
         public var dir:DHPoint;
         public var bornTime:Number = -1;

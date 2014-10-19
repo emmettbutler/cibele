@@ -551,8 +551,7 @@ package org.flixel
 		 * Useful for cases when you need to update this but are buried down in too many supers.
 		 * This function is called automatically by <code>FlxSprite.postUpdate()</code>.
 		 */
-		protected function updateAnimation():void
-		{
+		protected function updateAnimation():void {
 			if(_bakedRotation > 0)
 			{
 				var oldIndex:uint = _curIndex;

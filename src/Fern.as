@@ -1,15 +1,22 @@
 package{
     import org.flixel.*;
 
+    import flash.display.Bitmap;
+    import flash.display.BitmapData;
+    import flash.display.PixelSnapping;
+    import flash.display.Loader;
+    import flash.events.Event;
+    import flash.geom.Matrix;
+    import flash.net.URLRequest;
+
     public class Fern extends PlayerState {
         [Embed(source="../assets/voc_ikuturso.mp3")] private var Convo:Class;
         [Embed(source="../assets/waterfall1.png")] private var ImgWater1:Class;
         [Embed(source="../assets/waterfall2.png")] private var ImgWater2:Class;
         [Embed(source="../assets/waterfall3.png")] private var ImgWater3:Class;
 
-        public var ikutursodoor:GameObject;
-        public var euryaledoor:GameObject;
-        public var hiisidoor:GameObject;
+        public var ikutursodoor:FlxExtSprite, euryaledoor:FlxExtSprite,
+                   hiisidoor:FlxExtSprite;
         public var startCollisions:Boolean = false;
 
         public static const BOSS_MARK:String = "boss_iku_turso";
@@ -30,7 +37,6 @@ package{
             var that:Fern = this;
             this.addEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
                 function(event:DataEvent):void {
-                    FlxG.log("got event data: " + event.userData['bg_scale']);
                     that.addDoors(event.userData['bg_scale']);
                     FlxG.stage.removeEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
                                                     arguments.callee);
@@ -39,37 +45,44 @@ package{
             this.postCreate();
         }
 
+        public function buildScalerFunction(spr:FlxExtSprite, frameDim:DHPoint, scaleFactor:Number=1):Function {
+            return function (event_load:Event):void {
+                var bmp:Bitmap = new Bitmap(event_load.target.content.bitmapData);
+                var matrix:Matrix = new Matrix();
+                matrix.scale(scaleFactor, scaleFactor);
+                var scaledBMD:BitmapData = new BitmapData(bmp.width * scaleFactor,
+                                                        bmp.height * scaleFactor,
+                                                        true, 0x000000);
+                scaledBMD.draw(bmp, matrix, null, null, null, true);
+                bmp = new Bitmap(scaledBMD, PixelSnapping.NEVER, true);
+                spr.loadExtGraphic(bmp, true, true, frameDim.x*scaleFactor,
+                                   frameDim.y*scaleFactor);
+                spr.addAnimation("flow", [0,  1,  2,  3,  4,  5,  6,  7], 20, true);
+                spr.play("flow");
+            };
+        }
+
         public function addDoors(scaleFactor:Number=1):void {
+            var receivingMachines:Array = [new Loader(), new Loader(), new Loader()];
             var _screen:ScreenManager = ScreenManager.getInstance();
+
             ikutursodoor = new GameObject(new DHPoint(_screen.screenWidth * .02, 0));
-            var imgDim:DHPoint = new DHPoint(526, 1258);
-            ikutursodoor.loadGraphic(ImgWater1, true, false, imgDim.x, imgDim.y);
-            ikutursodoor.addAnimation("flow",
-               [0,  1,  2,  3,  4,  5,  6,  7], 20, true);
-            ikutursodoor.play("flow");
-            ikutursodoor.scale.x = scaleFactor;
-            ikutursodoor.scale.y = scaleFactor;
             add(ikutursodoor);
+            receivingMachines[0].contentLoaderInfo.addEventListener(Event.COMPLETE,
+                this.buildScalerFunction(ikutursodoor, new DHPoint(526, 1258), scaleFactor));
+            receivingMachines[0].load(new URLRequest("../assets/waterfall1.png"));
 
             euryaledoor = new GameObject(new DHPoint(_screen.screenWidth * .2, 0));
-            imgDim = new DHPoint(628, 1024);
-            euryaledoor.loadGraphic(ImgWater2, true, false, imgDim.x, imgDim.y);
-            euryaledoor.addAnimation("flow",
-               [0,  1,  2,  3,  4,  5,  6,  7], 20, true);
-            euryaledoor.play("flow");
-            euryaledoor.scale.x = scaleFactor;
-            euryaledoor.scale.y = scaleFactor;
             add(euryaledoor);
+            receivingMachines[1].contentLoaderInfo.addEventListener(Event.COMPLETE,
+                this.buildScalerFunction(euryaledoor, new DHPoint(628, 1024), scaleFactor));
+            receivingMachines[1].load(new URLRequest("../assets/waterfall2.png"));
 
             hiisidoor = new GameObject(new DHPoint(_screen.screenWidth * .5, 0));
-            imgDim = new DHPoint(526, 1354);
-            hiisidoor.loadGraphic(ImgWater3, true, false, imgDim.x * _screen.calcFullscreenScale(imgDim), imgDim.y * _screen.calcFullscreenScale(imgDim));
-            hiisidoor.addAnimation("flow",
-               [0,  1,  2,  3,  4,  5,  6,  7], 20, true);
-            hiisidoor.play("flow");
-            hiisidoor.scale.x = scaleFactor;
-            hiisidoor.scale.y = scaleFactor;
             add(hiisidoor);
+            receivingMachines[2].contentLoaderInfo.addEventListener(Event.COMPLETE,
+                this.buildScalerFunction(hiisidoor, new DHPoint(526, 1354), scaleFactor));
+            receivingMachines[2].load(new URLRequest("../assets/waterfall3.png"));
 
             this.startCollisions = true;
         }
