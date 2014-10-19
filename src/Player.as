@@ -124,7 +124,6 @@ package{
                         cur is UIElement && cur.visible)
                     {
                         ui_clicked = true;
-
                     } else if (cur is Enemy) {
                         if (mouseWorldRect.overlaps(worldRect)) {
                             this.targetEnemy = cur as Enemy;
@@ -267,18 +266,18 @@ package{
             if (this._state == STATE_WALK || this._state == STATE_WALK_HARD) {
                 this.walk();
                 if(FlxG.mouse.pressed()) {
-                    this.initWalk(new DHPoint(FlxG.mouse.x, FlxG.mouse.y));
-                    this.walk();
+                    this.walkTarget = new DHPoint(FlxG.mouse.x, FlxG.mouse.y);
                 } else if(FlxG.mouse.justReleased()) {
                     this.click_anim_lock = false;
                 }
-                if (this.walkTarget.sub(this.footPos)._length() < 100) {
-                    this.dir = this.dir.mulScl(.7);
-                } else if (this.walkTarget.sub(this.footPos)._length() < 10) {
+                if (this.walkTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
                     this._state = STATE_IDLE;
                     this.dir = ZERO_POINT;
+                } else if (this.walkTarget.sub(this.footPos)._length() < 100) {
+                    this.dir = this.dir.mulScl(.7);
                 }
             } else if (this._state == STATE_MOVE_TO_ENEMY) {
+                this.walkTarget = this.targetEnemy.getAttackPos();
                 this.walk();
                 if (this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;

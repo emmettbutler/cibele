@@ -132,8 +132,6 @@ package
         override public function update():void {
             super.update();
 
-            FlxG.log(stateMap[this._state] + " " + new Date().valueOf());
-
             if(this.facing == LEFT) {
                 this.shadow_sprite.x = this.pos.center(this).x - 15;
                 this.shadow_sprite.y = this.pos.center(this).y + 60;
@@ -237,7 +235,6 @@ package
                 this.walk();
                 this.walkTarget = this.targetEnemy.getAttackPos();
                 this.disp = this.walkTarget.sub(this.footPos).normalized();
-                FlxG.log(this.disp.x + "x" + this.disp.y);
                 this.dir = this.disp.mulScl(this.runSpeed);
                 if (this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;

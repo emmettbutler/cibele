@@ -328,7 +328,6 @@ package{
                     }
                     if (!this.mouse_rect.overlaps(new FlxRect(this.img_inbox.x, this.img_inbox.y, this.img_inbox.width, this.img_inbox.height)))
                     {
-                        FlxG.log("exit");
                         this._state = STATE_HIDE_INBOX;
                         this.exitInbox(true);
                         if (this.cur_viewing != null) {
