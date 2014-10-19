@@ -67,6 +67,7 @@ package{
             var _screen:ScreenManager = ScreenManager.getInstance();
 
             ikutursodoor = new GameObject(new DHPoint(_screen.screenWidth * .185, bg.y));
+
             add(ikutursodoor);
             receivingMachines[0].contentLoaderInfo.addEventListener(Event.COMPLETE,
                 this.buildScalerFunction(ikutursodoor, new DHPoint(458, 1128), scaleFactor));

@@ -62,7 +62,7 @@ package{
             super.create();
             SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true,
                                                  .08, GameSound.BGM);
-            GlobalTimer.getInstance().setMark(Fern.BOSS_MARK, 319632 - 60 * 1000);
+            GlobalTimer.getInstance().setMark(Fern.BOSS_MARK, 0 * 1000);
             this.convo1Sound = null;
         }
 

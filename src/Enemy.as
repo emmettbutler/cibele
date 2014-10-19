@@ -16,6 +16,8 @@ package
         public static const STATE_DAMAGED:Number = 2;
         public static const STATE_TRACKING:Number = 3;
         public static const STATE_RECOIL:Number = 4;
+        public static const STATE_ESCAPE:Number = 5;
+        public static const STATE_MOVE_TO_PATH_NODE:Number = 6;
         public var dead:Boolean = false;
 
         public var player:Player;
@@ -35,6 +37,10 @@ package
         public var fade:Boolean = false;
         public var bar:GameObject;
         public var sightRange:Number = 308;
+        public var canEscape:Boolean = false;
+
+        public var _path:Path = null;
+        public var targetPathNode:PathNode;
 
         {
             public static var stateMap:Dictionary = new Dictionary();
@@ -46,7 +52,7 @@ package
 
         public function Enemy(pos:DHPoint) {
             super(pos);
-            this._state = STATE_IDLE;
+            //this._state = STATE_IDLE;
 
             this.attackOffset = new DHPoint(0, 0);
 
@@ -103,7 +109,9 @@ package
 
         public function takeDamage(p:PartyMember):void{
             this.attacker = p;
-            this._state = STATE_RECOIL;
+            if (this._state != STATE_MOVE_TO_PATH_NODE && this._state != STATE_ESCAPE) {
+                this._state = STATE_RECOIL;
+            }
             this.hitpoints -= damage;
             this.bar.scale.x = this.hitpoints;
             this.disp = this.attacker.footPos.sub(this.getAttackPos());
@@ -169,6 +177,10 @@ package
             return this.footPos.add(this.attackOffset);
         }
 
+        public function setPath(path:Path):void {
+            this._path = path;
+        }
+
         override public function update():void{
             super.update();
 
@@ -216,6 +228,23 @@ package
                 if (this.attackerDisp._length() > 120) {
                     this._state = STATE_TRACKING;
                 }
+            } else if (this._state == STATE_ESCAPE) {
+                if(this.targetPathNode == null) {
+                    this._path.setCurrentNode(_path.getClosestNode(this.footPos));
+                    this._state = STATE_MOVE_TO_PATH_NODE;
+                } else {
+                    disp = this.targetPathNode.pos.sub(this.footPos);
+                    FlxG.log(disp._length());
+                    if (disp._length() < 10) {
+                        this._state = STATE_MOVE_TO_PATH_NODE;
+                    } else {
+                        this.dir = disp.normalized().mulScl(2);
+                    }
+                }
+            } else if (this._state == STATE_MOVE_TO_PATH_NODE) {
+                this._path.advance();
+                this.targetPathNode = this._path.currentNode;
+                this._state = STATE_ESCAPE;
             }
 
             if(this.hitpoints < 0){
