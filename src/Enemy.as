@@ -41,6 +41,7 @@ package
 
         public var _path:Path = null;
         public var targetPathNode:PathNode;
+        public var escape_counter:Number = 0;
 
         {
             public static var stateMap:Dictionary = new Dictionary();
@@ -111,11 +112,16 @@ package
             this.attacker = p;
             if (this._state != STATE_MOVE_TO_PATH_NODE && this._state != STATE_ESCAPE) {
                 this._state = STATE_RECOIL;
+                this.disp = this.attacker.footPos.sub(this.getAttackPos());
+                this.dir = this.disp.normalized().mulScl(this.recoilPower).reflectX();
             }
             this.hitpoints -= damage;
+            if(this.hitpoints%100 == 0) {
+                if (this._state != STATE_MOVE_TO_PATH_NODE && this._state != STATE_ESCAPE) {
+                    this._state = STATE_ESCAPE;
+                }
+            }
             this.bar.scale.x = this.hitpoints;
-            this.disp = this.attacker.footPos.sub(this.getAttackPos());
-            this.dir = this.disp.normalized().mulScl(this.recoilPower).reflectX();
         }
 
         public function setIdle():void {
@@ -234,17 +240,22 @@ package
                     this._state = STATE_MOVE_TO_PATH_NODE;
                 } else {
                     disp = this.targetPathNode.pos.sub(this.footPos);
-                    FlxG.log(disp._length());
                     if (disp._length() < 10) {
                         this._state = STATE_MOVE_TO_PATH_NODE;
                     } else {
-                        this.dir = disp.normalized().mulScl(2);
+                        this.dir = disp.normalized().mulScl(3);
                     }
                 }
             } else if (this._state == STATE_MOVE_TO_PATH_NODE) {
+                this.escape_counter += 1;
                 this._path.advance();
                 this.targetPathNode = this._path.currentNode;
-                this._state = STATE_ESCAPE;
+                if(this.escape_counter <= 10) {
+                    this._state = STATE_ESCAPE;
+                } else {
+                    this._state = STATE_TRACKING;
+                    this.escape_counter = 0;
+                }
             }
 
             if(this.hitpoints < 0){

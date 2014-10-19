@@ -15,7 +15,7 @@ package
             sightRange = 750;
             damage = 1;
             this.canEscape = true;
-            this.attackOffset = new DHPoint(this.width / 2 - 30,
+            this.attackOffset = new DHPoint(-200,
                                             -1 * (this.height / 3));
             this.recoilPower = 0;
 
@@ -25,9 +25,6 @@ package
 
         override public function update():void{
             super.update();
-            if(FlxG.mouse.pressed()) {
-                this._state = STATE_ESCAPE;
-            }
         }
 
         override public function die():void {
