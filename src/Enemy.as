@@ -21,7 +21,7 @@ package
         public var dead:Boolean = false;
 
         public var player:Player;
-        public var recoilPower:Number = 5;
+        public var recoilPower:Number = 3;
         public var playerDisp:DHPoint;
         public var attackOffset:DHPoint;
         public var disp:DHPoint;
