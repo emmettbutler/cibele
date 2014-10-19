@@ -96,7 +96,7 @@ package{
             super.update();
 
             if(this.startCollisions) {
-                /*if(player.mapHitbox.overlaps(ikutursodoor)){
+                if(player.mapHitbox.overlaps(ikutursodoor)){
                     FlxG.switchState(new IkuTursoTeleportRoom());
                 }
 
@@ -105,7 +105,7 @@ package{
                 }
                 if(player.mapHitbox.overlaps(hiisidoor)){
                     FlxG.switchState(new IkuTursoTeleportRoom());
-                }*/
+                }
             }
         }
 
