@@ -42,6 +42,11 @@ package {
             FlxG.stage.addChild(video);
         }
 
+        override public function create():void {
+            super.create();
+            FlxG.bgColor = 0xff000000;
+        }
+
         override public function update():void {
             super.update();
         }

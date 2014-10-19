@@ -22,7 +22,6 @@ package {
         override public function create():void {
             super.__create(new DHPoint(4600, 7565));
 
-            FlxG.bgColor = 0xffffffff;
             this.bornTime = new Date().valueOf();
             this.ID = LEVEL_ID;
 
