@@ -66,7 +66,6 @@ package {
                 MessageManager.getInstance();
             }
             this.game_cursor = new GameCursor();
-            FlxG.state.add(this.pauseLayer);
         }
 
         public function updateCursor():void {
@@ -149,6 +148,10 @@ package {
                 MessageManager.getInstance().update();
             }
 
+            if (!this.containsPauseLayer()) {
+                FlxG.state.add(this.pauseLayer);
+            }
+
             this.updateCursor();
 
             if(FlxG.mouse.justPressed()) {
@@ -166,6 +169,15 @@ package {
             } else if (FlxG.keys.justPressed("ESCAPE")) {
                 this.pause();
             }
+        }
+
+        public function containsPauseLayer():Boolean {
+            for (var i:int = 0; i < this.members.length; i++) {
+                if (this.members[i] == this.pauseLayer) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public function playClick():void {
