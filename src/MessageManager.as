@@ -346,7 +346,10 @@ package{
                             }
                         }
                     }
-                    if (!this.mouse_rect.overlaps(new FlxRect(this.img_inbox.x, this.img_inbox.y, this.img_inbox.width, this.img_inbox.height)))
+                    if (!this.mouse_rect.overlaps(
+                            new FlxRect(this.img_inbox.x, this.img_inbox.y, this.img_inbox.width, this.img_inbox.height)) ||
+                            new FlxRect(this.exit_ui.x, this.exit_ui.y, this.exit_ui.width, this.exit_ui.height)
+                        )
                     {
                         this._state = STATE_HIDE_INBOX;
                         this.exitInbox(true);
