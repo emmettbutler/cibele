@@ -50,8 +50,10 @@ package {
             state.addEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
                 function(event:DataEvent):void {
                     that.addDoors(bg, event.userData['bg_scale']);
-                    FlxG.stage.removeEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
-                                                    arguments.callee);
+                    FlxG.stage.removeEventListener(
+                        GameState.EVENT_SINGLETILE_BG_LOADED,
+                        arguments.callee
+                    );
                 });
 
         }
@@ -64,16 +66,15 @@ package {
             for (var i:int = 0; i < doors.length; i++) {
                 cur = doors[i];
                 cur["object"].y = bg.y;
-                receivingMachines[i].contentLoaderInfo.addEventListener(Event.COMPLETE,
-                    this.buildScalerFunction(cur["object"],
-                                                             cur["frame"],
-                                                             scaleFactor));
+                receivingMachines[i].contentLoaderInfo.addEventListener(
+                    Event.COMPLETE,
+                    this.buildScalerFunction(cur["object"], cur["frame"],
+                                             scaleFactor));
                 receivingMachines[i].load(new URLRequest(cur["image"]));
             }
         }
 
-        public function buildScalerFunction(spr:FlxExtSprite,
-                                            frameDim:DHPoint,
+        public function buildScalerFunction(spr:FlxExtSprite, frameDim:DHPoint,
                                             scaleFactor:Number=1):Function
         {
             return function (event_load:Event):void {

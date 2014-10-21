@@ -18,6 +18,7 @@ package{
         public var quit:GameObject;
         public var play_game:GameObject;
         public var char_select:GameObject;
+        public var title_text:FlxText;
 
         public var play_game_rect:FlxRect;
         public var login_rect:FlxRect;
@@ -50,6 +51,13 @@ package{
             quit.loadGraphic(ImgQuit,false,false,121,17);
             add(quit);
             quit_rect = new FlxRect(quit.x,quit.y,quit.width,quit.height);
+
+            this.title_text = new FlxText(0, _screen.screenHeight * .2,
+                _screen.screenWidth, "VALTAMERI");
+            this.title_text.setFormat("NexaBold-Regular", 146, 0xff616161, "center");
+            this.title_text.scrollFactor = new FlxPoint(0, 0);
+            this.title_text.active = false;
+            add(this.title_text);
 
 //
             login = new GameObject(new DHPoint(_screen.screenWidth * .45, _screen.screenHeight * .93));
