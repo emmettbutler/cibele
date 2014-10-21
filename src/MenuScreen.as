@@ -101,7 +101,7 @@ package{
             function _musicCallback():void {
                 SoundManager.getInstance().playSound(MenuBGMLoop, 0, null, true, 1, GameSound.BGM);
             }
-            SoundManager.getInstance().playSound(MenuBGMIntro, 9*GameSound.MSEC_PER_SEC, _musicCallback, false, 1, GameSound.BGM);
+            SoundManager.getInstance().playSound(MenuBGMIntro, 8*GameSound.MSEC_PER_SEC, _musicCallback, false, 1, GameSound.BGM);
 
             super.postCreate();
         }
