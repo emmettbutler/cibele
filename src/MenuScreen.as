@@ -34,12 +34,11 @@ package{
         }
 
         override public function create():void {
+            super.create();
+
             FlxG.bgColor = 0x00000000;
 
-            (new BackgroundLoader()).loadSingleTileBG("../assets/menuscreen.png");
-            ScreenManager.getInstance().setupCamera(null, 1);
-
-            super.postCreate();
+            new FernBackgroundLoader().load();
 
             var _screen:ScreenManager = ScreenManager.getInstance();
             play_game = new GameObject(new DHPoint(_screen.screenWidth * .45, _screen.screenHeight * .55));
@@ -69,6 +68,8 @@ package{
                 SoundManager.getInstance().playSound(FernBGMLoop, 0, null, true, .05, GameSound.BGM);
             }
             SoundManager.getInstance().playSound(FernBGMIntro, 12631, _musicCallback, false, .1, GameSound.BGM);
+
+            super.postCreate();
         }
 
         override public function update():void{
