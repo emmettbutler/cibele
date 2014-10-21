@@ -1,4 +1,21 @@
 {
+	"bgm_menu": {
+		"behavior": "sequence",
+		"subevents": [
+			{
+				"file": "bgm_menu_intro.mp3",
+				"startTime": 0,
+				"loop": false,
+				"bpm": 117
+			},
+			{
+				"file": "bgm_menu_loop.mp3",
+				"startTime": 8.205,
+				"loop": true,
+				"bpm": 117
+			}
+		]
+	},
 	"bgm_fern": {
 		"behavior": "sequence",
 		"subevents": [
@@ -25,12 +42,13 @@
 				"loop": false,
 				"bpm": 67
 			},
-                        {
-                                "file": "bgm_ikuturso_loop.mp3",
-                                "startTime": 3.582,
-                                "loop": false,
-                                "bpm": 67
-                        }
+			{
+				"file": "bgm_ikuturso_loop.mp3",
+				"startTime": 3.582,
+				"loop": false,
+				"bpm": 67
+			}
+		]
 	},
 	"bgm_euryale": {
 		"behavior": "sequence",
