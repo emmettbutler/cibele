@@ -64,12 +64,12 @@ package{
             add(this.crystal_icon);
 
             play_game = new FlxText(_screen.screenWidth * .26, _screen.screenHeight * .47, _screen.screenWidth, "play");
-            play_game.setFormat("NexaBold-Regular", 46, 0xff91c6d5);
+            play_game.setFormat("NexaBold-Regular", 46, 0xff709daa);
             add(play_game);
             play_game_rect = new FlxRect(play_game.x,play_game.y,300,200);
 
             quit = new FlxText(_screen.screenWidth * .2, _screen.screenHeight * .47, _screen.screenWidth, "quit");
-            quit.setFormat("NexaBold-Regular", 46, 0xff91c6d5, "center");
+            quit.setFormat("NexaBold-Regular", 46, 0xff709daa, "center");
             add(quit);
             quit_rect = new FlxRect(quit.x,quit.y,300,200);
 
@@ -85,8 +85,8 @@ package{
             char_select = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .05));
             char_select.loadGraphic(ImgChar,false,false,400,494);
 
-            login = new FlxText(_screen.screenWidth * .46, _screen.screenHeight * .8, _screen.screenWidth, "login");
-            login.setFormat("NexaBold-Regular", 46, 0xff91c6d5);
+            login = new FlxText(_screen.screenWidth * .46, _screen.screenHeight * .8, _screen.screenWidth, "> login <");
+            login.setFormat("NexaBold-Regular", 46, 0xff709daa);
             login_rect = new FlxRect(login.x,login.y,300,200)
 
             char_info = new FlxText(_screen.screenWidth * .36, _screen.screenHeight * .73, _screen.screenWidth, "Name: Cibele | Server: Medusa");

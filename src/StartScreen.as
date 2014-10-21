@@ -32,7 +32,7 @@ package{
         override public function update():void{
             super.update();
             if(FlxG.keys.SPACE) {
-                SoundManager.getInstance().playSound(VidBGMLoop, 0, null, true, .2, GameSound.BGM);
+                SoundManager.getInstance().playSound(VidBGMLoop, 24*GameSound.MSEC_PER_SEC, null, false, 1, Math.random()*5000+100);
                 startGame();
             }
         }
