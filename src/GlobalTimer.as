@@ -30,6 +30,7 @@ package {
             if (existing != null && !overwrite) {
                 return;
             }
+            delete this.marks[name];
             this.marks[name] = new GlobalTimerMark(name, time,
                                                    new Date().valueOf(),
                                                    0, callback);

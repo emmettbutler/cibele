@@ -123,13 +123,11 @@ package{
                 false, 1, GameSound.VOCAL
             );
             this.bitDialogueLock = false;
-            FlxG.log("play first");
         }
 
         override public function update():void{
             super.update();
             this.boss.update();
-            FlxG.log(SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL));
             if (this.convo1Sound == null) {
                 if (!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL))
                 {
