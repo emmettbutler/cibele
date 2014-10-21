@@ -6,8 +6,8 @@ package{
         [Embed(source="../assets/quit.png")] private var ImgQuit:Class;
         [Embed(source="../assets/play.png")] private var ImgPlay:Class;
         [Embed(source="../assets/charselect_small.png")] private var ImgChar:Class;
-        [Embed(source="../assets/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
-        [Embed(source="../assets/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
+        [Embed(source="../assets/bgm_menu_intro.mp3")] private var MenuBGMIntro:Class;
+        [Embed(source="../assets/bgm_menu_loop.mp3")] private var MenuBGMLoop:Class;
         [Embed(source="../assets/Crystal-icon-large.png")] private var ImgXtal:Class;
 
         public var timeFrame:Number = 0;
@@ -64,18 +64,18 @@ package{
             add(this.crystal_icon);
 
             play_game = new FlxText(_screen.screenWidth * .26, _screen.screenHeight * .47, _screen.screenWidth, "play");
-            play_game.setFormat("NexaBold-Regular", 46, 0xff63bed8);
+            play_game.setFormat("NexaBold-Regular", 46, 0xff91c6d5);
             add(play_game);
             play_game_rect = new FlxRect(play_game.x,play_game.y,300,200);
 
             quit = new FlxText(_screen.screenWidth * .2, _screen.screenHeight * .47, _screen.screenWidth, "quit");
-            quit.setFormat("NexaBold-Regular", 46, 0xff63bed8, "center");
+            quit.setFormat("NexaBold-Regular", 46, 0xff91c6d5, "center");
             add(quit);
             quit_rect = new FlxRect(quit.x,quit.y,300,200);
 
             this.title_text = new FlxText(0, _screen.screenHeight * .25,
                 _screen.screenWidth, "VALTAMERI");
-            this.title_text.setFormat("NexaBold-Regular", 146, 0xfff69eba, "center");
+            this.title_text.setFormat("NexaBold-Regular", 146, 0xffce8494, "center");
             this.title_text.scrollFactor = new FlxPoint(0, 0);
             this.title_text.active = false;
             add(this.title_text);
@@ -86,11 +86,11 @@ package{
             char_select.loadGraphic(ImgChar,false,false,400,494);
 
             login = new FlxText(_screen.screenWidth * .46, _screen.screenHeight * .8, _screen.screenWidth, "login");
-            login.setFormat("NexaBold-Regular", 46, 0xff63bed8);
+            login.setFormat("NexaBold-Regular", 46, 0xff91c6d5);
             login_rect = new FlxRect(login.x,login.y,300,200)
 
             char_info = new FlxText(_screen.screenWidth * .36, _screen.screenHeight * .73, _screen.screenWidth, "Name: Cibele | Server: Medusa");
-            char_info.setFormat("NexaBold-Regular", 26, 0xfff69eba);
+            char_info.setFormat("NexaBold-Regular", 26, 0xffce8494);
 
             mouse_rect = new FlxRect(FlxG.mouse.x,FlxG.mouse.y,1,1);
 
@@ -99,9 +99,9 @@ package{
 
             //todo this should probs not trigger every time if there's other music playing
             function _musicCallback():void {
-                SoundManager.getInstance().playSound(FernBGMLoop, 0, null, true, .05, GameSound.BGM);
+                SoundManager.getInstance().playSound(MenuBGMLoop, 0, null, true, 1, GameSound.BGM);
             }
-            SoundManager.getInstance().playSound(FernBGMIntro, 12631, _musicCallback, false, .1, GameSound.BGM);
+            SoundManager.getInstance().playSound(MenuBGMIntro, 9*GameSound.MSEC_PER_SEC, _musicCallback, false, 1, GameSound.BGM);
 
             super.postCreate();
         }

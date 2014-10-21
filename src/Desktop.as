@@ -4,6 +4,7 @@ package{
     public class Desktop extends GameState {
         [Embed(source="../assets/selfiedesktop.png")] private var ImgSelfies:Class;
         [Embed(source="../assets/untitledfolder.png")] private var ImgFolder:Class;
+        [Embed(source="../assets/sfx_roomtone.mp3")] private var SFXRoomTone:Class;
 
         public var timeFrame:Number = 0;
         public var timer:Number = 0;
@@ -42,6 +43,8 @@ package{
             this.selfie_folder.loadGraphic(ImgSelfies,false,false,769,411);
             FlxG.state.add(this.selfie_folder);
             this.selfie_folder.alpha = 0;
+
+            SoundManager.getInstance().playSound(SFXRoomTone, 5*GameSound.MSEC_PER_SEC, null, true, 1, GameSound.BGM);
         }
 
         override public function update():void{

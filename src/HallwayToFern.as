@@ -11,6 +11,8 @@ package{
         [Embed(source="../assets/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
         [Embed(source="../assets/voc_extra_ichiareyouthere.mp3")] private var SndRUThere:Class;
         [Embed(source="../assets/voc_extra_cibichi.mp3")] private var CibIchi:Class;
+        [Embed(source="../assets/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
+        [Embed(source="../assets/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
 
         public var call_button:GameObject;
         public var accept_call:Boolean = false;
@@ -48,11 +50,11 @@ package{
             ScreenManager.getInstance().setupCamera(player.cameraPos, 1);
             FlxG.camera.setBounds(0, 0, _screen.screenWidth, bottomY);
 
-            this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
-            this.light.alpha = .1;
+
 
             this.postCreate();
-
+            this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
+            this.light.alpha = .1;
             if(_state == STATE_PRE_IT){
                 call_button = new GameObject(new DHPoint(_screen.screenWidth * .35,
                                             _screen.screenHeight * .3));
@@ -62,6 +64,11 @@ package{
             }
 
             this.player.nameText.color = 0xffffffff;
+
+            function _musicCallback():void {
+                SoundManager.getInstance().playSound(FernBGMLoop, 0, null, true, 1, GameSound.BGM);
+            }
+            SoundManager.getInstance().playSound(FernBGMIntro, 16*GameSound.MSEC_PER_SEC, _musicCallback, false, 1, GameSound.BGM);
         }
 
         public function initTiles(startY:Number):void {

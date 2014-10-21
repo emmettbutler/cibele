@@ -5,7 +5,7 @@ package{
 
     public class IkuTurso extends LevelMapState {
         [Embed(source="../assets/ikuturso_wip.mp3")] private var ITBGMLoop:Class;
-        [Embed(source="../assets/sexyselfie_wip.mp3")] private var VidBGMLoop:Class;
+        [Embed(source="../assets/vid_sexyselfie.mp3")] private var VidBGMLoop:Class;
         [Embed(source="../assets/voc_ikuturso_bulldog.mp3")] private var Convo1:Class;
         [Embed(source="../assets/voc_ikuturso_ampule.mp3")] private var Convo2:Class;
         [Embed(source="../assets/voc_ikuturso_photogenic.mp3")] private var Convo3:Class;
