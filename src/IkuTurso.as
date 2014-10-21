@@ -27,7 +27,7 @@ package{
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo1, "len": 10*GameSound.MSEC_PER_SEC,
+                    "audio": Convo1, "len": 56*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showIchiDownloadWindow
                 },
                 {

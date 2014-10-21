@@ -354,7 +354,7 @@ package
 
         public function inViewOfPlayer():Boolean {
             return !(this.playerRef.pos.sub(this.pos)._length() >
-                    ScreenManager.getInstance().screenWidth / 2 + 100);
+                    ScreenManager.getInstance().screenWidth / 2);
         }
 
         public function warpToPlayer():void {

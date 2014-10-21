@@ -36,7 +36,6 @@ package {
         public static const IDX_FILE:int = 0;
         public static const IDX_HAS_PLAYED:int = 1;
 
-        public var dirDialogueLock:Boolean = false;
         public static var bitDialoguePieces:Dictionary = new Dictionary();
         public var containerState:LevelMapState;
 
@@ -60,7 +59,10 @@ package {
         }
 
         public function update():void {
-            playBitDialogue();
+            var rand:Number = Math.random();
+            if (rand > .99) {
+                playBitDialogue();
+            }
         }
 
         public function get player():Player {
@@ -75,28 +77,25 @@ package {
             if(player.isAttacking()) {
                 if(pathWalker.inViewOfPlayer()){
                     GlobalTimer.getInstance().setMark("delayed_ichinicehit",
-                        1*GameSound.MSEC_PER_SEC, this.buildDialogueCallback(this.playIchiNiceHit));
-                }
-            }
-
-            if(!pathWalker.inViewOfPlayer()) {
-                var rand:Number = Math.random() * 2;
-                if(!this.dirDialogueLock) {
-                    this.dirDialogueLock = true;
-                    if(rand >=0) {
-                        GlobalTimer.getInstance().setMark("delayed_cibwhichway",
-                        1*GameSound.MSEC_PER_SEC, this.buildDialogueCallback(this.playCibWhichWay));
-                    } else {
-                        GlobalTimer.getInstance().setMark("delayed_ichiwhichway",
-                        1*GameSound.MSEC_PER_SEC, this.buildDialogueCallback(this.playIchiWhichWay));
-                    }
+                        1*GameSound.MSEC_PER_SEC, this.buildDialogueCallback(this.playIchiNiceHit),
+                        true);
                 }
             }
 
             if(pathWalker.isAttacking()) {
                 if(pathWalker.inViewOfPlayer()){
                     GlobalTimer.getInstance().setMark("delayed_cibnicehit",
-                        1*GameSound.MSEC_PER_SEC, this.buildDialogueCallback(this.playCibNiceHit));
+                        1*GameSound.MSEC_PER_SEC, this.buildDialogueCallback(this.playCibNiceHit),
+                        true);
+                }
+            }
+
+            if(!pathWalker.inViewOfPlayer()) {
+                var rand:Number = Math.random() * 4;
+                if(rand > 1) {
+                    this.buildDialogueCallback(this.playCibWhichWay)();
+                } else {
+                    this.buildDialogueCallback(this.playIchiWhichWay)();
                 }
             }
         }
@@ -131,7 +130,6 @@ package {
                     );
                 }
             }
-            this.dirDialogueLock = false;
         }
 
         public function getDialogueDirection(from_obj:PartyMember, to_obj:PartyMember):Number {
@@ -150,14 +148,10 @@ package {
         }
 
         public function buildDialogueCallback(func:Function):Function {
-            FlxG.log("build anon");
             return function():void {
-                FlxG.log(!SoundManager.getInstance().soundOfTypeIsPlaying(
-                    GameSound.VOCAL));
                 if(!SoundManager.getInstance().soundOfTypeIsPlaying(
                     GameSound.VOCAL))
                 {
-                    FlxG.log("call func");
                     func();
                 }
             }
