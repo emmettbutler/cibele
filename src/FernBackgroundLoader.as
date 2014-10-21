@@ -12,7 +12,7 @@ package {
     public class FernBackgroundLoader {
         public var doors:Array;
 
-        public function load():void {
+        public function load():FlxExtSprite {
             var _screen:ScreenManager = ScreenManager.getInstance();
             doors = [
                 {
@@ -55,6 +55,8 @@ package {
                         arguments.callee
                     );
                 });
+
+            return bg;
 
         }
 

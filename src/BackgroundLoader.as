@@ -286,7 +286,7 @@ package {
                     bg.y = origin.y;
                     FlxG.stage.dispatchEvent(
                         new DataEvent(GameState.EVENT_SINGLETILE_BG_LOADED,
-                                      {'bg_scale': bgScale}));
+                                      {'bg_scale': bgScale, 'bg': bg}));
                 }
             );
             receivingMachine.load(new URLRequest(path));

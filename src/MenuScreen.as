@@ -5,7 +5,7 @@ package{
         [Embed(source="../assets/login.png")] private var ImgLogin:Class;
         [Embed(source="../assets/quit.png")] private var ImgQuit:Class;
         [Embed(source="../assets/play.png")] private var ImgPlay:Class;
-        [Embed(source="../assets/charselect.png")] private var ImgChar:Class;
+        [Embed(source="../assets/charselect_small.png")] private var ImgChar:Class;
         [Embed(source="../assets/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
         [Embed(source="../assets/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
 
@@ -38,10 +38,23 @@ package{
             super.create();
 
             FlxG.bgColor = 0x00000000;
+            var _screen:ScreenManager = ScreenManager.getInstance();
 
             new FernBackgroundLoader().load();
 
-            var _screen:ScreenManager = ScreenManager.getInstance();
+            var smoke:GameObject = new GameObject(new DHPoint(0, 0));
+            smoke.active = false;
+            add(smoke);
+            this.addEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
+                function(event:DataEvent):void {
+                    smoke.y = event.userData['bg'].y;
+                    smoke.makeGraphic(_screen.screenWidth, event.userData['bg'].height, 0xaaffffff);
+                    FlxG.stage.removeEventListener(
+                        GameState.EVENT_SINGLETILE_BG_LOADED,
+                        arguments.callee
+                    );
+                });
+
             play_game = new GameObject(new DHPoint(_screen.screenWidth * .45, _screen.screenHeight * .55));
             play_game.loadGraphic(ImgPlay,false,false,121,17);
             add(play_game);
