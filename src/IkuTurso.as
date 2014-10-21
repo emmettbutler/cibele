@@ -27,7 +27,7 @@ package{
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo1, "len": 56*GameSound.MSEC_PER_SEC,
+                    "audio": Convo1, "len": 10*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showIchiDownloadWindow
                 },
                 {
@@ -123,13 +123,11 @@ package{
                 false, 1, GameSound.VOCAL
             );
             this.bitDialogueLock = false;
-            FlxG.log("play first");
         }
 
         override public function update():void{
             super.update();
             this.boss.update();
-            FlxG.log(SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL));
             if (this.convo1Sound == null) {
                 if (!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL))
                 {
