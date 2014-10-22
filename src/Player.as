@@ -90,7 +90,7 @@ package{
             this.hitboxDim = new DHPoint(40, 50);
             this.mapHitbox = new GameObject(this.pos);
             this.mapHitbox.makeGraphic(this.hitboxDim.x, this.hitboxDim.y,
-                                       0xffff0000);
+                                       0xff000000);
             this.hitbox_rect = new FlxRect(this.pos.x, this.pos.y,
                                            this.mapHitbox.width,
                                            this.mapHitbox.height);

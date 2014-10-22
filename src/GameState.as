@@ -185,12 +185,12 @@ package {
             var rand:Number = Math.random() * 2;
             if(rand > 1) {
                 SoundManager.getInstance().playSound(
-                    SfxClick, 1*GameSound.MSEC_PER_SEC, null, false, .2, GameSound.SFX,
+                    SfxClick, 1*GameSound.MSEC_PER_SEC, null, false, .1, GameSound.SFX,
                     "" + Math.random()
                 );
             } else {
                 SoundManager.getInstance().playSound(
-                    SfxClick2, 200, null, false, .3, GameSound.SFX,
+                    SfxClick2, 200, null, false, .1, GameSound.SFX,
                     "" + Math.random()
                 );
             }
