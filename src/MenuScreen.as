@@ -15,9 +15,9 @@ package{
         public var debugText:FlxText;
 
         public var bg:GameObject;
-        public var login:FlxText;
-        public var quit:FlxText;
-        public var play_game:FlxText;
+        public var login:BouncingText;
+        public var quit:BouncingText;
+        public var play_game:BouncingText;
         public var char_select:GameObject;
         public var title_text:FlxText;
         public var char_info:FlxText;
@@ -61,37 +61,42 @@ package{
                     );
                 });
 
-            this.crystal_icon = new GameObject(new DHPoint(_screen.screenWidth * .38, _screen.screenHeight * .05));
+            this.crystal_icon = new GameObject(new DHPoint(_screen.screenWidth * .5, _screen.screenHeight * .5));
             this.crystal_icon.loadGraphic(ImgXtal,false,false,314,500);
+            this.crystal_icon.x -= this.crystal_icon.width/2;
+            this.crystal_icon.y -= this.crystal_icon.height/2;
             add(this.crystal_icon);
 
-            play_game = new FlxText(_screen.screenWidth * .26, _screen.screenHeight * .47, _screen.screenWidth, "play");
-            play_game.setFormat("NexaBold-Regular", 46, 0xff709daa);
-            add(play_game);
-            play_game_rect = new FlxRect(play_game.x,play_game.y,300,200);
-
-            quit = new FlxText(_screen.screenWidth * .2, _screen.screenHeight * .47, _screen.screenWidth, "quit");
-            quit.setFormat("NexaBold-Regular", 46, 0xff709daa, "center");
-            add(quit);
-            quit_rect = new FlxRect(quit.x,quit.y,300,200);
-
-            this.title_text = new FlxText(0, _screen.screenHeight * .25,
+            this.title_text = new FlxText(0, _screen.screenHeight * .5,
                 _screen.screenWidth, "VALTAMERI");
             this.title_text.setFormat("NexaBold-Regular", 146, 0xffce8494, "center");
             this.title_text.scrollFactor = new FlxPoint(0, 0);
             this.title_text.active = false;
+            this.title_text.y -= this.title_text.height/2;
             add(this.title_text);
+
+            play_game = new BouncingText(this.title_text.x + 360, this.title_text.y + 150, _screen.screenWidth, "play");
+            play_game.setFormat("NexaBold-Regular", 46, 0xff709daa);
+            add(play_game);
+            play_game_rect = new FlxRect(play_game.x,play_game.y,300,200);
+
+            quit = new BouncingText(this.title_text.x + 820, this.title_text.y + 150, _screen.screenWidth, "quit");
+            quit.setFormat("NexaBold-Regular", 46, 0xff709daa);
+            add(quit);
+            quit_rect = new FlxRect(quit.x,quit.y,300,200);
 
 //
 
-            char_select = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .05));
+            char_select = new GameObject(new DHPoint(_screen.screenWidth * .5, _screen.screenHeight * .4));
             char_select.loadGraphic(ImgChar,false,false,400,494);
+            char_select.x -= char_select.width/2;
+            char_select.y -= char_select.height/2;
 
-            login = new FlxText(_screen.screenWidth * .46, _screen.screenHeight * .8, _screen.screenWidth, "> login <");
+            login = new BouncingText(char_select.x + 110, char_select.y + char_select.height + 50, _screen.screenWidth, "> login <");
             login.setFormat("NexaBold-Regular", 46, 0xff709daa);
             login_rect = new FlxRect(login.x,login.y,300,200)
 
-            char_info = new FlxText(_screen.screenWidth * .36, _screen.screenHeight * .73, _screen.screenWidth, "Name: Cibele | Server: Medusa");
+            char_info = new FlxText(char_select.x, char_select.y + char_select.height + 0, _screen.screenWidth, "Name: Cibele | Server: Medusa");
             char_info.setFormat("NexaBold-Regular", 26, 0xffce8494);
 
             mouse_rect = new FlxRect(FlxG.mouse.x,FlxG.mouse.y,1,1);
@@ -114,6 +119,22 @@ package{
             super.update();
             if(SoundManager.getInstance().getSoundByName(Desktop.ROOMTONE) != null) {
                 SoundManager.getInstance().getSoundByName(Desktop.ROOMTONE).fadeOutSound();
+            }
+
+            if(mouse_rect.overlaps(play_game_rect)) {
+                play_game.alertOn();
+            } else {
+                play_game.alertOff();
+            }
+            if(mouse_rect.overlaps(play_game_rect)) {
+                login.alertOn();
+            } else {
+                login.alertOff();
+            }
+            if(mouse_rect.overlaps(quit_rect)) {
+                quit.alertOn();
+            } else {
+                quit.alertOff();
             }
 
             mouse_rect.x = FlxG.mouse.x;
