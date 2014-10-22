@@ -60,9 +60,9 @@ package {
 
         public function update():void {
             var rand:Number = Math.random();
-            //if (rand > .99) {
+            if (rand > .99) {
                 playBitDialogue();
-            //}
+            }
         }
 
         public function get player():Player {

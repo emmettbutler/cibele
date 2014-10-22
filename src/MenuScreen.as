@@ -85,8 +85,6 @@ package{
             add(quit);
             quit_rect = new FlxRect(quit.x,quit.y,300,200);
 
-//
-
             char_select = new GameObject(new DHPoint(_screen.screenWidth * .5, _screen.screenHeight * .4));
             char_select.loadGraphic(ImgChar,false,false,400,494);
             char_select.x -= char_select.width/2;
