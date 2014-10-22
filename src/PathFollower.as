@@ -116,7 +116,7 @@ package
         }
 
         public function setFacing():void {
-            if(this.dir != null){
+            if(this.dir != null && this.dir._length() > 2){
                 if(Math.abs(this.dir.y) > Math.abs(this.dir.x)){
                     if(this.dir.y <= 0){
                         this.facing = UP;
@@ -132,7 +132,6 @@ package
                 }
             }
         }
-
 
         override public function update():void {
             super.update();
