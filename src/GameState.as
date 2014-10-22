@@ -185,7 +185,7 @@ package {
             var rand:Number = Math.random() * 2;
             if(rand > 1) {
                 SoundManager.getInstance().playSound(
-                    SfxClick, 1*GameSound.MSEC_PER_SEC, null, false, .3, GameSound.SFX,
+                    SfxClick, 1*GameSound.MSEC_PER_SEC, null, false, .2, GameSound.SFX,
                     "" + Math.random()
                 );
             } else {
