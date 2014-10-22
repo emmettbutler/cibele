@@ -108,6 +108,8 @@ package{
 
         override public function update():void{
             super.update();
+            SoundManager.getInstance().getSoundByName("desktop room tone").fadeOutSound();
+
             mouse_rect.x = FlxG.mouse.x;
             mouse_rect.y = FlxG.mouse.y;
             if(FlxG.mouse.justPressed()){

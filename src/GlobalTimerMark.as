@@ -18,8 +18,12 @@ package {
         }
 
         public function timeRemaining():Number {
+            return this.end - timeElapsed();
+        }
+
+        public function timeElapsed():Number {
             var cur:Number = new Date().valueOf();
-            return this.end - (cur - this.start - this.pauseTime);
+            return cur - this.start - this.pauseTime;
         }
 
         private function timeIsUp():Boolean {

@@ -18,7 +18,9 @@ package {
         public function playSound(embeddedSound:Class, dur:Number,
                                   endCallback:Function=null,
                                   _loop:Boolean=false, _vol:Number=1,
-                                  _kind:Number=0, name:String=null):GameSound
+                                  _kind:Number=0, name:String=null,
+                                  fadeIn:Boolean=false,
+                                  fadeOut:Boolean=false):GameSound
         {
             if (name == null) {
                 name = "" + Math.random();
@@ -26,7 +28,7 @@ package {
 
             this.clearSoundsByType(_kind);
             var newSound:GameSound = new GameSound(embeddedSound, dur, _loop,
-                                                   _vol, _kind, name);
+                                                   _vol, _kind, name, fadeIn, fadeOut);
             this.runningSounds.push(newSound);
 
             var that:SoundManager = this;
@@ -99,6 +101,15 @@ package {
                     this.runningSounds[i].increaseVolume();
                 }
             }
+        }
+
+        public function getSoundByName(n:String):GameSound {
+            for(var i:int = 0; i < this.runningSounds.length; i++) {
+                if(this.runningSounds[i].name == n) {
+                    return this.runningSounds[i];
+                }
+            }
+            return null;
         }
 
         public static function getInstance():SoundManager {

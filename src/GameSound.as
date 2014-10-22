@@ -14,16 +14,20 @@ package
         public static const BGM:Number = 1;
         public static const SFX:Number = 2;
         public var _type:Number = VOCAL;
+        public var fadeIn:Boolean = false;
+        public var fadeOut:Boolean = false;
 
         public static const MSEC_PER_SEC:Number = 1000;
 
         public function GameSound(embeddedSound:Class, dur:Number,
                                   _loop:Boolean=false, _vol:Number=1,
-                                  _kind:Number=0, name:String=null) {
+                                  _kind:Number=0, name:String=null, fadeIn:Boolean=false, fadeOut:Boolean=false) {
             this.name = name;
             this.virtualVolume = _vol;
             this._type = _kind;
             this.running = true;
+            this.fadeOut = fadeOut;
+            this.fadeIn = fadeIn;
 
             this.embeddedSound = embeddedSound;
 
@@ -59,6 +63,28 @@ package
         }
 
         public function update():void {
+            if(this.fadeIn) {
+                if(GlobalTimer.getInstance().timeElapsed(this.name) < 3*GameSound.MSEC_PER_SEC) {
+                    this.fadeInSound();
+                }
+            }
+            if(this.fadeOut) {
+                if(GlobalTimer.getInstance().timeRemaining(this.name) < 3*GameSound.MSEC_PER_SEC) {
+                    this.fadeOutSound();
+                }
+            }
+        }
+
+        public function fadeInSound():void {
+            this.soundObject.volume += .01;
+        }
+
+        public function fadeOutSound():void {
+            this.soundObject.volume -= .01;
+            if(this.name == "desktop room tone") {
+                FlxG.log(this.soundObject.volume);
+            }
+
         }
 
         public function defaultEnd():void { }

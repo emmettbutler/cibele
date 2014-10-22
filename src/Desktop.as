@@ -44,7 +44,7 @@ package{
             FlxG.state.add(this.selfie_folder);
             this.selfie_folder.alpha = 0;
 
-            SoundManager.getInstance().playSound(SFXRoomTone, 5*GameSound.MSEC_PER_SEC, null, true, 1, GameSound.BGM);
+            SoundManager.getInstance().playSound(SFXRoomTone, 0, null, true, 1, Math.random()*2938+93082, "desktop room tone");
         }
 
         override public function update():void{

@@ -40,6 +40,10 @@ package {
             return this.marks[name].timeRemaining();
         }
 
+        public function timeElapsed(name:String):Number {
+            return this.marks[name].timeElapsed();
+        }
+
         public function hasPassed(name:String):Boolean {
             var mark:GlobalTimerMark = this.marks[name];
             if (mark != null) {
