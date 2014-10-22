@@ -114,6 +114,10 @@ def run_main(conf_file):
 
 
 def package_application(entry_point_class):
+    """
+    To generate cibelecert.pfx:
+        adt -certificate -cn SelfSign -ou QE -o "Star Maid Games" -c US 2048-RSA cibelecert.pfx AmanoJyakku!
+    """
     command = "adt -package -storetype pkcs12 -keystore cibelecert.pfx CibeleBeta.air {entry_point_class}.xml src/{entry_point_class}.swf assets".format(entry_point_class=entry_point_class)
     print command
     subprocess.call(command.split())
