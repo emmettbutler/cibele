@@ -25,7 +25,6 @@ package{
         [Embed(source="../assets/UI_sad_face_pink.png")] private var ImgEmojiSadPink:Class;
         [Embed(source="../assets/UI_Angry_face_pink.png")] private var ImgEmojiAngryPink:Class;
 
-
         public static var _instance:PopUpManager = null;
 
         public var _player:Player;

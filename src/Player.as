@@ -196,7 +196,7 @@ package{
         public function playUIGeneralSFX():void {
             SoundManager.getInstance().playSound(
                 SfxUI, 1*GameSound.MSEC_PER_SEC, null, false, .3, GameSound.SFX,
-                "UI"
+                "" + Math.random()
             );
         }
 
