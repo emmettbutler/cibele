@@ -67,6 +67,16 @@ package{
             this.crystal_icon.y -= this.crystal_icon.height/2;
             add(this.crystal_icon);
 
+            play_game = new BouncingText(_screen.screenWidth * .26, _screen.screenHeight * .47, _screen.screenWidth, "play");
+            play_game.setFormat("NexaBold-Regular", 46, 0xff709daa);
+            add(play_game);
+            play_game_rect = new FlxRect(play_game.x,play_game.y,300,200);
+
+            quit = new BouncingText(_screen.screenWidth * .2, _screen.screenHeight * .47, _screen.screenWidth, "quit");
+            quit.setFormat("NexaBold-Regular", 46, 0xff709daa, "center");
+            add(quit);
+            quit_rect = new FlxRect(quit.x,quit.y,300,200);
+
             this.title_text = new FlxText(0, _screen.screenHeight * .5,
                 _screen.screenWidth, "VALTAMERI");
             this.title_text.setFormat("NexaBold-Regular", 146, 0xffce8494, "center");
