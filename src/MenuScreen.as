@@ -77,14 +77,14 @@ package{
             this.title_text.y -= this.title_text.height/2;
             add(this.title_text);
 
-            play_game = new BouncingText(this.title_text.x + 360,
+            play_game = new BouncingText(this.title_text.x + _screen.screenWidth * .32,
                                          this.title_text.y + 150,
                                          _screen.screenWidth, "play");
             play_game.setFormat("NexaBold-Regular", 46, 0xff709daa);
             add(play_game);
             play_game_rect = new FlxRect(play_game.x,play_game.y, 120, 50);
 
-            quit = new BouncingText(this.title_text.x + 820,
+            quit = new BouncingText(this.title_text.x + _screen.screenWidth * .62,
                                     this.title_text.y + 150,
                                     _screen.screenWidth, "quit");
             quit.setFormat("NexaBold-Regular", 46, 0xff709daa);
@@ -101,7 +101,7 @@ package{
                                      char_select.y + char_select.height + 50,
                                      170, "> login <");
             login.setFormat("NexaBold-Regular", 46, 0xff709daa);
-            login_rect = new FlxRect(login.x, login.y, login.width, 70)
+            login_rect = new FlxRect(login.x, login.y, 100, 30)
 
             char_info = new FlxText(char_select.x,
                                     char_select.y + char_select.height + 0,
