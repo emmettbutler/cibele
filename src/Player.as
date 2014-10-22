@@ -10,6 +10,10 @@ package{
         [Embed(source="../assets/cib_shadow.png")] private var ImgShadow:Class;
         [Embed(source="../assets/cib_shadow_blue.png")] private var ImgShadowBlue:Class;
         [Embed(source="../assets/sfx_uigeneral.mp3")] private var SfxUI:Class;
+        [Embed(source="../assets/sfx_protoattack1.mp3")] private var SfxAttack1:Class;
+        [Embed(source="../assets/sfx_protoattack2.mp3")] private var SfxAttack2:Class;
+        [Embed(source="../assets/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
+        [Embed(source="../assets/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
 
         private var walkDistance:Number = 0;
         private var walkTarget:DHPoint;
@@ -410,6 +414,20 @@ package{
             if (this._state == STATE_IN_ATTACK) {
                 this.attack_sprite.alpha = 1;
                 this.attack_sprite.play("attack");
+
+                var snd:Class = SfxAttack1;
+                var rand:Number = Math.random() * 4;
+                if (rand > 3) {
+                    snd = SfxAttack2;
+                } else if (rand > 2) {
+                    snd = SfxAttack3;
+                } else if (rand > 1) {
+                    snd = SfxAttack4;
+                }
+                SoundManager.getInstance().playSound(
+                    snd, 2*GameSound.MSEC_PER_SEC, null, false, .3, GameSound.SFX,
+                    "" + Math.random()
+                );
             }
         }
 

@@ -9,6 +9,11 @@ package
         [Embed(source="../assets/Sprite_Ichi_Walk_Cycle.png")] private var ImgIchi:Class;
         [Embed(source="../assets/fire_explosion.png")] private var ImgAttack:Class;
         [Embed(source="../assets/cib_shadow.png")] private var ImgShadow:Class;
+        [Embed(source="../assets/sfx_protoattack1.mp3")] private var SfxAttack1:Class;
+        [Embed(source="../assets/sfx_protoattack2.mp3")] private var SfxAttack2:Class;
+        [Embed(source="../assets/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
+        [Embed(source="../assets/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
+
         public var _path:Path;
         public var _mapnodes:MapNodeContainer;
         public var _enemies:EnemyGroup;
@@ -383,6 +388,20 @@ package
                 attackAnim.y = this.y;
                 attackAnim.alpha = 1;
                 attackAnim.play("attack");
+
+                var snd:Class = SfxAttack1;
+                var rand:Number = Math.random() * 4;
+                if (rand > 3) {
+                    snd = SfxAttack2;
+                } else if (rand > 2) {
+                    snd = SfxAttack3;
+                } else if (rand > 1) {
+                    snd = SfxAttack4;
+                }
+                SoundManager.getInstance().playSound(
+                    snd, 2*GameSound.MSEC_PER_SEC, null, false, .3, GameSound.SFX,
+                    "" + Math.random()
+                );
             }
         }
     }
