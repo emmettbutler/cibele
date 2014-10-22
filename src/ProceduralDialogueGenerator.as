@@ -60,9 +60,9 @@ package {
 
         public function update():void {
             var rand:Number = Math.random();
-            if (rand > .99) {
+            //if (rand > .99) {
                 playBitDialogue();
-            }
+            //}
         }
 
         public function get player():Player {
@@ -93,7 +93,7 @@ package {
             if(!pathWalker.inViewOfPlayer()) {
                 var rand:Number = Math.random() * 4;
                 if(rand > 1) {
-                    this.buildDialogueCallback(this.playCibWhichWay)();
+                  this.buildDialogueCallback(this.playCibWhichWay)();
                 } else {
                     this.buildDialogueCallback(this.playIchiWhichWay)();
                 }
@@ -110,22 +110,22 @@ package {
             } else {
                 if(dirForDialogue == LevelMapState.EAST) {
                     SoundManager.getInstance().playSound(
-                        bitDialoguePieces[prefix+"east"][IDX_FILE], 7*GameSound.MSEC_PER_SEC, null,
+                        bitDialoguePieces[prefix+"east"][IDX_FILE], 2*GameSound.MSEC_PER_SEC, null,
                         false, 1, GameSound.VOCAL
                     );
                 } else if(dirForDialogue == LevelMapState.WEST) {
                     SoundManager.getInstance().playSound(
-                        bitDialoguePieces[prefix+"west"][IDX_FILE], 7*GameSound.MSEC_PER_SEC, null,
+                        bitDialoguePieces[prefix+"west"][IDX_FILE], 2*GameSound.MSEC_PER_SEC, null,
                         false, 1, GameSound.VOCAL
                     );
                 } else if(dirForDialogue == LevelMapState.SOUTH) {
                     SoundManager.getInstance().playSound(
-                        bitDialoguePieces[prefix+"south"][IDX_FILE], 7*GameSound.MSEC_PER_SEC, null,
+                        bitDialoguePieces[prefix+"south"][IDX_FILE], 2*GameSound.MSEC_PER_SEC, null,
                         false, 1, GameSound.VOCAL
                     );
                 } else if(dirForDialogue == LevelMapState.NORTH) {
                     SoundManager.getInstance().playSound(
-                        bitDialoguePieces[prefix+"north"][IDX_FILE], 7*GameSound.MSEC_PER_SEC, null,
+                        bitDialoguePieces[prefix+"north"][IDX_FILE], 2*GameSound.MSEC_PER_SEC, null,
                         false, 1, GameSound.VOCAL
                     );
                 }

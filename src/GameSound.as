@@ -7,7 +7,9 @@ package
         public var embeddedSound:Class;
         private var soundObject:FlxSound;
         private var callbackLock:Boolean = false;
-        public var virtualVolume:Number;
+        public var stopped:Boolean = false;
+        public var endCallback:Function = null;
+        public var virtualVolume:Number, dur:Number;
         public var running:Boolean = false;
 
         public static const VOCAL:Number = 0;
@@ -21,13 +23,17 @@ package
 
         public function GameSound(embeddedSound:Class, dur:Number,
                                   _loop:Boolean=false, _vol:Number=1,
-                                  _kind:Number=0, name:String=null, fadeIn:Boolean=false, fadeOut:Boolean=false) {
+                                  _kind:Number=0, name:String=null,
+                                  fadeIn:Boolean=false, fadeOut:Boolean=false,
+                                  endCallback:Function=null) {
             this.name = name;
             this.virtualVolume = _vol;
             this._type = _kind;
+            this.dur = dur;
             this.running = true;
             this.fadeOut = fadeOut;
             this.fadeIn = fadeIn;
+            this.endCallback = endCallback;
 
             this.embeddedSound = embeddedSound;
 
@@ -92,6 +98,11 @@ package
         public function stopSound():void {
             soundObject.stop();
             this.running = false;
+            this.stopped = true;
+            if (this.endCallback != null && !this.callbackLock) {
+                this.endCallback();
+                this.callbackLock = true;
+            }
         }
     }
 }

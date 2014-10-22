@@ -28,17 +28,11 @@ package {
 
             this.clearSoundsByType(_kind);
             var newSound:GameSound = new GameSound(embeddedSound, dur, _loop,
-                                                   _vol, _kind, name, fadeIn, fadeOut);
+                                                   _vol, _kind, name, fadeIn,
+                                                   fadeOut, endCallback);
             this.runningSounds.push(newSound);
 
-            var that:SoundManager = this;
-            function _callback():void {
-                that.stopSound(newSound);
-                if (endCallback != null) {
-                    endCallback();
-                }
-            }
-            GlobalTimer.getInstance().setMark(name, dur, _callback);
+            GlobalTimer.getInstance().setMark(name, dur);
 
             return newSound;
         }
@@ -48,6 +42,9 @@ package {
             for(var i:int = 0; i < this.runningSounds.length; i++) {
                 snd = this.runningSounds[i];
                 snd.update();
+                if (snd.dur != 0 && GlobalTimer.getInstance().hasPassed(snd.name)) {
+                    this.stopSound(snd);
+                }
             }
         }
 
@@ -66,13 +63,15 @@ package {
         }
 
         private function stopSound(sound:GameSound):void {
-            sound.stopSound();
             this.runningSounds.splice(this.runningSounds.indexOf(sound), 1);
+            sound.stopSound();
         }
 
         public function soundOfTypeIsPlaying(_kind:Number):Boolean {
+            var cur:GameSound;
             for(var i:int = 0; i < this.runningSounds.length; i++) {
-                if(this.runningSounds[i]._type == _kind) {
+                cur = this.runningSounds[i];
+                if(cur._type == _kind && !cur.stopped) {
                     return true;
                 }
             }
