@@ -6,16 +6,13 @@ package{
         [Embed(source="../assets/untitledfolder.png")] private var ImgFolder:Class;
         [Embed(source="../assets/sfx_roomtone.mp3")] private var SFXRoomTone:Class;
 
-        public var timeFrame:Number = 0;
-        public var timer:Number = 0;
-        public var debugText:FlxText;
-
         public var bg:GameObject;
-
         public var img_height:Number = 357;
-
         public var selfie_folder:GameObject;
         public var untitled_folder:GameObject;
+
+        public var selfie_folder_sprite:GameObject,
+                   untitled_folder_sprite:GameObject;
 
         public static var ROOMTONE:String = "desktop room tone";
 
@@ -31,9 +28,6 @@ package{
             ScreenManager.getInstance().setupCamera(null, 1);
             var _screen:ScreenManager = ScreenManager.getInstance();
 
-            debugText = new FlxText(0,0,100,"");
-            add(debugText);
-
             super.postCreate();
 
             this.untitled_folder = new GameObject(new DHPoint(_screen.screenWidth * .2, _screen.screenHeight * .1));
@@ -46,6 +40,26 @@ package{
             FlxG.state.add(this.selfie_folder);
             this.selfie_folder.alpha = 0;
 
+            this.selfie_folder_sprite = new GameObject(new DHPoint(_screen.screenWidth * .88, _screen.screenHeight * .09));
+            this.selfie_folder_sprite.makeGraphic(150, 100, 0x00ff0000);
+            add(this.selfie_folder_sprite);
+
+            this.untitled_folder_sprite = new GameObject(new DHPoint(_screen.screenWidth * .84, _screen.screenHeight * .09));
+            this.untitled_folder_sprite.makeGraphic(150, 100, 0x00ff0000);
+            add(this.untitled_folder_sprite);
+
+            var that:Desktop = this;
+            this.addEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
+                function(event:DataEvent):void {
+                    that.selfie_folder_sprite.y = event.userData['bg'].height * .15;
+                    that.untitled_folder_sprite.y = event.userData['bg'].height * .35;
+                    FlxG.stage.removeEventListener(
+                        GameState.EVENT_SINGLETILE_BG_LOADED,
+                        arguments.callee
+                    );
+                });
+
+
             SoundManager.getInstance().playSound(SFXRoomTone, 0, null, true, 1, Math.random()*2938+93082, Desktop.ROOMTONE);
         }
 
@@ -54,8 +68,14 @@ package{
 
             if(FlxG.mouse.justPressed()) {
                 var _screen:ScreenManager = ScreenManager.getInstance();
-                var untitled_folder_rect:FlxRect = new FlxRect(_screen.screenWidth * .85, _screen.screenHeight * .31, 100, 80);
-                var selfie_folder_rect:FlxRect = new FlxRect(_screen.screenWidth * .88, _screen.screenHeight * .09, 100, 80);
+                var untitled_folder_rect:FlxRect = new FlxRect(
+                    this.untitled_folder_sprite.x, this.untitled_folder_sprite.y,
+                    this.untitled_folder_sprite.width,
+                    this.untitled_folder_sprite.height);
+                var selfie_folder_rect:FlxRect = new FlxRect(
+                    this.selfie_folder_sprite.x, this.selfie_folder_sprite.y,
+                    this.selfie_folder_sprite.width,
+                    this.selfie_folder_sprite.height);
                 var mouse_rect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
 
                 if(mouse_rect.overlaps(untitled_folder_rect)) {
@@ -76,12 +96,6 @@ package{
                     untitled_folder.alpha = 0;
                     selfie_folder.alpha = 0;
                 }
-            }
-
-            timeFrame++;
-
-            if(timeFrame%30 == 0){
-                timer++;
             }
         }
     }
