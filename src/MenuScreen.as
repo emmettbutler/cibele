@@ -69,12 +69,6 @@ package{
             this.crystal_icon.y -= this.crystal_icon.height/2;
             add(this.crystal_icon);
 
-            quit = new BouncingText(_screen.screenWidth * .67,
-                                    _screen.screenHeight * .47, 120, "quit");
-            quit.setFormat("NexaBold-Regular", 46, 0xff709daa, "center");
-            add(quit);
-            quit_rect = new FlxRect(quit.x, quit.y, quit.width, 50);
-
             this.title_text = new FlxText(0, _screen.screenHeight * .5,
                 _screen.screenWidth, "VALTAMERI");
             this.title_text.setFormat("NexaBold-Regular", 146, 0xffce8494, "center");
@@ -109,7 +103,10 @@ package{
             login.setFormat("NexaBold-Regular", 46, 0xff709daa);
             login_rect = new FlxRect(login.x, login.y, login.width, 70)
 
-            char_info = new FlxText(char_select.x, char_select.y + char_select.height + 0, _screen.screenWidth, "Name: Cibele | Server: Medusa");
+            char_info = new FlxText(char_select.x,
+                                    char_select.y + char_select.height + 0,
+                                    _screen.screenWidth,
+                                    "Name: Cibele | Server: Medusa");
             char_info.setFormat("NexaBold-Regular", 26, 0xffce8494);
 
             mouse_rect = new FlxRect(FlxG.mouse.x,FlxG.mouse.y,1,1);
@@ -120,10 +117,13 @@ package{
             //todo this should probs not trigger every time if there's other music playing
             function _musicCallback():void {
                 if(!(FlxG.state is HallwayToFern)) {
-                    SoundManager.getInstance().playSound(MenuBGMLoop, 0, null, true, 1, Math.random()*2093+938, MenuScreen.BGM);
+                    SoundManager.getInstance().playSound(MenuBGMLoop, 0, null,
+                        true, 1, Math.random(), MenuScreen.BGM);
                 }
             }
-            SoundManager.getInstance().playSound(MenuBGMIntro, 8*GameSound.MSEC_PER_SEC, _musicCallback, false, 1, Math.random()*2093+938, MenuScreen.BGM);
+            SoundManager.getInstance().playSound(MenuBGMIntro,
+                8*GameSound.MSEC_PER_SEC, _musicCallback, false, 1,
+                Math.random()*2093+938, MenuScreen.BGM);
 
             super.postCreate();
         }
