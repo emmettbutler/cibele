@@ -123,8 +123,8 @@ package{
 
             if(accept_call) {
                 if(call_button.scale.x > 0) {
-                    call_button.scale.x -= .2;
-                    call_button.scale.y -= .2;
+                    call_button.scale.x -= .1;
+                    call_button.scale.y -= .1;
                 } else {
                     call_button.kill();
                 }
