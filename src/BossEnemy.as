@@ -14,6 +14,7 @@ package
             hitpoints = 600;
             sightRange = 750;
             damage = 1;
+            use_active_highlighter = false;
             this.canEscape = true;
             this.attackOffset = new DHPoint(-200,
                                             -1 * (this.height / 3));

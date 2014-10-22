@@ -43,6 +43,8 @@ package
         public var targetPathNode:PathNode;
         public var escape_counter:Number = 0;
 
+        public var use_active_highlighter:Boolean = true;
+
         {
             public static var stateMap:Dictionary = new Dictionary();
             stateMap[STATE_IDLE] = "STATE_IDLE";
@@ -261,7 +263,7 @@ package
             if(this.hitpoints < 0){
                 this.die();
             } else {
-                if(fade_active) {
+                if(fade_active && use_active_highlighter) {
                     if(this.attacker != null) {
                         if(this.attacker.tag == PartyMember.cib) {
                             this.fadeTarget(this.cib_target_sprite);
