@@ -64,9 +64,9 @@ package{
             this.filename = "ikuturso_path.txt";
             super.create();
             function _bgmCallback():void {
-                SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true, .08, GameSound.BGM, BGM, false, false);
+                SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true, .08, GameSound.BGM, IkuTurso.BGM, false, false);
             }
-            SoundManager.getInstance().playSound(ITBGMIntro, 3.6*GameSound.MSEC_PER_SEC, _bgmCallback, false, .08, Math.random()*928+298);
+            SoundManager.getInstance().playSound(ITBGMIntro, 3.6*GameSound.MSEC_PER_SEC, _bgmCallback, false, .08, Math.random()*928+298, IkuTurso.BGM);
             GlobalTimer.getInstance().setMark(Fern.BOSS_MARK, 319632 - 60 * 1000);
             this.convo1Sound = null;
         }
@@ -111,7 +111,7 @@ package{
                     });
             } else {
                 SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
-                    true, .2, GameSound.BGM);
+                    false, 1, GameSound.BGM);
                 FlxG.switchState(
                     new PlayVideoState("../assets/sexy_selfie.flv",
                         function():void { FlxG.switchState(new StartScreen()); }, SoundManager.getInstance().getSoundByName(BGM)
