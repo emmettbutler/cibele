@@ -87,7 +87,6 @@ package
 
         public function fadeOutSound():void {
             this.soundObject.volume -= .01;
-            FlxG.log("fading");
         }
 
         public function defaultEnd():void { }

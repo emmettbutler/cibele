@@ -185,12 +185,12 @@ package {
             if(rand > 1) {
                 SoundManager.getInstance().playSound(
                     SfxClick, 1*GameSound.MSEC_PER_SEC, null, false, .3, GameSound.SFX,
-                    "click"
+                    "" + Math.random()
                 );
             } else {
                 SoundManager.getInstance().playSound(
-                    SfxClick2, 1*GameSound.MSEC_PER_SEC, null, false, .3, GameSound.SFX,
-                    "click2"
+                    SfxClick2, 200, null, false, .3, GameSound.SFX,
+                    "" + Math.random()
                 );
             }
         }
