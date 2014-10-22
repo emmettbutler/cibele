@@ -61,21 +61,19 @@ package{
                     );
                 });
 
-            this.crystal_icon = new GameObject(new DHPoint(_screen.screenWidth * .5, _screen.screenHeight * .5));
-            this.crystal_icon.loadGraphic(ImgXtal,false,false,314,500);
+            this.crystal_icon = new GameObject(
+                new DHPoint(_screen.screenWidth * .5, _screen.screenHeight * .5)
+            );
+            this.crystal_icon.loadGraphic(ImgXtal, false, false, 314, 500);
             this.crystal_icon.x -= this.crystal_icon.width/2;
             this.crystal_icon.y -= this.crystal_icon.height/2;
             add(this.crystal_icon);
 
-            play_game = new BouncingText(_screen.screenWidth * .26, _screen.screenHeight * .47, _screen.screenWidth, "play");
-            play_game.setFormat("NexaBold-Regular", 46, 0xff709daa);
-            add(play_game);
-            play_game_rect = new FlxRect(play_game.x,play_game.y,300,200);
-
-            quit = new BouncingText(_screen.screenWidth * .2, _screen.screenHeight * .47, _screen.screenWidth, "quit");
+            quit = new BouncingText(_screen.screenWidth * .67,
+                                    _screen.screenHeight * .47, 120, "quit");
             quit.setFormat("NexaBold-Regular", 46, 0xff709daa, "center");
             add(quit);
-            quit_rect = new FlxRect(quit.x,quit.y,300,200);
+            quit_rect = new FlxRect(quit.x, quit.y, quit.width, 50);
 
             this.title_text = new FlxText(0, _screen.screenHeight * .5,
                 _screen.screenWidth, "VALTAMERI");
@@ -85,24 +83,31 @@ package{
             this.title_text.y -= this.title_text.height/2;
             add(this.title_text);
 
-            play_game = new BouncingText(this.title_text.x + 360, this.title_text.y + 150, _screen.screenWidth, "play");
+            play_game = new BouncingText(this.title_text.x + 360,
+                                         this.title_text.y + 150,
+                                         _screen.screenWidth, "play");
             play_game.setFormat("NexaBold-Regular", 46, 0xff709daa);
             add(play_game);
-            play_game_rect = new FlxRect(play_game.x,play_game.y,300,200);
+            play_game_rect = new FlxRect(play_game.x,play_game.y, 120, 50);
 
-            quit = new BouncingText(this.title_text.x + 820, this.title_text.y + 150, _screen.screenWidth, "quit");
+            quit = new BouncingText(this.title_text.x + 820,
+                                    this.title_text.y + 150,
+                                    _screen.screenWidth, "quit");
             quit.setFormat("NexaBold-Regular", 46, 0xff709daa);
             add(quit);
-            quit_rect = new FlxRect(quit.x,quit.y,300,200);
+            quit_rect = new FlxRect(quit.x, quit.y, 120, 50);
 
-            char_select = new GameObject(new DHPoint(_screen.screenWidth * .5, _screen.screenHeight * .4));
+            char_select = new GameObject(new DHPoint(_screen.screenWidth * .5,
+                                                     _screen.screenHeight * .4));
             char_select.loadGraphic(ImgChar,false,false,400,494);
             char_select.x -= char_select.width/2;
             char_select.y -= char_select.height/2;
 
-            login = new BouncingText(char_select.x + 110, char_select.y + char_select.height + 50, _screen.screenWidth, "> login <");
+            login = new BouncingText(char_select.x + 110,
+                                     char_select.y + char_select.height + 50,
+                                     170, "> login <");
             login.setFormat("NexaBold-Regular", 46, 0xff709daa);
-            login_rect = new FlxRect(login.x,login.y,300,200)
+            login_rect = new FlxRect(login.x, login.y, login.width, 70)
 
             char_info = new FlxText(char_select.x, char_select.y + char_select.height + 0, _screen.screenWidth, "Name: Cibele | Server: Medusa");
             char_info.setFormat("NexaBold-Regular", 26, 0xffce8494);
@@ -125,6 +130,11 @@ package{
 
         override public function update():void{
             super.update();
+
+            play_game.update();
+            login.update();
+            quit.update();
+
             if(SoundManager.getInstance().getSoundByName(Desktop.ROOMTONE) != null) {
                 SoundManager.getInstance().getSoundByName(Desktop.ROOMTONE).fadeOutSound();
             }

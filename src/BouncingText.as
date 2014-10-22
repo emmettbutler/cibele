@@ -7,7 +7,7 @@ package {
 
         public function BouncingText(x:Number, y:Number, width:Number, t:String) {
             this.anchor = new DHPoint(x, y);
-            super(x,y,width,t);
+            super(x, y, width, t);
         }
 
         public function alertOn():void {
