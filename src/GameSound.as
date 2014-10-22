@@ -87,10 +87,7 @@ package
 
         public function fadeOutSound():void {
             this.soundObject.volume -= .01;
-            if(this.name == "desktop room tone") {
-                FlxG.log(this.soundObject.volume);
-            }
-
+            FlxG.log("fading");
         }
 
         public function defaultEnd():void { }

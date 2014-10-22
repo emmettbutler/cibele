@@ -17,6 +17,8 @@ package{
         public var selfie_folder:GameObject;
         public var untitled_folder:GameObject;
 
+        public static var ROOMTONE:String = "desktop room tone";
+
         public function Desktop() {
             super(true, true, false);
             this.showEmoji = false;
@@ -44,7 +46,7 @@ package{
             FlxG.state.add(this.selfie_folder);
             this.selfie_folder.alpha = 0;
 
-            SoundManager.getInstance().playSound(SFXRoomTone, 0, null, true, 1, Math.random()*2938+93082, "desktop room tone");
+            SoundManager.getInstance().playSound(SFXRoomTone, 0, null, true, 1, Math.random()*2938+93082, Desktop.ROOMTONE);
         }
 
         override public function update():void{

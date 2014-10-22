@@ -33,6 +33,8 @@ package{
 
         public var img_height:Number = 357;
 
+        public static var BGM:String = "menu bgm";
+
         public function MenuScreen() {
             super(true, true, false);
             this.showEmoji = false;
@@ -99,16 +101,20 @@ package{
 
             //todo this should probs not trigger every time if there's other music playing
             function _musicCallback():void {
-                SoundManager.getInstance().playSound(MenuBGMLoop, 0, null, true, 1, GameSound.BGM);
+                if(!(FlxG.state is HallwayToFern)) {
+                    SoundManager.getInstance().playSound(MenuBGMLoop, 0, null, true, 1, Math.random()*2093+938, MenuScreen.BGM);
+                }
             }
-            SoundManager.getInstance().playSound(MenuBGMIntro, 8*GameSound.MSEC_PER_SEC, _musicCallback, false, 1, GameSound.BGM);
+            SoundManager.getInstance().playSound(MenuBGMIntro, 8*GameSound.MSEC_PER_SEC, _musicCallback, false, 1, Math.random()*2093+938, MenuScreen.BGM);
 
             super.postCreate();
         }
 
         override public function update():void{
             super.update();
-            SoundManager.getInstance().getSoundByName("desktop room tone").fadeOutSound();
+            if(SoundManager.getInstance().getSoundByName(Desktop.ROOMTONE) != null) {
+                SoundManager.getInstance().getSoundByName(Desktop.ROOMTONE).fadeOutSound();
+            }
 
             mouse_rect.x = FlxG.mouse.x;
             mouse_rect.y = FlxG.mouse.y;

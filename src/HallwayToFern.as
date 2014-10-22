@@ -35,6 +35,11 @@ package{
         }
 
         override public function create():void {
+            function _musicCallback():void {
+                SoundManager.getInstance().playSound(FernBGMLoop, 0, null, true, .2, GameSound.BGM);
+            }
+            SoundManager.getInstance().playSound(FernBGMIntro, 16*GameSound.MSEC_PER_SEC, _musicCallback, false, .2, GameSound.BGM);
+
             bgs = new Array();
             this.light = new FlxExtSprite(0,0);
 
@@ -50,8 +55,6 @@ package{
             ScreenManager.getInstance().setupCamera(player.cameraPos, 1);
             FlxG.camera.setBounds(0, 0, _screen.screenWidth, bottomY);
 
-
-
             this.postCreate();
             this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
             this.light.alpha = .1;
@@ -64,11 +67,6 @@ package{
             }
 
             this.player.nameText.color = 0xffffffff;
-
-            function _musicCallback():void {
-                SoundManager.getInstance().playSound(FernBGMLoop, 0, null, true, 1, GameSound.BGM);
-            }
-            SoundManager.getInstance().playSound(FernBGMIntro, 16*GameSound.MSEC_PER_SEC, _musicCallback, false, 1, GameSound.BGM);
         }
 
         public function initTiles(startY:Number):void {
@@ -89,6 +87,11 @@ package{
 
         override public function update():void {
             super.update();
+
+            if(SoundManager.getInstance().getSoundByName(MenuScreen.BGM) != null) {
+                FlxG.log("start fade");
+                SoundManager.getInstance().getSoundByName(MenuScreen.BGM).fadeOutSound();
+            }
 
             if(this.frameCount++ % 25 == 0) {
                 this.light.alpha = 1-(player.pos.y/bottomY);
