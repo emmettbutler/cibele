@@ -4,15 +4,17 @@ package{
     public class Desktop extends GameState {
         [Embed(source="../assets/selfiedesktop.png")] private var ImgSelfies:Class;
         [Embed(source="../assets/untitledfolder.png")] private var ImgFolder:Class;
+        [Embed(source="../assets/Screenshot.png")] private var ImgScreenshot:Class;
         [Embed(source="../assets/sfx_roomtone.mp3")] private var SFXRoomTone:Class;
 
         public var bg:GameObject;
         public var img_height:Number = 357;
-        public var selfie_folder:GameObject;
-        public var untitled_folder:GameObject;
+        public var selfie_folder:GameObject, untitled_folder:GameObject,
+                   screenshot_popup:GameObject;
 
         public var selfie_folder_sprite:GameObject,
-                   untitled_folder_sprite:GameObject;
+                   untitled_folder_sprite:GameObject,
+                   screenshot_popup_hitbox:GameObject;
 
         public static var ROOMTONE:String = "desktop room tone";
 
@@ -33,12 +35,17 @@ package{
             this.untitled_folder = new GameObject(new DHPoint(_screen.screenWidth * .2, _screen.screenHeight * .1));
             this.untitled_folder.loadGraphic(ImgFolder,false,false,765,407);
             FlxG.state.add(this.untitled_folder);
-            this.untitled_folder.alpha = 0;
+            this.untitled_folder.visible = false;
 
             this.selfie_folder = new GameObject(new DHPoint(_screen.screenWidth * .2, _screen.screenHeight * .1));
             this.selfie_folder.loadGraphic(ImgSelfies,false,false,769,411);
             FlxG.state.add(this.selfie_folder);
-            this.selfie_folder.alpha = 0;
+            this.selfie_folder.visible = false;
+
+            this.screenshot_popup = new GameObject(new DHPoint(_screen.screenWidth * .2, _screen.screenHeight * .1));
+            this.screenshot_popup.loadGraphic(ImgScreenshot,false,false,576, 350);
+            FlxG.state.add(this.screenshot_popup);
+            this.screenshot_popup.visible = false;
 
             this.selfie_folder_sprite = new GameObject(new DHPoint(_screen.screenWidth * .88, _screen.screenHeight * .09));
             this.selfie_folder_sprite.makeGraphic(150, 100, 0x00ff0000);
@@ -48,11 +55,16 @@ package{
             this.untitled_folder_sprite.makeGraphic(150, 100, 0x00ff0000);
             add(this.untitled_folder_sprite);
 
+            this.screenshot_popup_hitbox = new GameObject(new DHPoint(_screen.screenWidth * .72, _screen.screenHeight * .09));
+            this.screenshot_popup_hitbox.makeGraphic(150, 100, 0x00ff0000);
+            add(this.screenshot_popup_hitbox);
+
             var that:Desktop = this;
             this.addEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
                 function(event:DataEvent):void {
                     that.selfie_folder_sprite.y = event.userData['bg'].height * .15;
                     that.untitled_folder_sprite.y = event.userData['bg'].height * .35;
+                    that.screenshot_popup_hitbox.y = event.userData['bg'].height * .1;
                     FlxG.stage.removeEventListener(
                         GameState.EVENT_SINGLETILE_BG_LOADED,
                         arguments.callee
@@ -76,25 +88,28 @@ package{
                     this.selfie_folder_sprite.x, this.selfie_folder_sprite.y,
                     this.selfie_folder_sprite.width,
                     this.selfie_folder_sprite.height);
+                var screenshot_popup_rect:FlxRect = new FlxRect(
+                    this.screenshot_popup_hitbox.x, this.screenshot_popup_hitbox.y,
+                    this.screenshot_popup_hitbox.width,
+                    this.screenshot_popup_hitbox.height);
                 var mouse_rect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
 
                 if(mouse_rect.overlaps(untitled_folder_rect)) {
-                    selfie_folder.alpha = 0;
-                    if(untitled_folder.alpha == 1){
-                        untitled_folder.alpha = 0;
-                    } else {
-                        untitled_folder.alpha = 1;
-                    }
+                    screenshot_popup.visible = false;
+                    selfie_folder.visible = false;
+                    untitled_folder.visible = !untitled_folder.visible;
                 } else if(mouse_rect.overlaps(selfie_folder_rect)) {
-                    untitled_folder.alpha = 0;
-                    if(selfie_folder.alpha == 1) {
-                        selfie_folder.alpha = 0;
-                    } else {
-                        selfie_folder.alpha = 1;
-                    }
+                    untitled_folder.visible = false;
+                    screenshot_popup.visible = false;
+                    selfie_folder.visible = !selfie_folder.visible;
+                } else if(mouse_rect.overlaps(screenshot_popup_rect)) {
+                    untitled_folder.visible = false;
+                    selfie_folder.visible = false;
+                    screenshot_popup.visible = !screenshot_popup.visible;
                 } else {
-                    untitled_folder.alpha = 0;
-                    selfie_folder.alpha = 0;
+                    untitled_folder.visible = false;
+                    selfie_folder.visible = false;
+                    screenshot_popup.visible = false;
                 }
             }
         }
