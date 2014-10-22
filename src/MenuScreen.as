@@ -3,8 +3,6 @@ package{
 
     public class MenuScreen extends GameState {
         [Embed(source="../assets/login.png")] private var ImgLogin:Class;
-        [Embed(source="../assets/quit.png")] private var ImgQuit:Class;
-        [Embed(source="../assets/play.png")] private var ImgPlay:Class;
         [Embed(source="../assets/charselect_small.png")] private var ImgChar:Class;
         [Embed(source="../assets/bgm_menu_intro.mp3")] private var MenuBGMIntro:Class;
         [Embed(source="../assets/bgm_menu_loop.mp3")] private var MenuBGMLoop:Class;

@@ -33,17 +33,17 @@ package{
             super.postCreate();
 
             this.untitled_folder = new GameObject(new DHPoint(_screen.screenWidth * .2, _screen.screenHeight * .1));
-            this.untitled_folder.loadGraphic(ImgFolder,false,false,765,407);
+            this.untitled_folder.loadGraphic(ImgFolder,false,false,631,356);
             FlxG.state.add(this.untitled_folder);
             this.untitled_folder.visible = false;
 
             this.selfie_folder = new GameObject(new DHPoint(_screen.screenWidth * .2, _screen.screenHeight * .1));
-            this.selfie_folder.loadGraphic(ImgSelfies,false,false,769,411);
+            this.selfie_folder.loadGraphic(ImgSelfies,false,false,631,356);
             FlxG.state.add(this.selfie_folder);
             this.selfie_folder.visible = false;
 
             this.screenshot_popup = new GameObject(new DHPoint(_screen.screenWidth * .2, _screen.screenHeight * .1));
-            this.screenshot_popup.loadGraphic(ImgScreenshot,false,false,576, 350);
+            this.screenshot_popup.loadGraphic(ImgScreenshot,false,false,631,356);
             FlxG.state.add(this.screenshot_popup);
             this.screenshot_popup.visible = false;
 
