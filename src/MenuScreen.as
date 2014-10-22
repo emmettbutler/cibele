@@ -122,7 +122,7 @@ package{
                 }
             }
             SoundManager.getInstance().playSound(MenuBGMIntro,
-                8*GameSound.MSEC_PER_SEC, _musicCallback, false, 1,
+                7.9*GameSound.MSEC_PER_SEC, _musicCallback, false, 1,
                 Math.random()*2093+938, MenuScreen.BGM);
 
             super.postCreate();

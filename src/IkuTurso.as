@@ -4,7 +4,8 @@ package{
     import flash.events.*;
 
     public class IkuTurso extends LevelMapState {
-        [Embed(source="../assets/ikuturso_wip.mp3")] private var ITBGMLoop:Class;
+        [Embed(source="../assets/bgm_ikuturso_intro.mp3")] private var ITBGMIntro:Class;
+        [Embed(source="../assets/bgm_ikuturso_loop.mp3")] private var ITBGMLoop:Class;
         [Embed(source="../assets/vid_sexyselfie.mp3")] private var VidBGMLoop:Class;
         [Embed(source="../assets/voc_ikuturso_bulldog.mp3")] private var Convo1:Class;
         [Embed(source="../assets/voc_ikuturso_ampule.mp3")] private var Convo2:Class;
@@ -19,6 +20,8 @@ package{
 
         private var conversationPieces:Array;
         private var conversationCounter:Number = 0;
+
+        public static var BGM:String = "ikuturso bgm loop";
 
         public function IkuTurso() {
             this.bossHasAppeared = false;
@@ -60,8 +63,10 @@ package{
         override public function create():void {
             this.filename = "ikuturso_path.txt";
             super.create();
-            SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true,
-                                                 .08, GameSound.BGM);
+            function _bgmCallback():void {
+                SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true, .08, GameSound.BGM, BGM, false, false);
+            }
+            SoundManager.getInstance().playSound(ITBGMIntro, 3.6*GameSound.MSEC_PER_SEC, _bgmCallback, false, .08, Math.random()*928+298);
             GlobalTimer.getInstance().setMark(Fern.BOSS_MARK, 319632 - 60 * 1000);
             this.convo1Sound = null;
         }
@@ -109,7 +114,7 @@ package{
                     true, .2, GameSound.BGM);
                 FlxG.switchState(
                     new PlayVideoState("../assets/sexy_selfie.flv",
-                        function():void { FlxG.switchState(new StartScreen()); }
+                        function():void { FlxG.switchState(new StartScreen()); }, SoundManager.getInstance().getSoundByName(BGM)
                     )
                 );
             }
@@ -127,6 +132,10 @@ package{
 
         override public function update():void{
             super.update();
+            if(SoundManager.getInstance().getSoundByName(HallwayToFern.BGM) != null) {
+                SoundManager.getInstance().getSoundByName(HallwayToFern.BGM).fadeOutSound();
+            }
+
             this.boss.update();
             if (this.convo1Sound == null) {
                 if (!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL))

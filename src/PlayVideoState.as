@@ -11,11 +11,13 @@ package {
         public var videoStream:NetStream;
         public var video:Video;
         public var endCallback:Function;
+        public var fadeThis:GameSound;
 
-        public function PlayVideoState(filename:String, endCallback:Function) {
+        public function PlayVideoState(filename:String, endCallback:Function, fadingSound:GameSound=null) {
             super(true, false, false);
             this.loadVideo(filename);
             this.endCallback = endCallback;
+            this.fadeThis = fadingSound;
         }
 
         public function loadVideo(filename:String):void {
@@ -49,6 +51,9 @@ package {
 
         override public function update():void {
             super.update();
+            if(this.fadeThis != null) {
+                this.fadeThis.fadeOutSound();
+            }
         }
 
         override public function pause():void {
