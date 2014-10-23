@@ -116,12 +116,12 @@ package{
             function _musicCallback():void {
                 if(!(FlxG.state is HallwayToFern)) {
                     SoundManager.getInstance().playSound(MenuBGMLoop, 0, null,
-                        true, 1, Math.random(), MenuScreen.BGM);
+                        true, 1, GameSound.BGM, MenuScreen.BGM);
                 }
             }
             SoundManager.getInstance().playSound(MenuBGMIntro,
                 7.9*GameSound.MSEC_PER_SEC, _musicCallback, false, 1,
-                Math.random()*2093+938, MenuScreen.BGM);
+                GameSound.SFX, MenuScreen.BGM);
 
             super.postCreate();
         }
