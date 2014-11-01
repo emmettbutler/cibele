@@ -163,6 +163,7 @@ package {
                 false, 1, GameSound.VOCAL
             );
             bitDialoguePieces[ICHI_NICEHIT][IDX_HAS_PLAYED] = true;
+            PopUpManager.getInstance().emote(new FlxRect(0,0), pathWalker, true, Emote.HAPPY);
         }
 
         public function playCibWhichWay():void {
@@ -193,6 +194,7 @@ package {
                 false, 1, GameSound.VOCAL
             );
             bitDialoguePieces[CIB_NICEHIT][IDX_HAS_PLAYED] = true;
+            PopUpManager.getInstance().emote(new FlxRect(0,0), pathWalker, true, Emote.HAPPY);
         }
     }
 }

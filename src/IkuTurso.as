@@ -68,7 +68,28 @@ package{
             }
             SoundManager.getInstance().playSound(ITBGMIntro, 3.6*GameSound.MSEC_PER_SEC, _bgmCallback, false, .08, Math.random()*928+298, IkuTurso.BGM);
             GlobalTimer.getInstance().setMark(Fern.BOSS_MARK, 319632 - 60 * 1000);
+            GlobalTimer.getInstance().setMark("First Emote", 5*GameSound.MSEC_PER_SEC, this.ichiStartEmote);
             this.convo1Sound = null;
+        }
+
+        public function ichiStartEmote():void {
+            if(pathWalker.inViewOfPlayer()) {
+                PopUpManager.getInstance().emote(new FlxRect(0,0), this.pathWalker, true, Emote.HAPPY);
+            } else {
+                GlobalTimer.getInstance().setMark("First Emote", 3*GameSound.MSEC_PER_SEC, this.ichiStartEmote, true);
+            }
+        }
+
+        public function ichiMadEmote():void {
+            PopUpManager.getInstance().emote(new FlxRect(0,0), this.pathWalker, true, Emote.ANGRY);
+        }
+
+        public function ichiSadEmote():void {
+            PopUpManager.getInstance().emote(new FlxRect(0,0), this.pathWalker, true, Emote.SAD);
+        }
+
+        public function ichiHappyEmote():void {
+            PopUpManager.getInstance().emote(new FlxRect(0,0), this.pathWalker, true, Emote.HAPPY);
         }
 
         public function showSelfiesWindow():void {
@@ -106,6 +127,7 @@ package{
                             nextAudioInfo["audio"], nextAudioInfo["len"],
                             that.playNextConvoPiece, false, 1, GameSound.VOCAL
                         );
+                        that.playTimedEmotes(that.conversationCounter);
                         FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
                                                        arguments.callee);
                     });
@@ -117,6 +139,24 @@ package{
                         function():void { FlxG.switchState(new StartScreen()); }, SoundManager.getInstance().getSoundByName(BGM)
                     )
                 );
+            }
+        }
+
+        public function playTimedEmotes(convoNum:Number):void {
+            if(convoNum == 1) {
+                GlobalTimer.getInstance().setMark("2nd Convo Emote", 11*GameSound.MSEC_PER_SEC, this.ichiMadEmote);
+            }
+            if(convoNum == 2) {
+                GlobalTimer.getInstance().setMark("3rd Convo Emote", 7*GameSound.MSEC_PER_SEC, this.ichiSadEmote);
+            }
+            if(convoNum == 3) {
+                GlobalTimer.getInstance().setMark("4th Convo Emote", 20*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
+            }
+            if(convoNum == 4) {
+                GlobalTimer.getInstance().setMark("5th Convo Emote", 5*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
+            }
+            if(convoNum == 5) {
+                GlobalTimer.getInstance().setMark("6th Convo Emote", 12*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
             }
         }
 

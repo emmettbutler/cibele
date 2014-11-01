@@ -85,7 +85,7 @@ package{
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
             var mouseScreenRect:FlxRect = new FlxRect(screenPos.x, screenPos.y,
                                                       5, 5);
-            this.emote(mouseScreenRect);
+            this.emote(mouseScreenRect, _player);
 
             if(this._state != SHOWING_POP_UP) {
                 var curButton:DockButton;
@@ -184,7 +184,7 @@ package{
             emoji_happy.scrollFactor.x = 0;
             emoji_happy.scrollFactor.y = 0;
             this.elements.push(emoji_happy);
-            emojiButtons[emoji_happy] = Emote.HAPPY;
+            emojiButtons[Emote.HAPPY] = emoji_happy;
 
             imgClass = ImgEmojiSad;
             imgSize = new DHPoint(94, 99);
@@ -201,7 +201,7 @@ package{
             emoji_sad.scrollFactor.x = 0;
             emoji_sad.scrollFactor.y = 0;
             this.elements.push(emoji_sad);
-            this.emojiButtons[emoji_sad] = Emote.SAD;
+            this.emojiButtons[Emote.SAD] = emoji_sad;
 
             imgClass = ImgEmojiAngry;
             imgSize = new DHPoint(100, 99);
@@ -217,7 +217,7 @@ package{
             emoji_angry.scrollFactor.x = 0;
             emoji_angry.scrollFactor.y = 0;
             this.elements.push(emoji_angry);
-            this.emojiButtons[emoji_angry] = Emote.ANGRY;
+            this.emojiButtons[Emote.ANGRY] = emoji_angry;
 
             var dockOffset:Number = 100;
             var dock:UIElement = new UIElement(
@@ -291,17 +291,23 @@ package{
             }
         }
 
-        public function emote(mouseScreenRect:FlxRect):void {
-            var overlap:Boolean, element:UIElement;
-            for (var key:Object in this.emojiButtons) {
-                element = key as UIElement;
-                overlap = mouseScreenRect.overlaps(
-                    new FlxRect(element.x, element.y, element.width,
-                                element.height)
-                );
-                if (overlap) {
-                    new Emote(new DHPoint(_player.pos.x + (_player.width/4), _player.pos.y), this.emojiButtons[key],
-                              (FlxG.state as GameState).ui_color_flag);
+        public function emote(mouseScreenRect:FlxRect, char:PartyMember, procedural:Boolean=false, em:Number=Emote.HAPPY):void {
+            if(procedural) {
+                new Emote(new DHPoint(char.pos.x + (char.width/4), char.pos.y), em,
+                                  (FlxG.state as GameState).ui_color_flag);
+            } else {
+                var overlap:Boolean, element:UIElement, mood:Number;
+                for (var k:Object in this.emojiButtons) {
+                    element = this.emojiButtons[k] as UIElement;
+                    mood = k as Number;
+                    overlap = mouseScreenRect.overlaps(
+                        new FlxRect(element.x, element.y, element.width,
+                                    element.height)
+                    );
+                    if (overlap) {
+                        new Emote(new DHPoint(char.pos.x + (char.width/4), char.pos.y), mood,
+                                  (FlxG.state as GameState).ui_color_flag);
+                    }
                 }
             }
         }
