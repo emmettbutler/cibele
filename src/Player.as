@@ -36,6 +36,7 @@ package{
         public var enemy_dir:DHPoint;
         public var click_anim_lock:Boolean = false;
         public var cameraPos:GameObject;
+        public var active_enemy:Boolean = false;
 
         public static const STATE_WALK:Number = 2398476188;
         public static const STATE_WALK_HARD:Number = 23981333333;
@@ -129,16 +130,21 @@ package{
                         cur is UIElement && cur.visible)
                     {
                         ui_clicked = true;
+                        this.active_enemy = false;
                         this.playUIGeneralSFX();
                     } else if (cur is Enemy) {
                         if (mouseWorldRect.overlaps(worldRect)) {
-                            this.targetEnemy = cur as Enemy;
-                            this.targetEnemy.activeTarget();
-                            if(this.targetEnemy.dead) {
-                                this.targetEnemy = null;
+                            if(!this.active_enemy) {
+                                this.active_enemy = true;
+                                this.targetEnemy = cur as Enemy;
+                                this.targetEnemy.activeTarget();
+                                if(this.targetEnemy.dead) {
+                                    this.targetEnemy = null;
+                                }
                             }
                         } else {
                             (cur as Enemy).inactiveTarget();
+                            this.active_enemy = false;
                         }
                     }
                 }
