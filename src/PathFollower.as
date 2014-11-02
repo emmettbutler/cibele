@@ -145,6 +145,8 @@ package
         override public function update():void {
             super.update();
 
+            //FlxG.log(stateMap[this._state]);
+
             if(this.facing == LEFT) {
                 this.shadow_sprite.x = this.pos.center(this).x - 15;
                 this.shadow_sprite.y = this.pos.center(this).y + 60;
@@ -183,17 +185,29 @@ package
                 } else {
                     disp = this.targetPathNode.pos.sub(this.pos);
                     if (disp._length() < 10) {
+                        FlxG.log("move to path node now idle");
                         this._state = STATE_IDLE_AT_PATH_NODE;
                     } else {
+                        FlxG.log("move to path node disp > 10");
                         this.dir = disp.normalized().mulScl(this.runSpeed);
                     }
                 }
                 if (this.enemyIsInAttackRange(this.targetEnemy)) {
+                    FlxG.log("move to path node at enemy");
                     this._state = STATE_AT_ENEMY;
                     this.targetEnemy.activeTarget();
                 } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
-                    this.walkTarget = this.targetEnemy.getAttackPos();
-                    this._state = STATE_MOVE_TO_ENEMY;
+                    if (this.targetEnemy.getAttackPos().sub(this.footPos)._length() > (this.targetEnemy is BossEnemy ? this.bossSightRange : this.sightRange))
+                    {
+                        FlxG.log("move to path node move to next node");
+                        //TODO write moveToNextMapNode since
+                        //path node could be weirdly far...
+                        this.moveToNextPathNode();
+                    } else {
+                        FlxG.log("move to path node move to en");
+                        this.walkTarget = this.targetEnemy.getAttackPos();
+                        this._state = STATE_MOVE_TO_ENEMY;
+                    }
                 }
             } else if (this._state == STATE_MOVE_TO_MAP_NODE) {
                 this.walk();
@@ -221,12 +235,14 @@ package
             } else if (this._state == STATE_IDLE_AT_PATH_NODE) {
                 this.markCurrentNode();
                 if(this.playerIsInMovementRange()){
+                    FlxG.log("idle at path node move to next path node");
                     this.moveToNextPathNode();
-                }
-                if (this.enemyIsInAttackRange(this.targetEnemy)) {
+                } else if (this.enemyIsInAttackRange(this.targetEnemy)) {
+                    FlxG.log("idle at path node enemy in range");
                     this._state = STATE_AT_ENEMY;
                     this.targetEnemy.activeTarget();
                 } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
+                    FlxG.log("idle at path node move to enemy");
                     this.walkTarget = this.targetEnemy.getAttackPos();
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
@@ -265,6 +281,7 @@ package
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_MOVE_TO_PLAYER) {
                 this.walk();
+                FlxG.log("STATE_MOVE_TO_PLAYER");
                 this.disp = this.playerRef.pos.sub(this.footPos).normalized();
                 this.dir = this.disp.mulScl(this.runSpeed);
                 if (this.playerIsInMovementRange()) {
