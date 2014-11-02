@@ -18,7 +18,12 @@ package {
 
             var spr:Footstep;
             for (var i:int = 0; i < this.count; i++) {
-                spr = new Footstep();
+                if(this.target_ is Player) {
+                    spr = new Footstep(Footstep.BLUE);
+                } else {
+                    spr = new Footstep(Footstep.PURPLE);
+                }
+
                 this.sprites.push(spr);
             }
         }
@@ -45,6 +50,8 @@ package {
                     oldest = cur;
                 }
             }
+            oldest.scale.x = -1;
+            cur.scale.x = 1;
             oldest.place(this.target_.pos.add(this.target_.footstepOffset));
             this.angleStep(oldest);
         }

@@ -37,6 +37,9 @@ package{
         public var click_anim_lock:Boolean = false;
         public var cameraPos:GameObject;
         public var active_enemy:Boolean = false;
+        public var upDownFootstepOffset:DHPoint;
+        public var leftFootstepOffset:DHPoint;
+        public var rightFootstepOffset:DHPoint;
 
         public static const STATE_WALK:Number = 2398476188;
         public static const STATE_WALK_HARD:Number = 23981333333;
@@ -97,7 +100,10 @@ package{
                                            this.mapHitbox.height);
 
             this.lastPos = new DHPoint(this.pos.x, this.pos.y);
-            this.footstepOffset = new DHPoint(80, this.height);
+            this.upDownFootstepOffset = new DHPoint(70, this.height);
+            this.leftFootstepOffset = new DHPoint(90, this.height-20);
+            this.rightFootstepOffset = new DHPoint(40, this.height-20);
+            this.footstepOffset = this.upDownFootstepOffset;
             this.walkTarget = new DHPoint(0, 0);
 
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
@@ -226,15 +232,19 @@ package{
             if(this.facing == LEFT){
                 this.play("walk_l");
                 this.text_facing = "left";
+                this.footstepOffset = this.leftFootstepOffset;
             } else if (this.facing == RIGHT){
                 this.play("walk_r");
                 this.text_facing = "right";
+                this.footstepOffset = this.rightFootstepOffset;
             } else if(this.facing == UP){
                 this.play("walk_u");
                 this.text_facing = "up";
+                this.footstepOffset = this.upDownFootstepOffset;
             } else if(this.facing == DOWN){
                 this.play("walk_d");
                 this.text_facing = "down";
+                this.footstepOffset = this.upDownFootstepOffset;
             }
         }
 

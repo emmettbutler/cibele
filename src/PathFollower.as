@@ -28,6 +28,8 @@ package
         public var playerRef:Player;
         public var walkTarget:DHPoint;
         public var disp:DHPoint;
+        public var upDownFootstepOffset:DHPoint;
+        public var leftRightFootstepOffset:DHPoint;
 
         public var attackAnim:GameObject;
 
@@ -89,7 +91,10 @@ package
             this.targetPathNode = null;
             this._state = STATE_NULL;
 
-            this.footstepOffset = new DHPoint(0, 0);
+            this.upDownFootstepOffset = new DHPoint(70, this.height);
+            this.leftRightFootstepOffset = new DHPoint(90, this.height-20);
+            this.footstepOffset = this.upDownFootstepOffset;
+
             this.attackRange = 90;
 
             this.walkTarget = new DHPoint(0, 0);
@@ -106,12 +111,16 @@ package
         public function walk():void {
             if(this.facing == LEFT){
                 this.play("walk_l");
+                this.footstepOffset = this.leftRightFootstepOffset;
             } else if (this.facing == RIGHT){
                 this.play("walk_r");
+                this.footstepOffset = this.leftRightFootstepOffset;
             } else if(this.facing == UP){
                 this.play("walk_u");
+                this.footstepOffset = this.upDownFootstepOffset;
             } else if(this.facing == DOWN){
                 this.play("walk_d");
+                this.footstepOffset = this.upDownFootstepOffset;
             }
         }
 
