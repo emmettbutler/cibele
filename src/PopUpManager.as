@@ -291,7 +291,7 @@ package{
             }
         }
 
-        public function emote(mouseScreenRect:FlxRect, char:PartyMember, procedural:Boolean=false, em:Number=Emote.HAPPY):void {
+        public function emote(mouseScreenRect:FlxRect, char:PartyMember, procedural:Boolean=false, em:Number=111):void {
             if(procedural) {
                 new Emote(new DHPoint(char.pos.x + (char.width/4), char.pos.y), em,
                                   (FlxG.state as GameState).ui_color_flag);

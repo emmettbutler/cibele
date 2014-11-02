@@ -19,6 +19,8 @@ package{
 
         public var bgs:Array;
         public var light:FlxExtSprite;
+        public var wall_left:GameObject;
+        public var wall_right:GameObject;
 
         public var img_height:Number = 800;
 
@@ -60,9 +62,21 @@ package{
             this.postCreate();
             this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
             this.light.alpha = .1;
+
+            wall_left = new GameObject(new DHPoint(_screen.screenWidth * .0001, _screen.screenHeight * .001));
+            wall_left.makeGraphic(_screen.screenWidth * .41, _screen.
+                screenHeight, 0xff000000);
+            wall_left.scrollFactor = new DHPoint(0,0);
+            FlxG.state.add(wall_left);
+
+            wall_right = new GameObject(new DHPoint(_screen.screenWidth * .594, _screen.screenHeight * .001));
+            wall_right.makeGraphic(_screen.screenWidth * .45, _screen.
+                screenHeight, 0xff000000);
+            wall_right.scrollFactor = new DHPoint(0,0);
+            FlxG.state.add(wall_right);
+
             if(_state == STATE_PRE_IT){
-                call_button = new GameObject(new DHPoint(_screen.screenWidth * .35,
-                                            _screen.screenHeight * .3));
+                call_button = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .3));
                 call_button.loadGraphic(ImgCall,false,false,406,260);
                 call_button.scrollFactor = new DHPoint(0, 0);
                 FlxG.state.add(call_button);
