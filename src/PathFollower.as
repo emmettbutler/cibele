@@ -145,7 +145,7 @@ package
         override public function update():void {
             super.update();
 
-            //FlxG.log(stateMap[this._state]);
+            FlxG.log(stateMap[this._state]);
 
             if(this.facing == LEFT) {
                 this.shadow_sprite.x = this.pos.center(this).x - 15;
@@ -221,16 +221,16 @@ package
                         } else if(this.targetMapNode._type == MapNode.TYPE_MAP){
                             this._state = STATE_IDLE_AT_MAP_NODE;
                         }
+                        if (this.enemyIsInAttackRange(this.targetEnemy)) {
+                            this._state = STATE_AT_ENEMY;
+                            this.targetEnemy.activeTarget();
+                        } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
+                            this.walkTarget = this.targetEnemy.getAttackPos();
+                            this._state = STATE_MOVE_TO_ENEMY;
+                        }
                     } else {
                         this.dir = disp.normalized().mulScl(this.runSpeed);
                     }
-                }
-                if (this.enemyIsInAttackRange(this.targetEnemy)) {
-                    this._state = STATE_AT_ENEMY;
-                    this.targetEnemy.activeTarget();
-                } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
-                    this.walkTarget = this.targetEnemy.getAttackPos();
-                    this._state = STATE_MOVE_TO_ENEMY;
                 }
             } else if (this._state == STATE_IDLE_AT_PATH_NODE) {
                 this.markCurrentNode();
