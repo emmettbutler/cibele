@@ -329,6 +329,12 @@ package{
                 this.setIdleAnim();
             }
 
+            if(this._state != STATE_IN_ATTACK) {
+                this.alpha = 1;
+                this.shadow_sprite.alpha = 1;
+                this.attack_sprite.alpha = 0;
+            }
+
             if (this.colliding) {
                 if (this.collisionDirection != null) {
                     if (this.collisionDirection[0] == 1 &&
