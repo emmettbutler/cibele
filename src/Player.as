@@ -6,7 +6,7 @@ package{
     public class Player extends PartyMember {
         [Embed(source="../assets/c_walk.png")] private var ImgCibWalk:Class;
         [Embed(source="../assets/click_anim.png")] private var ImgWalkTo:Class;
-        [Embed(source="../assets/testattack.png")] private var ImgAttack:Class;
+        [Embed(source="../assets/cib_attack.png")] private var ImgAttack:Class;
         [Embed(source="../assets/cib_shadow.png")] private var ImgShadow:Class;
         [Embed(source="../assets/cib_shadow_blue.png")] private var ImgShadowBlue:Class;
         [Embed(source="../assets/sfx_uigeneral.mp3")] private var SfxUI:Class;
@@ -85,7 +85,6 @@ package{
                 20, false);
             addAnimation("idle_r", [40], 20, false);
             addAnimation("idle", [11], 7, false);
-            addAnimation("attack", [0, 1], 7, true);
 
             this.click_anim = new GameObject(this.pos);
             this.attack_sprite = new GameObject(this.pos);
@@ -269,6 +268,16 @@ package{
                                                this.pos.center(this).y);
             }
 
+            if(this.alpha == 0) {
+                if(this.attack_sprite.frame == 22) {
+                    this.alpha = 1;
+                    this.attack_sprite.alpha = 0;
+                }
+            }
+
+            this.attack_sprite.x = this.x;
+            this.attack_sprite.y = this.y+(this.height-this.attack_sprite.height);
+
             if(this.text_facing == "left") {
                 this.shadow_sprite.x = this.pos.center(this).x - 15;
                 this.shadow_sprite.y = this.pos.center(this).y + 50;
@@ -368,9 +377,6 @@ package{
                 this.click_anim.alpha = 0;
                 this.click_anim.play("idle");
             }
-            if(this.attack_sprite.frame == 3) {
-                this.attack_sprite.alpha = 0;
-            }
         }
 
         override public function resolveStatePostAttack():void {
@@ -412,8 +418,8 @@ package{
             this.click_anim.alpha = 0;
 
             //test attack sprite
-            this.attack_sprite.loadGraphic(ImgAttack,true,false,692/5,140);
-            this.attack_sprite.addAnimation("attack",[0,1,2,3,4],10,false);
+            this.attack_sprite.loadGraphic(ImgAttack,true,false,173,230);
+            this.attack_sprite.addAnimation("attack",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22],10,false);
             FlxG.state.add(attack_sprite);
             this.attack_sprite.alpha = 0;
         }
@@ -429,6 +435,7 @@ package{
             super.attack();
             if (this._state == STATE_IN_ATTACK) {
                 this.attack_sprite.alpha = 1;
+                this.alpha = 0;
                 this.attack_sprite.play("attack");
 
                 var snd:Class = SfxAttack1;
