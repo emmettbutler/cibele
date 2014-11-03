@@ -268,15 +268,8 @@ package{
                                                this.pos.center(this).y);
             }
 
-            if(this.alpha == 0) {
-                if(this.attack_sprite.frame == 22) {
-                    this.alpha = 1;
-                    this.attack_sprite.alpha = 0;
-                }
-            }
-
             this.attack_sprite.x = this.x;
-            this.attack_sprite.y = this.y+(this.height-this.attack_sprite.height);
+            this.attack_sprite.y = this.y-45;
 
             if(this.text_facing == "left") {
                 this.shadow_sprite.x = this.pos.center(this).x - 15;
@@ -328,10 +321,7 @@ package{
                 this.attack();
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_IN_ATTACK) {
-                this.attack_sprite.x = this.pos.x;
-                this.attack_sprite.y = this.pos.y;
                 this.setFacing(true);
-                this.setIdleAnim();
                 if (this.timeSinceLastAttack() > 100) {
                     this.resolveStatePostAttack();
                 }
@@ -381,18 +371,27 @@ package{
 
         override public function resolveStatePostAttack():void {
             super.resolveStatePostAttack();
-            if (this.targetEnemy != null && !this.targetEnemy.dead &&
-                this.targetEnemy.visible == true)
-            {
-                if(this.enemyIsInAttackRange(this.targetEnemy)) {
-                    this._state = STATE_AT_ENEMY;
+            if(this.alpha == 0) {
+                if(this.attack_sprite.frame == 22) {
+                    this.alpha = 1;
+                    this.shadow_sprite.alpha = 1;
+                    this.attack_sprite.alpha = 0;
+
+                    if (this.targetEnemy != null && !this.targetEnemy.dead && this.targetEnemy.visible == true)
+                    {
+                        if(this.enemyIsInAttackRange(this.targetEnemy)) {
+                            this._state = STATE_AT_ENEMY;
+                        } else {
+                            this.walkTarget = this.targetEnemy.getAttackPos();
+                            this.walkDistance = this.walkTarget.sub(footPos)._length();
+                            this._state = STATE_MOVE_TO_ENEMY;
+                        }
+                    } else {
+                        this._state = STATE_IDLE;
+                    }
                 } else {
-                    this.walkTarget = this.targetEnemy.getAttackPos();
-                    this.walkDistance = this.walkTarget.sub(footPos)._length();
-                    this._state = STATE_MOVE_TO_ENEMY;
+                    this._state = STATE_IN_ATTACK;
                 }
-            } else {
-                this._state = STATE_IDLE;
             }
         }
 
@@ -436,6 +435,7 @@ package{
             if (this._state == STATE_IN_ATTACK) {
                 this.attack_sprite.alpha = 1;
                 this.alpha = 0;
+                this.shadow_sprite.alpha = 0;
                 this.attack_sprite.play("attack");
 
                 var snd:Class = SfxAttack1;
