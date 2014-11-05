@@ -63,7 +63,7 @@ package{
             this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
             this.light.alpha = .1;
 
-            wall_left = new GameObject(new DHPoint(_screen.screenWidth * .0001, _screen.screenHeight * .001));
+            /*wall_left = new GameObject(new DHPoint(_screen.screenWidth * .0001, _screen.screenHeight * .001));
             wall_left.makeGraphic(_screen.screenWidth * .41, _screen.
                 screenHeight, 0xff000000);
             wall_left.scrollFactor = new DHPoint(0,0);
@@ -73,7 +73,7 @@ package{
             wall_right.makeGraphic(_screen.screenWidth * .45, _screen.
                 screenHeight, 0xff000000);
             wall_right.scrollFactor = new DHPoint(0,0);
-            FlxG.state.add(wall_right);
+            FlxG.state.add(wall_right);*/
 
             if(_state == STATE_PRE_IT){
                 call_button = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .3));
