@@ -123,7 +123,7 @@ package {
                     this.sortedObjects.push(members[i]);
                 }
                 basic = members[i++] as GameObject;
-                if((basic != null) && basic.exists && basic.active) {
+                if(basic != null && basic.scale != null && basic.exists && basic.active) {
                     if ((GlobalTimer.getInstance().isPaused() &&
                          !basic.observeGlobalPause) ||
                         !GlobalTimer.getInstance().isPaused())

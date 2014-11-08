@@ -180,12 +180,16 @@ package
         }
 
         public function respawn():void {
-            this.hitpoints = 100;
-            this.dead = false;
-            this.visible = true;
-            this.setIdle();
-            this.x = original_pos.x;
-            this.y = original_pos.y;
+            if(!this.inViewOfPlayer()) {
+                this.hitpoints = 100;
+                this.dead = false;
+                this.visible = true;
+                this.setIdle();
+                this.x = original_pos.x;
+                this.y = original_pos.y;
+            } else {
+                GlobalTimer.getInstance().setMark("respawn timer" + Math.random()*200, 10*GameSound.MSEC_PER_SEC, this.respawn, true);
+            }
         }
 
         public function getAttackPos():DHPoint {
@@ -194,6 +198,11 @@ package
 
         public function setPath(path:Path):void {
             this._path = path;
+        }
+
+        public function inViewOfPlayer():Boolean {
+            return !(this.player.pos.sub(this.pos)._length() >
+                    ScreenManager.getInstance().screenWidth / 2);
         }
 
         override public function update():void{
