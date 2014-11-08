@@ -40,9 +40,13 @@ package{
 
         override public function create():void {
             function _musicCallback():void {
-                SoundManager.getInstance().playSound(FernBGMLoop, 0, null, true, .2, GameSound.BGM, HallwayToFern.BGM, false, false);
+                SoundManager.getInstance().playSound(FernBGMLoop, 0, null,
+                    true, .2, GameSound.BGM, HallwayToFern.BGM, false, false);
             }
-            SoundManager.getInstance().playSound(FernBGMIntro, 12.4*GameSound.MSEC_PER_SEC, _musicCallback, false, .2, Math.random()*932+102, HallwayToFern.BGM, false, false);
+            SoundManager.getInstance().playSound(
+                FernBGMIntro, 12.4*GameSound.MSEC_PER_SEC, _musicCallback,
+                false, .2, Math.random()*932+102, HallwayToFern.BGM, false,
+                false);
 
             bgs = new Array();
             this.light = new FlxExtSprite(0,0);
