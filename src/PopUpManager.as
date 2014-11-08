@@ -274,7 +274,7 @@ package{
                 FlxG.state.add(this.popups[key]);
             }
 
-            for (var key:Object in this.sentPopups) {
+            for (key in this.sentPopups) {
                 this.sendPopup(key as String);
             }
         }

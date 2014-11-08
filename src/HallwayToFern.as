@@ -69,9 +69,9 @@ package{
             leftBound = ScreenManager.getInstance().screenWidth * .36;
             rightBound = ScreenManager.getInstance().screenWidth * .53;
 
-            this.postCreate();
             this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
             this.light.alpha = .1;
+            this.postCreate();
 
             if(_state == STATE_PRE_IT){
                 call_button = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .3));
@@ -112,7 +112,7 @@ package{
 
             var highestTile:GameObject = this.bgs[0];
             var lowestTile:GameObject = this.bgs[0];
-            for (i = 0; i < this.bgs.length; i++) {
+            for (var i:int = 0; i < this.bgs.length; i++) {
                 if (this.bgs[i].y < highestTile.y) {
                     highestTile = this.bgs[i];
                 }

@@ -25,7 +25,7 @@ package{
         public var lastPos:DHPoint;
         public var mapHitbox:GameObject;
         public var hitboxOffset:DHPoint, hitboxDim:DHPoint;
-        public var collisionDirection:Array;
+        public var collisionDirection:Array, lastPositions:Deque;
         public var popupmgr:PopUpManager;
         public var inhibitY:Boolean = false, inhibitX:Boolean = false;
         public var click_anim:GameObject;
@@ -36,6 +36,7 @@ package{
         public var enemy_dir:DHPoint;
         public var click_anim_lock:Boolean = false;
         public var cameraPos:GameObject;
+        public var clickWait:Boolean;
         public var active_enemy:Boolean = false;
         public var upDownFootstepOffset:DHPoint;
         public var leftFootstepOffset:DHPoint;
@@ -53,7 +54,6 @@ package{
             stateMap[STATE_WALK] = "STATE_WALK";
             stateMap[STATE_WALK_HARD] = "STATE_WALK_HARD";
         }
-
 
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
@@ -108,6 +108,9 @@ package{
             this.walkTarget = new DHPoint(0, 0);
 
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
+            this.lastPositions = new Deque(3);
+            GlobalTimer.getInstance().setMark("trail_update",
+                .1*GameSound.MSEC_PER_SEC, this.pushPos, true);
         }
 
         public function setMapNodes(nodes:MapNodeContainer):void {
@@ -169,6 +172,11 @@ package{
             }
             this.dir = this.walkTarget.sub(footPos).normalized();
             this.walkDistance = this.walkTarget.sub(footPos)._length();
+            this.clickWait = true;
+            GlobalTimer.getInstance().setMark("clickwait",
+                .4*GameSound.MSEC_PER_SEC, function():void {
+                    clickWait = false;
+                }, true);
         }
 
         public function setFacing(at_enemy:Boolean=false):void {
@@ -310,6 +318,10 @@ package{
                 } else if (this.walkTarget.sub(this.footPos)._length() < 100) {
                     this.dir = this.dir.mulScl(.7);
                 }
+                if (!this.positionDeltaOverThreshold() && !this.clickWait) {
+                    this._state = STATE_IDLE;
+                    this.dir = ZERO_POINT;
+                }
             } else if (this._state == STATE_MOVE_TO_ENEMY) {
                 if(this.targetEnemy != null) {
                     this.walkTarget = this.targetEnemy.getAttackPos();
@@ -381,6 +393,18 @@ package{
                 this.click_anim.visible = false;
                 this.click_anim.play("idle");
             }
+        }
+
+        public function pushPos():void {
+            this.lastPositions.push(new DHPoint(this.pos.x, this.pos.y));
+            GlobalTimer.getInstance().setMark("trail_update",
+                .1*GameSound.MSEC_PER_SEC, this.pushPos, true);
+        }
+
+        public function positionDeltaOverThreshold():Boolean {
+            var pa:DHPoint = this.lastPositions[0];
+            var pb:DHPoint = this.lastPositions[this.lastPositions.length - 1];
+            return pa.sub(pb)._length() > 5;
         }
 
         override public function resolveStatePostAttack():void {

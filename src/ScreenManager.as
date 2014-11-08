@@ -15,7 +15,7 @@ package {
         public var applet_dimensions:FlxPoint, letterbox_dimensions:FlxPoint, zero_point:FlxPoint;
 
         // global debug flag
-        public var DEBUG:Boolean = true;
+        public var DEBUG:Boolean = false;
 
         public var letterbox1:FlxSprite = null, letterbox2:FlxSprite = null, letterbox3:FlxSprite = null, letterbox4:FlxSprite = null;
 
