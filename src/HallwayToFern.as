@@ -59,9 +59,10 @@ package{
             ScreenManager.getInstance().setupCamera(player.cameraPos, 1);
             FlxG.camera.setBounds(0, 0, _screen.screenWidth, bottomY);
 
-            this.postCreate();
             this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
             this.light.alpha = .1;
+
+            this.postCreate();
 
             /*wall_left = new GameObject(new DHPoint(_screen.screenWidth * .0001, _screen.screenHeight * .001));
             wall_left.makeGraphic(_screen.screenWidth * .41, _screen.
