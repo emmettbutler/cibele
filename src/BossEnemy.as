@@ -16,8 +16,8 @@ package
             damage = 1;
             use_active_highlighter = false;
             this.canEscape = true;
-            this.attackOffset = new DHPoint(-200,
-                                            -1 * (this.height / 3));
+            //this.attackOffset = new DHPoint(-200, -1 * (this.height / 3));
+            this.attackOffset = new DHPoint(0,0);
             this.recoilPower = 0;
 
             addAnimation("run", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 12, true);

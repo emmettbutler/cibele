@@ -164,7 +164,7 @@ package{
             if (this.targetEnemy == null) {
                 this.initWalk(worldPos);
             } else {
-                this.walkTarget = this.targetEnemy.getAttackPos();
+                this.walkTarget = new DHPoint(FlxG.mouse.x, FlxG.mouse.y);
                 this._state = STATE_MOVE_TO_ENEMY;
             }
             this.dir = this.walkTarget.sub(footPos).normalized();
