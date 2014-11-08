@@ -83,6 +83,7 @@ package {
 
             for (var i:int = 0; i < this.enemies.length(); i++) {
                 FlxG.state.add(this.enemies.get_(i).bar);
+                FlxG.state.add(this.enemies.get_(i).debugText);
             }
 
             super.postCreate();

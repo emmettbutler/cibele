@@ -29,7 +29,6 @@ package{
         public var popupmgr:PopUpManager;
         public var inhibitY:Boolean = false, inhibitX:Boolean = false;
         public var click_anim:GameObject;
-        public var targetEnemy:Enemy;
         public var _mapnodes:MapNodeContainer;
         public var attack_sprite:GameObject;
         public var shadow_sprite:GameObject;
@@ -167,7 +166,7 @@ package{
             if (this.targetEnemy == null) {
                 this.initWalk(worldPos);
             } else {
-                this.walkTarget = this.targetEnemy.getAttackPos();
+                this.walkTarget = new DHPoint(FlxG.mouse.x, FlxG.mouse.y);
                 this._state = STATE_MOVE_TO_ENEMY;
             }
             this.dir = this.walkTarget.sub(footPos).normalized();
@@ -424,6 +423,8 @@ package{
                             this.walkDistance = this.walkTarget.sub(footPos)._length();
                             this._state = STATE_MOVE_TO_ENEMY;
                         }
+                    } else if (this.targetEnemy.dead) {
+                        this.targetEnemy = null;
                     } else {
                         this._state = STATE_IDLE;
                     }
