@@ -34,7 +34,7 @@ package{
         public var photo_button:DockButton = null;
 
         private var emojiButtons:Dictionary;
-        private var programButtons:Array;
+        private var programButtons:Array, sentPopups:Dictionary;
         public var popups:Dictionary;
         public var popupTags:Object;
 
@@ -65,6 +65,7 @@ package{
 
         public function PopUpManager() {
             this.elements = new Array();
+            this.sentPopups = new Dictionary();
 
             this.popupTags = {};
             this.popupTags[BUTTON_INTERNET] = BULLDOG_HELL;
@@ -87,6 +88,9 @@ package{
                             curButton.toggleGame();
                         } else {
                             curButton.open();
+                            if (curButton.tag in this.sentPopups) {
+                                delete this.sentPopups[curButton.tag];
+                            }
                         }
                     }
                 }
@@ -125,6 +129,7 @@ package{
             for (var i:int = 0; i < this.programButtons.length; i++) {
                 if (this.programButtons[i].ownsKey(key)) {
                     this.programButtons[i].sendPopup(this.popups[key]);
+                    this.sentPopups[key] = 1;
                 }
             }
         }
@@ -267,6 +272,10 @@ package{
             for (var key:Object in this.popups) {
                 this.elements.push(this.popups[key]);
                 FlxG.state.add(this.popups[key]);
+            }
+
+            for (var key:Object in this.sentPopups) {
+                this.sendPopup(key as String);
             }
         }
 
