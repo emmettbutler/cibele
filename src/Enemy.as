@@ -10,7 +10,7 @@ package
         [Embed(source="../assets/enemy2_highlight.png")] private var ImgActive2:Class;
         public var enemyType:String = "enemy";
         public var hitpoints:Number = 100;
-        public var damage:Number = 5;
+        public var damage:Number = 3;
 
         public static const STATE_IDLE:Number = 1;
         public static const STATE_DAMAGED:Number = 2;
@@ -18,6 +18,7 @@ package
         public static const STATE_RECOIL:Number = 4;
         public static const STATE_ESCAPE:Number = 5;
         public static const STATE_MOVE_TO_PATH_NODE:Number = 6;
+        public static const STATE_DEAD:Number = 7;
         public var dead:Boolean = false;
 
         public var player:Player;
@@ -31,13 +32,13 @@ package
         public var attacker:PartyMember;
         public var _mapnodes:MapNodeContainer;
         public var footPos:DHPoint;
-        public var cib_target_sprite:GameObject;
-        public var ichi_target_sprite:GameObject;
+        public var target_sprite:GameObject;
         public var fade_active:Boolean = false;
         public var fade:Boolean = false;
         public var bar:GameObject;
         public var sightRange:Number = 308;
         public var canEscape:Boolean = false;
+        public var original_pos:DHPoint;
 
         public var _path:Path = null;
         public var targetPathNode:PathNode;
@@ -51,37 +52,32 @@ package
             stateMap[STATE_DAMAGED] = "STATE_DAMAGED";
             stateMap[STATE_TRACKING] = "STATE_TRACKING";
             stateMap[STATE_RECOIL] = "STATE_RECOIL";
+            stateMap[STATE_DEAD] = "STATE_DEAD";
+            stateMap[STATE_ESCAPE] = "STATE_ESCAPE";
+            stateMap[STATE_MOVE_TO_PATH_NODE] = "STATE_MOVE_TO_PATH_NODE";
         }
 
         public function Enemy(pos:DHPoint) {
             super(pos);
+            this.original_pos = pos;
             //this._state = STATE_IDLE;
 
             this.attackOffset = new DHPoint(0, 0);
 
             var rand:Number = Math.random() * 2;
             if(rand > 1) {
-                this.cib_target_sprite = new GameObject(pos);
-                this.cib_target_sprite.loadGraphic(ImgActive,false,false,147,24);
-                FlxG.state.add(this.cib_target_sprite);
-                this.cib_target_sprite.alpha = 0;
-
-                this.ichi_target_sprite = new GameObject(pos);
-                this.ichi_target_sprite.loadGraphic(ImgActive,false,false,147,24);
-                FlxG.state.add(this.ichi_target_sprite);
-                this.ichi_target_sprite.alpha = 0;
+                this.target_sprite = new GameObject(pos);
+                this.target_sprite.loadGraphic(ImgActive,false,false,147,24);
+                FlxG.state.add(this.target_sprite);
+                this.target_sprite.visible = false;
 
                 loadGraphic(ImgIT1, false, false, 152, 104);
             } else {
-                this.cib_target_sprite = new GameObject(pos);
-                this.cib_target_sprite.loadGraphic(ImgActive2,false,false,67,15);
-                FlxG.state.add(this.cib_target_sprite);
-                this.cib_target_sprite.alpha = 0;
+                this.target_sprite = new GameObject(pos);
+                this.target_sprite.loadGraphic(ImgActive2,false,false,67,15);
+                FlxG.state.add(this.target_sprite);
+                this.target_sprite.visible = false;
 
-                this.ichi_target_sprite = new GameObject(pos);
-                this.ichi_target_sprite.loadGraphic(ImgActive2,false,false,67,15);
-                FlxG.state.add(this.ichi_target_sprite);
-                this.ichi_target_sprite.alpha = 0;
                 loadGraphic(ImgIT2, false, false, 70, 160);
             }
             addAnimation("run", [0, 1, 2, 3, 4, 5], 12, true);
@@ -137,17 +133,17 @@ package
         public function activeTarget():void {
             if(this.fade_active != true) {
                 this.fade_active = true;
+                this.target_sprite.visible = true;
             }
-            this.bar.alpha = 1;
+            this.bar.visible = true;
         }
 
         public function inactiveTarget():void {
             if(this.fade_active != false) {
                 this.fade_active = false;
-                this.cib_target_sprite.alpha = 0;
-                this.ichi_target_sprite.alpha = 0;
+                this.target_sprite.visible = false;
             }
-            this.bar.alpha = 0;
+            this.bar.visible = false;
         }
 
         public function fadeTarget(obj:GameObject, soften:Boolean=false):void {
@@ -176,9 +172,20 @@ package
             // don't destroy() or state.remove() here. doing so breaks z-sorting
             this.dead = true;
             this.visible = false;
-            this.ichi_target_sprite.alpha = 0;
-            this.cib_target_sprite.alpha = 0;
-            this.bar.alpha = 0;
+            this.target_sprite.visible = false;
+            this.bar.visible = false;
+            this._state = STATE_DEAD;
+            this.dir = new DHPoint(0,0);
+            GlobalTimer.getInstance().setMark("respawn timer" + Math.random()*200, 30*GameSound.MSEC_PER_SEC, this.respawn, true);
+        }
+
+        public function respawn():void {
+            this.hitpoints = 100;
+            this.dead = false;
+            this.visible = true;
+            this.setIdle();
+            this.x = original_pos.x;
+            this.y = original_pos.y;
         }
 
         public function getAttackPos():DHPoint {
@@ -196,25 +203,35 @@ package
             this.footPos.y = this.y + this.height;
             this.basePos.y = this.y + this.height;
 
-            this.cib_target_sprite.x = this.footPos.x - this.cib_target_sprite.width / 2;
-            this.cib_target_sprite.y = this.footPos.y - 10;
-            this.ichi_target_sprite.x = this.footPos.x - this.ichi_target_sprite.width / 2;
-            this.ichi_target_sprite.y = this.footPos.y - 10;
+            this.target_sprite.x = this.footPos.x - this.target_sprite.width / 2;
+            this.target_sprite.y = this.footPos.y - 10;
 
             this.bar.x = this.x + (this.width * .5);
             this.bar.y = this.pos.y-30;
 
-            if (this.player == null) {
-                this.playerDisp = new DHPoint(0, 0);
-            } else {
-                this.playerDisp = this.player.footPos.sub(this.getAttackPos());
-            }
+            if(this._state != STATE_DEAD) {
+                if (this.player == null) {
+                    this.playerDisp = new DHPoint(0, 0);
+                } else {
+                    this.playerDisp = this.player.footPos.sub(this.getAttackPos());
+                }
 
-            if(this.attacker != null){
-                if (this.attacker == this.player) {
-                    this.attackerDisp = this.playerDisp;
-                } else if (this.attacker == this.path_follower) {
-                    this.attackerDisp = this.path_follower.footPos.sub(this.getAttackPos());
+                if(this.attacker != null){
+                    if (this.attacker == this.player) {
+                        this.attackerDisp = this.playerDisp;
+                    } else if (this.attacker == this.path_follower) {
+                        this.attackerDisp = this.path_follower.footPos.sub(this.getAttackPos());
+                    }
+                }
+
+                if(this.hitpoints <= 0){
+                    this.die();
+                } else {
+                    if(fade_active && use_active_highlighter) {
+                        if(this.attacker != null) {
+                            this.fadeTarget(this.target_sprite);
+                        }
+                    }
                 }
             }
 
@@ -257,20 +274,6 @@ package
                 } else {
                     this._state = STATE_TRACKING;
                     this.escape_counter = 0;
-                }
-            }
-
-            if(this.hitpoints < 0){
-                this.die();
-            } else {
-                if(fade_active && use_active_highlighter) {
-                    if(this.attacker != null) {
-                        if(this.attacker.tag == PartyMember.cib) {
-                            this.fadeTarget(this.cib_target_sprite);
-                        } else if(this.attacker.tag == PartyMember.ichi) {
-                            this.fadeTarget(this.ichi_target_sprite, true);
-                        }
-                    }
                 }
             }
         }
