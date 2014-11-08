@@ -59,14 +59,14 @@ package {
         }
 
         public function postCreate():void {
-            if (this.updatePopup) {
-                if (this.showEmoji) {
-                    PopUpManager.getInstance().loadEmoji();
-                }
-                PopUpManager.getInstance().loadPopUps();
+            if (this.updatePopup && this.showEmoji) {
+                PopUpManager.getInstance().loadEmoji();
             }
             if (this.updateMessages) {
-                MessageManager.getInstance();
+                MessageManager.getInstance().reloadPersistentObjects();
+            }
+            if (this.updatePopup) {
+                PopUpManager.getInstance().loadPopUps();
             }
             this.game_cursor = new GameCursor();
         }

@@ -275,10 +275,6 @@ package{
             this.currentTime = new Date().valueOf();
             this.timeAlive = this.currentTime - this.bornTime;
 
-            if (this.notifications_text._textField == null) {
-                this.reloadPersistentObjects();
-            }
-
             this.updateUnreadNotification();
 
             this.mouse_rect.x = FlxG.mouse.screenX;
