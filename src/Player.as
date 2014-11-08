@@ -270,7 +270,7 @@ package{
             }
 
             this.attack_sprite.x = this.x;
-            this.attack_sprite.y = this.y-45;
+            this.attack_sprite.y = this.y - 45;
 
             if(this.text_facing == "left") {
                 this.shadow_sprite.x = this.pos.center(this).x - 15;
@@ -289,7 +289,8 @@ package{
             this.hitbox_rect.x = this.pos.x;
             this.hitbox_rect.y = this.pos.y;
 
-            this.basePos.y = this.y + (this.height-10);
+            this.basePos.y = this.y + (this.height - 10);
+            this.attack_sprite.basePos.y = this.attack_sprite.y + (this.attack_sprite.height - 10);
 
             if(this._state != STATE_AT_ENEMY) {
                 this.setFacing(false);
