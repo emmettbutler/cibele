@@ -88,6 +88,7 @@ package{
 
             this.click_anim = new GameObject(this.pos);
             this.attack_sprite = new GameObject(this.pos);
+            this.attack_sprite.zSorted = true;
 
             this.hitboxOffset = new DHPoint(60, 100);
             this.hitboxDim = new DHPoint(40, 50);
