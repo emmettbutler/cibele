@@ -221,7 +221,7 @@ package{
                     this.click_anim.width/2;
                 this.click_anim.y = this.walkTarget.y -
                     this.click_anim.height/2;
-                this.click_anim.alpha = 1;
+                this.click_anim.visible = true;
                 this.click_anim.play("click");
             }
         }
@@ -331,9 +331,9 @@ package{
             }
 
             if(this._state != STATE_IN_ATTACK) {
-                this.alpha = 1;
-                this.shadow_sprite.alpha = 1;
-                this.attack_sprite.alpha = 0;
+                this.visible = true;
+                this.shadow_sprite.visible = true;
+                this.attack_sprite.visible = false;
             }
 
             if (this.colliding) {
@@ -371,18 +371,18 @@ package{
             super.update();
 
             if(this.click_anim.frame == 10) {
-                this.click_anim.alpha = 0;
+                this.click_anim.visible = false;
                 this.click_anim.play("idle");
             }
         }
 
         override public function resolveStatePostAttack():void {
             super.resolveStatePostAttack();
-            if(this.alpha == 0) {
+            if(this.visible == false) {
                 if(this.attack_sprite.frame == 22) {
-                    this.alpha = 1;
-                    this.shadow_sprite.alpha = 1;
-                    this.attack_sprite.alpha = 0;
+                    this.visible = true;
+                    this.shadow_sprite.visible = true;
+                    this.attack_sprite.visible = false;
 
                     if (this.targetEnemy != null && !this.targetEnemy.dead && this.targetEnemy.visible == true)
                     {
@@ -421,13 +421,13 @@ package{
                 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 30, false);
             this.click_anim.addAnimation("idle", [0], 20, false);
             FlxG.state.add(this.click_anim);
-            this.click_anim.alpha = 0;
+            this.click_anim.visible = false;
 
             //test attack sprite
             this.attack_sprite.loadGraphic(ImgAttack,true,false,173,230);
             this.attack_sprite.addAnimation("attack",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22],10,false);
             FlxG.state.add(attack_sprite);
-            this.attack_sprite.alpha = 0;
+            this.attack_sprite.visible = false;
         }
 
         override public function setPos(pos:DHPoint):void {
@@ -440,9 +440,9 @@ package{
         override public function attack():void {
             super.attack();
             if (this._state == STATE_IN_ATTACK) {
-                this.attack_sprite.alpha = 1;
-                this.alpha = 0;
-                this.shadow_sprite.alpha = 0;
+                this.attack_sprite.visible = true;
+                this.visible = false;
+                this.shadow_sprite.visible = false;
                 this.attack_sprite.play("attack");
 
                 var snd:Class = SfxAttack1;
