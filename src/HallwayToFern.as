@@ -127,7 +127,7 @@ package{
 
             var highestTile:GameObject = this.bgs[0];
             var lowestTile:GameObject = this.bgs[0];
-            for (var i:int = 0; i < this.bgs.length; i++) {
+            for (i = 0; i < this.bgs.length; i++) {
                 if (this.bgs[i].y < highestTile.y) {
                     highestTile = this.bgs[i];
                 }
