@@ -183,7 +183,6 @@ package {
         }
 
         public function playClick():void {
-            FlxG.log("click");
             var rand:Number = Math.random() * 2;
             if(rand > 1) {
                 SoundManager.getInstance().playSound(
