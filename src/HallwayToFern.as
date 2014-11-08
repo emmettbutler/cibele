@@ -23,7 +23,7 @@ package{
         public var wall_left:GameObject;
         public var wall_right:GameObject;
         public var collisionData:Array;
-        public var walls:Array;
+        public var leftBound:Number, rightBound:Number;
 
         public var img_height:Number = 800;
 
@@ -62,21 +62,12 @@ package{
             ScreenManager.getInstance().setupCamera(player.cameraPos, 1);
             FlxG.camera.setBounds(0, 0, _screen.screenWidth, bottomY);
 
+            leftBound = ScreenManager.getInstance().screenWidth * .36;
+            rightBound = ScreenManager.getInstance().screenWidth * .53;
+
             this.postCreate();
             this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
             this.light.alpha = .1;
-
-            walls = new Array();
-
-            wall_left = new GameObject(new DHPoint(0,0));
-            wall_left.makeGraphic(_screen.screenWidth * .41, bottomY, 0xff000000);
-            FlxG.state.add(wall_left);
-            walls.push(wall_left);
-
-            wall_right = new GameObject(new DHPoint(_screen.screenWidth * .594, 0));
-            wall_right.makeGraphic(_screen.screenWidth * .45, bottomY, 0xff000000);
-            FlxG.state.add(wall_right);
-            walls.push(wall_right);
 
             if(_state == STATE_PRE_IT){
                 call_button = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .3));
@@ -107,16 +98,6 @@ package{
         override public function update():void {
             super.update();
 
-            var contact:Boolean;
-            for (var i:int = 0; i < walls.length; i++) {
-                collisionData = this.getCollisionData(walls[i])
-                if (collisionData[0]) {
-                    contact = true;
-                    this.player.collisionDirection = collisionData[1];
-                }
-            }
-            this.player.colliding = contact;
-
             if(SoundManager.getInstance().getSoundByName(MenuScreen.BGM) != null) {
                 SoundManager.getInstance().getSoundByName(MenuScreen.BGM).fadeOutSound();
             }
@@ -127,7 +108,7 @@ package{
 
             var highestTile:GameObject = this.bgs[0];
             var lowestTile:GameObject = this.bgs[0];
-            for (i = 0; i < this.bgs.length; i++) {
+            for (var i:int = 0; i < this.bgs.length; i++) {
                 if (this.bgs[i].y < highestTile.y) {
                     highestTile = this.bgs[i];
                 }
@@ -146,6 +127,13 @@ package{
 
             if (this.player.pos.y < ScreenManager.getInstance().screenHeight / 2) {
                 FlxG.switchState(new Fern());
+            }
+
+            if (this.player.x < leftBound) {
+                this.player.x = leftBound;
+            }
+            if (this.player.x > rightBound) {
+                this.player.x = rightBound;
             }
 
             if(accept_call) {
