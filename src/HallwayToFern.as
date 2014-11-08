@@ -1,5 +1,6 @@
 package{
     import org.flixel.*;
+    import org.flixel.plugin.photonstorm.FlxCollision;
 
     public class HallwayToFern extends PlayerState {
         [Embed(source="../assets/hallway sprite.png")] private var ImgBG:Class;
@@ -21,6 +22,8 @@ package{
         public var light:FlxExtSprite;
         public var wall_left:GameObject;
         public var wall_right:GameObject;
+        public var collisionData:Array;
+        public var leftBound:Number, rightBound:Number;
 
         public var img_height:Number = 800;
 
@@ -63,22 +66,12 @@ package{
             ScreenManager.getInstance().setupCamera(player.cameraPos, 1);
             FlxG.camera.setBounds(0, 0, _screen.screenWidth, bottomY);
 
-            this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
-            this.light.alpha = .1;
+            leftBound = ScreenManager.getInstance().screenWidth * .36;
+            rightBound = ScreenManager.getInstance().screenWidth * .53;
 
             this.postCreate();
-
-            /*wall_left = new GameObject(new DHPoint(_screen.screenWidth * .0001, _screen.screenHeight * .001));
-            wall_left.makeGraphic(_screen.screenWidth * .41, _screen.
-                screenHeight, 0xff000000);
-            wall_left.scrollFactor = new DHPoint(0,0);
-            FlxG.state.add(wall_left);
-
-            wall_right = new GameObject(new DHPoint(_screen.screenWidth * .594, _screen.screenHeight * .001));
-            wall_right.makeGraphic(_screen.screenWidth * .45, _screen.
-                screenHeight, 0xff000000);
-            wall_right.scrollFactor = new DHPoint(0,0);
-            FlxG.state.add(wall_right);*/
+            this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
+            this.light.alpha = .1;
 
             if(_state == STATE_PRE_IT){
                 call_button = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .3));
@@ -140,6 +133,13 @@ package{
                 FlxG.switchState(new Fern());
             }
 
+            if (this.player.x < leftBound) {
+                this.player.x = leftBound;
+            }
+            if (this.player.x > rightBound) {
+                this.player.x = rightBound;
+            }
+
             if(accept_call) {
                 if(call_button.scale.x > 0) {
                     call_button.scale.x -= .1;
@@ -148,6 +148,10 @@ package{
                     call_button.kill();
                 }
             }
+        }
+
+        public function getCollisionData(wall:GameObject):Array {
+            return FlxCollision.pixelPerfectCheck(player.mapHitbox, wall, 255, FlxG.camera, 30, 30, ScreenManager.getInstance().DEBUG);
         }
 
         override public function postCreate():void {
