@@ -340,11 +340,16 @@ package{
                     if (this.collisionDirection[0] == 1 &&
                         this.collisionDirection[1] == 1 &&
                         this.collisionDirection[2] == 1 &&
-                        this.collisionDirection[3] == 1 && this._mapnodes != null)
+                        this.collisionDirection[3] == 1)
                     {
                         // stuck!
                         this._state = STATE_WALK_HARD;
-                        this.walkTarget = this._mapnodes.getClosestNode(this.pos).pos;
+                        if (this._mapnodes != null) {
+                            this.walkTarget = this._mapnodes.getClosestNode(this.pos).pos;
+                        } else {
+                            var _screen:ScreenManager = ScreenManager.getInstance();
+                            this.walkTarget = new DHPoint(_screen.screenWidth/2, this.y);
+                        }
                     } else if (this._state != STATE_WALK_HARD){
                         if (this.dir.x > 0 && this.collisionDirection[1] == 1) {
                             // right

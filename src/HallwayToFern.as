@@ -1,5 +1,6 @@
 package{
     import org.flixel.*;
+    import org.flixel.plugin.photonstorm.FlxCollision;
 
     public class HallwayToFern extends PlayerState {
         [Embed(source="../assets/hallway sprite.png")] private var ImgBG:Class;
@@ -21,6 +22,8 @@ package{
         public var light:FlxExtSprite;
         public var wall_left:GameObject;
         public var wall_right:GameObject;
+        public var collisionData:Array;
+        public var walls:Array;
 
         public var img_height:Number = 800;
 
@@ -63,17 +66,17 @@ package{
             this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
             this.light.alpha = .1;
 
-            /*wall_left = new GameObject(new DHPoint(_screen.screenWidth * .0001, _screen.screenHeight * .001));
-            wall_left.makeGraphic(_screen.screenWidth * .41, _screen.
-                screenHeight, 0xff000000);
-            wall_left.scrollFactor = new DHPoint(0,0);
-            FlxG.state.add(wall_left);
+            walls = new Array();
 
-            wall_right = new GameObject(new DHPoint(_screen.screenWidth * .594, _screen.screenHeight * .001));
-            wall_right.makeGraphic(_screen.screenWidth * .45, _screen.
-                screenHeight, 0xff000000);
-            wall_right.scrollFactor = new DHPoint(0,0);
-            FlxG.state.add(wall_right);*/
+            wall_left = new GameObject(new DHPoint(0,0));
+            wall_left.makeGraphic(_screen.screenWidth * .41, bottomY, 0xff000000);
+            FlxG.state.add(wall_left);
+            walls.push(wall_left);
+
+            wall_right = new GameObject(new DHPoint(_screen.screenWidth * .594, 0));
+            wall_right.makeGraphic(_screen.screenWidth * .45, bottomY, 0xff000000);
+            FlxG.state.add(wall_right);
+            walls.push(wall_right);
 
             if(_state == STATE_PRE_IT){
                 call_button = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .3));
@@ -103,6 +106,16 @@ package{
 
         override public function update():void {
             super.update();
+
+            var contact:Boolean;
+            for (var i:int = 0; i < walls.length; i++) {
+                collisionData = this.getCollisionData(walls[i])
+                if (collisionData[0]) {
+                    contact = true;
+                    this.player.collisionDirection = collisionData[1];
+                }
+            }
+            this.player.colliding = contact;
 
             if(SoundManager.getInstance().getSoundByName(MenuScreen.BGM) != null) {
                 SoundManager.getInstance().getSoundByName(MenuScreen.BGM).fadeOutSound();
@@ -143,6 +156,10 @@ package{
                     call_button.kill();
                 }
             }
+        }
+
+        public function getCollisionData(wall:GameObject):Array {
+            return FlxCollision.pixelPerfectCheck(player.mapHitbox, wall, 255, FlxG.camera, 30, 30, ScreenManager.getInstance().DEBUG);
         }
 
         override public function postCreate():void {
