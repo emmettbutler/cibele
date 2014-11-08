@@ -130,6 +130,8 @@ package{
         }
 
         public function loadEmoji():void {
+            this.emojiButtons = new Dictionary();
+            this.elements.length = 0;
             var imgClass:Class, imgSize:DHPoint;
 
             imgClass = ImgRing;
@@ -192,10 +194,8 @@ package{
             var imgClass:Class;
             var imgSize:DHPoint;
 
-            this.elements.length = 0;
             var _screen:ScreenManager = ScreenManager.getInstance();
 
-            this.emojiButtons = new Dictionary();
             this.programButtons = new Array();
 
             var dockOffset:Number = 100;
