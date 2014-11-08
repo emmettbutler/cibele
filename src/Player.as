@@ -29,7 +29,6 @@ package{
         public var popupmgr:PopUpManager;
         public var inhibitY:Boolean = false, inhibitX:Boolean = false;
         public var click_anim:GameObject;
-        public var targetEnemy:Enemy;
         public var _mapnodes:MapNodeContainer;
         public var attack_sprite:GameObject;
         public var shadow_sprite:GameObject;

@@ -24,7 +24,6 @@ package
         public var bossRef:BossEnemy;
 
         public var closestEnemy:Enemy;
-        public var targetEnemy:Enemy;
         public var playerRef:Player;
         public var walkTarget:DHPoint;
         public var disp:DHPoint;

@@ -17,6 +17,7 @@ package {
         public var footPos:DHPoint;
         public var sightRange:Number;
         public var bossSightRange:Number;
+        public var targetEnemy:Enemy;
 
         public var tag:String;
         public static const cib:String = "cibelelele";
