@@ -32,7 +32,6 @@ package{
         public var game_button:DockButton = null;
         public var file_button:DockButton = null;
         public var photo_button:DockButton = null;
-        public var showEmoji:Boolean = true;
 
         private var emojiButtons:Dictionary;
         private var programButtons:Array;
@@ -64,16 +63,7 @@ package{
         //set this to false again if player exits game screen
         public static var GAME_ACTIVE:Boolean = false;
 
-        // this text is used to detect when state elements have been destroyed
-        // and need to be re-created. it is never displayed, but
-        // flagText._textField == null indicates that destroy() was called on
-        // the containing state
-        public var flagText:FlxText;
-
         public function PopUpManager() {
-            this.flagText = new FlxText(0, 0, 500, "");
-            this.flagText._textField = null;
-            FlxG.state.add(this.flagText);
             this.elements = new Array();
 
             this.popupTags = {};
@@ -124,12 +114,6 @@ package{
         }
 
         public function update():void {
-            if(this.flagText._textField == null) {
-                this.loadPopUps();
-                this.flagText = new FlxText(0, 0, 500, "");
-                FlxG.state.add(this.flagText);
-            }
-
             if(this._state == SHOWING_NOTHING) {
                 this.popup_active = false;
             } else if(this._state == SHOWING_POP_UP) {
@@ -145,19 +129,11 @@ package{
             }
         }
 
-        public function loadPopUps():void {
-            var imgClass:Class;
-            var imgSize:DHPoint;
-
-            this.elements.length = 0;
-            var _screen:ScreenManager = ScreenManager.getInstance();
-
-            this.emojiButtons = new Dictionary();
-            this.programButtons = new Array();
+        public function loadEmoji():void {
+            var imgClass:Class, imgSize:DHPoint;
 
             imgClass = ImgRing;
-            if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
-            {
+            if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK) {
                 imgClass = ImgRingPink;
             }
             var ring:UIElement = new UIElement(RING_INSET_X, RING_INSET_Y);
@@ -165,9 +141,7 @@ package{
             ring.scrollFactor.x = 0;
             ring.scrollFactor.y = 0;
             this.elements.push(ring);
-            if (this.showEmoji) {
-                FlxG.state.add(ring);
-            }
+            FlxG.state.add(ring);
 
             imgClass = ImgEmojiHappy;
             imgSize = new DHPoint(96, 98);
@@ -178,9 +152,7 @@ package{
             }
             var emoji_happy:UIElement = new UIElement(ring.x + 140, ring.y - 10);
             emoji_happy.loadGraphic(imgClass, false, false, imgSize.x, imgSize.y);
-            if (this.showEmoji) {
-                FlxG.state.add(emoji_happy);
-            }
+            FlxG.state.add(emoji_happy);
             emoji_happy.scrollFactor.x = 0;
             emoji_happy.scrollFactor.y = 0;
             this.elements.push(emoji_happy);
@@ -195,9 +167,7 @@ package{
             }
             var emoji_sad:UIElement = new UIElement(ring.x + 205, ring.y + 90);
             emoji_sad.loadGraphic(imgClass, false, false, imgSize.x, imgSize.y);
-            if (this.showEmoji) {
-                FlxG.state.add(emoji_sad);
-            }
+            FlxG.state.add(emoji_sad);
             emoji_sad.scrollFactor.x = 0;
             emoji_sad.scrollFactor.y = 0;
             this.elements.push(emoji_sad);
@@ -211,13 +181,22 @@ package{
             }
             var emoji_angry:UIElement = new UIElement(ring.x + 140, ring.y + 200);
             emoji_angry.loadGraphic(imgClass, false, false, imgSize.x, imgSize.y);
-            if (this.showEmoji) {
-                FlxG.state.add(emoji_angry);
-            }
+            FlxG.state.add(emoji_angry);
             emoji_angry.scrollFactor.x = 0;
             emoji_angry.scrollFactor.y = 0;
             this.elements.push(emoji_angry);
             this.emojiButtons[Emote.ANGRY] = emoji_angry;
+        }
+
+        public function loadPopUps():void {
+            var imgClass:Class;
+            var imgSize:DHPoint;
+
+            this.elements.length = 0;
+            var _screen:ScreenManager = ScreenManager.getInstance();
+
+            this.emojiButtons = new Dictionary();
+            this.programButtons = new Array();
 
             var dockOffset:Number = 100;
             var dock:UIElement = new UIElement(

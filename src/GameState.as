@@ -60,7 +60,10 @@ package {
 
         public function postCreate():void {
             if (this.updatePopup) {
-                PopUpManager.getInstance().showEmoji = this.showEmoji;
+                if (this.showEmoji) {
+                    PopUpManager.getInstance().loadEmoji();
+                }
+                PopUpManager.getInstance().loadPopUps();
             }
             if (this.updateMessages) {
                 MessageManager.getInstance();
@@ -141,7 +144,6 @@ package {
                 SoundManager.getInstance().update();
             }
             if (this.updatePopup) {
-                PopUpManager.getInstance().showEmoji = this.showEmoji;
                 PopUpManager.getInstance().update();
             }
             if (this.updateMessages) {
