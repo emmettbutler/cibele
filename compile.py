@@ -96,9 +96,9 @@ def write_conf_file(swf_path, entry_point_class, main_class):
         f.write(
 """
 <application xmlns="http://ns.adobe.com/air/application/3.1">
-    <id>com.starmaid.Cibele</id>
+    <id>com.starmaid.Cibele.{ts}</id>
     <versionNumber>1.0</versionNumber>
-    <filename>{main_class}{rand}</filename>
+    <filename>CibeleBeta-{ts}</filename>
     <initialWindow>
         <content>{swf_path}</content>
         <visible>true</visible>
@@ -106,7 +106,8 @@ def write_conf_file(swf_path, entry_point_class, main_class):
         <height>480</height>
     </initialWindow>
 </application>
-""".format(main_class=main_class, rand="",
+""".format(main_class=main_class,
+           ts=dt.datetime.now().strftime('%Y.%m.%d.%H.%M.%S'),
            swf_path=swf_path)
         )
     return conf_path
