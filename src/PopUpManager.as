@@ -88,9 +88,7 @@ package{
                             curButton.toggleGame();
                         } else {
                             curButton.open();
-                            if (curButton.tag in this.sentPopups) {
-                                delete this.sentPopups[curButton.tag];
-                            }
+                            this.deleteSentPopup(curButton.cur_popup_tag);
                         }
                     }
                 }
@@ -103,6 +101,18 @@ package{
                         curButton.getCurPopup().visible = false;
                     }
                 }
+            }
+        }
+
+        public function deleteSentPopup(tag:String):void {
+            var toDelete:Object;
+            for (var key:Object in this.sentPopups) {
+                if ((key as String) == tag) {
+                    toDelete = key;
+                }
+            }
+            if (toDelete != null) {
+                delete this.sentPopups[toDelete];
             }
         }
 
