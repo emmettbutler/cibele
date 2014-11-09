@@ -43,7 +43,7 @@ package {
 
         public function update():void {
             var cur:HallwayTile;
-            var front:Number = this.player.y - 100;
+            var front:Number = this.player.pos.y - 100;
             var row:Array;
             for (var i:int = 0; i < this.tiles.length; i++) {
                 row = this.tiles[i];
