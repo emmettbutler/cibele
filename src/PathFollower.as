@@ -144,6 +144,8 @@ package
         override public function update():void {
             super.update();
 
+            FlxG.log(stateMap[_state]);
+
             if(this.facing == LEFT) {
                 this.shadow_sprite.x = this.pos.center(this).x - 15;
                 this.shadow_sprite.y = this.pos.center(this).y + 60;
@@ -225,27 +227,35 @@ package
                     }
                 }
             } else if (this._state == STATE_IDLE_AT_PATH_NODE) {
-                this.markCurrentNode();
-                if(this.playerIsInMovementRange()){
-                    this.moveToNextPathNode();
-                } else if (this.enemyIsInAttackRange(this.targetEnemy)) {
-                    this._state = STATE_AT_ENEMY;
-                    this.targetEnemy.activeTarget();
-                } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
-                    this.walkTarget = this.targetEnemy.getAttackPos();
-                    this._state = STATE_MOVE_TO_ENEMY;
+                if(teamAttack()) {
+                    this.attackPlayerTargetEnemy();
+                } else {
+                    this.markCurrentNode();
+                    if(this.playerIsInMovementRange()){
+                        this.moveToNextPathNode();
+                    } else if (this.enemyIsInAttackRange(this.targetEnemy)) {
+                        this._state = STATE_AT_ENEMY;
+                        this.targetEnemy.activeTarget();
+                    } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
+                        this.walkTarget = this.targetEnemy.getAttackPos();
+                        this._state = STATE_MOVE_TO_ENEMY;
+                    }
+                    this.dir = ZERO_POINT;
                 }
-                this.dir = ZERO_POINT;
             } else if (this._state == STATE_IDLE_AT_MAP_NODE) {
-                if(this.playerIsInMovementRange()){
-                    this.moveToNextNode();
+                if(teamAttack()) {
+                    this.attackPlayerTargetEnemy();
+                } else {
+                    if(this.playerIsInMovementRange()){
+                        this.moveToNextNode();
+                    }
+                    //if (this.enemyIsInAttackRange(this.targetEnemy)) {
+                    //    this._state = STATE_AT_ENEMY;
+                    //} else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
+                    //    this._state = STATE_MOVE_TO_ENEMY;
+                    //}
+                    this.dir = ZERO_POINT;
                 }
-                //if (this.enemyIsInAttackRange(this.targetEnemy)) {
-                //    this._state = STATE_AT_ENEMY;
-                //} else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
-                //    this._state = STATE_MOVE_TO_ENEMY;
-                //}
-                this.dir = ZERO_POINT;
             } else if (this._state == STATE_AT_ENEMY) {
                 this.attack();
                 this.dir = ZERO_POINT;
@@ -259,7 +269,7 @@ package
                     this.targetEnemy.activeTarget();
                 } else if (this.targetEnemy.getAttackPos()
                     .sub(this.footPos)._length() >
-                    (this.targetEnemy is BossEnemy ? this.bossSightRange : this.sightRange))
+                    (this.targetEnemy is BossEnemy ? this.bossSightRange : this.sightRange) && !this.teamAttack())
                 {
                     this.moveToNextNode();
                 }
@@ -373,6 +383,17 @@ package
         public function inViewOfPlayer():Boolean {
             return !(this.playerRef.pos.sub(this.pos)._length() >
                     ScreenManager.getInstance().screenWidth / 2);
+        }
+
+        public function teamAttack():Boolean {
+            return (inViewOfPlayer() && playerRef.inAttack() && playerRef.targetEnemy != null);
+        }
+
+        public function attackPlayerTargetEnemy():void {
+            if(playerRef.targetEnemy != null) {
+                this.targetEnemy = playerRef.targetEnemy;
+                this._state = STATE_MOVE_TO_ENEMY;
+            }
         }
 
         public function warpToPlayer():void {

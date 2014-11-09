@@ -131,7 +131,7 @@ package
         }
 
         public function activeTarget():void {
-            if(this.fade_active != true) {
+            if(this.fade_active != true && use_active_highlighter) {
                 this.fade_active = true;
                 this.target_sprite.visible = true;
             }

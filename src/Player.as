@@ -446,6 +446,10 @@ package{
             }
         }
 
+        public function inAttack():Boolean {
+            return (this._state == STATE_IN_ATTACK || this._state == STATE_AT_ENEMY || this._state == STATE_MOVE_TO_ENEMY);
+        }
+
         public function addAttackAnim():void {
             //this sprite is being used for walk target anim
             this.click_anim.loadGraphic(ImgWalkTo, true, false, 275*.7, 164*.7);
