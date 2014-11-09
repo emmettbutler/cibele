@@ -423,8 +423,10 @@ package{
                             this.walkDistance = this.walkTarget.sub(footPos)._length();
                             this._state = STATE_MOVE_TO_ENEMY;
                         }
-                    } else if (this.targetEnemy.dead) {
-                        this.targetEnemy = null;
+                    } else if (this.targetEnemy != null) {
+                        if (this.targetEnemy.dead) {
+                            this.targetEnemy = null;
+                        }
                     } else {
                         this._state = STATE_IDLE;
                     }
