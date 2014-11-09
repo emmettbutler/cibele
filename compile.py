@@ -69,9 +69,9 @@ def compile_main(entry_point_class, libpath, debug_level):
         stacktraces = "false"
         debug = "false"
         test_flag = "false"
-    swfpath = "src/{entry_point_class}-{ts}.swf".format(
+    swfpath = "src/{entry_point_class}{ts}.swf".format(
         entry_point_class=entry_point_class,
-        ts=dt.datetime.now().strftime("%Y.%m.%d.%H.%M.%S"))
+        ts="")
     command = ["mxmlc", "src/{entry_point_class}.as".format(entry_point_class=entry_point_class), "-o",
                swfpath,
                "-use-network=false", "-verbose-stacktraces=true",
