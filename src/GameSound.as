@@ -79,7 +79,7 @@ package
                 if(GlobalTimer.getInstance().timeElapsed(this.name) < 3*GameSound.MSEC_PER_SEC) {
                     this.fadeInSound();
                     this.fading = true;
-                } else {
+                } else if (!this.fadeOut) {
                     this.fading = false;
                 }
             }
