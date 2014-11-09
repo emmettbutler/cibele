@@ -24,6 +24,7 @@ package{
         public static var BGM:String = "ikuturso bgm loop";
 
         public function IkuTurso() {
+            PopUpManager.GAME_ACTIVE = true;
             this.bossHasAppeared = false;
             this.ui_color_flag = GameState.UICOLOR_PINK;
 

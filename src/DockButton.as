@@ -40,6 +40,8 @@ package {
             if(PopUpManager.GAME_ACTIVE == false) {
                 FlxG.switchState(new MenuScreen());
                 PopUpManager.GAME_ACTIVE = true;
+            } else {
+                //TODO (FlxG.state as GameState).pause();
             }
         }
 

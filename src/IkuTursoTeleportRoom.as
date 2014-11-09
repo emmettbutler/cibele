@@ -9,6 +9,7 @@ package{
         public var img_height:Number = 357;
 
         override public function create():void {
+            PopUpManager.GAME_ACTIVE = true;
             var _screen:ScreenManager = ScreenManager.getInstance();
             super.__create(new DHPoint(
                 _screen.screenWidth * .4, _screen.screenHeight * .6));

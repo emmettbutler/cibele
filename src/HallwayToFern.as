@@ -38,6 +38,8 @@ package{
         }
 
         override public function create():void {
+            PopUpManager.GAME_ACTIVE = true;
+
             function _musicCallback():void {
                 SoundManager.getInstance().playSound(FernBGMLoop, 0, null,
                     true, .2, GameSound.BGM, HallwayToFern.BGM, false, false);

@@ -10,6 +10,8 @@ package{
         public static const DOOR_MARK:String = "fern_door_lock";
 
         override public function create():void {
+            PopUpManager.GAME_ACTIVE = true;
+
             var _screen:ScreenManager = ScreenManager.getInstance();
             super.__create(new DHPoint(
                 _screen.screenWidth * .5, _screen.screenHeight * .7));

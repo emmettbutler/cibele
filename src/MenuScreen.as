@@ -39,6 +39,7 @@ package{
         }
 
         override public function create():void {
+            PopUpManager.GAME_ACTIVE = true;
             super.create();
 
             FlxG.bgColor = 0x00000000;
