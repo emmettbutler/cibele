@@ -8,14 +8,18 @@ package {
             super(pos);
             this.loadGraphic(ImgTile, true, false, dim.x, dim.y);
             this.addAnimation("run", [0, 1, 2, 3, 4, 5], 12, true);
-            this.play("run");
-            this.active = false;
             this.visible = false;
             this.alpha = 0;
         }
 
         override public function update():void {
             super.update();
+
+            if (!this.onScreen()) {
+                this.active = false;
+            } else {
+                this.active = true;
+            }
 
             if (this._state == STATE_APPEARING) {
                 if (!this.visible) {
@@ -31,6 +35,7 @@ package {
 
         public function appear():void {
             this._state = STATE_APPEARING;
+            this.play("run");
         }
     }
 }
