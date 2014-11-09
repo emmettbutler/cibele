@@ -242,6 +242,14 @@ package
                         }
                     }
                 }
+            } else {
+                this.visible = false;
+                this.target_sprite.visible = false;
+                this.bar.visible = false;
+            }
+
+            if(this.hitpoints <= 0){
+                this.hitpoints = 0;
             }
 
             if (this._state == STATE_IDLE) {

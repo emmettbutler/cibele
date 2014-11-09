@@ -144,8 +144,6 @@ package
         override public function update():void {
             super.update();
 
-            FlxG.log(stateMap[_state]);
-
             if(this.facing == LEFT) {
                 this.shadow_sprite.x = this.pos.center(this).x - 15;
                 this.shadow_sprite.y = this.pos.center(this).y + 60;
