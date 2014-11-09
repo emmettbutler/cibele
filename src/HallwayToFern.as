@@ -4,7 +4,6 @@ package{
 
     public class HallwayToFern extends PlayerState {
         [Embed(source="../assets/hallway sprite.png")] private var ImgBG:Class;
-        [Embed(source="../assets/hallwaylight.png")] private var ImgLight:Class;
         [Embed(source="../assets/incomingcall.png")] private var ImgCall:Class;
         [Embed(source="../assets/voc_firstconvo.mp3")] private var Convo1:Class;
         [Embed(source="../assets/voc_ikuturso_start.mp3")] private var Convo2:Class;
@@ -52,7 +51,6 @@ package{
                 false);
 
             bgs = new Array();
-            //this.light = new FlxExtSprite(0,0);
 
             bottomY = 10000;
             _screen = ScreenManager.getInstance();
@@ -69,8 +67,6 @@ package{
             leftBound = ScreenManager.getInstance().screenWidth * .36;
             rightBound = ScreenManager.getInstance().screenWidth * .53;
 
-            /*this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
-            this.light.alpha = .1;*/
             this.postCreate();
 
             if(_state == STATE_PRE_IT){
@@ -105,10 +101,6 @@ package{
             if(SoundManager.getInstance().getSoundByName(MenuScreen.BGM) != null) {
                 SoundManager.getInstance().getSoundByName(MenuScreen.BGM).fadeOutSound();
             }
-
-            /*if(this.frameCount++ % 25 == 0) {
-                this.light.alpha = 1-(player.pos.y/bottomY);
-            }*/
 
             var highestTile:GameObject = this.bgs[0];
             var lowestTile:GameObject = this.bgs[0];
