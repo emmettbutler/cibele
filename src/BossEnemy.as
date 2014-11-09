@@ -30,7 +30,7 @@ package
             if(this.dead) {
                 this.die();
             } else if (this.hitpoints < 10) {
-                this.hitpoints = 10;
+                this.hitpoints = 200;
             } else if(!this.dead && this.alpha < 1 && this.hasAppeared) {
                 this.alpha += .01;
             }
@@ -38,7 +38,7 @@ package
 
         override public function die():void {
             if(this.alpha > 0) {
-                this.alpha -= .1;
+                this.alpha -= .01;
             } else {
                 this.alpha = 0;
             }
