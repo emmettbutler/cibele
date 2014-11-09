@@ -19,6 +19,7 @@ package
             //this.attackOffset = new DHPoint(-200, -1 * (this.height / 3));
             this.attackOffset = new DHPoint(0,0);
             this.recoilPower = 0;
+            this.alpha = 0;
 
             addAnimation("run", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 12, true);
             play("run");
@@ -30,6 +31,8 @@ package
                 this.die();
             } else if (this.hitpoints < 10) {
                 this.hitpoints = 10;
+            } else if(!this.dead && this.alpha < 1 && this.hasAppeared) {
+                this.alpha += .01;
             }
         }
 
