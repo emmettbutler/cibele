@@ -7,8 +7,10 @@ package {
         public var runningSounds:Array;
         public var newSound:GameSound;
         public var globalVolume:Number;
+        public var ducking:Boolean = false;
 
         public static const VOLUME_STEP:Number = .1;
+        public static const DUCK_STEP:Number = .05;
 
         public function SoundManager() {
             this.runningSounds = new Array();
@@ -20,21 +22,61 @@ package {
                                   _loop:Boolean=false, _vol:Number=1,
                                   _kind:Number=0, name:String=null,
                                   fadeIn:Boolean=false,
-                                  fadeOut:Boolean=false):GameSound
+                                  fadeOut:Boolean=false,
+                                  duck:Boolean=false):GameSound
         {
             if (name == null) {
                 name = "" + Math.random();
             }
 
             this.clearSoundsByType(_kind);
+
+            var _callback:Function = function():void {
+                if (this._type == GameSound.VOCAL) {
+                    if (ducking) {
+                        unduckMusic();
+                        ducking = false;
+                    }
+                }
+                if (endCallback != null) {
+                    endCallback();
+                }
+            };
             var newSound:GameSound = new GameSound(embeddedSound, dur, _loop,
                                                    _vol, _kind, name, fadeIn,
-                                                   fadeOut, endCallback);
+                                                   fadeOut, _callback, duck);
             this.runningSounds.push(newSound);
+            if (_kind == GameSound.VOCAL && !this.ducking) {
+                this.ducking = true;
+                this.duckMusic();
+            }
+            if (this.ducking && (_kind == GameSound.BGM || duck)) {
+                newSound.decreaseVolume(DUCK_STEP);
+            }
 
             GlobalTimer.getInstance().setMark(name, dur);
 
             return newSound;
+        }
+
+        public function duckMusic():void {
+            var cur:GameSound
+            for(var i:int = 0; i < this.runningSounds.length; i++) {
+                cur = this.runningSounds[i];
+                if ((cur.ducks || cur._type == GameSound.BGM) && !cur.fading) {
+                    this.runningSounds[i].decreaseVolume(DUCK_STEP);
+                }
+            }
+        }
+
+        public function unduckMusic():void {
+            var cur:GameSound
+            for(var i:int = 0; i < this.runningSounds.length; i++) {
+                cur = this.runningSounds[i];
+                if ((cur.ducks || cur._type == GameSound.BGM) && !cur.fading) {
+                    this.runningSounds[i].increaseVolume(DUCK_STEP);
+                }
+            }
         }
 
         public function update():void {

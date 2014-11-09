@@ -42,12 +42,12 @@ package{
 
             function _musicCallback():void {
                 SoundManager.getInstance().playSound(FernBGMLoop, 0, null,
-                    true, .2, GameSound.BGM, HallwayToFern.BGM, false, false);
+                    true, .15, GameSound.BGM, HallwayToFern.BGM, false, false, true);
             }
             SoundManager.getInstance().playSound(
                 FernBGMIntro, 12.4*GameSound.MSEC_PER_SEC, _musicCallback,
-                false, .2, Math.random()*932+102, HallwayToFern.BGM, false,
-                false);
+                false, .15, Math.random()*932+102, HallwayToFern.BGM, false,
+                false, true);
 
             bottomY = 10000;
             _screen = ScreenManager.getInstance();

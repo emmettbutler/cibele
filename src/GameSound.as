@@ -18,6 +18,8 @@ package
         public var _type:Number = VOCAL;
         public var fadeIn:Boolean = false;
         public var fadeOut:Boolean = false;
+        public var fading:Boolean = false;
+        public var ducks:Boolean = false;
 
         public static const MSEC_PER_SEC:Number = 1000;
 
@@ -25,7 +27,10 @@ package
                                   _loop:Boolean=false, _vol:Number=1,
                                   _kind:Number=0, name:String=null,
                                   fadeIn:Boolean=false, fadeOut:Boolean=false,
-                                  endCallback:Function=null) {
+                                  endCallback:Function=null, ducks:Boolean=false) {
+            if (_kind == BGM || ducks) {
+                _vol += SoundManager.DUCK_STEP;
+            }
             this.name = name;
             this.virtualVolume = _vol;
             this._type = _kind;
@@ -34,6 +39,7 @@ package
             this.fadeOut = fadeOut;
             this.fadeIn = fadeIn;
             this.endCallback = endCallback;
+            this.ducks = ducks;
 
             this.embeddedSound = embeddedSound;
 
@@ -46,13 +52,13 @@ package
             }
         }
 
-        public function increaseVolume():void {
-            this.virtualVolume += SoundManager.VOLUME_STEP;
+        public function increaseVolume(step:Number=0):void {
+            this.virtualVolume += step == 0 ? SoundManager.VOLUME_STEP : step;
             this.applyVolume();
         }
 
-        public function decreaseVolume():void {
-            this.virtualVolume -= SoundManager.VOLUME_STEP;
+        public function decreaseVolume(step:Number=0):void {
+            this.virtualVolume -= step == 0 ? SoundManager.VOLUME_STEP : step;
             this.applyVolume();
         }
 
@@ -72,10 +78,14 @@ package
             if(this.fadeIn) {
                 if(GlobalTimer.getInstance().timeElapsed(this.name) < 3*GameSound.MSEC_PER_SEC) {
                     this.fadeInSound();
+                    this.fading = true;
+                } else {
+                    this.fading = false;
                 }
             }
             if(this.fadeOut) {
                 if(GlobalTimer.getInstance().timeRemaining(this.name) < 3*GameSound.MSEC_PER_SEC) {
+                    this.fading = true;
                     this.fadeOutSound();
                 }
             }
