@@ -52,7 +52,7 @@ package{
                 false);
 
             bgs = new Array();
-            this.light = new FlxExtSprite(0,0);
+            //this.light = new FlxExtSprite(0,0);
 
             bottomY = 10000;
             _screen = ScreenManager.getInstance();
@@ -69,8 +69,8 @@ package{
             leftBound = ScreenManager.getInstance().screenWidth * .36;
             rightBound = ScreenManager.getInstance().screenWidth * .53;
 
-            this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
-            this.light.alpha = .1;
+            /*this.light = (new BackgroundLoader()).loadSingleTileBG("../assets/hallwaylight.png");
+            this.light.alpha = .1;*/
             this.postCreate();
 
             if(_state == STATE_PRE_IT){
@@ -106,9 +106,9 @@ package{
                 SoundManager.getInstance().getSoundByName(MenuScreen.BGM).fadeOutSound();
             }
 
-            if(this.frameCount++ % 25 == 0) {
+            /*if(this.frameCount++ % 25 == 0) {
                 this.light.alpha = 1-(player.pos.y/bottomY);
-            }
+            }*/
 
             var highestTile:GameObject = this.bgs[0];
             var lowestTile:GameObject = this.bgs[0];
@@ -138,6 +138,9 @@ package{
             }
             if (this.player.x > rightBound) {
                 this.player.x = rightBound;
+            }
+            if (this.player.y > bottomY) {
+                this.player.y = bottomY;
             }
 
             if(accept_call) {
