@@ -13,6 +13,7 @@ package{
         [Embed(source="../assets/voc_ikuturso_attractive.mp3")] private var Convo4:Class;
         [Embed(source="../assets/voc_ikuturso_picture.mp3")] private var Convo5:Class;
         [Embed(source="../assets/voc_ikuturso_whattowear.mp3")] private var Convo6:Class;
+        [Embed(source="../assets/voc_extra_ichilasthit.mp3")] private var IchiBossKill:Class;
 
         public var bossHasAppeared:Boolean;
         private var convo1Sound:GameSound;
@@ -29,7 +30,7 @@ package{
             this.ui_color_flag = GameState.UICOLOR_PINK;
 
             // embedded sound, length in ms, time to wait before playing
-            this.conversationPieces = [
+            /*this.conversationPieces = [
                 {
                     "audio": Convo1, "len": 56*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showIchiDownloadWindow
@@ -58,6 +59,36 @@ package{
                     "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC,
                     "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null
                 }
+            ];*/
+            this.conversationPieces = [
+                {
+                    "audio": Convo1, "len": 1*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "endfn": this.showIchiDownloadWindow
+                },
+                {
+                    "audio": Convo2, "len": 1*GameSound.MSEC_PER_SEC,
+                    "delay": 20*GameSound.MSEC_PER_SEC,
+                    "endfn": this.showSelfiesWindow
+                },
+                {
+                    "audio": Convo3, "len": 1*GameSound.MSEC_PER_SEC,
+                    "delay": 20*GameSound.MSEC_PER_SEC,
+                    "endfn": this.showForumWindow
+                },
+                {
+                    "audio": Convo4, "len": 107*GameSound.MSEC_PER_SEC,
+                    "delay": 20*GameSound.MSEC_PER_SEC,
+                    "endfn": this.showIchiSelfie1
+                },
+                {
+                    "audio": Convo5, "len": 15*GameSound.MSEC_PER_SEC,
+                    "delay": 20*GameSound.MSEC_PER_SEC,
+                    "endfn": this.showCibSelfieFolder
+                },
+                {
+                    "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC,
+                    "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null
+                }
             ];
         }
 
@@ -68,7 +99,6 @@ package{
                 SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true, .08, GameSound.BGM, IkuTurso.BGM, false, false);
             }
             SoundManager.getInstance().playSound(ITBGMIntro, 3.6*GameSound.MSEC_PER_SEC, _bgmCallback, false, .08, Math.random()*928+298, IkuTurso.BGM);
-            GlobalTimer.getInstance().setMark(Fern.BOSS_MARK, 319632 - 60 * 1000);
             GlobalTimer.getInstance().setMark("First Emote", 5*GameSound.MSEC_PER_SEC, this.ichiStartEmote);
             this.convo1Sound = null;
         }
@@ -99,6 +129,8 @@ package{
 
         public function showForumWindow():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.FORUM_1);
+            GlobalTimer.getInstance().setMark(Fern.BOSS_MARK, 10*GameSound.MSEC_PER_SEC);
+            FlxG.log("10 sec til");
         }
 
         public function showIchiDownloadWindow():void {
@@ -133,14 +165,26 @@ package{
                                                        arguments.callee);
                     });
             } else {
-                SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
+                GlobalTimer.getInstance().setMark("Boss Kill", 5*GameSound.MSEC_PER_SEC, this.ichiBossKill);
+            }
+        }
+
+        public function ichiBossKill():void {
+            //TODO play no other bit dialogue during this time
+            SoundManager.getInstance().playSound(
+                IchiBossKill, 3*GameSound.MSEC_PER_SEC, this.playEndFilm,
+                false, 1, GameSound.VOCAL
+            );
+        }
+
+        public function playEndFilm():void {
+            SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
                     false, 1, GameSound.BGM);
                 FlxG.switchState(
                     new PlayVideoState("../assets/sexy_selfie.flv",
                         function():void { FlxG.switchState(new StartScreen()); }, SoundManager.getInstance().getSoundByName(BGM)
                     )
                 );
-            }
         }
 
         public function playTimedEmotes(convoNum:Number):void {
