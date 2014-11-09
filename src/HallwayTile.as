@@ -35,7 +35,11 @@ package {
 
         public function appear():void {
             this._state = STATE_APPEARING;
-            this.play("run");
+            if (Math.random() * 2 > 1) {
+                this.play("run");
+            } else {
+                this.active = false;
+            }
         }
     }
 }
