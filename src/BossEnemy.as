@@ -26,9 +26,20 @@ package
 
         override public function update():void{
             super.update();
+            if(this.dead) {
+                this.die();
+            } else if (this.hitpoints < 10) {
+                this.hitpoints = 10;
+            }
         }
 
         override public function die():void {
+            if(this.alpha > 0) {
+                this.alpha -= .1;
+            } else {
+                this.alpha = 0;
+            }
+
         }
     }
 }

@@ -95,7 +95,8 @@ package
         public function warpToPlayer():void {
             var targetPoint:DHPoint = this.player.pos.add(this.player.dir.normalized().mulScl(1000));
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint);
-            this.setFootPos(warpNode.pos);
+            var headFootDisp:DHPoint = this.pos.sub(this.footPos);
+            this.setPos(warpNode.pos.add(headFootDisp));
         }
 
         public function setPlayerRef(p:Player):void{
@@ -203,10 +204,6 @@ package
         public function inViewOfPlayer():Boolean {
             return !(this.player.pos.sub(this.pos)._length() >
                     ScreenManager.getInstance().screenWidth / 2);
-        }
-
-        public function setFootPos(pos:DHPoint):void {
-            this.footPos = pos;
         }
 
         override public function update():void{

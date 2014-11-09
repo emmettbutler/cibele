@@ -129,8 +129,7 @@ package{
 
         public function showForumWindow():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.FORUM_1);
-            GlobalTimer.getInstance().setMark(Fern.BOSS_MARK, 10*GameSound.MSEC_PER_SEC);
-            FlxG.log("10 sec til");
+            GlobalTimer.getInstance().setMark(Fern.BOSS_MARK, 50*GameSound.MSEC_PER_SEC);
         }
 
         public function showIchiDownloadWindow():void {
@@ -175,6 +174,9 @@ package{
                 IchiBossKill, 3*GameSound.MSEC_PER_SEC, this.playEndFilm,
                 false, 1, GameSound.VOCAL
             );
+            if(this.boss != null) {
+                this.boss.dead = true;
+            }
         }
 
         public function playEndFilm():void {
