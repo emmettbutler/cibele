@@ -189,8 +189,8 @@ package{
 
         override public function update():void{
             super.update();
-            if(SoundManager.getInstance().getSoundByName(HallwayToFern.BGM) != null) {
-                var snd:GameSound = SoundManager.getInstance().getSoundByName(HallwayToFern.BGM);
+            var snd:GameSound = SoundManager.getInstance().getSoundByName(HallwayToFern.BGM);
+            if(snd != null) {
                 snd.fadeOutSound();
                 snd.fading = true;
             }

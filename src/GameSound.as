@@ -92,11 +92,11 @@ package
         }
 
         public function fadeInSound():void {
-            this.soundObject.volume += .01;
+            this.soundObject.volume += .005;
         }
 
         public function fadeOutSound():void {
-            this.soundObject.volume -= .01;
+            this.soundObject.volume -= .005;
         }
 
         public function defaultEnd():void { }
