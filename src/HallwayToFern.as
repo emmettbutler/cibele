@@ -3,7 +3,6 @@ package{
     import org.flixel.plugin.photonstorm.FlxCollision;
 
     public class HallwayToFern extends PlayerState {
-        [Embed(source="../assets/hallway sprite.png")] private var ImgBG:Class;
         [Embed(source="../assets/incomingcall.png")] private var ImgCall:Class;
         [Embed(source="../assets/voc_firstconvo.mp3")] private var Convo1:Class;
         [Embed(source="../assets/voc_ikuturso_start.mp3")] private var Convo2:Class;
@@ -17,14 +16,12 @@ package{
         public var call_button:GameObject;
         public var accept_call:Boolean = false;
 
-        public var bgs:Array;
         public var light:FlxExtSprite;
         public var wall_left:GameObject;
         public var wall_right:GameObject;
         public var collisionData:Array;
         public var leftBound:Number, rightBound:Number;
-
-        public var img_height:Number = 800;
+        public var tileLoader:HallwayTileLoader;
 
         public static const STATE_PRE_IT:Number = 0;
         public var _state:Number = 0;
@@ -50,8 +47,6 @@ package{
                 false, .2, Math.random()*932+102, HallwayToFern.BGM, false,
                 false);
 
-            bgs = new Array();
-
             bottomY = 10000;
             _screen = ScreenManager.getInstance();
             super.__create(new DHPoint(
@@ -59,13 +54,17 @@ package{
 
             FlxG.bgColor = 0xff000000;
 
-            this.initTiles(bottomY);
-
             ScreenManager.getInstance().setupCamera(player.cameraPos, 1);
             FlxG.camera.setBounds(0, 0, _screen.screenWidth, bottomY);
 
             leftBound = ScreenManager.getInstance().screenWidth * .36;
             rightBound = ScreenManager.getInstance().screenWidth * .53;
+
+            this.tileLoader = new HallwayTileLoader(
+                new DHPoint(77 * 4, bottomY),
+                new DHPoint(leftBound + 40, 0),
+                this.player
+            );
 
             this.postCreate();
 
@@ -79,46 +78,13 @@ package{
             this.player.nameText.color = 0xffffffff;
         }
 
-        public function initTiles(startY:Number):void {
-            var originX:Number = (_screen.screenWidth * .5) - 1422 / 2;
-            var cur:GameObject;
-            for (var i:int = 0; i < 3; i++) {
-                cur = new GameObject(new DHPoint(
-                        originX, startY - (i * img_height)
-                    )
-                );
-                cur.loadGraphic(ImgBG, false, false, 1422, img_height);
-                cur.addAnimation("run", [0, 1, 2, 3, 4], 12, true);
-                cur.play("run");
-                add(cur);
-                this.bgs.push(cur);
-            }
-        }
-
         override public function update():void {
             super.update();
 
+            this.tileLoader.update();
+
             if(SoundManager.getInstance().getSoundByName(MenuScreen.BGM) != null) {
                 SoundManager.getInstance().getSoundByName(MenuScreen.BGM).fadeOutSound();
-            }
-
-            var highestTile:GameObject = this.bgs[0];
-            var lowestTile:GameObject = this.bgs[0];
-            for (var i:int = 0; i < this.bgs.length; i++) {
-                if (this.bgs[i].y < highestTile.y) {
-                    highestTile = this.bgs[i];
-                }
-                if (this.bgs[i].y > lowestTile.y) {
-                    lowestTile = this.bgs[i];
-                }
-            }
-
-            if (this.player.dir.y < 0 &&
-                this.player.y < highestTile.y + highestTile.height) {
-                lowestTile.y = highestTile.y - lowestTile.height;
-            } else if (this.player.dir.y > 0 &&
-                this.player.y > lowestTile.y + lowestTile.height) {
-                highestTile.y = lowestTile.y + highestTile.height;
             }
 
             if (this.player.pos.y < ScreenManager.getInstance().screenHeight / 2) {
