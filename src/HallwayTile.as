@@ -34,11 +34,13 @@ package {
         }
 
         public function appear():void {
-            this._state = STATE_APPEARING;
-            if (Math.random() * 2 > 1) {
-                this.play("run");
-            } else {
-                this.active = false;
+            if (this.scale != null) {
+                this._state = STATE_APPEARING;
+                if (Math.random() * 2 > 1) {
+                    this.play("run");
+                } else {
+                    this.active = false;
+                }
             }
         }
     }
