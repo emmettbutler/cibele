@@ -2,21 +2,23 @@ package{
     import org.flixel.*;
 
     public class PopUp extends UIElement {
-        public static const ARROW_THROUGH:Number = 1;
+        public static const CLICK_THROUGH:Number = 1;
         public var cur_anim:Number = 0;
         public var timer_key:String;
         public var tag:String;
+        public var links:Array;
 
         public function PopUp(img:Class, w:Number, h:Number,
-                              functionality:Number=0, tag:String=null) {
+                              functionality:Number=0, tag:String=null, links:Array=null) {
             this.timer_key = Math.random() + "";
 
             var _screen:ScreenManager = ScreenManager.getInstance();
             super(_screen.screenWidth - w - 100, _screen.screenHeight * .1);
             this._state = functionality;
             this.tag = tag;
+            this.links = links;
 
-            if(this._state == ARROW_THROUGH) {
+            if(this._state == CLICK_THROUGH) {
                 this.loadGraphic(img,true,false,w,h);
                 for (var i:int = 0; i < 3; i++) {
                     this.addAnimation(i.toString(),[i],1,false);
@@ -32,7 +34,7 @@ package{
         }
 
         override public function update():void {
-            if(this._state == ARROW_THROUGH) {
+            if(this._state == CLICK_THROUGH) {
                 //TODO change this it won't work with point and click
                 if(FlxG.keys.justPressed("LEFT") || FlxG.keys.justPressed("RIGHT") ||
                    FlxG.keys.justPressed("UP") || FlxG.keys.justPressed("DOWN")) {

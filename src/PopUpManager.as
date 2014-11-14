@@ -49,6 +49,8 @@ package{
         public static const BUTTON_FILES:String = "philesz";
         public static const BUTTON_GAME:String = "gamez";
 
+        public var popups_and_icons:Dictionary;
+
         {
             public static const RING_INSET_X:Number = ScreenManager.getInstance().screenWidth * .03;
             public static const RING_INSET_Y:Number = ScreenManager.getInstance().screenHeight * .03;
@@ -296,6 +298,10 @@ package{
             for (key in this.sentPopups) {
                 this.sendPopup(key as String);
             }
+
+            //new way to load popups
+            this.popups_and_icons = new Dictionary();
+
         }
 
         public function emote(mouseScreenRect:FlxRect, char:PartyMember, procedural:Boolean=false, em:Number=111):void {
