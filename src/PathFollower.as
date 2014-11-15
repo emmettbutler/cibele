@@ -7,7 +7,7 @@ package
     public class PathFollower extends PartyMember
     {
         [Embed(source="../assets/Sprite_Ichi_Walk_Cycle.png")] private var ImgIchi:Class;
-        [Embed(source="../assets/fire_explosion.png")] private var ImgAttack:Class;
+        [Embed(source="../assets/Ichi_attack sprite.png")] private var ImgIchiAttack:Class;
         [Embed(source="../assets/cib_shadow.png")] private var ImgShadow:Class;
         [Embed(source="../assets/sfx_protoattack1.mp3")] private var SfxAttack1:Class;
         [Embed(source="../assets/sfx_protoattack2.mp3")] private var SfxAttack2:Class;
@@ -86,7 +86,6 @@ package
                 [39, 40, 41, 42, 43, 44, 45, 46, 47, 48],
                 20, false);
             addAnimation("idle_d", [39], 20, false);
-            addAnimation("attack",[0,1],7,true);
             this.targetPathNode = null;
             this._state = STATE_NULL;
 
@@ -102,7 +101,7 @@ package
 
         override public function addVisibleObjects():void {
             FlxG.state.add(this);
-            this.tempAttackAnim();
+            this.addAttackAnim();
             FlxG.state.add(this.shadow_sprite);
             FlxG.state.add(this.nameText);
         }
@@ -158,7 +157,8 @@ package
                 this.shadow_sprite.y = this.pos.center(this).y + 60;
             }
 
-            this.basePos.y = this.y + (this.height-10);
+            this.basePos.y = this.y + (this.height - 10);
+            this.attackAnim.basePos.y = this.attackAnim.y + (this.attackAnim.height - 10);
 
             this.closestEnemy = this.getClosestEnemy();
             if (this.bossRef != null && this.bossRef.hasAppeared) {
@@ -272,7 +272,7 @@ package
                     this.moveToNextNode();
                 }
             } else if (this._state == STATE_IN_ATTACK) {
-                if (this.timeSinceLastAttack() > 500) {
+                if (this.attackAnim.frame >= 20) {
                     this.resolveStatePostAttack();
                 }
                 this.dir = ZERO_POINT;
@@ -285,20 +285,22 @@ package
                 }
             }
 
-            if(this.attackAnim.frame == 8) {
+            if(this.attackAnim.frame >= 20) {
                 attackAnim.play("idle");
-                attackAnim.alpha = 0;
+                attackAnim.visible = false;
+                this.visible = true;
             }
         }
 
-        public function tempAttackAnim():void {
+        public function addAttackAnim():void {
             attackAnim = new GameObject(this.pos);
-            attackAnim.loadGraphic(ImgAttack, true, false, 1152/9, 128);
-            attackAnim.addAnimation("attack", [0, 1, 2, 3, 4, 5, 6, 7, 8], 15, false);
+            attackAnim.loadGraphic(ImgIchiAttack, true, false, 99, 175);
+            attackAnim.addAnimation("attack", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 15, false);
             attackAnim.addAnimation("idle", [0], 15, false);
+            attackAnim.zSorted = true;
+            attackAnim.basePos = new DHPoint(0, 0);
             FlxG.state.add(attackAnim);
-            attackAnim.alpha = 0;
-            attackAnim.play("idle");
+            attackAnim.visible = false;
         }
 
         override public function resolveStatePostAttack():void {
@@ -416,10 +418,11 @@ package
             super.attack();
             if (this._state == STATE_IN_ATTACK) {
                 play("attack");
-                attackAnim.x = this.x;
+                attackAnim.x = this.x + 20;
                 attackAnim.y = this.y;
-                attackAnim.alpha = 1;
+                attackAnim.visible = true;
                 attackAnim.play("attack");
+                this.visible = false;
 
                 var snd:Class = SfxAttack1;
                 var rand:Number = Math.random() * 4;

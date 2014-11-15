@@ -336,7 +336,7 @@ package{
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_IN_ATTACK) {
                 this.setFacing(true);
-                if (this.timeSinceLastAttack() > 100) {
+                if(this.attack_sprite.frame >= 21) {
                     this.resolveStatePostAttack();
                 }
             } else if (this._state == STATE_IDLE) {
@@ -408,31 +408,25 @@ package{
 
         override public function resolveStatePostAttack():void {
             super.resolveStatePostAttack();
-            if(this.visible == false) {
-                if(this.attack_sprite.frame == 22) {
-                    this.visible = true;
-                    this.shadow_sprite.visible = true;
-                    this.attack_sprite.visible = false;
+            this.visible = true;
+            this.shadow_sprite.visible = true;
+            this.attack_sprite.visible = false;
 
-                    if (this.targetEnemy != null && !this.targetEnemy.dead && this.targetEnemy.visible == true)
-                    {
-                        if(this.enemyIsInAttackRange(this.targetEnemy)) {
-                            this._state = STATE_AT_ENEMY;
-                        } else {
-                            this.walkTarget = this.targetEnemy.getAttackPos();
-                            this.walkDistance = this.walkTarget.sub(footPos)._length();
-                            this._state = STATE_MOVE_TO_ENEMY;
-                        }
-                    } else if (this.targetEnemy != null) {
-                        if (this.targetEnemy.dead) {
-                            this.targetEnemy = null;
-                        }
-                    } else {
-                        this._state = STATE_IDLE;
-                    }
+            if (this.targetEnemy != null && !this.targetEnemy.dead && this.targetEnemy.visible == true)
+            {
+                if(this.enemyIsInAttackRange(this.targetEnemy)) {
+                    this._state = STATE_AT_ENEMY;
                 } else {
-                    this._state = STATE_IN_ATTACK;
+                    this.walkTarget = this.targetEnemy.getAttackPos();
+                    this.walkDistance = this.walkTarget.sub(footPos)._length();
+                    this._state = STATE_MOVE_TO_ENEMY;
                 }
+            } else if (this.targetEnemy != null) {
+                if (this.targetEnemy.dead) {
+                    this.targetEnemy = null;
+                }
+            } else {
+                this._state = STATE_IDLE;
             }
         }
 
