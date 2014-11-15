@@ -60,7 +60,7 @@ package
         public function Enemy(pos:DHPoint) {
             super(pos);
             this.original_pos = pos;
-            //this._state = STATE_IDLE;
+            this._state = STATE_IDLE;
 
             this.attackOffset = new DHPoint(0, 0);
 
