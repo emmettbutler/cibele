@@ -72,7 +72,7 @@ def compile_main(entry_point_class, libpath, debug_level):
     swfpath = "src/{entry_point_class}{ts}.swf".format(
         entry_point_class=entry_point_class,
         ts="")
-    command = ["mxmlc", "src/{entry_point_class}.as".format(entry_point_class=entry_point_class), "-o",
+    command = ["/opt/air/bin/mxmlc", "src/{entry_point_class}.as".format(entry_point_class=entry_point_class), "-o",
                swfpath,
                "-use-network=false", "-verbose-stacktraces=true",
                "-compiler.include-libraries", libpath,
@@ -80,7 +80,8 @@ def compile_main(entry_point_class, libpath, debug_level):
                "-debug={}".format(debug),
                "-omit-trace-statements={}".format(omit_trace),
                "-define=CONFIG::debug,{}".format(debug_flag),
-               "-define=CONFIG::test,{}".format(test_flag), ]
+               "-define=CONFIG::test,{}".format(test_flag),
+               "-swf-version=11"]
     print " ".join(command)
     subprocess.check_call(command)
     return swfpath
@@ -95,9 +96,10 @@ def write_conf_file(swf_path, entry_point_class, main_class):
     with open(conf_path, "w") as f:
         f.write(
 """
-<application xmlns="http://ns.adobe.com/air/application/3.1">
+<application xmlns="http://ns.adobe.com/air/application/2.6">
     <id>com.starmaid.Cibele.{ts}</id>
     <versionNumber>1.0</versionNumber>
+    <version>1.0</version>
     <filename>CibeleBeta-{ts}</filename>
     <initialWindow>
         <content>{swf_path}</content>
@@ -114,7 +116,7 @@ def write_conf_file(swf_path, entry_point_class, main_class):
 
 
 def run_main(conf_file):
-    command = "adl -runtime /Library/Frameworks {conf_path}".format(conf_path=conf_file)
+    command = "/opt/air/bin/adl -runtime /opt/air/runtimes/air/linux {conf_path}".format(conf_path=conf_file)
     print command
     subprocess.call(command.split())
 

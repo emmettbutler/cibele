@@ -11,7 +11,7 @@ package {
 
         public var bitDialogueLock:Boolean = true;
 
-        public static const LEVEL_ID:int = 9234876592837465;
+        public static const LEVEL_ID:int = 837465;
         public static const NORTH:int = 948409;
         public static const SOUTH:int = 94876;
         public static const EAST:int = 9987;
