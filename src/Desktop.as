@@ -19,30 +19,7 @@ package{
         [Embed(source="../assets/popups/selfiedesktop/forum.png")] private var ImgPicturesFolderForum:Class;
         [Embed(source="../assets/popups/selfiedesktop/friends.png")] private var ImgPicturesFolderFriends:Class;
 
-        public var bg:GameObject;
-        public var img_height:Number = 357;
-        public var selfie_folder:GameObject, untitled_folder:GameObject,
-                   screenshot_popup:GameObject, selfie_folder_hitbox:GameObject;
-
-        public var folder_structure:Object,
-                   untitled_folder_sprite:GameObject,
-                   screenshot_popup_hitbox:GameObject;
-
-        public static const FOLDER:Number = -1;
-        public static const FOLDER_SIZE_AND_POS:Number = -2;
-        public static const ICONS:Number = 0;
-        public static const ICONS_POS:Number = 1;
-        public static const ICONS_SIZE:Number = 5;
-        public static const ICONS_OPEN:Number = 7;
-        public static const FOLDER_GAME_OBJECT:Number = 10;
-
-        public static const SUBFOLDER:Number = 2;
-        public static const SUBFOLDER_SIZE_AND_POS:Number = -3;
-        public static const SUBFOLDER_ICONS:Number = 3;
-        public static const SUBFOLDER_ICONS_POS:Number = 4;
-        public static const SUBFOLDER_ICONS_SIZE:Number = 6;
-        public static const SUBFOLDER_ICONS_OPEN:Number = 8;
-        public static const SUBFOLDER_GAME_OBJECT:Number = 11;
+        public var bg:GameObject, folder_structure:Object;
 
         public static var ROOMTONE:String = "desktop room tone";
 
@@ -115,16 +92,6 @@ package{
             super.postCreate();
 
             this.populateFolders(folder_structure);
-
-            this.untitled_folder = new GameObject(new DHPoint(_screen.screenWidth * .2, _screen.screenHeight * .1));
-            this.untitled_folder.loadGraphic(ImgFolder,false,false,631,356);
-            FlxG.state.add(this.untitled_folder);
-            this.untitled_folder.visible = false;
-
-            this.screenshot_popup = new GameObject(new DHPoint(_screen.screenWidth * .2, _screen.screenHeight * .1));
-            this.screenshot_popup.loadGraphic(ImgScreenshot,false,false,631,356);
-            FlxG.state.add(this.screenshot_popup);
-            this.screenshot_popup.visible = false;
 
             var that:Desktop = this;
             this.addEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
