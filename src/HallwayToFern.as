@@ -30,6 +30,8 @@ package{
         public var _screen:ScreenManager;
         public var frameCount:int = 0;
 
+        public var loader:FernBackgroundLoader;
+
         private var bottomY:Number, fernBase:FlxExtSprite, fernTop:FlxExtSprite;
 
         public static var BGM:String = "Hallway to fern BGM";
@@ -70,7 +72,8 @@ package{
             ScreenManager.getInstance().setupCamera(player.cameraPos, 1);
             FlxG.camera.setBounds(0, 0, _screen.screenWidth, bottomY);
 
-            fernTop = (new BackgroundLoader()).loadSingleTileBG("../assets/Fern-part-1.png");
+            loader = new FernBackgroundLoader();
+            fernTop = loader.load();
             fernTop.scrollFactor = new DHPoint(1, 1);
 
             fernBase = (new BackgroundLoader()).loadSingleTileBG("../assets/Fern-part-2.png");
@@ -130,6 +133,12 @@ package{
                     call_button.scale.y -= .1;
                 } else {
                     call_button.kill();
+                }
+            }
+
+            for (var i:int = 0; i < loader.doors.length; i++) {
+                if(player.mapHitbox.overlaps(loader.doors[i]["object"])){
+                    FlxG.switchState(new IkuTursoTeleportRoom());
                 }
             }
         }

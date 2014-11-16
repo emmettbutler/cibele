@@ -35,8 +35,7 @@ package {
                 }
             ];
 
-            var bg:FlxExtSprite = (new BackgroundLoader()).loadSingleTileBG("../assets/fern.jpg");
-            ScreenManager.getInstance().setupCamera(null, 1);
+            var bg:FlxExtSprite = (new BackgroundLoader()).loadSingleTileBG("../assets/Fern-part-1.png");
 
             var cur:Object;
             for (var i:int = 0; i < doors.length; i++) {
