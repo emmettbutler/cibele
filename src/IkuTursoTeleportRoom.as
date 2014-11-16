@@ -43,7 +43,7 @@ package{
             }
 
             if(player.mapHitbox.overlaps(door_fern)) {
-                FlxG.switchState(new Fern());
+                FlxG.switchState(new HallwayToFern(HallwayToFern.STATE_RETURN));
             }
         }
     }

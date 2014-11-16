@@ -25,7 +25,8 @@ package{
         public var tileLoader:HallwayTileLoader;
 
         public static const STATE_PRE_IT:Number = 0;
-        public var _state:Number = 0;
+        public static const STATE_RETURN:Number = 1;
+        public var _state:Number = STATE_PRE_IT;
 
         public var _screen:ScreenManager;
         public var frameCount:int = 0;
@@ -36,7 +37,7 @@ package{
 
         public static var BGM:String = "Hallway to fern BGM";
 
-        public function HallwayToFern(state:Number = 0){
+        public function HallwayToFern(state:Number=0){
             _state = state;
         }
 
@@ -52,10 +53,16 @@ package{
                 false, .15, Math.random()*932+102, HallwayToFern.BGM, false,
                 false, true);
 
-            bottomY = 12000;
             _screen = ScreenManager.getInstance();
-            super.__create(new DHPoint(
-                _screen.screenWidth * .5, bottomY - _screen.screenHeight * .5));
+
+            bottomY = 4000;
+            var startPos:DHPoint = new DHPoint(_screen.screenWidth * .5,
+                                               bottomY - _screen.screenHeight * .5);
+            if (this._state == STATE_RETURN) {
+                bottomY = _screen.screenHeight * 2;
+                startPos.y = _screen.screenHeight * .8;
+            }
+            super.__create(startPos);
 
             FlxG.state.remove(this.baseLayer);
             this.baseLayer = new GameObject(new DHPoint(0, 0));
@@ -101,7 +108,9 @@ package{
 
         override public function update():void {
             super.update();
-            this.tileLoader.update();
+            if (this._state != STATE_RETURN) {
+                this.tileLoader.update();
+            }
 
             if (this.fernBase.y != this.fernTop.y + this.fernTop.height) {
                 this.fernBase.y = this.fernTop.y + this.fernTop.height;
