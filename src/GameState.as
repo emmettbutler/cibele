@@ -9,8 +9,8 @@ package {
 
         protected var updateSound:Boolean, updatePopup:Boolean,
                       updateMessages:Boolean, showEmoji:Boolean = true;
-        protected var game_cursor:GameCursor;
-        private var pauseLayer:GameObject, baseLayer:GameObject;
+        protected var game_cursor:GameCursor, baseLayer:GameObject;
+        private var pauseLayer:GameObject;
         private var sortedObjects:Array;
 
         public var ui_color_flag:Number;
@@ -36,6 +36,8 @@ package {
 
         override public function create():void {
             super.create();
+
+            FlxG.bgColor = 0xff000000;
 
             this.baseLayer = new GameObject(new DHPoint(0, 0));
             this.baseLayer.scrollFactor = new DHPoint(0, 0);

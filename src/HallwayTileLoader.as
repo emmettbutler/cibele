@@ -3,16 +3,17 @@ package {
 
     public class HallwayTileLoader {
         public var dimensions:DHPoint, origin:DHPoint;
-        public var tileDimensions:DHPoint;
+        public var tileDimensions:DHPoint, stopY:Number;
 
         private var tiles:Array, rowLoads:Array;
         private var player:Player;
 
         public function HallwayTileLoader(dimensions:DHPoint, origin:DHPoint,
-                                          player:Player) {
+                                          player:Player, stopY:Number) {
             this.dimensions = dimensions;
             this.origin = origin;
             this.player = player;
+            this.stopY = stopY;
 
             this.tileDimensions = new DHPoint(77, 88);
             this.loadTiles();
@@ -45,6 +46,11 @@ package {
             var cur:HallwayTile;
             var front:Number = this.player.pos.y - 100;
             var row:Array;
+
+            if (front <= this.stopY) {
+                return;
+            }
+
             for (var i:int = 0; i < this.tiles.length; i++) {
                 row = this.tiles[i];
                 for (var j:int = 0; j < this.tiles[i].length; j++) {

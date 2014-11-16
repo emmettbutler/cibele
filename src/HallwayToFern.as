@@ -4,6 +4,7 @@ package{
 
     public class HallwayToFern extends PlayerState {
         [Embed(source="../assets/incomingcall.png")] private var ImgCall:Class;
+        [Embed(source="../assets/Fern-part-2.png")] private var ImgFernBase:Class;
         [Embed(source="../assets/voc_firstconvo.mp3")] private var Convo1:Class;
         [Embed(source="../assets/voc_ikuturso_start.mp3")] private var Convo2:Class;
         [Embed(source="../assets/voc_extra_wannaduo.mp3")] private var SndWannaDuo:Class;
@@ -29,7 +30,7 @@ package{
         public var _screen:ScreenManager;
         public var frameCount:int = 0;
 
-        private var bottomY:Number;
+        private var bottomY:Number, fernBase:FlxExtSprite, fernTop:FlxExtSprite;
 
         public static var BGM:String = "Hallway to fern BGM";
 
@@ -49,23 +50,39 @@ package{
                 false, .15, Math.random()*932+102, HallwayToFern.BGM, false,
                 false, true);
 
-            bottomY = 10000;
+            //bottomY = 10000;
+            bottomY = 4000;
             _screen = ScreenManager.getInstance();
             super.__create(new DHPoint(
                 _screen.screenWidth * .5, bottomY - _screen.screenHeight * .5));
 
-            FlxG.bgColor = 0xff000000;
+            FlxG.state.remove(this.baseLayer);
+            this.baseLayer = new GameObject(new DHPoint(0, 0));
+            this.baseLayer.scrollFactor = new DHPoint(0, 0);
+            this.baseLayer.active = false;
+            this.baseLayer.makeGraphic(
+                ScreenManager.getInstance().screenWidth,
+                ScreenManager.getInstance().screenHeight,
+                0xff071026
+            );
+            this.add(this.baseLayer);
 
             ScreenManager.getInstance().setupCamera(player.cameraPos, 1);
             FlxG.camera.setBounds(0, 0, _screen.screenWidth, bottomY);
 
-            leftBound = ScreenManager.getInstance().screenWidth * .36;
-            rightBound = ScreenManager.getInstance().screenWidth * .53;
+            fernTop = (new BackgroundLoader()).loadSingleTileBG("../assets/Fern-part-1.png");
+            fernTop.scrollFactor = new DHPoint(1, 1);
+
+            fernBase = (new BackgroundLoader()).loadSingleTileBG("../assets/Fern-part-2.png");
+            fernBase.scrollFactor = new DHPoint(1, 1);
+
+            leftBound = ScreenManager.getInstance().screenWidth * .39;
+            rightBound = ScreenManager.getInstance().screenWidth * .56;
 
             this.tileLoader = new HallwayTileLoader(
-                new DHPoint(77 * 4, bottomY),
+                new DHPoint(77 * 3, bottomY),
                 new DHPoint(leftBound + 40, 0),
-                this.player
+                this.player, 0
             );
 
             this.postCreate();
@@ -82,15 +99,19 @@ package{
 
         override public function update():void {
             super.update();
-
             this.tileLoader.update();
+
+            if (this.fernBase.y != this.fernTop.y + this.fernTop.height) {
+                this.fernBase.y = this.fernTop.y + this.fernTop.height;
+                this.tileLoader.stopY = this.fernBase.y + this.fernBase.height / 2;
+            }
 
             if(SoundManager.getInstance().getSoundByName(MenuScreen.BGM) != null) {
                 SoundManager.getInstance().getSoundByName(MenuScreen.BGM).fadeOutSound();
             }
 
             if (this.player.pos.y < ScreenManager.getInstance().screenHeight / 2) {
-                FlxG.switchState(new Fern());
+                //FlxG.switchState(new Fern());
             }
 
             if (this.player.x < leftBound) {
