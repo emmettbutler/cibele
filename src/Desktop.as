@@ -22,9 +22,9 @@ package{
         public var bg:GameObject;
         public var img_height:Number = 357;
         public var selfie_folder:GameObject, untitled_folder:GameObject,
-                   screenshot_popup:GameObject, selfie_folder_sprite:GameObject;
+                   screenshot_popup:GameObject, selfie_folder_hitbox:GameObject;
 
-        public var selfie_map:Dictionary = new Dictionary(),
+        public var folder_structure:Array,
                    untitled_folder_sprite:GameObject,
                    screenshot_popup_hitbox:GameObject;
 
@@ -58,18 +58,52 @@ package{
             ScreenManager.getInstance().setupCamera(null, 1);
             var _screen:ScreenManager = ScreenManager.getInstance();
 
-            selfie_map[FOLDER] = ImgSelfiesFolder
-            selfie_map[FOLDER_SIZE_AND_POS] = [[631,356],[new DHPoint(_screen.screenWidth * .88, _screen.screenHeight * .09)]];
-            selfie_map[ICONS] = [ImgSelfiesFolderMe1Icon,ImgSelfiesFolderPicsIcon];
-            selfie_map[ICONS_POS] = [[149,31],[31,35]];
-            selfie_map[ICONS_SIZE] = [[70,81],[87,79]];
-            selfie_map[ICONS_OPEN] = [ImgSelfiesFolderMe1,null];
-
-            selfie_map[SUBFOLDER] = ImgPicturesFolder;
-            selfie_map[SUBFOLDER_SIZE_AND_POS] = [[631,356],[new DHPoint(_screen.screenWidth * .88, _screen.screenHeight * .09)]];
-            selfie_map[SUBFOLDER_ICONS] = [ImgPicturesFolderFriendsIcon, ImgPicturesFolderForumIcon, ImgPicturesFolderForIchiIcon];
-            selfie_map[SUBFOLDER_ICONS_SIZE] = [[70,85],[70,85],[70,84]];
-            selfie_map[SUBFOLDER_ICONS_POS] = [[225,32],[30,32],[124,32]];
+            folder_structure = [
+                {
+                    "icon": ImgSelfiesFolder,
+                    "name": "selfies",
+                    "icon_dim": new DHPoint(631, 356),
+                    "icon_pos": new DHPoint(_screen.screenWidth * .88, _screen.screenHeight * .09),
+                    "contents": [
+                        {
+                            "name": "pics_subfolder",
+                            "icon": ImgSelfiesFolderPicsIcon,
+                            "icon_dim": new DHPoint(87, 79),
+                            "icon_pos": new DHPoint(31, 35),
+                            "contents": [
+                                {
+                                    "name": "forum",
+                                    "icon": ImgPicturesFolderForumIcon,
+                                    "icon_dim": new DHPoint(70, 85),
+                                    "icon_pos": new DHPoint(30, 32),
+                                    "contents": ImgPicturesFolderForum
+                                },
+                                {
+                                    "name": "forichi",
+                                    "icon": ImgPicturesFolderForIchiIcon,
+                                    "icon_dim": new DHPoint(70, 84),
+                                    "icon_pos": new DHPoint(124, 32),
+                                    "contents": ImgPicturesFolderForIchi
+                                },
+                                {
+                                    "name": "friends",
+                                    "icon": ImgPicturesFolderFriendsIcon,
+                                    "icon_dim": new DHPoint(70, 85),
+                                    "icon_pos": new DHPoint(225, 32),
+                                    "contents": ImgPicturesFolderFriends
+                                }
+                            ]
+                        },
+                        {
+                            "name": "img_me_1",
+                            "icon": ImgSelfiesFolderMe1Icon,
+                            "icon_dim": new DHPoint(70, 81),
+                            "icon_pos": new DHPoint(149, 31),
+                            "contents": ImgSelfiesFolderMe1
+                        }
+                    ]
+                }
+            ];
 
             super.postCreate();
 
@@ -78,22 +112,14 @@ package{
             FlxG.state.add(this.untitled_folder);
             this.untitled_folder.visible = false;
 
-            /*
-            var this.selfie_folder[FOLDER_GAME_OBJECT]:GameObject = new GameObject(this.selfie_folder[FOLDER_SIZE_AND_POS][1]);
-            this.selfie_folder[FOLDER_GAME_OBJECT].loadGraphic(this.selfie_folder[FOLDER],false,false,this.selfie_folder[FOLDER_SIZE_AND_POS[0][0],])
-            for(var i:Number = 0; i < this.selfie_folder.length; i++) {
-
-            }
-            */
-
             this.screenshot_popup = new GameObject(new DHPoint(_screen.screenWidth * .2, _screen.screenHeight * .1));
             this.screenshot_popup.loadGraphic(ImgScreenshot,false,false,631,356);
             FlxG.state.add(this.screenshot_popup);
             this.screenshot_popup.visible = false;
 
-            this.selfie_folder_sprite = new GameObject(new DHPoint(0, 0));
-            this.selfie_folder_sprite.makeGraphic(150, 100, 0x00ff0000);
-            add(this.selfie_folder_sprite);
+            this.selfie_folder_hitbox = new GameObject(new DHPoint(_screen.screenWidth * .87, 0));
+            this.selfie_folder_hitbox.makeGraphic(150, 100, 0xaaff0000);
+            add(this.selfie_folder_hitbox);
 
             this.untitled_folder_sprite = new GameObject(new DHPoint(_screen.screenWidth * .84, _screen.screenHeight * .09));
             this.untitled_folder_sprite.makeGraphic(150, 100, 0x00ff0000);
@@ -106,7 +132,7 @@ package{
             var that:Desktop = this;
             this.addEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
                 function(event:DataEvent):void {
-                    that.selfie_folder_sprite.y = event.userData['bg'].height * .15;
+                    that.selfie_folder_hitbox.y = event.userData['bg'].height * .15;
                     that.untitled_folder_sprite.y = event.userData['bg'].height * .35;
                     that.screenshot_popup_hitbox.y = event.userData['bg'].height * .1;
                     FlxG.stage.removeEventListener(
@@ -130,39 +156,39 @@ package{
                     this.untitled_folder_sprite.width,
                     this.untitled_folder_sprite.height);
                 var selfie_folder_rect:FlxRect = new FlxRect(
-                    this.selfie_folder_sprite.x, this.selfie_folder_sprite.y,
-                    this.selfie_folder_sprite.width,
-                    this.selfie_folder_sprite.height);
+                    this.selfie_folder_hitbox.x, this.selfie_folder_hitbox.y,
+                    this.selfie_folder_hitbox.width,
+                    this.selfie_folder_hitbox.height);
                 var screenshot_popup_rect:FlxRect = new FlxRect(
                     this.screenshot_popup_hitbox.x, this.screenshot_popup_hitbox.y,
                     this.screenshot_popup_hitbox.width,
                     this.screenshot_popup_hitbox.height);
                 var mouse_rect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
 
-                if (selfie_folder_sprite.visible) {
+                if (selfie_folder_hitbox.visible) {
                 } else if (untitled_folder.visible) {
                 } else if (screenshot_popup.visible) {
                 }
 
                 if(mouse_rect.overlaps(untitled_folder_rect)) {
                     screenshot_popup.visible = false;
-                    selfie_folder_sprite.visible = false;
+                    selfie_folder_hitbox.visible = false;
                     untitled_folder.visible = !untitled_folder.visible;
                 } else if(mouse_rect.overlaps(selfie_folder_rect)) {
                     untitled_folder.visible = false;
                     screenshot_popup.visible = false;
-                    selfie_folder_sprite.visible = !selfie_folder.visible;
+                    selfie_folder_hitbox.visible = !selfie_folder.visible;
                 } else if(mouse_rect.overlaps(screenshot_popup_rect)) {
                     untitled_folder.visible = false;
-                    selfie_folder_sprite.visible = false;
+                    selfie_folder_hitbox.visible = false;
                     screenshot_popup.visible = !screenshot_popup.visible;
                 } else {
                     if(!clickIn(untitled_folder) &&
-                        !clickIn(selfie_folder_sprite) &&
+                        !clickIn(selfie_folder_hitbox) &&
                         !clickIn(screenshot_popup))
                     {
                         untitled_folder.visible = false;
-                        selfie_folder_sprite.visible = false;
+                        selfie_folder_hitbox.visible = false;
                         screenshot_popup.visible = false;
                     }
                 }
