@@ -139,6 +139,11 @@ package{
                     this.screenshot_popup_hitbox.height);
                 var mouse_rect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
 
+                if (selfie_folder_sprite.visible) {
+                } else if (untitled_folder.visible) {
+                } else if (screenshot_popup.visible) {
+                }
+
                 if(mouse_rect.overlaps(untitled_folder_rect)) {
                     screenshot_popup.visible = false;
                     selfie_folder_sprite.visible = false;
@@ -152,11 +157,22 @@ package{
                     selfie_folder_sprite.visible = false;
                     screenshot_popup.visible = !screenshot_popup.visible;
                 } else {
-                    untitled_folder.visible = false;
-                    selfie_folder_sprite.visible = false;
-                    screenshot_popup.visible = false;
+                    if(!clickIn(untitled_folder) &&
+                        !clickIn(selfie_folder_sprite) &&
+                        !clickIn(screenshot_popup))
+                    {
+                        untitled_folder.visible = false;
+                        selfie_folder_sprite.visible = false;
+                        screenshot_popup.visible = false;
+                    }
                 }
             }
+        }
+
+        public function clickIn(spr:GameObject):Boolean {
+            var rect:FlxRect = new FlxRect(spr.x, spr.y, spr.width, spr.height);
+            var mouse_rect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
+            return spr.visible && mouse_rect.overlaps(rect);
         }
     }
 }
