@@ -52,8 +52,7 @@ package{
                 false, .15, Math.random()*932+102, HallwayToFern.BGM, false,
                 false, true);
 
-            //bottomY = 10000;
-            bottomY = 4000;
+            bottomY = 12000;
             _screen = ScreenManager.getInstance();
             super.__create(new DHPoint(
                 _screen.screenWidth * .5, bottomY - _screen.screenHeight * .5));
@@ -80,7 +79,7 @@ package{
             fernBase.scrollFactor = new DHPoint(1, 1);
 
             leftBound = ScreenManager.getInstance().screenWidth * .39;
-            rightBound = ScreenManager.getInstance().screenWidth * .56;
+            rightBound = ScreenManager.getInstance().screenWidth * .52;
 
             this.tileLoader = new HallwayTileLoader(
                 new DHPoint(77 * 3, bottomY),
@@ -113,15 +112,13 @@ package{
                 SoundManager.getInstance().getSoundByName(MenuScreen.BGM).fadeOutSound();
             }
 
-            if (this.player.pos.y < ScreenManager.getInstance().screenHeight / 2) {
-                //FlxG.switchState(new Fern());
-            }
-
-            if (this.player.x < leftBound) {
-                this.player.x = leftBound;
-            }
-            if (this.player.x > rightBound) {
-                this.player.x = rightBound;
+            if (this.player.y > this.fernTop.y + this.fernTop.height) {
+                if (this.player.x < leftBound) {
+                    this.player.x = leftBound;
+                }
+                if (this.player.x > rightBound) {
+                    this.player.x = rightBound;
+                }
             }
             if (this.player.y > bottomY) {
                 this.player.y = bottomY;
