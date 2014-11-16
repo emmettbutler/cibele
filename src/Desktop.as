@@ -62,6 +62,8 @@ package{
                 {
                     "folder_img": ImgSelfiesFolder,
                     "folder_dim": new DHPoint(631, 356),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .87, .15),
+                    "hitbox_dim": new DHPoint(150, 100),
                     "name": "selfies",
                     "contents": [
                         {
@@ -124,24 +126,14 @@ package{
             FlxG.state.add(this.screenshot_popup);
             this.screenshot_popup.visible = false;
 
-            this.selfie_folder_hitbox = new GameObject(new DHPoint(_screen.screenWidth * .87, 0));
-            this.selfie_folder_hitbox.makeGraphic(150, 100, 0x00ff0000);
-            add(this.selfie_folder_hitbox);
-
-            this.untitled_folder_sprite = new GameObject(new DHPoint(_screen.screenWidth * .84, _screen.screenHeight * .09));
-            this.untitled_folder_sprite.makeGraphic(150, 100, 0x00ff0000);
-            add(this.untitled_folder_sprite);
-
-            this.screenshot_popup_hitbox = new GameObject(new DHPoint(_screen.screenWidth * .72, _screen.screenHeight * .09));
-            this.screenshot_popup_hitbox.makeGraphic(150, 100, 0x00ff0000);
-            add(this.screenshot_popup_hitbox);
-
             var that:Desktop = this;
             this.addEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
                 function(event:DataEvent):void {
-                    that.selfie_folder_hitbox.y = event.userData['bg'].height * .15;
-                    that.untitled_folder_sprite.y = event.userData['bg'].height * .35;
-                    that.screenshot_popup_hitbox.y = event.userData['bg'].height * .1;
+                    var cur:Object;
+                    for (var i:int = 0; i < that.folder_structure["contents"].length; i++) {
+                        cur = that.folder_structure["contents"][i];
+                        cur["hitbox_sprite"].y = event.userData['bg'].height * cur["hitbox_pos"].y;
+                    }
                     FlxG.stage.removeEventListener(
                         GameState.EVENT_SINGLETILE_BG_LOADED,
                         arguments.callee
@@ -158,54 +150,24 @@ package{
 
             if(FlxG.mouse.justPressed()) {
                 var _screen:ScreenManager = ScreenManager.getInstance();
-                var untitled_folder_rect:FlxRect = new FlxRect(
-                    this.untitled_folder_sprite.x, this.untitled_folder_sprite.y,
-                    this.untitled_folder_sprite.width,
-                    this.untitled_folder_sprite.height);
-                var selfie_folder_rect:FlxRect = new FlxRect(
-                    this.selfie_folder_hitbox.x, this.selfie_folder_hitbox.y,
-                    this.selfie_folder_hitbox.width,
-                    this.selfie_folder_hitbox.height);
-                var screenshot_popup_rect:FlxRect = new FlxRect(
-                    this.screenshot_popup_hitbox.x, this.screenshot_popup_hitbox.y,
-                    this.screenshot_popup_hitbox.width,
-                    this.screenshot_popup_hitbox.height);
                 var mouse_rect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
 
-                if (selfie_folder_hitbox.visible) {
-                } else if (untitled_folder.visible) {
-                } else if (screenshot_popup.visible) {
-                }
-
-                if(mouse_rect.overlaps(untitled_folder_rect)) {
-                    screenshot_popup.visible = false;
-                    selfie_folder_hitbox.visible = false;
-                    untitled_folder.visible = !untitled_folder.visible;
-                } else if(mouse_rect.overlaps(selfie_folder_rect)) {
-                    untitled_folder.visible = false;
-                    screenshot_popup.visible = false;
-                    selfie_folder_hitbox.visible = !selfie_folder.visible;
-                } else if(mouse_rect.overlaps(screenshot_popup_rect)) {
-                    untitled_folder.visible = false;
-                    selfie_folder_hitbox.visible = false;
-                    screenshot_popup.visible = !screenshot_popup.visible;
-                } else {
-                    if(!clickIn(untitled_folder) &&
-                        !clickIn(selfie_folder_hitbox) &&
-                        !clickIn(screenshot_popup))
+                var hitbox_rect:FlxRect, folder_rect:FlxRect, cur:Object;
+                for (var i:int = 0; i < this.folder_structure["contents"].length; i++) {
+                    cur = this.folder_structure["contents"][i];
+                    hitbox_rect = new FlxRect(cur["hitbox_sprite"].x, cur["hitbox_sprite"].y,
+                                              cur["hitbox_sprite"].width, cur["hitbox_sprite"].height);
+                    folder_rect = new FlxRect(cur["folder_sprite"].x, cur["folder_sprite"].y,
+                                              cur["folder_sprite"].width, cur["folder_sprite"].height);
+                    if ((cur["folder_sprite"].visible && mouse_rect.overlaps(folder_rect)) ||
+                        mouse_rect.overlaps(hitbox_rect))
                     {
-                        untitled_folder.visible = false;
-                        selfie_folder_hitbox.visible = false;
-                        screenshot_popup.visible = false;
+                        cur["folder_sprite"].visible = true;
+                    } else {
+                        cur["folder_sprite"].visible = false;
                     }
                 }
             }
-        }
-
-        public function clickIn(spr:GameObject):Boolean {
-            var rect:FlxRect = new FlxRect(spr.x, spr.y, spr.width, spr.height);
-            var mouse_rect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
-            return spr.visible && mouse_rect.overlaps(rect);
         }
 
         public function populateFolders(root:Object):void {
@@ -218,6 +180,12 @@ package{
                     spr.visible = false;
                     FlxG.state.add(spr);
                     cur["icon_sprite"] = spr;
+                }
+                if("hitbox_pos" in cur && "hitbox_dim" in cur) {
+                    spr = new GameObject(new DHPoint(cur["hitbox_pos"].x, 0));
+                    spr.makeGraphic(cur["hitbox_dim"].x, cur["hitbox_dim"].y, 0xaaff0000);
+                    FlxG.state.add(spr);
+                    cur["hitbox_sprite"] = spr;
                 }
                 if (cur["contents"] is Array) {
                     spr = new GameObject(new DHPoint(0, 0));
