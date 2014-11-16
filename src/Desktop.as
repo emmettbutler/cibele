@@ -152,7 +152,7 @@ package{
                 var _screen:ScreenManager = ScreenManager.getInstance();
                 var mouse_rect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
 
-                var hitbox_rect:FlxRect, folder_rect:FlxRect, cur:Object;
+                var hitbox_rect:FlxRect, folder_rect:FlxRect, cur:Object, cur_icon:Object;
                 for (var i:int = 0; i < this.folder_structure["contents"].length; i++) {
                     cur = this.folder_structure["contents"][i];
                     hitbox_rect = new FlxRect(cur["hitbox_sprite"].x, cur["hitbox_sprite"].y,
@@ -163,8 +163,16 @@ package{
                         mouse_rect.overlaps(hitbox_rect))
                     {
                         cur["folder_sprite"].visible = true;
+                        for (var k:int = 0; k < cur["contents"].length; k++) {
+                            cur_icon = cur["contents"][k];
+                            cur_icon["icon_sprite"].visible = true;
+                        }
                     } else {
                         cur["folder_sprite"].visible = false;
+                        for (k = 0; k < cur["contents"].length; k++) {
+                            cur_icon = cur["contents"][k];
+                            cur_icon["icon_sprite"].visible = false;
+                        }
                     }
                 }
             }
@@ -183,7 +191,7 @@ package{
                 }
                 if("hitbox_pos" in cur && "hitbox_dim" in cur) {
                     spr = new GameObject(new DHPoint(cur["hitbox_pos"].x, 0));
-                    spr.makeGraphic(cur["hitbox_dim"].x, cur["hitbox_dim"].y, 0xaaff0000);
+                    spr.makeGraphic(cur["hitbox_dim"].x, cur["hitbox_dim"].y, 0x00ff0000);
                     FlxG.state.add(spr);
                     cur["hitbox_sprite"] = spr;
                 }
