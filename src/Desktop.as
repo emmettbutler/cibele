@@ -60,16 +60,17 @@ package{
 
             folder_structure = {"contents": [
                 {
-                    "icon": ImgSelfiesFolder,
+                    "folder_img": ImgSelfiesFolder,
+                    "folder_dim": new DHPoint(631, 356),
                     "name": "selfies",
-                    "icon_dim": new DHPoint(631, 356),
-                    "icon_pos": new DHPoint(_screen.screenWidth * .88, _screen.screenHeight * .09),
                     "contents": [
                         {
                             "name": "pics_subfolder",
                             "icon": ImgSelfiesFolderPicsIcon,
                             "icon_dim": new DHPoint(87, 79),
                             "icon_pos": new DHPoint(31, 35),
+                            "folder_img": ImgSelfiesFolder,
+                            "folder_dim": new DHPoint(631, 356),
                             "contents": [
                                 {
                                     "name": "forum",
@@ -208,15 +209,23 @@ package{
         }
 
         public function populateFolders(root:Object):void {
-            var cur:Object, spr:GameObject;
+            var cur:Object, spr:GameObject, icon_pos:DHPoint;
             for (var i:int = 0; i < root["contents"].length; i++) {
                 cur = root["contents"][i];
-                spr = new GameObject(new DHPoint(0, 0));
-                spr.loadGraphic(cur["icon"], false, false, cur["icon_dim"].x, cur["icon_dim"].y);
-                spr.visible = false;
-                FlxG.state.add(spr);
-                cur["icon_sprite"] = spr;
+                if ("icon" in cur && cur["icon"] != null) {
+                    spr = new GameObject(cur["icon_pos"].add(root["folder_sprite"].pos));
+                    spr.loadGraphic(cur["icon"], false, false, cur["icon_dim"].x, cur["icon_dim"].y);
+                    spr.visible = false;
+                    FlxG.state.add(spr);
+                    cur["icon_sprite"] = spr;
+                }
                 if (cur["contents"] is Array) {
+                    spr = new GameObject(new DHPoint(0, 0));
+                    spr.loadGraphic(cur["folder_img"], false, false, cur["folder_dim"].x, cur["folder_dim"].y);
+                    spr.visible = false;
+                    FlxG.state.add(spr);
+                    cur["folder_sprite"] = spr;
+
                     this.populateFolders(cur);
                 } else {
                     spr = new GameObject(new DHPoint(0, 0));
