@@ -24,7 +24,7 @@ package{
         public var selfie_folder:GameObject, untitled_folder:GameObject,
                    screenshot_popup:GameObject, selfie_folder_hitbox:GameObject;
 
-        public var folder_structure:Array,
+        public var folder_structure:Object,
                    untitled_folder_sprite:GameObject,
                    screenshot_popup_hitbox:GameObject;
 
@@ -58,7 +58,7 @@ package{
             ScreenManager.getInstance().setupCamera(null, 1);
             var _screen:ScreenManager = ScreenManager.getInstance();
 
-            folder_structure = [
+            folder_structure = {"contents": [
                 {
                     "icon": ImgSelfiesFolder,
                     "name": "selfies",
@@ -76,6 +76,7 @@ package{
                                     "icon": ImgPicturesFolderForumIcon,
                                     "icon_dim": new DHPoint(70, 85),
                                     "icon_pos": new DHPoint(30, 32),
+                                    "dim": new DHPoint(530, 356),
                                     "contents": ImgPicturesFolderForum
                                 },
                                 {
@@ -83,6 +84,7 @@ package{
                                     "icon": ImgPicturesFolderForIchiIcon,
                                     "icon_dim": new DHPoint(70, 84),
                                     "icon_pos": new DHPoint(124, 32),
+                                    "dim": new DHPoint(530, 356),
                                     "contents": ImgPicturesFolderForIchi
                                 },
                                 {
@@ -90,6 +92,7 @@ package{
                                     "icon": ImgPicturesFolderFriendsIcon,
                                     "icon_dim": new DHPoint(70, 85),
                                     "icon_pos": new DHPoint(225, 32),
+                                    "dim": new DHPoint(488, 356),
                                     "contents": ImgPicturesFolderFriends
                                 }
                             ]
@@ -99,13 +102,16 @@ package{
                             "icon": ImgSelfiesFolderMe1Icon,
                             "icon_dim": new DHPoint(70, 81),
                             "icon_pos": new DHPoint(149, 31),
+                            "dim": new DHPoint(530, 356),
                             "contents": ImgSelfiesFolderMe1
                         }
                     ]
                 }
-            ];
+            ]};
 
             super.postCreate();
+
+            this.populateFolders(folder_structure);
 
             this.untitled_folder = new GameObject(new DHPoint(_screen.screenWidth * .2, _screen.screenHeight * .1));
             this.untitled_folder.loadGraphic(ImgFolder,false,false,631,356);
@@ -118,7 +124,7 @@ package{
             this.screenshot_popup.visible = false;
 
             this.selfie_folder_hitbox = new GameObject(new DHPoint(_screen.screenWidth * .87, 0));
-            this.selfie_folder_hitbox.makeGraphic(150, 100, 0xaaff0000);
+            this.selfie_folder_hitbox.makeGraphic(150, 100, 0x00ff0000);
             add(this.selfie_folder_hitbox);
 
             this.untitled_folder_sprite = new GameObject(new DHPoint(_screen.screenWidth * .84, _screen.screenHeight * .09));
@@ -199,6 +205,27 @@ package{
             var rect:FlxRect = new FlxRect(spr.x, spr.y, spr.width, spr.height);
             var mouse_rect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
             return spr.visible && mouse_rect.overlaps(rect);
+        }
+
+        public function populateFolders(root:Object):void {
+            var cur:Object, spr:GameObject;
+            for (var i:int = 0; i < root["contents"].length; i++) {
+                cur = root["contents"][i];
+                spr = new GameObject(new DHPoint(0, 0));
+                spr.loadGraphic(cur["icon"], false, false, cur["icon_dim"].x, cur["icon_dim"].y);
+                spr.visible = false;
+                FlxG.state.add(spr);
+                cur["icon_sprite"] = spr;
+                if (cur["contents"] is Array) {
+                    this.populateFolders(cur);
+                } else {
+                    spr = new GameObject(new DHPoint(0, 0));
+                    spr.loadGraphic(cur["contents"], false, false, cur["dim"].x, cur["dim"].y);
+                    spr.visible = false;
+                    FlxG.state.add(spr);
+                    cur["full_sprite"] = spr;
+                }
+            }
         }
     }
 }
