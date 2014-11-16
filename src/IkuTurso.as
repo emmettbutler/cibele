@@ -23,6 +23,7 @@ package{
         private var conversationCounter:Number = 0;
 
         public static var BGM:String = "ikuturso bgm loop";
+        public static const BOSS_MARK:String = "boss_iku_turso";
 
         public function IkuTurso() {
             PopUpManager.GAME_ACTIVE = true;
@@ -99,7 +100,7 @@ package{
 
         public function showForumWindow():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.FORUM_1);
-            GlobalTimer.getInstance().setMark(Fern.BOSS_MARK, 50*GameSound.MSEC_PER_SEC);
+            GlobalTimer.getInstance().setMark(BOSS_MARK, 50*GameSound.MSEC_PER_SEC);
         }
 
         public function showIchiDownloadWindow():void {
@@ -203,7 +204,7 @@ package{
                 }
             }
 
-            if (GlobalTimer.getInstance().hasPassed(Fern.BOSS_MARK) &&
+            if (GlobalTimer.getInstance().hasPassed(BOSS_MARK) &&
                 !this.bossHasAppeared && FlxG.state.ID == LevelMapState.LEVEL_ID)
             {
                 this.bossHasAppeared = true;

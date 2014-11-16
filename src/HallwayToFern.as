@@ -55,7 +55,7 @@ package{
 
             _screen = ScreenManager.getInstance();
 
-            bottomY = 4000;
+            bottomY = 12000;
             var startPos:DHPoint = new DHPoint(_screen.screenWidth * .5,
                                                bottomY - _screen.screenHeight * .5);
             if (this._state == STATE_RETURN) {
