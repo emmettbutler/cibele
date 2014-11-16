@@ -141,19 +141,19 @@ package{
 
                 if(mouse_rect.overlaps(untitled_folder_rect)) {
                     screenshot_popup.visible = false;
-                    selfie_folder.visible = false;
+                    selfie_folder_sprite.visible = false;
                     untitled_folder.visible = !untitled_folder.visible;
                 } else if(mouse_rect.overlaps(selfie_folder_rect)) {
                     untitled_folder.visible = false;
                     screenshot_popup.visible = false;
-                    selfie_folder.visible = !selfie_folder.visible;
+                    selfie_folder_sprite.visible = !selfie_folder.visible;
                 } else if(mouse_rect.overlaps(screenshot_popup_rect)) {
                     untitled_folder.visible = false;
-                    selfie_folder.visible = false;
+                    selfie_folder_sprite.visible = false;
                     screenshot_popup.visible = !screenshot_popup.visible;
                 } else {
                     untitled_folder.visible = false;
-                    selfie_folder.visible = false;
+                    selfie_folder_sprite.visible = false;
                     screenshot_popup.visible = false;
                 }
             }
