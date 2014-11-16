@@ -275,7 +275,7 @@ package{
 
             this.popups = new Dictionary();
             this.popups[BULLDOG_HELL] = new PopUp(ImgBulldogHell, 1030, 510, 0, BULLDOG_HELL);
-            this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 631, 356, PopUp.ARROW_THROUGH, SELFIES_1);
+            this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 631, 356, PopUp.CLICK_THROUGH, SELFIES_1);
             this.popups[FORUM_1] = new PopUp(ImgForumSelfie1, 1174, 585, 0, FORUM_1);
             this.popups[ICHI_DOWNLOAD] = new PopUp(ImgIchiDownload, 631, 356, 0, ICHI_DOWNLOAD);
             this.popups[ICHI_SELFIE1] = new PopUp(ImgIchiSelfie1, 433, 356, 0, ICHI_SELFIE1);

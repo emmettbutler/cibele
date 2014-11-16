@@ -1,29 +1,30 @@
 package{
     import org.flixel.*;
+    import flash.utils.Dictionary;
 
     public class Desktop extends GameState {
         [Embed(source="../assets/untitledfolder.png")] private var ImgFolder:Class;
         [Embed(source="../assets/Screenshot.png")] private var ImgScreenshot:Class;
         [Embed(source="../assets/sfx_roomtone.mp3")] private var SFXRoomTone:Class;
         //desktop selfie folder assets
-        [Embed(source="../assets/selfiedesktop/selfies_folder.png")] private var ImgSelfiesFolder:Class;
-        [Embed(source="../assets/selfiedesktop/pics_icon.png")] private var ImgSelfiesFolderPicsIcon:Class;
-        [Embed(source="../assets/selfiedesktop/me1_icon.png")] private var ImgSelfiesFolderMe1Icon:Class;
-        [Embed(source="../assets/selfiedesktop/me1.png")] private var ImgSelfiesFolderMe1:Class;
-        [Embed(source="../assets/selfiedesktop/pictures_folder.png")] private var ImgPicturesFolder:Class;
-        [Embed(source="../assets/selfiedesktop/forichi_icon.png")] private var ImgPicturesFolderForIchiIcon:Class;
-        [Embed(source="../assets/selfiedesktop/forum_icon.png")] private var ImgPicturesFolderForumIcon:Class;
-        [Embed(source="../assets/selfiedesktop/friends_icon.png")] private var ImgPicturesFolderFriendsIcon:Class;
-        [Embed(source="../assets/selfiedesktop/forichi.png")] private var ImgPicturesFolderForIchi:Class;
-        [Embed(source="../assets/selfiedesktop/forum.png")] private var ImgPicturesFolderForumIcon:Class;
-        [Embed(source="../assets/selfiedesktop/friends.png")] private var ImgPicturesFolderFriendsIcon:Class;
+        [Embed(source="../assets/popups/selfiedesktop/selfies_folder.png")] private var ImgSelfiesFolder:Class;
+        [Embed(source="../assets/popups/selfiedesktop/pics_icon.png")] private var ImgSelfiesFolderPicsIcon:Class;
+        [Embed(source="../assets/popups/selfiedesktop/me1_icon.png")] private var ImgSelfiesFolderMe1Icon:Class;
+        [Embed(source="../assets/popups/selfiedesktop/me1.png")] private var ImgSelfiesFolderMe1:Class;
+        [Embed(source="../assets/popups/selfiedesktop/pictures_folder.png")] private var ImgPicturesFolder:Class;
+        [Embed(source="../assets/popups/selfiedesktop/forichi_icon.png")] private var ImgPicturesFolderForIchiIcon:Class;
+        [Embed(source="../assets/popups/selfiedesktop/forum_icon.png")] private var ImgPicturesFolderForumIcon:Class;
+        [Embed(source="../assets/popups/selfiedesktop/friends_icon.png")] private var ImgPicturesFolderFriendsIcon:Class;
+        [Embed(source="../assets/popups/selfiedesktop/forichi.png")] private var ImgPicturesFolderForIchi:Class;
+        [Embed(source="../assets/popups/selfiedesktop/forum.png")] private var ImgPicturesFolderForum:Class;
+        [Embed(source="../assets/popups/selfiedesktop/friends.png")] private var ImgPicturesFolderFriends:Class;
 
         public var bg:GameObject;
         public var img_height:Number = 357;
         public var selfie_folder:GameObject, untitled_folder:GameObject,
-                   screenshot_popup:GameObject;
+                   screenshot_popup:GameObject, selfie_folder_sprite:GameObject;
 
-        public var selfie_folder:Array = new Dictionary(),
+        public var selfie_map:Dictionary = new Dictionary(),
                    untitled_folder_sprite:GameObject,
                    screenshot_popup_hitbox:GameObject;
 
@@ -57,18 +58,18 @@ package{
             ScreenManager.getInstance().setupCamera(null, 1);
             var _screen:ScreenManager = ScreenManager.getInstance();
 
-            selfie_folder[FOLDER] = ImgSelfiesFolder
-            selfie_folder[FOLDER_SIZE_AND_POS] = [[631,356],[new DHPoint(_screen.screenWidth * .88, _screen.screenHeight * .09)]];
-            selfie_folder[ICONS] = [ImgSelfiesFolderMe1Icon,ImgSelfiesFolderPicsIcon];
-            selfie_folder[ICONS_POS] = [[149,31],[31,35]];
-            selfie_folder[ICONS_SIZE] = [[70,81],[87,79]];
-            selfie_folder[ICONS_OPEN] = [ImgSelfiesFolderMe1,null];
+            selfie_map[FOLDER] = ImgSelfiesFolder
+            selfie_map[FOLDER_SIZE_AND_POS] = [[631,356],[new DHPoint(_screen.screenWidth * .88, _screen.screenHeight * .09)]];
+            selfie_map[ICONS] = [ImgSelfiesFolderMe1Icon,ImgSelfiesFolderPicsIcon];
+            selfie_map[ICONS_POS] = [[149,31],[31,35]];
+            selfie_map[ICONS_SIZE] = [[70,81],[87,79]];
+            selfie_map[ICONS_OPEN] = [ImgSelfiesFolderMe1,null];
 
-            selfie_folder[SUBFOLDER] = ImgPicturesFolder;
-            selfie_folder[SUBFOLDER_SIZE_AND_POS] = [[631,356],[new DHPoint(_screen.screenWidth * .88, _screen.screenHeight * .09)]];
-            selfie_folder[SUBFOLDER_ICONS] = [ImgPicturesFolderFriendsIcon, ImgPicturesFolderForumIcon, ImgPicturesFolderForIchiIcon];
-            selfie_folder[SUBFOLDER_ICONS_SIZE] = [[70,85],[70,85],[70,84]];
-            selfie_folder[SUBFOLDER_ICONS_POS] = [[225,32],[30,32],[124,32]];
+            selfie_map[SUBFOLDER] = ImgPicturesFolder;
+            selfie_map[SUBFOLDER_SIZE_AND_POS] = [[631,356],[new DHPoint(_screen.screenWidth * .88, _screen.screenHeight * .09)]];
+            selfie_map[SUBFOLDER_ICONS] = [ImgPicturesFolderFriendsIcon, ImgPicturesFolderForumIcon, ImgPicturesFolderForIchiIcon];
+            selfie_map[SUBFOLDER_ICONS_SIZE] = [[70,85],[70,85],[70,84]];
+            selfie_map[SUBFOLDER_ICONS_POS] = [[225,32],[30,32],[124,32]];
 
             super.postCreate();
 
@@ -77,18 +78,20 @@ package{
             FlxG.state.add(this.untitled_folder);
             this.untitled_folder.visible = false;
 
+            /*
             var this.selfie_folder[FOLDER_GAME_OBJECT]:GameObject = new GameObject(this.selfie_folder[FOLDER_SIZE_AND_POS][1]);
             this.selfie_folder[FOLDER_GAME_OBJECT].loadGraphic(this.selfie_folder[FOLDER],false,false,this.selfie_folder[FOLDER_SIZE_AND_POS[0][0],])
             for(var i:Number = 0; i < this.selfie_folder.length; i++) {
 
             }
+            */
 
             this.screenshot_popup = new GameObject(new DHPoint(_screen.screenWidth * .2, _screen.screenHeight * .1));
             this.screenshot_popup.loadGraphic(ImgScreenshot,false,false,631,356);
             FlxG.state.add(this.screenshot_popup);
             this.screenshot_popup.visible = false;
 
-            this.selfie_folder_sprite = new GameObject(new DHPoint());
+            this.selfie_folder_sprite = new GameObject(new DHPoint(0, 0));
             this.selfie_folder_sprite.makeGraphic(150, 100, 0x00ff0000);
             add(this.selfie_folder_sprite);
 
