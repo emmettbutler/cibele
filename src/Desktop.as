@@ -86,6 +86,22 @@ package{
                             "contents": ImgSelfiesFolderMe1
                         }
                     ]
+                },
+                {
+                    "name": "screenshot",
+                    "folder_img": ImgScreenshot,
+                    "folder_dim": new DHPoint(631, 356),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .72, .09),
+                    "hitbox_dim": new DHPoint(150, 100),
+                    "contents": []
+                },
+                {
+                    "name": "untitled",
+                    "folder_img": ImgSelfiesFolder,
+                    "folder_dim": new DHPoint(631, 356),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .84, .35),
+                    "hitbox_dim": new DHPoint(150, 100),
+                    "contents": []
                 }
             ]};
 
