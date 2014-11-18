@@ -128,6 +128,55 @@ package{
             SoundManager.getInstance().playSound(SFXRoomTone, 0, null, true, 1, Math.random()*2938+93082, Desktop.ROOMTONE);
         }
 
+        public function resolveClick(root:Object, mouse_rect:FlxRect):void {
+            var spr:GameObject, icon_pos:DHPoint, full_rect:FlxRect, hitbox_key:String;
+            var hitbox_rect:FlxRect, folder_rect:FlxRect, cur:Object, cur_icon:Object;
+            for (var i:int = 0; i < root["contents"].length; i++) {
+                cur = root["contents"][i];
+
+                if (cur["contents"] is Array) {
+                    if ("icon_sprite" in cur) {
+                        hitbox_key = "icon_sprite";
+                    } else {
+                        hitbox_key = "hitbox_sprite";
+                    }
+                    hitbox_rect = new FlxRect(cur[hitbox_key].x, cur[hitbox_key].y,
+                                              cur[hitbox_key].width, cur[hitbox_key].height);
+                    if (cur["folder_sprite"].visible) {
+                        folder_rect = new FlxRect(cur["folder_sprite"].x, cur["folder_sprite"].y,
+                                                  cur["folder_sprite"].width, cur["folder_sprite"].height);
+                        if (!mouse_rect.overlaps(folder_rect) && !mouse_rect.overlaps(hitbox_rect)) {
+                            cur["folder_sprite"].visible = false;
+                            for (var k:int = 0; k < cur["contents"].length; k++) {
+                                cur_icon = cur["contents"][k];
+                                cur_icon["icon_sprite"].visible = false;
+                            }
+                        } else {
+                            this.resolveClick(cur, mouse_rect);
+                        }
+                    } else if (mouse_rect.overlaps(hitbox_rect)){
+                        cur["folder_sprite"].visible = true;
+                        for (k = 0; k < cur["contents"].length; k++) {
+                            cur_icon = cur["contents"][k];
+                            cur_icon["icon_sprite"].visible = true;
+                        }
+                    }
+                } else {
+                    hitbox_rect = new FlxRect(cur["icon_sprite"].x, cur["icon_sprite"].y,
+                                              cur["icon_sprite"].width, cur["icon_sprite"].height);
+                    full_rect = new FlxRect(cur["full_sprite"].x, cur["full_sprite"].y,
+                                            cur["full_sprite"].width, cur["full_sprite"].height);
+                    if ((cur["full_sprite"].visible && mouse_rect.overlaps(full_rect)) ||
+                        mouse_rect.overlaps(hitbox_rect))
+                    {
+                        cur["full_sprite"].visible = true;
+                    } else {
+                        cur["full_sprite"].visible = false;
+                    }
+                }
+            }
+        }
+
         override public function update():void{
             super.update();
 
@@ -135,29 +184,7 @@ package{
                 var _screen:ScreenManager = ScreenManager.getInstance();
                 var mouse_rect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
 
-                var hitbox_rect:FlxRect, folder_rect:FlxRect, cur:Object, cur_icon:Object;
-                for (var i:int = 0; i < this.folder_structure["contents"].length; i++) {
-                    cur = this.folder_structure["contents"][i];
-                    hitbox_rect = new FlxRect(cur["hitbox_sprite"].x, cur["hitbox_sprite"].y,
-                                              cur["hitbox_sprite"].width, cur["hitbox_sprite"].height);
-                    folder_rect = new FlxRect(cur["folder_sprite"].x, cur["folder_sprite"].y,
-                                              cur["folder_sprite"].width, cur["folder_sprite"].height);
-                    if ((cur["folder_sprite"].visible && mouse_rect.overlaps(folder_rect)) ||
-                        mouse_rect.overlaps(hitbox_rect))
-                    {
-                        cur["folder_sprite"].visible = true;
-                        for (var k:int = 0; k < cur["contents"].length; k++) {
-                            cur_icon = cur["contents"][k];
-                            cur_icon["icon_sprite"].visible = true;
-                        }
-                    } else {
-                        cur["folder_sprite"].visible = false;
-                        for (k = 0; k < cur["contents"].length; k++) {
-                            cur_icon = cur["contents"][k];
-                            cur_icon["icon_sprite"].visible = false;
-                        }
-                    }
-                }
+                this.resolveClick(this.folder_structure, mouse_rect);
             }
         }
 
