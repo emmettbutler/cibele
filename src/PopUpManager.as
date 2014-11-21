@@ -24,6 +24,9 @@ package{
         [Embed(source="../assets/UI_happy_face_pink.png")] private var ImgEmojiHappyPink:Class;
         [Embed(source="../assets/UI_sad_face_pink.png")] private var ImgEmojiSadPink:Class;
         [Embed(source="../assets/UI_Angry_face_pink.png")] private var ImgEmojiAngryPink:Class;
+        [Embed(source="../assets/ichidownloads 2.png")] private var ImgIchiDL2:Class;
+        [Embed(source="../assets/marmalade.png")] private var ImgMarmalade:Class;
+        [Embed(source="../assets/forichi.png")] private var ImgForIchi:Class;
 
         public static var _instance:PopUpManager = null;
 
@@ -60,6 +63,9 @@ package{
         public static const ICHI_DOWNLOAD:String = "ichidownload";
         public static const ICHI_SELFIE1:String = "ichiselfie1";
         public static const CIB_SELFIE_FOLDER:String = "cibselfiefolder";
+        public static const MARMALADE:String = "marm";
+        public static const FOR_ICHI:String = "ichiluvu";
+        public static const ICHI_DL_2:String = "dl2";
         //set this to false again if player exits game screen
         public static var GAME_ACTIVE:Boolean = false;
 
@@ -68,9 +74,9 @@ package{
             this.sentPopups = new Dictionary();
 
             this.popupTags = {};
-            this.popupTags[BUTTON_INTERNET] = BULLDOG_HELL;
-            this.popupTags[BUTTON_FILES] = ICHI_DOWNLOAD;
-            this.popupTags[BUTTON_PHOTO] = SELFIES_1;
+            this.popupTags[BUTTON_INTERNET] = MARMALADE;
+            this.popupTags[BUTTON_FILES] = ICHI_DL_2;
+            this.popupTags[BUTTON_PHOTO] = FOR_ICHI;
         }
 
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
@@ -272,6 +278,9 @@ package{
             this.popups[ICHI_DOWNLOAD] = new PopUp(ImgIchiDownload, 631, 356, 0, ICHI_DOWNLOAD);
             this.popups[ICHI_SELFIE1] = new PopUp(ImgIchiSelfie1, 433, 356, 0, ICHI_SELFIE1);
             this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibSelfieFolder, 631, 356, 0, CIB_SELFIE_FOLDER);
+            this.popups[MARMALADE] = new PopUp(ImgMarmalade, 1070, 565, 0, MARMALADE);
+            this.popups[FOR_ICHI] = new PopUp(ImgForIchi, 530, 356, 0, FOR_ICHI);
+            this.popups[ICHI_DL_2] = new PopUp(ImgIchiDL2, 631, 356, 0, ICHI_DL_2);
 
             var curButton:DockButton;
             for (var i:int = 0; i < this.programButtons.length; i++){
