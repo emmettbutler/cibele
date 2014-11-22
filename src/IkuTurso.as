@@ -18,6 +18,7 @@ package{
         public var bossHasAppeared:Boolean;
         private var convo1Sound:GameSound;
         private var convo1Ready:Boolean;
+        public var last_convo_playing:Boolean = false;
 
         private var conversationPieces:Array;
         private var conversationCounter:Number = 0;
@@ -113,6 +114,7 @@ package{
 
         public function showCibSelfieFolder():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.CIB_SELFIE_FOLDER);
+            this.last_convo_playing = true;
         }
 
         public function playNextConvoPiece():void {
@@ -186,6 +188,10 @@ package{
                 false, 1, GameSound.VOCAL
             );
             this.bitDialogueLock = false;
+        }
+
+        public function didLastConvoStart():Boolean {
+            return last_convo_playing;
         }
 
         override public function update():void{

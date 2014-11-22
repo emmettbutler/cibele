@@ -60,8 +60,7 @@ package {
 
         public function update():void {
             var rand:Number = Math.random();
-            if (rand > .99 && !PopUpManager.getInstance().showingPopup()) {
-                FlxG.log("yay dialogue!");
+            if (rand > .99 && !PopUpManager.getInstance().showingPopup() && !(FlxG.state as IkuTurso).didLastConvoStart()) {
                 playBitDialogue();
             }
         }
