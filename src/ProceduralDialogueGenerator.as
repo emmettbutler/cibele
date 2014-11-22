@@ -60,7 +60,7 @@ package {
 
         public function update():void {
             var rand:Number = Math.random();
-            if (rand > .99 && !PopUpManager.getInstance().showingPopup() && !(FlxG.state as IkuTurso).didLastConvoStart()) {
+            if (rand > .99 && !PopUpManager.getInstance().showingPopup() && !(FlxG.state as LevelMapState).lastConvoStarted()) {
                 playBitDialogue();
             }
         }

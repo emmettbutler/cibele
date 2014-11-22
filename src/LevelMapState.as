@@ -18,6 +18,7 @@ package {
         public static const WEST:int = 3447;
 
         public var bitDialogue:ProceduralDialogueGenerator;
+        public var last_convo_playing:Boolean = false;
 
         override public function create():void {
             super.__create(new DHPoint(4600, 7565));
@@ -49,6 +50,10 @@ package {
             if (!this.bitDialogueLock) {
                 this.bitDialogue.update();
             }
+        }
+
+        public function lastConvoStarted():Boolean {
+            return last_convo_playing;
         }
 
         override public function updateCursor():void {
