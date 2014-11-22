@@ -161,7 +161,7 @@ package
             this.attackAnim.basePos.y = this.attackAnim.y + (this.attackAnim.height - 10);
 
             this.closestEnemy = this.getClosestEnemy();
-            if (this.bossRef != null && this.bossRef.hasAppeared) {
+            if (this.bossRef != null && this.bossRef.bossHasAppeared) {
                 this.targetEnemy = this.bossRef;
             } else {
                 this.targetEnemy = this.closestEnemy;

@@ -44,6 +44,8 @@ package
         public var targetPathNode:PathNode;
         public var escape_counter:Number = 0;
 
+        public var bossHasAppeared:Boolean = false;
+
         public var use_active_highlighter:Boolean = true;
 
         {
@@ -97,6 +99,14 @@ package
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint);
             var headFootDisp:DHPoint = this.pos.sub(this.footPos);
             this.setPos(warpNode.pos.add(headFootDisp));
+            this._state = STATE_TRACKING;
+        }
+
+        public function bossFollowPlayer():void {
+            if(!inViewOfPlayer() && this.enemyType == "boss" && this.bossHasAppeared) {
+                this.warpToPlayer();
+                FlxG.log("warp");
+            }
         }
 
         public function setPlayerRef(p:Player):void{
@@ -259,6 +269,7 @@ package
                     this._state = STATE_TRACKING;
                 }
                 this.dir = ZERO_POINT;
+                this.bossFollowPlayer();
             } else if (this._state == STATE_TRACKING) {
                 if (this.playerDisp._length() > this.sightRange - 100 ||
                     this.playerDisp._length() < 10)

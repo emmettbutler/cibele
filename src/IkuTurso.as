@@ -212,7 +212,7 @@ package{
                 !this.bossHasAppeared && FlxG.state.ID == LevelMapState.LEVEL_ID)
             {
                 this.bossHasAppeared = true;
-                this.boss.hasAppeared = true;
+                this.boss.bossHasAppeared = true;
                 this.boss.warpToPlayer();
                 this.boss.visible = true;
             }

@@ -5,8 +5,6 @@ package
     public class BossEnemy extends Enemy {
         [Embed(source="../assets/boss1.png")] private var ImgBoss:Class;
 
-        public var hasAppeared:Boolean = false;
-
         public function BossEnemy(pos:DHPoint) {
             super(pos);
             loadGraphic(ImgBoss, false, false, 5613/11, 600);
@@ -31,7 +29,7 @@ package
                 this.die();
             } else if (this.hitpoints < 10) {
                 this.hitpoints = 200;
-            } else if(!this.dead && this.alpha < 1 && this.hasAppeared) {
+            } else if(!this.dead && this.alpha < 1 && this.bossHasAppeared) {
                 this.alpha += .01;
             }
         }
