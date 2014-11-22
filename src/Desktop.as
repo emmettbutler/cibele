@@ -180,11 +180,10 @@ package{
                 if (cur["contents"] is Array) {
                     if (cur["folder_sprite"].visible) {
                         if(mouse_rect.overlaps(cur["x_sprite"]._getRect())) {
-                            if (!cur["folder_sprite"].visible) {
-                                propagateClick = false;
-                            }
+                            propagateClick = false;
                             cur["folder_sprite"].visible = false;
                             cur["x_sprite"].visible = false;
+                            this.setIconVisibility(cur, false);
                         }
                     } else if (mouse_rect.overlaps(cur[this.getHitboxKey(cur)]._getRect())) {
                         cur["folder_sprite"].visible = true;
