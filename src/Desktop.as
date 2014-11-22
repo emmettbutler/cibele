@@ -3,7 +3,6 @@ package{
     import flash.utils.Dictionary;
 
     public class Desktop extends GameState {
-        [Embed(source="../assets/untitledfolder.png")] private var ImgFolder:Class;
         [Embed(source="../assets/Screenshot.png")] private var ImgScreenshot:Class;
         [Embed(source="../assets/sfx_roomtone.mp3")] private var SFXRoomTone:Class;
         //desktop selfie folder assets
@@ -18,6 +17,11 @@ package{
         [Embed(source="../assets/popups/selfiedesktop/forichi.png")] private var ImgPicturesFolderForIchi:Class;
         [Embed(source="../assets/popups/selfiedesktop/forum.png")] private var ImgPicturesFolderForum:Class;
         [Embed(source="../assets/popups/selfiedesktop/friends.png")] private var ImgPicturesFolderFriends:Class;
+        [Embed(source="../assets/popups/selfiedesktop/untitled.png")] private var ImgUntitledFolder:Class;
+        [Embed(source="../assets/popups/selfiedesktop/kawaiitxticon.png")] private var ImgUntitledFolderKawaiiIcon:Class;
+        [Embed(source="../assets/popups/selfiedesktop/partypoem1icon.png")] private var ImgUntitledFolderPartyPoem1Icon:Class;
+        [Embed(source="../assets/popups/selfiedesktop/partypoem1.png")] private var ImgUntitledFolderPartyPoem1:Class;
+        [Embed(source="../assets/popups/selfiedesktop/kawaii.png")] private var ImgUntitledFolderKawaii:Class;
 
         public var bg:GameObject, folder_structure:Object;
 
@@ -57,7 +61,7 @@ package{
                 {
                     "folder_img": ImgSelfiesFolder,
                     "folder_dim": new DHPoint(631, 356),
-                    "hitbox_pos": new DHPoint(_screen.screenWidth * .87, .15),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .87, .12),
                     "hitbox_dim": new DHPoint(150, 100),
                     "name": "selfies",
                     "contents": [
@@ -109,7 +113,7 @@ package{
                     "name": "screenshot",
                     "folder_img": ImgScreenshot,
                     "folder_dim": new DHPoint(631, 356),
-                    "hitbox_pos": new DHPoint(_screen.screenWidth * .72, .09),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .72, .07),
                     "hitbox_dim": new DHPoint(150, 100),
                     "contents": []
                 },
@@ -117,9 +121,26 @@ package{
                     "name": "untitled",
                     "folder_img": ImgSelfiesFolder,
                     "folder_dim": new DHPoint(631, 356),
-                    "hitbox_pos": new DHPoint(_screen.screenWidth * .84, .35),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .84, .33),
                     "hitbox_dim": new DHPoint(150, 100),
-                    "contents": []
+                    "contents": [
+                        {
+                            "name": "kawaii",
+                            "icon": ImgUntitledFolderKawaiiIcon,
+                            "icon_dim": new DHPoint(76, 82),
+                            "icon_pos": new DHPoint(27, 36),
+                            "dim": new DHPoint(631, 356),
+                            "contents": ImgUntitledFolderKawaii
+                        },
+                        {
+                            "name": "partypoem1",
+                            "icon": ImgUntitledFolderPartyPoem1Icon,
+                            "icon_dim": new DHPoint(96, 84),
+                            "icon_pos": new DHPoint(129, 36),
+                            "dim": new DHPoint(631, 356),
+                            "contents": ImgUntitledFolderPartyPoem1
+                        },
+                    ]
                 }
             ]};
 
