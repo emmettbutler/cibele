@@ -319,6 +319,14 @@ package{
             }
         }
 
+        public function showingPopup():Boolean {
+            if(this._state == SHOWING_POP_UP) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         public static function getInstance():PopUpManager {
             if (_instance == null) {
                 _instance = new PopUpManager();
