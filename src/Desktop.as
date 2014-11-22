@@ -171,25 +171,22 @@ package{
             }
         }
 
-        public function resolveClick(root:Object, mouse_rect:FlxRect, propagateClick:Boolean):void {
-            var spr:GameObject, icon_pos:DHPoint, full_rect:FlxRect, hitbox_key:String;
-            var hitbox_rect:FlxRect, folder_rect:FlxRect, cur:Object, cur_icon:Object;
+        public function resolveClick(root:Object, mouse_rect:FlxRect):void {
+            var spr:GameObject, icon_pos:DHPoint, cur:Object, cur_icon:Object,
+                propagateClick:Boolean = true;
             for (var i:int = 0; i < root["contents"].length; i++) {
                 cur = root["contents"][i];
 
                 if (cur["contents"] is Array) {
-                    hitbox_key = this.getHitboxKey(cur);
-                    hitbox_rect = cur[hitbox_key]._getRect();
-                    if (cur["folder_sprite"].visible) {
-                        if (mouse_rect.overlaps(cur["x_sprite"]._getRect())) {
-                            if (!cur["folder_sprite"].visible) {
-                                propagateClick = false;
-                            }
-                            cur["folder_sprite"].visible = false;
-                            cur["x_sprite"].visible = false;
-                            this.setIconVisibility(cur, false);
-                        }
-                    } else if (mouse_rect.overlaps(hitbox_rect)){
+                    if (cur["folder_sprite"].visible &&
+                        mouse_rect.overlaps(cur["x_sprite"]._getRect()))
+                    {
+                        propagateClick = cur["folder_sprite"].visible;
+                        cur["folder_sprite"].visible = false;
+                        cur["x_sprite"].visible = false;
+                        this.setIconVisibility(cur, false);
+                    }
+                    if (mouse_rect.overlaps(cur[this.getHitboxKey(cur)]._getRect())){
                         this.setIconVisibility(root, false);
                         cur["folder_sprite"].visible = true;
                         cur["x_sprite"].visible = true;
@@ -197,17 +194,15 @@ package{
                         propagateClick = false;
                     }
                     if (propagateClick) {
-                        this.resolveClick(cur, mouse_rect, propagateClick);
+                        this.resolveClick(cur, mouse_rect);
                     }
                 } else {
-                    full_rect = cur["full_sprite"]._getRect();
                     if (mouse_rect.overlaps(cur["icon_sprite"]._getRect()) && cur["icon_sprite"].visible)
                     {
                         cur["full_sprite"].visible = true;
                         cur["x_sprite"].visible = true;
                     }
                     if (cur["x_sprite"].visible && mouse_rect.overlaps(cur["x_sprite"]._getRect())){
-                        folder_rect = root["folder_sprite"]._getRect();
                         cur["full_sprite"].visible = false;
                         cur["x_sprite"].visible = false;
                     }
@@ -219,7 +214,7 @@ package{
             super.update();
             if(FlxG.mouse.justPressed()) {
                 this.resolveClick(this.folder_structure,
-                    new FlxRect(FlxG.mouse.x, FlxG.mouse.y), true);
+                    new FlxRect(FlxG.mouse.x, FlxG.mouse.y));
             }
         }
 
