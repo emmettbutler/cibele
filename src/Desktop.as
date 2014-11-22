@@ -128,6 +128,23 @@ package{
             SoundManager.getInstance().playSound(SFXRoomTone, 0, null, true, 1, Math.random()*2938+93082, Desktop.ROOMTONE);
         }
 
+        public function getHitboxKey(obj:Object):String {
+            if ("icon_sprite" in obj) {
+                return "icon_sprite";
+            }
+            return "hitbox_sprite";
+        }
+
+        public function setIconVisibility(node:Object, vis:Boolean):void {
+            var cur_icon:Object;
+            for (var k:int = 0; k < node["contents"].length; k++) {
+                cur_icon = node["contents"][k];
+                if ("icon_sprite" in cur_icon) {
+                    cur_icon["icon_sprite"].visible = vis;
+                }
+            }
+        }
+
         public function resolveClick(root:Object, mouse_rect:FlxRect, parent:Object=null):void {
             var spr:GameObject, icon_pos:DHPoint, full_rect:FlxRect, hitbox_key:String;
             var hitbox_rect:FlxRect, folder_rect:FlxRect, cur:Object, cur_icon:Object;
@@ -135,76 +152,36 @@ package{
                 cur = root["contents"][i];
 
                 if (cur["contents"] is Array) {
-                    if ("icon_sprite" in cur) {
-                        hitbox_key = "icon_sprite";
-                    } else {
-                        hitbox_key = "hitbox_sprite";
-                    }
-                    hitbox_rect = new FlxRect(cur[hitbox_key].x, cur[hitbox_key].y,
-                                              cur[hitbox_key].width, cur[hitbox_key].height);
-
+                    hitbox_key = this.getHitboxKey(cur);
+                    hitbox_rect = cur[hitbox_key]._getRect();
                     if (cur["folder_sprite"].visible) {
-                        folder_rect = new FlxRect(cur["folder_sprite"].x, cur["folder_sprite"].y,
-                                                  cur["folder_sprite"].width, cur["folder_sprite"].height);
-                        if (!mouse_rect.overlaps(folder_rect) && !mouse_rect.overlaps(hitbox_rect)) {
+                        if (!mouse_rect.overlaps(cur["folder_sprite"]._getRect()) &&
+                            !mouse_rect.overlaps(hitbox_rect))
+                        {
                             cur["folder_sprite"].visible = false;
-                            for (var k:int = 0; k < cur["contents"].length; k++) {
-                                cur_icon = cur["contents"][k];
-                                cur_icon["icon_sprite"].visible = false;
-                            }
+                            this.setIconVisibility(cur, false);
                         }
                         this.resolveClick(cur, mouse_rect);
                     } else if (mouse_rect.overlaps(hitbox_rect)){
-                        for (k = 0; k < root["contents"].length; k++) {
-                            cur_icon = root["contents"][k];
-                            if ("icon_sprite" in cur_icon) {
-                                cur_icon["icon_sprite"].visible = false;
-                            }
-                        }
+                        this.setIconVisibility(root, false);
                         cur["folder_sprite"].visible = true;
-                        for (k = 0; k < cur["contents"].length; k++) {
-                            cur_icon = cur["contents"][k];
-                            cur_icon["icon_sprite"].visible = true;
-                        }
+                        this.setIconVisibility(cur, true);
                     }
                 } else {
-                    hitbox_rect = new FlxRect(cur["icon_sprite"].x, cur["icon_sprite"].y,
-                                              cur["icon_sprite"].width, cur["icon_sprite"].height);
-                    full_rect = new FlxRect(cur["full_sprite"].x, cur["full_sprite"].y,
-                                            cur["full_sprite"].width, cur["full_sprite"].height);
+                    full_rect = cur["full_sprite"]._getRect();
+                    // clicking on a leaf or its icon - show it
                     if ((cur["full_sprite"].visible && mouse_rect.overlaps(full_rect)) ||
-                        mouse_rect.overlaps(hitbox_rect) && cur["icon_sprite"].visible)
+                        (mouse_rect.overlaps(cur["icon_sprite"]._getRect()) &&
+                        cur["icon_sprite"].visible))
                     {
-                        for (k = 0; k < root["contents"].length; k++) {
-                            cur_icon = root["contents"][k];
-                            if ("icon_sprite" in cur_icon) {
-                                cur_icon["icon_sprite"].visible = false;
-                            }
-                        }
+                        this.setIconVisibility(root, false);
                         cur["full_sprite"].visible = true;
+                    // clicking not on a leaf or its icon
                     } else {
-                        folder_rect = new FlxRect(root["folder_sprite"].x, root["folder_sprite"].y,
-                                                  root["folder_sprite"].width, root["folder_sprite"].height);
-                        // outside full sprite:
-                        //  outside folder sprite:
-                        //      shoutd not
-                        //  else
-                        //      should
+                        folder_rect = root["folder_sprite"]._getRect();
                         if (cur["full_sprite"].visible && !mouse_rect.overlaps(full_rect)) {
-                            if(root["folder_sprite"].visible && !mouse_rect.overlaps(folder_rect)) {
-                                for (k = 0; k < root["contents"].length; k++) {
-                                    cur_icon = root["contents"][k];
-                                    if ("icon_sprite" in cur_icon) {
-                                        cur_icon["icon_sprite"].visible = false;
-                                    }
-                                }
-                            } else if (root["folder_sprite"].visible && mouse_rect.overlaps(folder_rect)) {
-                                for (k = 0; k < root["contents"].length; k++) {
-                                    cur_icon = root["contents"][k];
-                                    if ("icon_sprite" in cur_icon) {
-                                        cur_icon["icon_sprite"].visible = true;
-                                    }
-                                }
+                            if(root["folder_sprite"].visible) {
+                                this.setIconVisibility(root, mouse_rect.overlaps(folder_rect));
                             }
                         }
                         cur["full_sprite"].visible = false;

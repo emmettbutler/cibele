@@ -55,5 +55,9 @@ package
             this.x = pos.x;
             this.y = pos.y;
         }
+
+        public function _getRect():FlxRect {
+            return new FlxRect(this.x, this.y, this.width, this.height);
+        }
     }
 }
