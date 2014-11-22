@@ -183,6 +183,30 @@ package{
                         }
                         cur["full_sprite"].visible = true;
                     } else {
+                        folder_rect = new FlxRect(root["folder_sprite"].x, root["folder_sprite"].y,
+                                                  root["folder_sprite"].width, root["folder_sprite"].height);
+                        // outside full sprite:
+                        //  outside folder sprite:
+                        //      shoutd not
+                        //  else
+                        //      should
+                        if (cur["full_sprite"].visible && !mouse_rect.overlaps(full_rect)) {
+                            if(root["folder_sprite"].visible && !mouse_rect.overlaps(folder_rect)) {
+                                for (k = 0; k < root["contents"].length; k++) {
+                                    cur_icon = root["contents"][k];
+                                    if ("icon_sprite" in cur_icon) {
+                                        cur_icon["icon_sprite"].visible = false;
+                                    }
+                                }
+                            } else if (root["folder_sprite"].visible && mouse_rect.overlaps(folder_rect)) {
+                                for (k = 0; k < root["contents"].length; k++) {
+                                    cur_icon = root["contents"][k];
+                                    if ("icon_sprite" in cur_icon) {
+                                        cur_icon["icon_sprite"].visible = true;
+                                    }
+                                }
+                            }
+                        }
                         cur["full_sprite"].visible = false;
                     }
                 }
@@ -201,6 +225,7 @@ package{
         }
 
         public function populateFolders(root:Object):void {
+            var _screen:ScreenManager = ScreenManager.getInstance();
             var cur:Object, spr:GameObject, icon_pos:DHPoint;
             for (var i:int = 0; i < root["contents"].length; i++) {
                 cur = root["contents"][i];
@@ -218,7 +243,7 @@ package{
                     cur["hitbox_sprite"] = spr;
                 }
                 if (cur["contents"] is Array) {
-                    spr = new GameObject(new DHPoint(0, 0));
+                    spr = new GameObject(new DHPoint(_screen.screenWidth * .3, _screen.screenHeight * .2));
                     spr.loadGraphic(cur["folder_img"], false, false, cur["folder_dim"].x, cur["folder_dim"].y);
                     spr.visible = false;
                     FlxG.state.add(spr);
@@ -226,7 +251,7 @@ package{
 
                     this.populateFolders(cur);
                 } else {
-                    spr = new GameObject(new DHPoint(0, 0));
+                    spr = new GameObject(new DHPoint(_screen.screenWidth * .3, _screen.screenHeight * .2));
                     spr.loadGraphic(cur["contents"], false, false, cur["dim"].x, cur["dim"].y);
                     spr.visible = false;
                     FlxG.state.add(spr);
