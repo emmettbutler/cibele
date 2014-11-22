@@ -171,7 +171,9 @@ package{
             this.truncated_textbox.visible = false;
             for (var i:int = 0; i < this.messages.length; i++) {
                 if (this.messages[i].sent) {
-                    this.messages[i].show();
+                    if (this.messages[i].pos.y >= this.inbox_ref.y) {
+                        this.messages[i].show();
+                    }
                 }
             }
         }
