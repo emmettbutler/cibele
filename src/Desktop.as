@@ -35,6 +35,24 @@ package{
             ScreenManager.getInstance().setupCamera(null, 1);
             var _screen:ScreenManager = ScreenManager.getInstance();
 
+            /*
+              Directory tree definition
+
+              folder_img: The container image ("finder window")
+              folder_dim: the dimensions of folder_img in pixels
+              hitbox_pos: For toplevel folders, the position of the hitbox
+                to draw on the screen. The x coordinate is an absolute number,
+                and the y coordinate is a value to multiply _screen.screenHeight
+                by after load
+              name: human-readable name for debugging
+              contents: if this node is a folder, an array of nodes representing
+                its contents (folders and popups). If this node is a popup,
+                the image to show when it is opened
+              icon: the folder or popup icon to display for this node
+              icon_dim: the dimensions in pixels of the icon
+              icon_pos: the position of the icon relative to the folder window sprite
+              dim: the dimensions of the full node image
+             */
             folder_structure = {"contents": [
                 {
                     "folder_img": ImgSelfiesFolder,
@@ -192,12 +210,9 @@ package{
 
         override public function update():void{
             super.update();
-
             if(FlxG.mouse.justPressed()) {
-                var _screen:ScreenManager = ScreenManager.getInstance();
-                var mouse_rect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
-
-                this.resolveClick(this.folder_structure, mouse_rect);
+                this.resolveClick(this.folder_structure,
+                    new FlxRect(FlxG.mouse.x, FlxG.mouse.y));
             }
         }
 
