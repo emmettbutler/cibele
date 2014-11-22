@@ -19,7 +19,7 @@ package{
         [Embed(source="../assets/popups/selfiedesktop/forum.png")] private var ImgPicturesFolderForum:Class;
         [Embed(source="../assets/popups/selfiedesktop/friends.png")] private var ImgPicturesFolderFriends:Class;
 
-        public var bg:GameObject, folder_structure:Object;
+        public var bg:GameObject, folder_structure:Object, leafPopups:Array;
 
         public static var ROOMTONE:String = "desktop room tone";
 
@@ -34,6 +34,7 @@ package{
             (new BackgroundLoader()).loadSingleTileBG("../assets/UI_Desktop.png");
             ScreenManager.getInstance().setupCamera(null, 1);
             var _screen:ScreenManager = ScreenManager.getInstance();
+            this.leafPopups = new Array();
 
             /*
               Directory tree definition
@@ -126,6 +127,9 @@ package{
             super.postCreate();
 
             this.populateFolders(folder_structure);
+            for (var k:int = 0; k < this.leafPopups.length; k++) {
+                FlxG.state.add(this.leafPopups[k]);
+            }
 
             var that:Desktop = this;
             this.addEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
@@ -192,7 +196,6 @@ package{
                         (mouse_rect.overlaps(cur["icon_sprite"]._getRect()) &&
                         cur["icon_sprite"].visible))
                     {
-                        this.setIconVisibility(root, false);
                         cur["full_sprite"].visible = true;
                     // clicking not on a leaf or its icon
                     } else {
@@ -243,10 +246,11 @@ package{
 
                     this.populateFolders(cur);
                 } else {
-                    spr = new GameObject(new DHPoint(_screen.screenWidth * .3, _screen.screenHeight * .2));
+                    var mult:DHPoint = new DHPoint(Math.random() * .6, Math.random() * .6);
+                    spr = new GameObject(new DHPoint(_screen.screenWidth * mult.x, _screen.screenHeight * mult.y));
                     spr.loadGraphic(cur["contents"], false, false, cur["dim"].x, cur["dim"].y);
                     spr.visible = false;
-                    FlxG.state.add(spr);
+                    this.leafPopups.push(spr);
                     cur["full_sprite"] = spr;
                 }
             }
