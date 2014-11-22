@@ -128,7 +128,7 @@ package{
             SoundManager.getInstance().playSound(SFXRoomTone, 0, null, true, 1, Math.random()*2938+93082, Desktop.ROOMTONE);
         }
 
-        public function resolveClick(root:Object, mouse_rect:FlxRect):void {
+        public function resolveClick(root:Object, mouse_rect:FlxRect, parent:Object=null):void {
             var spr:GameObject, icon_pos:DHPoint, full_rect:FlxRect, hitbox_key:String;
             var hitbox_rect:FlxRect, folder_rect:FlxRect, cur:Object, cur_icon:Object;
             for (var i:int = 0; i < root["contents"].length; i++) {
@@ -142,6 +142,7 @@ package{
                     }
                     hitbox_rect = new FlxRect(cur[hitbox_key].x, cur[hitbox_key].y,
                                               cur[hitbox_key].width, cur[hitbox_key].height);
+
                     if (cur["folder_sprite"].visible) {
                         folder_rect = new FlxRect(cur["folder_sprite"].x, cur["folder_sprite"].y,
                                                   cur["folder_sprite"].width, cur["folder_sprite"].height);
@@ -151,10 +152,15 @@ package{
                                 cur_icon = cur["contents"][k];
                                 cur_icon["icon_sprite"].visible = false;
                             }
-                        } else {
-                            this.resolveClick(cur, mouse_rect);
                         }
+                        this.resolveClick(cur, mouse_rect);
                     } else if (mouse_rect.overlaps(hitbox_rect)){
+                        for (k = 0; k < root["contents"].length; k++) {
+                            cur_icon = root["contents"][k];
+                            if ("icon_sprite" in cur_icon) {
+                                cur_icon["icon_sprite"].visible = false;
+                            }
+                        }
                         cur["folder_sprite"].visible = true;
                         for (k = 0; k < cur["contents"].length; k++) {
                             cur_icon = cur["contents"][k];
@@ -167,8 +173,14 @@ package{
                     full_rect = new FlxRect(cur["full_sprite"].x, cur["full_sprite"].y,
                                             cur["full_sprite"].width, cur["full_sprite"].height);
                     if ((cur["full_sprite"].visible && mouse_rect.overlaps(full_rect)) ||
-                        mouse_rect.overlaps(hitbox_rect))
+                        mouse_rect.overlaps(hitbox_rect) && cur["icon_sprite"].visible)
                     {
+                        for (k = 0; k < root["contents"].length; k++) {
+                            cur_icon = root["contents"][k];
+                            if ("icon_sprite" in cur_icon) {
+                                cur_icon["icon_sprite"].visible = false;
+                            }
+                        }
                         cur["full_sprite"].visible = true;
                     } else {
                         cur["full_sprite"].visible = false;
