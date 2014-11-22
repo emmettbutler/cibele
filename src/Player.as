@@ -40,6 +40,7 @@ package{
         public var upDownFootstepOffset:DHPoint;
         public var leftFootstepOffset:DHPoint;
         public var rightFootstepOffset:DHPoint;
+        public var attack_anim_playing:Boolean = false;
 
         public static const STATE_WALK:Number = 2398476188;
         public static const STATE_WALK_HARD:Number = 23981333333;
@@ -119,6 +120,9 @@ package{
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint,
                                       group:Array=null):void
         {
+            if(this.attack_anim_playing) {
+                return;
+            }
             this.targetEnemy = null;
             var ui_clicked:Boolean = false;
             if (group != null) {
@@ -469,6 +473,10 @@ package{
             this.mapHitbox.y = pos.y + this.hitboxOffset.y;
         }
 
+        public function attackFinished():void {
+            this.attack_anim_playing = false;
+        }
+
         override public function attack():void {
             super.attack();
             if (this._state == STATE_IN_ATTACK) {
@@ -476,6 +484,9 @@ package{
                 this.visible = false;
                 this.shadow_sprite.visible = false;
                 this.attack_sprite.play("attack");
+                this.attack_anim_playing = true;
+                GlobalTimer.getInstance().setMark("attack_finished",
+                (23/10)*GameSound.MSEC_PER_SEC, this.attackFinished, true);
 
                 var snd:Class = SfxAttack1;
                 var rand:Number = Math.random() * 4;
