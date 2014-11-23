@@ -72,11 +72,10 @@ def compile_main(entry_point_class, libpath, debug_level):
     swfpath = "src/{entry_point_class}{ts}.swf".format(
         entry_point_class=entry_point_class,
         ts="")
-    command = ["mxmlc", "src/{entry_point_class}.as".format(entry_point_class=entry_point_class), "-o",
+    command = ["amxmlc", "src/{entry_point_class}.as".format(entry_point_class=entry_point_class), "-o",
                swfpath,
                "-use-network=false", "-verbose-stacktraces=true",
                "-compiler.include-libraries", libpath,
-               "-static-link-runtime-shared-libraries",
                "-debug={}".format(debug),
                "-omit-trace-statements={}".format(omit_trace),
                "-define=CONFIG::debug,{}".format(debug_flag),
@@ -95,7 +94,7 @@ def write_conf_file(swf_path, entry_point_class, main_class):
     with open(conf_path, "w") as f:
         f.write(
 """
-<application xmlns="http://ns.adobe.com/air/application/3.1">
+<application xmlns="http://ns.adobe.com/air/application/15.0">
     <id>com.starmaid.Cibele.{ts}</id>
     <versionNumber>1.0</versionNumber>
     <filename>CibeleBeta-{ts}</filename>
@@ -114,18 +113,23 @@ def write_conf_file(swf_path, entry_point_class, main_class):
 
 
 def run_main(conf_file):
-    command = "adl -runtime /Library/Frameworks {conf_path}".format(conf_path=conf_file)
+    command = "adl {conf_path}".format(conf_path=conf_file)
     print command
     subprocess.call(command.split())
 
 
-def package_application(entry_point_class, swf_path):
+def package_application(entry_point_class, swf_path, platform="air"):
     """
     To generate cibelecert.pfx:
         adt -certificate -cn SelfSign -ou QE -o "Star Maid Games" -c US 2048-RSA cibelecert.pfx AmanoJyakku!
     """
-    command = "adt -package -storetype pkcs12 -keystore cibelecert.pfx CibeleBeta.air {entry_point_class}.xml {swf_path} assets".format(
-        entry_point_class=entry_point_class, swf_path=swf_path)
+    outfile = "CibeleBeta.air"
+    target = ""
+    if platform == "mac":
+        target = "-target bundle"
+        outfile = "CibeleBeta.app"
+    command = "adt -package -storetype pkcs12 -keystore cibelecert.pfx {target} {outfile} {entry_point_class}.xml {swf_path} assets".format(
+        entry_point_class=entry_point_class, swf_path=swf_path, target=target, outfile=outfile)
     print command
     subprocess.call(command.split())
 
@@ -153,7 +157,7 @@ def main():
         conf_path = write_conf_file(swf_path, entry_point_class, args.mainclass[0])
 
         if args.package:
-            package_application(entry_point_class, swf_path)
+            package_application(entry_point_class, swf_path, platform=args.platform)
         else:
             run_main(conf_path)
 
@@ -173,7 +177,9 @@ if __name__ == "__main__":
                         default=["test"], nargs=1,
                         help="Debug level to compile under. One of [debug|test|release]")
     parser.add_argument('--package', '-p', action="store_true",
-                        help="Build an Adobe AIR application")
+                        help="Build an executable")
+    parser.add_argument('--platform', '-t', type=str, default="air",
+                        help="The platform for which to build an executable")
     parser.add_argument('--copy_path', '-a', action="store_true",
                         help="Copy editor path files to source control")
     parser.add_argument('--run_only', '-r', action="store_true",

@@ -11,6 +11,7 @@ settings.ini
 
 *.pfx
 *.air
+*.app
 todo.txt
 
 SigningCert.p12
