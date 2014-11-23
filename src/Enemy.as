@@ -105,7 +105,6 @@ package
         public function bossFollowPlayer():void {
             if(!inViewOfPlayer() && this.enemyType == "boss" && this.bossHasAppeared) {
                 this.warpToPlayer();
-                FlxG.log("warp");
             }
         }
 
@@ -291,7 +290,7 @@ package
                     if (disp._length() < 10) {
                         this._state = STATE_MOVE_TO_PATH_NODE;
                     } else {
-                        this.dir = disp.normalized().mulScl(3);
+                        this.dir = disp.normalized().mulScl(1.5);
                     }
                 }
             } else if (this._state == STATE_MOVE_TO_PATH_NODE) {
