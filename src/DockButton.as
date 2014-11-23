@@ -2,6 +2,7 @@ package {
     import org.flixel.*;
 
     public class DockButton extends UIElement {
+        [Embed(source="../assets/sfx_notification.mp3")] private var SfxNotification:Class;
         private var cur_popup:PopUp;
         public var cur_popup_tag:String;
         private var ownedKeys:Array;
@@ -26,6 +27,10 @@ package {
             this.setCurPopup(popup);
             this.hasOpened = false;
             this.alerting = true;
+            SoundManager.getInstance().playSound(
+                    SfxNotification, 1*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.SFX,
+                    "" + Math.random()
+                );
         }
 
         public function open():void {
