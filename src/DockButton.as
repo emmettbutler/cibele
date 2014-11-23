@@ -28,7 +28,7 @@ package {
             this.hasOpened = false;
             this.alerting = true;
             SoundManager.getInstance().playSound(
-                    SfxNotification, 1*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.SFX,
+                    SfxNotification, 2*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.SFX,
                     "" + Math.random()
                 );
         }

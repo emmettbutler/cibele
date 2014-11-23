@@ -39,6 +39,9 @@ package {
         public static var bitDialoguePieces:Dictionary = new Dictionary();
         public var containerState:LevelMapState;
 
+        public var cib_nice_hit_lock:Boolean = false;
+        public var ichi_nice_hit_lock:Boolean = false;
+
         public function ProceduralDialogueGenerator(containerState:LevelMapState) {
             this.containerState = containerState;
 
@@ -74,7 +77,7 @@ package {
         }
 
         public function playBitDialogue():void {
-            if(player.isAttacking()) {
+            if(player.isAttacking() && !this.ichi_nice_hit_lock) {
                 if(pathWalker.inViewOfPlayer()){
                     GlobalTimer.getInstance().setMark("delayed_ichinicehit",
                         1*GameSound.MSEC_PER_SEC, this.buildDialogueCallback(this.playIchiNiceHit),
@@ -82,7 +85,7 @@ package {
                 }
             }
 
-            if(pathWalker.isAttacking()) {
+            if(pathWalker.isAttacking() && !this.cib_nice_hit_lock) {
                 if(pathWalker.inViewOfPlayer()){
                     GlobalTimer.getInstance().setMark("delayed_cibnicehit",
                         1*GameSound.MSEC_PER_SEC, this.buildDialogueCallback(this.playCibNiceHit),
@@ -164,6 +167,13 @@ package {
             );
             bitDialoguePieces[ICHI_NICEHIT][IDX_HAS_PLAYED] = true;
             PopUpManager.getInstance().emote(new FlxRect(0,0), pathWalker, true, Emote.HAPPY);
+            this.ichi_nice_hit_lock = true;
+            GlobalTimer.getInstance().setMark("ichi nice hit lock",
+                    35*GameSound.MSEC_PER_SEC, this.unlockIchiNiceHit, false);
+        }
+
+        public function unlockIchiNiceHit():void {
+            this.ichi_nice_hit_lock = false;
         }
 
         public function playCibWhichWay():void {
@@ -195,6 +205,13 @@ package {
             );
             bitDialoguePieces[CIB_NICEHIT][IDX_HAS_PLAYED] = true;
             PopUpManager.getInstance().emote(new FlxRect(0,0), pathWalker, true, Emote.HAPPY);
+            this.cib_nice_hit_lock = true;
+            GlobalTimer.getInstance().setMark("cib nice hit lock",
+                    35*GameSound.MSEC_PER_SEC, this.unlockCibNiceHit, false);
+        }
+
+        public function unlockCibNiceHit():void {
+            this.cib_nice_hit_lock = false;
         }
     }
 }
