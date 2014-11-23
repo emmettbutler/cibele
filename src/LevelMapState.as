@@ -47,6 +47,7 @@ package {
             ScreenManager.getInstance().setupCamera(player.cameraPos);
             FlxG.camera.setBounds(0, 0, bgLoader.cols * bgLoader.estTileWidth,
                                   bgLoader.rows * bgLoader.estTileHeight);
+
             super.postCreate();
         }
 

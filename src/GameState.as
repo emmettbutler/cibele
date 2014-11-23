@@ -12,6 +12,8 @@ package {
         protected var game_cursor:GameCursor, baseLayer:GameObject;
         private var pauseLayer:GameObject;
         private var sortedObjects:Array;
+        public var loadingScreen:LoadingScreen;
+        public var use_loading_screen:Boolean = true;
 
         public var ui_color_flag:Number;
         public static const UICOLOR_DEFAULT:Number = 0;
@@ -75,6 +77,9 @@ package {
             if (this.updatePopup) {
                 PopUpManager.getInstance().loadPopUps();
             }
+            if(this.use_loading_screen) {
+                this.loadingScreen = new LoadingScreen();
+            }
             this.game_cursor = new GameCursor();
         }
 
@@ -122,6 +127,10 @@ package {
             // DO NOT call super here, since that breaks pausing
             // the following loop is copypasta from FlxGroup update, altered to
             // support pausing
+            if(this.use_loading_screen) {
+                this.loadingScreen.update();
+            }
+
             this.sortedObjects.length = 0;
             var basic:GameObject, i:uint = 0;
             while(i < length) {

@@ -23,6 +23,7 @@ package {
 
         override public function postCreate():void {
             this.player.addVisibleObjects();
+            this.postPlayerAddCallback();
             super.postCreate();
             this.game_cursor.setGameMouse();
             FlxG.mouse.x = this.player.pos.x;
@@ -33,6 +34,8 @@ package {
                 MessageManager.getInstance().elements
             ];
         }
+
+        public function postPlayerAddCallback():void {}
 
         override public function update():void {
             super.update();
