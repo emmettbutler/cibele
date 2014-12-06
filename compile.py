@@ -89,12 +89,12 @@ def get_conf_path(entry_point_class):
     return "{}.xml".format(entry_point_class)
 
 
-def write_conf_file(swf_path, entry_point_class, main_class):
+def write_conf_file(swf_path, entry_point_class, main_class, version_id):
     conf_path = get_conf_path(entry_point_class)
     with open(conf_path, "w") as f:
         f.write(
 """
-<application xmlns="http://ns.adobe.com/air/application/15.0">
+<application xmlns="http://ns.adobe.com/air/application/{version_id}">
     <id>com.starmaid.Cibele.{ts}</id>
     <versionNumber>1.0</versionNumber>
     <filename>CibeleBeta-{ts}</filename>
@@ -105,7 +105,7 @@ def write_conf_file(swf_path, entry_point_class, main_class):
         <height>480</height>
     </initialWindow>
 </application>
-""".format(main_class=main_class,
+""".format(version_id=version_id, main_class=main_class,
            ts=dt.datetime.now().strftime('%Y.%m.%d.%H.%M.%S'),
            swf_path=swf_path)
         )
@@ -154,7 +154,7 @@ def main():
     else:
         preloader_class = write_preloader()
         swf_path = compile_main(entry_point_class, libpath, args.debug_level[0])
-        conf_path = write_conf_file(swf_path, entry_point_class, args.mainclass[0])
+        conf_path = write_conf_file(swf_path, entry_point_class, args.mainclass[0], args.version_id[0])
 
         if args.package:
             package_application(entry_point_class, swf_path, platform=args.platform)
@@ -170,6 +170,9 @@ if __name__ == "__main__":
     parser.add_argument('--libpath', '-l', metavar="LIBPATH", type=str,
                         nargs=1,
                         help="The name of the flex directory in /opt")
+    parser.add_argument('--version_id', '-v', metavar="VERSION_ID", type=str,
+                        nargs=1, default=["3.1"],
+                        help="The xml namespace version to compile against")
     parser.add_argument('--config', '-c', metavar="CONFIG", type=str,
                         default="settings.ini", nargs=1,
                         help="The config file to use")
