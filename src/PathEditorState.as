@@ -17,6 +17,7 @@ package {
         public var filename:String;
         public var dataFile:File, backupFile:File, writeFile:File;
         public var fpsCounter:FPSCounter;
+        public var shouldAddEnemies:Boolean = true;
 
         public static const MODE_READONLY:Number = 0;
         public static const MODE_EDIT:Number = 1;
@@ -218,13 +219,13 @@ package {
                     this._mapnodes.addNode(
                         new DHPoint(Number(coords[0]), Number(coords[1])),
                         this.showNodes);
-                } else if (prefix_.indexOf("enemy") == 0) {
+                } else if (prefix_.indexOf("enemy") == 0 && this.shouldAddEnemies) {
                     coords = line[1].split("x");
                     var en:SmallEnemy = new SmallEnemy(
                         new DHPoint(Number(coords[0]), Number(coords[1])));
                     add(en);
                     this.enemies.addEnemy(en);
-                } else if (prefix_.indexOf("boss") == 0) {
+                } else if (prefix_.indexOf("boss") == 0 && this.shouldAddEnemies) {
                     coords = line[1].split("x");
                     var bo:BossEnemy = new BossEnemy(
                         new DHPoint(Number(coords[0]), Number(coords[1])));

@@ -88,7 +88,6 @@ package {
             if (playerCamera != null) {
                 cam.target = playerCamera;
             }
-            //zoomcam.targetZoom = zoomFactor;
         }
 
         public function addLetterbox():void {

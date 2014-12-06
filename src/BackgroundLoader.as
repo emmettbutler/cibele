@@ -24,6 +24,8 @@ package {
         public var colliderScaleFactor:Number = 4;
         public var loadPositionThreshold:DHPoint;
         public var collisionData:Array;
+        public var shouldLoadMap:Boolean;
+        public var allTilesHaveLoaded:Boolean = false;
 
         public var dbgText:FlxText;
 
@@ -37,6 +39,7 @@ package {
                 this.colliderName = colliderName;
             }
             this.macroImageName = macroImageName;
+            this.shouldLoadMap = true;
             this.rows = rows;
             this.cols = cols;
             this.estTileWidth = 1359;
@@ -175,7 +178,7 @@ package {
             }
             var tile:FlxExtSprite = rowArr[col];
             if (tile != null) {
-                return tile.hasStartedLoad;
+                return tile.hasLoaded;
             }
             return false
         }
@@ -191,6 +194,53 @@ package {
                                                   ScreenManager.getInstance().DEBUG);
         }
 
+        public function getTileAtPoint(pt:DHPoint, arr:Array):FlxExtSprite {
+            var relPos:DHPoint = new DHPoint(pt.x / this.estTileWidth, pt.y / this.estTileHeight);
+            var row:Number = Math.floor(relPos.y);
+            var col:Number = Math.floor(relPos.x);
+            return this.getTileByIndex(row, col, arr);
+        }
+
+        public function collideRay(ray:FlxSprite, pt1:DHPoint, pt2:DHPoint):Boolean {
+            var tilesToCheck:Array = new Array();
+            tilesToCheck.push(this.getTileAtPoint(pt1, this.colliderTiles));
+            tilesToCheck.push(this.getTileAtPoint(pt2, this.colliderTiles));
+
+            var colliderTile:FlxExtSprite;
+            for (var i:int; i < this.colliderTiles.length; i++) {
+                for (var k:int; k < this.colliderTiles[i].length; k++) {
+                    colliderTile = colliderTiles[i][k];
+                    if (FlxCollision.pixelPerfectCheck(ray, colliderTile)[0]) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public function loadAllTiles():void {
+            for (var row:int = 0; row < rows; row++) {
+                for (var col:int = 0; col < cols; col++) {
+                    if (!this.tileHasLoaded(row, col, this.colliderTiles)) {
+                        this.loadTile(row, col, this.colliderTiles,
+                                      this.colliderReceivingMachines,
+                                      this.colliderName, true);
+                    }
+                }
+            }
+        }
+
+        public function allTilesLoaded():Boolean {
+            for (var row:int = 0; row < rows; row++) {
+                for (var col:int = 0; col < cols; col++) {
+                    if (!this.tileHasLoaded(row, col, this.colliderTiles)) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
         public function update():void {
             var playerRow:int, playerCol:int, playerRelativePos:DHPoint;
             playerRelativePos = new DHPoint(this.playerRef.pos.x / this.estTileWidth,
@@ -200,7 +250,6 @@ package {
             playerRelativePos.x -= playerCol;
             playerRelativePos.y -= playerRow;
 
-            var numberString:String = this.getTileIndex(playerRow, playerCol);
             var playerSpriteTileWidthPct:Number = this.playerRef.width / this.estTileWidth;
 
             adjacentCoords.push([playerRow,   playerCol]);
@@ -235,7 +284,7 @@ package {
                 col = adjacentCoords[i][1];
                 // load background tiles
                 if (!this.tileHasLoaded(row, col)) {
-                    if (!ScreenManager.getInstance().DEBUG) {
+                    if (!ScreenManager.getInstance().DEBUG && this.shouldLoadMap) {
                         this.loadTile(row, col, null, null, this.macroImageName);
                     }
                 }
@@ -255,6 +304,11 @@ package {
             this.playerRef.colliding = contact;
 
             adjacentCoords.length = 0;
+
+
+            if(this.allTilesLoaded()) {
+                this.allTilesHaveLoaded = true;
+            }
         }
 
         public function setPlayerReference(pl:Player):void {
