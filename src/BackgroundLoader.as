@@ -203,16 +203,22 @@ package {
 
         public function collideRay(ray:FlxSprite, pt1:DHPoint, pt2:DHPoint):Boolean {
             var tilesToCheck:Array = new Array();
-            tilesToCheck.push(this.getTileAtPoint(pt1, this.colliderTiles));
-            tilesToCheck.push(this.getTileAtPoint(pt2, this.colliderTiles));
+            //tilesToCheck.push(this.getTileAtPoint(pt1, this.colliderTiles));
+            //tilesToCheck.push(this.getTileAtPoint(pt2, this.colliderTiles));
+
+            var i:int;
+
+            for (i = 0; i < this.colliderTiles.length; i++) {
+                for (var k:int = 0; k < this.colliderTiles[i].length; k++) {
+                    tilesToCheck.push(this.colliderTiles[i][k]);
+                }
+            }
 
             var colliderTile:FlxExtSprite;
-            for (var i:int; i < this.colliderTiles.length; i++) {
-                for (var k:int; k < this.colliderTiles[i].length; k++) {
-                    colliderTile = colliderTiles[i][k];
-                    if (FlxCollision.pixelPerfectCheck(ray, colliderTile)[0]) {
-                        return true;
-                    }
+            for (i = 0; i < tilesToCheck.length; i++) {
+                colliderTile = tilesToCheck[i];
+                if (FlxCollision.pixelPerfectCheck(ray, colliderTile)[0]) {
+                    return true;
                 }
             }
             return false;
