@@ -112,8 +112,10 @@ def write_conf_file(swf_path, entry_point_class, main_class, version_id):
     return conf_path
 
 
-def run_main(conf_file):
-    command = "adl {conf_path}".format(conf_path=conf_file)
+def run_main(conf_file, runtime):
+    if runtime:
+        runtime = "-runtime {}".format(runtime)
+    command = "adl {runtime} {conf_path}".format(runtime=runtime, conf_path=conf_file)
     print command
     subprocess.call(command.split())
 
@@ -150,7 +152,7 @@ def main():
     entry_point_class = write_entry_point()
 
     if args.run_only:
-        run_main(get_conf_path(entry_point_class))
+        run_main(get_conf_path(entry_point_class), args.runtime[0])
     else:
         preloader_class = write_preloader()
         swf_path = compile_main(entry_point_class, libpath, args.debug_level[0])
@@ -159,7 +161,7 @@ def main():
         if args.package:
             package_application(entry_point_class, swf_path, platform=args.platform)
         else:
-            run_main(conf_path)
+            run_main(conf_path, args.runtime[0])
 
 
 if __name__ == "__main__":
@@ -187,6 +189,9 @@ if __name__ == "__main__":
                         help="Copy editor path files to source control")
     parser.add_argument('--run_only', '-r', action="store_true",
                         help="Don't compile, just run")
+    parser.add_argument('--runtime', '-u', metavar="RUNTIME", type=str,
+                        default=[""], nargs=1,
+                        help="The location of the Adobe AIR runtime")
     args = parser.parse_args()
 
     config = configparser.ConfigParser()
