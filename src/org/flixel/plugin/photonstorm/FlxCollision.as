@@ -55,7 +55,8 @@ package org.flixel.plugin.photonstorm
                                                  camera:FlxCamera = null,
                                                  collisionWidthThreshold:Number=0,
                                                  collisionHeightThreshold:Number=0,
-                                                 showCollider:Boolean=false):Array
+                                                 showCollider:Boolean=false,
+                                                 rotationOrigin:DHPoint=null):Array
         {
             var pointA:Point = new Point;
             var pointB:Point = new Point;
@@ -73,21 +74,20 @@ package org.flixel.plugin.photonstorm
                 var degrees:Number = contact.angle;
                 var angle_in_radians:Number = degrees * Math.PI / 180;
                 var rotationMatrix:Matrix = new Matrix();
-                //rotationMatrix.translate(-1 * (contact.width / 2), -1 * (contact.height / 2));
-                rotationMatrix.translate(contact.width / 2, contact.height / 2);
+                rotationMatrix.translate(contact.width / 2, 0);
                 rotationMatrix.rotate(angle_in_radians);
+                rotationMatrix.translate(-1 * (contact.width / 2) * Math.cos(angle_in_radians), -1 * (contact.width / 2) * Math.sin(angle_in_radians));
                 var matrixImage:BitmapData = new BitmapData(
-                    Math.max(contact.width, contact.height) * 1.5,
-                    Math.max(contact.width, contact.height) * 1.5, true, 0x77aaaaaa);
+                    Math.max(contact.width, contact.height),
+                    Math.max(contact.width, contact.height), true, 0x44666666);
                 matrixImage.draw(contact.framePixels, rotationMatrix);
                 contactPixels = matrixImage;
 
-                contactPos = new DHPoint(contact.x,
-                                         contact.y - contact.width);
+                contactPos = rotationOrigin == null ? new DHPoint(contact.x, contact.y) : rotationOrigin;
             }
 
-            pointA.x = contact.x - int(cam.scroll.x * contact.scrollFactor.x) - contact.offset.x;
-            pointA.y = contact.y - int(cam.scroll.y * contact.scrollFactor.y) - contact.offset.y;
+            pointA.x = contactPos.x - int(cam.scroll.x * contact.scrollFactor.x) - contact.offset.x;
+            pointA.y = contactPos.y - int(cam.scroll.y * contact.scrollFactor.y) - contact.offset.y;
 
             pointB.x = target.x - int(cam.scroll.x * target.scrollFactor.x) - target.offset.x;
             pointB.y = target.y - int(cam.scroll.y * target.scrollFactor.y) - target.offset.y;
@@ -121,8 +121,8 @@ package org.flixel.plugin.photonstorm
 
             var testA:BitmapData = contactPixels;
             var testB:BitmapData = target.framePixels;
-            var overlapArea:BitmapData = new BitmapData(intersect.width, intersect.height, false);
 
+            var overlapArea:BitmapData = new BitmapData(intersect.width, intersect.height, true, 0x00000000);
             overlapArea.draw(testA, matrixA, new ColorTransform(1, 1, 1, 1, 255, -255, -255, alphaTolerance), BlendMode.NORMAL);
             overlapArea.draw(testB, matrixB, new ColorTransform(1, 1, 1, 1, 255, 255, 255, alphaTolerance), BlendMode.DIFFERENCE);
 

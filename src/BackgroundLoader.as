@@ -97,7 +97,7 @@ package {
                         matrix.scale(scaleFactor, scaleFactor);
                         var scaledBMD:BitmapData = new BitmapData(bmp.width * scaleFactor,
                                                                   bmp.height * scaleFactor,
-                                                                  true, 0x000000);
+                                                                  true, 0x00000000);
                         scaledBMD.draw(bmp, matrix, null, null, null, true);
                         bmp = new Bitmap(scaledBMD, PixelSnapping.NEVER, true);
                     }
@@ -217,7 +217,7 @@ package {
             var colliderTile:FlxExtSprite;
             for (i = 0; i < tilesToCheck.length; i++) {
                 colliderTile = tilesToCheck[i];
-                if (FlxCollision.pixelPerfectCheck(ray, colliderTile)[0]) {
+                if (FlxCollision.pixelPerfectCheck(ray, colliderTile, 255, null, 0, 0, false, pt1)[0]) {
                     return true;
                 }
             }

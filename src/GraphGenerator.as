@@ -57,7 +57,7 @@ package{
             var yDisp:Number = pt2.y - pt1.y;
             var disp:DHPoint = pt1.sub(pt2);
 
-            if (disp._length() > 200) {
+            if (disp._length() > 270) {
                 return null;
             }
 
