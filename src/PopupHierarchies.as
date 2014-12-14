@@ -14,22 +14,22 @@ package {
             struc[PopUpManager.MARMALADE] = { "contents": [
                 {
                     "name": "marmalade_link_1",
-                    "folder_img": ImgMarmaladeLink1,
-                    "folder_dim": new DHPoint(90, 95),
-                    "hitbox_pos": new DHPoint(449, 93),
-                    "hitbox_dim": new DHPoint(90, 95),
+                    "icon": ImgMarmaladeLink1,
+                    "icon_dim": new DHPoint(90, 95),
+                    "icon_pos": new DHPoint(449, 93),
+                    "dim": new DHPoint(614, 461),
                     "contents": ImgMarmalade1
                 },
                 {
                     "name": "marmalade_link_2",
-                    "folder_img": ImgMarmaladeLink2,
-                    "folder_dim": new DHPoint(203, 185),
-                    "hitbox_pos": new DHPoint(558, 317),
-                    "hitbox_dim": new DHPoint(203, 185),
+                    "icon": ImgMarmaladeLink2,
+                    "icon_dim": new DHPoint(203, 185),
+                    "icon_pos": new DHPoint(558, 317),
+                    "dim": new DHPoint(593, 421),
                     "contents": ImgMarmalade2
                 }
             ]};
-            struc[PopUpManager.BULLDOG_HELL] = {};
+            //struc[PopUpManager.BULLDOG_HELL] = {};
             return struc;
         }
     }

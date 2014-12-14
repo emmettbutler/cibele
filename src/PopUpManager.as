@@ -44,6 +44,7 @@ package{
         public var elements:Array;
         public var popup_active:Boolean = false;
         public var folder_structure:Object;
+        public var folder_builder:FolderBuilder;
 
         public static const BUTTON_INTERNET:String = "innernet";
         public static const BUTTON_PHOTO:String = "photototot";
@@ -99,15 +100,16 @@ package{
                         } else {
                             curButton.open();
                             this.open_popup = curButton.getCurPopup();
+                            if(folder_structure[this.open_popup.tag] != null) {
+                                this.folder_builder.setIconVisibility(this.folder_structure[this.open_popup.tag], true);
+                            }
                             this.deleteSentPopup(curButton.cur_popup_tag);
                         }
                     }
                 }
             } else if(this._state == SHOWING_POP_UP) {
-                FlxG.log(this.open_popup.tag);
                 if(this.open_popup != null) {
                     if(mouseScreenRect.overlaps(this.open_popup.x_sprite._getRect())) {
-                        FlxG.log("overlap x");
                         this._state = SHOWING_NOTHING;
                         FlxG.stage.dispatchEvent(new Event(GameState.EVENT_POPUP_CLOSED));
                         for (i = 0; i < this.programButtons.length; i++) {
@@ -116,6 +118,9 @@ package{
                                 curButton.getCurPopup().visible = false;
                             }
                         }
+                        if(folder_structure[this.open_popup.tag] != null) {
+                                this.folder_builder.setIconVisibility(this.folder_structure[this.open_popup.tag], false);
+                            }
                     }
                 }
             }
@@ -311,11 +316,11 @@ package{
 
             //new way to load popups
             this.popups_and_icons = new Dictionary();
-            /*
-            this.strucs = PopupHierarchies.build();
-            this.folder_builder = new FolderBuilder(this.strucs);
-            this.folder_builder.populateFolders(this.strucs);
-            this.folder_builder.setUpLeafPopups();*/
+
+            this.folder_structure = PopupHierarchies.build();
+            this.folder_builder = new FolderBuilder();
+            this.folder_builder.populateFolders(this.folder_structure[MARMALADE], popups[MARMALADE]);
+            this.folder_builder.setUpLeafPopups();
 
         }
 

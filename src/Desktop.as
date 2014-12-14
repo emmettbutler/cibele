@@ -147,7 +147,7 @@ package{
                 }
             ]};
 
-            this.folder_builder = new FolderBuilder(folder_structure);
+            this.folder_builder = new FolderBuilder();
             this.folder_builder.populateFolders(folder_structure);
             this.folder_builder.setUpLeafPopups();
 

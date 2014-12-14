@@ -7,17 +7,18 @@ package{
     public class FolderBuilder {
         [Embed(source="../assets/UI_pink_x.png")] private var ImgInboxXPink:Class;
 
-        public var folder_structure:Object;
         public var leafPopups:Array;
 
-        public function FolderBuilder(root:Object) {
-            folder_structure = root;
+        public function FolderBuilder() {
             leafPopups = new Array();
         }
 
-        public function populateFolders(root:Object):void {
+        public function populateFolders(root:Object, root_folder:UIElement=null):void {
             var _screen:ScreenManager = ScreenManager.getInstance();
             var cur:Object, curX:GameObject, spr:GameObject, icon_pos:DHPoint;
+            if (root_folder != null) {
+                root["folder_sprite"] = root_folder;
+            }
             for (var i:int = 0; i < root["contents"].length; i++) {
                 var mult:DHPoint = new DHPoint(Math.random() * .6, Math.random() * .6);
                 cur = root["contents"][i];
@@ -25,12 +26,14 @@ package{
                     spr = new GameObject(cur["icon_pos"].add(root["folder_sprite"].pos));
                     spr.loadGraphic(cur["icon"], false, false, cur["icon_dim"].x, cur["icon_dim"].y);
                     spr.visible = false;
+                    spr.scrollFactor = new DHPoint(0,0);
                     FlxG.state.add(spr);
                     cur["icon_sprite"] = spr;
                 }
                 if("hitbox_pos" in cur && "hitbox_dim" in cur) {
                     spr = new GameObject(new DHPoint(cur["hitbox_pos"].x, cur["hitbox_pos"].y));
                     spr.makeGraphic(cur["hitbox_dim"].x, cur["hitbox_dim"].y, 0x00ff0000);
+                    spr.scrollFactor = new DHPoint(0,0);
                     FlxG.state.add(spr);
                     cur["hitbox_sprite"] = spr;
                 }
@@ -38,11 +41,13 @@ package{
                     spr = new GameObject(new DHPoint(_screen.screenWidth * mult.x, _screen.screenHeight * mult.y));
                     spr.loadGraphic(cur["folder_img"], false, false, cur["folder_dim"].x, cur["folder_dim"].y);
                     spr.visible = false;
+                    spr.scrollFactor = new DHPoint(0,0);
                     FlxG.state.add(spr);
                     cur["folder_sprite"] = spr;
                     curX = new GameObject(new DHPoint(spr.x + spr.width - 23 - 2, spr.y + 2));
                     curX.loadGraphic(ImgInboxXPink, false, false, 23, 18);
                     curX.visible = false;
+                    curX.scrollFactor = new DHPoint(0,0);
                     FlxG.state.add(curX);
                     cur["x_sprite"] = curX;
 
@@ -55,6 +60,8 @@ package{
                     curX.loadGraphic(ImgInboxXPink, false, false, 23, 18);
                     curX.visible = false;
                     this.leafPopups.push({"sprite": spr, "x": curX});
+                    spr.scrollFactor = new DHPoint(0,0);
+                    curX.scrollFactor = new DHPoint(0,0);
                     cur["full_sprite"] = spr;
                     cur["x_sprite"] = curX;
                 }
