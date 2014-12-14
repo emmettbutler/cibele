@@ -56,7 +56,7 @@ package{
             }
         }
 
-        public function rayCast(pt1:DHPoint, pt2:DHPoint):FlxSprite {
+        public function rayCast(pt1:DHPoint, pt2:DHPoint, color:uint=0xffff00ff):FlxSprite {
             var xDisp:Number = pt2.x - pt1.x;
             var yDisp:Number = pt2.y - pt1.y;
             var disp:DHPoint = pt1.sub(pt2);
@@ -71,7 +71,7 @@ package{
             var posY:Number = pt1.y + (disp._length() / 2) * Math.sin(angle);
 
             var ray:FlxSprite = new FlxSprite(posX - disp._length() / 2, posY);
-            ray.makeGraphic(disp._length(), 1, 0xffff00ff);
+            ray.makeGraphic(disp._length(), 1, color);
             ray.angle = this.radToDeg(angle);
             ray.active = false;
             if (ScreenManager.getInstance().DEBUG) {

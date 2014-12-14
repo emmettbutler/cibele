@@ -16,12 +16,13 @@ package{
         [Embed(source="../assets/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
 
         private var walkDistance:Number = 0;
-        private var walkTarget:DHPoint;
+        private var walkTarget:DHPoint, finalTarget:DHPoint;
         private var walkDirection:DHPoint = null;
         private var walkSpeed:Number = 8;
         private var walking:Boolean = false;
         public var colliding:Boolean = false;
         public var hitbox_rect:FlxRect;
+        public var curPath:Path;
         public var lastPos:DHPoint;
         public var mapHitbox:GameObject;
         public var hitboxOffset:DHPoint, hitboxDim:DHPoint;
@@ -44,6 +45,7 @@ package{
 
         public static const STATE_WALK:Number = 2398476188;
         public static const STATE_WALK_HARD:Number = 23981333333;
+        public static const STATE_MOVE_TO_PATH_NODE:Number = 384759813734;
 
         {
             public static var stateMap:Dictionary = new Dictionary();
@@ -53,6 +55,7 @@ package{
             stateMap[STATE_MOVE_TO_ENEMY] = "STATE_MOVE_TO_ENEMY";
             stateMap[STATE_WALK] = "STATE_WALK";
             stateMap[STATE_WALK_HARD] = "STATE_WALK_HARD";
+            stateMap[STATE_MOVE_TO_PATH_NODE] = "STATE_MOVE_TO_PATH_NODE";
         }
 
         public function Player(x:Number, y:Number):void{
@@ -226,7 +229,12 @@ package{
 
         public function initWalk(worldPos:DHPoint):void {
             this._state = STATE_WALK;
-            this.walkTarget = worldPos;
+            var closestNode:MapNode = this._mapnodes.getClosestNode(this.pos);
+            this.walkTarget = closestNode.pos;
+            this.finalTarget = worldPos;
+            this.curPath = Path.shortestPath(
+                closestNode, this._mapnodes.getClosestNode(this.finalTarget)
+            );
             if(!this.click_anim_lock) {
                 this.click_anim_lock = true;
                 this.click_anim.x = this.walkTarget.x -
@@ -274,6 +282,7 @@ package{
         }
 
         override public function update():void{
+            var pathEnded:Boolean = false;
             if(this.walkTarget != null) {
                 this.cameraPos.x = interpolate(.1, this.cameraPos.x,
                                                this.pos.center(this).x);
@@ -310,15 +319,25 @@ package{
 
             if (this._state == STATE_WALK || this._state == STATE_WALK_HARD) {
                 this.walk();
+                /*
                 if(FlxG.mouse.pressed()) {
                     this.walkTarget = new DHPoint(FlxG.mouse.x, FlxG.mouse.y);
                 } else if(FlxG.mouse.justReleased()) {
                     this.click_anim_lock = false;
                 }
-                if (this.walkTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
+                */
+                if (this.finalTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
                     this._state = STATE_IDLE;
                     this.dir = ZERO_POINT;
-                } else if (this.walkTarget.sub(this.footPos)._length() < 100) {
+                } else if (this.walkTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
+                    pathEnded = this.curPath.advance();
+                    if (pathEnded) {
+                        this.walkTarget = this.finalTarget;
+                        this.curPath = null;
+                    } else {
+                        this.walkTarget = this.curPath.currentNode.pos;
+                    }
+                } else if (this.finalTarget.sub(this.footPos)._length() < 100) {
                     this.dir = this.dir.mulScl(.7);
                 }
                 if (!this.positionDeltaOverThreshold() && !this.clickWait) {

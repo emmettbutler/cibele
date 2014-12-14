@@ -23,7 +23,7 @@ package
         public function addNode(point:DHPoint, showNodes:Boolean=false):void {
             var node:PathNode = new PathNode(point, showNodes);
             node.next = null;
-            node.alpha = showNodes ? 1 : 0;
+            node.visible = showNodes ? true : false;
             var prevNode:PathNode = this.nodes[this.nodes.length - 1];
             node.prev = prevNode
             if (prevNode != null) {
@@ -33,11 +33,13 @@ package
             this.nodes.push(node);
         }
 
-        public function advance():void {
+        public function advance():Boolean {
             if (this.currentNode != null && this.currentNode.next != null) {
                 this.currentNode = this.currentNode.next;
+                return false;
             } else {
                 this.currentNode = this.nodes[0];
+                return true;
             }
         }
 
@@ -96,11 +98,14 @@ package
         public static function shortestPath(sourceNode:MapNode,
                                             targetNode:MapNode):Path
         {
-            var openList:Array, closedList:Array;
+            var openList:Array, closedList:Array, curNode:MapNode,
+                curCheckEdge:GraphEdge, curG:Number, curH:Number;
+
+            openList = new Array();
+            closedList = new Array();
+
             sourceNode.setAStarMeasures(0, Path.calcH(sourceNode, targetNode))
             openList.push(sourceNode);
-
-            var curNode:MapNode, curCheckEdge:GraphEdge, curG:Number, curH:Number;
 
             while (closedList.indexOf(targetNode) == -1 && openList.length > 0) {
                 curNode = Path.getLowestF(openList);
@@ -155,7 +160,7 @@ package
         }
 
         private static function moveToArray(item:Object, source:Array, target:Array):void {
-            source.splice(source.indexof(item, 1));
+            source.splice(source.indexOf(item, 1));
             target.push(item);
         }
 
