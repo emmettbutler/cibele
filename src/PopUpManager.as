@@ -43,6 +43,7 @@ package{
 
         public var elements:Array;
         public var popup_active:Boolean = false;
+        public var folder_structure:Object;
 
         public static const BUTTON_INTERNET:String = "innernet";
         public static const BUTTON_PHOTO:String = "photototot";
@@ -50,6 +51,7 @@ package{
         public static const BUTTON_GAME:String = "gamez";
 
         public var popups_and_icons:Dictionary;
+        public var open_popup:PopUp;
 
         {
             public static const RING_INSET_X:Number = ScreenManager.getInstance().screenWidth * .03;
@@ -96,17 +98,24 @@ package{
                             curButton.toggleGame();
                         } else {
                             curButton.open();
+                            this.open_popup = curButton.getCurPopup();
                             this.deleteSentPopup(curButton.cur_popup_tag);
                         }
                     }
                 }
             } else if(this._state == SHOWING_POP_UP) {
-                this._state = SHOWING_NOTHING;
-                FlxG.stage.dispatchEvent(new Event(GameState.EVENT_POPUP_CLOSED));
-                for (i = 0; i < this.programButtons.length; i++) {
-                    curButton = this.programButtons[i];
-                    if(curButton.getCurPopup() != null) {
-                        curButton.getCurPopup().visible = false;
+                FlxG.log(this.open_popup.tag);
+                if(this.open_popup != null) {
+                    if(mouseScreenRect.overlaps(this.open_popup.x_sprite._getRect())) {
+                        FlxG.log("overlap x");
+                        this._state = SHOWING_NOTHING;
+                        FlxG.stage.dispatchEvent(new Event(GameState.EVENT_POPUP_CLOSED));
+                        for (i = 0; i < this.programButtons.length; i++) {
+                            curButton = this.programButtons[i];
+                            if(curButton.getCurPopup() != null) {
+                                curButton.getCurPopup().visible = false;
+                            }
+                        }
                     }
                 }
             }
@@ -293,6 +302,7 @@ package{
             for (var key:Object in this.popups) {
                 this.elements.push(this.popups[key]);
                 FlxG.state.add(this.popups[key]);
+                FlxG.state.add(this.popups[key].x_sprite);
             }
 
             for (key in this.sentPopups) {
@@ -301,6 +311,11 @@ package{
 
             //new way to load popups
             this.popups_and_icons = new Dictionary();
+            /*
+            this.strucs = PopupHierarchies.build();
+            this.folder_builder = new FolderBuilder(this.strucs);
+            this.folder_builder.populateFolders(this.strucs);
+            this.folder_builder.setUpLeafPopups();*/
 
         }
 
