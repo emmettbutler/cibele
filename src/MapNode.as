@@ -7,7 +7,8 @@ package {
         public var _type:Number;
         public var edges:Array;
         public var node_id:String;
-        public var f:Number, g:Number, h:Number, parent:MapNode;  // A* storage
+        public var f:Number, g:Number, h:Number, parent:MapNode,
+                   costFromParent:Number;  // A* storage
         public static const TYPE_MAP:Number = 1;
         public static const TYPE_PATH:Number = 2;
 
@@ -26,6 +27,12 @@ package {
 
         public function addEdge(target:MapNode, score:Number):void {
             this.edges.push(new GraphEdge(target, score));
+        }
+
+        public function setAStarMeasures(g:Number, h:Number):void {
+            this.g = g;
+            this.h = h;
+            this.f = this.g + this.h;
         }
 
         public function mark():void{ }

@@ -56,7 +56,7 @@ package {
             player.initFootsteps();
             pathWalker.initFootsteps();
 
-            _path = new Path(player);
+            _path = new Path();
             pathWalker.setPath(_path);
             pathWalker.setPlayerReference(player);
 
