@@ -10,7 +10,7 @@ package {
     public class PathEditorState extends PlayerState {
         public var pathWalker:PathFollower;
         public var _path:Path;
-        public var _mapnodes:MapNodeContainer, _mapNodeHash:Object;
+        public var _mapnodes:MapNodeContainer;
         public var enemies:EnemyGroup;
         public var boss:BossEnemy;
         public var showNodes:Boolean;
@@ -63,8 +63,6 @@ package {
             _mapnodes = new MapNodeContainer(_path, player);
             this.pathWalker.setMapNodes(this._mapnodes);
             this.player.setMapNodes(this._mapnodes);
-
-            this._mapNodeHash = {};
 
             this.enemies = new EnemyGroup(player, pathWalker);
             pathWalker.setEnemyGroupReference(this.enemies);
@@ -219,7 +217,7 @@ package {
         }
 
         public function getMapNodeById(_id:String):MapNode {
-            return this._mapNodeHash[_id];
+            return this._mapnodes.nodesHash[_id];
         }
 
         public function readIn():void {
@@ -239,7 +237,6 @@ package {
 
             var lines:Array = fileContents.split("\n");
             var line:Array, coords:Array, prefix_:String;
-            var node:MapNode;
             for (var i:int = 0; i < lines.length - 1; i++) {
                 line = lines[i].split(" ");
                 prefix_ = line[0];
@@ -250,10 +247,9 @@ package {
                         this.showNodes);
                 } else if (prefix_.indexOf("mapnode") == 0) {
                     coords = line[1].split("x");
-                    node = this._mapnodes.addNode(
+                    this._mapnodes.addNode(
                         new DHPoint(Number(coords[0]), Number(coords[1])),
                         this.showNodes);
-                    this._mapNodeHash[node.node_id] = node;
                 } else if (prefix_.indexOf("enemy") == 0 && this.shouldAddEnemies) {
                     coords = line[1].split("x");
                     var en:SmallEnemy = new SmallEnemy(

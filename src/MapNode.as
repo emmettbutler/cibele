@@ -7,6 +7,7 @@ package {
         public var _type:Number;
         public var edges:Array;
         public var node_id:String;
+        public var f:Number, g:Number, h:Number, parent:MapNode;  // A* storage
         public static const TYPE_MAP:Number = 1;
         public static const TYPE_PATH:Number = 2;
 

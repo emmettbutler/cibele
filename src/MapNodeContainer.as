@@ -5,6 +5,7 @@ package
     public class MapNodeContainer
     {
         public var nodes:Array;
+        public var nodesHash:Object;
         public var path:Path;
         public var player:Player;
         public var dbgText:FlxText;
@@ -24,6 +25,7 @@ package
             node.alpha = showNodes ? 1 : 0;
             node.active = false;
             this.nodes.push(node);
+            this.nodesHash[node.node_id] = node;
             return node;
         }
 
