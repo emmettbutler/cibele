@@ -43,13 +43,14 @@ package{
         }
 
         public function generate():void {
-            var curMapNode:MapNode, secondaryNode:MapNode;
+            var curMapNode:MapNode, secondaryNode:MapNode, res:Object;
             for (var i:int = 0; i < this._mapnodes.nodes.length; i++) {
                 curMapNode = this._mapnodes.nodes[i];
                 for (var k:int = 0; k < this._mapnodes.nodes.length; k++) {
                     secondaryNode = this._mapnodes.nodes[k];
-                    if (this.nodesCanConnect(curMapNode, secondaryNode)) {
-                        curMapNode.addEdge(secondaryNode, 1);
+                    res = this.nodesCanConnect(curMapNode, secondaryNode);
+                    if (res["canConnect"]) {
+                        curMapNode.addEdge(secondaryNode, res["length"]);
                     }
                 }
             }
@@ -87,7 +88,7 @@ package{
             return radians * 180 / Math.PI;
         }
 
-        public function nodesCanConnect(node1:MapNode, node2:MapNode):Boolean {
+        public function nodesCanConnect(node1:MapNode, node2:MapNode):Object {
             var ray:FlxSprite;
             if (node1 != node2) {
                 ray = this.rayCast(node1.pos, node2.pos);
@@ -103,7 +104,7 @@ package{
                 ray.color = 0xffff0000;
                 //FlxG.state.remove(ray);
             }
-            return canConnect;
+            return {"canConnect": canConnect, "length": ray.width};
         }
 
         override public function writeOut():void {
