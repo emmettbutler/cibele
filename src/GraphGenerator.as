@@ -34,7 +34,7 @@ package{
                 if (!this.generateLock) {
                     this.generateLock = true;
                     this.generate();
-                    //this.writeOut();
+                    this.writeOut();
                 }
             }
         }
@@ -57,7 +57,7 @@ package{
             var yDisp:Number = pt2.y - pt1.y;
             var disp:DHPoint = pt1.sub(pt2);
 
-            if (disp._length() > 270) {
+            if (disp._length() > 400) {
                 return null;
             }
 
@@ -70,7 +70,7 @@ package{
             ray.makeGraphic(disp._length(), 1, 0xffff00ff);
             ray.angle = this.radToDeg(angle);
             ray.active = false;
-            //FlxG.state.add(ray);
+            FlxG.state.add(ray);
             return ray;
         }
 

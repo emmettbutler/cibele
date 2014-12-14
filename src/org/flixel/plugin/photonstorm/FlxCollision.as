@@ -73,17 +73,21 @@ package org.flixel.plugin.photonstorm
             } else {
                 var degrees:Number = contact.angle;
                 var angle_in_radians:Number = degrees * Math.PI / 180;
-                var rotationMatrix:Matrix = new Matrix();
-                rotationMatrix.translate(contact.width / 2, 0);
-                rotationMatrix.rotate(angle_in_radians);
-                rotationMatrix.translate(-1 * (contact.width / 2) * Math.cos(angle_in_radians), -1 * (contact.width / 2) * Math.sin(angle_in_radians));
                 var matrixImage:BitmapData = new BitmapData(
-                    Math.max(contact.width, contact.height),
-                    Math.max(contact.width, contact.height), true, 0x44666666);
+                    Math.max(contact.width, contact.height) * 2,
+                    Math.max(contact.width, contact.height) * 2, true,
+                    0x00cccccc);
+                var rotationMatrix:Matrix = new Matrix();
+                rotationMatrix.rotate(angle_in_radians);
+                rotationMatrix.translate(matrixImage.width / 2, matrixImage.height / 2);
                 matrixImage.draw(contact.framePixels, rotationMatrix);
                 contactPixels = matrixImage;
 
-                contactPos = rotationOrigin == null ? new DHPoint(contact.x, contact.y) : rotationOrigin;
+                if (rotationOrigin == null) {
+                    contactPos = new DHPoint(contact.x, contact.y);
+                } else {
+                    contactPos = rotationOrigin.sub(new DHPoint(matrixImage.width / 2, matrixImage.height / 2));
+                }
             }
 
             pointA.x = contactPos.x - int(cam.scroll.x * contact.scrollFactor.x) - contact.offset.x;
@@ -127,13 +131,12 @@ package org.flixel.plugin.photonstorm
             overlapArea.draw(testB, matrixB, new ColorTransform(1, 1, 1, 1, 255, 255, 255, alphaTolerance), BlendMode.DIFFERENCE);
 
             //    Developers: If you'd like to see how this works, display it in your game somewhere. Or you can comment it out to save a tiny bit of performance
-            if (true || showCollider) {
+            if (showCollider) {
                 var spr:FlxExtSprite = new FlxExtSprite(contactPos.x, contactPos.y);
-                var bmp:Bitmap = new Bitmap(testA, PixelSnapping.NEVER, true);
+                var bmp:Bitmap = new Bitmap(overlapArea, PixelSnapping.NEVER, true);
                 spr.loadExtGraphic(bmp, false, false, bmp.width, bmp.height, true);
                 spr.active = false;
                 FlxG.state.add(spr);
-                /*
                 var tid:Number;
                 tid = setTimeout(function():void {
                     FlxG.state.remove(spr);
@@ -141,7 +144,6 @@ package org.flixel.plugin.photonstorm
                     spr = null;
                     clearTimeout(tid);
                 }, 500);
-                */
             }
 
             var overlap:Rectangle = overlapArea.getColorBoundsRect(0xffffffff, 0xff00ffff);
