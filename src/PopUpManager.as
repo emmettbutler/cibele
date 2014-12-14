@@ -24,7 +24,7 @@ package{
         [Embed(source="../assets/UI_happy_face_pink.png")] private var ImgEmojiHappyPink:Class;
         [Embed(source="../assets/UI_sad_face_pink.png")] private var ImgEmojiSadPink:Class;
         [Embed(source="../assets/UI_Angry_face_pink.png")] private var ImgEmojiAngryPink:Class;
-        [Embed(source="../assets/ichidownloads 2.png")] private var ImgIchiDL2:Class;
+        [Embed(source="../assets/popups/test/ichidownloads.png")] private var ImgIchiDL2:Class;
         [Embed(source="../assets/marmalade.png")] private var ImgMarmalade:Class;
         [Embed(source="../assets/forichi.png")] private var ImgForIchi:Class;
 
@@ -51,7 +51,6 @@ package{
         public static const BUTTON_FILES:String = "philesz";
         public static const BUTTON_GAME:String = "gamez";
 
-        public var popups_and_icons:Dictionary;
         public var open_popup:PopUp;
 
         {
@@ -120,6 +119,10 @@ package{
                         }
                         if(folder_structure[this.open_popup.tag] != null) {
                                 this.folder_builder.setIconVisibility(this.folder_structure[this.open_popup.tag], false);
+                            }
+                    } else {
+                        if(folder_structure[this.open_popup.tag] != null) {
+                                this.folder_builder.resolveClick(this.folder_structure[this.open_popup.tag], mouseScreenRect);
                             }
                     }
                 }
@@ -304,24 +307,23 @@ package{
                 curButton.setCurPopup(this.popups[this.popupTags[curButton.tag]]);
             }
 
+            this.folder_structure = PopupHierarchies.build();
+            this.folder_builder = new FolderBuilder();
+
             for (var key:Object in this.popups) {
                 this.elements.push(this.popups[key]);
                 FlxG.state.add(this.popups[key]);
                 FlxG.state.add(this.popups[key].x_sprite);
+                if(this.folder_structure[key] != null) {
+                    this.folder_builder.populateFolders(this.folder_structure[key], this.popups[key]);
+                }
             }
+
+            this.folder_builder.setUpLeafPopups();
 
             for (key in this.sentPopups) {
                 this.sendPopup(key as String);
             }
-
-            //new way to load popups
-            this.popups_and_icons = new Dictionary();
-
-            this.folder_structure = PopupHierarchies.build();
-            this.folder_builder = new FolderBuilder();
-            this.folder_builder.populateFolders(this.folder_structure[MARMALADE], popups[MARMALADE]);
-            this.folder_builder.setUpLeafPopups();
-
         }
 
         public function emote(mouseScreenRect:FlxRect, char:PartyMember, procedural:Boolean=false, em:Number=111):void {

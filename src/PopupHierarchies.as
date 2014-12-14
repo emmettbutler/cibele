@@ -7,6 +7,8 @@ package {
         [Embed(source="../assets/popups/test/marmlink2.png")] private static var ImgMarmaladeLink2:Class;
         [Embed(source="../assets/popups/test/marm1.jpg")] private static var ImgMarmalade1:Class;
         [Embed(source="../assets/popups/test/marm2.jpg")] private static var ImgMarmalade2:Class;
+        [Embed(source="../assets/popups/test/ichiicon.png")] private static var ImgIchiIcon:Class;
+        [Embed(source="../assets/popups/test/emmy.jpg")] private static var ImgIchiDL1:Class;
 
         public static function build():Dictionary {
             var struc:Dictionary = new Dictionary();
@@ -29,7 +31,16 @@ package {
                     "contents": ImgMarmalade2
                 }
             ]};
-            //struc[PopUpManager.BULLDOG_HELL] = {};
+            struc[PopUpManager.ICHI_DL_2] = { "contents": [
+                {
+                    "name": "ichi dl 2 link",
+                    "icon": ImgIchiIcon,
+                    "icon_dim": new DHPoint(70, 81),
+                    "icon_pos": new DHPoint(148, 35),
+                    "dim": new DHPoint(480, 640),
+                    "contents": ImgIchiDL1
+                }
+            ]};
             return struc;
         }
     }
