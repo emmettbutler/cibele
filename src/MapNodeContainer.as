@@ -19,11 +19,12 @@ package
             FlxG.state.add(this.dbgText);
         }
 
-        public function addNode(point:DHPoint, showNodes:Boolean=false):void {
+        public function addNode(point:DHPoint, showNodes:Boolean=false):MapNode {
             var node:MapNode = new MapNode(point, showNodes);
             node.alpha = showNodes ? 1 : 0;
             node.active = false;
             this.nodes.push(node);
+            return node;
         }
 
         public function hasNodes():Boolean {

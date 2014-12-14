@@ -1,7 +1,6 @@
 package {
 
     import org.flixel.*;
-    import mx.utils.UIDUtil;
 
     public class MapNode extends GameObject
     {
@@ -15,7 +14,7 @@ package {
         {
             super(pos);
             this.edges = new Array();
-            this.node_id = UIDUtil.createUID();
+            this.node_id = pos.x + "x" + pos.y;
             this._type = TYPE_MAP;
             makeGraphic(10, 10, 0xff00ffff);
             this.pos = pos;

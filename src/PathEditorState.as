@@ -10,12 +10,12 @@ package {
     public class PathEditorState extends PlayerState {
         public var pathWalker:PathFollower;
         public var _path:Path;
-        public var _mapnodes:MapNodeContainer;
+        public var _mapnodes:MapNodeContainer, _mapNodeHash:Object;
         public var enemies:EnemyGroup;
         public var boss:BossEnemy;
         public var showNodes:Boolean;
-        public var filename:String;
-        public var dataFile:File, backupFile:File, writeFile:File;
+        public var filename:String, graph_filename:String;
+        public var dataFile:File, backupFile:File, writeFile:File, graphDataFile:File;
         public var fpsCounter:FPSCounter;
         public var shouldAddEnemies:Boolean = true;
 
@@ -35,6 +35,8 @@ package {
                 this.filename);
             this.backupFile = File.applicationStorageDirectory.resolvePath(
                 this.filename + ".bak");
+            this.graphDataFile = File.applicationDirectory.resolvePath(
+                "assets/" + this.graph_filename);
 
             if (!this.writeFile.exists) {
                 this.editorMode = MODE_READONLY;
@@ -62,10 +64,13 @@ package {
             this.pathWalker.setMapNodes(this._mapnodes);
             this.player.setMapNodes(this._mapnodes);
 
+            this._mapNodeHash = {};
+
             this.enemies = new EnemyGroup(player, pathWalker);
             pathWalker.setEnemyGroupReference(this.enemies);
 
             this.readIn();
+            this.readGraphIn();
 
             if (this._path.hasNodes()) {
                 this.pathWalker.moveToNextPathNode();
@@ -187,6 +192,36 @@ package {
             this.writeBackup();
         }
 
+        public function readGraphIn():void {
+            var f:File = this.graphDataFile;
+            var str:FileStream = new FileStream();
+            if (!f.exists) {
+                return;
+            }
+            str.open(f, FileMode.READ);
+            var fileContents:String = str.readUTFBytes(f.size);
+            str.close();
+
+            var lines:Array = fileContents.split("\n");
+            var line:Array, generator:GraphGenerator;
+            var node1:MapNode, node2:MapNode, score:Number;
+            generator = new GraphGenerator();
+            for (var i:int = 0; i < lines.length - 1; i++) {
+                line = lines[i].split(" ");
+                node1 = this.getMapNodeById(line[0]);
+                node2 = this.getMapNodeById(line[1]);
+                score = Number(line[2]);
+                node1.addEdge(node2, score);
+                if (ScreenManager.getInstance().DEBUG) {
+                    generator.rayCast(node1.pos, node2.pos)
+                }
+            }
+        }
+
+        public function getMapNodeById(_id:String):MapNode {
+            return this._mapNodeHash[_id];
+        }
+
         public function readIn():void {
             var f:File = this.dataFile;
             if (this.editorMode == MODE_EDIT) {
@@ -203,9 +238,8 @@ package {
             str.close();
 
             var lines:Array = fileContents.split("\n");
-            var line:Array;
-            var coords:Array;
-            var prefix_:String;
+            var line:Array, coords:Array, prefix_:String;
+            var node:MapNode;
             for (var i:int = 0; i < lines.length - 1; i++) {
                 line = lines[i].split(" ");
                 prefix_ = line[0];
@@ -216,9 +250,10 @@ package {
                         this.showNodes);
                 } else if (prefix_.indexOf("mapnode") == 0) {
                     coords = line[1].split("x");
-                    this._mapnodes.addNode(
+                    node = this._mapnodes.addNode(
                         new DHPoint(Number(coords[0]), Number(coords[1])),
                         this.showNodes);
+                    this._mapNodeHash[node.node_id] = node;
                 } else if (prefix_.indexOf("enemy") == 0 && this.shouldAddEnemies) {
                     coords = line[1].split("x");
                     var en:SmallEnemy = new SmallEnemy(

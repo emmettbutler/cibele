@@ -8,20 +8,23 @@ package{
     import flash.net.FileReference;
 
     public class GraphGenerator extends LevelMapState {
-        public var graph_filename:String;
         public var generateLock:Boolean = false;
 
-        override public function create():void {
+        public function GraphGenerator():void {
             this.filename = "ikuturso_path.txt";
             this.graph_filename = "ikuturso_graph.txt";
             this.shouldAddEnemies = false;
-
-            super.create();
 
             this.writeFile = File.applicationStorageDirectory.resolvePath(
                 this.graph_filename);
             this.backupFile = File.applicationStorageDirectory.resolvePath(
                 this.graph_filename + ".bak");
+            this.dataFile = File.applicationDirectory.resolvePath(
+                "assets/" + this.graph_filename);
+        }
+
+        override public function create():void {
+            super.create();
 
             this.bgLoader.shouldLoadMap = false;
             this.bgLoader.loadAllTiles();
@@ -70,7 +73,9 @@ package{
             ray.makeGraphic(disp._length(), 1, 0xffff00ff);
             ray.angle = this.radToDeg(angle);
             ray.active = false;
-            FlxG.state.add(ray);
+            if (ScreenManager.getInstance().DEBUG) {
+                FlxG.state.add(ray);
+            }
             return ray;
         }
 

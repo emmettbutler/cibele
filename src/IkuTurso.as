@@ -65,6 +65,7 @@ package{
 
         override public function create():void {
             this.filename = "ikuturso_path.txt";
+            this.graph_filename = "ikuturso_graph.txt";
             super.create();
             function _bgmCallback():void {
                 SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true, .08, GameSound.BGM, IkuTurso.BGM, false, false);
