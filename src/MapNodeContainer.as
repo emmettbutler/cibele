@@ -14,6 +14,7 @@ package
 
         public function MapNodeContainer(p:Path, player:Player) {
             this.nodes = new Array();
+            this.nodesHash = {};
             this.path = p;
             this.player = player;
             this.dbgText = new FlxText(100, 250, FlxG.width, "");
