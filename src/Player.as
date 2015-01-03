@@ -235,7 +235,7 @@ package{
             this.curPath = Path.shortestPath(
                 closestNode, this._mapnodes.getClosestNode(this.finalTarget)
             );
-            FlxG.log("walking");
+            this.curPath.init();
             if(!this.click_anim_lock) {
                 this.click_anim_lock = true;
                 this.click_anim.x = this.walkTarget.x -

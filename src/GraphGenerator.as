@@ -45,8 +45,7 @@ package{
             }
         }
 
-        public function generate():void {
-            var curMapNode:MapNode, secondaryNode:MapNode, res:Object;
+        private function getAllNodes():Array {
             var allNodes:Array = new Array();
             for (var k:int = 0; k < this._mapnodes.path.nodes.length; k++) {
                 allNodes.push(this._mapnodes.path.nodes[k]);
@@ -54,13 +53,20 @@ package{
             for (var h:int = 0; h < this._mapnodes.nodes.length; h++) {
                 allNodes.push(this._mapnodes.nodes[h]);
             }
+            return allNodes;
+        }
+
+        public function generate():void {
+            var curMapNode:MapNode, secondaryNode:MapNode, res:Object;
+            var allNodes:Array = this.getAllNodes();
             for (var i:int = 0; i < allNodes.length; i++) {
                 curMapNode = allNodes[i];
-                for (k = 0; k < allNodes.length; k++) {
+                for (var k:int = 0; k < allNodes.length; k++) {
                     secondaryNode = allNodes[k];
                     res = this.nodesCanConnect(curMapNode, secondaryNode);
                     if (res["canConnect"]) {
                         curMapNode.addEdge(secondaryNode, res["length"]);
+                        secondaryNode.addEdge(curMapNode, res["length"]);
                     }
                 }
             }
@@ -71,7 +77,7 @@ package{
             var yDisp:Number = pt2.y - pt1.y;
             var disp:DHPoint = pt1.sub(pt2);
 
-            if (disp._length() > 400 || disp._length() <= 0) {
+            if (disp._length() > 300 || disp._length() <= 0) {
                 return null;
             }
 
@@ -122,8 +128,9 @@ package{
             var fString:String = "";
 
             var curMapNode:MapNode, curEdge:GraphEdge;
-            for (var i:int = 0; i < this._mapnodes.nodes.length; i++) {
-                curMapNode = this._mapnodes.nodes[i];
+            var allNodes:Array = this.getAllNodes();
+            for (var i:int = 0; i < allNodes.length; i++) {
+                curMapNode = allNodes[i];
                 for (var k:int = 0; k < curMapNode.edges.length; k++) {
                     curEdge = curMapNode.edges[k];
                     fString += curMapNode.node_id + " " + curEdge.target.node_id
@@ -136,7 +143,6 @@ package{
             str.open(f, FileMode.WRITE);
             str.writeUTFBytes(fString);
             str.close();
-            this.writeBackup();
         }
 
         override public function writeBackup():void {

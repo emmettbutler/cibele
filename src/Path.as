@@ -33,7 +33,6 @@ package
             }
             node.active = false;
             this.nodes.push(node);
-            trace("added node to path");
             this.nodesHash[node.node_id] = node;
         }
 
@@ -45,6 +44,10 @@ package
                 this.currentNode = this.nodes[0];
                 return true;
             }
+        }
+
+        public function init():void {
+            this.setCurrentNode(this.nodes[0]);
         }
 
         public function setCurrentNode(n:PathNode):void {
@@ -118,6 +121,7 @@ package
                 Path.moveToArray(curNode, openList, closedList);
                 trace("closed list: " + closedList.length)
                 trace("open list: " + openList.length)
+                trace("current node edges: " + curNode.edges.length);
                 for (var i:int = 0; i < curNode.edges.length; i++) {
                     curCheckEdge = curNode.edges[i];
                     trace("checking edge " + i);
@@ -132,12 +136,16 @@ package
                             curCheckEdge.target.parent = curNode;
                             curCheckEdge.target.costFromParent = curCheckEdge.score;
                             curG = Path.calcG(curCheckEdge.target, sourceNode);
+                            trace("calculating H");
                             curH = Path.calcH(curCheckEdge.target, targetNode);
                             curCheckEdge.target.setAStarMeasures(curG, curH);
 
                             // add to the open list
+                            trace("adding to open list");
                             openList.push(curCheckEdge.target);
+                            trace("added");
                         } else {
+                            trace("found node on open list");
                             if (curCheckEdge.target.g < curNode.g) {
                                 curCheckEdge.target.parent = curNode;
                                 curCheckEdge.target.costFromParent = curNode.pos.sub(curCheckEdge.target.pos)._length();
@@ -151,14 +159,17 @@ package
 
             // assemble the path object
             var cur:MapNode = targetNode, orderedPath:Array = new Array();
-            while (cur.parent != null) {
+            trace("assembling path");
+            while (cur.parent != null && cur != sourceNode) {
                 orderedPath.push(cur);
                 cur = cur.parent;
             }
+            trace("done");
             var path:Path = new Path();
             for (var k:int = orderedPath.length - 1; k >= 0; k--) {
-                path.addNode(orderedPath[k]);
+                path.addNode(orderedPath[k].pos);
             }
+            trace("output path length: " + path.nodes.length);
             return path;
         }
 
@@ -168,11 +179,13 @@ package
         }
 
         private static function calcG(curNode:MapNode, sourceNode:MapNode):Number {
+            trace("in calcG");
             var cur:MapNode = curNode, total:Number = 0;
-            while (cur.parent != null) {
+            while (cur.parent != null && cur != sourceNode) {
                 total += cur.costFromParent;
                 cur = cur.parent;
             }
+            trace("calcG complete");
             return total;
         }
 

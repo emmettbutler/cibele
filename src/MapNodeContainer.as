@@ -61,7 +61,9 @@ package
                 } else {
                     var screenPos:DHPoint = new DHPoint(0, 0);
                     curNode.getScreenXY(screenPos);
-                    if((screenPos.x < ScreenManager.getInstance().screenWidth && screenPos.x > 0 && screenPos.y > 0 && screenPos.y < ScreenManager.getInstance().screenHeight) == false)
+                    if((screenPos.x < ScreenManager.getInstance().screenWidth &&
+                       screenPos.x > 0 && screenPos.y > 0 &&
+                       screenPos.y < ScreenManager.getInstance().screenHeight) == false)
                     {
                         if(pos.sub(curNode.pos)._length() <
                            pos.sub(currentClosestNode.pos)._length())

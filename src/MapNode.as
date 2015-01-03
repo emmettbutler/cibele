@@ -26,7 +26,15 @@ package {
         }
 
         public function addEdge(target:MapNode, score:Number):void {
-            this.edges.push(new GraphEdge(target, score));
+            var found:Boolean = false;
+            for (var i:int = 0; i < this.edges.length; i++) {
+                if (this.edges[i].target == target) {
+                    found = true;
+                }
+            }
+            if (!found) {
+                this.edges.push(new GraphEdge(target, score));
+            }
         }
 
         public function setAStarMeasures(g:Number, h:Number):void {
