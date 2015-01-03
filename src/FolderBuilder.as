@@ -20,7 +20,6 @@ package{
                 root["folder_sprite"] = root_folder;
             }
             for (var i:int = 0; i < root["contents"].length; i++) {
-                var mult:DHPoint = new DHPoint(Math.random() * .4, Math.random() * .4);
                 cur = root["contents"][i];
                 if ("icon" in cur && cur["icon"] != null) {
                     spr = new GameObject(cur["icon_pos"].add(root["folder_sprite"].pos));
@@ -38,7 +37,7 @@ package{
                     cur["hitbox_sprite"] = spr;
                 }
                 if (cur["contents"] is Array) {
-                    spr = new GameObject(new DHPoint(_screen.screenWidth * mult.x, _screen.screenHeight * mult.y));
+                    spr = new GameObject(new DHPoint((_screen.screenWidth - cur["folder_dim"].x) * Math.random(), (_screen.screenHeight - cur["folder_dim"].y) * Math.random()));
                     spr.loadGraphic(cur["folder_img"], false, false, cur["folder_dim"].x, cur["folder_dim"].y);
                     spr.visible = false;
                     spr.scrollFactor = new DHPoint(0,0);
@@ -53,7 +52,7 @@ package{
 
                     this.populateFolders(cur);
                 } else {
-                    spr = new GameObject(new DHPoint(_screen.screenWidth * mult.x, _screen.screenHeight * mult.y));
+                    spr = new GameObject(new DHPoint((_screen.screenWidth - cur["dim"].x) * Math.random(), (_screen.screenHeight - cur["dim"].y) * Math.random()));
                     spr.loadGraphic(cur["contents"], false, false, cur["dim"].x, cur["dim"].y);
                     spr.visible = false;
                     curX = new GameObject(new DHPoint(spr.x + spr.width - 23 - 2, spr.y + 2));
