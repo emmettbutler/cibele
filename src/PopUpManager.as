@@ -10,14 +10,13 @@ package{
         [Embed(source="../assets/UI_icon_photo.png")] private var ImgPhotoButton:Class;
         [Embed(source="../assets/UI_icon_internet.png")] private var ImgInternetButton:Class;
         [Embed(source="../assets/UI_dock.png")] private var ImgDock:Class;
-        [Embed(source="../assets/cib_selfies_1.png")] private var ImgCibSelfie1:Class;
+        [Embed(source="../assets/popups/picly/nina1.png")] private var ImgCibSelfie1:Class;
         [Embed(source="../assets/forum_selfies_1.png")] private var ImgForumSelfie1:Class;
         [Embed(source="../assets/UI_happy face_blue.png")] private var ImgEmojiHappy:Class;
         [Embed(source="../assets/UI_Sad Face_blue.png")] private var ImgEmojiSad:Class;
         [Embed(source="../assets/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;
         [Embed(source="../assets/UI_Outer Ring.png")] private var ImgRing:Class;
         [Embed(source="../assets/UI_Outer_Ring_pink.png")] private var ImgRingPink:Class;
-        [Embed(source="../assets/ichidownloads.png")] private var ImgIchiDownload:Class;
         [Embed(source="../assets/ichiselfie1.png")] private var ImgIchiSelfie1:Class;
         [Embed(source="../assets/cibselfiefolder.png")] private var ImgCibSelfieFolder:Class;
         [Embed(source="../assets/UI_happy_face_pink.png")] private var ImgEmojiHappyPink:Class;
@@ -27,6 +26,7 @@ package{
         [Embed(source="../assets/marmalade.png")] private var ImgMarmalade:Class;
         [Embed(source="../assets/forichi.png")] private var ImgForIchi:Class;
         [Embed(source="../assets/popups/it_email/bulldoghell_email.png")] private static var ImgBHEmail:Class;
+        [Embed(source="../assets/popups/picly/emmy1.png")] private static var ImgIchiPicly1:Class;
 
         public static var _instance:PopUpManager = null;
 
@@ -64,7 +64,7 @@ package{
         public static const BULLDOG_HELL:String = "bulldoghell";
         public static const SELFIES_1:String = "selfies1";
         public static const FORUM_1:String = "forum1";
-        public static const ICHI_DOWNLOAD:String = "ichidownload";
+        public static const ICHI_PICLY_1:String = "ichidownload";
         public static const ICHI_SELFIE1:String = "ichiselfie1";
         public static const CIB_SELFIE_FOLDER:String = "cibselfiefolder";
         public static const MARMALADE:String = "marm";
@@ -270,7 +270,7 @@ package{
             this.elements.push(this.internet_button);
             this.programButtons.push(this.internet_button);
 
-            this.file_button = new DockButton(this.internet_button.x + this.internet_button.width + 30, dock.y - 30, [ICHI_DOWNLOAD, CIB_SELFIE_FOLDER], BUTTON_FILES);
+            this.file_button = new DockButton(this.internet_button.x + this.internet_button.width + 30, dock.y - 30, [CIB_SELFIE_FOLDER], BUTTON_FILES);
             this.file_button.loadGraphic(ImgFileButton, false, false, 88, 60);
             this.file_button.alpha = 1;
             this.file_button.scrollFactor.x = 0;
@@ -281,7 +281,7 @@ package{
 
             this.photo_button = new DockButton(
                 this.file_button.x + this.file_button.width + 30,
-                dock.y - 25, [SELFIES_1, ICHI_SELFIE1], BUTTON_PHOTO);
+                dock.y - 25, [ICHI_PICLY_1 , SELFIES_1, ICHI_SELFIE1], BUTTON_PHOTO);
             this.photo_button.loadGraphic(ImgPhotoButton, false, false, 82, 65);
             this.photo_button.alpha = 1;
             this.photo_button.scrollFactor.x = 0;
@@ -292,9 +292,9 @@ package{
 
             this.popups = new Dictionary();
             this.popups[BULLDOG_HELL] = new PopUp(ImgBHEmail, 631, 356, 0, BULLDOG_HELL);
-            this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 631, 356, PopUp.CLICK_THROUGH, SELFIES_1);
+            this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 356, 463, PopUp.CLICK_THROUGH, SELFIES_1);
             this.popups[FORUM_1] = new PopUp(ImgForumSelfie1, 1174, 585, 0, FORUM_1);
-            this.popups[ICHI_DOWNLOAD] = new PopUp(ImgIchiDownload, 631, 356, 0, ICHI_DOWNLOAD);
+            this.popups[ICHI_PICLY_1] = new PopUp(ImgIchiPicly1, 356, 463, 0, ICHI_PICLY_1);
             this.popups[ICHI_SELFIE1] = new PopUp(ImgIchiSelfie1, 433, 356, 0, ICHI_SELFIE1);
             this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibSelfieFolder, 631, 356, 0, CIB_SELFIE_FOLDER);
             this.popups[MARMALADE] = new PopUp(ImgMarmalade, 1070, 565, 0, MARMALADE);

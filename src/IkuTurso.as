@@ -104,7 +104,7 @@ package{
         }
 
         public function showIchiDownloadWindow():void {
-            PopUpManager.getInstance().sendPopup(PopUpManager.ICHI_DOWNLOAD);
+            PopUpManager.getInstance().sendPopup(PopUpManager.ICHI_PICLY_1);
         }
 
         public function showIchiSelfie1():void {
