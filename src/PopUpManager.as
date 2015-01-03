@@ -17,8 +17,8 @@ package{
         [Embed(source="../assets/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;
         [Embed(source="../assets/UI_Outer Ring.png")] private var ImgRing:Class;
         [Embed(source="../assets/UI_Outer_Ring_pink.png")] private var ImgRingPink:Class;
-        [Embed(source="../assets/ichiselfie1.png")] private var ImgIchiSelfie1:Class;
-        [Embed(source="../assets/cibselfiefolder.png")] private var ImgCibSelfieFolder:Class;
+        [Embed(source="../assets/popups/it_email/ichiselfieemail1.png")] private var ImgIchiSelfie1:Class;
+        [Embed(source="../assets/popups/files/camera1disconnect.png")] private var ImgCibCamDisconnect:Class;
         [Embed(source="../assets/UI_happy_face_pink.png")] private var ImgEmojiHappyPink:Class;
         [Embed(source="../assets/UI_sad_face_pink.png")] private var ImgEmojiSadPink:Class;
         [Embed(source="../assets/UI_Angry_face_pink.png")] private var ImgEmojiAngryPink:Class;
@@ -260,7 +260,7 @@ package{
 
             this.internet_button = new DockButton(
                 this.game_button.x + this.game_button.width + 30,
-                dock.y - 50, [BULLDOG_HELL, FORUM_1], BUTTON_INTERNET);
+                dock.y - 50, [BULLDOG_HELL, FORUM_1, ICHI_SELFIE1], BUTTON_INTERNET);
             this.internet_button.loadGraphic(ImgInternetButton, false, false,
                                              88, 75);
             this.internet_button.alpha = 1;
@@ -281,7 +281,7 @@ package{
 
             this.photo_button = new DockButton(
                 this.file_button.x + this.file_button.width + 30,
-                dock.y - 25, [ICHI_PICLY_1 , SELFIES_1, ICHI_SELFIE1], BUTTON_PHOTO);
+                dock.y - 25, [ICHI_PICLY_1 , SELFIES_1], BUTTON_PHOTO);
             this.photo_button.loadGraphic(ImgPhotoButton, false, false, 82, 65);
             this.photo_button.alpha = 1;
             this.photo_button.scrollFactor.x = 0;
@@ -295,8 +295,8 @@ package{
             this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 356, 463, PopUp.CLICK_THROUGH, SELFIES_1);
             this.popups[FORUM_1] = new PopUp(ImgForumSelfie1, 1174, 585, 0, FORUM_1);
             this.popups[ICHI_PICLY_1] = new PopUp(ImgIchiPicly1, 356, 463, 0, ICHI_PICLY_1);
-            this.popups[ICHI_SELFIE1] = new PopUp(ImgIchiSelfie1, 433, 356, 0, ICHI_SELFIE1);
-            this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibSelfieFolder, 631, 356, 0, CIB_SELFIE_FOLDER);
+            this.popups[ICHI_SELFIE1] = new PopUp(ImgIchiSelfie1, 631, 356, 0, ICHI_SELFIE1);
+            this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibCamDisconnect, 253, 107, 0, CIB_SELFIE_FOLDER);
             this.popups[MARMALADE] = new PopUp(ImgMarmalade, 1070, 565, 0, MARMALADE);
             this.popups[FOR_ICHI] = new PopUp(ImgForIchi, 530, 356, 0, FOR_ICHI);
             this.popups[ICHI_DL_2] = new PopUp(ImgIchiDL2, 631, 356, 0, ICHI_DL_2);
