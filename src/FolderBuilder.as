@@ -20,7 +20,7 @@ package{
                 root["folder_sprite"] = root_folder;
             }
             for (var i:int = 0; i < root["contents"].length; i++) {
-                var mult:DHPoint = new DHPoint(Math.random() * .6, Math.random() * .6);
+                var mult:DHPoint = new DHPoint(Math.random() * .4, Math.random() * .4);
                 cur = root["contents"][i];
                 if ("icon" in cur && cur["icon"] != null) {
                     spr = new GameObject(cur["icon_pos"].add(root["folder_sprite"].pos));
