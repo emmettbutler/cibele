@@ -92,7 +92,6 @@ package{
                         this.resolveClick(cur, mouse_rect);
                     }
                 } else {
-                    FlxG.log(mouse_rect.overlaps(cur["icon_sprite"]._getRect()));
                     if (mouse_rect.overlaps(cur["icon_sprite"]._getRect()) && cur["icon_sprite"].visible)
                     {
                         cur["full_sprite"].visible = true;

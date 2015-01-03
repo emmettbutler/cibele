@@ -87,17 +87,17 @@ package{
             var mouseScreenRect:FlxRect = new FlxRect(screenPos.x, screenPos.y,
                                                       5, 5);
             this.emote(mouseScreenRect, _player);
-
+            FlxG.log(this._state);
             if(this._state != SHOWING_POP_UP) {
                 var curButton:DockButton;
                 for (var i:int = 0; i < this.programButtons.length; i++) {
                     curButton = this.programButtons[i];
                     if(this.overlaps(mouseScreenRect, curButton)) {
-                        this._state = SHOWING_POP_UP;
                         if(curButton.tag == BUTTON_GAME) {
                             curButton.toggleGame();
                         } else {
                             curButton.open();
+                            this._state = SHOWING_POP_UP;
                             this.open_popup = curButton.getCurPopup();
                             if(folder_structure[this.open_popup.tag] != null) {
                                 this.folder_builder.setIconVisibility(this.folder_structure[this.open_popup.tag], true);
