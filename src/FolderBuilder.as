@@ -70,12 +70,14 @@ package{
         public function resolveClick(root:Object, mouse_rect:FlxRect):void {
             var spr:GameObject, icon_pos:DHPoint, cur:Object, cur_icon:Object,
                 propagateClick:Boolean = true;
+            FlxG.log("click");
             for (var i:int = 0; i < root["contents"].length; i++) {
                 cur = root["contents"][i];
 
                 if (cur["contents"] is Array) {
                     if (cur["folder_sprite"].visible) {
                         if(mouse_rect.overlaps(cur["x_sprite"]._getRect())) {
+                            FlxG.log("1");
                             propagateClick = false;
                             cur["folder_sprite"].visible = false;
                             cur["x_sprite"].visible = false;
@@ -85,6 +87,7 @@ package{
                         cur["folder_sprite"].visible = true;
                         cur["x_sprite"].visible = true;
                         this.setIconVisibility(cur, true);
+                        FlxG.log("2");
                         propagateClick = false;
                     }
                     if (propagateClick) {
@@ -97,6 +100,7 @@ package{
                         cur["x_sprite"].visible = true;
                     }
                     if (cur["x_sprite"].visible && mouse_rect.overlaps(cur["x_sprite"]._getRect())){
+                        FlxG.log("3");
                         cur["full_sprite"].visible = false;
                         cur["x_sprite"].visible = false;
                     }

@@ -87,7 +87,12 @@ package{
             var mouseScreenRect:FlxRect = new FlxRect(screenPos.x, screenPos.y,
                                                       5, 5);
             this.emote(mouseScreenRect, _player);
-            FlxG.log(this._state);
+
+            for(var key:Object in this.folder_structure) {
+                var _val:Object = this.folder_structure[key];
+                this.folder_builder.resolveClick(_val, mouseScreenRect);
+            }
+
             if(this._state != SHOWING_POP_UP) {
                 var curButton:DockButton;
                 for (var i:int = 0; i < this.programButtons.length; i++) {
@@ -107,6 +112,7 @@ package{
                     }
                 }
             } else if(this._state == SHOWING_POP_UP) {
+                FlxG.log(this.open_popup);
                 if(this.open_popup != null) {
                     if(mouseScreenRect.overlaps(this.open_popup.x_sprite._getRect())) {
                         this._state = SHOWING_NOTHING;
