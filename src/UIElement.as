@@ -10,6 +10,10 @@ package {
             super(this.anchor);
         }
 
+        public static function fromPoint(pos:DHPoint):UIElement {
+            return new UIElement(pos.x, pos.y);
+        }
+
         public function alertOn():void {
             this.alerting = true;
         }

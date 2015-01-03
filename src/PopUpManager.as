@@ -321,11 +321,11 @@ package{
                 FlxG.state.add(this.popups[key]);
                 FlxG.state.add(this.popups[key].x_sprite);
                 if(this.folder_structure[key] != null) {
-                    this.folder_builder.populateFolders(this.folder_structure[key], this.popups[key]);
+                    this.folder_builder.populateFolders(this.folder_structure[key], this.elements, this.popups[key]);
                 }
             }
 
-            this.folder_builder.setUpLeafPopups();
+            this.folder_builder.setUpLeafPopups(this.elements);
 
             for (key in this.sentPopups) {
                 this.sendPopup(key as String);
