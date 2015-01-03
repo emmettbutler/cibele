@@ -217,7 +217,21 @@ package {
         }
 
         public function getMapNodeById(_id:String):MapNode {
-            return this._mapnodes.nodesHash[_id];
+            var mapNode:MapNode = this._mapnodes.nodesHash[_id];
+            if (mapNode != null) {
+                return mapNode;
+            }
+
+            trace("nodesHash:");
+            for(var id:String in this._path.nodesHash) {
+                var value:Object = this._path.nodesHash[id];
+                trace(id + " = " + value);
+            }
+            var pathNode:MapNode = this._path.nodesHash[_id];
+            if(pathNode != null) {
+                return pathNode;
+            }
+            return null;
         }
 
         public function readIn():void {
@@ -242,6 +256,7 @@ package {
                 prefix_ = line[0];
                 if (prefix_.indexOf("pathnode") == 0) {
                     coords = line[1].split("x");
+                    trace("adding...");
                     this._path.addNode(
                         new DHPoint(Number(coords[0]), Number(coords[1])),
                         this.showNodes);

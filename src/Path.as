@@ -5,6 +5,7 @@ package
     public class Path
     {
         public var nodes:Array;
+        public var nodesHash:Object;
         public var currentNode:PathNode;
         public var nodeStatusCounter:Number;
         public var complete_:Boolean = false;
@@ -15,6 +16,7 @@ package
         public function Path() {
             this.nodes = new Array();
             this.currentNode = null;
+            this.nodesHash = {};
 
             this.dbgText = new FlxText(100, 250, FlxG.width, "");
             FlxG.state.add(this.dbgText);
@@ -31,6 +33,8 @@ package
             }
             node.active = false;
             this.nodes.push(node);
+            trace("added node to path");
+            this.nodesHash[node.node_id] = node;
         }
 
         public function advance():Boolean {
@@ -107,18 +111,31 @@ package
             sourceNode.setAStarMeasures(0, Path.calcH(sourceNode, targetNode))
             openList.push(sourceNode);
 
+            trace("starting");
             while (closedList.indexOf(targetNode) == -1 && openList.length > 0) {
+                trace("continuing");
                 curNode = Path.getLowestF(openList);
                 Path.moveToArray(curNode, openList, closedList);
+                trace("closed list: " + closedList.length)
+                trace("open list: " + openList.length)
                 for (var i:int = 0; i < curNode.edges.length; i++) {
                     curCheckEdge = curNode.edges[i];
-                    if (closedList.indexOf(curCheckEdge.target) != -1) {
+                    trace("checking edge " + i);
+
+                    // not on the closed list
+                    if (closedList.indexOf(curCheckEdge.target) == -1) {
+
+                        // not on the open list
                         if (openList.indexOf(curCheckEdge.target) == -1) {
+                            trace("found node not on open list");
+
                             curCheckEdge.target.parent = curNode;
                             curCheckEdge.target.costFromParent = curCheckEdge.score;
                             curG = Path.calcG(curCheckEdge.target, sourceNode);
                             curH = Path.calcH(curCheckEdge.target, targetNode);
                             curCheckEdge.target.setAStarMeasures(curG, curH);
+
+                            // add to the open list
                             openList.push(curCheckEdge.target);
                         } else {
                             if (curCheckEdge.target.g < curNode.g) {

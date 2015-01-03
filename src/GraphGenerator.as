@@ -36,18 +36,28 @@ package{
             if (this.bgLoader.allTilesHaveLoaded) {
                 if (!this.generateLock) {
                     this.generateLock = true;
+                    trace("Generating spatial graph...");
                     this.generate();
+                    trace("Graph generated. Writing to file...");
                     this.writeOut();
+                    trace("Done");
                 }
             }
         }
 
         public function generate():void {
             var curMapNode:MapNode, secondaryNode:MapNode, res:Object;
-            for (var i:int = 0; i < this._mapnodes.nodes.length; i++) {
-                curMapNode = this._mapnodes.nodes[i];
-                for (var k:int = 0; k < this._mapnodes.nodes.length; k++) {
-                    secondaryNode = this._mapnodes.nodes[k];
+            var allNodes:Array = new Array();
+            for (var k:int = 0; k < this._mapnodes.path.nodes.length; k++) {
+                allNodes.push(this._mapnodes.path.nodes[k]);
+            }
+            for (var h:int = 0; h < this._mapnodes.nodes.length; h++) {
+                allNodes.push(this._mapnodes.nodes[h]);
+            }
+            for (var i:int = 0; i < allNodes.length; i++) {
+                curMapNode = allNodes[i];
+                for (k = 0; k < allNodes.length; k++) {
+                    secondaryNode = allNodes[k];
                     res = this.nodesCanConnect(curMapNode, secondaryNode);
                     if (res["canConnect"]) {
                         curMapNode.addEdge(secondaryNode, res["length"]);
@@ -61,7 +71,7 @@ package{
             var yDisp:Number = pt2.y - pt1.y;
             var disp:DHPoint = pt1.sub(pt2);
 
-            if (disp._length() > 400) {
+            if (disp._length() > 400 || disp._length() <= 0) {
                 return null;
             }
 
@@ -95,7 +105,7 @@ package{
             }
 
             if (ray == null) {
-                return false;
+                return {"canConnect": false};
             }
 
             var canConnect:Boolean = !this.bgLoader.collideRay(ray, node1.pos,
