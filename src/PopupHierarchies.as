@@ -9,6 +9,8 @@ package {
         [Embed(source="../assets/popups/test/marm2.jpg")] private static var ImgMarmalade2:Class;
         [Embed(source="../assets/popups/test/ichiicon.png")] private static var ImgIchiIcon:Class;
         [Embed(source="../assets/popups/test/emmy.jpg")] private static var ImgIchiDL1:Class;
+        [Embed(source="../assets/popups/it_email/bulldoghell_icon.png")] private static var ImgBHIcon:Class;
+        [Embed(source="../assets/popups/it_email/bulldoghell.png")] private static var ImgBH:Class;
 
         public static function build():Dictionary {
             var struc:Dictionary = new Dictionary();
@@ -39,6 +41,16 @@ package {
                     "icon_pos": new DHPoint(148, 35),
                     "dim": new DHPoint(480, 640),
                     "contents": ImgIchiDL1
+                }
+            ]};
+            struc[PopUpManager.BULLDOG_HELL] = { "contents": [
+                {
+                    "name": "bulldog hell",
+                    "icon": ImgBHIcon,
+                    "icon_dim": new DHPoint(74, 14),
+                    "icon_pos": new DHPoint(179, 101),
+                    "dim": new DHPoint(1030, 510),
+                    "contents": ImgBH
                 }
             ]};
             return struc;

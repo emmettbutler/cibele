@@ -10,7 +10,6 @@ package{
         [Embed(source="../assets/UI_icon_photo.png")] private var ImgPhotoButton:Class;
         [Embed(source="../assets/UI_icon_internet.png")] private var ImgInternetButton:Class;
         [Embed(source="../assets/UI_dock.png")] private var ImgDock:Class;
-        [Embed(source="../assets/bulldoghell.png")] private var ImgBulldogHell:Class;
         [Embed(source="../assets/cib_selfies_1.png")] private var ImgCibSelfie1:Class;
         [Embed(source="../assets/forum_selfies_1.png")] private var ImgForumSelfie1:Class;
         [Embed(source="../assets/UI_happy face_blue.png")] private var ImgEmojiHappy:Class;
@@ -27,6 +26,7 @@ package{
         [Embed(source="../assets/popups/test/ichidownloads.png")] private var ImgIchiDL2:Class;
         [Embed(source="../assets/marmalade.png")] private var ImgMarmalade:Class;
         [Embed(source="../assets/forichi.png")] private var ImgForIchi:Class;
+        [Embed(source="../assets/popups/it_email/bulldoghell_email.png")] private static var ImgBHEmail:Class;
 
         public static var _instance:PopUpManager = null;
 
@@ -291,7 +291,7 @@ package{
             this.programButtons.push(this.photo_button);
 
             this.popups = new Dictionary();
-            this.popups[BULLDOG_HELL] = new PopUp(ImgBulldogHell, 1030, 510, 0, BULLDOG_HELL);
+            this.popups[BULLDOG_HELL] = new PopUp(ImgBHEmail, 631, 356, 0, BULLDOG_HELL);
             this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 631, 356, PopUp.CLICK_THROUGH, SELFIES_1);
             this.popups[FORUM_1] = new PopUp(ImgForumSelfie1, 1174, 585, 0, FORUM_1);
             this.popups[ICHI_DOWNLOAD] = new PopUp(ImgIchiDownload, 631, 356, 0, ICHI_DOWNLOAD);
