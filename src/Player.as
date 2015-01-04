@@ -109,6 +109,7 @@ package{
             this.rightFootstepOffset = new DHPoint(40, this.height-20);
             this.footstepOffset = this.upDownFootstepOffset;
             this.walkTarget = new DHPoint(0, 0);
+            this.debugText.color = 0xff444444;
 
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
             this.lastPositions = new Deque(3);
@@ -228,18 +229,26 @@ package{
         }
 
         public function initWalk(worldPos:DHPoint):void {
-            this._state = STATE_WALK;
             var closestNode:MapNode = this._mapnodes.getClosestGenericNode(this.pos);
-            this.walkTarget = closestNode.pos;
-            this.finalTarget = worldPos;
-            this.curPath = Path.shortestPath(
-                closestNode, this._mapnodes.getClosestGenericNode(this.finalTarget)
-            );
-            this.curPath.init();
-            (FlxG.state as PathEditorState).clearAllAStarMeasures();
-            if (ScreenManager.getInstance().DEBUG) {
-                trace("Path: " + this.curPath.toString());
+            if (this.pos.sub(worldPos)._length() < this.pos.sub(closestNode.pos)._length()) {
+                this.walkTarget = worldPos;
+                this.finalTarget = worldPos;
+            } else {
+                this.walkTarget = closestNode.pos;
+                this.finalTarget = worldPos;
+                this.curPath = Path.shortestPath(
+                    closestNode, this._mapnodes.getClosestGenericNode(this.finalTarget)
+                );
+                this.curPath.init();
+                (FlxG.state as PathEditorState).clearAllAStarMeasures();
+
+                if (ScreenManager.getInstance().DEBUG) {
+                    trace("Path: " + this.curPath.toString());
+                }
             }
+
+            this._state = STATE_WALK;
+
             if(!this.click_anim_lock) {
                 this.click_anim_lock = true;
                 this.click_anim.x = this.finalTarget.x -
@@ -295,6 +304,10 @@ package{
                                                this.pos.center(this).y);
             }
 
+            if (ScreenManager.getInstance().DEBUG) {
+                this.debugText.text = Player.stateMap[this._state] == null ? "unknown" : Player.stateMap[this._state];
+            }
+
             this.attack_sprite.x = this.x;
             this.attack_sprite.y = this.y - 45;
 
@@ -335,12 +348,17 @@ package{
                     this._state = STATE_IDLE;
                     this.dir = ZERO_POINT;
                 } else if (this.walkTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
-                    pathEnded = this.curPath.advance();
-                    if (pathEnded) {
-                        this.walkTarget = this.finalTarget;
-                        this.curPath = null;
+                    if (curPath == null) {
+                        this._state = STATE_IDLE;
+                        this.dir = ZERO_POINT;
                     } else {
-                        this.walkTarget = this.curPath.currentNode.pos;
+                        pathEnded = this.curPath.advance();
+                        if (pathEnded) {
+                            this.walkTarget = this.finalTarget;
+                            this.curPath = null;
+                        } else {
+                            this.walkTarget = this.curPath.currentNode.pos;
+                        }
                     }
                 } else if (this.finalTarget.sub(this.footPos)._length() < 100) {
                     this.dir = this.dir.mulScl(.7);
@@ -348,6 +366,7 @@ package{
                 if (!this.positionDeltaOverThreshold() && !this.clickWait) {
                     this._state = STATE_IDLE;
                     this.dir = ZERO_POINT;
+                    this.curPath = null;
                 }
             } else if (this._state == STATE_MOVE_TO_ENEMY) {
                 if(this.targetEnemy != null) {
