@@ -82,6 +82,7 @@ package{
 
             var ray:FlxSprite = new FlxSprite(posX - disp._length() / 2, posY);
             ray.makeGraphic(disp._length(), 1, color);
+            ray.width = disp._length();
             ray.angle = this.radToDeg(angle);
             ray.active = false;
             if (ScreenManager.getInstance().DEBUG) {
@@ -101,7 +102,7 @@ package{
         public function nodesCanConnect(node1:MapNode, node2:MapNode):Object {
             var ray:FlxSprite;
             if (node1 != node2) {
-                ray = this.rayCast(node1.pos, node2.pos, 0xffff00ff, 300);
+                ray = this.rayCast(node1.pos, node2.pos, 0xffff00ff, 440);
             }
 
             if (ray == null) {
@@ -113,6 +114,9 @@ package{
             if (!canConnect) {
                 ray.color = 0xffff0000;
                 //FlxG.state.remove(ray);
+            }
+            if (canConnect) {
+                trace("length: " + ray.width);
             }
             return {"canConnect": canConnect, "length": ray.width};
         }

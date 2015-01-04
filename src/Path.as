@@ -123,13 +123,18 @@ package
             sourceNode.setAStarMeasures(0, Path.calcH(sourceNode, targetNode))
             openList.push(sourceNode);
 
-            trace("starting:\n    target node: " + targetNode.node_id + "\n    source node: " + sourceNode.node_id);
+            if (ScreenManager.getInstance().DEBUG) {
+                trace("starting:\n    target node: " + targetNode.node_id + "\n    source node: " + sourceNode.node_id);
+            }
             while (closedList.indexOf(targetNode) == -1 && openList.length > 0) {
-                trace("continuing\n    target in closed: " + (closedList.indexOf(targetNode) != -1) + "\n    target in open: " + (openList.indexOf(targetNode) != -1));
+                if (ScreenManager.getInstance().DEBUG) {
+                    trace("continuing\n    target in closed: " + (closedList.indexOf(targetNode) != -1) + "\n    target in open: " + (openList.indexOf(targetNode) != -1));
+                }
                 curNode = Path.getLowestF(openList);
                 Path.moveToArray(curNode, openList, closedList);
-                trace("closed list: " + closedList.length)
-                trace("open list: " + openList.length)
+                if (ScreenManager.getInstance().DEBUG) {
+                    trace("closed list: " + closedList.length + "\nopen list: " + openList.length);
+                }
                 for (var i:int = 0; i < curNode.edges.length; i++) {
                     curCheckEdge = curNode.edges[i];
 
@@ -162,13 +167,11 @@ package
             var cur:MapNode = targetNode, orderedPath:Array = new Array();
             while (cur != null) {
                 orderedPath.push(cur);
-                trace("added to ordered path " + cur.node_id);
                 cur = cur.parent;
             }
             var path:Path = new Path();
             for (var k:int = orderedPath.length - 1; k >= 0; k--) {
                 path.addNode(orderedPath[k].pos);
-                trace("added to path " + orderedPath[k].node_id);
             }
             return path;
         }

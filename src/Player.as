@@ -237,7 +237,9 @@ package{
             );
             this.curPath.init();
             (FlxG.state as PathEditorState).clearAllAStarMeasures();
-            trace("Path: " + this.curPath.toString());
+            if (ScreenManager.getInstance().DEBUG) {
+                trace("Path: " + this.curPath.toString());
+            }
             if(!this.click_anim_lock) {
                 this.click_anim_lock = true;
                 this.click_anim.x = this.walkTarget.x -
