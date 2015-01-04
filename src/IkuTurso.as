@@ -12,6 +12,8 @@ package{
         [Embed(source="../assets/voc_ikuturso_picture.mp3")] private var Convo5:Class;
         [Embed(source="../assets/voc_ikuturso_whattowear.mp3")] private var Convo6:Class;
         [Embed(source="../assets/voc_extra_ichilasthit.mp3")] private var IchiBossKill:Class;
+        [Embed(source="../assets/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
+        [Embed(source="../assets/voc_extra_areyoucoming.mp3")] private var SndRUComing:Class;
 
         public var bossHasAppeared:Boolean;
         private var convo1Sound:GameSound;
@@ -68,26 +70,24 @@ package{
                 SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true, .08, GameSound.BGM, IkuTurso.BGM, false, false);
             }
             SoundManager.getInstance().playSound(ITBGMIntro, 3.6*GameSound.MSEC_PER_SEC, _bgmCallback, false, .08, Math.random()*928+298, IkuTurso.BGM, false, false, true);
-            GlobalTimer.getInstance().setMark("First Convo", 2*GameSound.MSEC_PER_SEC, this.bulldogHellPopup);
+            if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
+                GlobalTimer.getInstance().setMark("First Convo", 2*GameSound.MSEC_PER_SEC, this.bulldogHellPopup);
+            }
             this.convo1Sound = null;
         }
 
         public function bulldogHellPopup():void {
-            if(SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
-                GlobalTimer.getInstance().setMark("First Convo", 1*GameSound.MSEC_PER_SEC, this.bulldogHellPopup, true);
-            } else {
-                PopUpManager.getInstance().sendPopup(PopUpManager.BULLDOG_HELL);
-                GlobalTimer.getInstance().setMark("First Emote", 5*GameSound.MSEC_PER_SEC, this.ichiStartEmote);
-                var that:IkuTurso = this;
-                this.addEventListener(GameState.EVENT_POPUP_CLOSED,
-                        function(event:DataEvent):void {
-                            if(event.userData['tag'] == PopUpManager.BULLDOG_HELL) {
-                                that.playFirstConvo();
-                            }
-                            FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
-                                                           arguments.callee);
-                        });
-            }
+            PopUpManager.getInstance().sendPopup(PopUpManager.BULLDOG_HELL);
+            GlobalTimer.getInstance().setMark("First Emote", 5*GameSound.MSEC_PER_SEC, this.ichiStartEmote);
+            var that:IkuTurso = this;
+            this.addEventListener(GameState.EVENT_POPUP_CLOSED,
+                    function(event:DataEvent):void {
+                        if(event.userData['tag'] == PopUpManager.BULLDOG_HELL) {
+                            that.playRUComing();
+                        }
+                        FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
+                                                       arguments.callee);
+                    });
         }
 
         public function ichiStartEmote():void {
@@ -208,6 +208,20 @@ package{
                 false, 1, GameSound.VOCAL
             );
             this.bitDialogueLock = false;
+        }
+
+        public function playRUComing():void {
+            SoundManager.getInstance().playSound(
+                SndRUComing, GameSound.MSEC_PER_SEC * 3, this.playYeahSorry,
+                false, 1, GameSound.VOCAL
+            );
+        }
+
+        public function playYeahSorry():void {
+            SoundManager.getInstance().playSound(
+                SndYeahSorry, GameSound.MSEC_PER_SEC * 2, this.playFirstConvo,
+                false, 1, GameSound.VOCAL
+            );
         }
 
         override public function update():void{

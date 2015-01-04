@@ -164,12 +164,19 @@ package{
             this.player.inhibitY = true;
         }
 
+        public function firstConvo():void {
+            if(!(FlxG.state is IkuTurso)) {
+            } else {
+                (FlxG.state as IkuTurso).bulldogHellPopup();
+            }
+        }
+
         override public function clickCallback(screenPos:DHPoint,
                                                worldPos:DHPoint):void {
             if (this._state == STATE_PRE_IT && !this.accept_call) {
                 accept_call = true;
                 SoundManager.getInstance().playSound(
-                    Convo1, 29*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.VOCAL,
+                    Convo1, 29*GameSound.MSEC_PER_SEC, firstConvo, false, 1, GameSound.VOCAL,
                     "convo_1_hall"
                 );
             } else {
