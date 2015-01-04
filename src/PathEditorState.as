@@ -241,12 +241,10 @@ package {
             if (mapNode != null) {
                 return mapNode;
             }
-            /*
             var pathNode:MapNode = this._path.nodesHash[_id];
             if(pathNode != null) {
                 return pathNode;
             }
-            */
             return null;
         }
 

@@ -67,7 +67,6 @@ package
             if(this.closestPathNode != null && pos.sub(closestPathNode.pos)._length() < curClosestDisp){
                 return closestPathNode;
             } else {
-                trace("closest: " + currentClosestNode.node_id);
                 return currentClosestNode;
             }
         }
