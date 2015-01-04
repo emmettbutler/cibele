@@ -179,18 +179,16 @@ package
         }
 
         private static function calcG(curNode:MapNode, sourceNode:MapNode):Number {
-            trace("in calcG");
             var cur:MapNode = curNode, total:Number = 0;
             while (cur.parent != null && cur != sourceNode) {
                 total += cur.costFromParent;
                 cur = cur.parent;
             }
-            trace("calcG complete");
             return total;
         }
 
         private static function moveToArray(item:Object, source:Array, target:Array):void {
-            source.splice(source.indexOf(item, 1));
+            source.splice(source.indexOf(item), 1);
             target.push(item);
         }
 
