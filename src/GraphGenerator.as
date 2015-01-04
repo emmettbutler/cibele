@@ -72,12 +72,17 @@ package{
             }
         }
 
-        public function rayCast(pt1:DHPoint, pt2:DHPoint, color:uint=0xffff00ff):FlxSprite {
+        public function rayCast(pt1:DHPoint, pt2:DHPoint,
+                                color:uint=0xffff00ff, limit:Number=-1):FlxSprite {
             var xDisp:Number = pt2.x - pt1.x;
             var yDisp:Number = pt2.y - pt1.y;
             var disp:DHPoint = pt1.sub(pt2);
 
-            if (disp._length() > 300 || disp._length() <= 0) {
+            if (disp._length() <= 0) {
+                return null;
+            }
+
+            if (limit != -1 && disp._length() > limit) {
                 return null;
             }
 
@@ -107,7 +112,7 @@ package{
         public function nodesCanConnect(node1:MapNode, node2:MapNode):Object {
             var ray:FlxSprite;
             if (node1 != node2) {
-                ray = this.rayCast(node1.pos, node2.pos);
+                ray = this.rayCast(node1.pos, node2.pos, 0xffff00ff, 300);
             }
 
             if (ray == null) {

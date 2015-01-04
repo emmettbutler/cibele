@@ -99,6 +99,15 @@ package
             return currentClosestNode;
         }
 
+        public function toString():String {
+            var ret:String = "", cur:PathNode = this.nodes[0];
+            while (cur != null) {
+                ret += cur.node_id + "\n";
+                cur = cur.next;
+            }
+            return ret;
+        }
+
         /*
          * Supposedly, this is an A* implementation
          */
@@ -114,38 +123,30 @@ package
             sourceNode.setAStarMeasures(0, Path.calcH(sourceNode, targetNode))
             openList.push(sourceNode);
 
-            trace("starting");
+            trace("starting:\n    target node: " + targetNode.node_id + "\n    source node: " + sourceNode.node_id);
             while (closedList.indexOf(targetNode) == -1 && openList.length > 0) {
-                trace("continuing");
+                trace("continuing\n    target in closed: " + (closedList.indexOf(targetNode) != -1) + "\n    target in open: " + (openList.indexOf(targetNode) != -1));
                 curNode = Path.getLowestF(openList);
                 Path.moveToArray(curNode, openList, closedList);
                 trace("closed list: " + closedList.length)
                 trace("open list: " + openList.length)
-                trace("current node edges: " + curNode.edges.length);
                 for (var i:int = 0; i < curNode.edges.length; i++) {
                     curCheckEdge = curNode.edges[i];
-                    trace("checking edge " + i);
 
                     // not on the closed list
                     if (closedList.indexOf(curCheckEdge.target) == -1) {
 
                         // not on the open list
                         if (openList.indexOf(curCheckEdge.target) == -1) {
-                            trace("found node not on open list");
-
                             curCheckEdge.target.parent = curNode;
                             curCheckEdge.target.costFromParent = curCheckEdge.score;
                             curG = Path.calcG(curCheckEdge.target, sourceNode);
-                            trace("calculating H");
                             curH = Path.calcH(curCheckEdge.target, targetNode);
                             curCheckEdge.target.setAStarMeasures(curG, curH);
 
                             // add to the open list
-                            trace("adding to open list");
                             openList.push(curCheckEdge.target);
-                            trace("added");
                         } else {
-                            trace("found node on open list");
                             if (curCheckEdge.target.g < curNode.g) {
                                 curCheckEdge.target.parent = curNode;
                                 curCheckEdge.target.costFromParent = curNode.pos.sub(curCheckEdge.target.pos)._length();
