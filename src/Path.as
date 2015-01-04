@@ -160,17 +160,16 @@ package
 
             // assemble the path object
             var cur:MapNode = targetNode, orderedPath:Array = new Array();
-            trace("assembling path");
-            while (cur.parent != null && cur != sourceNode) {
+            while (cur != null) {
                 orderedPath.push(cur);
+                trace("added to ordered path " + cur.node_id);
                 cur = cur.parent;
             }
-            trace("done");
             var path:Path = new Path();
             for (var k:int = orderedPath.length - 1; k >= 0; k--) {
                 path.addNode(orderedPath[k].pos);
+                trace("added to path " + orderedPath[k].node_id);
             }
-            trace("output path length: " + path.nodes.length);
             return path;
         }
 
