@@ -173,6 +173,7 @@ package
             for (var k:int = orderedPath.length - 1; k >= 0; k--) {
                 path.addNode(orderedPath[k].pos);
             }
+            path.init();
             return path;
         }
 

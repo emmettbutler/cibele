@@ -229,16 +229,18 @@ package{
         public function initWalk(worldPos:DHPoint):void {
             if (this._mapnodes != null) {
                 var closestNode:MapNode = this._mapnodes.getClosestGenericNode(this.pos);
-                if (this.pos.sub(worldPos)._length() < this.pos.sub(closestNode.pos)._length()) {
+                var destinationDisp:Number = this.footPos.sub(worldPos)._length();
+                var nearestNodeDisp:Number = this.footPos.sub(closestNode.pos)._length();
+                if (destinationDisp < nearestNodeDisp) {
                     this.walkTarget = worldPos;
                     this.finalTarget = worldPos;
+                    this.curPath = null;
                 } else {
                     this.walkTarget = closestNode.pos;
                     this.finalTarget = worldPos;
                     this.curPath = Path.shortestPath(
                         closestNode, this._mapnodes.getClosestGenericNode(this.finalTarget)
                     );
-                    this.curPath.init();
                     (FlxG.state as PathEditorState).clearAllAStarMeasures();
 
                     if (ScreenManager.getInstance().DEBUG) {
@@ -248,6 +250,7 @@ package{
             } else {
                 this.walkTarget = worldPos;
                 this.finalTarget = worldPos;
+                    this.curPath = null;
             }
 
             this._state = STATE_WALK;
