@@ -227,22 +227,27 @@ package{
         }
 
         public function initWalk(worldPos:DHPoint):void {
-            var closestNode:MapNode = this._mapnodes.getClosestGenericNode(this.pos);
-            if (this.pos.sub(worldPos)._length() < this.pos.sub(closestNode.pos)._length()) {
+            if (this._mapnodes != null) {
+                var closestNode:MapNode = this._mapnodes.getClosestGenericNode(this.pos);
+                if (this.pos.sub(worldPos)._length() < this.pos.sub(closestNode.pos)._length()) {
+                    this.walkTarget = worldPos;
+                    this.finalTarget = worldPos;
+                } else {
+                    this.walkTarget = closestNode.pos;
+                    this.finalTarget = worldPos;
+                    this.curPath = Path.shortestPath(
+                        closestNode, this._mapnodes.getClosestGenericNode(this.finalTarget)
+                    );
+                    this.curPath.init();
+                    (FlxG.state as PathEditorState).clearAllAStarMeasures();
+
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace("Path: " + this.curPath.toString());
+                    }
+                }
+            } else {
                 this.walkTarget = worldPos;
                 this.finalTarget = worldPos;
-            } else {
-                this.walkTarget = closestNode.pos;
-                this.finalTarget = worldPos;
-                this.curPath = Path.shortestPath(
-                    closestNode, this._mapnodes.getClosestGenericNode(this.finalTarget)
-                );
-                this.curPath.init();
-                (FlxG.state as PathEditorState).clearAllAStarMeasures();
-
-                if (ScreenManager.getInstance().DEBUG) {
-                    trace("Path: " + this.curPath.toString());
-                }
             }
 
             this._state = STATE_WALK;
