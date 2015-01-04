@@ -1,8 +1,6 @@
 package{
     import org.flixel.*;
 
-    import flash.events.*;
-
     public class IkuTurso extends LevelMapState {
         [Embed(source="../assets/bgm_ikuturso_intro.mp3")] private var ITBGMIntro:Class;
         [Embed(source="../assets/bgm_ikuturso_loop.mp3")] private var ITBGMLoop:Class;
@@ -70,8 +68,26 @@ package{
                 SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true, .08, GameSound.BGM, IkuTurso.BGM, false, false);
             }
             SoundManager.getInstance().playSound(ITBGMIntro, 3.6*GameSound.MSEC_PER_SEC, _bgmCallback, false, .08, Math.random()*928+298, IkuTurso.BGM, false, false, true);
-            GlobalTimer.getInstance().setMark("First Emote", 5*GameSound.MSEC_PER_SEC, this.ichiStartEmote);
+            GlobalTimer.getInstance().setMark("First Convo", 2*GameSound.MSEC_PER_SEC, this.bulldogHellPopup);
             this.convo1Sound = null;
+        }
+
+        public function bulldogHellPopup():void {
+            if(SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
+                GlobalTimer.getInstance().setMark("First Convo", 1*GameSound.MSEC_PER_SEC, this.bulldogHellPopup, true);
+            } else {
+                PopUpManager.getInstance().sendPopup(PopUpManager.BULLDOG_HELL);
+                GlobalTimer.getInstance().setMark("First Emote", 5*GameSound.MSEC_PER_SEC, this.ichiStartEmote);
+                var that:IkuTurso = this;
+                this.addEventListener(GameState.EVENT_POPUP_CLOSED,
+                        function(event:DataEvent):void {
+                            if(event.userData['tag'] == PopUpManager.BULLDOG_HELL) {
+                                that.playFirstConvo();
+                            }
+                            FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
+                                                           arguments.callee);
+                        });
+            }
         }
 
         public function ichiStartEmote():void {
@@ -125,14 +141,13 @@ package{
             var nextAudioInfo:Object = this.conversationPieces[this.conversationCounter];
             if (nextAudioInfo != null) {
                 this.addEventListener(GameState.EVENT_POPUP_CLOSED,
-                    function():void {
+                    function(event:DataEvent):void {
                         SoundManager.getInstance().playSound(
                             nextAudioInfo["audio"], nextAudioInfo["len"],
                             that.playNextConvoPiece, false, 1, GameSound.VOCAL
                         );
                         that.playTimedEmotes(that.conversationCounter);
                         if(that.conversationPieces.length == that.conversationCounter + 1) {
-                            FlxG.log("last convo");
                             that.last_convo_playing = true;
                         }
                         FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
@@ -204,12 +219,6 @@ package{
             }
 
             this.boss.update();
-            if (this.convo1Sound == null) {
-                if (!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL))
-                {
-                    this.playFirstConvo();
-                }
-            }
 
             if (GlobalTimer.getInstance().hasPassed(BOSS_MARK) &&
                 !this.bossHasAppeared && FlxG.state.ID == LevelMapState.LEVEL_ID)

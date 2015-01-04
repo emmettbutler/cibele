@@ -115,7 +115,7 @@ package{
                 if(this.open_popup != null) {
                     if(mouseScreenRect.overlaps(this.open_popup.x_sprite._getRect())) {
                         this._state = SHOWING_NOTHING;
-                        FlxG.stage.dispatchEvent(new Event(GameState.EVENT_POPUP_CLOSED));
+                        FlxG.stage.dispatchEvent(new DataEvent(GameState.EVENT_POPUP_CLOSED, {'tag': this.open_popup.tag}));
                         for (i = 0; i < this.programButtons.length; i++) {
                             curButton = this.programButtons[i];
                             if(curButton.getCurPopup() != null) {

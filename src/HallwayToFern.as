@@ -168,52 +168,8 @@ package{
                                                worldPos:DHPoint):void {
             if (this._state == STATE_PRE_IT && !this.accept_call) {
                 accept_call = true;
-
-                function convo2Done():void {
-                    if (!(FlxG.state is IkuTurso)) {
-                    } else {
-                        (FlxG.state as IkuTurso).playFirstConvo();
-                    }
-                }
-
-                function playConvo2():void {
-                    SoundManager.getInstance().playSound(
-                        Convo2, 24*GameSound.MSEC_PER_SEC, convo2Done, false, 1, GameSound.VOCAL,
-                        "convo_2_hall"
-                    );
-                }
-
-                function playWannaDuo():void {
-                    if (!(FlxG.state is IkuTurso)) {
-                        SoundManager.getInstance().playSound(
-                            SndWannaDuo, 4*GameSound.MSEC_PER_SEC, playConvo2,
-                            false, 1, GameSound.VOCAL
-                        );
-                    } else {
-                        SoundManager.getInstance().playSound(
-                            SndYeahSorry, 2*GameSound.MSEC_PER_SEC, convo2Done,
-                            false, 1, GameSound.VOCAL, "convo_2_hall"
-                        );
-                    }
-                }
-
-                function playRUThere():void {
-                    if(!(FlxG.state is IkuTurso)){
-                        SoundManager.getInstance().playSound(
-                            SndRUThere, 1.5*GameSound.MSEC_PER_SEC, playWannaDuo,
-                            false, 1, GameSound.VOCAL
-                        );
-                    }
-                }
-
-                function convo1Done():void {
-                    GlobalTimer.getInstance().setMark("delayed_wannaduo",
-                        10*GameSound.MSEC_PER_SEC, playRUThere);
-                    PopUpManager.getInstance().sendPopup(PopUpManager.BULLDOG_HELL);
-                }
-
                 SoundManager.getInstance().playSound(
-                    Convo1, 29*GameSound.MSEC_PER_SEC, convo1Done, false, 1, GameSound.VOCAL,
+                    Convo1, 29*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.VOCAL,
                     "convo_1_hall"
                 );
             } else {
