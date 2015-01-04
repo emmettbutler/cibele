@@ -295,8 +295,33 @@ package{
             return minimum + (maximum - minimum) * normValue;
         }
 
+        public function doMovementState():void {
+            if (this.finalTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
+                this._state = STATE_IDLE;
+                this.dir = ZERO_POINT;
+            } else if (this.walkTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
+                if (curPath == null) {
+                    this._state = STATE_IDLE;
+                    this.dir = ZERO_POINT;
+                } else {
+                    if (this.curPath.advance()) {
+                        this.walkTarget = this.finalTarget;
+                        this.curPath = null;
+                    } else {
+                        this.walkTarget = this.curPath.currentNode.pos;
+                    }
+                }
+            } else if (this.finalTarget.sub(this.footPos)._length() < 100) {
+                this.dir = this.dir.mulScl(.7);
+            }
+            if (!this.positionDeltaOverThreshold() && !this.clickWait) {
+                this._state = STATE_IDLE;
+                this.dir = ZERO_POINT;
+                this.curPath = null;
+            }
+        }
+
         override public function update():void{
-            var pathEnded:Boolean = false;
             if(this.walkTarget != null) {
                 this.cameraPos.x = interpolate(.1, this.cameraPos.x,
                                                this.pos.center(this).x);
@@ -337,37 +362,7 @@ package{
 
             if (this._state == STATE_WALK || this._state == STATE_WALK_HARD) {
                 this.walk();
-                /*
-                if(FlxG.mouse.pressed()) {
-                    this.walkTarget = new DHPoint(FlxG.mouse.x, FlxG.mouse.y);
-                } else if(FlxG.mouse.justReleased()) {
-                    this.click_anim_lock = false;
-                }
-                */
-                if (this.finalTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
-                    this._state = STATE_IDLE;
-                    this.dir = ZERO_POINT;
-                } else if (this.walkTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
-                    if (curPath == null) {
-                        this._state = STATE_IDLE;
-                        this.dir = ZERO_POINT;
-                    } else {
-                        pathEnded = this.curPath.advance();
-                        if (pathEnded) {
-                            this.walkTarget = this.finalTarget;
-                            this.curPath = null;
-                        } else {
-                            this.walkTarget = this.curPath.currentNode.pos;
-                        }
-                    }
-                } else if (this.finalTarget.sub(this.footPos)._length() < 100) {
-                    this.dir = this.dir.mulScl(.7);
-                }
-                if (!this.positionDeltaOverThreshold() && !this.clickWait) {
-                    this._state = STATE_IDLE;
-                    this.dir = ZERO_POINT;
-                    this.curPath = null;
-                }
+                this.doMovementState();
             } else if (this._state == STATE_MOVE_TO_ENEMY) {
                 if(this.targetEnemy != null) {
                     this.walkTarget = this.targetEnemy.getAttackPos();
