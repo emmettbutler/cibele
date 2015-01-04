@@ -45,17 +45,6 @@ package{
             }
         }
 
-        private function getAllNodes():Array {
-            var allNodes:Array = new Array();
-            for (var k:int = 0; k < this._mapnodes.path.nodes.length; k++) {
-                allNodes.push(this._mapnodes.path.nodes[k]);
-            }
-            for (var h:int = 0; h < this._mapnodes.nodes.length; h++) {
-                allNodes.push(this._mapnodes.nodes[h]);
-            }
-            return allNodes;
-        }
-
         public function generate():void {
             var curMapNode:MapNode, secondaryNode:MapNode, res:Object;
             var allNodes:Array = this.getAllNodes();
