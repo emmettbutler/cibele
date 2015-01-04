@@ -36,6 +36,7 @@ package{
 
         override public function create():void {
             super.create();
+            this.ui_color_flag = GameState.UICOLOR_PINK;
             FlxG.bgColor = 0x00000000;
             (new BackgroundLoader()).loadSingleTileBG("../assets/UI_Desktop.png");
             ScreenManager.getInstance().setupCamera(null, 1);
@@ -64,16 +65,24 @@ package{
                 {
                     "folder_img": ImgSelfiesFolder,
                     "folder_dim": new DHPoint(631, 356),
-                    "hitbox_pos": new DHPoint(_screen.screenWidth * .87, .12),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .87, _screen.screenHeight * .12),
                     "hitbox_dim": new DHPoint(150, 100),
                     "name": "selfies",
                     "contents": [
+                        {
+                            "name": "img_me_1",
+                            "icon": ImgSelfiesFolderMe1Icon,
+                            "icon_dim": new DHPoint(70, 81),
+                            "icon_pos": new DHPoint(149, 31),
+                            "dim": new DHPoint(530, 356),
+                            "contents": ImgSelfiesFolderMe1
+                        },
                         {
                             "name": "pics_subfolder",
                             "icon": ImgSelfiesFolderPicsIcon,
                             "icon_dim": new DHPoint(87, 79),
                             "icon_pos": new DHPoint(31, 35),
-                            "folder_img": ImgSelfiesFolder,
+                            "folder_img": ImgPicturesFolder,
                             "folder_dim": new DHPoint(631, 356),
                             "contents": [
                                 {
@@ -101,14 +110,6 @@ package{
                                     "contents": ImgPicturesFolderFriends
                                 }
                             ]
-                        },
-                        {
-                            "name": "img_me_1",
-                            "icon": ImgSelfiesFolderMe1Icon,
-                            "icon_dim": new DHPoint(70, 81),
-                            "icon_pos": new DHPoint(149, 31),
-                            "dim": new DHPoint(530, 356),
-                            "contents": ImgSelfiesFolderMe1
                         }
                     ]
                 },
@@ -116,15 +117,15 @@ package{
                     "name": "screenshot",
                     "folder_img": ImgScreenshot,
                     "folder_dim": new DHPoint(631, 356),
-                    "hitbox_pos": new DHPoint(_screen.screenWidth * .72, .07),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .72, _screen.screenHeight * .07),
                     "hitbox_dim": new DHPoint(150, 100),
                     "contents": []
                 },
                 {
                     "name": "untitled",
-                    "folder_img": ImgSelfiesFolder,
+                    "folder_img": ImgUntitledFolder,
                     "folder_dim": new DHPoint(631, 356),
-                    "hitbox_pos": new DHPoint(_screen.screenWidth * .84, .33),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .84, _screen.screenHeight * .33),
                     "hitbox_dim": new DHPoint(150, 100),
                     "contents": [
                         {

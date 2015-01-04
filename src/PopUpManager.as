@@ -23,8 +23,8 @@ package{
         [Embed(source="../assets/UI_sad_face_pink.png")] private var ImgEmojiSadPink:Class;
         [Embed(source="../assets/UI_Angry_face_pink.png")] private var ImgEmojiAngryPink:Class;
         [Embed(source="../assets/popups/test/ichidownloads.png")] private var ImgIchiDL2:Class;
-        [Embed(source="../assets/marmalade.png")] private var ImgMarmalade:Class;
-        [Embed(source="../assets/forichi.png")] private var ImgForIchi:Class;
+        [Embed(source="../assets/popups/it_email/none.png")] private var ImgEmptyInbox:Class;
+        [Embed(source="../assets/popups/picly/ninaopen.png")] private var ImgForIchi:Class;
         [Embed(source="../assets/popups/it_email/bulldoghell_email.png")] private static var ImgBHEmail:Class;
         [Embed(source="../assets/popups/picly/emmy1.png")] private static var ImgIchiPicly1:Class;
 
@@ -67,7 +67,7 @@ package{
         public static const ICHI_PICLY_1:String = "ichidownload";
         public static const ICHI_SELFIE1:String = "ichiselfie1";
         public static const CIB_SELFIE_FOLDER:String = "cibselfiefolder";
-        public static const MARMALADE:String = "marm";
+        public static const EMPTY_INBOX:String = "marm";
         public static const FOR_ICHI:String = "ichiluvu";
         public static const ICHI_DL_2:String = "dl2";
         //set this to false again if player exits game screen
@@ -78,7 +78,7 @@ package{
             this.sentPopups = new Dictionary();
 
             this.popupTags = {};
-            this.popupTags[BUTTON_INTERNET] = MARMALADE;
+            this.popupTags[BUTTON_INTERNET] = EMPTY_INBOX;
             this.popupTags[BUTTON_FILES] = ICHI_DL_2;
             this.popupTags[BUTTON_PHOTO] = FOR_ICHI;
         }
@@ -302,8 +302,8 @@ package{
             this.popups[ICHI_PICLY_1] = new PopUp(ImgIchiPicly1, 356, 463, 0, ICHI_PICLY_1);
             this.popups[ICHI_SELFIE1] = new PopUp(ImgIchiSelfie1, 631, 356, 0, ICHI_SELFIE1);
             this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibCamDisconnect, 253, 107, 0, CIB_SELFIE_FOLDER);
-            this.popups[MARMALADE] = new PopUp(ImgMarmalade, 1070, 565, 0, MARMALADE);
-            this.popups[FOR_ICHI] = new PopUp(ImgForIchi, 530, 356, 0, FOR_ICHI);
+            this.popups[EMPTY_INBOX] = new PopUp(ImgEmptyInbox, 631, 356, 0, EMPTY_INBOX);
+            this.popups[FOR_ICHI] = new PopUp(ImgForIchi, 356, 463, 0, FOR_ICHI);
             this.popups[ICHI_DL_2] = new PopUp(ImgIchiDL2, 631, 356, 0, ICHI_DL_2);
 
             var curButton:DockButton;

@@ -91,12 +91,20 @@ package{
                             cur["x_sprite"].visible = false;
                             this.setIconVisibility(cur, false);
                         }
-                    } else if (mouse_rect.overlaps(cur[this.getHitboxKey(cur)]._getRect()) && cur[this.getHitboxKey(cur)].visible) {
-                        FlxG.log(new Date().valueOf());
-                        cur["folder_sprite"].visible = true;
-                        cur["x_sprite"].visible = true;
-                        this.setIconVisibility(cur, true);
-                        propagateClick = false;
+                    } else if (mouse_rect.overlaps(cur[this.getHitboxKey(cur)]._getRect())) {
+                        if(cur[this.getHitboxKey(cur)].visible && "icon_sprite" in cur) {
+                            cur["folder_sprite"].visible = true;
+                            cur["x_sprite"].visible = true;
+                            this.setIconVisibility(cur, true);
+                            propagateClick = false;
+                        } else if("hitbox_sprite" in cur) {
+                            if(this.checkForVisiblePopups(cur[this.getHitboxKey(cur)]._getRect(), root)) {
+                                cur["folder_sprite"].visible = true;
+                                cur["x_sprite"].visible = true;
+                                this.setIconVisibility(cur, true);
+                                propagateClick = false;
+                            }
+                        }
                     }
                     if (propagateClick) {
                         this.resolveClick(cur, mouse_rect);
@@ -113,6 +121,23 @@ package{
                     }
                 }
             }
+        }
+
+        public function checkForVisiblePopups(hitbox:FlxRect, root:Object):Boolean {
+            var cur:Object;
+            for (var i:int = 0; i < root["contents"].length; i++) {
+                cur = root["contents"][i];
+
+                if (cur["contents"] is Array) {
+                    FlxG.log("in contents");
+                    if("folder_sprite" in cur) {
+                        if(cur["folder_sprite"].visible && cur["folder_sprite"]._getRect().overlaps(hitbox)) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         public function getHitboxKey(obj:Object):String {
