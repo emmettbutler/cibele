@@ -17,6 +17,10 @@ package {
         [Embed(source="../assets/popups/files/camera1selfie.png")] private static var ImgCibCam1:Class;
         [Embed(source="../assets/popups/files/camera1selfieicon.png")] private static var ImgCibCam1Icon:Class;
         [Embed(source="../assets/popups/files/camera1.png")] private static var ImgCibSelfieFolder:Class;
+        [Embed(source="../assets/popups/it_email/guil1_sub1link.png")] private static var ImgGuilLink1:Class;
+        [Embed(source="../assets/popups/it_email/guil1_sub1.png")] private static var ImgGuilSub:Class;
+        [Embed(source="../assets/popups/it_email/ichiselfieemail_sub1.png")] private static var ImgIchiSelfieSub1:Class;
+        [Embed(source="../assets/popups/it_email/ichiselfieemail_link1.png")] private static var ImgIchiSelfieSubLink1:Class;
 
         public static function build():Dictionary {
             var struc:Dictionary = new Dictionary();
@@ -67,7 +71,32 @@ package {
                     "icon_pos": new DHPoint(23, 210),
                     "dim": new DHPoint(433, 356),
                     "contents": ImgIchiSelfie1
-                }
+                },
+                {
+                    "name": "ichi selfie email link",
+                    "icon": ImgGuilLink1,
+                    "icon_dim": new DHPoint(327, 20),
+                    "icon_pos": new DHPoint(295, 126),
+                    "folder_dim": new DHPoint(280, 356),
+                    "folder_img": ImgGuilSub,
+                    "contents": [
+                        {
+                            "name": "ichi selfie sub bulldog hell",
+                            "icon": ImgBHIcon,
+                            "icon_dim": new DHPoint(74, 14),
+                            "icon_pos": new DHPoint(180, 106),
+                            "dim": new DHPoint(1030, 510),
+                            "contents": ImgBH
+                        }]
+                },
+                {
+                    "name": "ichi selfie email sub 1",
+                    "icon": ImgIchiSelfieSubLink1,
+                    "icon_dim": new DHPoint(325, 22),
+                    "icon_pos": new DHPoint(295, 104),
+                    "dim": new DHPoint(280, 356),
+                    "contents": ImgIchiSelfieSub1
+                },
             ]};
             struc[PopUpManager.CIB_SELFIE_FOLDER] = { "contents": [
                 {
@@ -85,6 +114,25 @@ package {
                             "icon_pos": new DHPoint(69, 84),
                             "dim": new DHPoint(530, 356),
                             "contents": ImgCibCam1
+                        }]
+                }
+            ]};
+            struc[PopUpManager.GUIL_1] = { "contents": [
+                {
+                    "name": "guil email link",
+                    "icon": ImgGuilLink1,
+                    "icon_dim": new DHPoint(327, 20),
+                    "icon_pos": new DHPoint(290, 98),
+                    "folder_dim": new DHPoint(280, 356),
+                    "folder_img": ImgGuilSub,
+                    "contents": [
+                        {
+                            "name": "guil sub bulldog hell",
+                            "icon": ImgBHIcon,
+                            "icon_dim": new DHPoint(74, 14),
+                            "icon_pos": new DHPoint(180, 106),
+                            "dim": new DHPoint(1030, 510),
+                            "contents": ImgBH
                         }]
                 }
             ]};

@@ -44,7 +44,7 @@ package{
                 {
                     "audio": Convo3, "len": 1*GameSound.MSEC_PER_SEC,
                     "delay": 20*GameSound.MSEC_PER_SEC,
-                    "endfn": this.showForumWindow
+                    "endfn": this.showGuilEmail
                 },
                 {
                     "audio": Convo4, "len": 1*GameSound.MSEC_PER_SEC,
@@ -98,8 +98,8 @@ package{
             PopUpManager.getInstance().sendPopup(PopUpManager.SELFIES_1);
         }
 
-        public function showForumWindow():void {
-            PopUpManager.getInstance().sendPopup(PopUpManager.FORUM_1);
+        public function showGuilEmail():void {
+            PopUpManager.getInstance().sendPopup(PopUpManager.GUIL_1);
             GlobalTimer.getInstance().setMark(BOSS_MARK, 50*GameSound.MSEC_PER_SEC);
         }
 

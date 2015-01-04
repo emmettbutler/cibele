@@ -63,7 +63,7 @@ package{
         public var _state:Number = SHOWING_NOTHING;
         public static const BULLDOG_HELL:String = "bulldoghell";
         public static const SELFIES_1:String = "selfies1";
-        public static const FORUM_1:String = "forum1";
+        public static const GUIL_1:String = "forum1";
         public static const ICHI_PICLY_1:String = "ichidownload";
         public static const ICHI_SELFIE1:String = "ichiselfie1";
         public static const CIB_SELFIE_FOLDER:String = "cibselfiefolder";
@@ -112,7 +112,6 @@ package{
                     }
                 }
             } else if(this._state == SHOWING_POP_UP) {
-                FlxG.log(this.open_popup);
                 if(this.open_popup != null) {
                     if(mouseScreenRect.overlaps(this.open_popup.x_sprite._getRect())) {
                         this._state = SHOWING_NOTHING;
@@ -266,7 +265,7 @@ package{
 
             this.internet_button = new DockButton(
                 this.game_button.x + this.game_button.width + 30,
-                dock.y - 50, [BULLDOG_HELL, FORUM_1, ICHI_SELFIE1], BUTTON_INTERNET);
+                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1], BUTTON_INTERNET);
             this.internet_button.loadGraphic(ImgInternetButton, false, false,
                                              88, 75);
             this.internet_button.alpha = 1;
@@ -299,7 +298,7 @@ package{
             this.popups = new Dictionary();
             this.popups[BULLDOG_HELL] = new PopUp(ImgBHEmail, 631, 356, 0, BULLDOG_HELL);
             this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 356, 463, PopUp.CLICK_THROUGH, SELFIES_1);
-            this.popups[FORUM_1] = new PopUp(ImgGuilEmail1, 631, 356, 0, FORUM_1);
+            this.popups[GUIL_1] = new PopUp(ImgGuilEmail1, 631, 356, 0, GUIL_1);
             this.popups[ICHI_PICLY_1] = new PopUp(ImgIchiPicly1, 356, 463, 0, ICHI_PICLY_1);
             this.popups[ICHI_SELFIE1] = new PopUp(ImgIchiSelfie1, 631, 356, 0, ICHI_SELFIE1);
             this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibCamDisconnect, 253, 107, 0, CIB_SELFIE_FOLDER);
