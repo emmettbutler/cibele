@@ -229,13 +229,15 @@ package{
 
         public function initWalk(worldPos:DHPoint):void {
             this._state = STATE_WALK;
-            var closestNode:MapNode = this._mapnodes.getClosestNode(this.pos);
+            var closestNode:MapNode = this._mapnodes.getClosestGenericNode(this.pos);
             this.walkTarget = closestNode.pos;
             this.finalTarget = worldPos;
             this.curPath = Path.shortestPath(
-                closestNode, this._mapnodes.getClosestNode(this.finalTarget)
+                closestNode, this._mapnodes.getClosestGenericNode(this.finalTarget)
             );
             this.curPath.init();
+            (FlxG.state as PathEditorState).clearAllAStarMeasures();
+            trace("Path: " + this.curPath.toString());
             if(!this.click_anim_lock) {
                 this.click_anim_lock = true;
                 this.click_anim.x = this.walkTarget.x -

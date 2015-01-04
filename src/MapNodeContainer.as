@@ -27,6 +27,11 @@ package
             node.active = false;
             this.nodes.push(node);
             this.nodesHash[node.node_id] = node;
+            if (ScreenManager.getInstance().DEBUG) {
+                var lbl:FlxText = new FlxText(node.pos.x + 10, node.pos.y, 400, node.node_id);
+                lbl.color = 0xff444444;
+                FlxG.state.add(lbl);
+            }
             return node;
         }
 
@@ -43,6 +48,28 @@ package
         }
 
         public function update():void {
+        }
+
+        public function getClosestGenericNode(pos:DHPoint):MapNode {
+            var closestPathNode:MapNode = this.path.getClosestNode(pos);
+            var currentClosestNode:MapNode = this.nodes[0];
+            var curNode:MapNode, curDisp:Number, curClosestDisp:Number;
+            curClosestDisp = pos.sub(currentClosestNode.pos)._length();
+            for(var i:Number = 0; i < this.nodes.length; i++){
+                curNode = this.nodes[i];
+                curDisp = pos.sub(curNode.pos)._length();
+                if(curDisp < curClosestDisp)
+                {
+                    currentClosestNode = curNode;
+                    curClosestDisp = pos.sub(currentClosestNode.pos)._length();
+                }
+            }
+            if(this.closestPathNode != null && pos.sub(closestPathNode.pos)._length() < curClosestDisp){
+                return closestPathNode;
+            } else {
+                trace("closest: " + currentClosestNode.node_id);
+                return currentClosestNode;
+            }
         }
 
         public function getClosestNode(pos:DHPoint, exclude:MapNode=null, on_screen:Boolean = true):MapNode {

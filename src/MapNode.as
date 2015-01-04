@@ -43,6 +43,14 @@ package {
             this.f = this.g + this.h;
         }
 
+        public function clearAStarData():void {
+            this.g = 0;
+            this.h = 0;
+            this.f = 0;
+            this.parent = null;
+            this.costFromParent = 0;
+        }
+
         public function mark():void{ }
     }
 }

@@ -220,10 +220,19 @@ package {
                 node1 = this.getMapNodeById(line[0]);
                 node2 = this.getMapNodeById(line[1]);
                 score = Number(line[2]);
-                node1.addEdge(node2, score);
-                if (ScreenManager.getInstance().DEBUG) {
-                    generator.rayCast(node1.pos, node2.pos)
+                if (node1 != null && node2 != null) {
+                    node1.addEdge(node2, score);
+                    if (ScreenManager.getInstance().DEBUG) {
+                        generator.rayCast(node1.pos, node2.pos)
+                    }
                 }
+            }
+        }
+
+        public function clearAllAStarMeasures():void {
+            var allNodes:Array = this.getAllNodes();
+            for (var i:int = 0; i < allNodes.length; i++) {
+                allNodes[i].clearAStarData();
             }
         }
 
@@ -232,10 +241,12 @@ package {
             if (mapNode != null) {
                 return mapNode;
             }
+            /*
             var pathNode:MapNode = this._path.nodesHash[_id];
             if(pathNode != null) {
                 return pathNode;
             }
+            */
             return null;
         }
 
