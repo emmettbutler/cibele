@@ -103,7 +103,7 @@ package{
         public function nodesCanConnect(node1:MapNode, node2:MapNode):Object {
             var ray:FlxSprite;
             if (node1 != node2) {
-                ray = this.rayCast(node1.pos, node2.pos, 0xffff00ff, 17);
+                ray = this.rayCast(node1.pos, node2.pos, 0xffff00ff, 440);
             }
 
             if (ray == null) {
