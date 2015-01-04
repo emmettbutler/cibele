@@ -64,7 +64,8 @@ package{
         }
 
         public function rayCast(pt1:DHPoint, pt2:DHPoint,
-                                color:uint=0xffff00ff, limit:Number=-1):FlxSprite {
+                                color:uint=0xffff00ff, limit:Number=-1,
+                                width:Number=1):FlxSprite {
             var xDisp:Number = pt2.x - pt1.x;
             var yDisp:Number = pt2.y - pt1.y;
             var disp:DHPoint = pt1.sub(pt2);
@@ -83,7 +84,7 @@ package{
             var posY:Number = pt1.y + (disp._length() / 2) * Math.sin(angle);
 
             var ray:FlxSprite = new FlxSprite(posX - disp._length() / 2, posY);
-            ray.makeGraphic(disp._length(), 1, color);
+            ray.makeGraphic(disp._length(), width, color);
             ray.angle = this.radToDeg(angle);
             ray.active = false;
             if (ScreenManager.getInstance().DEBUG) {
@@ -103,7 +104,7 @@ package{
         public function nodesCanConnect(node1:MapNode, node2:MapNode):Object {
             var ray:FlxSprite;
             if (node1 != node2) {
-                ray = this.rayCast(node1.pos, node2.pos, 0xffff00ff, 440);
+                ray = this.rayCast(node1.pos, node2.pos, 0xffff00ff, 440, 40);
             }
 
             if (ray == null) {
