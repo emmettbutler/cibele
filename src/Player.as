@@ -171,10 +171,8 @@ package{
                 return;
             }
 
-            if (this.targetEnemy == null) {
-                this.initWalk(worldPos);
-            } else {
-                this.walkTarget = new DHPoint(FlxG.mouse.x, FlxG.mouse.y);
+            this.initWalk(worldPos);
+            if (this.targetEnemy != null) {
                 this._state = STATE_MOVE_TO_ENEMY;
             }
             this.dir = this.walkTarget.sub(footPos).normalized();
@@ -365,8 +363,9 @@ package{
                 this.doMovementState();
             } else if (this._state == STATE_MOVE_TO_ENEMY) {
                 if(this.targetEnemy != null) {
-                    this.walkTarget = this.targetEnemy.getAttackPos();
+                    this.finalTarget = this.targetEnemy.getAttackPos();
                     this.walk();
+                    this.doMovementState();
                     if (this.enemyIsInAttackRange(this.targetEnemy)) {
                         this._state = STATE_AT_ENEMY;
                     }
@@ -524,7 +523,7 @@ package{
                 this.attack_sprite.play("attack");
                 this.attack_anim_playing = true;
                 GlobalTimer.getInstance().setMark("attack_finished",
-                (23/10)*GameSound.MSEC_PER_SEC, this.attackFinished, true);
+                    (23/10)*GameSound.MSEC_PER_SEC, this.attackFinished, true);
 
                 var snd:Class = SfxAttack1;
                 var rand:Number = Math.random() * 4;
