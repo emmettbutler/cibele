@@ -242,9 +242,9 @@ package{
             }
             if(!this.click_anim_lock) {
                 this.click_anim_lock = true;
-                this.click_anim.x = this.walkTarget.x -
+                this.click_anim.x = this.finalTarget.x -
                     this.click_anim.width/2;
-                this.click_anim.y = this.walkTarget.y -
+                this.click_anim.y = this.finalTarget.y -
                     this.click_anim.height/2;
                 this.click_anim.visible = true;
                 this.click_anim.play("click");
