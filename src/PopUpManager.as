@@ -11,7 +11,7 @@ package{
         [Embed(source="../assets/UI_icon_internet.png")] private var ImgInternetButton:Class;
         [Embed(source="../assets/UI_dock.png")] private var ImgDock:Class;
         [Embed(source="../assets/popups/picly/nina1.png")] private var ImgCibSelfie1:Class;
-        [Embed(source="../assets/forum_selfies_1.png")] private var ImgForumSelfie1:Class;
+        [Embed(source="../assets/popups/it_email/guil1.png")] private var ImgGuilEmail1:Class;
         [Embed(source="../assets/UI_happy face_blue.png")] private var ImgEmojiHappy:Class;
         [Embed(source="../assets/UI_Sad Face_blue.png")] private var ImgEmojiSad:Class;
         [Embed(source="../assets/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;
@@ -299,7 +299,7 @@ package{
             this.popups = new Dictionary();
             this.popups[BULLDOG_HELL] = new PopUp(ImgBHEmail, 631, 356, 0, BULLDOG_HELL);
             this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 356, 463, PopUp.CLICK_THROUGH, SELFIES_1);
-            this.popups[FORUM_1] = new PopUp(ImgForumSelfie1, 1174, 585, 0, FORUM_1);
+            this.popups[FORUM_1] = new PopUp(ImgGuilEmail1, 631, 356, 0, FORUM_1);
             this.popups[ICHI_PICLY_1] = new PopUp(ImgIchiPicly1, 356, 463, 0, ICHI_PICLY_1);
             this.popups[ICHI_SELFIE1] = new PopUp(ImgIchiSelfie1, 631, 356, 0, ICHI_SELFIE1);
             this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibCamDisconnect, 253, 107, 0, CIB_SELFIE_FOLDER);
