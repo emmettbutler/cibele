@@ -73,10 +73,18 @@ package {
                     "contents": ImgIchiSelfie1
                 },
                 {
+                    "name": "ichi selfie email sub 1",
+                    "icon": ImgIchiSelfieSubLink1,
+                    "icon_dim": new DHPoint(325, 22),
+                    "icon_pos": new DHPoint(290, 100),
+                    "dim": new DHPoint(280, 356),
+                    "contents": ImgIchiSelfieSub1
+                },
+                {
                     "name": "ichi selfie email link",
                     "icon": ImgGuilLink1,
                     "icon_dim": new DHPoint(327, 20),
-                    "icon_pos": new DHPoint(295, 126),
+                    "icon_pos": new DHPoint(290, 126),
                     "folder_dim": new DHPoint(280, 356),
                     "folder_img": ImgGuilSub,
                     "contents": [
@@ -88,15 +96,7 @@ package {
                             "dim": new DHPoint(1030, 510),
                             "contents": ImgBH
                         }]
-                },
-                {
-                    "name": "ichi selfie email sub 1",
-                    "icon": ImgIchiSelfieSubLink1,
-                    "icon_dim": new DHPoint(325, 22),
-                    "icon_pos": new DHPoint(295, 104),
-                    "dim": new DHPoint(280, 356),
-                    "contents": ImgIchiSelfieSub1
-                },
+                }
             ]};
             struc[PopUpManager.CIB_SELFIE_FOLDER] = { "contents": [
                 {
