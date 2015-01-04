@@ -21,6 +21,8 @@ package{
                 this.graph_filename + ".bak");
             this.dataFile = File.applicationDirectory.resolvePath(
                 "assets/" + this.graph_filename);
+
+            this.readExistingGraph = false;
         }
 
         override public function create():void {
@@ -82,7 +84,6 @@ package{
 
             var ray:FlxSprite = new FlxSprite(posX - disp._length() / 2, posY);
             ray.makeGraphic(disp._length(), 1, color);
-            ray.width = disp._length();
             ray.angle = this.radToDeg(angle);
             ray.active = false;
             if (ScreenManager.getInstance().DEBUG) {
@@ -102,7 +103,7 @@ package{
         public function nodesCanConnect(node1:MapNode, node2:MapNode):Object {
             var ray:FlxSprite;
             if (node1 != node2) {
-                ray = this.rayCast(node1.pos, node2.pos, 0xffff00ff, 440);
+                ray = this.rayCast(node1.pos, node2.pos, 0xffff00ff, 17);
             }
 
             if (ray == null) {
@@ -113,10 +114,9 @@ package{
                                                                node2.pos);
             if (!canConnect) {
                 ray.color = 0xffff0000;
-                //FlxG.state.remove(ray);
             }
             if (canConnect) {
-                trace("length: " + ray.width);
+                trace("adding ray of length: " + ray.width);
             }
             return {"canConnect": canConnect, "length": ray.width};
         }

@@ -18,6 +18,7 @@ package {
         public var dataFile:File, backupFile:File, writeFile:File, graphDataFile:File;
         public var fpsCounter:FPSCounter;
         public var shouldAddEnemies:Boolean = true;
+        public var readExistingGraph:Boolean = true;
 
         public static const MODE_READONLY:Number = 0;
         public static const MODE_EDIT:Number = 1;
@@ -68,7 +69,9 @@ package {
             pathWalker.setEnemyGroupReference(this.enemies);
 
             this.readIn();
-            this.readGraphIn();
+            if (this.readExistingGraph) {
+                this.readGraphIn();
+            }
 
             if (this._path.hasNodes()) {
                 this.pathWalker.moveToNextPathNode();
