@@ -92,12 +92,7 @@ package{
                             this.setIconVisibility(cur, false);
                         }
                     } else if (mouse_rect.overlaps(cur[this.getHitboxKey(cur)]._getRect())) {
-                        if(cur[this.getHitboxKey(cur)].visible && "icon_sprite" in cur) {
-                            cur["folder_sprite"].visible = true;
-                            cur["x_sprite"].visible = true;
-                            this.setIconVisibility(cur, true);
-                            propagateClick = false;
-                        } else if("hitbox_sprite" in cur) {
+                        if(cur[this.getHitboxKey(cur)].visible) {
                             if(this.checkForVisiblePopups(cur[this.getHitboxKey(cur)]._getRect(), root)) {
                                 cur["folder_sprite"].visible = true;
                                 cur["x_sprite"].visible = true;
@@ -135,6 +130,11 @@ package{
                             return false;
                         }
                     }
+                }
+            }
+            if(PopUpManager.getInstance().open_popup != null) {
+                if(PopUpManager.getInstance().open_popup.visible && PopUpManager.getInstance().open_popup._getRect().overlaps(hitbox)) {
+                    return false;
                 }
             }
             return true;
