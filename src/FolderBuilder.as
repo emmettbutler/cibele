@@ -120,7 +120,8 @@ package{
 
         public function checkForVisiblePopups(hitbox:FlxRect, root:Object):Boolean {
             var cur:Object;
-            for (var i:int = 0; i < root["contents"].length; i++) {
+            var i:Number = 0;
+            for (i = 0; i < root["contents"].length; i++) {
                 cur = root["contents"][i];
 
                 if (cur["contents"] is Array) {
@@ -132,9 +133,13 @@ package{
                     }
                 }
             }
-            if(PopUpManager.getInstance().open_popup != null) {
-                if(PopUpManager.getInstance().open_popup.visible && PopUpManager.getInstance().open_popup._getRect().overlaps(hitbox)) {
-                    return false;
+            if(PopUpManager.getInstance().open_popups != null) {
+                for(i = 0; i < PopUpManager.getInstance().open_popups.length; i++) {
+                    if(PopUpManager.getInstance().open_popups[i] != null) {
+                        if(PopUpManager.getInstance().open_popups[i].visible && PopUpManager.getInstance().open_popups[i]._getRect().overlaps(hitbox)) {
+                            return false;
+                        }
+                    }
                 }
             }
             return true;

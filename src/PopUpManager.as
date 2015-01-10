@@ -51,7 +51,7 @@ package{
         public static const BUTTON_FILES:String = "philesz";
         public static const BUTTON_GAME:String = "gamez";
 
-        public var open_popup:PopUp;
+        public var open_popups:Array;
 
         {
             public static const RING_INSET_X:Number = ScreenManager.getInstance().screenWidth * .03;
@@ -76,6 +76,7 @@ package{
         public function PopUpManager() {
             this.elements = new Array();
             this.sentPopups = new Dictionary();
+            this.open_popups = new Array();
 
             this.popupTags = {};
             this.popupTags[BUTTON_INTERNET] = EMPTY_INBOX;
@@ -86,6 +87,7 @@ package{
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
             var mouseScreenRect:FlxRect = new FlxRect(screenPos.x, screenPos.y,
                                                       5, 5);
+            var i:Number = 0;
             this.emote(mouseScreenRect, _player);
 
             for(var key:Object in this.folder_structure) {
@@ -95,40 +97,36 @@ package{
 
             if(this._state != SHOWING_POP_UP) {
                 var curButton:DockButton;
-                for (var i:int = 0; i < this.programButtons.length; i++) {
+                var curPopup:PopUp;
+                for (i = 0; i < this.programButtons.length; i++) {
                     curButton = this.programButtons[i];
                     if(this.overlaps(mouseScreenRect, curButton)) {
                         if(curButton.tag == BUTTON_GAME) {
                             curButton.toggleGame();
                         } else {
                             curButton.open();
+                            curPopup = curButton.getCurPopup();
                             this._state = SHOWING_POP_UP;
-                            this.open_popup = curButton.getCurPopup();
-                            if(folder_structure[this.open_popup.tag] != null) {
-                                this.folder_builder.setIconVisibility(this.folder_structure[this.open_popup.tag], true);
+                            this.open_popups.push(curPopup);
+                            if(folder_structure[curPopup.tag] != null) {
+                                this.folder_builder.setIconVisibility(this.folder_structure[curPopup.tag], true);
                             }
                             this.deleteSentPopup(curButton.cur_popup_tag);
                         }
                     }
                 }
             } else if(this._state == SHOWING_POP_UP) {
-                if(this.open_popup != null) {
-                    if(mouseScreenRect.overlaps(this.open_popup.x_sprite._getRect())) {
-                        this._state = SHOWING_NOTHING;
-                        FlxG.stage.dispatchEvent(new DataEvent(GameState.EVENT_POPUP_CLOSED, {'tag': this.open_popup.tag}));
-                        for (i = 0; i < this.programButtons.length; i++) {
-                            curButton = this.programButtons[i];
-                            if(curButton.getCurPopup() != null) {
-                                curButton.getCurPopup().visible = false;
-                            }
+                for(i = 0; i < this.open_popups.length; i++) {
+                    if(this.open_popups[i] != null) {
+                        if(mouseScreenRect.overlaps(this.open_popups[i].x_sprite._getRect())) {
+                            this._state = SHOWING_NOTHING;
+                            FlxG.stage.dispatchEvent(new DataEvent(GameState.EVENT_POPUP_CLOSED, {'tag': this.open_popups[i].tag}));
+                            this.open_popups[i].visible = false;
+                            if(folder_structure[this.open_popups[i].tag] != null) {
+                                    this.folder_builder.setIconVisibility(this.folder_structure[this.open_popups[i].tag], false);
+                                }
+                            this.open_popups[i] = null;
                         }
-                        if(folder_structure[this.open_popup.tag] != null) {
-                                this.folder_builder.setIconVisibility(this.folder_structure[this.open_popup.tag], false);
-                            }
-                    } else {
-                        if(folder_structure[this.open_popup.tag] != null) {
-                                this.folder_builder.resolveClick(this.folder_structure[this.open_popup.tag], mouseScreenRect);
-                            }
                     }
                 }
             }
