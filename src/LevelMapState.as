@@ -21,9 +21,12 @@ package {
         public var last_convo_playing:Boolean = false;
         public var mapTilePrefix:String;
         public var tileGridDimensions:DHPoint;
+        public var estTileDimensions:DHPoint;
+        public var playerStartPos:DHPoint;
+        public var colliderScaleFactor:Number;
 
         override public function create():void {
-            super.__create(new DHPoint(4600, 7565));
+            super.__create(this.playerStartPos);
 
             this.bornTime = new Date().valueOf();
             this.ID = LEVEL_ID;
@@ -35,6 +38,8 @@ package {
             this.bgLoader = new BackgroundLoader(
                 this.mapTilePrefix,
                 this.tileGridDimensions,
+                this.estTileDimensions,
+                this.colliderScaleFactor,
                 shouldShowColliders
             );
             this.bgLoader.setPlayerReference(player);

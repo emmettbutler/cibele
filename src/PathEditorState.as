@@ -28,22 +28,24 @@ package {
 
         override public function postCreate():void
         {
-            this.dataFile = File.applicationDirectory.resolvePath(
-                "assets/" + this.filename);
-            this.writeFile = File.applicationStorageDirectory.resolvePath(
-                this.filename);
-            this.backupFile = File.applicationStorageDirectory.resolvePath(
-                this.filename + ".bak");
+            if (this.filename != null) {
+                this.dataFile = File.applicationDirectory.resolvePath(
+                    "assets/" + this.filename);
+                this.writeFile = File.applicationStorageDirectory.resolvePath(
+                    this.filename);
+                this.backupFile = File.applicationStorageDirectory.resolvePath(
+                    this.filename + ".bak");
 
-            if (!this.writeFile.exists) {
-                this.editorMode = MODE_READONLY;
-                FlxG.flashGfxSprite.mouseEnabled = false;
-            } else {
-                this.editorMode = MODE_EDIT;
-                FlxG.flashGfxSprite.mouseEnabled = true;
+                if (!this.writeFile.exists) {
+                    this.editorMode = MODE_READONLY;
+                    FlxG.flashGfxSprite.mouseEnabled = false;
+                } else {
+                    this.editorMode = MODE_EDIT;
+                    FlxG.flashGfxSprite.mouseEnabled = true;
+                }
+                //this.editorMode = MODE_EDIT; //turn this on in order to edit
+                //compile with -a flag if I edit or make new path
             }
-            //this.editorMode = MODE_EDIT; //turn this on in order to edit
-            //compile with -a flag if I edit or make new path
 
             this.showNodes = ScreenManager.getInstance().DEBUG ||
                 this.editorMode == MODE_EDIT;
@@ -187,6 +189,9 @@ package {
         }
 
         public function readIn():void {
+            if (this.dataFile == null) {
+                return;
+            }
             var f:File = this.dataFile;
             if (this.editorMode == MODE_EDIT) {
                 if (this.writeFile.exists) {

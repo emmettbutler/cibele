@@ -39,13 +39,18 @@ package {
 
             FlxG.bgColor = 0xff000000;
 
+            var baseLayerColor:uint = 0xff000000;
+            if (ScreenManager.getInstance().DEBUG) {
+                baseLayerColor = 0xffffffff;
+            }
+
             this.baseLayer = new GameObject(new DHPoint(0, 0));
             this.baseLayer.scrollFactor = new DHPoint(0, 0);
             this.baseLayer.active = false;
             this.baseLayer.makeGraphic(
                 ScreenManager.getInstance().screenWidth,
                 ScreenManager.getInstance().screenHeight,
-                0xff000000
+                baseLayerColor
             );
             this.add(this.baseLayer);
 
