@@ -431,8 +431,9 @@ package{
                     {
                         // stuck!
                         this._state = STATE_WALK_HARD;
-                        if (this._mapnodes != null) {
-                            this.walkTarget = this._mapnodes.getClosestNode(this.pos).pos;
+                        var closest:MapNode = this._mapnodes.getClosestNode(this.pos);
+                        if (this._mapnodes != null && closest != null) {
+                            this.walkTarget = closest.pos;
                         } else {
                             var _screen:ScreenManager = ScreenManager.getInstance();
                             this.walkTarget = new DHPoint(_screen.screenWidth/2, this.y);

@@ -39,9 +39,9 @@ package {
 
             FlxG.bgColor = 0xff000000;
 
-            var bgColor:uint = 0xff000000;
+            var baseLayerColor:uint = 0xff000000;
             if (ScreenManager.getInstance().DEBUG) {
-                bgColor = 0xffffffff;
+                baseLayerColor = 0xffffffff;
             }
 
             this.baseLayer = new GameObject(new DHPoint(0, 0));
@@ -50,7 +50,7 @@ package {
             this.baseLayer.makeGraphic(
                 ScreenManager.getInstance().screenWidth,
                 ScreenManager.getInstance().screenHeight,
-                bgColor
+                baseLayerColor
             );
             this.add(this.baseLayer);
 

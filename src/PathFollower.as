@@ -357,6 +357,9 @@ package
 
         public function moveToNextNode():void {
             this.targetMapNode = this._mapnodes.getClosestNode(this.pos, this.targetMapNode);
+            if (this.targetMapNode == null) {
+                return;
+            }
             if(this.targetMapNode._type == MapNode.TYPE_MAP) {
                 this._state = STATE_MOVE_TO_MAP_NODE;
                 this.targetMapNode = this.targetMapNode;
@@ -405,7 +408,9 @@ package
             //TODO if you're standing still for too long, he should walk to you
             var targetPoint:DHPoint = this.playerRef.pos.add(dir.normalized().mulScl(555));
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint, null, false);
-            this.setPos(warpNode.pos);
+            if (warpNode != null) {
+                this.setPos(warpNode.pos);
+            }
             this._state = STATE_MOVE_TO_PLAYER;
             this.targetEnemy.inactiveTarget();
         }

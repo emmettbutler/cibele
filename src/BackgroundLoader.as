@@ -21,7 +21,7 @@ package {
         public var playerRef:Player;
         public var estTileWidth:Number, estTileHeight:Number;
         public var adjacentCoords:Array;
-        public var colliderScaleFactor:Number = 4;
+        public var colliderScaleFactor:Number;
         public var loadPositionThreshold:DHPoint;
         public var collisionData:Array;
         public var shouldLoadMap:Boolean;
@@ -29,21 +29,20 @@ package {
 
         public var dbgText:FlxText;
 
-        public function BackgroundLoader(macroImageName:String="", rows:Number=0,
-                                         cols:Number=0, colliderName:String=null,
+        public function BackgroundLoader(macroImageName:String="",
+                                         gridDimensions:DHPoint=null,
+                                         estTileDimensions:DHPoint=null,
+                                         colliderScaleFactor:Number=1,
                                          showColliders:Boolean=false)
         {
-            if (colliderName == null) {
-                this.colliderName = macroImageName;
-            } else {
-                this.colliderName = colliderName;
-            }
-            this.macroImageName = macroImageName;
             this.shouldLoadMap = true;
-            this.rows = rows;
-            this.cols = cols;
-            this.estTileWidth = 1359;
-            this.estTileHeight = 818;
+            this.colliderName = macroImageName + "_collider"
+            this.macroImageName = macroImageName + "_map";
+            this.colliderScaleFactor = colliderScaleFactor;
+            this.rows = gridDimensions.x;
+            this.cols = gridDimensions.y;
+            this.estTileWidth = estTileDimensions.x;
+            this.estTileHeight = estTileDimensions.y;
             this.loadPositionThreshold = new DHPoint(
                 Math.min((ScreenManager.getInstance().screenWidth) /
                     this.estTileWidth, .5),
@@ -152,8 +151,8 @@ package {
 
                 receivingMachine.contentLoaderInfo.addEventListener(Event.COMPLETE,
                     this.buildLoadCompleteCallback(tile, receivingMachine,
-                                                   isCollider ? 8.65 : 1));
-                var path:String = "../assets/test_tiles/" + imgName + "_" + numberString + ".png";
+                                                   isCollider ? this.colliderScaleFactor : 1));
+                var path:String = "../assets/map_tiles/" + imgName + "_" + numberString + ".png";
                 var req:URLRequest = new URLRequest(path);
                 receivingMachine.load(req);
             }
