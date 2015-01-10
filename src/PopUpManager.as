@@ -120,10 +120,20 @@ package{
                     if(mouseScreenRect.overlaps(this.open_popups[i].x_sprite._getRect())) {
                         this._state = SHOWING_NOTHING;
                         FlxG.stage.dispatchEvent(new DataEvent(GameState.EVENT_POPUP_CLOSED, {'tag': this.open_popups[i].tag}));
-                        this.open_popups[i].visible = false;
+                        FlxG.log("close");
                         if(folder_structure[this.open_popups[i].tag] != null) {
                                 this.folder_builder.setIconVisibility(this.folder_structure[this.open_popups[i].tag], false);
+                        }
+                        for (var ii:Number = 0; ii < this.programButtons.length; ii++) {
+                            curButton = this.programButtons[ii];
+                            if(curButton.getCurPopup() != null) {
+                                if(curButton.getCurPopup() == this.open_popups[i]) {
+                                    curButton.getCurPopup().visible = false;
+                                } else {
+                                    this.open_popups[i].visible = false;
+                                }
                             }
+                        }
                         this.open_popups[i] = null;
                     }
                 }
