@@ -42,7 +42,6 @@ package{
         public var popupTags:Object;
 
         public var elements:Array;
-        public var popup_active:Boolean = false;
         public var folder_structure:Object;
         public var folder_builder:FolderBuilder;
 
@@ -166,11 +165,6 @@ package{
         }
 
         public function update():void {
-            if(this._state == SHOWING_NOTHING) {
-                this.popup_active = false;
-            } else if(this._state == SHOWING_POP_UP) {
-                this.popup_active = true;
-            }
         }
 
         public function sendPopup(key:String):void {

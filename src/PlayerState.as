@@ -52,11 +52,7 @@ package {
                     objects.push(this.clickObjectGroups[i][j]);
                 }
             }
-            if(!PopUpManager.getInstance().popup_active){
-                this.player.clickCallback(screenPos, worldPos, objects);
-            } else {
-                PopUpManager.getInstance().popup_active = false;
-            }
+            this.player.clickCallback(screenPos, worldPos, objects);
         }
 
         public function restrictPlayerMovement():void {
