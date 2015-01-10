@@ -19,6 +19,8 @@ package {
 
         public var bitDialogue:ProceduralDialogueGenerator;
         public var last_convo_playing:Boolean = false;
+        public var mapTilePrefix:String;
+        public var tileGridDimensions:DHPoint;
 
         override public function create():void {
             super.__create(new DHPoint(4600, 7565));
@@ -28,10 +30,13 @@ package {
 
             this.bitDialogue = new ProceduralDialogueGenerator(this);
 
-            this.bgLoader = new BackgroundLoader("ikuturso_map", 10, 5,
-                "ikuturso_collider",
-                ScreenManager.getInstance().DEBUG ||
-                    this.editorMode == PathEditorState.MODE_EDIT);
+            var shouldShowColliders:Boolean = ScreenManager.getInstance().DEBUG ||
+                                              this.editorMode == PathEditorState.MODE_EDIT;
+            this.bgLoader = new BackgroundLoader(
+                this.mapTilePrefix,
+                this.tileGridDimensions,
+                shouldShowColliders
+            );
             this.bgLoader.setPlayerReference(player);
 
             ScreenManager.getInstance().setupCamera(player.cameraPos);

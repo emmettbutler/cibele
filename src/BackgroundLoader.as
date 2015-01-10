@@ -27,18 +27,14 @@ package {
 
         public var dbgText:FlxText;
 
-        public function BackgroundLoader(macroImageName:String="", rows:Number=0,
-                                         cols:Number=0, colliderName:String=null,
+        public function BackgroundLoader(macroImageName:String="",
+                                         gridDimensions:DHPoint=null,
                                          showColliders:Boolean=false)
         {
-            if (colliderName == null) {
-                this.colliderName = macroImageName;
-            } else {
-                this.colliderName = colliderName;
-            }
-            this.macroImageName = macroImageName;
-            this.rows = rows;
-            this.cols = cols;
+            this.colliderName = macroImageName + "_collider"
+            this.macroImageName = macroImageName + "_map";
+            this.rows = gridDimensions.x;
+            this.cols = gridDimensions.y;
             this.estTileWidth = 1359;
             this.estTileHeight = 818;
             this.loadPositionThreshold = new DHPoint(

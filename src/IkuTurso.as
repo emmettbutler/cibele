@@ -65,6 +65,8 @@ package{
 
         override public function create():void {
             this.filename = "ikuturso_path.txt";
+            this.mapTilePrefix = "ikuturso";
+            this.tileGridDimensions = new DHPoint(10, 5);
             super.create();
             function _bgmCallback():void {
                 SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true, .08, GameSound.BGM, IkuTurso.BGM, false, false);
