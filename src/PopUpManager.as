@@ -95,38 +95,36 @@ package{
                 this.folder_builder.resolveClick(_val, mouseScreenRect);
             }
 
-            if(this._state != SHOWING_POP_UP) {
-                var curButton:DockButton;
-                var curPopup:PopUp;
-                for (i = 0; i < this.programButtons.length; i++) {
-                    curButton = this.programButtons[i];
-                    if(this.overlaps(mouseScreenRect, curButton)) {
-                        if(curButton.tag == BUTTON_GAME) {
-                            curButton.toggleGame();
-                        } else {
-                            curButton.open();
-                            curPopup = curButton.getCurPopup();
-                            this._state = SHOWING_POP_UP;
-                            this.open_popups.push(curPopup);
-                            if(folder_structure[curPopup.tag] != null) {
-                                this.folder_builder.setIconVisibility(this.folder_structure[curPopup.tag], true);
-                            }
-                            this.deleteSentPopup(curButton.cur_popup_tag);
+            var curButton:DockButton;
+            var curPopup:PopUp;
+            for (i = 0; i < this.programButtons.length; i++) {
+                curButton = this.programButtons[i];
+                if(this.overlaps(mouseScreenRect, curButton)) {
+                    if(curButton.tag == BUTTON_GAME) {
+                        curButton.toggleGame();
+                    } else {
+                        curButton.open();
+                        curPopup = curButton.getCurPopup();
+                        this._state = SHOWING_POP_UP;
+                        this.open_popups.push(curPopup);
+                        if(folder_structure[curPopup.tag] != null) {
+                            this.folder_builder.setIconVisibility(this.folder_structure[curPopup.tag], true);
                         }
+                        this.deleteSentPopup(curButton.cur_popup_tag);
                     }
                 }
-            } else if(this._state == SHOWING_POP_UP) {
-                for(i = 0; i < this.open_popups.length; i++) {
-                    if(this.open_popups[i] != null) {
-                        if(mouseScreenRect.overlaps(this.open_popups[i].x_sprite._getRect())) {
-                            this._state = SHOWING_NOTHING;
-                            FlxG.stage.dispatchEvent(new DataEvent(GameState.EVENT_POPUP_CLOSED, {'tag': this.open_popups[i].tag}));
-                            this.open_popups[i].visible = false;
-                            if(folder_structure[this.open_popups[i].tag] != null) {
-                                    this.folder_builder.setIconVisibility(this.folder_structure[this.open_popups[i].tag], false);
-                                }
-                            this.open_popups[i] = null;
-                        }
+            }
+
+            for(i = 0; i < this.open_popups.length; i++) {
+                if(this.open_popups[i] != null) {
+                    if(mouseScreenRect.overlaps(this.open_popups[i].x_sprite._getRect())) {
+                        this._state = SHOWING_NOTHING;
+                        FlxG.stage.dispatchEvent(new DataEvent(GameState.EVENT_POPUP_CLOSED, {'tag': this.open_popups[i].tag}));
+                        this.open_popups[i].visible = false;
+                        if(folder_structure[this.open_popups[i].tag] != null) {
+                                this.folder_builder.setIconVisibility(this.folder_structure[this.open_popups[i].tag], false);
+                            }
+                        this.open_popups[i] = null;
                     }
                 }
             }
@@ -294,15 +292,15 @@ package{
             this.programButtons.push(this.photo_button);
 
             this.popups = new Dictionary();
-            this.popups[BULLDOG_HELL] = new PopUp(ImgBHEmail, 631, 356, 0, BULLDOG_HELL);
-            this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 356, 463, PopUp.CLICK_THROUGH, SELFIES_1);
-            this.popups[GUIL_1] = new PopUp(ImgGuilEmail1, 631, 356, 0, GUIL_1);
-            this.popups[ICHI_PICLY_1] = new PopUp(ImgIchiPicly1, 356, 463, 0, ICHI_PICLY_1);
-            this.popups[ICHI_SELFIE1] = new PopUp(ImgIchiSelfie1, 631, 356, 0, ICHI_SELFIE1);
-            this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibCamDisconnect, 253, 107, 0, CIB_SELFIE_FOLDER);
             this.popups[EMPTY_INBOX] = new PopUp(ImgEmptyInbox, 631, 356, 0, EMPTY_INBOX);
             this.popups[FOR_ICHI] = new PopUp(ImgForIchi, 356, 463, 0, FOR_ICHI);
             this.popups[ICHI_DL_2] = new PopUp(ImgIchiDL2, 631, 356, 0, ICHI_DL_2);
+            this.popups[ICHI_PICLY_1] = new PopUp(ImgIchiPicly1, 356, 463, 0, ICHI_PICLY_1);
+            this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 356, 463, PopUp.CLICK_THROUGH, SELFIES_1);
+            this.popups[GUIL_1] = new PopUp(ImgGuilEmail1, 631, 356, 0, GUIL_1);
+            this.popups[BULLDOG_HELL] = new PopUp(ImgBHEmail, 631, 356, 0, BULLDOG_HELL);
+            this.popups[ICHI_SELFIE1] = new PopUp(ImgIchiSelfie1, 631, 356, 0, ICHI_SELFIE1);
+            this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibCamDisconnect, 253, 107, 0, CIB_SELFIE_FOLDER);
 
             var curButton:DockButton;
             for (var i:int = 0; i < this.programButtons.length; i++){
