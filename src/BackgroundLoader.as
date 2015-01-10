@@ -39,10 +39,14 @@ package {
             this.colliderName = macroImageName + "_collider"
             this.macroImageName = macroImageName + "_map";
             this.colliderScaleFactor = colliderScaleFactor;
-            this.rows = gridDimensions.x;
-            this.cols = gridDimensions.y;
-            this.estTileWidth = estTileDimensions.x;
-            this.estTileHeight = estTileDimensions.y;
+            if (gridDimensions != null) {
+                this.rows = gridDimensions.x;
+                this.cols = gridDimensions.y;
+            }
+            if (estTileDimensions != null) {
+                this.estTileWidth = estTileDimensions.x;
+                this.estTileHeight = estTileDimensions.y;
+            }
             this.loadPositionThreshold = new DHPoint(
                 Math.min((ScreenManager.getInstance().screenWidth) /
                     this.estTileWidth, .5),
