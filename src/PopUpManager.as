@@ -119,8 +119,10 @@ package{
                 if(this.open_popups[i] != null) {
                     if(mouseScreenRect.overlaps(this.open_popups[i].x_sprite._getRect())) {
                         this._state = SHOWING_NOTHING;
-                        FlxG.stage.dispatchEvent(new DataEvent(GameState.EVENT_POPUP_CLOSED, {'tag': this.open_popups[i].tag}));
-                        FlxG.log("close");
+                        if(!this.open_popups[i].was_opened) {
+                            this.open_popups[i].was_opened = true;
+                            FlxG.stage.dispatchEvent(new DataEvent(GameState.EVENT_POPUP_CLOSED, {'tag': this.open_popups[i].tag}));
+                        }
                         if(folder_structure[this.open_popups[i].tag] != null) {
                                 this.folder_builder.setIconVisibility(this.folder_structure[this.open_popups[i].tag], false);
                         }
@@ -303,8 +305,11 @@ package{
 
             this.popups = new Dictionary();
             this.popups[EMPTY_INBOX] = new PopUp(ImgEmptyInbox, 631, 356, 0, EMPTY_INBOX);
+            this.popups[EMPTY_INBOX].was_opened = true;
             this.popups[FOR_ICHI] = new PopUp(ImgForIchi, 356, 463, 0, FOR_ICHI);
+            this.popups[FOR_ICHI].was_opened = true;
             this.popups[ICHI_DL_2] = new PopUp(ImgIchiDL2, 631, 356, 0, ICHI_DL_2);
+            this.popups[ICHI_DL_2].was_opened = true;
             this.popups[ICHI_PICLY_1] = new PopUp(ImgIchiPicly1, 356, 463, 0, ICHI_PICLY_1);
             this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 356, 463, PopUp.CLICK_THROUGH, SELFIES_1);
             this.popups[GUIL_1] = new PopUp(ImgGuilEmail1, 631, 356, 0, GUIL_1);

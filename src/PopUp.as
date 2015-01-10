@@ -11,6 +11,7 @@ package{
         public var tag:String;
         public var links:Array;
         public var x_sprite:GameObject;
+        public var was_opened:Boolean = false;
 
         public function PopUp(img:Class, w:Number, h:Number,
                               functionality:Number=0, tag:String=null,
@@ -48,6 +49,10 @@ package{
             } else {
                 this.x_sprite.visible = false;
             }
+        }
+
+        public function open():void {
+            this.visible = true;
         }
 
         override public function destroy():void { }

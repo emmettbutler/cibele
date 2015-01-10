@@ -37,7 +37,7 @@ package {
             this.hasOpened = true;
             this.alerting = false;
             if (this.cur_popup != null) {
-                this.cur_popup.visible = true;
+                this.cur_popup.open();
             }
         }
 

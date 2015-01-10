@@ -34,16 +34,6 @@ package {
                     "contents": ImgIchiDL1
                 }
             ]};
-            struc[PopUpManager.BULLDOG_HELL] = { "contents": [
-                {
-                    "name": "bulldog hell",
-                    "icon": ImgBHIcon,
-                    "icon_dim": new DHPoint(74, 14),
-                    "icon_pos": new DHPoint(179, 101),
-                    "dim": new DHPoint(1030, 510),
-                    "contents": ImgBH
-                }
-            ]};
             struc[PopUpManager.ICHI_SELFIE1] = { "contents": [
                 {
                     "name": "ichi selfie email 1",
@@ -96,6 +86,16 @@ package {
                             "dim": new DHPoint(530, 356),
                             "contents": ImgCibCam1
                         }]
+                }
+            ]};
+            struc[PopUpManager.BULLDOG_HELL] = { "contents": [
+                {
+                    "name": "bulldog hell",
+                    "icon": ImgBHIcon,
+                    "icon_dim": new DHPoint(74, 14),
+                    "icon_pos": new DHPoint(179, 101),
+                    "dim": new DHPoint(1030, 510),
+                    "contents": ImgBH
                 }
             ]};
             struc[PopUpManager.GUIL_1] = { "contents": [
