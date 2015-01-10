@@ -13,6 +13,11 @@ package{
         public function GraphGenerator():void {
             this.filename = "ikuturso_path.txt";
             this.graph_filename = "ikuturso_graph.txt";
+            this.mapTilePrefix = "ikuturso";
+            this.tileGridDimensions = new DHPoint(10, 5);
+            this.estTileDimensions = new DHPoint(1359, 818);
+            this.playerStartPos = new DHPoint(4600, 7565);
+            this.colliderScaleFactor = 8.65;
             this.shouldAddEnemies = false;
 
             this.writeFile = File.applicationStorageDirectory.resolvePath(
