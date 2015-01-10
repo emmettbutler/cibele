@@ -42,6 +42,8 @@ package{
         public var leftFootstepOffset:DHPoint;
         public var rightFootstepOffset:DHPoint;
         public var attack_anim_playing:Boolean = false;
+        public var mouseDownTime:Number;
+        public var mouseHeld:Boolean = false;
 
         public static const STATE_WALK:Number = 2398476188;
         public static const STATE_WALK_HARD:Number = 23981333333;
@@ -171,6 +173,11 @@ package{
                 return;
             }
 
+            // don't react to held mouse button
+            if (new Date().valueOf() - this.mouseDownTime > 1*GameSound.MSEC_PER_SEC) {
+                return;
+            }
+
             this.initWalk(worldPos);
             if (this.targetEnemy != null) {
                 this._state = STATE_MOVE_TO_ENEMY;
@@ -226,12 +233,12 @@ package{
             );
         }
 
-        public function initWalk(worldPos:DHPoint):void {
+        public function initWalk(worldPos:DHPoint, usePaths:Boolean=true):void {
             if (this._mapnodes != null) {
                 var closestNode:MapNode = this._mapnodes.getClosestGenericNode(this.pos);
                 var destinationDisp:Number = this.footPos.sub(worldPos)._length();
                 var nearestNodeDisp:Number = this.footPos.sub(closestNode.pos)._length();
-                if (destinationDisp < nearestNodeDisp) {
+                if (!usePaths || destinationDisp < nearestNodeDisp) {
                     this.walkTarget = worldPos;
                     this.finalTarget = worldPos;
                     this.curPath = null;
@@ -320,7 +327,7 @@ package{
             } else if (this.finalTarget.sub(this.footPos)._length() < 100) {
                 this.dir = this.dir.mulScl(.7);
             }
-            if (!this.positionDeltaOverThreshold() && !this.clickWait) {
+            if (!this.positionDeltaOverThreshold() && !this.clickWait && !this.mouseHeld) {
                 this._state = STATE_IDLE;
                 this.dir = ZERO_POINT;
                 this.curPath = null;
@@ -328,6 +335,9 @@ package{
         }
 
         override public function update():void{
+            if (FlxG.mouse.justPressed()) {
+                this.mouseDownTime = new Date().valueOf();
+            }
             if(this.walkTarget != null) {
                 this.cameraPos.x = interpolate(.1, this.cameraPos.x,
                                                this.pos.center(this).x);
@@ -366,8 +376,22 @@ package{
                 this.setFacing(false);
             }
 
+            var timeDiff:Number = new Date().valueOf() - this.mouseDownTime;
+            if (FlxG.mouse.pressed() && timeDiff > .5*GameSound.MSEC_PER_SEC && timeDiff < 1.5*GameSound.MSEC_PER_SEC) {
+                this.initWalk(new DHPoint(FlxG.mouse.x, FlxG.mouse.y), false);
+                this.mouseHeld = true;
+            }
+            if (this.mouseHeld && !FlxG.mouse.pressed()) {
+                this.mouseHeld = false;
+            }
+
             if (this._state == STATE_WALK || this._state == STATE_WALK_HARD) {
                 this.walk();
+                if(FlxG.mouse.pressed()) {
+                    this.walkTarget = new DHPoint(FlxG.mouse.x, FlxG.mouse.y);
+                } else if(FlxG.mouse.justReleased()) {
+                    this.click_anim_lock = false;
+                }
                 this.doMovementState();
             } else if (this._state == STATE_MOVE_TO_ENEMY) {
                 if(this.targetEnemy != null) {

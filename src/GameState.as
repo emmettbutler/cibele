@@ -163,7 +163,7 @@ package {
 
             this.updateCursor();
 
-            if(FlxG.mouse.justPressed()) {
+            if(FlxG.mouse.justReleased()) {
                 this.playClick();
                 this.clickCallback(
                     new DHPoint(FlxG.mouse.screenX, FlxG.mouse.screenY),
