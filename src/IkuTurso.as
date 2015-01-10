@@ -65,6 +65,7 @@ package{
 
         override public function create():void {
             this.filename = "ikuturso_path.txt";
+            this.graph_filename = "ikuturso_graph.txt";
             this.mapTilePrefix = "ikuturso";
             this.tileGridDimensions = new DHPoint(10, 5);
             this.estTileDimensions = new DHPoint(1359, 818);
@@ -77,6 +78,7 @@ package{
             SoundManager.getInstance().playSound(ITBGMIntro, 3.6*GameSound.MSEC_PER_SEC, _bgmCallback, false, .08, Math.random()*928+298, IkuTurso.BGM, false, false, true);
             GlobalTimer.getInstance().setMark("First Emote", 5*GameSound.MSEC_PER_SEC, this.ichiStartEmote);
             this.convo1Sound = null;
+            this.bgLoader.loadAllTiles();
         }
 
         public function ichiStartEmote():void {

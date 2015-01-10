@@ -14,9 +14,11 @@ package {
         public var enemies:EnemyGroup;
         public var boss:BossEnemy;
         public var showNodes:Boolean;
-        public var filename:String;
-        public var dataFile:File, backupFile:File, writeFile:File;
+        public var filename:String, graph_filename:String;
+        public var dataFile:File, backupFile:File, writeFile:File, graphDataFile:File;
         public var fpsCounter:FPSCounter;
+        public var shouldAddEnemies:Boolean = true;
+        public var readExistingGraph:Boolean = true;
 
         public static const MODE_READONLY:Number = 0;
         public static const MODE_EDIT:Number = 1;
@@ -35,6 +37,8 @@ package {
                     this.filename);
                 this.backupFile = File.applicationStorageDirectory.resolvePath(
                     this.filename + ".bak");
+                this.graphDataFile = File.applicationDirectory.resolvePath(
+                    "assets/" + this.graph_filename);
 
                 if (!this.writeFile.exists) {
                     this.editorMode = MODE_READONLY;
@@ -55,7 +59,7 @@ package {
             player.initFootsteps();
             pathWalker.initFootsteps();
 
-            _path = new Path(player);
+            _path = new Path();
             pathWalker.setPath(_path);
             pathWalker.setPlayerReference(player);
 
@@ -67,6 +71,9 @@ package {
             pathWalker.setEnemyGroupReference(this.enemies);
 
             this.readIn();
+            if (this.readExistingGraph) {
+                this.readGraphIn();
+            }
 
             if (this._path.hasNodes()) {
                 this.pathWalker.moveToNextPathNode();
@@ -188,6 +195,64 @@ package {
             this.writeBackup();
         }
 
+        public function getAllNodes():Array {
+            var allNodes:Array = new Array();
+            for (var k:int = 0; k < this._mapnodes.path.nodes.length; k++) {
+                allNodes.push(this._mapnodes.path.nodes[k]);
+            }
+            for (var h:int = 0; h < this._mapnodes.nodes.length; h++) {
+                allNodes.push(this._mapnodes.nodes[h]);
+            }
+            return allNodes;
+        }
+
+        public function readGraphIn():void {
+            var f:File = this.graphDataFile;
+            var str:FileStream = new FileStream();
+            if (!f.exists) {
+                return;
+            }
+            str.open(f, FileMode.READ);
+            var fileContents:String = str.readUTFBytes(f.size);
+            str.close();
+
+            var lines:Array = fileContents.split("\n");
+            var line:Array, generator:GraphGenerator;
+            var node1:MapNode, node2:MapNode, score:Number;
+            generator = new GraphGenerator();
+            for (var i:int = 0; i < lines.length - 1; i++) {
+                line = lines[i].split(" ");
+                node1 = this.getMapNodeById(line[0]);
+                node2 = this.getMapNodeById(line[1]);
+                score = Number(line[2]);
+                if (node1 != null && node2 != null) {
+                    node1.addEdge(node2, score);
+                    if (ScreenManager.getInstance().DEBUG) {
+                        generator.rayCast(node1.pos, node2.pos)
+                    }
+                }
+            }
+        }
+
+        public function clearAllAStarMeasures():void {
+            var allNodes:Array = this.getAllNodes();
+            for (var i:int = 0; i < allNodes.length; i++) {
+                allNodes[i].clearAStarData();
+            }
+        }
+
+        public function getMapNodeById(_id:String):MapNode {
+            var mapNode:MapNode = this._mapnodes.nodesHash[_id];
+            if (mapNode != null) {
+                return mapNode;
+            }
+            var pathNode:MapNode = this._path.nodesHash[_id];
+            if(pathNode != null) {
+                return pathNode;
+            }
+            return null;
+        }
+
         public function readIn():void {
             if (this.dataFile == null) {
                 return;
@@ -207,9 +272,7 @@ package {
             str.close();
 
             var lines:Array = fileContents.split("\n");
-            var line:Array;
-            var coords:Array;
-            var prefix_:String;
+            var line:Array, coords:Array, prefix_:String;
             for (var i:int = 0; i < lines.length - 1; i++) {
                 line = lines[i].split(" ");
                 prefix_ = line[0];
@@ -223,13 +286,13 @@ package {
                     this._mapnodes.addNode(
                         new DHPoint(Number(coords[0]), Number(coords[1])),
                         this.showNodes);
-                } else if (prefix_.indexOf("enemy") == 0) {
+                } else if (prefix_.indexOf("enemy") == 0 && this.shouldAddEnemies) {
                     coords = line[1].split("x");
                     var en:SmallEnemy = new SmallEnemy(
                         new DHPoint(Number(coords[0]), Number(coords[1])));
                     add(en);
                     this.enemies.addEnemy(en);
-                } else if (prefix_.indexOf("boss") == 0) {
+                } else if (prefix_.indexOf("boss") == 0 && this.shouldAddEnemies) {
                     coords = line[1].split("x");
                     var bo:BossEnemy = new BossEnemy(
                         new DHPoint(Number(coords[0]), Number(coords[1])));

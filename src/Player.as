@@ -16,12 +16,13 @@ package{
         [Embed(source="../assets/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
 
         private var walkDistance:Number = 0;
-        private var walkTarget:DHPoint;
+        private var walkTarget:DHPoint, finalTarget:DHPoint;
         private var walkDirection:DHPoint = null;
         private var walkSpeed:Number = 8;
         private var walking:Boolean = false;
         public var colliding:Boolean = false;
         public var hitbox_rect:FlxRect;
+        public var curPath:Path;
         public var lastPos:DHPoint;
         public var mapHitbox:GameObject;
         public var hitboxOffset:DHPoint, hitboxDim:DHPoint;
@@ -41,9 +42,12 @@ package{
         public var leftFootstepOffset:DHPoint;
         public var rightFootstepOffset:DHPoint;
         public var attack_anim_playing:Boolean = false;
+        public var mouseDownTime:Number;
+        public var mouseHeld:Boolean = false;
 
         public static const STATE_WALK:Number = 2398476188;
         public static const STATE_WALK_HARD:Number = 23981333333;
+        public static const STATE_MOVE_TO_PATH_NODE:Number = 384759813734;
 
         {
             public static var stateMap:Dictionary = new Dictionary();
@@ -53,6 +57,7 @@ package{
             stateMap[STATE_MOVE_TO_ENEMY] = "STATE_MOVE_TO_ENEMY";
             stateMap[STATE_WALK] = "STATE_WALK";
             stateMap[STATE_WALK_HARD] = "STATE_WALK_HARD";
+            stateMap[STATE_MOVE_TO_PATH_NODE] = "STATE_MOVE_TO_PATH_NODE";
         }
 
         public function Player(x:Number, y:Number):void{
@@ -106,6 +111,7 @@ package{
             this.rightFootstepOffset = new DHPoint(40, this.height-20);
             this.footstepOffset = this.upDownFootstepOffset;
             this.walkTarget = new DHPoint(0, 0);
+            this.debugText.color = 0xff444444;
 
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
             this.lastPositions = new Deque(3);
@@ -167,10 +173,13 @@ package{
                 return;
             }
 
-            if (this.targetEnemy == null) {
-                this.initWalk(worldPos);
-            } else {
-                this.walkTarget = new DHPoint(FlxG.mouse.x, FlxG.mouse.y);
+            // don't react to held mouse button
+            if (new Date().valueOf() - this.mouseDownTime > 1*GameSound.MSEC_PER_SEC) {
+                return;
+            }
+
+            this.initWalk(worldPos);
+            if (this.targetEnemy != null) {
                 this._state = STATE_MOVE_TO_ENEMY;
             }
             this.dir = this.walkTarget.sub(footPos).normalized();
@@ -224,14 +233,40 @@ package{
             );
         }
 
-        public function initWalk(worldPos:DHPoint):void {
+        public function initWalk(worldPos:DHPoint, usePaths:Boolean=true):void {
+            if (this._mapnodes != null) {
+                var closestNode:MapNode = this._mapnodes.getClosestGenericNode(this.pos);
+                var destinationDisp:Number = this.footPos.sub(worldPos)._length();
+                var nearestNodeDisp:Number = this.footPos.sub(closestNode.pos)._length();
+                if (!usePaths || destinationDisp < nearestNodeDisp) {
+                    this.walkTarget = worldPos;
+                    this.finalTarget = worldPos;
+                    this.curPath = null;
+                } else {
+                    this.walkTarget = closestNode.pos;
+                    this.finalTarget = worldPos;
+                    this.curPath = Path.shortestPath(
+                        closestNode, this._mapnodes.getClosestGenericNode(this.finalTarget)
+                    );
+                    (FlxG.state as PathEditorState).clearAllAStarMeasures();
+
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace("Path: " + this.curPath.toString());
+                    }
+                }
+            } else {
+                this.walkTarget = worldPos;
+                this.finalTarget = worldPos;
+                    this.curPath = null;
+            }
+
             this._state = STATE_WALK;
-            this.walkTarget = worldPos;
+
             if(!this.click_anim_lock) {
                 this.click_anim_lock = true;
-                this.click_anim.x = this.walkTarget.x -
+                this.click_anim.x = this.finalTarget.x -
                     this.click_anim.width/2;
-                this.click_anim.y = this.walkTarget.y -
+                this.click_anim.y = this.finalTarget.y -
                     this.click_anim.height/2;
                 this.click_anim.visible = true;
                 this.click_anim.play("click");
@@ -273,12 +308,45 @@ package{
             return minimum + (maximum - minimum) * normValue;
         }
 
+        public function doMovementState():void {
+            if (this.finalTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
+                this._state = STATE_IDLE;
+                this.dir = ZERO_POINT;
+            } else if (this.walkTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
+                if (curPath == null) {
+                    this._state = STATE_IDLE;
+                    this.dir = ZERO_POINT;
+                } else {
+                    if (this.curPath.advance()) {
+                        this.walkTarget = this.finalTarget;
+                        this.curPath = null;
+                    } else {
+                        this.walkTarget = this.curPath.currentNode.pos;
+                    }
+                }
+            } else if (this.finalTarget.sub(this.footPos)._length() < 100) {
+                this.dir = this.dir.mulScl(.7);
+            }
+            if (!this.positionDeltaOverThreshold() && !this.clickWait && !this.mouseHeld) {
+                this._state = STATE_IDLE;
+                this.dir = ZERO_POINT;
+                this.curPath = null;
+            }
+        }
+
         override public function update():void{
+            if (FlxG.mouse.justPressed()) {
+                this.mouseDownTime = new Date().valueOf();
+            }
             if(this.walkTarget != null) {
                 this.cameraPos.x = interpolate(.1, this.cameraPos.x,
                                                this.pos.center(this).x);
                 this.cameraPos.y = interpolate(.1, this.cameraPos.y,
                                                this.pos.center(this).y);
+            }
+
+            if (ScreenManager.getInstance().DEBUG) {
+                this.debugText.text = Player.stateMap[this._state] == null ? "unknown" : Player.stateMap[this._state];
             }
 
             this.attack_sprite.x = this.x;
@@ -308,6 +376,15 @@ package{
                 this.setFacing(false);
             }
 
+            var timeDiff:Number = new Date().valueOf() - this.mouseDownTime;
+            if (FlxG.mouse.pressed() && timeDiff > .5*GameSound.MSEC_PER_SEC && timeDiff < 1.5*GameSound.MSEC_PER_SEC) {
+                this.initWalk(new DHPoint(FlxG.mouse.x, FlxG.mouse.y), false);
+                this.mouseHeld = true;
+            }
+            if (this.mouseHeld && !FlxG.mouse.pressed()) {
+                this.mouseHeld = false;
+            }
+
             if (this._state == STATE_WALK || this._state == STATE_WALK_HARD) {
                 this.walk();
                 if(FlxG.mouse.pressed()) {
@@ -315,20 +392,12 @@ package{
                 } else if(FlxG.mouse.justReleased()) {
                     this.click_anim_lock = false;
                 }
-                if (this.walkTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
-                    this._state = STATE_IDLE;
-                    this.dir = ZERO_POINT;
-                } else if (this.walkTarget.sub(this.footPos)._length() < 100) {
-                    this.dir = this.dir.mulScl(.7);
-                }
-                if (!this.positionDeltaOverThreshold() && !this.clickWait) {
-                    this._state = STATE_IDLE;
-                    this.dir = ZERO_POINT;
-                }
+                this.doMovementState();
             } else if (this._state == STATE_MOVE_TO_ENEMY) {
                 if(this.targetEnemy != null) {
-                    this.walkTarget = this.targetEnemy.getAttackPos();
+                    this.finalTarget = this.targetEnemy.getAttackPos();
                     this.walk();
+                    this.doMovementState();
                     if (this.enemyIsInAttackRange(this.targetEnemy)) {
                         this._state = STATE_AT_ENEMY;
                     }
@@ -487,7 +556,7 @@ package{
                 this.attack_sprite.play("attack");
                 this.attack_anim_playing = true;
                 GlobalTimer.getInstance().setMark("attack_finished",
-                (23/10)*GameSound.MSEC_PER_SEC, this.attackFinished, true);
+                    (23/10)*GameSound.MSEC_PER_SEC, this.attackFinished, true);
 
                 var snd:Class = SfxAttack1;
                 var rand:Number = Math.random() * 4;

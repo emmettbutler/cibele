@@ -31,8 +31,6 @@ package org.flixel.plugin.photonstorm
 
     public class FlxCollision
     {
-        public static var debug:BitmapData = new BitmapData(1, 1, false);
-
         public static var CAMERA_WALL_OUTSIDE:uint = 0;
         public static var CAMERA_WALL_INSIDE:uint = 1;
 
@@ -57,27 +55,48 @@ package org.flixel.plugin.photonstorm
                                                  camera:FlxCamera = null,
                                                  collisionWidthThreshold:Number=0,
                                                  collisionHeightThreshold:Number=0,
-                                                 showCollider:Boolean=false):Array
+                                                 showCollider:Boolean=false,
+                                                 rotationOrigin:DHPoint=null):Array
         {
             var pointA:Point = new Point;
             var pointB:Point = new Point;
 
-            if (camera) {
-                pointA.x = contact.x - int(camera.scroll.x * contact.scrollFactor.x) - contact.offset.x;
-                pointA.y = contact.y - int(camera.scroll.y * contact.scrollFactor.y) - contact.offset.y;
-
-                pointB.x = target.x - int(camera.scroll.x * target.scrollFactor.x) - target.offset.x;
-                pointB.y = target.y - int(camera.scroll.y * target.scrollFactor.y) - target.offset.y;
-            }
-            else {
-                pointA.x = contact.x - int(FlxG.camera.scroll.x * contact.scrollFactor.x) - contact.offset.x;
-                pointA.y = contact.y - int(FlxG.camera.scroll.y * contact.scrollFactor.y) - contact.offset.y;
-
-                pointB.x = target.x - int(FlxG.camera.scroll.x * target.scrollFactor.x) - target.offset.x;
-                pointB.y = target.y - int(FlxG.camera.scroll.y * target.scrollFactor.y) - target.offset.y;
+            var cam:FlxCamera = camera;
+            if (cam == null) {
+                cam = FlxG.camera;
             }
 
-            var boundsA:Rectangle = new Rectangle(pointA.x, pointA.y, contact.framePixels.width, contact.framePixels.height);
+            var contactPixels:BitmapData;
+            var contactPos:DHPoint = new DHPoint(contact.x, contact.y);
+            if (contact.angle == 0) {
+                contactPixels = contact.framePixels;
+            } else {
+                var degrees:Number = contact.angle;
+                var angle_in_radians:Number = degrees * Math.PI / 180;
+                var matrixImage:BitmapData = new BitmapData(
+                    Math.max(contact.width, contact.height) * 2,
+                    Math.max(contact.width, contact.height) * 2, true,
+                    0x00cccccc);
+                var rotationMatrix:Matrix = new Matrix();
+                rotationMatrix.rotate(angle_in_radians);
+                rotationMatrix.translate(matrixImage.width / 2, matrixImage.height / 2);
+                matrixImage.draw(contact.framePixels, rotationMatrix);
+                contactPixels = matrixImage;
+
+                if (rotationOrigin == null) {
+                    contactPos = new DHPoint(contact.x, contact.y);
+                } else {
+                    contactPos = rotationOrigin.sub(new DHPoint(matrixImage.width / 2, matrixImage.height / 2));
+                }
+            }
+
+            pointA.x = contactPos.x - int(cam.scroll.x * contact.scrollFactor.x) - contact.offset.x;
+            pointA.y = contactPos.y - int(cam.scroll.y * contact.scrollFactor.y) - contact.offset.y;
+
+            pointB.x = target.x - int(cam.scroll.x * target.scrollFactor.x) - target.offset.x;
+            pointB.y = target.y - int(cam.scroll.y * target.scrollFactor.y) - target.offset.y;
+
+            var boundsA:Rectangle = new Rectangle(pointA.x, pointA.y, contactPixels.width, contactPixels.height);
             var boundsB:Rectangle = new Rectangle(pointB.x, pointB.y, target.framePixels.width, target.framePixels.height);
 
             var intersect:Rectangle = boundsA.intersection(boundsB);
@@ -104,17 +123,16 @@ package org.flixel.plugin.photonstorm
             var matrixB:Matrix = new Matrix;
             matrixB.translate(-(intersect.x - boundsB.x), -(intersect.y - boundsB.y));
 
-            var testA:BitmapData = contact.framePixels;
+            var testA:BitmapData = contactPixels;
             var testB:BitmapData = target.framePixels;
-            var overlapArea:BitmapData = new BitmapData(intersect.width, intersect.height, false);
 
+            var overlapArea:BitmapData = new BitmapData(intersect.width, intersect.height, true, 0x00000000);
             overlapArea.draw(testA, matrixA, new ColorTransform(1, 1, 1, 1, 255, -255, -255, alphaTolerance), BlendMode.NORMAL);
             overlapArea.draw(testB, matrixB, new ColorTransform(1, 1, 1, 1, 255, 255, 255, alphaTolerance), BlendMode.DIFFERENCE);
 
             //    Developers: If you'd like to see how this works, display it in your game somewhere. Or you can comment it out to save a tiny bit of performance
             if (showCollider) {
-                debug = overlapArea;
-                var spr:FlxExtSprite = new FlxExtSprite(contact.x, contact.y);
+                var spr:FlxExtSprite = new FlxExtSprite(contactPos.x, contactPos.y);
                 var bmp:Bitmap = new Bitmap(overlapArea, PixelSnapping.NEVER, true);
                 spr.loadExtGraphic(bmp, false, false, bmp.width, bmp.height, true);
                 spr.active = false;
