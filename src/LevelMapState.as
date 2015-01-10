@@ -28,8 +28,8 @@ package {
 
             this.bitDialogue = new ProceduralDialogueGenerator(this);
 
-            this.bgLoader = new BackgroundLoader("full-map-iggo-turso", 10, 5,
-                "paths",
+            this.bgLoader = new BackgroundLoader("ikuturso_map", 10, 5,
+                "ikuturso_collider",
                 ScreenManager.getInstance().DEBUG ||
                     this.editorMode == PathEditorState.MODE_EDIT);
             this.bgLoader.setPlayerReference(player);
