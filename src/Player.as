@@ -15,35 +15,22 @@ package{
         [Embed(source="../assets/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
         [Embed(source="../assets/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
 
-        private var walkDistance:Number = 0;
-        private var walkTarget:DHPoint, finalTarget:DHPoint;
-        private var walkDirection:DHPoint = null;
-        private var walkSpeed:Number = 8;
-        private var walking:Boolean = false;
+        private var walkDistance:Number = 0, walkSpeed:Number = 8,
+                    mouseDownTime:Number;
+        private var walkTarget:DHPoint, finalTarget:DHPoint, hitboxOffset:DHPoint,
+                    hitboxDim:DHPoint;
+        private var curPath:Path;
+        private var click_anim:GameObject, attack_sprite:GameObject,
+                    shadow_sprite:GameObject;
+        private var click_anim_lock:Boolean = false, clickWait:Boolean,
+                    active_enemy:Boolean = false, mouseHeld:Boolean = false;
+        private var attack_anim_playing:Boolean = false;
+        private var upDownFootstepOffset:DHPoint, leftFootstepOffset:DHPoint,
+                   rightFootstepOffset:DHPoint;
         public var colliding:Boolean = false;
-        public var hitbox_rect:FlxRect;
-        public var curPath:Path;
-        public var lastPos:DHPoint;
-        public var mapHitbox:GameObject;
-        public var hitboxOffset:DHPoint, hitboxDim:DHPoint;
+        public var mapHitbox:GameObject, cameraPos:GameObject;
         public var collisionDirection:Array, lastPositions:Deque;
-        public var popupmgr:PopUpManager;
-        public var inhibitY:Boolean = false, inhibitX:Boolean = false;
-        public var click_anim:GameObject;
         public var _mapnodes:MapNodeContainer;
-        public var attack_sprite:GameObject;
-        public var shadow_sprite:GameObject;
-        public var enemy_dir:DHPoint;
-        public var click_anim_lock:Boolean = false;
-        public var cameraPos:GameObject;
-        public var clickWait:Boolean;
-        public var active_enemy:Boolean = false;
-        public var upDownFootstepOffset:DHPoint;
-        public var leftFootstepOffset:DHPoint;
-        public var rightFootstepOffset:DHPoint;
-        public var attack_anim_playing:Boolean = false;
-        public var mouseDownTime:Number;
-        public var mouseHeld:Boolean = false;
 
         public static const STATE_WALK:Number = 2398476188;
         public static const STATE_WALK_HARD:Number = 23981333333;
@@ -101,11 +88,7 @@ package{
             this.mapHitbox = new GameObject(this.pos);
             this.mapHitbox.makeGraphic(this.hitboxDim.x, this.hitboxDim.y,
                                        0xff000000);
-            this.hitbox_rect = new FlxRect(this.pos.x, this.pos.y,
-                                           this.mapHitbox.width,
-                                           this.mapHitbox.height);
 
-            this.lastPos = new DHPoint(this.pos.x, this.pos.y);
             this.upDownFootstepOffset = new DHPoint(70, this.height);
             this.leftFootstepOffset = new DHPoint(90, this.height-20);
             this.rightFootstepOffset = new DHPoint(40, this.height-20);
@@ -189,6 +172,7 @@ package{
             GlobalTimer.getInstance().setMark("clickwait",
                 .4*GameSound.MSEC_PER_SEC, function():void {
                     clickWait = false;
+                    click_anim_lock = false;
                 }, true);
         }
 
@@ -210,15 +194,15 @@ package{
                     }
                 }
             } else if(at_enemy == true && this.targetEnemy != null){
-                this.enemy_dir = this.targetEnemy.pos.sub(footPos).normalized();
-                if(Math.abs(this.enemy_dir.y) > Math.abs(this.enemy_dir.x)){
-                    if(this.enemy_dir.y <= 0){
+                 var enemy_dir:DHPoint = this.targetEnemy.pos.sub(footPos).normalized();
+                if(Math.abs(enemy_dir.y) > Math.abs(enemy_dir.x)){
+                    if(enemy_dir.y <= 0){
                         this.facing = UP;
                     } else {
                         this.facing = DOWN;
                     }
                 } else {
-                    if(this.enemy_dir.x >= 0){
+                    if(enemy_dir.x >= 0){
                         this.facing = RIGHT;
                     } else {
                         this.facing = LEFT;
@@ -284,8 +268,8 @@ package{
         }
 
         public function walk():void {
-            this.walkDirection = walkTarget.sub(footPos).normalized();
-            this.dir = this.walkDirection.mulScl(this.walkSpeed);
+            var walkDirection:DHPoint = walkTarget.sub(footPos).normalized();
+            this.dir = walkDirection.mulScl(this.walkSpeed);
             if(this.facing == LEFT){
                 this.play("walk_l");
                 this.text_facing = "left";
@@ -376,9 +360,6 @@ package{
                 this.shadow_sprite.y = this.pos.center(this).y + 50;
             }
 
-            this.hitbox_rect.x = this.pos.x;
-            this.hitbox_rect.y = this.pos.y;
-
             this.basePos.y = this.y + (this.height - 10);
             this.attack_sprite.basePos.y = this.attack_sprite.y + (this.attack_sprite.height - 10);
 
@@ -467,9 +448,6 @@ package{
                 }
             }
 
-            if (!this.lastPos.eq(this.pos)) {
-                this.lastPos = new DHPoint(this.pos.x, this.pos.y);
-            }
             super.update();
 
             if(this.click_anim.frame == 10) {

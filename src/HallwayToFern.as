@@ -155,13 +155,7 @@ package{
 
         override public function postCreate():void {
             super.postCreate();
-            player.inhibitY = true;
             player.setBlueShadow();
-        }
-
-        override public function restrictPlayerMovement():void {
-            super.restrictPlayerMovement();
-            this.player.inhibitY = true;
         }
 
         public function firstConvo():void {

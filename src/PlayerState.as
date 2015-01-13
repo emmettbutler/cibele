@@ -39,8 +39,6 @@ package {
             if(PopUpManager.getInstance()._player != this.player) {
                 PopUpManager.getInstance()._player = this.player;
             }
-
-            this.restrictPlayerMovement();
         }
 
         override public function clickCallback(screenPos:DHPoint,
@@ -53,14 +51,6 @@ package {
                 }
             }
             this.player.clickCallback(screenPos, worldPos, objects);
-        }
-
-        public function restrictPlayerMovement():void {
-            if(PopUpManager.getInstance()._state == PopUpManager.SHOWING_POP_UP){
-                this.player.inhibitX = this.player.inhibitY = true;
-            } else {
-                this.player.inhibitX = this.player.inhibitY = false;
-            }
         }
     }
 }
