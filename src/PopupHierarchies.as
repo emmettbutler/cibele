@@ -3,11 +3,7 @@ package {
     import flash.utils.Dictionary;
 
     public class PopupHierarchies {
-        [Embed(source="../assets/popups/test/marmlink1.png")] private static var ImgMarmaladeLink1:Class;
-        [Embed(source="../assets/popups/test/marmlink2.png")] private static var ImgMarmaladeLink2:Class;
-        [Embed(source="../assets/popups/test/marm1.jpg")] private static var ImgMarmalade1:Class;
-        [Embed(source="../assets/popups/test/marm2.jpg")] private static var ImgMarmalade2:Class;
-        [Embed(source="../assets/popups/test/ichiicon.png")] private static var ImgIchiIcon:Class;
+        [Embed(source="../assets/popups/ichiicon.png")] private static var ImgIchiIcon:Class;
         [Embed(source="../assets/popups/files/ichiselfie1.png")] private static var ImgIchiDL1:Class;
         [Embed(source="../assets/popups/it_email/bulldoghell_icon.png")] private static var ImgBHIcon:Class;
         [Embed(source="../assets/popups/it_email/bulldoghell.png")] private static var ImgBH:Class;
