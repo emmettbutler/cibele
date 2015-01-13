@@ -10,23 +10,23 @@ package{
         [Embed(source="../assets/UI_icon_photo.png")] private var ImgPhotoButton:Class;
         [Embed(source="../assets/UI_icon_internet.png")] private var ImgInternetButton:Class;
         [Embed(source="../assets/UI_dock.png")] private var ImgDock:Class;
-        [Embed(source="../assets/bulldoghell.png")] private var ImgBulldogHell:Class;
-        [Embed(source="../assets/cib_selfies_1.png")] private var ImgCibSelfie1:Class;
-        [Embed(source="../assets/forum_selfies_1.png")] private var ImgForumSelfie1:Class;
+        [Embed(source="../assets/popups/picly/nina1.png")] private var ImgCibSelfie1:Class;
+        [Embed(source="../assets/popups/it_email/guil1.png")] private var ImgGuilEmail1:Class;
         [Embed(source="../assets/UI_happy face_blue.png")] private var ImgEmojiHappy:Class;
         [Embed(source="../assets/UI_Sad Face_blue.png")] private var ImgEmojiSad:Class;
         [Embed(source="../assets/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;
         [Embed(source="../assets/UI_Outer Ring.png")] private var ImgRing:Class;
         [Embed(source="../assets/UI_Outer_Ring_pink.png")] private var ImgRingPink:Class;
-        [Embed(source="../assets/ichidownloads.png")] private var ImgIchiDownload:Class;
-        [Embed(source="../assets/ichiselfie1.png")] private var ImgIchiSelfie1:Class;
-        [Embed(source="../assets/cibselfiefolder.png")] private var ImgCibSelfieFolder:Class;
+        [Embed(source="../assets/popups/it_email/ichiselfieemail1.png")] private var ImgIchiSelfie1:Class;
+        [Embed(source="../assets/popups/files/camera1disconnect.png")] private var ImgCibCamDisconnect:Class;
         [Embed(source="../assets/UI_happy_face_pink.png")] private var ImgEmojiHappyPink:Class;
         [Embed(source="../assets/UI_sad_face_pink.png")] private var ImgEmojiSadPink:Class;
         [Embed(source="../assets/UI_Angry_face_pink.png")] private var ImgEmojiAngryPink:Class;
-        [Embed(source="../assets/ichidownloads 2.png")] private var ImgIchiDL2:Class;
-        [Embed(source="../assets/marmalade.png")] private var ImgMarmalade:Class;
-        [Embed(source="../assets/forichi.png")] private var ImgForIchi:Class;
+        [Embed(source="../assets/popups/ichidownloads.png")] private var ImgIchiDL2:Class;
+        [Embed(source="../assets/popups/it_email/none.png")] private var ImgEmptyInbox:Class;
+        [Embed(source="../assets/popups/picly/ninaopen.png")] private var ImgForIchi:Class;
+        [Embed(source="../assets/popups/it_email/bulldoghell_email.png")] private static var ImgBHEmail:Class;
+        [Embed(source="../assets/popups/picly/emmy1.png")] private static var ImgIchiPicly1:Class;
 
         public static var _instance:PopUpManager = null;
 
@@ -42,14 +42,15 @@ package{
         public var popupTags:Object;
 
         public var elements:Array;
-        public var popup_active:Boolean = false;
+        public var folder_structure:Object;
+        public var folder_builder:FolderBuilder;
 
         public static const BUTTON_INTERNET:String = "innernet";
         public static const BUTTON_PHOTO:String = "photototot";
         public static const BUTTON_FILES:String = "philesz";
         public static const BUTTON_GAME:String = "gamez";
 
-        public var popups_and_icons:Dictionary;
+        public var open_popups:Array;
 
         {
             public static const RING_INSET_X:Number = ScreenManager.getInstance().screenWidth * .03;
@@ -61,11 +62,11 @@ package{
         public var _state:Number = SHOWING_NOTHING;
         public static const BULLDOG_HELL:String = "bulldoghell";
         public static const SELFIES_1:String = "selfies1";
-        public static const FORUM_1:String = "forum1";
-        public static const ICHI_DOWNLOAD:String = "ichidownload";
+        public static const GUIL_1:String = "forum1";
+        public static const ICHI_PICLY_1:String = "ichidownload";
         public static const ICHI_SELFIE1:String = "ichiselfie1";
         public static const CIB_SELFIE_FOLDER:String = "cibselfiefolder";
-        public static const MARMALADE:String = "marm";
+        public static const EMPTY_INBOX:String = "marm";
         public static const FOR_ICHI:String = "ichiluvu";
         public static const ICHI_DL_2:String = "dl2";
         //set this to false again if player exits game screen
@@ -74,9 +75,10 @@ package{
         public function PopUpManager() {
             this.elements = new Array();
             this.sentPopups = new Dictionary();
+            this.open_popups = new Array();
 
             this.popupTags = {};
-            this.popupTags[BUTTON_INTERNET] = MARMALADE;
+            this.popupTags[BUTTON_INTERNET] = EMPTY_INBOX;
             this.popupTags[BUTTON_FILES] = ICHI_DL_2;
             this.popupTags[BUTTON_PHOTO] = FOR_ICHI;
         }
@@ -84,29 +86,56 @@ package{
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
             var mouseScreenRect:FlxRect = new FlxRect(screenPos.x, screenPos.y,
                                                       5, 5);
+            var i:Number = 0;
             this.emote(mouseScreenRect, _player);
 
-            if(this._state != SHOWING_POP_UP) {
-                var curButton:DockButton;
-                for (var i:int = 0; i < this.programButtons.length; i++) {
-                    curButton = this.programButtons[i];
-                    if(this.overlaps(mouseScreenRect, curButton)) {
+            for(var key:Object in this.folder_structure) {
+                var _val:Object = this.folder_structure[key];
+                this.folder_builder.resolveClick(_val, mouseScreenRect);
+            }
+
+            var curButton:DockButton;
+            var curPopup:PopUp;
+            for (i = 0; i < this.programButtons.length; i++) {
+                curButton = this.programButtons[i];
+                if(this.overlaps(mouseScreenRect, curButton)) {
+                    if(curButton.tag == BUTTON_GAME) {
+                        curButton.toggleGame();
+                    } else {
+                        curButton.open();
+                        curPopup = curButton.getCurPopup();
                         this._state = SHOWING_POP_UP;
-                        if(curButton.tag == BUTTON_GAME) {
-                            curButton.toggleGame();
-                        } else {
-                            curButton.open();
-                            this.deleteSentPopup(curButton.cur_popup_tag);
+                        this.open_popups.push(curPopup);
+                        if(folder_structure[curPopup.tag] != null) {
+                            this.folder_builder.setIconVisibility(this.folder_structure[curPopup.tag], true);
                         }
+                        this.deleteSentPopup(curButton.cur_popup_tag);
                     }
                 }
-            } else if(this._state == SHOWING_POP_UP) {
-                this._state = SHOWING_NOTHING;
-                FlxG.stage.dispatchEvent(new Event(GameState.EVENT_POPUP_CLOSED));
-                for (i = 0; i < this.programButtons.length; i++) {
-                    curButton = this.programButtons[i];
-                    if(curButton.getCurPopup() != null) {
-                        curButton.getCurPopup().visible = false;
+            }
+
+            for(i = 0; i < this.open_popups.length; i++) {
+                if(this.open_popups[i] != null) {
+                    if(mouseScreenRect.overlaps(this.open_popups[i].x_sprite._getRect())) {
+                        this._state = SHOWING_NOTHING;
+                        if(!this.open_popups[i].was_opened) {
+                            this.open_popups[i].was_opened = true;
+                            FlxG.stage.dispatchEvent(new DataEvent(GameState.EVENT_POPUP_CLOSED, {'tag': this.open_popups[i].tag}));
+                        }
+                        if(folder_structure[this.open_popups[i].tag] != null) {
+                            this.folder_builder.setIconVisibility(this.folder_structure[this.open_popups[i].tag], false);
+                        }
+                        for (var k:Number = 0; k < this.programButtons.length; k++) {
+                            curButton = this.programButtons[k];
+                            if(curButton.getCurPopup() != null) {
+                                if(curButton.getCurPopup() == this.open_popups[i]) {
+                                    curButton.getCurPopup().visible = false;
+                                } else {
+                                    this.open_popups[i].visible = false;
+                                }
+                            }
+                        }
+                        this.open_popups[i] = null;
                     }
                 }
             }
@@ -136,11 +165,6 @@ package{
         }
 
         public function update():void {
-            if(this._state == SHOWING_NOTHING) {
-                this.popup_active = false;
-            } else if(this._state == SHOWING_POP_UP) {
-                this.popup_active = true;
-            }
         }
 
         public function sendPopup(key:String):void {
@@ -243,7 +267,7 @@ package{
 
             this.internet_button = new DockButton(
                 this.game_button.x + this.game_button.width + 30,
-                dock.y - 50, [BULLDOG_HELL, FORUM_1], BUTTON_INTERNET);
+                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1], BUTTON_INTERNET);
             this.internet_button.loadGraphic(ImgInternetButton, false, false,
                                              88, 75);
             this.internet_button.alpha = 1;
@@ -253,7 +277,7 @@ package{
             this.elements.push(this.internet_button);
             this.programButtons.push(this.internet_button);
 
-            this.file_button = new DockButton(this.internet_button.x + this.internet_button.width + 30, dock.y - 30, [ICHI_DOWNLOAD, CIB_SELFIE_FOLDER], BUTTON_FILES);
+            this.file_button = new DockButton(this.internet_button.x + this.internet_button.width + 30, dock.y - 30, [CIB_SELFIE_FOLDER], BUTTON_FILES);
             this.file_button.loadGraphic(ImgFileButton, false, false, 88, 60);
             this.file_button.alpha = 1;
             this.file_button.scrollFactor.x = 0;
@@ -264,7 +288,7 @@ package{
 
             this.photo_button = new DockButton(
                 this.file_button.x + this.file_button.width + 30,
-                dock.y - 25, [SELFIES_1, ICHI_SELFIE1], BUTTON_PHOTO);
+                dock.y - 25, [ICHI_PICLY_1 , SELFIES_1], BUTTON_PHOTO);
             this.photo_button.loadGraphic(ImgPhotoButton, false, false, 82, 65);
             this.photo_button.alpha = 1;
             this.photo_button.scrollFactor.x = 0;
@@ -274,15 +298,18 @@ package{
             this.programButtons.push(this.photo_button);
 
             this.popups = new Dictionary();
-            this.popups[BULLDOG_HELL] = new PopUp(ImgBulldogHell, 1030, 510, 0, BULLDOG_HELL);
-            this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 631, 356, PopUp.CLICK_THROUGH, SELFIES_1);
-            this.popups[FORUM_1] = new PopUp(ImgForumSelfie1, 1174, 585, 0, FORUM_1);
-            this.popups[ICHI_DOWNLOAD] = new PopUp(ImgIchiDownload, 631, 356, 0, ICHI_DOWNLOAD);
-            this.popups[ICHI_SELFIE1] = new PopUp(ImgIchiSelfie1, 433, 356, 0, ICHI_SELFIE1);
-            this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibSelfieFolder, 631, 356, 0, CIB_SELFIE_FOLDER);
-            this.popups[MARMALADE] = new PopUp(ImgMarmalade, 1070, 565, 0, MARMALADE);
-            this.popups[FOR_ICHI] = new PopUp(ImgForIchi, 530, 356, 0, FOR_ICHI);
+            this.popups[EMPTY_INBOX] = new PopUp(ImgEmptyInbox, 631, 356, 0, EMPTY_INBOX);
+            this.popups[EMPTY_INBOX].was_opened = true;
+            this.popups[FOR_ICHI] = new PopUp(ImgForIchi, 356, 463, 0, FOR_ICHI);
+            this.popups[FOR_ICHI].was_opened = true;
             this.popups[ICHI_DL_2] = new PopUp(ImgIchiDL2, 631, 356, 0, ICHI_DL_2);
+            this.popups[ICHI_DL_2].was_opened = true;
+            this.popups[ICHI_PICLY_1] = new PopUp(ImgIchiPicly1, 356, 463, 0, ICHI_PICLY_1);
+            this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 356, 463, PopUp.CLICK_THROUGH, SELFIES_1);
+            this.popups[GUIL_1] = new PopUp(ImgGuilEmail1, 631, 356, 0, GUIL_1);
+            this.popups[BULLDOG_HELL] = new PopUp(ImgBHEmail, 631, 356, 0, BULLDOG_HELL);
+            this.popups[ICHI_SELFIE1] = new PopUp(ImgIchiSelfie1, 631, 356, 0, ICHI_SELFIE1);
+            this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibCamDisconnect, 253, 107, 0, CIB_SELFIE_FOLDER);
 
             var curButton:DockButton;
             for (var i:int = 0; i < this.programButtons.length; i++){
@@ -290,18 +317,24 @@ package{
                 curButton.setCurPopup(this.popups[this.popupTags[curButton.tag]]);
             }
 
+            this.folder_structure = PopupHierarchies.build();
+            this.folder_builder = new FolderBuilder();
+
             for (var key:Object in this.popups) {
                 this.elements.push(this.popups[key]);
+                this.elements.push(this.popups[key].x_sprite);
                 FlxG.state.add(this.popups[key]);
+                FlxG.state.add(this.popups[key].x_sprite);
+                if(this.folder_structure[key] != null) {
+                    this.folder_builder.populateFolders(this.folder_structure[key], this.elements, this.popups[key]);
+                }
             }
+
+            this.folder_builder.setUpLeafPopups(this.elements);
 
             for (key in this.sentPopups) {
                 this.sendPopup(key as String);
             }
-
-            //new way to load popups
-            this.popups_and_icons = new Dictionary();
-
         }
 
         public function emote(mouseScreenRect:FlxRect, char:PartyMember, procedural:Boolean=false, em:Number=111):void {

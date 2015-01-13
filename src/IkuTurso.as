@@ -1,8 +1,6 @@
 package{
     import org.flixel.*;
 
-    import flash.events.*;
-
     public class IkuTurso extends LevelMapState {
         [Embed(source="../assets/bgm_ikuturso_intro.mp3")] private var ITBGMIntro:Class;
         [Embed(source="../assets/bgm_ikuturso_loop.mp3")] private var ITBGMLoop:Class;
@@ -14,6 +12,8 @@ package{
         [Embed(source="../assets/voc_ikuturso_picture.mp3")] private var Convo5:Class;
         [Embed(source="../assets/voc_ikuturso_whattowear.mp3")] private var Convo6:Class;
         [Embed(source="../assets/voc_extra_ichilasthit.mp3")] private var IchiBossKill:Class;
+        [Embed(source="../assets/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
+        [Embed(source="../assets/voc_extra_areyoucoming.mp3")] private var SndRUComing:Class;
 
         public var bossHasAppeared:Boolean;
         private var convo1Sound:GameSound;
@@ -44,7 +44,7 @@ package{
                 {
                     "audio": Convo3, "len": 25*GameSound.MSEC_PER_SEC,
                     "delay": 20*GameSound.MSEC_PER_SEC,
-                    "endfn": this.showForumWindow
+                    "endfn": this.showGuilEmail
                 },
                 {
                     "audio": Convo4, "len": 107*GameSound.MSEC_PER_SEC,
@@ -76,9 +76,25 @@ package{
                 SoundManager.getInstance().playSound(ITBGMLoop, 0, null, true, .08, GameSound.BGM, IkuTurso.BGM, false, false);
             }
             SoundManager.getInstance().playSound(ITBGMIntro, 3.6*GameSound.MSEC_PER_SEC, _bgmCallback, false, .08, Math.random()*928+298, IkuTurso.BGM, false, false, true);
-            GlobalTimer.getInstance().setMark("First Emote", 5*GameSound.MSEC_PER_SEC, this.ichiStartEmote);
+            if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
+                GlobalTimer.getInstance().setMark("First Convo", 2*GameSound.MSEC_PER_SEC, this.bulldogHellPopup);
+            }
             this.convo1Sound = null;
             this.bgLoader.loadAllTiles();
+        }
+
+        public function bulldogHellPopup():void {
+            PopUpManager.getInstance().sendPopup(PopUpManager.BULLDOG_HELL);
+            GlobalTimer.getInstance().setMark("First Emote", 5*GameSound.MSEC_PER_SEC, this.ichiStartEmote);
+            var that:IkuTurso = this;
+            this.addEventListener(GameState.EVENT_POPUP_CLOSED,
+                    function(event:DataEvent):void {
+                        if(event.userData['tag'] == PopUpManager.BULLDOG_HELL) {
+                            that.playRUComing();
+                        }
+                        FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
+                                                       arguments.callee);
+                    });
         }
 
         public function ichiStartEmote():void {
@@ -105,13 +121,13 @@ package{
             PopUpManager.getInstance().sendPopup(PopUpManager.SELFIES_1);
         }
 
-        public function showForumWindow():void {
-            PopUpManager.getInstance().sendPopup(PopUpManager.FORUM_1);
+        public function showGuilEmail():void {
+            PopUpManager.getInstance().sendPopup(PopUpManager.GUIL_1);
             GlobalTimer.getInstance().setMark(BOSS_MARK, 50*GameSound.MSEC_PER_SEC);
         }
 
         public function showIchiDownloadWindow():void {
-            PopUpManager.getInstance().sendPopup(PopUpManager.ICHI_DOWNLOAD);
+            PopUpManager.getInstance().sendPopup(PopUpManager.ICHI_PICLY_1);
         }
 
         public function showIchiSelfie1():void {
@@ -132,14 +148,13 @@ package{
             var nextAudioInfo:Object = this.conversationPieces[this.conversationCounter];
             if (nextAudioInfo != null) {
                 this.addEventListener(GameState.EVENT_POPUP_CLOSED,
-                    function():void {
+                    function(event:DataEvent):void {
                         SoundManager.getInstance().playSound(
                             nextAudioInfo["audio"], nextAudioInfo["len"],
                             that.playNextConvoPiece, false, 1, GameSound.VOCAL
                         );
                         that.playTimedEmotes(that.conversationCounter);
                         if(that.conversationPieces.length == that.conversationCounter + 1) {
-                            FlxG.log("last convo");
                             that.last_convo_playing = true;
                         }
                         FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
@@ -202,6 +217,20 @@ package{
             this.bitDialogueLock = false;
         }
 
+        public function playRUComing():void {
+            SoundManager.getInstance().playSound(
+                SndRUComing, GameSound.MSEC_PER_SEC * 3, this.playYeahSorry,
+                false, 1, GameSound.VOCAL
+            );
+        }
+
+        public function playYeahSorry():void {
+            SoundManager.getInstance().playSound(
+                SndYeahSorry, GameSound.MSEC_PER_SEC * 2, this.playFirstConvo,
+                false, 1, GameSound.VOCAL
+            );
+        }
+
         override public function update():void{
             super.update();
             var snd:GameSound = SoundManager.getInstance().getSoundByName(HallwayToFern.BGM);
@@ -211,12 +240,6 @@ package{
             }
 
             this.boss.update();
-            if (this.convo1Sound == null) {
-                if (!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL))
-                {
-                    this.playFirstConvo();
-                }
-            }
 
             if (GlobalTimer.getInstance().hasPassed(BOSS_MARK) &&
                 !this.bossHasAppeared && FlxG.state.ID == LevelMapState.LEVEL_ID)

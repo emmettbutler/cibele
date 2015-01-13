@@ -131,6 +131,7 @@ package{
             }
             this.targetEnemy = null;
             var ui_clicked:Boolean = false;
+
             if (group != null) {
                 var cur:GameObject, screenRect:FlxRect, worldRect:FlxRect;
                 var mouseScreenRect:FlxRect = new FlxRect(screenPos.x, screenPos.y,
