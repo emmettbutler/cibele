@@ -322,6 +322,7 @@ package{
 
             for (var key:Object in this.popups) {
                 this.elements.push(this.popups[key]);
+                this.elements.push(this.popups[key].x_sprite);
                 FlxG.state.add(this.popups[key]);
                 FlxG.state.add(this.popups[key].x_sprite);
                 if(this.folder_structure[key] != null) {

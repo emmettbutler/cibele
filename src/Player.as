@@ -125,6 +125,7 @@ package{
             }
             this.targetEnemy = null;
             var ui_clicked:Boolean = false;
+
             if (group != null) {
                 var cur:GameObject, screenRect:FlxRect, worldRect:FlxRect;
                 var mouseScreenRect:FlxRect = new FlxRect(screenPos.x, screenPos.y,
@@ -139,6 +140,7 @@ package{
                                              cur.width, cur.height);
                     worldRect = new FlxRect(cur.x, cur.y,
                                             cur.width, cur.height);
+                    FlxG.log(cur.ID);
                     if (mouseScreenRect.overlaps(screenRect) &&
                         cur is UIElement && cur.visible)
                     {

@@ -15,7 +15,7 @@ package{
 
         public function populateFolders(root:Object, elements:Array=null, root_folder:UIElement=null):void {
             var _screen:ScreenManager = ScreenManager.getInstance();
-            var cur:Object, curX:GameObject, spr:GameObject, icon_pos:DHPoint;
+            var cur:Object, curX:UIElement, spr:GameObject, icon_pos:DHPoint;
             if (root_folder != null) {
                 root["folder_sprite"] = root_folder;
             }
@@ -54,6 +54,7 @@ package{
                     curX.visible = false;
                     curX.scrollFactor = new DHPoint(0,0);
                     FlxG.state.add(curX);
+                    curX.ID = 00000000000001;
                     if(elements != null) {
                         elements.push(spr);
                         elements.push(curX);
@@ -73,6 +74,10 @@ package{
                     curX.scrollFactor = new DHPoint(0,0);
                     cur["full_sprite"] = spr;
                     cur["x_sprite"] = curX;
+                    if(elements != null) {
+                        elements.push(spr);
+                        elements.push(curX);
+                    }
                 }
             }
         }

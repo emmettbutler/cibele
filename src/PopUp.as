@@ -10,7 +10,7 @@ package{
         public var timer_key:String;
         public var tag:String;
         public var links:Array;
-        public var x_sprite:GameObject;
+        public var x_sprite:UIElement;
         public var was_opened:Boolean = false;
 
         public function PopUp(img:Class, w:Number, h:Number,
@@ -32,7 +32,7 @@ package{
                 imgXSize.y = 18;
                 imgClass = ImgXPink;
             }
-            this.x_sprite = new GameObject(new DHPoint((this.x+w)-imgXSize.x, this.y+1));
+            this.x_sprite = UIElement.fromPoint(new DHPoint((this.x+w)-imgXSize.x, this.y+1));
             this.x_sprite.loadGraphic(imgClass, false, false, imgXSize.x, imgXSize.y);
 
             this.visible = false;
