@@ -23,10 +23,11 @@ package{
         private var click_anim:GameObject, attack_sprite:GameObject,
                     shadow_sprite:GameObject;
         private var click_anim_lock:Boolean = false, clickWait:Boolean,
-                    active_enemy:Boolean = false, mouseHeld:Boolean = false;
-        private var attack_anim_playing:Boolean = false;
+                    active_enemy:Boolean = false, mouseHeld:Boolean = false,
+                    attack_anim_playing:Boolean = false;
         private var upDownFootstepOffset:DHPoint, leftFootstepOffset:DHPoint,
-                   rightFootstepOffset:DHPoint;
+                    rightFootstepOffset:DHPoint;
+
         public var colliding:Boolean = false;
         public var mapHitbox:GameObject, cameraPos:GameObject;
         public var collisionDirection:Array, lastPositions:Deque;
@@ -78,10 +79,19 @@ package{
             addAnimation("idle_r", [40], 20, false);
             addAnimation("idle", [11], 7, false);
 
-            this.click_anim = new GameObject(this.pos);
             this.attack_sprite = new GameObject(this.pos);
             this.attack_sprite.zSorted = true;
             this.attack_sprite.basePos = new DHPoint(0, 0);
+            this.attack_sprite.loadGraphic(ImgAttack,true,false,173,230);
+            this.attack_sprite.addAnimation("attack",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22],10,false);
+            this.attack_sprite.visible = false;
+
+            this.click_anim = new GameObject(this.pos);
+            this.click_anim.loadGraphic(ImgWalkTo, true, false, 275*.7, 164*.7);
+            this.click_anim.addAnimation("click",
+                [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 30, false);
+            this.click_anim.addAnimation("idle", [0], 20, false);
+            this.click_anim.visible = false;
 
             this.hitboxOffset = new DHPoint(60, 100);
             this.hitboxDim = new DHPoint(40, 50);
@@ -109,9 +119,6 @@ package{
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint,
                                       group:Array=null):void
         {
-            if(this.attack_anim_playing) {
-                return;
-            }
             this.targetEnemy = null;
             var ui_clicked:Boolean = false;
 
@@ -136,6 +143,9 @@ package{
                         this.active_enemy = false;
                         this.playUIGeneralSFX();
                     } else if (cur is Enemy) {
+                        if(this.attack_anim_playing) {
+                            return;
+                        }
                         if (mouseWorldRect.overlaps(worldRect)) {
                             if(!this.active_enemy) {
                                 this.active_enemy = true;
@@ -151,6 +161,10 @@ package{
                         }
                     }
                 }
+            }
+
+            if(this.attack_anim_playing) {
+                return;
             }
 
             if (ui_clicked) {
@@ -290,7 +304,8 @@ package{
         }
 
         override public function addVisibleObjects():void {
-            this.addAttackAnim();
+            FlxG.state.add(this.click_anim);
+            FlxG.state.add(this.attack_sprite);
             FlxG.state.add(this.shadow_sprite);
             FlxG.state.add(this);
             FlxG.state.add(this.nameText);
@@ -400,9 +415,6 @@ package{
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_IN_ATTACK) {
                 this.setFacing(true);
-                if(this.attack_sprite.frame >= 21) {
-                    this.resolveStatePostAttack();
-                }
             } else if (this._state == STATE_IDLE) {
                 this.setIdleAnim();
             }
@@ -470,9 +482,6 @@ package{
 
         override public function resolveStatePostAttack():void {
             super.resolveStatePostAttack();
-            this.visible = true;
-            this.shadow_sprite.visible = true;
-            this.attack_sprite.visible = false;
 
             if (this.targetEnemy != null && !this.targetEnemy.dead && this.targetEnemy.visible == true)
             {
@@ -509,19 +518,6 @@ package{
         }
 
         public function addAttackAnim():void {
-            //this sprite is being used for walk target anim
-            this.click_anim.loadGraphic(ImgWalkTo, true, false, 275*.7, 164*.7);
-            this.click_anim.addAnimation("click",
-                [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 30, false);
-            this.click_anim.addAnimation("idle", [0], 20, false);
-            FlxG.state.add(this.click_anim);
-            this.click_anim.visible = false;
-
-            //test attack sprite
-            this.attack_sprite.loadGraphic(ImgAttack,true,false,173,230);
-            this.attack_sprite.addAnimation("attack",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22],10,false);
-            FlxG.state.add(attack_sprite);
-            this.attack_sprite.visible = false;
         }
 
         override public function setPos(pos:DHPoint):void {
@@ -529,10 +525,6 @@ package{
 
             this.mapHitbox.x = pos.x + this.hitboxOffset.x;
             this.mapHitbox.y = pos.y + this.hitboxOffset.y;
-        }
-
-        public function attackFinished():void {
-            this.attack_anim_playing = false;
         }
 
         override public function attack():void {
@@ -544,7 +536,10 @@ package{
                 this.attack_sprite.play("attack");
                 this.attack_anim_playing = true;
                 GlobalTimer.getInstance().setMark("attack_finished",
-                    (23/10)*GameSound.MSEC_PER_SEC, this.attackFinished, true);
+                    (23/10)*GameSound.MSEC_PER_SEC, function():void {
+                        attack_anim_playing = false;
+                        resolveStatePostAttack();
+                    }, true);
 
                 var snd:Class = SfxAttack1;
                 var rand:Number = Math.random() * 4;
