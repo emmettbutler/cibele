@@ -140,7 +140,6 @@ package{
                                              cur.width, cur.height);
                     worldRect = new FlxRect(cur.x, cur.y,
                                             cur.width, cur.height);
-                    FlxG.log(cur.ID);
                     if (mouseScreenRect.overlaps(screenRect) &&
                         cur is UIElement && cur.visible)
                     {

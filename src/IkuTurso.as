@@ -140,10 +140,8 @@ package{
             var that:IkuTurso = this;
             var nextAudioInfo:Object = this.conversationPieces[this.conversationCounter];
             if (nextAudioInfo != null) {
-                FlxG.log("out func");
                 this.addEventListener(GameState.EVENT_POPUP_CLOSED,
                     function(event:DataEvent):void {
-                        FlxG.log("in func");
                         SoundManager.getInstance().playSound(
                             nextAudioInfo["audio"], nextAudioInfo["len"],
                             that.playNextConvoPiece, false, 1, GameSound.VOCAL

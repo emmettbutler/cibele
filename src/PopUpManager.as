@@ -123,10 +123,10 @@ package{
                             FlxG.stage.dispatchEvent(new DataEvent(GameState.EVENT_POPUP_CLOSED, {'tag': this.open_popups[i].tag}));
                         }
                         if(folder_structure[this.open_popups[i].tag] != null) {
-                                this.folder_builder.setIconVisibility(this.folder_structure[this.open_popups[i].tag], false);
+                            this.folder_builder.setIconVisibility(this.folder_structure[this.open_popups[i].tag], false);
                         }
-                        for (var ii:Number = 0; ii < this.programButtons.length; ii++) {
-                            curButton = this.programButtons[ii];
+                        for (var k:Number = 0; k < this.programButtons.length; k++) {
+                            curButton = this.programButtons[k];
                             if(curButton.getCurPopup() != null) {
                                 if(curButton.getCurPopup() == this.open_popups[i]) {
                                     curButton.getCurPopup().visible = false;
