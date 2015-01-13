@@ -54,6 +54,9 @@ package
             var closestPathNode:MapNode = this.path.getClosestNode(pos);
             var currentClosestNode:MapNode = this.nodes[0];
             var curNode:MapNode, curDisp:Number, curClosestDisp:Number;
+            if (currentClosestNode == null) {
+                return null;
+            }
             curClosestDisp = pos.sub(currentClosestNode.pos)._length();
             for(var i:Number = 0; i < this.nodes.length; i++){
                 curNode = this.nodes[i];

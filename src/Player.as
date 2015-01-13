@@ -235,30 +235,39 @@ package{
         }
 
         public function initWalk(worldPos:DHPoint, usePaths:Boolean=true):void {
+            var useNodes:Boolean = true;
             if (this._mapnodes != null) {
                 var closestNode:MapNode = this._mapnodes.getClosestGenericNode(this.pos);
-                var destinationDisp:Number = this.footPos.sub(worldPos)._length();
-                var nearestNodeDisp:Number = this.footPos.sub(closestNode.pos)._length();
-                if (!usePaths || destinationDisp < nearestNodeDisp) {
-                    this.walkTarget = worldPos;
-                    this.finalTarget = worldPos;
-                    this.curPath = null;
+                if (closestNode == null) {
+                    useNodes = false;
                 } else {
-                    this.walkTarget = closestNode.pos;
-                    this.finalTarget = worldPos;
-                    this.curPath = Path.shortestPath(
-                        closestNode, this._mapnodes.getClosestGenericNode(this.finalTarget)
-                    );
-                    (FlxG.state as PathEditorState).clearAllAStarMeasures();
+                    var destinationDisp:Number = this.footPos.sub(worldPos)._length();
+                    var nearestNodeDisp:Number = this.footPos.sub(closestNode.pos)._length();
+                    if (!usePaths || destinationDisp < nearestNodeDisp) {
+                        this.walkTarget = worldPos;
+                        this.finalTarget = worldPos;
+                        this.curPath = null;
+                    } else {
+                        this.walkTarget = closestNode.pos;
+                        this.finalTarget = worldPos;
+                        this.curPath = Path.shortestPath(
+                            closestNode, this._mapnodes.getClosestGenericNode(this.finalTarget)
+                        );
+                        (FlxG.state as PathEditorState).clearAllAStarMeasures();
 
-                    if (ScreenManager.getInstance().DEBUG) {
-                        trace("Path: " + this.curPath.toString());
+                        if (ScreenManager.getInstance().DEBUG) {
+                            trace("Path: " + this.curPath.toString());
+                        }
                     }
                 }
             } else {
+                useNodes = false;
+            }
+
+            if (!useNodes) {
                 this.walkTarget = worldPos;
                 this.finalTarget = worldPos;
-                    this.curPath = null;
+                this.curPath = null;
             }
 
             this._state = STATE_WALK;
