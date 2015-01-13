@@ -209,7 +209,7 @@ package {
         public function readGraphIn():void {
             var f:File = this.graphDataFile;
             var str:FileStream = new FileStream();
-            if (!f.exists) {
+            if (f == null || !f.exists) {
                 return;
             }
             str.open(f, FileMode.READ);
