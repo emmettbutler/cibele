@@ -22,7 +22,7 @@ package{
         [Embed(source="../assets/UI_happy_face_pink.png")] private var ImgEmojiHappyPink:Class;
         [Embed(source="../assets/UI_sad_face_pink.png")] private var ImgEmojiSadPink:Class;
         [Embed(source="../assets/UI_Angry_face_pink.png")] private var ImgEmojiAngryPink:Class;
-        [Embed(source="../assets/popups/test/ichidownloads.png")] private var ImgIchiDL2:Class;
+        [Embed(source="../assets/popups/ichidownloads.png")] private var ImgIchiDL2:Class;
         [Embed(source="../assets/popups/it_email/none.png")] private var ImgEmptyInbox:Class;
         [Embed(source="../assets/popups/picly/ninaopen.png")] private var ImgForIchi:Class;
         [Embed(source="../assets/popups/it_email/bulldoghell_email.png")] private static var ImgBHEmail:Class;
