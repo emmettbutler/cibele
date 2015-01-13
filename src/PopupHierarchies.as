@@ -65,25 +65,6 @@ package {
                         }]
                 }
             ]};
-            struc[PopUpManager.CIB_SELFIE_FOLDER] = { "contents": [
-                {
-                    "name": "cib camera selfies 1",
-                    "icon": ImgCibCamDisconnectIcon,
-                    "icon_dim": new DHPoint(215, 21),
-                    "icon_pos": new DHPoint(25, 65),
-                    "folder_dim": new DHPoint(631, 356),
-                    "folder_img": ImgCibSelfieFolder,
-                    "contents": [
-                        {
-                            "name": "cam selfies",
-                            "icon": ImgCibCam1Icon,
-                            "icon_dim": new DHPoint(70, 81),
-                            "icon_pos": new DHPoint(69, 84),
-                            "dim": new DHPoint(530, 356),
-                            "contents": ImgCibCam1
-                        }]
-                }
-            ]};
             struc[PopUpManager.BULLDOG_HELL] = { "contents": [
                 {
                     "name": "bulldog hell",
@@ -110,6 +91,25 @@ package {
                             "icon_pos": new DHPoint(180, 106),
                             "dim": new DHPoint(1030, 510),
                             "contents": ImgBH
+                        }]
+                }
+            ]};
+            struc[PopUpManager.CIB_SELFIE_FOLDER] = { "contents": [
+                {
+                    "name": "cib camera selfies 1",
+                    "icon": ImgCibCamDisconnectIcon,
+                    "icon_dim": new DHPoint(215, 21),
+                    "icon_pos": new DHPoint(25, 65),
+                    "folder_dim": new DHPoint(631, 356),
+                    "folder_img": ImgCibSelfieFolder,
+                    "contents": [
+                        {
+                            "name": "cam selfies",
+                            "icon": ImgCibCam1Icon,
+                            "icon_dim": new DHPoint(70, 81),
+                            "icon_pos": new DHPoint(69, 84),
+                            "dim": new DHPoint(530, 356),
+                            "contents": ImgCibCam1
                         }]
                 }
             ]};

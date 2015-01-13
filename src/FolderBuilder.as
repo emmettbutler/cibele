@@ -98,12 +98,15 @@ package{
                         }
                     } else if (mouse_rect.overlaps(cur[this.getHitboxKey(cur)]._getRect())) {
                         if(cur[this.getHitboxKey(cur)].visible) {
-                            if(this.checkForVisiblePopups(cur[this.getHitboxKey(cur)]._getRect(), root)) {
+                            //checkForVisiblePopups needs fixing bc
+                            //when this is uncommented some subfolders
+                            //wont open TODO
+                            //if(this.checkForVisiblePopups(cur[this.getHitboxKey(cur)]._getRect(), root)) {
                                 cur["folder_sprite"].visible = true;
                                 cur["x_sprite"].visible = true;
                                 this.setIconVisibility(cur, true);
                                 propagateClick = false;
-                            }
+                            //}
                         }
                     }
                     if (propagateClick) {
@@ -130,7 +133,6 @@ package{
                 cur = root["contents"][i];
 
                 if (cur["contents"] is Array) {
-                    FlxG.log("in contents");
                     if("folder_sprite" in cur) {
                         if(cur["folder_sprite"].visible && cur["folder_sprite"]._getRect().overlaps(hitbox)) {
                             return false;
