@@ -40,7 +40,6 @@ package{
 
         override public function update():void {
             if(this.showing) {
-                FlxG.log("fade");
                 if(this.loading_text.alpha == 0) {
                     fade_up = true;
                 } else if(this.loading_text.alpha == 1) {
