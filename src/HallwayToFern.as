@@ -3,7 +3,6 @@ package{
     import org.flixel.plugin.photonstorm.FlxCollision;
 
     public class HallwayToFern extends PlayerState {
-        [Embed(source="../assets/incomingcall.png")] private var ImgCall:Class;
         [Embed(source="../assets/Fern-part-2.png")] private var ImgFernBase:Class;
         [Embed(source="../assets/voc_firstconvo.mp3")] private var Convo1:Class;
         [Embed(source="../assets/voc_ikuturso_start.mp3")] private var Convo2:Class;
@@ -14,7 +13,6 @@ package{
         [Embed(source="../assets/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
         [Embed(source="../assets/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
 
-        public var call_button:GameObject;
         public var accept_call:Boolean = false;
 
         public var light:FlxExtSprite;
@@ -97,10 +95,7 @@ package{
             this.postCreate();
 
             if(_state == STATE_PRE_IT){
-                call_button = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .3));
-                call_button.loadGraphic(ImgCall,false,false,406,260);
-                call_button.scrollFactor = new DHPoint(0, 0);
-                FlxG.state.add(call_button);
+                call_button.visible = true;
             }
 
             this.player.nameText.color = 0xffffffff;

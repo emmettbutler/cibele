@@ -37,6 +37,7 @@ package{
         override public function create():void {
             super.create();
             this.ui_color_flag = GameState.UICOLOR_PINK;
+            this.use_loading_screen = false;
             FlxG.bgColor = 0x00000000;
             (new BackgroundLoader()).loadSingleTileBG("../assets/UI_Desktop.png");
             ScreenManager.getInstance().setupCamera(null, 1);

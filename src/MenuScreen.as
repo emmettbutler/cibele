@@ -42,6 +42,7 @@ package{
             PopUpManager.GAME_ACTIVE = true;
             super.create();
 
+            this.use_loading_screen = false;
             FlxG.bgColor = 0x00000000;
             var _screen:ScreenManager = ScreenManager.getInstance();
 

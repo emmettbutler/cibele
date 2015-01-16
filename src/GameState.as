@@ -6,12 +6,16 @@ package {
     public class GameState extends FlxState {
         [Embed(source="../assets/sfx_mouseclick.mp3")] private var SfxClick:Class;
         [Embed(source="../assets/sfx_mouseclick2.mp3")] private var SfxClick2:Class;
+        [Embed(source="../assets/incomingcall.png")] private var ImgCall:Class;
 
         protected var updateSound:Boolean, updatePopup:Boolean,
                       updateMessages:Boolean, showEmoji:Boolean = true;
         protected var game_cursor:GameCursor, baseLayer:GameObject;
         private var pauseLayer:GameObject;
         private var sortedObjects:Array;
+        public var loadingScreen:LoadingScreen;
+        public var use_loading_screen:Boolean = true;
+        public var call_button:GameObject;
 
         public var ui_color_flag:Number;
         public static const UICOLOR_DEFAULT:Number = 0;
@@ -75,6 +79,17 @@ package {
             if (this.updatePopup) {
                 PopUpManager.getInstance().loadPopUps();
             }
+
+            var _screen:ScreenManager = ScreenManager.getInstance();
+            call_button = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .3));
+            call_button.loadGraphic(ImgCall,false,false,406,260);
+            call_button.scrollFactor = new DHPoint(0, 0);
+            FlxG.state.add(call_button);
+            call_button.visible = false;
+
+            if(this.use_loading_screen) {
+                this.loadingScreen = new LoadingScreen();
+            }
             this.game_cursor = new GameCursor();
         }
 
@@ -122,6 +137,12 @@ package {
             // DO NOT call super here, since that breaks pausing
             // the following loop is copypasta from FlxGroup update, altered to
             // support pausing
+            if(this.use_loading_screen) {
+                if(this.loadingScreen != null) {
+                    this.loadingScreen.update();
+                }
+            }
+
             this.sortedObjects.length = 0;
             var basic:GameObject, i:uint = 0;
             while(i < length) {
