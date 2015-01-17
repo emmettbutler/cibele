@@ -29,6 +29,11 @@ package{
         [Embed(source="../assets/images/ui/popups/it_email/bulldoghell_email.png")] private static var ImgBHEmail:Class;
         [Embed(source="../assets/images/ui/popups/picly/emmy1.png")] private static var ImgIchiPicly1:Class;
 
+        //euryale popups
+        [Embed(source="../assets/popups/eu_email/email1.png")] private static var ImgEuEmail1:Class;
+        [Embed(source="../assets/popups/eu_email/email2.png")] private static var ImgEuEmail2:Class;
+        [Embed(source="../assets/popups/eu_picly/dredgeirl.png")] private static var ImgEuDredge:Class;
+
         public static var _instance:PopUpManager = null;
 
         public var _player:Player;
@@ -61,6 +66,12 @@ package{
         public static const SHOWING_POP_UP:Number = 0;
         public static const SHOWING_NOTHING:Number = -699999999;
         public var _state:Number = SHOWING_NOTHING;
+
+        //set this to false again if player exits game screen
+        public static var GAME_ACTIVE:Boolean = false;
+        public var reminder_ding:Boolean = false;
+
+        //ikuturso
         public static const BULLDOG_HELL:String = "bulldoghell";
         public static const SELFIES_1:String = "selfies1";
         public static const GUIL_1:String = "forum1";
@@ -70,9 +81,11 @@ package{
         public static const EMPTY_INBOX:String = "marm";
         public static const FOR_ICHI:String = "ichiluvu";
         public static const ICHI_DL_2:String = "dl2";
-        //set this to false again if player exits game screen
-        public static var GAME_ACTIVE:Boolean = false;
-        public var reminder_ding:Boolean = false;
+
+        //euryale
+        public static const EU_EMAIL_1:String = "euemail1";
+        public static const EU_EMAIL_2:String = "euemail2";
+        public static const EU_DREDGE:String = "eudredge";
 
         public function PopUpManager() {
             this.elements = new Array();
@@ -286,7 +299,7 @@ package{
 
             this.internet_button = new DockButton(
                 this.game_button.x + this.game_button.width + 30,
-                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1], BUTTON_INTERNET);
+                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_1, EU_EMAIL_2], BUTTON_INTERNET);
             this.internet_button.loadGraphic(ImgInternetButton, false, false,
                                              88, 75);
             this.internet_button.alpha = 1;
@@ -307,7 +320,7 @@ package{
 
             this.photo_button = new DockButton(
                 this.file_button.x + this.file_button.width + 30,
-                dock.y - 25, [ICHI_PICLY_1 , SELFIES_1], BUTTON_PHOTO);
+                dock.y - 25, [ICHI_PICLY_1 , SELFIES_1, EU_DREDGE], BUTTON_PHOTO);
             this.photo_button.loadGraphic(ImgPhotoButton, false, false, 82, 65);
             this.photo_button.alpha = 1;
             this.photo_button.scrollFactor.x = 0;
@@ -317,6 +330,7 @@ package{
             this.programButtons.push(this.photo_button);
 
             this.popups = new Dictionary();
+            //ikuturso
             this.popups[EMPTY_INBOX] = new PopUp(ImgEmptyInbox, 631, 356, 0, EMPTY_INBOX);
             this.popups[EMPTY_INBOX].was_opened = true;
             this.popups[FOR_ICHI] = new PopUp(ImgForIchi, 356, 463, 0, FOR_ICHI);
@@ -329,6 +343,11 @@ package{
             this.popups[BULLDOG_HELL] = new PopUp(ImgBHEmail, 631, 356, 0, BULLDOG_HELL);
             this.popups[ICHI_SELFIE1] = new PopUp(ImgIchiSelfie1, 631, 356, 0, ICHI_SELFIE1);
             this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibCamDisconnect, 253, 107, 0, CIB_SELFIE_FOLDER);
+
+            //euryale
+            this.popups[EU_EMAIL_1] = new PopUp(ImgEuEmail1, 631, 356, 0, EU_EMAIL_1);
+            this.popups[EU_EMAIL_2] = new PopUp(ImgEuEmail2, 631, 356, 0, EU_EMAIL_2);
+            this.popups[EU_DREDGE] = new PopUp(ImgEuEmail2, 456, 356, 0, EU_DREDGE);
 
             var curButton:DockButton;
             for (var i:int = 0; i < this.programButtons.length; i++){
