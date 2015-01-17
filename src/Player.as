@@ -336,7 +336,9 @@ package{
             } else if (this.finalTarget.sub(this.footPos)._length() < 100) {
                 this.dir = this.dir.mulScl(.7);
             }
-            if (!this.positionDeltaOverThreshold() && !this.clickWait && !this.mouseHeld) {
+            if (!this.positionDeltaOverThreshold() && !this.clickWait
+                && !this.mouseHeld && !this.inAttack())
+            {
                 this._state = STATE_IDLE;
                 this.dir = ZERO_POINT;
                 this.curPath = null;
@@ -488,7 +490,7 @@ package{
                 if(this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
                 } else {
-                    this.walkTarget = this.targetEnemy.getAttackPos();
+                    this.finalTarget = this.targetEnemy.getAttackPos();
                     this.walkDistance = this.walkTarget.sub(footPos)._length();
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
