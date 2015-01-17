@@ -40,6 +40,7 @@ package{
         {
             public static var stateMap:Dictionary = new Dictionary();
             stateMap[STATE_NULL] = "STATE_NULL";
+            stateMap[STATE_IDLE] = "STATE_IDLE";
             stateMap[STATE_AT_ENEMY] = "STATE_AT_ENEMY";
             stateMap[STATE_IN_ATTACK] = "STATE_IN_ATTACK";
             stateMap[STATE_MOVE_TO_ENEMY] = "STATE_MOVE_TO_ENEMY";
@@ -323,8 +324,11 @@ package{
                 this.dir = ZERO_POINT;
             } else if (this.walkTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
                 if (curPath == null) {
-                    this._state = STATE_IDLE;
-                    this.dir = ZERO_POINT;
+                    if (!this.inAttack()) {
+                        this._state = STATE_IDLE;
+                        this.dir = ZERO_POINT;
+                    } else {
+                    }
                 } else {
                     if (this.curPath.advance()) {
                         this.walkTarget = this.finalTarget;
@@ -485,7 +489,8 @@ package{
         override public function resolveStatePostAttack():void {
             super.resolveStatePostAttack();
 
-            if (this.targetEnemy != null && !this.targetEnemy.dead && this.targetEnemy.visible == true)
+            if (this.targetEnemy != null && !this.targetEnemy.dead
+                && this.targetEnemy.visible == true)
             {
                 if(this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
