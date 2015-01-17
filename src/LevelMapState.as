@@ -25,8 +25,6 @@ package {
         public var playerStartPos:DHPoint;
         public var colliderScaleFactor:Number;
 
-        public var ikuturso:Boolean = false;
-
         protected var conversationPieces:Array;
         protected var conversationCounter:Number = 0;
 
@@ -161,33 +159,47 @@ package {
             return {"canConnect": canConnect, "length": ray.width};
         }
 
+        public function playFirstConvo():void {
+            this.playConvoPiece(0);
+            this.bitDialogueLock = false;
+        }
+
         public function playNextConvoPiece():void {
-            var thisAudioInfo:Object = this.conversationPieces[this.conversationCounter];
-            if (thisAudioInfo["endfn"] != null) {
-                thisAudioInfo["endfn"]();
-            }
-            this.conversationCounter += 1;
-            var that:LevelMapState = this;
-            var nextAudioInfo:Object = this.conversationPieces[this.conversationCounter];
-            if (nextAudioInfo != null && (thisAudioInfo["registerCallback"] != null || thisAudioInfo["registerCallback"] == true)) {
-                this.addEventListener(GameState.EVENT_POPUP_CLOSED,
-                    function(event:DataEvent):void {
-                        SoundManager.getInstance().playSound(
-                            nextAudioInfo["audio"], nextAudioInfo["len"],
-                            that.playNextConvoPiece, false, 1, GameSound.VOCAL
-                        );
-                        that.playTimedEmotes(that.conversationCounter);
-                        if(that.conversationPieces.length == that.conversationCounter + 1) {
-                            that.last_convo_playing = true;
-                        }
-                        FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
-                                                       arguments.callee);
-                    });
-            } else {
-                if(ikuturso) {
-                    GlobalTimer.getInstance().setMark("Boss Kill", 5*GameSound.MSEC_PER_SEC, this.finalConvoDone);
+            this.playConvoPiece(this.conversationCounter + 1);
+        }
+
+        private function playConvoPiece(counterVal:Number):void {
+            this.conversationCounter = counterVal;
+            var audioInfo:Object = this.conversationPieces[this.conversationCounter];
+            if (audioInfo != null) {
+                var endfn:Function = this.playNextConvoPiece;
+                if (audioInfo["endfn"] != null) {
+                    endfn = function():void {
+                        registerPopupCallback();
+                        audioInfo["endfn"]();
+                    };
                 }
+                SoundManager.getInstance().playSound(
+                    audioInfo["audio"], audioInfo["len"], endfn, false, 1,
+                    GameSound.VOCAL
+                );
+            } else {
+                this.finalConvoDone();
             }
+        }
+
+        public function registerPopupCallback():void {
+            var that:LevelMapState = this;
+            this.addEventListener(GameState.EVENT_POPUP_CLOSED,
+                function(event:DataEvent):void {
+                    that.playNextConvoPiece();
+                    that.playTimedEmotes(that.conversationCounter);
+                    if(that.conversationPieces.length == that.conversationCounter + 1) {
+                        that.last_convo_playing = true;
+                    }
+                    FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
+                                                    arguments.callee);
+                });
         }
 
         public function finalConvoDone():void {}

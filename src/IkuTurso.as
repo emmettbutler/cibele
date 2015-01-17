@@ -26,7 +26,6 @@ package{
             PopUpManager.GAME_ACTIVE = true;
             this.bossHasAppeared = false;
             this.ui_color_flag = GameState.UICOLOR_PINK;
-            this.ikuturso = true;
 
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
@@ -56,7 +55,7 @@ package{
                 },
                 {
                     "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC,
-                    "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null
+                    "delay": 20*GameSound.MSEC_PER_SEC
                 }
             ];
         }
@@ -138,14 +137,17 @@ package{
         }
 
         override public function finalConvoDone():void {
-            //TODO play no other bit dialogue during this time
-            SoundManager.getInstance().playSound(
-                IchiBossKill, 3*GameSound.MSEC_PER_SEC, this.playEndFilm,
-                false, 1, GameSound.VOCAL
-            );
-            if(this.boss != null) {
-                this.boss.dead = true;
-            }
+            var that:IkuTurso = this;
+            GlobalTimer.getInstance().setMark("Boss Kill", 5*GameSound.MSEC_PER_SEC, function():void {
+                //TODO play no other bit dialogue during this time
+                SoundManager.getInstance().playSound(
+                    IchiBossKill, 3*GameSound.MSEC_PER_SEC, that.playEndFilm,
+                    false, 1, GameSound.VOCAL
+                );
+                if(this.boss != null) {
+                    this.boss.dead = true;
+                }
+            });
         }
 
         public function playEndFilm():void {
@@ -177,16 +179,6 @@ package{
             if(convoNum == 5) {
                 GlobalTimer.getInstance().setMark("6th Convo Emote", 12*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
             }
-        }
-
-        public function playFirstConvo():void {
-            this.conversationCounter = 0;
-            var sndInfo:Object = this.conversationPieces[this.conversationCounter];
-            this.convo1Sound = SoundManager.getInstance().playSound(
-                sndInfo["audio"], sndInfo["len"], this.playNextConvoPiece,
-                false, 1, GameSound.VOCAL
-            );
-            this.bitDialogueLock = false;
         }
 
         public function playRUComing():void {

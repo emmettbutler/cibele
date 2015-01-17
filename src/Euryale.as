@@ -23,21 +23,11 @@ package{
             this.conversationPieces = [
                 {
                     "audio": Convo1, "len": 7*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.playNextConvoPiece
+                    "delay": 0
                 },
                 {
                     "audio": Convo1_2, "len": 27*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showFriendEmail
-                },
-                {
-                    "audio": Convo2, "len": 40*GameSound.MSEC_PER_SEC,
-                    "delay": 20*GameSound.MSEC_PER_SEC,
-                    "endfn": this.playNadaConvo
-                },
-                {
-                    "audio": Convo3, "len": 40*GameSound.MSEC_PER_SEC,
-                    "delay": 10*GameSound.MSEC_PER_SEC,
-                    "endfn": null
                 }
             ];
         }
@@ -53,20 +43,6 @@ package{
             GlobalTimer.getInstance().setMark("start euryale convo", 5*GameSound.MSEC_PER_SEC, this.playFirstConvo);
 
             super.create();
-        }
-
-        public function playFirstConvo():void {
-            this.conversationCounter = 0;
-            var sndInfo:Object = this.conversationPieces[this.conversationCounter];
-            this.convo1Sound = SoundManager.getInstance().playSound(
-                sndInfo["audio"], sndInfo["len"], sndInfo["endfn"],
-                false, 1, GameSound.VOCAL
-            );
-            this.bitDialogueLock = false;
-        }
-
-        public function playTeleportConvo():void {
-            SoundManager.getInstance().playSound(Convo1_2, 27*GameSound.MSEC_PER_SEC, this.showFriendEmail, false, 1, GameSound.VOCAL);
         }
 
         public function playNadaConvo():void {
@@ -86,6 +62,7 @@ package{
         }
 
         public function showFriendEmail():void {
+            trace("sent");
             PopUpManager.getInstance().sendPopup(PopUpManager.EU_EMAIL_1);
         }
 
