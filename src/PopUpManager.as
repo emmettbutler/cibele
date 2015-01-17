@@ -5,6 +5,7 @@ package{
     import flash.utils.Dictionary;
 
     public class PopUpManager {
+        [Embed(source="../assets/sfx_notification.mp3")] private var SfxNotification:Class;
         [Embed(source="../assets/UI_icon_game.png")] private var ImgGameButton:Class;
         [Embed(source="../assets/UI_icon_folder.png")] private var ImgFileButton:Class;
         [Embed(source="../assets/UI_icon_photo.png")] private var ImgPhotoButton:Class;
@@ -71,6 +72,7 @@ package{
         public static const ICHI_DL_2:String = "dl2";
         //set this to false again if player exits game screen
         public static var GAME_ACTIVE:Boolean = false;
+        public var reminder_ding:Boolean = false;
 
         public function PopUpManager() {
             this.elements = new Array();
@@ -150,6 +152,7 @@ package{
             }
             if (toDelete != null) {
                 delete this.sentPopups[toDelete];
+                this.reminder_ding = false;
             }
         }
 
@@ -172,8 +175,24 @@ package{
                 if (this.programButtons[i].ownsKey(key)) {
                     this.programButtons[i].sendPopup(this.popups[key]);
                     this.sentPopups[key] = 1;
+                    this.reminder_ding = true;
+                    GlobalTimer.getInstance().setMark("new popup", 10*GameSound.MSEC_PER_SEC, this.reminderDing);
                 }
             }
+        }
+
+        public function reminderDing():void {
+            if(this.reminder_ding) {
+                playNotificationSound();
+                GlobalTimer.getInstance().setMark("new popup", 10*GameSound.MSEC_PER_SEC, this.reminderDing);
+            }
+        }
+
+        public function playNotificationSound():void {
+            SoundManager.getInstance().playSound(
+                    SfxNotification, 2*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.SFX,
+                    "" + Math.random()
+                );
         }
 
         public function loadEmoji():void {
