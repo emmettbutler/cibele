@@ -19,9 +19,6 @@ package{
         private var convo1Sound:GameSound;
         private var convo1Ready:Boolean;
 
-        private var conversationPieces:Array;
-        private var conversationCounter:Number = 0;
-
         public static var BGM:String = "ikuturso bgm loop";
         public static const BOSS_MARK:String = "boss_iku_turso";
 
@@ -29,6 +26,7 @@ package{
             PopUpManager.GAME_ACTIVE = true;
             this.bossHasAppeared = false;
             this.ui_color_flag = GameState.UICOLOR_PINK;
+            this.ikuturso = true;
 
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
@@ -139,34 +137,7 @@ package{
             PopUpManager.getInstance().sendPopup(PopUpManager.CIB_SELFIE_FOLDER);
         }
 
-        public function playNextConvoPiece():void {
-            var thisAudioInfo:Object = this.conversationPieces[this.conversationCounter];
-            if (thisAudioInfo["endfn"] != null) {
-                thisAudioInfo["endfn"]();
-            }
-            this.conversationCounter += 1;
-            var that:IkuTurso = this;
-            var nextAudioInfo:Object = this.conversationPieces[this.conversationCounter];
-            if (nextAudioInfo != null) {
-                this.addEventListener(GameState.EVENT_POPUP_CLOSED,
-                    function(event:DataEvent):void {
-                        SoundManager.getInstance().playSound(
-                            nextAudioInfo["audio"], nextAudioInfo["len"],
-                            that.playNextConvoPiece, false, 1, GameSound.VOCAL
-                        );
-                        that.playTimedEmotes(that.conversationCounter);
-                        if(that.conversationPieces.length == that.conversationCounter + 1) {
-                            that.last_convo_playing = true;
-                        }
-                        FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
-                                                       arguments.callee);
-                    });
-            } else {
-                GlobalTimer.getInstance().setMark("Boss Kill", 5*GameSound.MSEC_PER_SEC, this.ichiBossKill);
-            }
-        }
-
-        public function ichiBossKill():void {
+        override public function finalConvoDone():void {
             //TODO play no other bit dialogue during this time
             SoundManager.getInstance().playSound(
                 IchiBossKill, 3*GameSound.MSEC_PER_SEC, this.playEndFilm,
@@ -190,7 +161,7 @@ package{
                 );
         }
 
-        public function playTimedEmotes(convoNum:Number):void {
+        override public function playTimedEmotes(convoNum:Number):void {
             if(convoNum == 1) {
                 GlobalTimer.getInstance().setMark("2nd Convo Emote", 11*GameSound.MSEC_PER_SEC, this.ichiMadEmote);
             }

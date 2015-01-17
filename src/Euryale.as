@@ -13,8 +13,7 @@ package{
         [Embed(source="../assets/voc_euryale_parents.mp3")] private var Convo3_3:Class;
         [Embed(source="../assets/voc_euryale_dredge.mp3")] private var Convo4:Class;
 
-        private var conversationPieces:Array;
-        private var conversationCounter:Number = 0;
+        private var convo1Sound:GameSound;
 
         public function Euryale() {
             PopUpManager.GAME_ACTIVE = true;
@@ -24,7 +23,11 @@ package{
             this.conversationPieces = [
                 {
                     "audio": Convo1, "len": 7*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.playTeleportConvo
+                    "delay": 0, "endfn": this.playNextConvoPiece
+                },
+                {
+                    "audio": Convo1_2, "len": 27*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "endfn": this.showFriendEmail
                 },
                 {
                     "audio": Convo2, "len": 40*GameSound.MSEC_PER_SEC,
@@ -47,31 +50,39 @@ package{
             this.playerStartPos = new DHPoint(2266*3 - 500, 1365*6 - 500);
             this.colliderScaleFactor = 3.54;
 
-            if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
-                GlobalTimer.getInstance().setMark("First Convo", 2*GameSound.MSEC_PER_SEC, this.startConvo);
-            }
+            GlobalTimer.getInstance().setMark("start euryale convo", 5*GameSound.MSEC_PER_SEC, this.playFirstConvo);
 
             super.create();
         }
 
+        public function playFirstConvo():void {
+            this.conversationCounter = 0;
+            var sndInfo:Object = this.conversationPieces[this.conversationCounter];
+            this.convo1Sound = SoundManager.getInstance().playSound(
+                sndInfo["audio"], sndInfo["len"], sndInfo["endfn"],
+                false, 1, GameSound.VOCAL
+            );
+            this.bitDialogueLock = false;
+        }
+
         public function playTeleportConvo():void {
-            SoundManager.getInstance().playSound(Convo1_2, 27, this.showFriendEmail, false, 1, GameSound.VOCAL);
+            SoundManager.getInstance().playSound(Convo1_2, 27*GameSound.MSEC_PER_SEC, this.showFriendEmail, false, 1, GameSound.VOCAL);
         }
 
         public function playNadaConvo():void {
-            SoundManager.getInstance().playSound(Convo2_2, 17, this.playCallMeBlakeConvo, false, 1, GameSound.VOCAL);
+            SoundManager.getInstance().playSound(Convo2_2, 17*GameSound.MSEC_PER_SEC, this.playCallMeBlakeConvo, false, 1, GameSound.VOCAL);
         }
 
         public function playCallMeBlakeConvo():void {
-            SoundManager.getInstance().playSound(Convo2_3, 46, this.showFriendEmail2, false, 1, GameSound.VOCAL);
+            SoundManager.getInstance().playSound(Convo2_3, 46*GameSound.MSEC_PER_SEC, this.showFriendEmail2, false, 1, GameSound.VOCAL);
         }
 
         public function playMeetupConvo():void {
-            SoundManager.getInstance().playSound(Convo3_2, 72, this.playParentsConvo, false, 1, GameSound.VOCAL);
+            SoundManager.getInstance().playSound(Convo3_2, 72*GameSound.MSEC_PER_SEC, this.playParentsConvo, false, 1, GameSound.VOCAL);
         }
 
         public function playParentsConvo():void {
-            SoundManager.getInstance().playSound(Convo3_3, 47, this.showDredgeSelfie, false, 1, GameSound.VOCAL);
+            SoundManager.getInstance().playSound(Convo3_3, 47*GameSound.MSEC_PER_SEC, this.showDredgeSelfie, false, 1, GameSound.VOCAL);
         }
 
         public function showFriendEmail():void {
@@ -90,31 +101,8 @@ package{
             super.update();
         }
 
-        public function playNextConvoPiece():void {
-            var thisAudioInfo:Object = this.conversationPieces[this.conversationCounter];
-            if (thisAudioInfo["endfn"] != null) {
-                thisAudioInfo["endfn"]();
-            }
-            this.conversationCounter += 1;
-            var that:Euryale = this;
-            var nextAudioInfo:Object = this.conversationPieces[this.conversationCounter];
-            if (nextAudioInfo != null) {
-                this.addEventListener(GameState.EVENT_POPUP_CLOSED,
-                    function(event:DataEvent):void {
-                        SoundManager.getInstance().playSound(
-                            nextAudioInfo["audio"], nextAudioInfo["len"],
-                            that.playNextConvoPiece, false, 1, GameSound.VOCAL
-                        );
-                        that.playTimedEmotes(that.conversationCounter);
-                        if(that.conversationPieces.length == that.conversationCounter + 1) {
-                            that.last_convo_playing = true;
-                        }
-                        FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
-                                                       arguments.callee);
-                    });
-            } else {
-                //GlobalTimer.getInstance().setMark("Boss Kill", 5*GameSound.MSEC_PER_SEC, this.ichiBossKill);
-            }
+        public function ichiMadEmote():void {
+            PopUpManager.getInstance().emote(new FlxRect(0,0), this.pathWalker, true, Emote.ANGRY);
         }
     }
 }

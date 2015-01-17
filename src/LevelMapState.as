@@ -25,6 +25,11 @@ package {
         public var playerStartPos:DHPoint;
         public var colliderScaleFactor:Number;
 
+        public var ikuturso:Boolean = false;
+
+        protected var conversationPieces:Array;
+        protected var conversationCounter:Number = 0;
+
         override public function create():void {
             super.__create(this.playerStartPos);
 
@@ -155,5 +160,38 @@ package {
             }
             return {"canConnect": canConnect, "length": ray.width};
         }
+
+        public function playNextConvoPiece():void {
+            var thisAudioInfo:Object = this.conversationPieces[this.conversationCounter];
+            if (thisAudioInfo["endfn"] != null) {
+                thisAudioInfo["endfn"]();
+            }
+            this.conversationCounter += 1;
+            var that:LevelMapState = this;
+            var nextAudioInfo:Object = this.conversationPieces[this.conversationCounter];
+            if (nextAudioInfo != null && (thisAudioInfo["registerCallback"] != null || thisAudioInfo["registerCallback"] == true)) {
+                this.addEventListener(GameState.EVENT_POPUP_CLOSED,
+                    function(event:DataEvent):void {
+                        SoundManager.getInstance().playSound(
+                            nextAudioInfo["audio"], nextAudioInfo["len"],
+                            that.playNextConvoPiece, false, 1, GameSound.VOCAL
+                        );
+                        that.playTimedEmotes(that.conversationCounter);
+                        if(that.conversationPieces.length == that.conversationCounter + 1) {
+                            that.last_convo_playing = true;
+                        }
+                        FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
+                                                       arguments.callee);
+                    });
+            } else {
+                if(ikuturso) {
+                    GlobalTimer.getInstance().setMark("Boss Kill", 5*GameSound.MSEC_PER_SEC, this.finalConvoDone);
+                }
+            }
+        }
+
+        public function finalConvoDone():void {}
+
+        public function playTimedEmotes(convoNum:Number):void {}
     }
 }
