@@ -33,6 +33,7 @@ package{
         [Embed(source="../assets/popups/eu_email/email1.png")] private static var ImgEuEmail1:Class;
         [Embed(source="../assets/popups/eu_email/email2.png")] private static var ImgEuEmail2:Class;
         [Embed(source="../assets/popups/eu_picly/dredgeirl.png")] private static var ImgEuDredge:Class;
+        [Embed(source="../assets/popups/eu_files/highschool.png")] private static var ImgEuHighSchool:Class;
 
         public static var _instance:PopUpManager = null;
 
@@ -86,6 +87,7 @@ package{
         public static const EU_EMAIL_1:String = "euemail1";
         public static const EU_EMAIL_2:String = "euemail2";
         public static const EU_DREDGE:String = "eudredge";
+        public static const EU_HIGHSCHOOL:String = "euhighschool";
 
         public function PopUpManager() {
             this.elements = new Array();
@@ -309,7 +311,7 @@ package{
             this.elements.push(this.internet_button);
             this.programButtons.push(this.internet_button);
 
-            this.file_button = new DockButton(this.internet_button.x + this.internet_button.width + 30, dock.y - 30, [CIB_SELFIE_FOLDER], BUTTON_FILES);
+            this.file_button = new DockButton(this.internet_button.x + this.internet_button.width + 30, dock.y - 30, [CIB_SELFIE_FOLDER, EU_HIGHSCHOOL], BUTTON_FILES);
             this.file_button.loadGraphic(ImgFileButton, false, false, 88, 60);
             this.file_button.alpha = 1;
             this.file_button.scrollFactor.x = 0;
@@ -348,6 +350,7 @@ package{
             this.popups[EU_EMAIL_1] = new PopUp(ImgEuEmail1, 631, 356, 0, EU_EMAIL_1);
             this.popups[EU_EMAIL_2] = new PopUp(ImgEuEmail2, 631, 356, 0, EU_EMAIL_2);
             this.popups[EU_DREDGE] = new PopUp(ImgEuEmail2, 456, 356, 0, EU_DREDGE);
+            this.popups[EU_HIGHSCHOOL] = new PopUp(ImgEuHighSchool, 631, 356, 0, EU_HIGHSCHOOL);
 
             var curButton:DockButton;
             for (var i:int = 0; i < this.programButtons.length; i++){
@@ -402,6 +405,12 @@ package{
             } else {
                 return false;
             }
+        }
+
+        public function setOpeningPopups(internet:String, files:String, photo:String):void {
+            this.popupTags[BUTTON_INTERNET] = internet;
+            this.popupTags[BUTTON_FILES] = files;
+            this.popupTags[BUTTON_PHOTO] = photo;
         }
 
         public static function getInstance():PopUpManager {
