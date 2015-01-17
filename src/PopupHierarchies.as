@@ -130,7 +130,7 @@ package {
             struc[PopUpManager.EU_EMAIL_2] = { "contents": [
                 {
                     "name": "eu email 2 link 1",
-                    "icon": ImgEuEmail2Link1,
+                    "icon": ImgEuEmail2Link2,
                     "icon_dim": new DHPoint(325, 21),
                     "icon_pos": new DHPoint(293, 101),
                     "dim": new DHPoint(1023, 515),
@@ -138,7 +138,7 @@ package {
                 },
                 {
                     "name": "eu email 2 link 2",
-                    "icon": ImgEuEmail2Link2,
+                    "icon": ImgEuEmail2Link1,
                     "icon_dim": new DHPoint(225, 18),
                     "icon_pos": new DHPoint(20, 219),
                     "dim": new DHPoint(284, 356),

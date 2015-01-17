@@ -26,7 +26,35 @@ package{
                 },
                 {
                     "audio": Convo1_2, "len": 27*GameSound.MSEC_PER_SEC,
-                    "endfn": this.showFriendEmail
+                    "delay": 0, "endfn": this.showFriendEmail
+                },
+                {
+                    "audio": Convo2, "len": 40*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": Convo2_2, "len": 17*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": Convo2_3, "len": 46*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "endfn": this.showFriendEmail2
+                },
+                {
+                    "audio": Convo3, "len": 10*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": Convo3_2, "len": 72*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": Convo3_3, "len": 47*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "endfn": showDredgeSelfie
+                },
+                {
+                    "audio": Convo4, "len": 85*GameSound.MSEC_PER_SEC,
+                    "delay": 0
                 }
             ];
         }
@@ -44,24 +72,7 @@ package{
             super.create();
         }
 
-        public function playNadaConvo():void {
-            SoundManager.getInstance().playSound(Convo2_2, 17*GameSound.MSEC_PER_SEC, this.playCallMeBlakeConvo, false, 1, GameSound.VOCAL);
-        }
-
-        public function playCallMeBlakeConvo():void {
-            SoundManager.getInstance().playSound(Convo2_3, 46*GameSound.MSEC_PER_SEC, this.showFriendEmail2, false, 1, GameSound.VOCAL);
-        }
-
-        public function playMeetupConvo():void {
-            SoundManager.getInstance().playSound(Convo3_2, 72*GameSound.MSEC_PER_SEC, this.playParentsConvo, false, 1, GameSound.VOCAL);
-        }
-
-        public function playParentsConvo():void {
-            SoundManager.getInstance().playSound(Convo3_3, 47*GameSound.MSEC_PER_SEC, this.showDredgeSelfie, false, 1, GameSound.VOCAL);
-        }
-
         public function showFriendEmail():void {
-            trace("sent");
             PopUpManager.getInstance().sendPopup(PopUpManager.EU_EMAIL_1);
         }
 
@@ -70,7 +81,7 @@ package{
         }
 
         public function showDredgeSelfie():void {
-            PopUpManager.getInstance().sendPopup(PopUpManager.EU_EMAIL_1);
+            PopUpManager.getInstance().sendPopup(PopUpManager.EU_DREDGE);
         }
 
         override public function update():void{
