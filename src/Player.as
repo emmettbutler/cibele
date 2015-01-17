@@ -23,8 +23,7 @@ package{
         private var click_anim:GameObject, attack_sprite:GameObject,
                     shadow_sprite:GameObject;
         private var click_anim_lock:Boolean = false, clickWait:Boolean,
-                    active_enemy:Boolean = false, mouseHeld:Boolean = false,
-                    attack_anim_playing:Boolean = false;
+                    active_enemy:Boolean = false, mouseHeld:Boolean = false;
         private var upDownFootstepOffset:DHPoint, leftFootstepOffset:DHPoint,
                     rightFootstepOffset:DHPoint;
 
@@ -84,7 +83,7 @@ package{
             this.attack_sprite.zSorted = true;
             this.attack_sprite.basePos = new DHPoint(0, 0);
             this.attack_sprite.loadGraphic(ImgAttack,true,false,173,230);
-            this.attack_sprite.addAnimation("attack",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22],10,false);
+            this.attack_sprite.addAnimation("attack",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22],13,false);
             this.attack_sprite.visible = false;
 
             this.click_anim = new GameObject(this.pos);
@@ -144,7 +143,7 @@ package{
                         this.active_enemy = false;
                         this.playUIGeneralSFX();
                     } else if (cur is Enemy) {
-                        if(this.attack_anim_playing) {
+                        if(this._state == STATE_IN_ATTACK) {
                             return;
                         }
                         if (mouseWorldRect.overlaps(worldRect)) {
@@ -164,7 +163,7 @@ package{
                 }
             }
 
-            if(this.attack_anim_playing) {
+            if(this._state == STATE_IN_ATTACK) {
                 return;
             }
 
@@ -495,15 +494,17 @@ package{
                 if(this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
                 } else {
+                    this.walkTarget = this.targetEnemy.getAttackPos();
                     this.finalTarget = this.targetEnemy.getAttackPos();
                     this.walkDistance = this.walkTarget.sub(footPos)._length();
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
-            } else if (this.targetEnemy != null) {
-                if (this.targetEnemy.dead) {
-                    this.targetEnemy = null;
-                }
             } else {
+                if (this.targetEnemy != null) {
+                    if (this.targetEnemy.dead) {
+                        this.targetEnemy = null;
+                    }
+                }
                 this._state = STATE_IDLE;
             }
         }
@@ -541,10 +542,8 @@ package{
                 this.visible = false;
                 this.shadow_sprite.visible = false;
                 this.attack_sprite.play("attack");
-                this.attack_anim_playing = true;
                 GlobalTimer.getInstance().setMark("attack_finished",
-                    (23/10)*GameSound.MSEC_PER_SEC, function():void {
-                        attack_anim_playing = false;
+                    (23.0/10.0)*GameSound.MSEC_PER_SEC, function():void {
                         resolveStatePostAttack();
                     }, true);
 
