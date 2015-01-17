@@ -31,31 +31,26 @@ package{
             this.conversationPieces = [
                 {
                     "audio": Convo1, "len": 56*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showIchiDownloadWindow
+                    "endfn": this.showIchiDownloadWindow
                 },
                 {
                     "audio": Convo2, "len": 76*GameSound.MSEC_PER_SEC,
-                    "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showSelfiesWindow
                 },
                 {
                     "audio": Convo3, "len": 25*GameSound.MSEC_PER_SEC,
-                    "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showGuilEmail
                 },
                 {
                     "audio": Convo4, "len": 107*GameSound.MSEC_PER_SEC,
-                    "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showIchiSelfie1
                 },
                 {
                     "audio": Convo5, "len": 15*GameSound.MSEC_PER_SEC,
-                    "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showCibSelfieFolder
                 },
                 {
-                    "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC,
-                    "delay": 20*GameSound.MSEC_PER_SEC
+                    "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC
                 }
             ];
         }

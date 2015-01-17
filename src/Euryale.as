@@ -23,11 +23,10 @@ package{
             this.conversationPieces = [
                 {
                     "audio": Convo1, "len": 7*GameSound.MSEC_PER_SEC,
-                    "delay": 0
                 },
                 {
                     "audio": Convo1_2, "len": 27*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showFriendEmail
+                    "endfn": this.showFriendEmail
                 }
             ];
         }
