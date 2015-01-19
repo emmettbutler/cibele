@@ -22,7 +22,7 @@ package{
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo1, "len": 7*GameSound.MSEC_PER_SEC,
+                    "audio": Convo1, "len": 7*GameSound.MSEC_PER_SEC
                 },
                 {
                     "audio": Convo1_2, "len": 27*GameSound.MSEC_PER_SEC,
