@@ -97,6 +97,8 @@ package
 
             this.walkTarget = new DHPoint(0, 0);
             this.disp = new DHPoint(0, 0);
+
+            this.debugText.color = 0xff444444;
         }
 
         override public function addVisibleObjects():void {
@@ -142,6 +144,10 @@ package
 
         override public function update():void {
             super.update();
+
+            if (ScreenManager.getInstance().DEBUG) {
+                this.debugText.text = PathFollower.stateMap[this._state];
+            }
 
             if(this.facing == LEFT) {
                 this.shadow_sprite.x = this.pos.center(this).x - 15;
