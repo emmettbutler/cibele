@@ -62,6 +62,12 @@ package
             return cur;
         }
 
+        public function advanceToNode(node:PathNode):void {
+            while (this.currentNode != node) {
+                this.advance();
+            }
+        }
+
         public function init():void {
             this.setCurrentNode(this.nodes[0]);
         }

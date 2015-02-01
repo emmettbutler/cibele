@@ -101,5 +101,56 @@ package {
             this.resolveAttacksHelper(this.player);
             this.resolveAttacksHelper(this.pathWalker);
         }
+
+        public function rayCast(pt1:DHPoint, pt2:DHPoint,
+                                color:uint=0xffff00ff, limit:Number=-1,
+                                width:Number=1):FlxSprite {
+            var xDisp:Number = pt2.x - pt1.x;
+            var yDisp:Number = pt2.y - pt1.y;
+            var disp:DHPoint = pt1.sub(pt2);
+
+            if (disp._length() <= 0) {
+                return null;
+            }
+
+            if (limit != -1 && disp._length() > limit) {
+                return null;
+            }
+
+            var angle:Number = Math.atan2(yDisp, xDisp);
+
+            var posX:Number = pt1.x + (disp._length() / 2) * Math.cos(angle);
+            var posY:Number = pt1.y + (disp._length() / 2) * Math.sin(angle);
+
+            var ray:FlxSprite = new FlxSprite(posX - disp._length() / 2, posY);
+            ray.makeGraphic(disp._length(), width, color);
+            ray.angle = Utils.radToDeg(angle);
+            ray.active = false;
+            if (ScreenManager.getInstance().DEBUG) {
+                FlxG.state.add(ray);
+            }
+            return ray;
+        }
+
+        public function pointsCanConnect(pt1:DHPoint, pt2:DHPoint):Object {
+            var ray:FlxSprite;
+            if (pt1 != pt2) {
+                ray = this.rayCast(pt1, pt2, 0xffff00ff, 440, 40);
+            }
+
+            if (ray == null) {
+                return {"canConnect": false};
+            }
+
+            var canConnect:Boolean = !this.bgLoader.collideRay(ray, pt1, pt2);
+            if (!canConnect) {
+                ray.color = 0xffff0000;
+            }
+            if (canConnect) {
+                trace("adding ray of length: " + ray.width);
+            }
+            return {"canConnect": canConnect, "length": ray.width};
+        }
+
     }
 }
