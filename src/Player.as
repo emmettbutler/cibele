@@ -252,19 +252,6 @@ package{
                         );
                         (FlxG.state as PathEditorState).clearAllAStarMeasures();
 
-                        // avoid the situation in which Cibele walks away from
-                        // the target before walking toward it
-                        // XXX this fails when there is an obstacle between the
-                        // player and the second node on the path, just as the
-                        // main path logic fails when there is an obstacle between
-                        // the player and the first node on the path
-                        var thirdNode:PathNode = this.curPath.getNodeByIndex(2)
-                        if (this.curPath.getNodeByIndex(0).pos.sub(thirdNode.pos) >
-                            this.curPath.getNodeByIndex(1).pos.sub(thirdNode.pos))
-                        {
-                            this.curPath.advance();
-                        }
-
                         this.walkTarget = this.curPath.currentNode.pos;
 
                         if (ScreenManager.getInstance().DEBUG) {
@@ -344,6 +331,7 @@ package{
                     }
                 } else {
                     this.curPath.advance();
+
                     if (this.curPath.isAtFirstNode()) {
                         this.walkTarget = this.finalTarget;
                         this.curPath = null;

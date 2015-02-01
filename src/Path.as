@@ -55,9 +55,9 @@ package
         public function getNodeByIndex(idx:Number):PathNode {
             var counter:Number = 0;
             var cur:PathNode = this.nodes[counter];
-            while (counter < idx) {
+            while (counter != idx) {
                 cur = this.getNextNode(cur);
-                counter += 1;
+                counter += idx >= 0 ? 1 : -1;
             }
             return cur;
         }
