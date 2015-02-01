@@ -31,6 +31,10 @@ package {
         [Embed(source="../assets/popups/eu_files/old.png")] private static var ImgEuFile1Old:Class;
         [Embed(source="../assets/popups/eu_files/ollld.png")] private static var ImgEuFile1Ollld:Class;
         [Embed(source="../assets/popups/eu_files/ollld_icon.png")] private static var ImgEuFile1OllldIcon:Class;
+        [Embed(source="../assets/popups/eu_email/emailselfie_link.png")] private static var ImgEuEmailSelfieLink:Class;
+        [Embed(source="../assets/popups/eu_net/ichiselfiethread.png")] private static var ImgEuEmailSelfieNetThread:Class;
+        [Embed(source="../assets/popups/eu_email/miniemailselfie_link.png")] private static var ImgEuEmailSelfieMiniLink:Class;
+        [Embed(source="../assets/popups/eu_email/small_emailselfie.png")] private static var ImgEuMiniSelfieEmail:Class;
 
         public static function build():Dictionary {
             var struc:Dictionary = new Dictionary();
@@ -127,22 +131,57 @@ package {
                         }]
                 }
             ]};
+            struc[PopUpManager.EU_EMAIL_SELFIE] = { "contents": [
+                {
+                    "name": "eu email selfie link 1",
+                    "icon": ImgEuEmailSelfieLink,
+                    "icon_dim": new DHPoint(154, 19),
+                    "icon_pos": new DHPoint(18, 186),
+                    "dim": new DHPoint(998, 606),
+                    "contents": ImgEuEmailSelfieNetThread
+                },
+                {
+                    "name": "eu email selfie link 2",
+                    "icon": ImgEuEmail2Link1,
+                    "icon_dim": new DHPoint(325, 21),
+                    "icon_pos": new DHPoint(293, 102),
+                    "dim": new DHPoint(284, 356),
+                    "contents": ImgEuEmailSmallEmail1
+                }
+            ]};
             struc[PopUpManager.EU_EMAIL_2] = { "contents": [
                 {
                     "name": "eu email 2 link 1",
-                    "icon": ImgEuEmail2Link2,
+                    "icon": ImgEuEmail2Link1,
                     "icon_dim": new DHPoint(325, 21),
                     "icon_pos": new DHPoint(293, 101),
+                    "dim": new DHPoint(284, 356),
+                    "contents": ImgEuEmailSmallEmail1
+                },
+                {
+                    "name": "eu email 2 link 2",
+                    "icon": ImgEuEmail2Link2,
+                    "icon_dim": new DHPoint(225, 18),
+                    "icon_pos": new DHPoint(20, 219),
                     "dim": new DHPoint(1023, 515),
                     "contents": ImgEuEmail2Flight
                 },
                 {
-                    "name": "eu email 2 link 2",
-                    "icon": ImgEuEmail2Link1,
-                    "icon_dim": new DHPoint(225, 18),
-                    "icon_pos": new DHPoint(20, 219),
-                    "dim": new DHPoint(284, 356),
-                    "contents": ImgEuEmail2Flight
+                    "name": "eu email 2 link 3",
+                    "icon": ImgEuEmailSelfieMiniLink,
+                    "icon_dim": new DHPoint(319, 22),
+                    "icon_pos": new DHPoint(294, 124),
+                    "folder_dim": new DHPoint(284, 356),
+                    "folder_img": ImgEuMiniSelfieEmail,
+                    "contents": [
+                        {
+                            "name": "eu mini selfie email",
+                            "icon": ImgEuEmailSelfieLink,
+                            "icon_dim": new DHPoint(154, 19),
+                            "icon_pos": new DHPoint(20, 184),
+                            "dim": new DHPoint(998, 606),
+                            "contents": ImgEuEmailSelfieNetThread
+                        }]
                 }
             ]};
             struc[PopUpManager.EU_HIGHSCHOOL] = { "contents": [

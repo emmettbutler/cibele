@@ -7,11 +7,12 @@ package{
         [Embed(source="../assets/voc_euryale_teleport.mp3")] private var Convo1_2:Class;
         [Embed(source="../assets/voc_euryale_breakups.mp3")] private var Convo2:Class;
         [Embed(source="../assets/voc_euryale_nada.mp3")] private var Convo2_2:Class;
-        [Embed(source="../assets/voc_euryale_callmeblake.mp3")] private var Convo2_3:Class;
-        [Embed(source="../assets/voc_euryale_closer.mp3")] private var Convo3:Class;
-        [Embed(source="../assets/voc_euryale_meetup.mp3")] private var Convo3_2:Class;
-        [Embed(source="../assets/voc_euryale_parents.mp3")] private var Convo3_3:Class;
-        [Embed(source="../assets/voc_euryale_dredge.mp3")] private var Convo4:Class;
+        [Embed(source="../assets/voc_euryale_crush.mp3")] private var Convo3:Class;
+        [Embed(source="../assets/voc_euryale_callmeblake.mp3")] private var Convo3_2:Class;
+        [Embed(source="../assets/voc_euryale_closer.mp3")] private var Convo4:Class;
+        [Embed(source="../assets/voc_euryale_meetup.mp3")] private var Convo4_2:Class;
+        [Embed(source="../assets/voc_euryale_parents.mp3")] private var Convo4_3:Class;
+        [Embed(source="../assets/voc_euryale_dredge.mp3")] private var Convo5:Class;
 
         private var convo1Sound:GameSound;
 
@@ -22,7 +23,7 @@ package{
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo1, "len": 7*GameSound.MSEC_PER_SEC
+                    "audio": Convo1, "len": 17*GameSound.MSEC_PER_SEC
                 },
                 {
                     "audio": Convo1_2, "len": 27*GameSound.MSEC_PER_SEC,
@@ -34,26 +35,30 @@ package{
                 },
                 {
                     "audio": Convo2_2, "len": 17*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "endfn": this.showSelfiePostEmail
+                },
+                {
+                    "audio": Convo3, "len": 26*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": Convo2_3, "len": 46*GameSound.MSEC_PER_SEC,
+                    "audio": Convo3_2, "len": 46*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showFriendEmail2
                 },
                 {
-                    "audio": Convo3, "len": 10*GameSound.MSEC_PER_SEC,
+                    "audio": Convo4, "len": 10*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": Convo3_2, "len": 72*GameSound.MSEC_PER_SEC,
+                    "audio": Convo4_2, "len": 72*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": Convo3_3, "len": 47*GameSound.MSEC_PER_SEC,
+                    "audio": Convo4_3, "len": 47*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": showDredgeSelfie
                 },
                 {
-                    "audio": Convo4, "len": 85*GameSound.MSEC_PER_SEC,
+                    "audio": Convo5, "len": 85*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 }
             ];
@@ -74,6 +79,10 @@ package{
 
         public function showFriendEmail():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.EU_EMAIL_1);
+        }
+
+        public function showSelfiePostEmail():void {
+            PopUpManager.getInstance().sendPopup(PopUpManager.EU_EMAIL_SELFIE);
         }
 
         public function showFriendEmail2():void {

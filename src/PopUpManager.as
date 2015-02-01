@@ -31,6 +31,7 @@ package{
 
         //euryale popups
         [Embed(source="../assets/popups/eu_email/email1.png")] private static var ImgEuEmail1:Class;
+        [Embed(source="../assets/popups/eu_email/emailselfie.png")] private static var ImgEuEmailSelfie:Class;
         [Embed(source="../assets/popups/eu_email/email2.png")] private static var ImgEuEmail2:Class;
         [Embed(source="../assets/popups/eu_picly/dredgeirl.png")] private static var ImgEuDredge:Class;
         [Embed(source="../assets/popups/eu_files/highschool.png")] private static var ImgEuHighSchool:Class;
@@ -85,6 +86,7 @@ package{
 
         //euryale
         public static const EU_EMAIL_1:String = "euemail1";
+        public static const EU_EMAIL_SELFIE:String = "euemailselfie";
         public static const EU_EMAIL_2:String = "euemail2";
         public static const EU_DREDGE:String = "eudredge";
         public static const EU_HIGHSCHOOL:String = "euhighschool";
@@ -301,7 +303,7 @@ package{
 
             this.internet_button = new DockButton(
                 this.game_button.x + this.game_button.width + 30,
-                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_1, EU_EMAIL_2], BUTTON_INTERNET);
+                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_1, EU_EMAIL_SELFIE, EU_EMAIL_2], BUTTON_INTERNET);
             this.internet_button.loadGraphic(ImgInternetButton, false, false,
                                              88, 75);
             this.internet_button.alpha = 1;
@@ -348,6 +350,7 @@ package{
 
             //euryale
             this.popups[EU_EMAIL_1] = new PopUp(ImgEuEmail1, 631, 356, 0, EU_EMAIL_1);
+            this.popups[EU_EMAIL_SELFIE] = new PopUp(ImgEuEmailSelfie, 631, 356, 0, EU_EMAIL_SELFIE);
             this.popups[EU_EMAIL_2] = new PopUp(ImgEuEmail2, 631, 356, 0, EU_EMAIL_2);
             this.popups[EU_DREDGE] = new PopUp(ImgEuDredge, 456, 356, 0, EU_DREDGE);
             this.popups[EU_HIGHSCHOOL] = new PopUp(ImgEuHighSchool, 631, 356, 0, EU_HIGHSCHOOL);
