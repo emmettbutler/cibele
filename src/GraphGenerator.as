@@ -10,14 +10,14 @@ package{
     public class GraphGenerator extends LevelMapState {
         public var generateLock:Boolean = false;
 
-        public function GraphGenerator():void {
-            this.filename = "ikuturso_path.txt";
-            this.graph_filename = "ikuturso_graph.txt";
-            this.mapTilePrefix = "ikuturso";
-            this.tileGridDimensions = new DHPoint(10, 5);
-            this.estTileDimensions = new DHPoint(1359, 818);
-            this.playerStartPos = new DHPoint(4600, 7565);
-            this.colliderScaleFactor = 8.65;
+        public function GraphGenerator(state:LevelMapState):void {
+            this.filename = state.filename;
+            this.graph_filename = state.graph_filename;
+            this.mapTilePrefix = state.mapTilePrefix;
+            this.tileGridDimensions = state.tileGridDimensions;
+            this.estTileDimensions = state.estTileDimensions;
+            this.playerStartPos = state.playerStartPos;
+            this.colliderScaleFactor = state.colliderScaleFactor;
             this.shouldAddEnemies = false;
 
             this.writeFile = File.applicationStorageDirectory.resolvePath(

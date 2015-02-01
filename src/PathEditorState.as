@@ -219,7 +219,7 @@ package {
             var lines:Array = fileContents.split("\n");
             var line:Array, generator:GraphGenerator;
             var node1:MapNode, node2:MapNode, score:Number;
-            generator = new GraphGenerator();
+            generator = new GraphGenerator(this as LevelMapState);
             for (var i:int = 0; i < lines.length - 1; i++) {
                 line = lines[i].split(" ");
                 node1 = this.getMapNodeById(line[0]);
