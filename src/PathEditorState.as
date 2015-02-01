@@ -15,7 +15,8 @@ package {
         public var boss:BossEnemy;
         public var showNodes:Boolean;
         public var filename:String, graph_filename:String;
-        public var dataFile:File, backupFile:File, writeFile:File, graphDataFile:File;
+        public var dataFile:File, backupFile:File, writeFile:File,
+                   graphDataFile:File;
         public var fpsCounter:FPSCounter;
         public var shouldAddEnemies:Boolean = true;
         public var readExistingGraph:Boolean = true;
@@ -177,17 +178,20 @@ package {
 
             for (i = 0; i < this._path.nodes.length; i++) {
                 curNode = this._path.nodes[i];
-                fString += "pathnode " + curNode.pos.x + "x" + curNode.pos.y + "\n";
+                fString += "pathnode " + curNode.pos.x + "x" + curNode.pos.y +
+                           "\n";
             }
 
             for (i = 0; i < this._mapnodes.nodes.length; i++) {
                 curMapNode = this._mapnodes.nodes[i];
-                fString += "mapnode " + curMapNode.pos.x + "x" + curMapNode.pos.y + "\n";
+                fString += "mapnode " + curMapNode.pos.x + "x" +
+                           curMapNode.pos.y + "\n";
             }
 
             for (i = 0; i < this.enemies.length(); i++) {
                 curEnemy = this.enemies.get_(i);
-                fString += curEnemy.enemyType + " " + curEnemy.pos.x + "x" + curEnemy.pos.y + "\n";
+                fString += curEnemy.enemyType + " " + curEnemy.pos.x + "x" +
+                           curEnemy.pos.y + "\n";
             }
 
             str.writeUTFBytes(fString);
