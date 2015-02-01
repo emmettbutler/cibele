@@ -36,14 +36,30 @@ package
             this.nodesHash[node.node_id] = node;
         }
 
-        public function advance():Boolean {
-            if (this.currentNode != null && this.currentNode.next != null) {
-                this.currentNode = this.currentNode.next;
-                return false;
+        public function advance():void {
+            this.currentNode = this.getNextNode(this.currentNode);
+        }
+
+        public function isAtFirstNode():Boolean {
+            return this.currentNode == this.nodes[0];
+        }
+
+        private function getNextNode(node:PathNode):PathNode {
+            if (node != null && node.next != null) {
+                return node.next;
             } else {
-                this.currentNode = this.nodes[0];
-                return true;
+                return this.nodes[0];
             }
+        }
+
+        public function getNodeByIndex(idx:Number):PathNode {
+            var counter:Number = 0;
+            var cur:PathNode = this.nodes[counter];
+            while (counter < idx) {
+                cur = this.getNextNode(cur);
+                counter += 1;
+            }
+            return cur;
         }
 
         public function init():void {
