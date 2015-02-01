@@ -352,7 +352,7 @@ package{
             this.popups[EU_EMAIL_1] = new PopUp(ImgEuEmail1, 631, 356, 0, EU_EMAIL_1);
             this.popups[EU_EMAIL_SELFIE] = new PopUp(ImgEuEmailSelfie, 631, 356, 0, EU_EMAIL_SELFIE);
             this.popups[EU_EMAIL_2] = new PopUp(ImgEuEmail2, 631, 356, 0, EU_EMAIL_2);
-            this.popups[EU_DREDGE] = new PopUp(ImgEuDredge, 456, 356, 0, EU_DREDGE);
+            this.popups[EU_DREDGE] = new PopUp(ImgEuDredge, 356, 463, 0, EU_DREDGE);
             this.popups[EU_HIGHSCHOOL] = new PopUp(ImgEuHighSchool, 631, 356, 0, EU_HIGHSCHOOL);
 
             var curButton:DockButton;

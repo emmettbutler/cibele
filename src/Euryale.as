@@ -23,10 +23,10 @@ package{
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo1, "len": 17*GameSound.MSEC_PER_SEC
+                    "audio": Convo1, "len": 15*GameSound.MSEC_PER_SEC
                 },
                 {
-                    "audio": Convo1_2, "len": 27*GameSound.MSEC_PER_SEC,
+                    "audio": Convo1_2, "len": 32*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showFriendEmail
                 },
                 {
@@ -34,7 +34,7 @@ package{
                     "delay": 0
                 },
                 {
-                    "audio": Convo2_2, "len": 17*GameSound.MSEC_PER_SEC,
+                    "audio": Convo2_2, "len": 25*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showSelfiePostEmail
                 },
                 {
@@ -42,11 +42,11 @@ package{
                     "delay": 0
                 },
                 {
-                    "audio": Convo3_2, "len": 46*GameSound.MSEC_PER_SEC,
+                    "audio": Convo3_2, "len": 50*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showFriendEmail2
                 },
                 {
-                    "audio": Convo4, "len": 10*GameSound.MSEC_PER_SEC,
+                    "audio": Convo4, "len": 15*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
@@ -54,7 +54,7 @@ package{
                     "delay": 0
                 },
                 {
-                    "audio": Convo4_3, "len": 47*GameSound.MSEC_PER_SEC,
+                    "audio": Convo4_3, "len": 51*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": showDredgeSelfie
                 },
                 {
