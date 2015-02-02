@@ -246,13 +246,25 @@ package{
                         this.finalTarget = worldPos;
                         this.curPath = null;
                     } else {
-                        this.finalTarget = worldPos;
                         this.curPath = Path.shortestPath(
-                            closestNode, this._mapnodes.getClosestGenericNode(this.finalTarget)
+                            closestNode, this._mapnodes.getClosestGenericNode(worldPos)
                         );
                         (FlxG.state as PathEditorState).clearAllAStarMeasures();
 
-                        this.walkTarget = this.curPath.currentNode.pos;
+                        var curNode:PathNode = this.curPath.nodes[0], tries:Number = 0;
+                        var res:Object = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, curNode.pos);
+                        while (!res["canConnect"] && tries <= 3 && curNode != null) {
+                            curNode = curNode.next;
+                            if (curNode != null) {
+                                res = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, curNode.pos);
+                            }
+                            tries += 1;
+                        }
+                        if (res["canConnect"]) {
+                            this.curPath.advanceToNode(curNode);
+                            this.walkTarget = this.curPath.currentNode.pos;
+                            this.finalTarget = worldPos;
+                        }
 
                         if (ScreenManager.getInstance().DEBUG) {
                             trace("Path: " + this.curPath.toString());
