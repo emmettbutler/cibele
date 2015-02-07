@@ -8,7 +8,6 @@ package{
 
         override public function create():void {
             super.create();
-            GameState.CUR_LEVEL = GameState.EU;
         }
 
         override public function update():void{
