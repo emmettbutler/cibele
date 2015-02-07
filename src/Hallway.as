@@ -147,6 +147,7 @@ package{
 
         override public function clickCallback(screenPos:DHPoint,
                                                worldPos:DHPoint):void {
+            super.clickCallback(screenPos, worldPos);
         }
     }
 }
