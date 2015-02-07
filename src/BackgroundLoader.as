@@ -156,7 +156,7 @@ package {
                 receivingMachine.contentLoaderInfo.addEventListener(Event.COMPLETE,
                     this.buildLoadCompleteCallback(tile, receivingMachine,
                                                    isCollider ? this.colliderScaleFactor : 1));
-                var path:String = "../assets/map_tiles/" + imgName + "_" + numberString + ".png";
+                var path:String = "../assets/images/worlds/map_tiles/" + imgName + "_" + numberString + ".png";
                 var req:URLRequest = new URLRequest(path);
                 receivingMachine.load(req);
             }

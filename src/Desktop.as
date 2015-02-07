@@ -7,22 +7,22 @@ package{
         [Embed(source="../assets/audio/effects/sfx_roomtone.mp3")] private var SFXRoomTone:Class;
         [Embed(source="../assets/images/ui/UI_pink_x.png")] private var ImgInboxXPink:Class;
         //desktop selfie folder assets
-        [Embed(source="../assets/popups/selfiedesktop/selfies_folder.png")] private var ImgSelfiesFolder:Class;
-        [Embed(source="../assets/popups/selfiedesktop/pics_icon.png")] private var ImgSelfiesFolderPicsIcon:Class;
-        [Embed(source="../assets/popups/selfiedesktop/me1_icon.png")] private var ImgSelfiesFolderMe1Icon:Class;
-        [Embed(source="../assets/popups/selfiedesktop/me1.png")] private var ImgSelfiesFolderMe1:Class;
-        [Embed(source="../assets/popups/selfiedesktop/pictures_folder.png")] private var ImgPicturesFolder:Class;
-        [Embed(source="../assets/popups/selfiedesktop/forichi_icon.png")] private var ImgPicturesFolderForIchiIcon:Class;
-        [Embed(source="../assets/popups/selfiedesktop/forum_icon.png")] private var ImgPicturesFolderForumIcon:Class;
-        [Embed(source="../assets/popups/selfiedesktop/friends_icon.png")] private var ImgPicturesFolderFriendsIcon:Class;
-        [Embed(source="../assets/popups/selfiedesktop/forichi.png")] private var ImgPicturesFolderForIchi:Class;
-        [Embed(source="../assets/popups/selfiedesktop/forum.png")] private var ImgPicturesFolderForum:Class;
-        [Embed(source="../assets/popups/selfiedesktop/friends.png")] private var ImgPicturesFolderFriends:Class;
-        [Embed(source="../assets/popups/selfiedesktop/untitled.png")] private var ImgUntitledFolder:Class;
-        [Embed(source="../assets/popups/selfiedesktop/kawaiitxticon.png")] private var ImgUntitledFolderKawaiiIcon:Class;
-        [Embed(source="../assets/popups/selfiedesktop/partypoem1icon.png")] private var ImgUntitledFolderPartyPoem1Icon:Class;
-        [Embed(source="../assets/popups/selfiedesktop/partypoem1.png")] private var ImgUntitledFolderPartyPoem1:Class;
-        [Embed(source="../assets/popups/selfiedesktop/kawaii.png")] private var ImgUntitledFolderKawaii:Class;
+        [Embed(source="../assets/images/ui/popups/selfiedesktop/selfies_folder.png")] private var ImgSelfiesFolder:Class;
+        [Embed(source="../assets/images/ui/popups/selfiedesktop/pics_icon.png")] private var ImgSelfiesFolderPicsIcon:Class;
+        [Embed(source="../assets/images/ui/popups/selfiedesktop/me1_icon.png")] private var ImgSelfiesFolderMe1Icon:Class;
+        [Embed(source="../assets/images/ui/popups/selfiedesktop/me1.png")] private var ImgSelfiesFolderMe1:Class;
+        [Embed(source="../assets/images/ui/popups/selfiedesktop/pictures_folder.png")] private var ImgPicturesFolder:Class;
+        [Embed(source="../assets/images/ui/popups/selfiedesktop/forichi_icon.png")] private var ImgPicturesFolderForIchiIcon:Class;
+        [Embed(source="../assets/images/ui/popups/selfiedesktop/forum_icon.png")] private var ImgPicturesFolderForumIcon:Class;
+        [Embed(source="../assets/images/ui/popups/selfiedesktop/friends_icon.png")] private var ImgPicturesFolderFriendsIcon:Class;
+        [Embed(source="../assets/images/ui/popups/selfiedesktop/forichi.png")] private var ImgPicturesFolderForIchi:Class;
+        [Embed(source="../assets/images/ui/popups/selfiedesktop/forum.png")] private var ImgPicturesFolderForum:Class;
+        [Embed(source="../assets/images/ui/popups/selfiedesktop/friends.png")] private var ImgPicturesFolderFriends:Class;
+        [Embed(source="../assets/images/ui/popups/selfiedesktop/untitled.png")] private var ImgUntitledFolder:Class;
+        [Embed(source="../assets/images/ui/popups/selfiedesktop/kawaiitxticon.png")] private var ImgUntitledFolderKawaiiIcon:Class;
+        [Embed(source="../assets/images/ui/popups/selfiedesktop/partypoem1icon.png")] private var ImgUntitledFolderPartyPoem1Icon:Class;
+        [Embed(source="../assets/images/ui/popups/selfiedesktop/partypoem1.png")] private var ImgUntitledFolderPartyPoem1:Class;
+        [Embed(source="../assets/images/ui/popups/selfiedesktop/kawaii.png")] private var ImgUntitledFolderKawaii:Class;
 
         public var bg:GameObject, folder_structure:Object, leafPopups:Array;
         public var folder_builder:FolderBuilder;

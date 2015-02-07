@@ -3,20 +3,20 @@ package {
     import flash.utils.Dictionary;
 
     public class PopupHierarchies {
-        [Embed(source="../assets/popups/ichiicon.png")] private static var ImgIchiIcon:Class;
-        [Embed(source="../assets/popups/files/ichiselfie1.png")] private static var ImgIchiDL1:Class;
-        [Embed(source="../assets/popups/it_email/bulldoghell_icon.png")] private static var ImgBHIcon:Class;
-        [Embed(source="../assets/popups/it_email/bulldoghell.png")] private static var ImgBH:Class;
-        [Embed(source="../assets/popups/it_email/ichiselfie1.png")] private static var ImgIchiSelfie1:Class;
-        [Embed(source="../assets/popups/it_email/ichiselfieicon1.png")] private static var ImgIchiSelfie1Icon:Class;
-        [Embed(source="../assets/popups/files/camera1disconnecticon.png")] private static var ImgCibCamDisconnectIcon:Class;
-        [Embed(source="../assets/popups/files/camera1selfie.png")] private static var ImgCibCam1:Class;
-        [Embed(source="../assets/popups/files/camera1selfieicon.png")] private static var ImgCibCam1Icon:Class;
-        [Embed(source="../assets/popups/files/camera1.png")] private static var ImgCibSelfieFolder:Class;
-        [Embed(source="../assets/popups/it_email/guil1_sub1link.png")] private static var ImgGuilLink1:Class;
-        [Embed(source="../assets/popups/it_email/guil1_sub1.png")] private static var ImgGuilSub:Class;
-        [Embed(source="../assets/popups/it_email/ichiselfieemail_sub1.png")] private static var ImgIchiSelfieSub1:Class;
-        [Embed(source="../assets/popups/it_email/ichiselfieemail_link1.png")] private static var ImgIchiSelfieSubLink1:Class;
+        [Embed(source="../assets/images/ui/popups/ichiicon.png")] private static var ImgIchiIcon:Class;
+        [Embed(source="../assets/images/ui/popups/files/ichiselfie1.png")] private static var ImgIchiDL1:Class;
+        [Embed(source="../assets/images/ui/popups/it_email/bulldoghell_icon.png")] private static var ImgBHIcon:Class;
+        [Embed(source="../assets/images/ui/popups/it_email/bulldoghell.png")] private static var ImgBH:Class;
+        [Embed(source="../assets/images/ui/popups/it_email/ichiselfie1.png")] private static var ImgIchiSelfie1:Class;
+        [Embed(source="../assets/images/ui/popups/it_email/ichiselfieicon1.png")] private static var ImgIchiSelfie1Icon:Class;
+        [Embed(source="../assets/images/ui/popups/files/camera1disconnecticon.png")] private static var ImgCibCamDisconnectIcon:Class;
+        [Embed(source="../assets/images/ui/popups/files/camera1selfie.png")] private static var ImgCibCam1:Class;
+        [Embed(source="../assets/images/ui/popups/files/camera1selfieicon.png")] private static var ImgCibCam1Icon:Class;
+        [Embed(source="../assets/images/ui/popups/files/camera1.png")] private static var ImgCibSelfieFolder:Class;
+        [Embed(source="../assets/images/ui/popups/it_email/guil1_sub1link.png")] private static var ImgGuilLink1:Class;
+        [Embed(source="../assets/images/ui/popups/it_email/guil1_sub1.png")] private static var ImgGuilSub:Class;
+        [Embed(source="../assets/images/ui/popups/it_email/ichiselfieemail_sub1.png")] private static var ImgIchiSelfieSub1:Class;
+        [Embed(source="../assets/images/ui/popups/it_email/ichiselfieemail_link1.png")] private static var ImgIchiSelfieSubLink1:Class;
 
         public static function build():Dictionary {
             var struc:Dictionary = new Dictionary();
