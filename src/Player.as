@@ -347,7 +347,13 @@ package{
                     this.curPath.advance();
 
                     if (this.curPath.isAtFirstNode()) {
-                        this.walkTarget = this.finalTarget;
+                        var destinationDisp:Number = this.footPos.sub(this.finalTarget)._length();
+                        if (destinationDisp > 100) {
+                            this.walkTarget = this.finalTarget;
+                        } else {
+                            // end the path early to avoid jerky movements at the end
+                            this.finalTarget = this.footPos;
+                        }
                         this.curPath = null;
                     } else {
                         this.walkTarget = this.curPath.currentNode.pos;
