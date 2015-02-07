@@ -2,8 +2,8 @@ package{
     import org.flixel.*;
 
     public class PopUp extends UIElement {
-        [Embed(source="../assets/UI_pink_x.png")] private var ImgXPink:Class;
-        [Embed(source="../assets/UI_text_box_x_blue.png")] private var ImgXBlue:Class;
+        [Embed(source="../assets/images/ui/UI_pink_x.png")] private var ImgXPink:Class;
+        [Embed(source="../assets/images/ui/UI_text_box_x_blue.png")] private var ImgXBlue:Class;
 
         public static const CLICK_THROUGH:Number = 1;
         public var cur_anim:Number = 0;
