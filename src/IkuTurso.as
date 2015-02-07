@@ -64,8 +64,8 @@ package{
         }
 
         override public function create():void {
-            this.filename = "ikuturso_path.txt";
-            this.graph_filename = "ikuturso_graph.txt";
+            this.filename = "data/ikuturso_path.txt";
+            this.graph_filename = "data/ikuturso_graph.txt";
             this.mapTilePrefix = "ikuturso";
             this.tileGridDimensions = new DHPoint(10, 5);
             this.estTileDimensions = new DHPoint(1359, 818);
