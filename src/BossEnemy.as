@@ -3,7 +3,7 @@ package
     import org.flixel.*;
 
     public class BossEnemy extends Enemy {
-        [Embed(source="../assets/boss1.png")] private var ImgBoss:Class;
+        [Embed(source="../assets/images/characters/boss1.png")] private var ImgBoss:Class;
 
         public function BossEnemy(pos:DHPoint) {
             super(pos);

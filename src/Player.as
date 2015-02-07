@@ -4,11 +4,11 @@ package{
     import flash.utils.Dictionary;
 
     public class Player extends PartyMember {
-        [Embed(source="../assets/c_walk.png")] private var ImgCibWalk:Class;
         [Embed(source="../assets/images/ui/click_anim.png")] private var ImgWalkTo:Class;
-        [Embed(source="../assets/cib_attack.png")] private var ImgAttack:Class;
-        [Embed(source="../assets/cib_shadow.png")] private var ImgShadow:Class;
-        [Embed(source="../assets/cib_shadow_blue.png")] private var ImgShadowBlue:Class;
+        [Embed(source="../assets/images/characters/c_walk.png")] private var ImgCibWalk:Class;
+        [Embed(source="../assets/images/characters/cib_attack.png")] private var ImgAttack:Class;
+        [Embed(source="../assets/images/characters/cib_shadow.png")] private var ImgShadow:Class;
+        [Embed(source="../assets/images/characters/cib_shadow_blue.png")] private var ImgShadowBlue:Class;
         [Embed(source="../assets/audio/effects/sfx_uigeneral.mp3")] private var SfxUI:Class;
         [Embed(source="../assets/audio/effects/sfx_protoattack1.mp3")] private var SfxAttack1:Class;
         [Embed(source="../assets/audio/effects/sfx_protoattack2.mp3")] private var SfxAttack2:Class;

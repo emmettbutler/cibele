@@ -2,8 +2,8 @@ package {
     import org.flixel.*;
 
     public class Footstep extends GameObject {
-        [Embed(source="../assets/blue_steps.png")] private var ImgFeetBlue:Class;
-        [Embed(source="../assets/purple-steps.png")] private var ImgFeetPurple:Class;
+        [Embed(source="../assets/images/characters/blue_steps.png")] private var ImgFeetBlue:Class;
+        [Embed(source="../assets/images/characters/purple-steps.png")] private var ImgFeetPurple:Class;
 
         public var age:Number = 0;
         public var drawn:Boolean;
