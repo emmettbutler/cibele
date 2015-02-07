@@ -87,7 +87,7 @@ package
 
             checkedGroup.sort(sortByDisp);
             checkedGroup.length = n;
-            for (var i:Number = 0; i < checkedGroup.length; i++) {
+            for (i = 0; i < checkedGroup.length; i++) {
                 trace(checkedGroup[i]['disp'])
             }
             return checkedGroup;

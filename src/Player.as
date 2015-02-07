@@ -447,7 +447,7 @@ package{
                 this.attack_sprite.visible = false;
             }
 
-            if (this.colliding) {
+            if (this.curPath == null && this.colliding) {
                 if (this.collisionDirection != null) {
                     if (this.collisionDirection[0] == 1 &&
                         this.collisionDirection[1] == 1 &&
