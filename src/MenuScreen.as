@@ -178,7 +178,11 @@ package{
                 }
                 if (mouse_rect.overlaps(quit_rect) && !play_screen){
                     PopUpManager.GAME_ACTIVE = false;
-                    FlxG.switchState(new Desktop());
+                    if(GameState.CUR_LEVEL == GameState.IT) {
+                        FlxG.switchState(new IkuTursoDesktop());
+                    } else if(GameState.CUR_LEVEL == GameState.EU) {
+                        FlxG.switchState(new EuryaleDesktop());
+                    }
                 }
             }
 

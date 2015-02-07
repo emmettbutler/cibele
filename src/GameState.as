@@ -26,6 +26,11 @@ package {
         public static const EVENT_CHAT_RECEIVED:String = "chat_received";
         public static const EVENT_SINGLETILE_BG_LOADED:String = "bg_loaded";
 
+        public static const IT:String = "it";
+        public static const EU:String = "eu";
+        public static const HI:String = "hi";
+        public static var CUR_LEVEL:String = GameState.IT;
+
         public function GameState(snd:Boolean=true, popup:Boolean=true,
                                   messages:Boolean=true){
             this.updateSound = snd;
