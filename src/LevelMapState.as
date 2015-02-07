@@ -123,7 +123,11 @@ package {
             var posY:Number = pt1.y + (disp._length() / 2) * Math.sin(angle);
 
             var ray:FlxSprite = new FlxSprite(posX - disp._length() / 2, posY);
-            ray.makeGraphic(disp._length(), width, color);
+            try {
+                ray.makeGraphic(disp._length(), width, color);
+            } catch (err:Error) {  // handle broken rays at runtime
+                return null;
+            }
             ray.angle = Utils.radToDeg(angle);
             ray.active = false;
             if (ScreenManager.getInstance().DEBUG && draw) {
