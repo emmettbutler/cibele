@@ -136,16 +136,9 @@ def package_application(entry_point_class, swf_path, platform="air"):
     subprocess.call(command.split())
 
 
-def copy_path_files():
-    command = ["cp", os.path.expanduser("~/Library/Preferences/com.starmaid.Cibele/Local Store/ikuturso_path.txt"), "assets"]
-    print " ".join(command)
-    subprocess.call(command)
-
-
 def main():
     libpath = args.libpath[0]
 
-    copy_path_files()
     if args.copy_path:
         return
 
