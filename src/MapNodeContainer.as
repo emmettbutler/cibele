@@ -86,7 +86,10 @@ package
             }
 
             checkedGroup.sort(sortByDisp);
-            // TODO - hould truncate checkedGroup here
+            checkedGroup.length = n;
+            for (var i:Number = 0; i < checkedGroup.length; i++) {
+                trace(checkedGroup[i]['disp'])
+            }
             return checkedGroup;
         }
 
