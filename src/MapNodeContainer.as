@@ -87,9 +87,6 @@ package
 
             checkedGroup.sort(sortByDisp);
             checkedGroup.length = n;
-            for (i = 0; i < checkedGroup.length; i++) {
-                trace(checkedGroup[i]['disp'])
-            }
             return checkedGroup;
         }
 
