@@ -4,8 +4,8 @@ package{
     public class MenuScreen extends GameState {
         [Embed(source="../assets/login.png")] private var ImgLogin:Class;
         [Embed(source="../assets/charselect_small.png")] private var ImgChar:Class;
-        [Embed(source="../assets/bgm_menu_intro.mp3")] private var MenuBGMIntro:Class;
-        [Embed(source="../assets/bgm_menu_loop.mp3")] private var MenuBGMLoop:Class;
+        [Embed(source="../assets/audio/music/bgm_menu_intro.mp3")] private var MenuBGMIntro:Class;
+        [Embed(source="../assets/audio/music/bgm_menu_loop.mp3")] private var MenuBGMLoop:Class;
         [Embed(source="../assets/Crystal-icon-large.png")] private var ImgXtal:Class;
 
         public var timeFrame:Number = 0;

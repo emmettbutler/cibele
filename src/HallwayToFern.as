@@ -10,8 +10,8 @@ package{
         [Embed(source="../assets/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
         [Embed(source="../assets/voc_extra_ichiareyouthere.mp3")] private var SndRUThere:Class;
         [Embed(source="../assets/voc_extra_cibichi.mp3")] private var CibIchi:Class;
-        [Embed(source="../assets/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
-        [Embed(source="../assets/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
+        [Embed(source="../assets/audio/music/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
+        [Embed(source="../assets/audio/music/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
 
         public var accept_call:Boolean = false;
 
