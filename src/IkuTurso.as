@@ -192,7 +192,7 @@ package{
 
         override public function update():void{
             super.update();
-            var snd:GameSound = SoundManager.getInstance().getSoundByName(HallwayToFern.BGM);
+            var snd:GameSound = SoundManager.getInstance().getSoundByName(Hallway.BGM);
             if(snd != null) {
                 snd.fadeOutSound();
                 snd.fading = true;

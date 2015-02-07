@@ -43,7 +43,11 @@ package{
             }
 
             if(player.mapHitbox.overlaps(door_fern)) {
-                FlxG.switchState(new HallwayToFern(HallwayToFern.STATE_RETURN));
+                if(GameState.cur_level == GameState.LVL_IT) {
+                    FlxG.switchState(new IkuTursoHallway(Hallway.STATE_RETURN));
+                } else if(GameState.cur_level == GameState.LVL_EU) {
+                    FlxG.switchState(new EuryaleHallway(Hallway.STATE_RETURN));
+                }
             }
         }
     }
