@@ -1,7 +1,7 @@
 package{
     import org.flixel.*;
 
-    public class IkuTursoTeleportRoom extends TeleportRoom {
+    public class EuryaleTeleportRoom extends TeleportRoom {
 
         override public function create():void {
             super.create();
@@ -11,7 +11,7 @@ package{
             super.update();
 
             if (player.mapHitbox.overlaps(door)) {
-                FlxG.switchState(new IkuTurso());
+                FlxG.switchState(new Euryale());
             }
         }
     }

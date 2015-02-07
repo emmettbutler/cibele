@@ -3,8 +3,6 @@ package{
     import flash.events.*;
 
     public class Euryale extends LevelMapState {
-        [Embed(source="../assets/voc_euryale_hey.mp3")] private var Convo1:Class;
-        [Embed(source="../assets/voc_euryale_teleport.mp3")] private var Convo1_2:Class;
         [Embed(source="../assets/voc_euryale_breakups.mp3")] private var Convo2:Class;
         [Embed(source="../assets/voc_euryale_nada.mp3")] private var Convo2_2:Class;
         [Embed(source="../assets/voc_euryale_crush.mp3")] private var Convo3:Class;
@@ -14,21 +12,12 @@ package{
         [Embed(source="../assets/voc_euryale_parents.mp3")] private var Convo4_3:Class;
         [Embed(source="../assets/voc_euryale_dredge.mp3")] private var Convo5:Class;
 
-        private var convo1Sound:GameSound;
-
         public function Euryale() {
             PopUpManager.GAME_ACTIVE = true;
             this.ui_color_flag = GameState.UICOLOR_PINK;
 
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
-                {
-                    "audio": Convo1, "len": 15*GameSound.MSEC_PER_SEC
-                },
-                {
-                    "audio": Convo1_2, "len": 32*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showFriendEmail
-                },
                 {
                     "audio": Convo2, "len": 40*GameSound.MSEC_PER_SEC,
                     "delay": 0
@@ -72,10 +61,12 @@ package{
             this.playerStartPos = new DHPoint(2266*3 - 500, 1365*6 - 500);
             this.colliderScaleFactor = 3.54;
 
-            GlobalTimer.getInstance().setMark("start euryale convo", 5*GameSound.MSEC_PER_SEC, this.playFirstConvo);
-
             super.create();
         }
+
+        /*public function startConvo():void {
+            GlobalTimer.getInstance().setMark("start euryale convo", 5*GameSound.MSEC_PER_SEC, this.playFirstConvo);
+        }*/
 
         public function showFriendEmail():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.EU_EMAIL_1);

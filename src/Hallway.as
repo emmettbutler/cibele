@@ -3,6 +3,7 @@ package{
     import org.flixel.plugin.photonstorm.FlxCollision;
 
     public class Hallway extends PlayerState {
+        [Embed(source="../assets/Fern-part-2.png")] private var ImgFernBase:Class;
         [Embed(source="../assets/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
         [Embed(source="../assets/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
 
@@ -131,7 +132,11 @@ package{
 
             for (var i:int = 0; i < loader.doors.length; i++) {
                 if(player.mapHitbox.overlaps(loader.doors[i]["object"])){
-                    FlxG.switchState(new IkuTursoTeleportRoom());
+                    if(GameState.cur_level == GameState.LVL_IT) {
+                        FlxG.switchState(new IkuTursoTeleportRoom());
+                    } else if(GameState.cur_level == GameState.LVL_EU) {
+                        FlxG.switchState(new EuryaleTeleportRoom());
+                    }
                 }
             }
         }
