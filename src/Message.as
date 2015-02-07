@@ -2,7 +2,7 @@ package{
     import org.flixel.*;
 
     public class Message {
-        [Embed(source="../assets/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
+        [Embed(source="../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
         public var display_text:String, sent_by:String;
 

@@ -2,7 +2,7 @@ package {
     import org.flixel.*;
 
     public class PartyMember extends GameObject {
-        [Embed(source="../assets/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
+        [Embed(source="../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
         public static const STATE_IN_ATTACK:Number = 1;
         public static const STATE_MOVE_TO_ENEMY:Number = 34987651333;

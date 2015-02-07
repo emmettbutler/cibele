@@ -3,7 +3,7 @@ package{
 
     public class StartScreen extends GameState {
         [Embed(source="../assets/audio/music/vid_intro.mp3")] private var VidBGMLoop:Class;
-        [Embed(source="../assets/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
+        [Embed(source="../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
         public var startText:FlxText;
 

@@ -8,7 +8,7 @@ package{
         [Embed(source="../assets/UI_text_box_x_blue.png")] private var ImgInboxX:Class;
         [Embed(source="../assets/UI_pink_msg_box.png")] private var ImgInboxPink:Class;
         [Embed(source="../assets/UI_pink_x.png")] private var ImgInboxXPink:Class;
-        [Embed(source="../assets/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
+        [Embed(source="../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
         public static var _instance:MessageManager = null;
 
