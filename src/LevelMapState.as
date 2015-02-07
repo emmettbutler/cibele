@@ -155,6 +155,5 @@ package {
             }
             return {"canConnect": canConnect, "length": ray.width};
         }
-
     }
 }
