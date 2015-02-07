@@ -4,12 +4,12 @@ package{
 
     public class HallwayToFern extends PlayerState {
         [Embed(source="../assets/Fern-part-2.png")] private var ImgFernBase:Class;
-        [Embed(source="../assets/voc_firstconvo.mp3")] private var Convo1:Class;
-        [Embed(source="../assets/voc_ikuturso_start.mp3")] private var Convo2:Class;
-        [Embed(source="../assets/voc_extra_wannaduo.mp3")] private var SndWannaDuo:Class;
-        [Embed(source="../assets/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
-        [Embed(source="../assets/voc_extra_ichiareyouthere.mp3")] private var SndRUThere:Class;
-        [Embed(source="../assets/voc_extra_cibichi.mp3")] private var CibIchi:Class;
+        [Embed(source="../assets/audio/voiceover/voc_firstconvo.mp3")] private var Convo1:Class;
+        [Embed(source="../assets/audio/voiceover/voc_ikuturso_start.mp3")] private var Convo2:Class;
+        [Embed(source="../assets/audio/voiceover/voc_extra_wannaduo.mp3")] private var SndWannaDuo:Class;
+        [Embed(source="../assets/audio/voiceover/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
+        [Embed(source="../assets/audio/voiceover/voc_extra_ichiareyouthere.mp3")] private var SndRUThere:Class;
+        [Embed(source="../assets/audio/voiceover/voc_extra_cibichi.mp3")] private var CibIchi:Class;
         [Embed(source="../assets/audio/music/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
         [Embed(source="../assets/audio/music/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
 

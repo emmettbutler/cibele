@@ -5,15 +5,15 @@ package{
         [Embed(source="../assets/audio/music/bgm_ikuturso_intro.mp3")] private var ITBGMIntro:Class;
         [Embed(source="../assets/audio/music/bgm_ikuturso_loop.mp3")] private var ITBGMLoop:Class;
         [Embed(source="../assets/vid_sexyselfie.mp3")] private var VidBGMLoop:Class;
-        [Embed(source="../assets/voc_ikuturso_bulldog.mp3")] private var Convo1:Class;
-        [Embed(source="../assets/voc_ikuturso_ampule.mp3")] private var Convo2:Class;
-        [Embed(source="../assets/voc_ikuturso_photogenic.mp3")] private var Convo3:Class;
-        [Embed(source="../assets/voc_ikuturso_attractive.mp3")] private var Convo4:Class;
-        [Embed(source="../assets/voc_ikuturso_picture.mp3")] private var Convo5:Class;
-        [Embed(source="../assets/voc_ikuturso_whattowear.mp3")] private var Convo6:Class;
-        [Embed(source="../assets/voc_extra_ichilasthit.mp3")] private var IchiBossKill:Class;
-        [Embed(source="../assets/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
-        [Embed(source="../assets/voc_extra_areyoucoming.mp3")] private var SndRUComing:Class;
+        [Embed(source="../assets/audio/voiceover/voc_ikuturso_bulldog.mp3")] private var Convo1:Class;
+        [Embed(source="../assets/audio/voiceover/voc_ikuturso_ampule.mp3")] private var Convo2:Class;
+        [Embed(source="../assets/audio/voiceover/voc_ikuturso_photogenic.mp3")] private var Convo3:Class;
+        [Embed(source="../assets/audio/voiceover/voc_ikuturso_attractive.mp3")] private var Convo4:Class;
+        [Embed(source="../assets/audio/voiceover/voc_ikuturso_picture.mp3")] private var Convo5:Class;
+        [Embed(source="../assets/audio/voiceover/voc_ikuturso_whattowear.mp3")] private var Convo6:Class;
+        [Embed(source="../assets/audio/voiceover/voc_extra_ichilasthit.mp3")] private var IchiBossKill:Class;
+        [Embed(source="../assets/audio/voiceover/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
+        [Embed(source="../assets/audio/voiceover/voc_extra_areyoucoming.mp3")] private var SndRUComing:Class;
 
         public var bossHasAppeared:Boolean;
         private var convo1Sound:GameSound;
