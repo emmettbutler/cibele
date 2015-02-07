@@ -2,7 +2,7 @@ package{
     import org.flixel.*;
 
     public class MenuScreen extends GameState {
-        [Embed(source="../assets/charselect_small.png")] private var ImgChar:Class;
+        [Embed(source="../assets/images/ui/charselect_small.png")] private var ImgChar:Class;
         [Embed(source="../assets/audio/music/bgm_menu_intro.mp3")] private var MenuBGMIntro:Class;
         [Embed(source="../assets/audio/music/bgm_menu_loop.mp3")] private var MenuBGMLoop:Class;
         [Embed(source="../assets/images/ui/Crystal-icon-large.png")] private var ImgXtal:Class;

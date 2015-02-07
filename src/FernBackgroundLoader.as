@@ -18,24 +18,24 @@ package {
                 {
                     "xPos": _screen.screenWidth * .165,
                     "frame": new DHPoint(526, 1172),
-                    "image": "../assets/waterfall_l.png",
+                    "image": "../assets/images/worlds/waterfall_l.png",
                     "object": null
                 },
                 {
                     "xPos": _screen.screenWidth * .395,
                     "frame": new DHPoint(629, 940),
-                    "image": "../assets/waterfall_m.png",
+                    "image": "../assets/images/worlds/waterfall_m.png",
                     "object": null
                 },
                 {
                     "xPos": _screen.screenWidth * .65,
                     "frame": new DHPoint(526, 1172),
-                    "image": "../assets/waterfall_r.png",
+                    "image": "../assets/images/worlds/waterfall_r.png",
                     "object": null
                 }
             ];
 
-            var bg:FlxExtSprite = (new BackgroundLoader()).loadSingleTileBG("../assets/Fern-part-1.png");
+            var bg:FlxExtSprite = (new BackgroundLoader()).loadSingleTileBG("../assets/images/worlds/Fern-part-1.png");
 
             var cur:Object;
             for (var i:int = 0; i < doors.length; i++) {

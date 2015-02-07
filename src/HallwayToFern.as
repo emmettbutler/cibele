@@ -3,7 +3,6 @@ package{
     import org.flixel.plugin.photonstorm.FlxCollision;
 
     public class HallwayToFern extends PlayerState {
-        [Embed(source="../assets/Fern-part-2.png")] private var ImgFernBase:Class;
         [Embed(source="../assets/audio/voiceover/voc_firstconvo.mp3")] private var Convo1:Class;
         [Embed(source="../assets/audio/voiceover/voc_ikuturso_start.mp3")] private var Convo2:Class;
         [Embed(source="../assets/audio/voiceover/voc_extra_wannaduo.mp3")] private var SndWannaDuo:Class;
@@ -80,7 +79,7 @@ package{
             fernTop = loader.load();
             fernTop.scrollFactor = new DHPoint(1, 1);
 
-            fernBase = (new BackgroundLoader()).loadSingleTileBG("../assets/Fern-part-2.png");
+            fernBase = (new BackgroundLoader()).loadSingleTileBG("../assets/images/worlds/Fern-part-2.png");
             fernBase.scrollFactor = new DHPoint(1, 1);
 
             leftBound = ScreenManager.getInstance().screenWidth * .39;

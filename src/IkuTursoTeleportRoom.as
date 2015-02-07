@@ -14,7 +14,7 @@ package{
             super.__create(new DHPoint(
                 _screen.screenWidth * .4, _screen.screenHeight * .6));
 
-            (new BackgroundLoader()).loadSingleTileBG("../assets/it_teleport.png");
+            (new BackgroundLoader()).loadSingleTileBG("../assets/images/worlds/it_teleport.png");
             ScreenManager.getInstance().setupCamera(null, 1);
 
             door_it = new GameObject(new DHPoint(_screen.screenWidth * .3, _screen.screenHeight * .4));
