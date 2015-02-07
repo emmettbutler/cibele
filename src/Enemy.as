@@ -6,8 +6,8 @@ package
     public class Enemy extends GameObject {
         [Embed(source="../assets/squid_baby.png")] private var ImgIT1:Class;
         [Embed(source="../assets/Enemy2_sprite.png")] private var ImgIT2:Class;
-        [Embed(source="../assets/enemy_highlight.png")] private var ImgActive:Class;
-        [Embed(source="../assets/enemy2_highlight.png")] private var ImgActive2:Class;
+        [Embed(source="../assets/images/ui/enemy_highlight.png")] private var ImgActive:Class;
+        [Embed(source="../assets/images/ui/enemy2_highlight.png")] private var ImgActive2:Class;
         public var enemyType:String = "enemy";
         public var hitpoints:Number = 100;
         public var damage:Number = 3;

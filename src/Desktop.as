@@ -3,7 +3,7 @@ package{
     import flash.utils.Dictionary;
 
     public class Desktop extends GameState {
-        [Embed(source="../assets/Screenshot.png")] private var ImgScreenshot:Class;
+        [Embed(source="../assets/images/ui/Screenshot.png")] private var ImgScreenshot:Class;
         [Embed(source="../assets/audio/effects/sfx_roomtone.mp3")] private var SFXRoomTone:Class;
         [Embed(source="../assets/images/ui/UI_pink_x.png")] private var ImgInboxXPink:Class;
         //desktop selfie folder assets

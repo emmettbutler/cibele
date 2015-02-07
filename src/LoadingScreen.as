@@ -2,8 +2,8 @@ package{
     import org.flixel.*;
 
     public class LoadingScreen extends GameObject{
-        [Embed(source="../assets/loading_icon.png")] private var ImgLoadingIcon:Class;
-        [Embed(source="../assets/loading_text.png")] private var ImgLoadingText:Class;
+        [Embed(source="../assets/images/ui/loading_icon.png")] private var ImgLoadingIcon:Class;
+        [Embed(source="../assets/images/ui/loading_text.png")] private var ImgLoadingText:Class;
 
         public var loading_icon:GameObject;
         public var loading_text:GameObject;

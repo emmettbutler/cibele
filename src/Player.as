@@ -5,7 +5,7 @@ package{
 
     public class Player extends PartyMember {
         [Embed(source="../assets/c_walk.png")] private var ImgCibWalk:Class;
-        [Embed(source="../assets/click_anim.png")] private var ImgWalkTo:Class;
+        [Embed(source="../assets/images/ui/click_anim.png")] private var ImgWalkTo:Class;
         [Embed(source="../assets/cib_attack.png")] private var ImgAttack:Class;
         [Embed(source="../assets/cib_shadow.png")] private var ImgShadow:Class;
         [Embed(source="../assets/cib_shadow_blue.png")] private var ImgShadowBlue:Class;
