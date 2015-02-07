@@ -5,7 +5,7 @@ package{
     import flash.utils.Dictionary;
 
     public class PopUpManager {
-        [Embed(source="../assets/sfx_notification.mp3")] private var SfxNotification:Class;
+        [Embed(source="../assets/audio/effects/sfx_notification.mp3")] private var SfxNotification:Class;
         [Embed(source="../assets/UI_icon_game.png")] private var ImgGameButton:Class;
         [Embed(source="../assets/UI_icon_folder.png")] private var ImgFileButton:Class;
         [Embed(source="../assets/UI_icon_photo.png")] private var ImgPhotoButton:Class;

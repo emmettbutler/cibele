@@ -4,7 +4,7 @@ package{
 
     public class Desktop extends GameState {
         [Embed(source="../assets/Screenshot.png")] private var ImgScreenshot:Class;
-        [Embed(source="../assets/sfx_roomtone.mp3")] private var SFXRoomTone:Class;
+        [Embed(source="../assets/audio/effects/sfx_roomtone.mp3")] private var SFXRoomTone:Class;
         [Embed(source="../assets/UI_pink_x.png")] private var ImgInboxXPink:Class;
         //desktop selfie folder assets
         [Embed(source="../assets/popups/selfiedesktop/selfies_folder.png")] private var ImgSelfiesFolder:Class;

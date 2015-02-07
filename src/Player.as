@@ -9,11 +9,11 @@ package{
         [Embed(source="../assets/cib_attack.png")] private var ImgAttack:Class;
         [Embed(source="../assets/cib_shadow.png")] private var ImgShadow:Class;
         [Embed(source="../assets/cib_shadow_blue.png")] private var ImgShadowBlue:Class;
-        [Embed(source="../assets/sfx_uigeneral.mp3")] private var SfxUI:Class;
-        [Embed(source="../assets/sfx_protoattack1.mp3")] private var SfxAttack1:Class;
-        [Embed(source="../assets/sfx_protoattack2.mp3")] private var SfxAttack2:Class;
-        [Embed(source="../assets/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
-        [Embed(source="../assets/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
+        [Embed(source="../assets/audio/effects/sfx_uigeneral.mp3")] private var SfxUI:Class;
+        [Embed(source="../assets/audio/effects/sfx_protoattack1.mp3")] private var SfxAttack1:Class;
+        [Embed(source="../assets/audio/effects/sfx_protoattack2.mp3")] private var SfxAttack2:Class;
+        [Embed(source="../assets/audio/effects/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
+        [Embed(source="../assets/audio/effects/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
 
         private var walkDistance:Number = 0, walkSpeed:Number = 8,
                     mouseDownTime:Number;

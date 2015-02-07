@@ -4,8 +4,8 @@ package {
     import flash.events.Event;
 
     public class GameState extends FlxState {
-        [Embed(source="../assets/sfx_mouseclick.mp3")] private var SfxClick:Class;
-        [Embed(source="../assets/sfx_mouseclick2.mp3")] private var SfxClick2:Class;
+        [Embed(source="../assets/audio/effects/sfx_mouseclick.mp3")] private var SfxClick:Class;
+        [Embed(source="../assets/audio/effects/sfx_mouseclick2.mp3")] private var SfxClick2:Class;
         [Embed(source="../assets/incomingcall.png")] private var ImgCall:Class;
 
         protected var updateSound:Boolean, updatePopup:Boolean,
