@@ -150,7 +150,7 @@ package {
             if (!canConnect) {
                 ray.color = 0xffff0000;
             }
-            if (canConnect) {
+            if (canConnect && ScreenManager.getInstance().DEBUG) {
                 trace("adding ray of length: " + ray.width);
             }
             return {"canConnect": canConnect, "length": ray.width};
