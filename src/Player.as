@@ -250,7 +250,7 @@ package{
                         var closeNodes:Array = this._mapnodes.getNClosestGenericNodes(maxTries, this.footPos);
                         var curNode:MapNode = closeNodes[0]['node'], tries:Number = 0;
                         var res:Object = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, curNode.pos);
-                        while (!res["canConnect"] && tries <= maxTries && curNode != null) {
+                        while (!res["canConnect"] && tries < maxTries && curNode != null) {
                             curNode = closeNodes[tries]['node'];
                             if (curNode != null) {
                                 res = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, curNode.pos);
