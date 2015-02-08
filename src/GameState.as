@@ -184,7 +184,7 @@ package {
 
             this.updateCursor();
 
-            if(FlxG.mouse.justReleased()) {
+            if(FlxG.mouse.justReleased() && !(FlxG.state is PlayVideoState)) {
                 this.playClick();
                 this.clickCallback(
                     new DHPoint(FlxG.mouse.screenX, FlxG.mouse.screenY),
