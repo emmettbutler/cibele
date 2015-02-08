@@ -2,14 +2,27 @@ package
 {
     import org.flixel.*;
 
+    import flash.ui.Mouse;
+    import flash.ui.MouseCursorData;
+    import flash.geom.Point;
+    import flash.display.BitmapData;
+    import flash.display.IBitmapDrawable;
+
     public class GameCursor extends GameObject {
         [Embed(source="../assets/images/ui/attack_cursor.png")] private var ImgEnemy:Class;
         [Embed(source="../assets/images/ui/gamemouse.png")] private var ImgGameCursor:Class;
         [Embed(source="../assets/images/ui/computermouse.png")] private var ImgPCCursor:Class;
+        [Embed (source="../assets/images/misc/clear_cursor.png" )] public var ClearCursor:Class;
+
+        public var clearCursor:Object;
         public var mouse_rect:FlxRect;
         public var enemy_mouse:GameObject;
         public var game_mouse:GameObject;
         public var pc_mouse:GameObject;
+
+        private var cursorBitmapData:BitmapData;
+        private var cursorData:MouseCursorData;
+        private var cursorVector:Vector.<BitmapData>;
 
         public static const ENEMY:Number = 0;
         public static const GAME:Number = 1;
@@ -24,6 +37,21 @@ package
             this.observeGlobalPause = false;
 
             this.addCursorSprites();
+        }
+
+        public function hideSystemCursor():void {
+            if(Mouse.supportsNativeCursor){
+                clearCursor = new ClearCursor();
+                cursorBitmapData = new BitmapData(1, 1, true, 0x000000);
+                cursorBitmapData.draw(clearCursor as IBitmapDrawable);
+                cursorVector = new Vector.<BitmapData>();
+                cursorVector[0] = cursorBitmapData;
+                cursorData = new MouseCursorData();
+                cursorData.hotSpot = new Point(10, 10);
+                cursorData.data = cursorVector;
+                Mouse.registerCursor("clearCursor", cursorData);
+                Mouse.cursor = "clearCursor";
+            }
         }
 
         override public function update():void {
