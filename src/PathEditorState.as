@@ -232,7 +232,8 @@ package {
                 if (node1 != null && node2 != null) {
                     node1.addEdge(node2, score);
                     if (ScreenManager.getInstance().DEBUG) {
-                        generator.rayCast(node1.pos, node2.pos)
+                        generator.rayCast(node1.pos, node2.pos, 0xffff00ff, -1,
+                                          1, true);
                     }
                 }
             }

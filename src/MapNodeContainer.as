@@ -74,6 +74,35 @@ package
             }
         }
 
+        public function getNClosestGenericNodes(n:Number, pos:DHPoint):Array {
+            var checkedGroup:Array = new Array();
+            var curNode:MapNode, disp:Number;
+            for (var i:Number = 0; i < this.nodes.length; i++) {
+                curNode = this.nodes[i];
+                disp = curNode.pos.sub(pos)._length();
+                if (disp < 700) {
+                    checkedGroup.push({"node": curNode, "disp": disp});
+                }
+            }
+
+            checkedGroup.sort(sortByDisp);
+            checkedGroup.length = n;
+            return checkedGroup;
+        }
+
+        private function sortByDisp(a:Object, b:Object):Number {
+            var aY:Number = a['disp'];
+            var bY:Number = b['disp'];
+
+            if (aY > bY) {
+                return 1;
+            }
+            if (aY < bY) {
+                return -1;
+            }
+            return 0;
+        }
+
         public function getClosestNode(pos:DHPoint, exclude:MapNode=null, on_screen:Boolean = true):MapNode {
             this.closestPathNode = this.path.getClosestNode(pos);
             currentClosestNode = this.nodes[0];

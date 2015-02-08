@@ -246,13 +246,27 @@ package{
                         this.finalTarget = worldPos;
                         this.curPath = null;
                     } else {
-                        this.finalTarget = worldPos;
-                        this.curPath = Path.shortestPath(
-                            closestNode, this._mapnodes.getClosestGenericNode(this.finalTarget)
-                        );
-                        (FlxG.state as PathEditorState).clearAllAStarMeasures();
+                        var maxTries:Number = 10;
+                        var closeNodes:Array = this._mapnodes.getNClosestGenericNodes(maxTries, this.footPos);
+                        var curNode:MapNode = closeNodes[0]['node'], tries:Number = 0;
+                        var res:Object = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, curNode.pos);
+                        while (!res["canConnect"] && tries < maxTries && curNode != null) {
+                            curNode = closeNodes[tries]['node'];
+                            if (curNode != null) {
+                                res = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, curNode.pos);
+                            }
+                            tries += 1;
+                        }
+                        if (res["canConnect"]) {
+                            this.curPath = Path.shortestPath(
+                                curNode,
+                                this._mapnodes.getClosestGenericNode(worldPos)
+                            );
+                            (FlxG.state as PathEditorState).clearAllAStarMeasures();
 
-                        this.walkTarget = this.curPath.currentNode.pos;
+                            this.walkTarget = this.curPath.currentNode.pos;
+                            this.finalTarget = worldPos;
+                        }
 
                         if (ScreenManager.getInstance().DEBUG) {
                             trace("Path: " + this.curPath.toString());
@@ -333,7 +347,13 @@ package{
                     this.curPath.advance();
 
                     if (this.curPath.isAtFirstNode()) {
-                        this.walkTarget = this.finalTarget;
+                        var destinationDisp:Number = this.footPos.sub(this.finalTarget)._length();
+                        if (destinationDisp > 100) {
+                            this.walkTarget = this.finalTarget;
+                        } else {
+                            // end the path early to avoid jerky movements at the end
+                            this.finalTarget = this.footPos;
+                        }
                         this.curPath = null;
                     } else {
                         this.walkTarget = this.curPath.currentNode.pos;
@@ -433,7 +453,7 @@ package{
                 this.attack_sprite.visible = false;
             }
 
-            if (this.colliding) {
+            if (this.curPath == null && this.colliding) {
                 if (this.collisionDirection != null) {
                     if (this.collisionDirection[0] == 1 &&
                         this.collisionDirection[1] == 1 &&
