@@ -19,22 +19,22 @@ package {
         [Embed(source="../assets/images/ui/popups/it_email/ichiselfieemail_link1.png")] private static var ImgIchiSelfieSubLink1:Class;
 
         //euryale
-        [Embed(source="../assets/popups/eu_email/email2_link1.png")] private static var ImgEuEmail2Link1:Class;
-        [Embed(source="../assets/popups/eu_email/email2_link2.png")] private static var ImgEuEmail2Link2:Class;
-        [Embed(source="../assets/popups/eu_email/email2_flight.png")] private static var ImgEuEmail2Flight:Class;
-        [Embed(source="../assets/popups/eu_email/small_email1.png")] private static var ImgEuEmailSmallEmail1:Class;
-        [Embed(source="../assets/popups/eu_files/bed_icon.png")] private static var ImgEuFile1BedIcon:Class;
-        [Embed(source="../assets/popups/eu_files/bed.png")] private static var ImgEuFile1Bed:Class;
-        [Embed(source="../assets/popups/eu_files/cutewow_icon.png")] private static var ImgEuFile1CuteWowIcon:Class;
-        [Embed(source="../assets/popups/eu_files/cutewow.png")] private static var ImgEuFile1CuteWow:Class;
-        [Embed(source="../assets/popups/eu_files/old_icon.png")] private static var ImgEuFile1OldIcon:Class;
-        [Embed(source="../assets/popups/eu_files/old.png")] private static var ImgEuFile1Old:Class;
-        [Embed(source="../assets/popups/eu_files/ollld.png")] private static var ImgEuFile1Ollld:Class;
-        [Embed(source="../assets/popups/eu_files/ollld_icon.png")] private static var ImgEuFile1OllldIcon:Class;
-        [Embed(source="../assets/popups/eu_email/emailselfie_link.png")] private static var ImgEuEmailSelfieLink:Class;
-        [Embed(source="../assets/popups/eu_net/ichiselfiethread.png")] private static var ImgEuEmailSelfieNetThread:Class;
-        [Embed(source="../assets/popups/eu_email/miniemailselfie_link.png")] private static var ImgEuEmailSelfieMiniLink:Class;
-        [Embed(source="../assets/popups/eu_email/small_emailselfie.png")] private static var ImgEuMiniSelfieEmail:Class;
+        [Embed(source="../assets/images/ui/popups/eu_email/email2_link1.png")] private static var ImgEuEmail2Link1:Class;
+        [Embed(source="../assets/images/ui/popups/eu_email/email2_link2.png")] private static var ImgEuEmail2Link2:Class;
+        [Embed(source="../assets/images/ui/popups/eu_email/email2_flight.png")] private static var ImgEuEmail2Flight:Class;
+        [Embed(source="../assets/images/ui/popups/eu_email/small_email1.png")] private static var ImgEuEmailSmallEmail1:Class;
+        [Embed(source="../assets/images/ui/popups/eu_files/bed_icon.png")] private static var ImgEuFile1BedIcon:Class;
+        [Embed(source="../assets/images/ui/popups/eu_files/bed.png")] private static var ImgEuFile1Bed:Class;
+        [Embed(source="../assets/images/ui/popups/eu_files/cutewow_icon.png")] private static var ImgEuFile1CuteWowIcon:Class;
+        [Embed(source="../assets/images/ui/popups/eu_files/cutewow.png")] private static var ImgEuFile1CuteWow:Class;
+        [Embed(source="../assets/images/ui/popups/eu_files/old_icon.png")] private static var ImgEuFile1OldIcon:Class;
+        [Embed(source="../assets/images/ui/popups/eu_files/old.png")] private static var ImgEuFile1Old:Class;
+        [Embed(source="../assets/images/ui/popups/eu_files/ollld.png")] private static var ImgEuFile1Ollld:Class;
+        [Embed(source="../assets/images/ui/popups/eu_files/ollld_icon.png")] private static var ImgEuFile1OllldIcon:Class;
+        [Embed(source="../assets/images/ui/popups/eu_email/emailselfie_link.png")] private static var ImgEuEmailSelfieLink:Class;
+        [Embed(source="../assets/images/ui/popups/eu_net/ichiselfiethread.png")] private static var ImgEuEmailSelfieNetThread:Class;
+        [Embed(source="../assets/images/ui/popups/eu_email/miniemailselfie_link.png")] private static var ImgEuEmailSelfieMiniLink:Class;
+        [Embed(source="../assets/images/ui/popups/eu_email/small_emailselfie.png")] private static var ImgEuMiniSelfieEmail:Class;
 
         public static function build():Dictionary {
             var struc:Dictionary = new Dictionary();

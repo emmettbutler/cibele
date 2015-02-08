@@ -3,8 +3,8 @@ package{
     import org.flixel.plugin.photonstorm.FlxCollision;
 
     public class EuryaleHallway extends Hallway {
-        [Embed(source="../assets/voc_euryale_hey.mp3")] private var Convo1:Class;
-        [Embed(source="../assets/voc_euryale_teleport.mp3")] private var Convo1_2:Class;
+        [Embed(source="../assets/audio/voiceover/voc_euryale_hey.mp3")] private var Convo1:Class;
+        [Embed(source="../assets/audio/voiceover/voc_euryale_teleport.mp3")] private var Convo1_2:Class;
 
         public function EuryaleHallway(state:Number=0){
             _state = state;

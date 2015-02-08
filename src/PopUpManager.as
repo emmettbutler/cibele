@@ -30,11 +30,11 @@ package{
         [Embed(source="../assets/images/ui/popups/picly/emmy1.png")] private static var ImgIchiPicly1:Class;
 
         //euryale popups
-        [Embed(source="../assets/popups/eu_email/email1.png")] private static var ImgEuEmail1:Class;
-        [Embed(source="../assets/popups/eu_email/emailselfie.png")] private static var ImgEuEmailSelfie:Class;
-        [Embed(source="../assets/popups/eu_email/email2.png")] private static var ImgEuEmail2:Class;
-        [Embed(source="../assets/popups/eu_picly/dredgeirl.png")] private static var ImgEuDredge:Class;
-        [Embed(source="../assets/popups/eu_files/highschool.png")] private static var ImgEuHighSchool:Class;
+        [Embed(source="../assets/images/ui/popups/eu_email/email1.png")] private static var ImgEuEmail1:Class;
+        [Embed(source="../assets/images/ui/popups/eu_email/emailselfie.png")] private static var ImgEuEmailSelfie:Class;
+        [Embed(source="../assets/images/ui/popups/eu_email/email2.png")] private static var ImgEuEmail2:Class;
+        [Embed(source="../assets/images/ui/popups/eu_picly/dredgeirl.png")] private static var ImgEuDredge:Class;
+        [Embed(source="../assets/images/ui/popups/eu_files/highschool.png")] private static var ImgEuHighSchool:Class;
 
         public static var _instance:PopUpManager = null;
 

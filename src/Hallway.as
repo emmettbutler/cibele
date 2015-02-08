@@ -3,9 +3,8 @@ package{
     import org.flixel.plugin.photonstorm.FlxCollision;
 
     public class Hallway extends PlayerState {
-        [Embed(source="../assets/Fern-part-2.png")] private var ImgFernBase:Class;
-        [Embed(source="../assets/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
-        [Embed(source="../assets/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
+        [Embed(source="../assets/audio/music/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
+        [Embed(source="../assets/audio/music/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
 
         public var accept_call:Boolean = false;
 

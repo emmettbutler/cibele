@@ -3,14 +3,14 @@ package{
     import flash.events.*;
 
     public class Euryale extends LevelMapState {
-        [Embed(source="../assets/voc_euryale_breakups.mp3")] private var Convo2:Class;
-        [Embed(source="../assets/voc_euryale_nada.mp3")] private var Convo2_2:Class;
-        [Embed(source="../assets/voc_euryale_crush.mp3")] private var Convo3:Class;
-        [Embed(source="../assets/voc_euryale_callmeblake.mp3")] private var Convo3_2:Class;
-        [Embed(source="../assets/voc_euryale_closer.mp3")] private var Convo4:Class;
-        [Embed(source="../assets/voc_euryale_meetup.mp3")] private var Convo4_2:Class;
-        [Embed(source="../assets/voc_euryale_parents.mp3")] private var Convo4_3:Class;
-        [Embed(source="../assets/voc_euryale_dredge.mp3")] private var Convo5:Class;
+        [Embed(source="../assets/audio/voiceover/voc_euryale_breakups.mp3")] private var Convo2:Class;
+        [Embed(source="../assets/audio/voiceover/voc_euryale_nada.mp3")] private var Convo2_2:Class;
+        [Embed(source="../assets/audio/voiceover/voc_euryale_crush.mp3")] private var Convo3:Class;
+        [Embed(source="../assets/audio/voiceover/voc_euryale_callmeblake.mp3")] private var Convo3_2:Class;
+        [Embed(source="../assets/audio/voiceover/voc_euryale_closer.mp3")] private var Convo4:Class;
+        [Embed(source="../assets/audio/voiceover/voc_euryale_meetup.mp3")] private var Convo4_2:Class;
+        [Embed(source="../assets/audio/voiceover/voc_euryale_parents.mp3")] private var Convo4_3:Class;
+        [Embed(source="../assets/audio/voiceover/voc_euryale_dredge.mp3")] private var Convo5:Class;
 
         public function Euryale() {
             PopUpManager.GAME_ACTIVE = true;
