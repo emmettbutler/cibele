@@ -36,6 +36,7 @@ package
             this._state = PC;
             this.observeGlobalPause = false;
 
+            this.hideSystemCursor();
             this.addCursorSprites();
         }
 
