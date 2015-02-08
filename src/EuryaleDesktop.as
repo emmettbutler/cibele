@@ -1,7 +1,10 @@
 package{
     import org.flixel.*;
+    import flash.utils.Dictionary;
 
-    public class IkuTursoTeleportRoom extends TeleportRoom {
+    public class EuryaleDesktop extends Desktop {
+        public function EuryaleDesktop() {
+        }
 
         override public function create():void {
             super.create();
@@ -9,10 +12,6 @@ package{
 
         override public function update():void{
             super.update();
-
-            if (player.mapHitbox.overlaps(door)) {
-                FlxG.switchState(new IkuTurso());
-            }
         }
     }
 }

@@ -115,7 +115,7 @@ package{
 
             //todo this should probs not trigger every time if there's other music playing
             function _musicCallback():void {
-                if(!(FlxG.state is HallwayToFern)) {
+                if(!(FlxG.state is Hallway)) {
                     SoundManager.getInstance().playSound(MenuBGMLoop, 0, null,
                         true, 1, GameSound.BGM, MenuScreen.BGM);
                 }
@@ -174,11 +174,19 @@ package{
                     crystal_icon.alpha = 0;
                 }
                 if (mouse_rect.overlaps(play_game_rect) && play_screen){
-                    FlxG.switchState(new HallwayToFern());
+                    if(GameState.cur_level == GameState.LVL_IT) {
+                        FlxG.switchState(new IkuTursoHallway());
+                    } else if(GameState.cur_level == GameState.LVL_EU) {
+                        FlxG.switchState(new EuryaleHallway());
+                    }
                 }
                 if (mouse_rect.overlaps(quit_rect) && !play_screen){
                     PopUpManager.GAME_ACTIVE = false;
-                    FlxG.switchState(new Desktop());
+                    if(GameState.cur_level == GameState.LVL_IT) {
+                        FlxG.switchState(new IkuTursoDesktop());
+                    } else if(GameState.cur_level == GameState.LVL_EU) {
+                        FlxG.switchState(new EuryaleDesktop());
+                    }
                 }
             }
 

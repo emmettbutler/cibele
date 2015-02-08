@@ -25,6 +25,9 @@ package {
         public var playerStartPos:DHPoint;
         public var colliderScaleFactor:Number;
 
+        protected var conversationPieces:Array;
+        protected var conversationCounter:Number = 0;
+
         override public function create():void {
             super.__create(this.playerStartPos);
 
@@ -155,5 +158,52 @@ package {
             }
             return {"canConnect": canConnect, "length": ray.width};
         }
+
+        public function playFirstConvo():void {
+            this.playConvoPiece(0);
+            this.bitDialogueLock = false;
+        }
+
+        public function playNextConvoPiece():void {
+            this.playConvoPiece(this.conversationCounter + 1);
+        }
+
+        private function playConvoPiece(counterVal:Number):void {
+            this.conversationCounter = counterVal;
+            var audioInfo:Object = this.conversationPieces[this.conversationCounter];
+            if (audioInfo != null) {
+                var endfn:Function = this.playNextConvoPiece;
+                if (audioInfo["endfn"] != null) {
+                    endfn = function():void {
+                        registerPopupCallback();
+                        audioInfo["endfn"]();
+                    };
+                }
+                SoundManager.getInstance().playSound(
+                    audioInfo["audio"], audioInfo["len"], endfn, false, 1,
+                    GameSound.VOCAL
+                );
+            } else {
+                this.finalConvoDone();
+            }
+        }
+
+        public function registerPopupCallback():void {
+            var that:LevelMapState = this;
+            this.addEventListener(GameState.EVENT_POPUP_CLOSED,
+                function(event:DataEvent):void {
+                    that.playNextConvoPiece();
+                    that.playTimedEmotes(that.conversationCounter);
+                    if(that.conversationPieces.length == that.conversationCounter + 1) {
+                        that.last_convo_playing = true;
+                    }
+                    FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
+                                                    arguments.callee);
+                });
+        }
+
+        public function finalConvoDone():void {}
+
+        public function playTimedEmotes(convoNum:Number):void {}
     }
 }

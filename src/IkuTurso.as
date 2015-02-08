@@ -19,9 +19,6 @@ package{
         private var convo1Sound:GameSound;
         private var convo1Ready:Boolean;
 
-        private var conversationPieces:Array;
-        private var conversationCounter:Number = 0;
-
         public static var BGM:String = "ikuturso bgm loop";
         public static const BOSS_MARK:String = "boss_iku_turso";
 
@@ -34,31 +31,26 @@ package{
             this.conversationPieces = [
                 {
                     "audio": Convo1, "len": 56*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showIchiDownloadWindow
+                    "endfn": this.showIchiDownloadWindow
                 },
                 {
                     "audio": Convo2, "len": 76*GameSound.MSEC_PER_SEC,
-                    "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showSelfiesWindow
                 },
                 {
                     "audio": Convo3, "len": 25*GameSound.MSEC_PER_SEC,
-                    "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showGuilEmail
                 },
                 {
                     "audio": Convo4, "len": 107*GameSound.MSEC_PER_SEC,
-                    "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showIchiSelfie1
                 },
                 {
                     "audio": Convo5, "len": 15*GameSound.MSEC_PER_SEC,
-                    "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showCibSelfieFolder
                 },
                 {
-                    "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC,
-                    "delay": 20*GameSound.MSEC_PER_SEC, "endfn": null
+                    "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC
                 }
             ];
         }
@@ -139,42 +131,18 @@ package{
             PopUpManager.getInstance().sendPopup(PopUpManager.CIB_SELFIE_FOLDER);
         }
 
-        public function playNextConvoPiece():void {
-            var thisAudioInfo:Object = this.conversationPieces[this.conversationCounter];
-            if (thisAudioInfo["endfn"] != null) {
-                thisAudioInfo["endfn"]();
-            }
-            this.conversationCounter += 1;
+        override public function finalConvoDone():void {
             var that:IkuTurso = this;
-            var nextAudioInfo:Object = this.conversationPieces[this.conversationCounter];
-            if (nextAudioInfo != null) {
-                this.addEventListener(GameState.EVENT_POPUP_CLOSED,
-                    function(event:DataEvent):void {
-                        SoundManager.getInstance().playSound(
-                            nextAudioInfo["audio"], nextAudioInfo["len"],
-                            that.playNextConvoPiece, false, 1, GameSound.VOCAL
-                        );
-                        that.playTimedEmotes(that.conversationCounter);
-                        if(that.conversationPieces.length == that.conversationCounter + 1) {
-                            that.last_convo_playing = true;
-                        }
-                        FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
-                                                       arguments.callee);
-                    });
-            } else {
-                GlobalTimer.getInstance().setMark("Boss Kill", 5*GameSound.MSEC_PER_SEC, this.ichiBossKill);
-            }
-        }
-
-        public function ichiBossKill():void {
-            //TODO play no other bit dialogue during this time
-            SoundManager.getInstance().playSound(
-                IchiBossKill, 3*GameSound.MSEC_PER_SEC, this.playEndFilm,
-                false, 1, GameSound.VOCAL
-            );
-            if(this.boss != null) {
-                this.boss.dead = true;
-            }
+            GlobalTimer.getInstance().setMark("Boss Kill", 5*GameSound.MSEC_PER_SEC, function():void {
+                //TODO play no other bit dialogue during this time
+                SoundManager.getInstance().playSound(
+                    IchiBossKill, 3*GameSound.MSEC_PER_SEC, that.playEndFilm,
+                    false, 1, GameSound.VOCAL
+                );
+                if(this.boss != null) {
+                    this.boss.dead = true;
+                }
+            });
         }
 
         public function playEndFilm():void {
@@ -190,7 +158,7 @@ package{
                 );
         }
 
-        public function playTimedEmotes(convoNum:Number):void {
+        override public function playTimedEmotes(convoNum:Number):void {
             if(convoNum == 1) {
                 GlobalTimer.getInstance().setMark("2nd Convo Emote", 11*GameSound.MSEC_PER_SEC, this.ichiMadEmote);
             }
@@ -206,16 +174,6 @@ package{
             if(convoNum == 5) {
                 GlobalTimer.getInstance().setMark("6th Convo Emote", 12*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
             }
-        }
-
-        public function playFirstConvo():void {
-            this.conversationCounter = 0;
-            var sndInfo:Object = this.conversationPieces[this.conversationCounter];
-            this.convo1Sound = SoundManager.getInstance().playSound(
-                sndInfo["audio"], sndInfo["len"], this.playNextConvoPiece,
-                false, 1, GameSound.VOCAL
-            );
-            this.bitDialogueLock = false;
         }
 
         public function playRUComing():void {
@@ -234,7 +192,7 @@ package{
 
         override public function update():void{
             super.update();
-            var snd:GameSound = SoundManager.getInstance().getSoundByName(HallwayToFern.BGM);
+            var snd:GameSound = SoundManager.getInstance().getSoundByName(Hallway.BGM);
             if(snd != null) {
                 snd.fadeOutSound();
                 snd.fading = true;

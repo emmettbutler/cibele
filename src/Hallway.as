@@ -2,13 +2,7 @@ package{
     import org.flixel.*;
     import org.flixel.plugin.photonstorm.FlxCollision;
 
-    public class HallwayToFern extends PlayerState {
-        [Embed(source="../assets/audio/voiceover/voc_firstconvo.mp3")] private var Convo1:Class;
-        [Embed(source="../assets/audio/voiceover/voc_ikuturso_start.mp3")] private var Convo2:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_wannaduo.mp3")] private var SndWannaDuo:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_ichiareyouthere.mp3")] private var SndRUThere:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_cibichi.mp3")] private var CibIchi:Class;
+    public class Hallway extends PlayerState {
         [Embed(source="../assets/audio/music/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
         [Embed(source="../assets/audio/music/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
 
@@ -21,9 +15,9 @@ package{
         public var leftBound:Number, rightBound:Number;
         public var tileLoader:HallwayTileLoader;
 
-        public static const STATE_PRE_IT:Number = 0;
+        public static const STATE_PRE:Number = 0;
         public static const STATE_RETURN:Number = 1;
-        public var _state:Number = STATE_PRE_IT;
+        public var _state:Number = STATE_PRE;
 
         public var _screen:ScreenManager;
         public var frameCount:int = 0;
@@ -34,8 +28,7 @@ package{
 
         public static var BGM:String = "Hallway to fern BGM";
 
-        public function HallwayToFern(state:Number=0){
-            _state = state;
+        public function Hallway(){
         }
 
         override public function create():void {
@@ -43,11 +36,11 @@ package{
 
             function _musicCallback():void {
                 SoundManager.getInstance().playSound(FernBGMLoop, 0, null,
-                    true, .15, GameSound.BGM, HallwayToFern.BGM, false, false, true);
+                    true, .15, GameSound.BGM, Hallway.BGM, false, false, true);
             }
             SoundManager.getInstance().playSound(
                 FernBGMIntro, 12.4*GameSound.MSEC_PER_SEC, _musicCallback,
-                false, .15, Math.random()*932+102, HallwayToFern.BGM, false,
+                false, .15, Math.random()*932+102, Hallway.BGM, false,
                 false, true);
 
             _screen = ScreenManager.getInstance();
@@ -93,7 +86,7 @@ package{
 
             this.postCreate();
 
-            if(_state == STATE_PRE_IT){
+            if(_state == STATE_PRE){
                 call_button.visible = true;
             }
 
@@ -138,7 +131,11 @@ package{
 
             for (var i:int = 0; i < loader.doors.length; i++) {
                 if(player.mapHitbox.overlaps(loader.doors[i]["object"])){
-                    FlxG.switchState(new IkuTursoTeleportRoom());
+                    if(GameState.cur_level == GameState.LVL_IT) {
+                        FlxG.switchState(new IkuTursoTeleportRoom());
+                    } else if(GameState.cur_level == GameState.LVL_EU) {
+                        FlxG.switchState(new EuryaleTeleportRoom());
+                    }
                 }
             }
         }
@@ -152,24 +149,9 @@ package{
             player.setBlueShadow();
         }
 
-        public function firstConvo():void {
-            if(!(FlxG.state is IkuTurso)) {
-            } else {
-                (FlxG.state as IkuTurso).bulldogHellPopup();
-            }
-        }
-
         override public function clickCallback(screenPos:DHPoint,
                                                worldPos:DHPoint):void {
-            if (this._state == STATE_PRE_IT && !this.accept_call) {
-                accept_call = true;
-                SoundManager.getInstance().playSound(
-                    Convo1, 29*GameSound.MSEC_PER_SEC, firstConvo, false, 1, GameSound.VOCAL,
-                    "convo_1_hall"
-                );
-            } else {
-                super.clickCallback(screenPos, worldPos);
-            }
+            super.clickCallback(screenPos, worldPos);
         }
     }
 }

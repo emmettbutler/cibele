@@ -23,7 +23,7 @@ package{
 
         public function startGame():void {
             function _innerCallback():void {
-                FlxG.switchState(new Desktop());
+                FlxG.switchState(new IkuTursoDesktop());
             }
             FlxG.switchState(new PlayVideoState("../assets/video/computer_open.flv",
                                                 _innerCallback));
