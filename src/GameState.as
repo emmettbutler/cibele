@@ -1,12 +1,18 @@
 package {
     import org.flixel.*;
-
     import flash.events.Event;
+    import flash.ui.Mouse;
+    import flash.ui.MouseCursorData;
+    import flash.geom.Point;
+    import flash.display.BitmapData;
+    import flash.display.IBitmapDrawable;
 
     public class GameState extends FlxState {
         [Embed(source="../assets/audio/effects/sfx_mouseclick.mp3")] private var SfxClick:Class;
         [Embed(source="../assets/audio/effects/sfx_mouseclick2.mp3")] private var SfxClick2:Class;
         [Embed(source="../assets/images/ui/incomingcall.png")] private var ImgCall:Class;
+        [Embed (source="../assets/images/misc/clear_cursor.png" )] public var ClearCursor:Class;
+        public var clearCursor:Object;
 
         protected var updateSound:Boolean, updatePopup:Boolean,
                       updateMessages:Boolean, showEmoji:Boolean = true;
@@ -22,6 +28,10 @@ package {
         public static const UICOLOR_PINK:Number = 1;
 
         public var cursorResetFlag:Boolean = false;
+
+        private var cursorBitmapData:BitmapData;
+        private var cursorData:MouseCursorData;
+        private var cursorVector:Vector.<BitmapData>;
 
         public static const EVENT_POPUP_CLOSED:String = "popup_closed";
         public static const EVENT_CHAT_RECEIVED:String = "chat_received";
@@ -40,6 +50,19 @@ package {
 
         override public function create():void {
             super.create();
+
+            if(Mouse.supportsNativeCursor){
+                clearCursor = new ClearCursor();
+                cursorBitmapData = new BitmapData(1, 1, true, 0x000000);
+                cursorBitmapData.draw(clearCursor as IBitmapDrawable);
+                cursorVector = new Vector.<BitmapData>();
+                cursorVector[0] = cursorBitmapData;
+                cursorData = new MouseCursorData();
+                cursorData.hotSpot = new Point(10, 10);
+                cursorData.data = cursorVector;
+                Mouse.registerCursor("clearCursor", cursorData);
+                Mouse.cursor = "clearCursor";
+            }
 
             FlxG.bgColor = 0xff000000;
 
