@@ -383,7 +383,7 @@ package{
             }
 
             if (ScreenManager.getInstance().DEBUG) {
-                this.debugText.text = Player.stateMap[this._state] == null ? "unknown" : Player.stateMap[this._state];
+                this.debugText.text = (Player.stateMap[this._state] == null ? "unknown" : Player.stateMap[this._state]) + "\n" + this.pos.x + "x" + this.pos.y;
             }
 
             this.attack_sprite.x = this.x;
