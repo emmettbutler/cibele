@@ -3,8 +3,8 @@ package {
     import flash.utils.Dictionary;
 
     public class PopupHierarchies {
-        [Embed(source="../assets/images/ui/popups/ichiicon.png")] private static var ImgIchiIcon:Class;
-        [Embed(source="../assets/images/ui/popups/files/ichiselfie1.png")] private static var ImgIchiDL1:Class;
+        [Embed(source="../assets/images/ui/popups/files/bday_icon.png")] private static var ImgBdayIcon:Class;
+        [Embed(source="../assets/images/ui/popups/files/it_bday.png")] private static var ImgBday:Class;
         [Embed(source="../assets/images/ui/popups/it_email/bulldoghell_icon.png")] private static var ImgBHIcon:Class;
         [Embed(source="../assets/images/ui/popups/it_email/bulldoghell.png")] private static var ImgBH:Class;
         [Embed(source="../assets/images/ui/popups/it_email/ichiselfie1.png")] private static var ImgIchiSelfie1:Class;
@@ -12,7 +12,7 @@ package {
         [Embed(source="../assets/images/ui/popups/files/camera1disconnecticon.png")] private static var ImgCibCamDisconnectIcon:Class;
         [Embed(source="../assets/images/ui/popups/files/camera1selfie.png")] private static var ImgCibCam1:Class;
         [Embed(source="../assets/images/ui/popups/files/camera1selfieicon.png")] private static var ImgCibCam1Icon:Class;
-        [Embed(source="../assets/images/ui/popups/files/camera1.png")] private static var ImgCibSelfieFolder:Class;
+        [Embed(source="../assets/images/ui/popups/ichidownloads.png")] private static var ImgCibSelfieFolder:Class;
         [Embed(source="../assets/images/ui/popups/it_email/guil1_sub1link.png")] private static var ImgGuilLink1:Class;
         [Embed(source="../assets/images/ui/popups/it_email/guil1_sub1.png")] private static var ImgGuilSub:Class;
         [Embed(source="../assets/images/ui/popups/it_email/ichiselfieemail_sub1.png")] private static var ImgIchiSelfieSub1:Class;
@@ -23,11 +23,11 @@ package {
             struc[PopUpManager.ICHI_DL_2] = { "contents": [
                 {
                     "name": "ichi dl 2 link",
-                    "icon": ImgIchiIcon,
-                    "icon_dim": new DHPoint(70, 81),
+                    "icon": ImgBdayIcon,
+                    "icon_dim": new DHPoint(100, 93),
                     "icon_pos": new DHPoint(148, 35),
-                    "dim": new DHPoint(336, 448),
-                    "contents": ImgIchiDL1
+                    "dim": new DHPoint(631, 356),
+                    "contents": ImgBday
                 }
             ]};
             struc[PopUpManager.ICHI_SELFIE1] = { "contents": [
@@ -98,8 +98,8 @@ package {
                 {
                     "name": "cib camera selfies 1",
                     "icon": ImgCibCamDisconnectIcon,
-                    "icon_dim": new DHPoint(215, 21),
-                    "icon_pos": new DHPoint(25, 65),
+                    "icon_dim": new DHPoint(204, 34),
+                    "icon_pos": new DHPoint(29, 93),
                     "folder_dim": new DHPoint(631, 356),
                     "folder_img": ImgCibSelfieFolder,
                     "contents": [
@@ -107,10 +107,19 @@ package {
                             "name": "cam selfies",
                             "icon": ImgCibCam1Icon,
                             "icon_dim": new DHPoint(70, 81),
-                            "icon_pos": new DHPoint(69, 84),
+                            "icon_pos": new DHPoint(49, 64),
                             "dim": new DHPoint(530, 356),
                             "contents": ImgCibCam1
-                        }]
+                        },
+                        {
+                            "name": "ichi dl 2 link",
+                            "icon": ImgBdayIcon,
+                            "icon_dim": new DHPoint(100, 93),
+                            "icon_pos": new DHPoint(138, 64),
+                            "dim": new DHPoint(631, 356),
+                            "contents": ImgBday
+                        }
+                    ]
                 }
             ]};
             return struc;
