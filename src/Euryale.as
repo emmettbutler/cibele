@@ -15,6 +15,7 @@ package{
         public function Euryale() {
             PopUpManager.GAME_ACTIVE = true;
             this.ui_color_flag = GameState.UICOLOR_PINK;
+            this.conversationCounter = -1;
 
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
@@ -61,12 +62,10 @@ package{
             this.playerStartPos = new DHPoint(2266*3 - 500, 1365*6 - 500);
             this.colliderScaleFactor = 3.54;
 
+            this.registerPopupCallback();
+
             super.create();
         }
-
-        /*public function startConvo():void {
-            GlobalTimer.getInstance().setMark("start euryale convo", 5*GameSound.MSEC_PER_SEC, this.playFirstConvo);
-        }*/
 
         public function showFriendEmail():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.EU_EMAIL_1);
