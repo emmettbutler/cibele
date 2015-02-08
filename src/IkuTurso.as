@@ -30,23 +30,27 @@ package{
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo1, "len": 56*GameSound.MSEC_PER_SEC,
-                    "endfn": this.showIchiDownloadWindow
+                    "audio": Convo1, "len": 60*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "endfn": this.showIchiDownloadWindow
                 },
                 {
-                    "audio": Convo2, "len": 76*GameSound.MSEC_PER_SEC,
+                    "audio": Convo2, "len": 80*GameSound.MSEC_PER_SEC,
+                    "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showSelfiesWindow
                 },
                 {
-                    "audio": Convo3, "len": 25*GameSound.MSEC_PER_SEC,
+                    "audio": Convo3, "len": 30*GameSound.MSEC_PER_SEC,
+                    "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showGuilEmail
                 },
                 {
-                    "audio": Convo4, "len": 107*GameSound.MSEC_PER_SEC,
+                    "audio": Convo4, "len": 110*GameSound.MSEC_PER_SEC,
+                    "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showIchiSelfie1
                 },
                 {
-                    "audio": Convo5, "len": 15*GameSound.MSEC_PER_SEC,
+                    "audio": Convo5, "len": 23*GameSound.MSEC_PER_SEC,
+                    "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showCibSelfieFolder
                 },
                 {
@@ -70,7 +74,7 @@ package{
             }
             SoundManager.getInstance().playSound(ITBGMIntro, 3.6*GameSound.MSEC_PER_SEC, _bgmCallback, false, .08, Math.random()*928+298, IkuTurso.BGM, false, false, true);
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
-                GlobalTimer.getInstance().setMark("First Convo", 2*GameSound.MSEC_PER_SEC, this.bulldogHellPopup);
+                GlobalTimer.getInstance().setMark("First Convo", 7*GameSound.MSEC_PER_SEC, this.bulldogHellPopup);
             }
             this.convo1Sound = null;
             this.bgLoader.loadAllTiles();

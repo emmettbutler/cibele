@@ -27,7 +27,7 @@ package{
         public function firstConvo():void {
             if(!(FlxG.state is IkuTurso)) {
             } else {
-                (FlxG.state as IkuTurso).bulldogHellPopup();
+                GlobalTimer.getInstance().setMark("First Convo", 7*GameSound.MSEC_PER_SEC, (FlxG.state as IkuTurso).bulldogHellPopup);
             }
         }
 
