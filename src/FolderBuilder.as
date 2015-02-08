@@ -74,10 +74,6 @@ package{
                     curX.scrollFactor = new DHPoint(0,0);
                     cur["full_sprite"] = spr;
                     cur["x_sprite"] = curX;
-                    if(elements != null) {
-                        elements.push(spr);
-                        elements.push(curX);
-                    }
                 }
             }
         }
