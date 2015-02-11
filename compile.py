@@ -74,7 +74,7 @@ def compile_main(entry_point_class, libpath, debug_level):
         ts="")
     command = ["amxmlc", "src/{entry_point_class}.as".format(entry_point_class=entry_point_class), "-o",
                swfpath,
-               "-use-network=false", "-verbose-stacktraces=true",
+               "-use-network=false", "-verbose-stacktraces={}".format(stacktraces),
                "-compiler.include-libraries", libpath,
                "-debug={}".format(debug),
                "-omit-trace-statements={}".format(omit_trace),
