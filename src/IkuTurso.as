@@ -143,8 +143,8 @@ package{
                     IchiBossKill, 3*GameSound.MSEC_PER_SEC, that.playEndFilm,
                     false, 1, GameSound.VOCAL
                 );
-                if(this.boss != null) {
-                    this.boss.dead = true;
+                if(that.boss != null) {
+                    that.boss.dead = true;
                 }
             });
         }
