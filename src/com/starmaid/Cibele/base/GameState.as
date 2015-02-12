@@ -1,5 +1,6 @@
 package com.starmaid.Cibele.base {
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.utils.GlobalTimer;
 
     import org.flixel.*;
     import flash.events.Event;

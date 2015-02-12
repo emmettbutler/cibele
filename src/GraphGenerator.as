@@ -1,5 +1,5 @@
 package{
-    import com.starmaid.Cibele.base.GraphEdge;
+    import com.starmaid.Cibele.utils.GraphEdge;
 
     import org.flixel.*;
     import org.flixel.plugin.photonstorm.FlxCollision;
