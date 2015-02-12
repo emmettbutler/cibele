@@ -1,4 +1,4 @@
-package {
+package com.starmaid.Cibele.utils {
     public dynamic class Deque extends Array {
         public var maxSize:Number;
 

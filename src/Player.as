@@ -1,5 +1,6 @@
 package{
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.utils.Deque;
 
     import org.flixel.*;
 
