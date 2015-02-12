@@ -1,5 +1,8 @@
 package {
+    import com.starmaid.Cibele.utils.DHPoint;
+
     import flash.utils.Dictionary;
+
     import org.flixel.*;
 
     public class ProceduralDialogueGenerator {

@@ -1,4 +1,6 @@
 package {
+    import com.starmaid.Cibele.utils.DHPoint;
+
     import org.flixel.*;
 
     import flash.net.NetConnection;

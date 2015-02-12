@@ -1,5 +1,4 @@
-package
-{
+package com.starmaid.Cibele.utils {
     import org.flixel.*;
     import org.flixel.plugin.photonstorm.FlxMath;
 

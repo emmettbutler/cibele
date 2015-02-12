@@ -1,5 +1,8 @@
 package {
+    import com.starmaid.Cibele.utils.DHPoint;
+
     import org.flixel.*;
+
     import flash.utils.Dictionary;
 
     public class PopupHierarchies {

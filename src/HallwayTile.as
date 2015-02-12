@@ -1,4 +1,6 @@
 package {
+    import com.starmaid.Cibele.utils.DHPoint;
+
     public class HallwayTile extends GameObject {
         [Embed(source="../assets/images/worlds/Single Animated tile.png")] private var ImgTile:Class;
 
