@@ -1,4 +1,6 @@
 package {
+    import com.starmaid.Cibele.base.GameSound;
+
     import org.flixel.*;
 
     public class DockButton extends UIElement {

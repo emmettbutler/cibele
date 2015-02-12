@@ -1,4 +1,6 @@
 package com.starmaid.Cibele.utils {
+    import com.starmaid.Cibele.base.GameObject;
+
     import org.flixel.*;
     import org.flixel.plugin.photonstorm.FlxMath;
 

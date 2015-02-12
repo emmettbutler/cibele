@@ -1,4 +1,7 @@
 package {
+    import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.utils.GlobalTimer;
+
     import org.flixel.*;
 
     public class SoundManager {

@@ -1,4 +1,4 @@
-package {
+package com.starmaid.Cibele.base {
     import com.starmaid.Cibele.utils.DHPoint;
 
     import org.flixel.*;
@@ -10,10 +10,10 @@ package {
     import flash.display.IBitmapDrawable;
 
     public class GameCursor extends GameObject {
-        [Embed(source="../assets/images/ui/attack_cursor.png")] private var ImgEnemy:Class;
-        [Embed(source="../assets/images/ui/gamemouse.png")] private var ImgGameCursor:Class;
-        [Embed(source="../assets/images/ui/computermouse.png")] private var ImgPCCursor:Class;
-        [Embed (source="../assets/images/misc/clear_cursor.png" )] public var ClearCursor:Class;
+        [Embed(source="/../assets/images/ui/attack_cursor.png")] private var ImgEnemy:Class;
+        [Embed(source="/../assets/images/ui/gamemouse.png")] private var ImgGameCursor:Class;
+        [Embed(source="/../assets/images/ui/computermouse.png")] private var ImgPCCursor:Class;
+        [Embed(source="/../assets/images/misc/clear_cursor.png" )] public var ClearCursor:Class;
 
         public var clearCursor:Object;
         public var mouse_rect:FlxRect;

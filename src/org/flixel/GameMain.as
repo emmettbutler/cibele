@@ -1,4 +1,6 @@
 package org.flixel {
+    import com.starmaid.Cibele.utils.GlobalTimer;
+
     import flash.events.*;
 
     public class GameMain extends FlxGame {

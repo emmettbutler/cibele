@@ -1,6 +1,9 @@
 package{
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.DataEvent;
+    import com.starmaid.Cibele.base.GameState;
+    import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.base.GameSound;
 
     import org.flixel.*;
 

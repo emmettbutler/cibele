@@ -1,5 +1,6 @@
 package{
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.base.GameObject;
 
     import org.flixel.*;
 

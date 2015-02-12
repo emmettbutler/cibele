@@ -1,5 +1,4 @@
-package
-{
+package com.starmaid.Cibele.base {
     import org.flixel.*;
 
     public class GameSound {

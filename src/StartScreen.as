@@ -1,4 +1,7 @@
 package{
+    import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.GameState;
+
     import org.flixel.*;
 
     public class StartScreen extends GameState {

@@ -1,4 +1,4 @@
-package {
+package com.starmaid.Cibele.utils {
     import org.flixel.*;
 
     public class GlobalTimerMark {

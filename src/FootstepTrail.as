@@ -1,4 +1,6 @@
 package {
+    import com.starmaid.Cibele.base.GameObject;
+
     import org.flixel.*;
 
     public class FootstepTrail extends GameObject {
