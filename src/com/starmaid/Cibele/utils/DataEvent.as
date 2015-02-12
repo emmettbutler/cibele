@@ -1,4 +1,4 @@
-package {
+package com.starmaid.Cibele.utils {
     import flash.events.Event;
 
     public class DataEvent extends Event {
