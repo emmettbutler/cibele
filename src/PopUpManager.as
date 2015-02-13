@@ -3,6 +3,7 @@ package{
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.UIElement;
     import com.starmaid.Cibele.utils.GlobalTimer;
 
     import org.flixel.*;

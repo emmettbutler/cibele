@@ -3,6 +3,7 @@ package{
     import com.starmaid.Cibele.utils.Deque;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.UIElement;
     import com.starmaid.Cibele.utils.GlobalTimer;
 
     import org.flixel.*;

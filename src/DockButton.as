@@ -1,5 +1,6 @@
 package {
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.UIElement;
 
     import org.flixel.*;
 
