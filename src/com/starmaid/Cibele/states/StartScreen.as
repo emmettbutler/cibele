@@ -1,12 +1,12 @@
-package{
+package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameState;
 
     import org.flixel.*;
 
     public class StartScreen extends GameState {
-        [Embed(source="../assets/audio/music/vid_intro.mp3")] private var VidBGMLoop:Class;
-        [Embed(source="../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
+        [Embed(source="/../assets/audio/music/vid_intro.mp3")] private var VidBGMLoop:Class;
+        [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
         public var startText:FlxText;
 
@@ -28,7 +28,7 @@ package{
             function _innerCallback():void {
                 FlxG.switchState(new IkuTursoDesktop());
             }
-            FlxG.switchState(new PlayVideoState("../assets/video/computer_open.flv",
+            FlxG.switchState(new PlayVideoState("/../assets/video/computer_open.flv",
                                                 _innerCallback));
         }
 

@@ -1,4 +1,4 @@
-package{
+package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.base.GameSound;
@@ -8,18 +8,18 @@ package{
     import org.flixel.*;
 
     public class IkuTurso extends LevelMapState {
-        [Embed(source="../assets/audio/music/bgm_ikuturso_intro.mp3")] private var ITBGMIntro:Class;
-        [Embed(source="../assets/audio/music/bgm_ikuturso_loop.mp3")] private var ITBGMLoop:Class;
-        [Embed(source="../assets/audio/music/vid_sexyselfie.mp3")] private var VidBGMLoop:Class;
-        [Embed(source="../assets/audio/voiceover/voc_ikuturso_bulldog.mp3")] private var Convo1:Class;
-        [Embed(source="../assets/audio/voiceover/voc_ikuturso_ampule.mp3")] private var Convo2:Class;
-        [Embed(source="../assets/audio/voiceover/voc_ikuturso_photogenic.mp3")] private var Convo3:Class;
-        [Embed(source="../assets/audio/voiceover/voc_ikuturso_attractive.mp3")] private var Convo4:Class;
-        [Embed(source="../assets/audio/voiceover/voc_ikuturso_picture.mp3")] private var Convo5:Class;
-        [Embed(source="../assets/audio/voiceover/voc_ikuturso_whattowear.mp3")] private var Convo6:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_ichilasthit.mp3")] private var IchiBossKill:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_areyoucoming.mp3")] private var SndRUComing:Class;
+        [Embed(source="/../assets/audio/music/bgm_ikuturso_intro.mp3")] private var ITBGMIntro:Class;
+        [Embed(source="/../assets/audio/music/bgm_ikuturso_loop.mp3")] private var ITBGMLoop:Class;
+        [Embed(source="/../assets/audio/music/vid_sexyselfie.mp3")] private var VidBGMLoop:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_bulldog.mp3")] private var Convo1:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_ampule.mp3")] private var Convo2:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_photogenic.mp3")] private var Convo3:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_attractive.mp3")] private var Convo4:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_picture.mp3")] private var Convo5:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_whattowear.mp3")] private var Convo6:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ichilasthit.mp3")] private var IchiBossKill:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_areyoucoming.mp3")] private var SndRUComing:Class;
 
         public var bossHasAppeared:Boolean;
         private var convo1Sound:GameSound;
@@ -159,7 +159,7 @@ package{
             SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
                     false, 1, GameSound.BGM);
                 FlxG.switchState(
-                    new PlayVideoState("../assets/video/sexy_selfie.flv",
+                    new PlayVideoState("/../assets/video/sexy_selfie.flv",
                         function():void {
                             FlxG.switchState(new StartScreen());
                             PopUpManager.GAME_ACTIVE = false;

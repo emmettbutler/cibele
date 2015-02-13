@@ -1,4 +1,6 @@
 package{
+    import com.starmaid.Cibele.states.IkuTurso;
+
     import org.flixel.*;
 
     public class IkuTursoTeleportRoom extends TeleportRoom {
