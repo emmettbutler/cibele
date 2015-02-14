@@ -7,6 +7,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.UIElement;
     import com.starmaid.Cibele.utils.GlobalTimer;
+    import com.starmaid.Cibele.utils.MapNodeContainer;
 
     import org.flixel.*;
 

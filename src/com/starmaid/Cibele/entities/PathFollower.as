@@ -1,5 +1,7 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.utils.EnemyGroup;
+    import com.starmaid.Cibele.utils.MapNodeContainer;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameObject;
 

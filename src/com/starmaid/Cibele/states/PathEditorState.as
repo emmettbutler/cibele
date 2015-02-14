@@ -1,4 +1,6 @@
 package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.utils.EnemyGroup;
+    import com.starmaid.Cibele.utils.MapNodeContainer;
     import com.starmaid.Cibele.entities.PathFollower;
     import com.starmaid.Cibele.entities.BossEnemy;
     import com.starmaid.Cibele.entities.SmallEnemy;
