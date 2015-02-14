@@ -1,4 +1,5 @@
 package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.entities.Emote;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameSound;

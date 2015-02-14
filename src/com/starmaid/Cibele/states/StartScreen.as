@@ -1,4 +1,6 @@
 package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.states.IkuTursoDesktop;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameState;

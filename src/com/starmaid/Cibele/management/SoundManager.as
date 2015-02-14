@@ -1,4 +1,4 @@
-package {
+package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.utils.GlobalTimer;
 

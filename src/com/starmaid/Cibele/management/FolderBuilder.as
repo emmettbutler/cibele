@@ -1,4 +1,4 @@
-package{
+package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.UIElement;
@@ -9,7 +9,7 @@ package{
     import flash.utils.Dictionary;
 
     public class FolderBuilder {
-        [Embed(source="../assets/images/ui/UI_pink_x.png")] private var ImgInboxXPink:Class;
+        [Embed(source="/../assets/images/ui/UI_pink_x.png")] private var ImgInboxXPink:Class;
 
         public var leafPopups:Array;
 

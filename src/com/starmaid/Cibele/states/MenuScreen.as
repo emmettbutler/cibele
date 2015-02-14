@@ -1,4 +1,8 @@
 package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.FernBackgroundLoader;
+    import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.entities.BouncingText;
     import com.starmaid.Cibele.states.Desktop;
     import com.starmaid.Cibele.states.IkuTursoDesktop;

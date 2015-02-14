@@ -1,4 +1,10 @@
 package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.MessageManager;
+    import com.starmaid.Cibele.management.BackgroundLoader;
+    import com.starmaid.Cibele.management.PopUpManager;
+    import com.starmaid.Cibele.management.ProceduralDialogueGenerator;
+    import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.PartyMember;
     import com.starmaid.Cibele.entities.Enemy;
     import com.starmaid.Cibele.utils.Utils;

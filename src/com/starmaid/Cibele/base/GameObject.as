@@ -1,4 +1,6 @@
 package com.starmaid.Cibele.base {
+    import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.Player;
     import com.starmaid.Cibele.utils.DHPoint;
 

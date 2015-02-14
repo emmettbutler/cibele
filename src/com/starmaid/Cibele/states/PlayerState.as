@@ -1,4 +1,6 @@
 package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.management.PopUpManager;
+    import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.entities.Player;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameState;

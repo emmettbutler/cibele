@@ -1,4 +1,8 @@
 package com.starmaid.Cibele.base {
+    import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.MessageManager;
+    import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.states.PlayVideoState;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.GlobalTimer;

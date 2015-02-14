@@ -1,4 +1,6 @@
 package com.starmaid.Cibele.entities {
+    import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.states.LevelMapState;
     import com.starmaid.Cibele.states.PathEditorState;
     import com.starmaid.Cibele.utils.DHPoint;

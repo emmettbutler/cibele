@@ -1,4 +1,4 @@
-package{
+package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.entities.PopUp;
     import com.starmaid.Cibele.entities.PartyMember;
     import com.starmaid.Cibele.entities.Emote;
@@ -17,36 +17,36 @@ package{
     import flash.utils.Dictionary;
 
     public class PopUpManager {
-        [Embed(source="../assets/audio/effects/sfx_notification.mp3")] private var SfxNotification:Class;
-        [Embed(source="../assets/images/ui/UI_icon_game.png")] private var ImgGameButton:Class;
-        [Embed(source="../assets/images/ui/UI_icon_folder.png")] private var ImgFileButton:Class;
-        [Embed(source="../assets/images/ui/UI_icon_photo.png")] private var ImgPhotoButton:Class;
-        [Embed(source="../assets/images/ui/UI_icon_internet.png")] private var ImgInternetButton:Class;
-        [Embed(source="../assets/images/ui/UI_dock.png")] private var ImgDock:Class;
-        [Embed(source="../assets/images/ui/popups/picly/nina1.png")] private var ImgCibSelfie1:Class;
-        [Embed(source="../assets/images/ui/popups/it_email/guil1.png")] private var ImgGuilEmail1:Class;
-        [Embed(source="../assets/images/ui/UI_happy face_blue.png")] private var ImgEmojiHappy:Class;
-        [Embed(source="../assets/images/ui/UI_Sad Face_blue.png")] private var ImgEmojiSad:Class;
-        [Embed(source="../assets/images/ui/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;
-        [Embed(source="../assets/images/ui/UI_Outer Ring.png")] private var ImgRing:Class;
-        [Embed(source="../assets/images/ui/UI_Outer_Ring_pink.png")] private var ImgRingPink:Class;
-        [Embed(source="../assets/images/ui/popups/it_email/ichiselfieemail1.png")] private var ImgIchiSelfie1:Class;
-        [Embed(source="../assets/images/ui/popups/files/camera1disconnect.png")] private var ImgCibCamDisconnect:Class;
-        [Embed(source="../assets/images/ui/UI_happy_face_pink.png")] private var ImgEmojiHappyPink:Class;
-        [Embed(source="../assets/images/ui/UI_sad_face_pink.png")] private var ImgEmojiSadPink:Class;
-        [Embed(source="../assets/images/ui/UI_Angry_face_pink.png")] private var ImgEmojiAngryPink:Class;
-        [Embed(source="../assets/images/ui/popups/ichidownloads.png")] private var ImgIchiDL2:Class;
-        [Embed(source="../assets/images/ui/popups/it_email/none.png")] private var ImgEmptyInbox:Class;
-        [Embed(source="../assets/images/ui/popups/picly/ninaopen.png")] private var ImgForIchi:Class;
-        [Embed(source="../assets/images/ui/popups/it_email/bulldoghell_email.png")] private static var ImgBHEmail:Class;
-        [Embed(source="../assets/images/ui/popups/picly/emmy1.png")] private static var ImgIchiPicly1:Class;
+        [Embed(source="/../assets/audio/effects/sfx_notification.mp3")] private var SfxNotification:Class;
+        [Embed(source="/../assets/images/ui/UI_icon_game.png")] private var ImgGameButton:Class;
+        [Embed(source="/../assets/images/ui/UI_icon_folder.png")] private var ImgFileButton:Class;
+        [Embed(source="/../assets/images/ui/UI_icon_photo.png")] private var ImgPhotoButton:Class;
+        [Embed(source="/../assets/images/ui/UI_icon_internet.png")] private var ImgInternetButton:Class;
+        [Embed(source="/../assets/images/ui/UI_dock.png")] private var ImgDock:Class;
+        [Embed(source="/../assets/images/ui/popups/picly/nina1.png")] private var ImgCibSelfie1:Class;
+        [Embed(source="/../assets/images/ui/popups/it_email/guil1.png")] private var ImgGuilEmail1:Class;
+        [Embed(source="/../assets/images/ui/UI_happy face_blue.png")] private var ImgEmojiHappy:Class;
+        [Embed(source="/../assets/images/ui/UI_Sad Face_blue.png")] private var ImgEmojiSad:Class;
+        [Embed(source="/../assets/images/ui/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;
+        [Embed(source="/../assets/images/ui/UI_Outer Ring.png")] private var ImgRing:Class;
+        [Embed(source="/../assets/images/ui/UI_Outer_Ring_pink.png")] private var ImgRingPink:Class;
+        [Embed(source="/../assets/images/ui/popups/it_email/ichiselfieemail1.png")] private var ImgIchiSelfie1:Class;
+        [Embed(source="/../assets/images/ui/popups/files/camera1disconnect.png")] private var ImgCibCamDisconnect:Class;
+        [Embed(source="/../assets/images/ui/UI_happy_face_pink.png")] private var ImgEmojiHappyPink:Class;
+        [Embed(source="/../assets/images/ui/UI_sad_face_pink.png")] private var ImgEmojiSadPink:Class;
+        [Embed(source="/../assets/images/ui/UI_Angry_face_pink.png")] private var ImgEmojiAngryPink:Class;
+        [Embed(source="/../assets/images/ui/popups/ichidownloads.png")] private var ImgIchiDL2:Class;
+        [Embed(source="/../assets/images/ui/popups/it_email/none.png")] private var ImgEmptyInbox:Class;
+        [Embed(source="/../assets/images/ui/popups/picly/ninaopen.png")] private var ImgForIchi:Class;
+        [Embed(source="/../assets/images/ui/popups/it_email/bulldoghell_email.png")] private static var ImgBHEmail:Class;
+        [Embed(source="/../assets/images/ui/popups/picly/emmy1.png")] private static var ImgIchiPicly1:Class;
 
         //euryale popups
-        [Embed(source="../assets/images/ui/popups/eu_email/email1.png")] private static var ImgEuEmail1:Class;
-        [Embed(source="../assets/images/ui/popups/eu_email/emailselfie.png")] private static var ImgEuEmailSelfie:Class;
-        [Embed(source="../assets/images/ui/popups/eu_email/email2.png")] private static var ImgEuEmail2:Class;
-        [Embed(source="../assets/images/ui/popups/eu_picly/dredgeirl.png")] private static var ImgEuDredge:Class;
-        [Embed(source="../assets/images/ui/popups/eu_files/highschool.png")] private static var ImgEuHighSchool:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_email/email1.png")] private static var ImgEuEmail1:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_email/emailselfie.png")] private static var ImgEuEmailSelfie:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_email/email2.png")] private static var ImgEuEmail2:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_picly/dredgeirl.png")] private static var ImgEuDredge:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/highschool.png")] private static var ImgEuHighSchool:Class;
 
         public static var _instance:PopUpManager = null;
 

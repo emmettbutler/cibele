@@ -1,4 +1,4 @@
-package {
+package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.entities.Player;
     import com.starmaid.Cibele.entities.PathFollower;
     import com.starmaid.Cibele.entities.PartyMember;

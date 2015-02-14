@@ -1,4 +1,4 @@
-package{
+package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.UIElement;
@@ -6,13 +6,13 @@ package{
     import org.flixel.*;
 
     public class MessageManager {
-        [Embed(source="../assets/images/ui/UI_letter.png")] private var ImgMsg:Class;
-        [Embed(source="../assets/images/ui/UI_letter_pink.png")] private var ImgMsgPink:Class;
-        [Embed(source="../assets/images/ui/UI_text_box.png")] private var ImgInbox:Class;
-        [Embed(source="../assets/images/ui/UI_text_box_x_blue.png")] private var ImgInboxX:Class;
-        [Embed(source="../assets/images/ui/UI_pink_msg_box.png")] private var ImgInboxPink:Class;
-        [Embed(source="../assets/images/ui/UI_pink_x.png")] private var ImgInboxXPink:Class;
-        [Embed(source="../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
+        [Embed(source="/../assets/images/ui/UI_letter.png")] private var ImgMsg:Class;
+        [Embed(source="/../assets/images/ui/UI_letter_pink.png")] private var ImgMsgPink:Class;
+        [Embed(source="/../assets/images/ui/UI_text_box.png")] private var ImgInbox:Class;
+        [Embed(source="/../assets/images/ui/UI_text_box_x_blue.png")] private var ImgInboxX:Class;
+        [Embed(source="/../assets/images/ui/UI_pink_msg_box.png")] private var ImgInboxPink:Class;
+        [Embed(source="/../assets/images/ui/UI_pink_x.png")] private var ImgInboxXPink:Class;
+        [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
         public static var _instance:MessageManager = null;
 

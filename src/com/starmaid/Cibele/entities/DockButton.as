@@ -1,4 +1,6 @@
 package com.starmaid.Cibele.entities {
+    import com.starmaid.Cibele.management.PopUpManager;
+    import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.states.MenuScreen;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.UIElement;
