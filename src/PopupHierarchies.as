@@ -17,6 +17,16 @@ package {
         [Embed(source="../assets/images/ui/popups/it_email/guil1_sub1.png")] private static var ImgGuilSub:Class;
         [Embed(source="../assets/images/ui/popups/it_email/ichiselfieemail_sub1.png")] private static var ImgIchiSelfieSub1:Class;
         [Embed(source="../assets/images/ui/popups/it_email/ichiselfieemail_link1.png")] private static var ImgIchiSelfieSubLink1:Class;
+        [Embed(source="../assets/images/ui/popups/files/friend_selfie1.png")] private static var ImgFriendSelfie1:Class;
+        [Embed(source="../assets/images/ui/popups/files/friend_selfie1_icon.png")] private static var ImgFriendSelfie1Icon:Class;
+        [Embed(source="../assets/images/ui/popups/files/friends_1_icon.png")] private static var ImgFriends1Icon:Class;
+        [Embed(source="../assets/images/ui/popups/files/friends_1.png")] private static var ImgFriends1:Class;
+        [Embed(source="../assets/images/ui/popups/files/friends_2_icon.png")] private static var ImgFriends2Icon:Class;
+        [Embed(source="../assets/images/ui/popups/files/friends_2.png")] private static var ImgFriends2:Class;
+        [Embed(source="../assets/images/ui/popups/files/home1.png")] private static var ImgHome1:Class;
+        [Embed(source="../assets/images/ui/popups/files/home1_icon.png")] private static var ImgHome1Icon:Class;
+        [Embed(source="../assets/images/ui/popups/files/pretty.png")] private static var ImgPretty:Class;
+        [Embed(source="../assets/images/ui/popups/files/pretty_icon.png")] private static var ImgPrettyIcon:Class;
 
         //euryale
         [Embed(source="../assets/images/ui/popups/eu_email/email2_link1.png")] private static var ImgEuEmail2Link1:Class;
@@ -40,12 +50,52 @@ package {
             var struc:Dictionary = new Dictionary();
             struc[PopUpManager.ICHI_DL_2] = { "contents": [
                 {
-                    "name": "ichi dl 2 link",
+                    "name": "friends_1",
+                    "icon": ImgFriends1Icon,
+                    "icon_dim": new DHPoint(70, 84),
+                    "icon_pos": new DHPoint(28, 35),
+                    "dim": new DHPoint(338, 451),
+                    "contents": ImgFriends1
+                },
+                {
+                    "name": "bday",
                     "icon": ImgBdayIcon,
                     "icon_dim": new DHPoint(100, 93),
-                    "icon_pos": new DHPoint(148, 35),
+                    "icon_pos": new DHPoint(108, 35),
                     "dim": new DHPoint(631, 356),
                     "contents": ImgBday
+                },
+                {
+                    "name": "friend_selfie1",
+                    "icon": ImgFriendSelfie1Icon,
+                    "icon_dim": new DHPoint(75, 86),
+                    "icon_pos": new DHPoint(220, 35),
+                    "dim": new DHPoint(512, 356),
+                    "contents": ImgFriendSelfie1
+                },
+                {
+                    "name": "friends_2",
+                    "icon": ImgFriends2Icon,
+                    "icon_dim": new DHPoint(70, 85),
+                    "icon_pos": new DHPoint(320, 35),
+                    "dim": new DHPoint(512, 356),
+                    "contents": ImgFriends2
+                },
+                {
+                    "name": "home_1",
+                    "icon": ImgHome1Icon,
+                    "icon_dim": new DHPoint(117, 86),
+                    "icon_pos": new DHPoint(400, 35),
+                    "dim": new DHPoint(512, 356),
+                    "contents": ImgHome1
+                },
+                {
+                    "name": "pretty",
+                    "icon": ImgPrettyIcon,
+                    "icon_dim": new DHPoint(70, 85),
+                    "icon_pos": new DHPoint(28, 135),
+                    "dim": new DHPoint(512, 356),
+                    "contents": ImgPretty
                 }
             ]};
             struc[PopUpManager.ICHI_SELFIE1] = { "contents": [
@@ -78,7 +128,7 @@ package {
                             "icon": ImgBHIcon,
                             "icon_dim": new DHPoint(74, 14),
                             "icon_pos": new DHPoint(180, 106),
-                            "dim": new DHPoint(1030, 510),
+                            "dim": new DHPoint(1030, 437),
                             "contents": ImgBH
                         }]
                 }
@@ -89,7 +139,7 @@ package {
                     "icon": ImgBHIcon,
                     "icon_dim": new DHPoint(74, 14),
                     "icon_pos": new DHPoint(179, 101),
-                    "dim": new DHPoint(1030, 510),
+                    "dim": new DHPoint(1030, 437),
                     "contents": ImgBH
                 }
             ]};
@@ -130,12 +180,52 @@ package {
                             "contents": ImgCibCam1
                         },
                         {
-                            "name": "ichi dl 2 link",
+                            "name": "friends_1",
+                            "icon": ImgFriends1Icon,
+                            "icon_dim": new DHPoint(70, 84),
+                            "icon_pos": new DHPoint(28, 35),
+                            "dim": new DHPoint(338, 451),
+                            "contents": ImgFriends1
+                        },
+                        {
+                            "name": "bday",
                             "icon": ImgBdayIcon,
                             "icon_dim": new DHPoint(100, 93),
-                            "icon_pos": new DHPoint(138, 64),
+                            "icon_pos": new DHPoint(108, 35),
                             "dim": new DHPoint(631, 356),
                             "contents": ImgBday
+                        },
+                        {
+                            "name": "friend_selfie1",
+                            "icon": ImgFriendSelfie1Icon,
+                            "icon_dim": new DHPoint(75, 86),
+                            "icon_pos": new DHPoint(220, 35),
+                            "dim": new DHPoint(512, 356),
+                            "contents": ImgFriendSelfie1
+                        },
+                        {
+                            "name": "friends_2",
+                            "icon": ImgFriends2Icon,
+                            "icon_dim": new DHPoint(70, 85),
+                            "icon_pos": new DHPoint(320, 35),
+                            "dim": new DHPoint(512, 356),
+                            "contents": ImgFriends2
+                        },
+                        {
+                            "name": "home_1",
+                            "icon": ImgHome1Icon,
+                            "icon_dim": new DHPoint(117, 86),
+                            "icon_pos": new DHPoint(400, 35),
+                            "dim": new DHPoint(512, 356),
+                            "contents": ImgHome1
+                        },
+                        {
+                            "name": "pretty",
+                            "icon": ImgPrettyIcon,
+                            "icon_dim": new DHPoint(70, 85),
+                            "icon_pos": new DHPoint(28, 135),
+                            "dim": new DHPoint(512, 356),
+                            "contents": ImgPretty
                         }
                     ]
                 }
