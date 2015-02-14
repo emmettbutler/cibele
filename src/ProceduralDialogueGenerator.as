@@ -1,4 +1,8 @@
 package {
+    import com.starmaid.Cibele.entities.Player;
+    import com.starmaid.Cibele.entities.PathFollower;
+    import com.starmaid.Cibele.entities.PartyMember;
+    import com.starmaid.Cibele.entities.Emote;
     import com.starmaid.Cibele.states.LevelMapState;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameSound;
@@ -9,20 +13,20 @@ package {
     import org.flixel.*;
 
     public class ProceduralDialogueGenerator {
-        [Embed(source="../assets/audio/voiceover/voc_extra_cibnicehit.mp3")] private var CibNiceHit:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_ichiwhichway.mp3")] private var IchiWhichWay:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_ichinice2.mp3")] private var IchiNiceHit:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_cibeast.mp3")] private var CibEast:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_cibnorth.mp3")] private var CibNorth:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_cibwest.mp3")] private var CibWest:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_cibsouth.mp3")] private var CibSouth:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_ichieast.mp3")] private var IchiEast:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_ichinorth.mp3")] private var IchiNorth:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_ichiwest.mp3")] private var IchiWest:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_ichisouth.mp3")] private var IchiSouth:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_ciblost.mp3")] private var CibWhichWay:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_cibhere.mp3")] private var CibHere:Class;
-        [Embed(source="../assets/audio/voiceover/voc_extra_ichirighthere.mp3")] private var IchiHere:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_cibnicehit.mp3")] private var CibNiceHit:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ichiwhichway.mp3")] private var IchiWhichWay:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ichinice2.mp3")] private var IchiNiceHit:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_cibeast.mp3")] private var CibEast:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_cibnorth.mp3")] private var CibNorth:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_cibwest.mp3")] private var CibWest:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_cibsouth.mp3")] private var CibSouth:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ichieast.mp3")] private var IchiEast:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ichinorth.mp3")] private var IchiNorth:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ichiwest.mp3")] private var IchiWest:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ichisouth.mp3")] private var IchiSouth:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ciblost.mp3")] private var CibWhichWay:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_cibhere.mp3")] private var CibHere:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ichirighthere.mp3")] private var IchiHere:Class;
 
         public static const CIB_NICEHIT:String = "cib_nicehit";
         public static const CIB_EAST:String = "cib_east";

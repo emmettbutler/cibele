@@ -1,4 +1,6 @@
 package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.entities.PartyMember;
+    import com.starmaid.Cibele.entities.Enemy;
     import com.starmaid.Cibele.utils.Utils;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.DataEvent;

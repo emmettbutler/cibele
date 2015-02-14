@@ -1,4 +1,5 @@
 package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.entities.BouncingText;
     import com.starmaid.Cibele.states.Desktop;
     import com.starmaid.Cibele.states.IkuTursoDesktop;
     import com.starmaid.Cibele.states.EuryaleDesktop;

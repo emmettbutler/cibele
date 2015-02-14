@@ -1,9 +1,9 @@
-package {
+package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
 
     public class HallwayTile extends GameObject {
-        [Embed(source="../assets/images/worlds/Single Animated tile.png")] private var ImgTile:Class;
+        [Embed(source="/../assets/images/worlds/Single Animated tile.png")] private var ImgTile:Class;
 
         public static const STATE_APPEARING:Number = 2394859384987;
 

@@ -1,4 +1,4 @@
-package {
+package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.utils.GlobalTimer;
@@ -9,10 +9,10 @@ package {
     import flash.utils.Dictionary;
 
     public class Enemy extends GameObject {
-        [Embed(source="../assets/images/characters/squid_baby.png")] private var ImgIT1:Class;
-        [Embed(source="../assets/images/characters/Enemy2_sprite.png")] private var ImgIT2:Class;
-        [Embed(source="../assets/images/ui/enemy_highlight.png")] private var ImgActive:Class;
-        [Embed(source="../assets/images/ui/enemy2_highlight.png")] private var ImgActive2:Class;
+        [Embed(source="/../assets/images/characters/squid_baby.png")] private var ImgIT1:Class;
+        [Embed(source="/../assets/images/characters/Enemy2_sprite.png")] private var ImgIT2:Class;
+        [Embed(source="/../assets/images/ui/enemy_highlight.png")] private var ImgActive:Class;
+        [Embed(source="/../assets/images/ui/enemy2_highlight.png")] private var ImgActive2:Class;
         public var enemyType:String = "enemy";
         public var hitpoints:Number = 100;
         public var damage:Number = 3;

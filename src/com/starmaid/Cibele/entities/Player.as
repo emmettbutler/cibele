@@ -1,4 +1,4 @@
-package{
+package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.states.LevelMapState;
     import com.starmaid.Cibele.states.PathEditorState;
     import com.starmaid.Cibele.utils.DHPoint;
@@ -13,16 +13,16 @@ package{
     import flash.utils.Dictionary;
 
     public class Player extends PartyMember {
-        [Embed(source="../assets/images/ui/click_anim.png")] private var ImgWalkTo:Class;
-        [Embed(source="../assets/images/characters/c_walk.png")] private var ImgCibWalk:Class;
-        [Embed(source="../assets/images/characters/cib_attack.png")] private var ImgAttack:Class;
-        [Embed(source="../assets/images/characters/cib_shadow.png")] private var ImgShadow:Class;
-        [Embed(source="../assets/images/characters/cib_shadow_blue.png")] private var ImgShadowBlue:Class;
-        [Embed(source="../assets/audio/effects/sfx_uigeneral.mp3")] private var SfxUI:Class;
-        [Embed(source="../assets/audio/effects/sfx_protoattack1.mp3")] private var SfxAttack1:Class;
-        [Embed(source="../assets/audio/effects/sfx_protoattack2.mp3")] private var SfxAttack2:Class;
-        [Embed(source="../assets/audio/effects/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
-        [Embed(source="../assets/audio/effects/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
+        [Embed(source="/../assets/images/ui/click_anim.png")] private var ImgWalkTo:Class;
+        [Embed(source="/../assets/images/characters/c_walk.png")] private var ImgCibWalk:Class;
+        [Embed(source="/../assets/images/characters/cib_attack.png")] private var ImgAttack:Class;
+        [Embed(source="/../assets/images/characters/cib_shadow.png")] private var ImgShadow:Class;
+        [Embed(source="/../assets/images/characters/cib_shadow_blue.png")] private var ImgShadowBlue:Class;
+        [Embed(source="/../assets/audio/effects/sfx_uigeneral.mp3")] private var SfxUI:Class;
+        [Embed(source="/../assets/audio/effects/sfx_protoattack1.mp3")] private var SfxAttack1:Class;
+        [Embed(source="/../assets/audio/effects/sfx_protoattack2.mp3")] private var SfxAttack2:Class;
+        [Embed(source="/../assets/audio/effects/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
+        [Embed(source="/../assets/audio/effects/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
 
         private var walkDistance:Number = 0, walkSpeed:Number = 8,
                     mouseDownTime:Number;

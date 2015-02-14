@@ -1,4 +1,6 @@
 package com.starmaid.Cibele.base {
+    import com.starmaid.Cibele.entities.Enemy;
+    import com.starmaid.Cibele.entities.Player;
     import com.starmaid.Cibele.utils.DHPoint;
 
     import org.flixel.*;

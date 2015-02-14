@@ -1,5 +1,7 @@
-package
-{
+package {
+    import com.starmaid.Cibele.entities.Player;
+    import com.starmaid.Cibele.entities.PathFollower;
+    import com.starmaid.Cibele.entities.Enemy;
     import org.flixel.*;
 
     public class EnemyGroup {

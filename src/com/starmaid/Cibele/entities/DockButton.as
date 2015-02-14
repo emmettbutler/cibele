@@ -1,4 +1,4 @@
-package {
+package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.states.MenuScreen;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.UIElement;
@@ -6,7 +6,7 @@ package {
     import org.flixel.*;
 
     public class DockButton extends UIElement {
-        [Embed(source="../assets/audio/effects/sfx_notification.mp3")] private var SfxNotification:Class;
+        [Embed(source="/../assets/audio/effects/sfx_notification.mp3")] private var SfxNotification:Class;
         private var cur_popup:PopUp;
         public var cur_popup_tag:String;
         private var ownedKeys:Array;

@@ -1,4 +1,4 @@
-package {
+package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameState;
@@ -6,12 +6,12 @@ package {
     import org.flixel.*;
 
     public class Emote extends GameObject {
-        [Embed(source="../assets/images/ui/UI_happy face_blue.png")] private var ImgEmojiHappy:Class;
-        [Embed(source="../assets/images/ui/UI_Sad Face_blue.png")] private var ImgEmojiSad:Class;
-        [Embed(source="../assets/images/ui/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;
-        [Embed(source="../assets/images/ui/UI_happy_face_pink.png")] private var ImgEmojiHappyPink:Class;
-        [Embed(source="../assets/images/ui/UI_sad_face_pink.png")] private var ImgEmojiSadPink:Class;
-        [Embed(source="../assets/images/ui/UI_Angry_face_pink.png")] private var ImgEmojiAngryPink:Class;
+        [Embed(source="/../assets/images/ui/UI_happy face_blue.png")] private var ImgEmojiHappy:Class;
+        [Embed(source="/../assets/images/ui/UI_Sad Face_blue.png")] private var ImgEmojiSad:Class;
+        [Embed(source="/../assets/images/ui/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;
+        [Embed(source="/../assets/images/ui/UI_happy_face_pink.png")] private var ImgEmojiHappyPink:Class;
+        [Embed(source="/../assets/images/ui/UI_sad_face_pink.png")] private var ImgEmojiSadPink:Class;
+        [Embed(source="/../assets/images/ui/UI_Angry_face_pink.png")] private var ImgEmojiAngryPink:Class;
 
         public static const STATE_RISE:Number = 938476;
         public static const STATE_HANG:Number = 938477;

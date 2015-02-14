@@ -1,12 +1,12 @@
-package {
+package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
 
     import org.flixel.*;
 
     public class Footstep extends GameObject {
-        [Embed(source="../assets/images/characters/blue_steps.png")] private var ImgFeetBlue:Class;
-        [Embed(source="../assets/images/characters/purple-steps.png")] private var ImgFeetPurple:Class;
+        [Embed(source="/../assets/images/characters/blue_steps.png")] private var ImgFeetBlue:Class;
+        [Embed(source="/../assets/images/characters/purple-steps.png")] private var ImgFeetPurple:Class;
 
         public var age:Number = 0;
         public var drawn:Boolean;

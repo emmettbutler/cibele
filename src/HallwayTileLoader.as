@@ -1,4 +1,6 @@
 package {
+    import com.starmaid.Cibele.entities.Player;
+    import com.starmaid.Cibele.entities.HallwayTile;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameSound;

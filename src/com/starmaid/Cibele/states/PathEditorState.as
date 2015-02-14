@@ -1,4 +1,8 @@
 package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.entities.PathFollower;
+    import com.starmaid.Cibele.entities.BossEnemy;
+    import com.starmaid.Cibele.entities.SmallEnemy;
+    import com.starmaid.Cibele.entities.Enemy;
     import com.starmaid.Cibele.utils.DHPoint;
 
     import org.flixel.*;

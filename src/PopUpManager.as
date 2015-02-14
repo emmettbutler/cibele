@@ -1,4 +1,9 @@
 package{
+    import com.starmaid.Cibele.entities.PopUp;
+    import com.starmaid.Cibele.entities.PartyMember;
+    import com.starmaid.Cibele.entities.Emote;
+    import com.starmaid.Cibele.entities.Player;
+    import com.starmaid.Cibele.entities.DockButton;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.base.GameState;

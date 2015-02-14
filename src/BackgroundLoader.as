@@ -1,4 +1,6 @@
 package {
+    import com.starmaid.Cibele.entities.Player;
+    import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameState;
@@ -160,7 +162,7 @@ package {
                 receivingMachine.contentLoaderInfo.addEventListener(Event.COMPLETE,
                     this.buildLoadCompleteCallback(tile, receivingMachine,
                                                    isCollider ? this.colliderScaleFactor : 1));
-                var path:String = "../assets/images/worlds/map_tiles/" + imgName + "_" + numberString + ".png";
+                var path:String = "/../assets/images/worlds/map_tiles/" + imgName + "_" + numberString + ".png";
                 var req:URLRequest = new URLRequest(path);
                 receivingMachine.load(req);
             }
