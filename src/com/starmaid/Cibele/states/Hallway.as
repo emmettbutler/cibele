@@ -1,4 +1,4 @@
-package{
+package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameState;
@@ -8,8 +8,8 @@ package{
     import org.flixel.plugin.photonstorm.FlxCollision;
 
     public class Hallway extends PlayerState {
-        [Embed(source="../assets/audio/music/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
-        [Embed(source="../assets/audio/music/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
+        [Embed(source="/../assets/audio/music/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
+        [Embed(source="/../assets/audio/music/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
 
         public var accept_call:Boolean = false;
 
@@ -77,7 +77,7 @@ package{
             fernTop = loader.load();
             fernTop.scrollFactor = new DHPoint(1, 1);
 
-            fernBase = (new BackgroundLoader()).loadSingleTileBG("../assets/images/worlds/Fern-part-2.png");
+            fernBase = (new BackgroundLoader()).loadSingleTileBG("/../assets/images/worlds/Fern-part-2.png");
             fernBase.scrollFactor = new DHPoint(1, 1);
 
             leftBound = ScreenManager.getInstance().screenWidth * .39;

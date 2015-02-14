@@ -1,7 +1,9 @@
-package{
+package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.states.IkuTurso;
+
     import org.flixel.*;
 
-    public class EuryaleTeleportRoom extends TeleportRoom {
+    public class IkuTursoTeleportRoom extends TeleportRoom {
 
         override public function create():void {
             super.create();
@@ -11,7 +13,7 @@ package{
             super.update();
 
             if (player.mapHitbox.overlaps(door)) {
-                FlxG.switchState(new Euryale());
+                FlxG.switchState(new IkuTurso());
             }
         }
     }

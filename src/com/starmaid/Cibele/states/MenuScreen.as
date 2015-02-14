@@ -1,4 +1,4 @@
-package{
+package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.base.GameState;
@@ -8,10 +8,10 @@ package{
     import org.flixel.*;
 
     public class MenuScreen extends GameState {
-        [Embed(source="../assets/images/ui/charselect_small.png")] private var ImgChar:Class;
-        [Embed(source="../assets/audio/music/bgm_menu_intro.mp3")] private var MenuBGMIntro:Class;
-        [Embed(source="../assets/audio/music/bgm_menu_loop.mp3")] private var MenuBGMLoop:Class;
-        [Embed(source="../assets/images/ui/Crystal-icon-large.png")] private var ImgXtal:Class;
+        [Embed(source="/../assets/images/ui/charselect_small.png")] private var ImgChar:Class;
+        [Embed(source="/../assets/audio/music/bgm_menu_intro.mp3")] private var MenuBGMIntro:Class;
+        [Embed(source="/../assets/audio/music/bgm_menu_loop.mp3")] private var MenuBGMLoop:Class;
+        [Embed(source="/../assets/images/ui/Crystal-icon-large.png")] private var ImgXtal:Class;
 
         public var timeFrame:Number = 0;
         public var timer:Number = 0;

@@ -1,4 +1,5 @@
 package {
+    import com.starmaid.Cibele.states.MenuScreen;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.UIElement;
 
