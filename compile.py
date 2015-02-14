@@ -7,14 +7,18 @@ try:
 except ImportError:
     import configparser
 
-def write_entry_point():
+
+def _get_mainclass():
     main_classpath = args.mainclass[0]
     main_class = main_classpath.split('.')[-1]
     if '.' not in main_classpath:
         main_classpath = "com.starmaid.Cibele.states.{}".format(main_classpath)
+    return main_class, main_classpath
 
-    name = main_class.lower()
-    entry_point_class = "{}main".format(name)
+
+def write_entry_point():
+    main_class, main_classpath = _get_mainclass()
+    entry_point_class = "{}main".format(main_class.lower())
 
     with open("src/{}.as".format(entry_point_class), "w") as f:
         f.write(
@@ -31,7 +35,7 @@ package {{
         }}
     }}
 }}
-""".format(preloader_class="{}_loader".format(name),
+""".format(preloader_class="{}_loader".format(main_class.lower()),
            entry_point_class=entry_point_class,
            main_class=main_class,
            main_classpath=main_classpath))
@@ -39,9 +43,9 @@ package {{
 
 
 def write_preloader():
-    name = args.mainclass[0].lower()
-    entry_point_class = "{}main".format(name)
-    preloader_class = "{}_loader".format(name)
+    main_class, main_classpath = _get_mainclass()
+    entry_point_class = "{}main".format(main_class.lower())
+    preloader_class = "{}_loader".format(main_class.lower())
 
     with open("src/{}.as".format(preloader_class), "w") as f:
         f.write(
