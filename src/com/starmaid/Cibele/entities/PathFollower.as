@@ -6,6 +6,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.EnemyGroup;
     import com.starmaid.Cibele.utils.MapNodeContainer;
+    import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.states.PathEditorState;
@@ -298,9 +299,6 @@ package com.starmaid.Cibele.entities {
                     this.moveToNextNode();
                 }
             } else if (this._state == STATE_IN_ATTACK) {
-                if (this.attackAnim.frame >= 20) {
-                    this.resolveStatePostAttack();
-                }
                 this.dir = ZERO_POINT;
             } else if (this._state == STATE_MOVE_TO_PLAYER) {
                 this.walk();
@@ -322,6 +320,7 @@ package com.starmaid.Cibele.entities {
             attackAnim = new GameObject(this.pos);
             attackAnim.loadGraphic(ImgIchiAttack, true, false, 99, 175);
             attackAnim.addAnimation("attack", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 15, false);
+            attackAnim.addAnimation("reverse_attack", [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], 15, false);
             attackAnim.addAnimation("idle", [0], 15, false);
             attackAnim.zSorted = true;
             attackAnim.basePos = new DHPoint(0, 0);
@@ -445,10 +444,16 @@ package com.starmaid.Cibele.entities {
             return this.currentTime - this.lastInViewTime >= 7*1000;
         }
 
+        public function reverseAttackAnim():void {
+            play("reverse_attack");
+            GlobalTimer.getInstance().setMark("attack anim stuff reverse", 1*GameSound.MSEC_PER_SEC, this.resolveStatePostAttack);
+        }
+
         override public function attack():void {
             super.attack();
             if (this._state == STATE_IN_ATTACK) {
                 play("attack");
+                GlobalTimer.getInstance().setMark("attack anim stuff", 1*GameSound.MSEC_PER_SEC, this.reverseAttackAnim);
                 attackAnim.x = this.x + 20;
                 attackAnim.y = this.y;
                 attackAnim.visible = true;
