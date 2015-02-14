@@ -1,4 +1,5 @@
 package com.starmaid.Cibele.base {
+    import com.starmaid.Cibele.states.PlayVideoState;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.GlobalTimer;
 
