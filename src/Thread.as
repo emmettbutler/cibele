@@ -1,4 +1,5 @@
-package{
+package {
+    import com.starmaid.Cibele.entities.Message;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.utils.GlobalTimer;
