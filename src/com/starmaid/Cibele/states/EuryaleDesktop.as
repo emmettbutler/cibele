@@ -1,4 +1,4 @@
-package{
+package com.starmaid.Cibele.states {
     import org.flixel.*;
     import flash.utils.Dictionary;
 
