@@ -1,5 +1,8 @@
 package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.states.Desktop;
+
     import org.flixel.*;
+
     import flash.utils.Dictionary;
 
     public class EuryaleDesktop extends Desktop {

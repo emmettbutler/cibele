@@ -1,4 +1,4 @@
-package{
+package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.utils.GraphEdge;
 
     import org.flixel.*;

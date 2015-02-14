@@ -1,4 +1,7 @@
 package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.states.Desktop;
+    import com.starmaid.Cibele.states.IkuTursoDesktop;
+    import com.starmaid.Cibele.states.EuryaleDesktop;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.base.GameState;

@@ -1,4 +1,4 @@
-package {
+package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.utils.Utils;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.DataEvent;

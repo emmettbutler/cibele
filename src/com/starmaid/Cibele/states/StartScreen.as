@@ -1,4 +1,5 @@
 package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.states.IkuTursoDesktop;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameState;
 
