@@ -7,14 +7,24 @@ try:
 except ImportError:
     import configparser
 
+
+def _get_mainclass():
+    main_classpath = args.mainclass[0]
+    main_class = main_classpath.split('.')[-1]
+    if '.' not in main_classpath:
+        main_classpath = "com.starmaid.Cibele.states.{}".format(main_classpath)
+    return main_class, main_classpath
+
+
 def write_entry_point():
-    name = args.mainclass[0].lower()
-    entry_point_class = "{}main".format(name)
+    main_class, main_classpath = _get_mainclass()
+    entry_point_class = "{}main".format(main_class.lower())
 
     with open("src/{}.as".format(entry_point_class), "w") as f:
         f.write(
 """
 package {{
+    import {main_classpath};
     import org.flixel.*;
     [SWF(width="640", height="480", backgroundColor="#000000")]
     [Frame(factoryClass="{preloader_class}")]
@@ -25,16 +35,17 @@ package {{
         }}
     }}
 }}
-""".format(preloader_class="{}_loader".format(name),
+""".format(preloader_class="{}_loader".format(main_class.lower()),
            entry_point_class=entry_point_class,
-           main_class=args.mainclass[0]))
+           main_class=main_class,
+           main_classpath=main_classpath))
     return entry_point_class
 
 
 def write_preloader():
-    name = args.mainclass[0].lower()
-    entry_point_class = "{}main".format(name)
-    preloader_class = "{}_loader".format(name)
+    main_class, main_classpath = _get_mainclass()
+    entry_point_class = "{}main".format(main_class.lower())
+    preloader_class = "{}_loader".format(main_class.lower())
 
     with open("src/{}.as".format(preloader_class), "w") as f:
         f.write(
@@ -89,7 +100,7 @@ def get_conf_path(entry_point_class):
     return "{}.xml".format(entry_point_class)
 
 
-def write_conf_file(swf_path, entry_point_class, main_class, version_id):
+def write_conf_file(swf_path, entry_point_class, version_id):
     conf_path = get_conf_path(entry_point_class)
     with open(conf_path, "w") as f:
         f.write(
@@ -105,7 +116,7 @@ def write_conf_file(swf_path, entry_point_class, main_class, version_id):
         <height>480</height>
     </initialWindow>
 </application>
-""".format(version_id=version_id, main_class=main_class,
+""".format(version_id=version_id,
            ts=dt.datetime.now().strftime('%Y.%m.%d.%H.%M.%S'),
            swf_path=swf_path)
         )
@@ -148,8 +159,8 @@ def main():
         run_main(get_conf_path(entry_point_class), args.runtime[0])
     else:
         preloader_class = write_preloader()
-        swf_path = compile_main(entry_point_class, libpath, args.debug_level[0])
-        conf_path = write_conf_file(swf_path, entry_point_class, args.mainclass[0], args.version_id[0])
+        swf_path = compile_main(entry_point_class.split('.')[-1], libpath, args.debug_level[0])
+        conf_path = write_conf_file(swf_path, entry_point_class, args.version_id[0])
 
         if args.package:
             package_application(entry_point_class, swf_path, platform=args.platform)
