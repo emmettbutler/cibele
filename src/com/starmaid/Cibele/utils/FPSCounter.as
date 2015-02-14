@@ -1,4 +1,4 @@
-package {
+package com.starmaid.Cibele.utils {
 
     import flash.events.Event;
     import flash.utils.getTimer;

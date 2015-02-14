@@ -1,4 +1,4 @@
-package {
+package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.entities.Message;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameState;
@@ -10,7 +10,7 @@ package {
     import flash.events.Event;
 
     public class Thread {
-        [Embed(source="../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
+        [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
         public var display_text:String, sent_by:String;
 

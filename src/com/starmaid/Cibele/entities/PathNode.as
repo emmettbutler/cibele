@@ -1,4 +1,4 @@
-package {
+package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
 
     import org.flixel.*;

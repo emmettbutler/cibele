@@ -1,4 +1,7 @@
 package com.starmaid.Cibele.utils {
+    import com.starmaid.Cibele.entities.MapNode;
+    import com.starmaid.Cibele.entities.PathNode;
+    import com.starmaid.Cibele.management.Path;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.entities.Player;
     import com.starmaid.Cibele.utils.DHPoint;

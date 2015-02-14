@@ -1,4 +1,5 @@
 package com.starmaid.Cibele.entities {
+    import com.starmaid.Cibele.management.Path;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.utils.DHPoint;

@@ -1,4 +1,6 @@
 package com.starmaid.Cibele.utils {
+    import com.starmaid.Cibele.entities.MapNode;
+
     import org.flixel.*;
 
     public class GraphEdge {

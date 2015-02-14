@@ -1,4 +1,5 @@
 package com.starmaid.Cibele.base {
+    import com.starmaid.Cibele.entities.LoadingScreen;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.management.ScreenManager;

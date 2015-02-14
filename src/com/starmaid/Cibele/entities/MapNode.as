@@ -1,4 +1,4 @@
-package {
+package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.utils.GraphEdge;

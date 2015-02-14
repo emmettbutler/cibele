@@ -1,4 +1,5 @@
 package com.starmaid.Cibele.management {
+    import com.starmaid.Cibele.entities.Thread;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.UIElement;
