@@ -8,13 +8,13 @@ except ImportError:
     import configparser
 
 def write_entry_point():
-    name = args.mainclass[0].lower()
-    entry_point_class = "{}main".format(name)
-
     main_classpath = args.mainclass[0]
     main_class = main_classpath.split('.')[-1]
     if '.' not in main_classpath:
         main_classpath = "com.starmaid.Cibele.states.{}".format(main_classpath)
+
+    name = main_class.lower()
+    entry_point_class = "{}main".format(name)
 
     with open("src/{}.as".format(entry_point_class), "w") as f:
         f.write(
