@@ -6,6 +6,7 @@ package com.starmaid.Cibele.states {
     public class IkuTursoTeleportRoom extends TeleportRoom {
 
         override public function create():void {
+            this.bg_img_name = "it_teleport.png";
             super.create();
         }
 

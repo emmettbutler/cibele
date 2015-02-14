@@ -12,6 +12,7 @@ package com.starmaid.Cibele.states {
         public var bg:GameObject;
         public var door:GameObject;
         public var door_fern:GameObject;
+        public var bg_img_name:String = "it_teleport.png";
 
         public var img_height:Number = 357;
 
@@ -21,7 +22,7 @@ package com.starmaid.Cibele.states {
             super.__create(new DHPoint(
                 _screen.screenWidth * .4, _screen.screenHeight * .6));
 
-            (new BackgroundLoader()).loadSingleTileBG("/../assets/images/worlds/it_teleport.png");
+            (new BackgroundLoader()).loadSingleTileBG("/../assets/images/worlds/" + this.bg_img_name);
             ScreenManager.getInstance().setupCamera(null, 1);
 
             door = new GameObject(new DHPoint(_screen.screenWidth * .3, _screen.screenHeight * .4));
