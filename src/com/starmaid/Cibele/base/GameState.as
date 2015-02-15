@@ -1,5 +1,6 @@
 package com.starmaid.Cibele.base {
     import com.starmaid.Cibele.entities.LoadingScreen;
+    import com.starmaid.Cibele.management.DebugConsoleManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.management.ScreenManager;
@@ -103,6 +104,11 @@ package com.starmaid.Cibele.base {
             if(this.use_loading_screen) {
                 this.loadingScreen = new LoadingScreen();
             }
+
+            if (ScreenManager.getInstance().DEBUG) {
+                DebugConsoleManager.getInstance().addVisibleObjects();
+            }
+
             this.game_cursor = new GameCursor();
         }
 
@@ -189,6 +195,12 @@ package com.starmaid.Cibele.base {
             }
             if (this.updateMessages) {
                 MessageManager.getInstance().update();
+            }
+            if (ScreenManager.getInstance().DEBUG) {
+                DebugConsoleManager.getInstance().update();
+
+                DebugConsoleManager.getInstance().trackAttribute("state.player.pos");
+                DebugConsoleManager.getInstance().trackAttribute("state.player.getStateString");
             }
 
             if (!this.containsPauseLayer()) {

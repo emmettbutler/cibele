@@ -129,6 +129,10 @@ package com.starmaid.Cibele.entities {
             this._mapnodes = nodes;
         }
 
+        public function getStateString():String {
+            return Player.stateMap[this._state] == null ? "unknown" : Player.stateMap[this._state];
+        }
+
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint,
                                       group:Array=null):void
         {

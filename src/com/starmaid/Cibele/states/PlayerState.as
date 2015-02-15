@@ -8,7 +8,7 @@ package com.starmaid.Cibele.states {
     import org.flixel.*;
 
     public class PlayerState extends GameState {
-        protected var player:Player;
+        public var player:Player;
         protected var startPos:DHPoint;
         protected var clickObjectGroups:Array;
 
