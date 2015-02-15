@@ -70,8 +70,13 @@ def compile_main(entry_point_class, libpath, debug_level):
     omit_trace = "false"
     debug = "true"
     debug_flag = "true"
+    editor_mode = "false"
     test_flag = "true"
     if debug_level == "test":
+        debug_flag = "false"
+        test_flag = "true"
+    elif debug_level == "edit":
+        editor_mode = "true"
         debug_flag = "false"
         test_flag = "true"
     elif debug_level == "release":
@@ -89,6 +94,7 @@ def compile_main(entry_point_class, libpath, debug_level):
                "-compiler.include-libraries", libpath,
                "-debug={}".format(debug),
                "-omit-trace-statements={}".format(omit_trace),
+               "-define=CONFIG::editor_mode,{}".format(editor_mode),
                "-define=CONFIG::debug,{}".format(debug_flag),
                "-define=CONFIG::test,{}".format(test_flag), ]
     print " ".join(command)

@@ -59,7 +59,9 @@ package com.starmaid.Cibele.states {
                     this.editorMode = MODE_EDIT;
                     FlxG.flashGfxSprite.mouseEnabled = true;
                 }
-                //this.editorMode = MODE_EDIT; //turn this on in order to edit
+                CONFIG::editor_mode {
+                    this.editorMode = MODE_EDIT;
+                }
             }
 
             this.showNodes = ScreenManager.getInstance().DEBUG ||
@@ -117,6 +119,7 @@ package com.starmaid.Cibele.states {
 
             if (FlxG.mouse.justReleased()) {
                 if (FlxG.keys["A"]) {
+                    trace("added pathNode");
                     this._path.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y),
                                        this.showNodes);
                     this.pathWalker.moveToNextPathNode();
