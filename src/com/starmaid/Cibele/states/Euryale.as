@@ -3,6 +3,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.Emote;
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameState;
 
@@ -123,6 +124,23 @@ package com.starmaid.Cibele.states {
 
         public function ichiMadEmote():void {
             PopUpManager.getInstance().emote(new FlxRect(0,0), this.pathWalker, true, Emote.ANGRY);
+        }
+
+        override public function finalConvoDone():void {
+            GlobalTimer.getInstance().setMark("eu end", 5*GameSound.MSEC_PER_SEC, this.playEndFilm);
+        }
+
+        public function playEndFilm():void {
+            //SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
+                    //false, 1, GameSound.BGM);
+                FlxG.switchState(
+                    new PlayVideoState("/../assets/video/Phone Talk_v1.mp4",
+                        function():void {
+                            FlxG.switchState(new StartScreen());
+                            PopUpManager.GAME_ACTIVE = false;
+                        }, null
+                    )
+                );
         }
     }
 }

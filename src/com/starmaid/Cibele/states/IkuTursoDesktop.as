@@ -1,6 +1,6 @@
 package com.starmaid.Cibele.states {
     import org.flixel.*;
-
+    import com.starmaid.Cibele.base.GameState;
     import flash.utils.Dictionary;
 
     public class IkuTursoDesktop extends Desktop {
