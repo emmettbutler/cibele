@@ -28,8 +28,7 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/audio/effects/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
         [Embed(source="/../assets/audio/effects/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
 
-        private var walkDistance:Number = 0, walkSpeed:Number = 8,
-                    mouseDownTime:Number;
+        private var walkSpeed:Number = 8, mouseDownTime:Number;
         private var walkTarget:DHPoint, finalTarget:DHPoint, hitboxOffset:DHPoint,
                     hitboxDim:DHPoint;
         private var curPath:Path;
@@ -117,6 +116,7 @@ package com.starmaid.Cibele.entities {
             this.rightFootstepOffset = new DHPoint(40, this.height-20);
             this.footstepOffset = this.upDownFootstepOffset;
             this.walkTarget = new DHPoint(0, 0);
+            this.finalTarget = new DHPoint(0, 0);
             this.debugText.color = 0xff444444;
 
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
@@ -193,9 +193,17 @@ package com.starmaid.Cibele.entities {
             if (this.targetEnemy != null) {
                 this._state = STATE_MOVE_TO_ENEMY;
             }
-            this.dir = this.walkTarget.sub(footPos).normalized();
-            this.walkDistance = this.walkTarget.sub(footPos)._length();
+
             this.clickWait = true;
+            if(!this.click_anim_lock) {
+                this.click_anim_lock = true;
+                this.click_anim.x = this.finalTarget.x -
+                    this.click_anim.width/2;
+                this.click_anim.y = this.finalTarget.y -
+                    this.click_anim.height/2;
+                this.click_anim.visible = true;
+                this.click_anim.play("click");
+            }
             GlobalTimer.getInstance().setMark("clickwait",
                 .4*GameSound.MSEC_PER_SEC, function():void {
                     clickWait = false;
@@ -311,16 +319,6 @@ package com.starmaid.Cibele.entities {
             }
 
             this._state = STATE_WALK;
-
-            if(!this.click_anim_lock) {
-                this.click_anim_lock = true;
-                this.click_anim.x = this.finalTarget.x -
-                    this.click_anim.width/2;
-                this.click_anim.y = this.finalTarget.y -
-                    this.click_anim.height/2;
-                this.click_anim.visible = true;
-                this.click_anim.play("click");
-            }
         }
 
         public function walk():void {
@@ -365,10 +363,12 @@ package com.starmaid.Cibele.entities {
                 this.dir = ZERO_POINT;
             } else if (this.walkTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
                 if (curPath == null) {
-                    if (!this.inAttack()) {
+                    if (this.inAttack()) {
+                        this.initWalk(this.targetEnemy.getAttackPos());
+                        this._state = STATE_MOVE_TO_ENEMY;
+                    } else {
                         this._state = STATE_IDLE;
                         this.dir = ZERO_POINT;
-                    } else {
                     }
                 } else {
                     this.curPath.advance();
@@ -410,7 +410,10 @@ package com.starmaid.Cibele.entities {
             }
 
             if (ScreenManager.getInstance().DEBUG) {
-                this.debugText.text = (Player.stateMap[this._state] == null ? "unknown" : Player.stateMap[this._state]) + "\n" + this.pos.x + "x" + this.pos.y + "\nwalkTarget: " + this.walkTarget.x + "x" + this.walkTarget.y;
+                this.debugText.text = (Player.stateMap[this._state] == null ? "unknown" : Player.stateMap[this._state]) + "\n" + this.pos.x + "x" + this.pos.y + "\nwalkTarget: " + this.walkTarget.x + "x" + this.walkTarget.y + "\nfinalTarget: " + this.finalTarget.x + "x" + this.finalTarget.y;
+                if (this.curPath != null) {
+                    this.debugText.text += "\nisAtFirstNode: " + this.curPath.isAtFirstNode();
+                }
             }
 
             this.attack_sprite.x = this.x;
@@ -544,9 +547,7 @@ package com.starmaid.Cibele.entities {
                 if(this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
                 } else {
-                    this.walkTarget = this.targetEnemy.getAttackPos();
-                    this.finalTarget = this.targetEnemy.getAttackPos();
-                    this.walkDistance = this.walkTarget.sub(footPos)._length();
+                    this.initWalk(this.targetEnemy.getAttackPos());
                     this._state = STATE_MOVE_TO_ENEMY;
                 }
             } else {
