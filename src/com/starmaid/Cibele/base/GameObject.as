@@ -35,6 +35,7 @@ package com.starmaid.Cibele.base {
             this.timeAlive = 0;
             this.dir = new DHPoint(0, 0);
             this.debugText = new FlxText(0, 0, 400, "");
+            this.debugText.color = 0xff444444;
         }
 
         override public function update():void {

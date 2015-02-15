@@ -87,7 +87,12 @@ package com.starmaid.Cibele.states {
         override public function updateCursor():void {
             super.updateCursor();
             if (this.game_cursor != null) {
-                this.game_cursor.checkObjectOverlap(this.enemies.enemies);
+                var cursorObjectGroups:Array = [
+                    this.enemies.enemies,
+                    PopUpManager.getInstance().elements,
+                    MessageManager.getInstance().elements
+                ];
+                this.game_cursor.checkObjectOverlap(cursorObjectGroups);
             }
         }
 
