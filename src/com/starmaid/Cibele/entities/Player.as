@@ -410,7 +410,10 @@ package com.starmaid.Cibele.entities {
             }
 
             if (ScreenManager.getInstance().DEBUG) {
-                this.debugText.text = (Player.stateMap[this._state] == null ? "unknown" : Player.stateMap[this._state]) + "\n" + this.pos.x + "x" + this.pos.y + "\nwalkTarget: " + this.walkTarget.x + "x" + this.walkTarget.y + "\nfinalTarget: " + this.finalTarget.x + "x" + this.finalTarget.y;
+                this.debugText.text = (Player.stateMap[this._state] == null ? "unknown" : Player.stateMap[this._state]) +
+                    "\nposition: " + this.pos.x + "x" + this.pos.y +
+                    "\nwalkTarget: " + this.walkTarget.x + "x" + this.walkTarget.y +
+                    "\nfinalTarget: " + this.finalTarget.x + "x" + this.finalTarget.y;
                 if (this.curPath != null) {
                     this.debugText.text += "\nisAtFirstNode: " + this.curPath.isAtFirstNode();
                 }
