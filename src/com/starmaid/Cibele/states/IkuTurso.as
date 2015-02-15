@@ -39,21 +39,21 @@ package com.starmaid.Cibele.states {
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo1, "len": 1*GameSound.MSEC_PER_SEC,
+                    "audio": Convo1, "len": 60*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showIchiDownloadWindow
                 },
                 {
-                    "audio": Convo2, "len": 1*GameSound.MSEC_PER_SEC,
+                    "audio": Convo2, "len": 80*GameSound.MSEC_PER_SEC,
                     "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showSelfiesWindow
                 },
                 {
-                    "audio": Convo3, "len": 1*GameSound.MSEC_PER_SEC,
+                    "audio": Convo3, "len": 30*GameSound.MSEC_PER_SEC,
                     "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showGuilEmail
                 },
                 {
-                    "audio": Convo4, "len": 1*GameSound.MSEC_PER_SEC,
+                    "audio": Convo4, "len": 110*GameSound.MSEC_PER_SEC,
                     "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showIchiSelfie1
                 },
@@ -129,7 +129,7 @@ package com.starmaid.Cibele.states {
 
         public function showGuilEmail():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.GUIL_1);
-            GlobalTimer.getInstance().setMark(BOSS_MARK, 1*GameSound.MSEC_PER_SEC);
+            GlobalTimer.getInstance().setMark(BOSS_MARK, 50*GameSound.MSEC_PER_SEC);
         }
 
         public function showIchiDownloadWindow():void {
