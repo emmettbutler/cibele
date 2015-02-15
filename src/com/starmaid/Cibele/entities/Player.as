@@ -245,6 +245,43 @@ package com.starmaid.Cibele.entities {
             );
         }
 
+        public function buildBestPath(worldPos:DHPoint):void {
+            // examine nearby nodes to find the shortest path along the graph
+            // from current position to worldPos
+
+            var maxTries:Number = 10;
+
+            // get closest N nodes to player
+            var closeNodes:Array = this._mapnodes.getNClosestGenericNodes(maxTries, this.footPos);
+            var curNode:MapNode = closeNodes[0]['node'], tries:Number = 0;
+
+            // check each of these nodes for obstructions
+            var res:Object = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, curNode.pos);
+            while (!res["canConnect"] && tries < maxTries && curNode != null) {
+                curNode = closeNodes[tries]['node'];
+                if (curNode != null) {
+                    res = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, curNode.pos);
+                }
+                tries += 1;
+            }
+
+            // if we found an unobstructed node, generate a path and initialize state
+            if (res["canConnect"]) {
+                this.curPath = Path.shortestPath(
+                    curNode,
+                    this._mapnodes.getClosestGenericNode(worldPos)
+                );
+                (FlxG.state as PathEditorState).clearAllAStarMeasures();
+
+                this.walkTarget = this.curPath.currentNode.pos;
+                this.finalTarget = worldPos;
+            }
+
+            if (ScreenManager.getInstance().DEBUG) {
+                trace("Path: " + this.curPath.toString());
+            }
+        }
+
         public function initWalk(worldPos:DHPoint, usePaths:Boolean=true):void {
             var useNodes:Boolean = true;
             if (this._mapnodes != null) {
@@ -260,31 +297,7 @@ package com.starmaid.Cibele.entities {
                         this.finalTarget = worldPos;
                         this.curPath = null;
                     } else {
-                        var maxTries:Number = 10;
-                        var closeNodes:Array = this._mapnodes.getNClosestGenericNodes(maxTries, this.footPos);
-                        var curNode:MapNode = closeNodes[0]['node'], tries:Number = 0;
-                        var res:Object = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, curNode.pos);
-                        while (!res["canConnect"] && tries < maxTries && curNode != null) {
-                            curNode = closeNodes[tries]['node'];
-                            if (curNode != null) {
-                                res = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, curNode.pos);
-                            }
-                            tries += 1;
-                        }
-                        if (res["canConnect"]) {
-                            this.curPath = Path.shortestPath(
-                                curNode,
-                                this._mapnodes.getClosestGenericNode(worldPos)
-                            );
-                            (FlxG.state as PathEditorState).clearAllAStarMeasures();
-
-                            this.walkTarget = this.curPath.currentNode.pos;
-                            this.finalTarget = worldPos;
-                        }
-
-                        if (ScreenManager.getInstance().DEBUG) {
-                            trace("Path: " + this.curPath.toString());
-                        }
+                        this.buildBestPath(worldPos);
                     }
                 }
             } else {
