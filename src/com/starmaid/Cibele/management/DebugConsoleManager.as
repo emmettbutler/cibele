@@ -31,7 +31,7 @@ package com.starmaid.Cibele.management {
             var curText:FlxText;
             for (var i:int = 0; i < MAX_ATTRS; i++) {
                 curText = new FlxText(
-                    this.consoleBackground.pos.x + 10, 20,
+                    this.consoleBackground.pos.x + 10, 20*i,
                     this.consoleBackground.width, ""
                 );
                 curText.size = 14;
@@ -42,9 +42,12 @@ package com.starmaid.Cibele.management {
         }
 
         private function getTextObject():FlxText {
+            var cur:FlxText;
             for(var i:int = 0; i < this.textObjects.length; i++) {
-                if (this.textObjects[i].text == "") {
-                    return this.textObjects[i];
+                cur = this.textObjects[i];
+                if (cur.text == "") {
+                    cur.text = "-";
+                    return cur;
                 }
             }
             return null;
@@ -57,13 +60,13 @@ package com.starmaid.Cibele.management {
             }
         }
 
-        public function trackAttribute(attrName:String):void {
+        public function trackAttribute(attrName:String, displayName:String=""):void {
             if (attrName in this.trackedAttributes) {
                 return;
             }
-            trace("starting");
             var attr:Object = {
                 'name': attrName,
+                'display_name': displayName == "" ? attrName : displayName,
                 'text': this.getTextObject(),
                 'val': this.resolveTrackedAttribute(attrName)
             };
@@ -74,40 +77,46 @@ package com.starmaid.Cibele.management {
             var attr:Object;
             for(var k:String in this.trackedAttributes) {
                 attr = this.trackedAttributes[k];
-                attr['text'].text = "";
-
                 attr['val'] = this.resolveTrackedAttribute(attr['name']);
-                attr['text'].text = attr['name'] + ": " + attr['val'];
+                attr['text'].text = attr['display_name'] + ": " + attr['val'];
             }
         }
 
         private function resolveTrackedAttribute(attrName:String):String {
             var parts:Array = attrName.split('.');
             var curPart:String, curAttr:Object;
+
             for (var i:int = 0; i < parts.length; i++) {
                 curPart = parts[i];
 
-                if (curPart == 'state') {
-                    curAttr = FlxG.state as GameState;
-                } else {
-                    if (curAttr.hasOwnProperty(curPart)) {
-                        if (curAttr[curPart] is Function) {
-                            curAttr = curAttr[curPart]();
-                        } else {
-                            curAttr = curAttr[curPart];
-                        }
+                if (curAttr != null) {
+                    //trace(curAttr + ".hasOwnProperty(" + curPart + "): " + curAttr.hasOwnProperty(curPart));
+                }
+
+                if (curPart == "FlxG") {
+                    curAttr = FlxG;
+                } else if (curPart == "ScreenManager") {
+                    curAttr = ScreenManager;
+                } else if (curPart in curAttr || curAttr.hasOwnProperty(curPart)) {
+                    if (curAttr[curPart] is Function) {
+                        curAttr = curAttr[curPart]();
                     } else {
-                        return null;
+                        curAttr = curAttr[curPart];
                     }
+                } else {
+                    return null;
                 }
             }
+
             var ret:String;
             if (curAttr is DHPoint) {
                 ret = curAttr.x.toFixed(2) + "x" + curAttr.y.toFixed(2);
             } else if (curAttr is Number) {
                 ret = curAttr.toFixed(2).toString();
-            } else if (curAttr.hasOwnProperty('toString')) {
-                ret = curAttr.toString();
+            } else if (curAttr is Boolean) {
+                ret = curAttr ? "true" : "false";
+            } else {
+                ret = curAttr as String;
             }
             return ret;
         }
