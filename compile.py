@@ -106,7 +106,7 @@ def write_conf_file(swf_path, entry_point_class, version_id):
         f.write(
 """
 <application xmlns="http://ns.adobe.com/air/application/{version_id}">
-    <id>com.starmaid.Cibele.{ts}</id>
+    <id>com.starmaid.Cibele</id>
     <versionNumber>1.0</versionNumber>
     <filename>CibeleBeta-{ts}</filename>
     <initialWindow>
