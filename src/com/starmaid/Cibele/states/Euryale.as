@@ -1,5 +1,6 @@
 package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.PopUpManager;
+    import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.Emote;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameSound;
@@ -10,6 +11,8 @@ package com.starmaid.Cibele.states {
     import flash.events.*;
 
     public class Euryale extends LevelMapState {
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_hey.mp3")] private var Convo1:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_teleport.mp3")] private var Convo1_2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_breakups.mp3")] private var Convo2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_nada.mp3")] private var Convo2_2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_crush.mp3")] private var Convo3:Class;
@@ -18,6 +21,8 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/voiceover/voc_euryale_meetup.mp3")] private var Convo4_2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_parents.mp3")] private var Convo4_3:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_dredge.mp3")] private var Convo5:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_canicallyou.mp3")] private var Convo5_2:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_cibyeah.mp3")] private var Convo5_3:Class;
 
         public function Euryale() {
             PopUpManager.GAME_ACTIVE = true;
@@ -35,7 +40,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0, "endfn": this.showSelfiePostEmail
                 },
                 {
-                    "audio": Convo3, "len": 26*GameSound.MSEC_PER_SEC,
+                    "audio": Convo3, "len": 30*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
@@ -55,7 +60,15 @@ package com.starmaid.Cibele.states {
                     "delay": 0, "endfn": showDredgeSelfie
                 },
                 {
-                    "audio": Convo5, "len": 85*GameSound.MSEC_PER_SEC,
+                    "audio": Convo5, "len": 92*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": Convo5_2, "len": 5*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": Convo5_3, "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 }
             ];
@@ -72,6 +85,20 @@ package com.starmaid.Cibele.states {
             this.registerPopupCallback();
 
             super.create();
+
+            if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
+                SoundManager.getInstance().playSound(
+                        Convo1, 12*GameSound.MSEC_PER_SEC, firstConvoPartTwo, false, 1, GameSound.VOCAL,
+                        "eu_convo_1_hall"
+                    );
+                }
+        }
+
+        public function firstConvoPartTwo():void {
+            SoundManager.getInstance().playSound(
+                    Convo1_2, 27*GameSound.MSEC_PER_SEC, this.showFriendEmail, false, 1, GameSound.VOCAL,
+                    "eu_convo_1_2_hall"
+                );
         }
 
         public function showFriendEmail():void {

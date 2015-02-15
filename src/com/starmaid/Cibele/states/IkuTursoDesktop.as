@@ -5,6 +5,9 @@ package com.starmaid.Cibele.states {
 
     public class IkuTursoDesktop extends Desktop {
         public function IkuTursoDesktop() {
+            if(GameState.cur_level != GameState.LVL_IT) {
+                GameState.cur_level = GameState.LVL_IT;
+            }
         }
 
         override public function create():void {
