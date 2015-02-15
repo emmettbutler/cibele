@@ -410,7 +410,7 @@ package com.starmaid.Cibele.entities {
             }
 
             if (ScreenManager.getInstance().DEBUG) {
-                this.debugText.text = (Player.stateMap[this._state] == null ? "unknown" : Player.stateMap[this._state]) + "\n" + this.pos.x + "x" + this.pos.y;
+                this.debugText.text = (Player.stateMap[this._state] == null ? "unknown" : Player.stateMap[this._state]) + "\n" + this.pos.x + "x" + this.pos.y + "\nwalkTarget: " + this.walkTarget.x + "x" + this.walkTarget.y;
             }
 
             this.attack_sprite.x = this.x;

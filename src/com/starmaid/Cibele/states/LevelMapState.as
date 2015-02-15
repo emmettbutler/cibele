@@ -148,7 +148,7 @@ package com.starmaid.Cibele.states {
             ray.angle = Utils.radToDeg(angle);
             ray.active = false;
             if (ScreenManager.getInstance().DEBUG && draw) {
-                FlxG.state.add(ray);
+                //FlxG.state.add(ray);
             }
             return ray;
         }
