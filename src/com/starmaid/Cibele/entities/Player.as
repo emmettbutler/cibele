@@ -249,7 +249,8 @@ package com.starmaid.Cibele.entities {
             var useNodes:Boolean = true;
             if (this._mapnodes != null) {
                 var closestNode:MapNode = this._mapnodes.getClosestGenericNode(this.pos);
-                if (closestNode == null) {
+                var connectInfo:Object = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, worldPos);
+                if (closestNode == null || connectInfo["canConnect"]) {
                     useNodes = false;
                 } else {
                     var destinationDisp:Number = this.footPos.sub(worldPos)._length();
@@ -609,4 +610,3 @@ package com.starmaid.Cibele.entities {
         }
     }
 }
-
