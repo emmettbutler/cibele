@@ -238,6 +238,16 @@ package com.starmaid.Cibele.base {
             }
         }
 
+        public function cursorOverlaps(cur_rect:FlxRect, screen_space:Boolean):Boolean {
+            var overlap:Boolean;
+            if(screen_space) {
+                overlap = this.game_cursor.mouse_screen_rect.overlaps(cur_rect);
+            } else if(!screen_space) {
+                overlap = this.game_cursor.mouse_rect.overlaps(cur_rect);
+            }
+            return overlap;
+        }
+
         public function pause():void {
             GlobalTimer.getInstance().pause();
             SoundManager.getInstance().pause();

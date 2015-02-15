@@ -25,7 +25,7 @@ package com.starmaid.Cibele.management {
         public var img_msg:UIElement;
 
         public var notifications_box:FlxRect, exit_inbox_rect:FlxRect,
-                   mouse_rect:FlxRect, exit_box:FlxRect, reply_box:FlxRect;
+                   exit_box:FlxRect, reply_box:FlxRect;
 
         public var threads:Array;
         public var cur_viewing:Thread;
@@ -50,6 +50,8 @@ package com.starmaid.Cibele.management {
         public var minimizeFlag:Boolean = false;
         public var maximizeExitFlag:Boolean = false;
         public var maximizeInboxFlag:Boolean = false;
+
+        public var i:Number = 0;
 
         public function MessageManager() {
             this.elements = new Array();
@@ -98,7 +100,6 @@ package com.starmaid.Cibele.management {
 
             this.elements.length = 0;
 
-            this.mouse_rect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 5, 5);
             var notifications_pos:DHPoint = new DHPoint(
                 PopUpManager.RING_INSET_X + 55,
                 PopUpManager.RING_INSET_Y + 75
@@ -282,9 +283,6 @@ package com.starmaid.Cibele.management {
 
             this.updateUnreadNotification();
 
-            this.mouse_rect.x = FlxG.mouse.screenX;
-            this.mouse_rect.y = FlxG.mouse.screenY;
-
             var cur_thread:Thread;
             this.unread_count = 0;
 
@@ -313,43 +311,44 @@ package com.starmaid.Cibele.management {
                 this.maximizeExitFlag = false;
             }
 
-            for(var i:int = 0; i < this.threads.length; i++) {
+            for(i = 0; i < this.threads.length; i++) {
                 cur_thread = this.threads[i];
                 cur_thread.update();
                 if (cur_thread.unread) {
                     this.unread_count++;
                 }
-
-                if(this._state == STATE_VIEW_LIST &&
-                    FlxG.mouse.justPressed() &&
-                    this.mouse_rect.overlaps(cur_thread.list_hitbox))
-                {
-                    this.openThread(cur_thread);
-                }
             }
 
             if(FlxG.mouse.justPressed()) {
+                if(this._state == STATE_VIEW_LIST) {
+                    for(i = 0; i < this.threads.length; i++) {
+                        if((FlxG.state as GameState).cursorOverlaps(this.threads[i].list_hitbox, true))
+                        {
+                            this.openThread(this.threads[i]);
+                        }
+                    }
+                }
+
                 if(this._state == STATE_HIDE_INBOX) {
-                    if (this.mouse_rect.overlaps(this.notifications_box)) {
+                    if ((FlxG.state as GameState).cursorOverlaps(this.notifications_box, true)) {
                         this._state = STATE_VIEW_LIST;
                         this.openInbox();
                     }
                 } else {
                     if (this._state == STATE_VIEW_MESSAGE) {
                         if(cur_viewing != null) {
-                            if(this.mouse_rect.overlaps(this.exit_box)) {
+                            if((FlxG.state as GameState).cursorOverlaps(this.exit_box, true)) {
                                 cur_viewing.hideFull();
                                 cur_viewing = null;
                                 this.showPreviews();
                                 this._state = STATE_VIEW_LIST;
-                            } else if(this.mouse_rect.overlaps(this.reply_box)) {
+                            } else if((FlxG.state as GameState).cursorOverlaps(this.reply_box, true)) {
                                 cur_viewing.reply();
                             }
                         }
                     }
-                    if (!this.mouse_rect.overlaps(
-                            new FlxRect(this.img_inbox.x, this.img_inbox.y, this.img_inbox.width, this.img_inbox.height)) ||
-                            this.mouse_rect.overlaps(new FlxRect(this.exit_ui.x, this.exit_ui.y, this.exit_ui.width, this.exit_ui.height))
+                    if (!(FlxG.state as GameState).cursorOverlaps(new FlxRect(this.img_inbox.x, this.img_inbox.y, this.img_inbox.width, this.img_inbox.height), true) ||
+                            (FlxG.state as GameState).cursorOverlaps(new FlxRect(this.exit_ui.x, this.exit_ui.y, this.exit_ui.width, this.exit_ui.height), true)
                         )
                     {
                         this._state = STATE_HIDE_INBOX;

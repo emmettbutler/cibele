@@ -30,6 +30,9 @@ package com.starmaid.Cibele.entities {
 
         public var messages:Array;
 
+        public var list_hitbox_width:Number = 380;
+        public var list_hitbox_height:Number = 25;
+
         public function Thread(inbox:GameObject,
                                ... messages) {
             this.inbox_ref = inbox;
@@ -63,9 +66,9 @@ package com.starmaid.Cibele.entities {
             this.truncated_textbox.active = false;
             FlxG.state.add(truncated_textbox);
 
-            this.list_hitbox = new FlxRect(this.truncated_textbox.x,
-                this.truncated_textbox.y, 404, 40);
 
+            this.list_hitbox = new FlxRect(this.truncated_textbox.x,
+                this.truncated_textbox.y, this.list_hitbox_width, this.list_hitbox_height);
             for (var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].initVisibleObjects();
             }
@@ -137,7 +140,7 @@ package com.starmaid.Cibele.entities {
             this.pos.y = new_pos.y + this.list_offset;
             this.truncated_textbox.y = this.pos.y;
             this.list_hitbox = new FlxRect(this.truncated_textbox.x,
-                this.truncated_textbox.y, this.inbox_ref.width, 10);
+                this.truncated_textbox.y, this.list_hitbox_width, this.list_hitbox_height);
         }
 
         public function hide():void {
