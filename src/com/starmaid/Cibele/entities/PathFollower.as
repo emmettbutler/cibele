@@ -7,6 +7,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.MapNodeContainer;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.states.PathEditorState;
 
     import org.flixel.*;
 
@@ -155,6 +156,10 @@ package com.starmaid.Cibele.entities {
 
             if (ScreenManager.getInstance().DEBUG) {
                 this.debugText.text = PathFollower.stateMap[this._state];
+            }
+
+            if((FlxG.state as PathEditorState).editorMode == PathEditorState.MODE_EDIT) {
+                return;
             }
 
             if(this.facing == LEFT) {

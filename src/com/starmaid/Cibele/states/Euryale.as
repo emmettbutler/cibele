@@ -76,7 +76,8 @@ package com.starmaid.Cibele.states {
         }
 
         override public function create():void {
-            this.filename = null;
+            this.filename = "data/euryale_path.txt";
+            this.graph_filename = "data/euryale_graph.txt";
             this.mapTilePrefix = "euryale";
             this.tileGridDimensions = new DHPoint(6, 3);
             this.estTileDimensions = new DHPoint(2266, 1365);

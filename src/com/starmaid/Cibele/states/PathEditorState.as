@@ -62,7 +62,6 @@ package com.starmaid.Cibele.states {
                     FlxG.flashGfxSprite.mouseEnabled = true;
                 }
                 //this.editorMode = MODE_EDIT; //turn this on in order to edit
-                //compile with -a flag if I edit or make new path
             }
 
             this.showNodes = ScreenManager.getInstance().DEBUG ||
