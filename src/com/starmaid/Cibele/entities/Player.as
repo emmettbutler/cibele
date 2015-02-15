@@ -29,7 +29,7 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/audio/effects/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
 
         private var walkSpeed:Number = 8, mouseDownTime:Number;
-        private var walkTarget:DHPoint, finalTarget:DHPoint, hitboxOffset:DHPoint,
+        private var hitboxOffset:DHPoint,
                     hitboxDim:DHPoint;
         private var curPath:Path;
         private var click_anim:GameObject, attack_sprite:GameObject,
@@ -43,6 +43,7 @@ package com.starmaid.Cibele.entities {
         public var mapHitbox:GameObject, cameraPos:GameObject;
         public var collisionDirection:Array, lastPositions:Deque;
         public var _mapnodes:MapNodeContainer;
+        public var walkTarget:DHPoint, finalTarget:DHPoint;
 
         public static const STATE_WALK:Number = 2398476188;
         public static const STATE_WALK_HARD:Number = 23981333333;
