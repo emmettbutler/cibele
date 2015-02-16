@@ -61,16 +61,18 @@ package com.starmaid.Cibele.management {
         }
 
         public function trackAttribute(attrName:String, displayName:String=""):void {
-            if (attrName in this.trackedAttributes) {
-                return;
+            CONFIG::debug {
+                if (attrName in this.trackedAttributes) {
+                    return;
+                }
+                var attr:Object = {
+                    'name': attrName,
+                    'display_name': displayName == "" ? attrName : displayName,
+                    'text': this.getTextObject(),
+                    'val': this.resolveTrackedAttribute(attrName)
+                };
+                this.trackedAttributes[attrName] = attr;
             }
-            var attr:Object = {
-                'name': attrName,
-                'display_name': displayName == "" ? attrName : displayName,
-                'text': this.getTextObject(),
-                'val': this.resolveTrackedAttribute(attrName)
-            };
-            this.trackedAttributes[attrName] = attr;
         }
 
         public function update():void {
