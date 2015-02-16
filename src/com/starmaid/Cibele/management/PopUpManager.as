@@ -47,6 +47,7 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/eu_email/email2.png")] private static var ImgEuEmail2:Class;
         [Embed(source="/../assets/images/ui/popups/eu_picly/dredgeirl.png")] private static var ImgEuDredge:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/highschool.png")] private static var ImgEuHighSchool:Class;
+        [Embed(source="/../assets/images/ui/popups/picly/ninabday.png")] private static var ImgNinaBday:Class;
 
         public static var _instance:PopUpManager = null;
 
@@ -102,6 +103,8 @@ package com.starmaid.Cibele.management {
         public static const EU_EMAIL_2:String = "euemail2";
         public static const EU_DREDGE:String = "eudredge";
         public static const EU_HIGHSCHOOL:String = "euhighschool";
+        public static const EU_DOWNLOADS:String = "eudls";
+        public static const EU_PICLY_1:String = "eudpicly1";
 
         public function PopUpManager() {
             this.elements = new Array();
@@ -366,12 +369,10 @@ package com.starmaid.Cibele.management {
             this.popups[EU_EMAIL_2] = new PopUp(ImgEuEmail2, 631, 356, 0, EU_EMAIL_2);
             this.popups[EU_DREDGE] = new PopUp(ImgEuDredge, 356, 463, 0, EU_DREDGE);
             this.popups[EU_HIGHSCHOOL] = new PopUp(ImgEuHighSchool, 631, 356, 0, EU_HIGHSCHOOL);
+            this.popups[EU_DOWNLOADS] = new PopUp(ImgIchiDL2, 631, 356, 0, EU_DOWNLOADS);
+            this.popups[EU_PICLY_1] = new PopUp(ImgNinaBday, 356, 463, 0, EU_PICLY_1);
 
-            var curButton:DockButton;
-            for (var i:int = 0; i < this.programButtons.length; i++){
-                curButton = this.programButtons[i];
-                curButton.setCurPopup(this.popups[this.popupTags[curButton.tag]]);
-            }
+            this.setDefaultDockPopups();
 
             this.folder_structure = PopupHierarchies.build();
             this.folder_builder = new FolderBuilder();
@@ -390,6 +391,14 @@ package com.starmaid.Cibele.management {
 
             for (key in this.sentPopups) {
                 this.sendPopup(key as String);
+            }
+        }
+
+        public function setDefaultDockPopups():void {
+            var curButton:DockButton;
+            for (var i:int = 0; i < this.programButtons.length; i++){
+                curButton = this.programButtons[i];
+                curButton.setCurPopup(this.popups[this.popupTags[curButton.tag]]);
             }
         }
 
@@ -426,6 +435,7 @@ package com.starmaid.Cibele.management {
             this.popupTags[BUTTON_INTERNET] = internet;
             this.popupTags[BUTTON_FILES] = files;
             this.popupTags[BUTTON_PHOTO] = photo;
+            this.setDefaultDockPopups();
         }
 
         public static function getInstance():PopUpManager {

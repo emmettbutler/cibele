@@ -48,6 +48,10 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/eu_net/ichiselfiethread.png")] private static var ImgEuEmailSelfieNetThread:Class;
         [Embed(source="/../assets/images/ui/popups/eu_email/miniemailselfie_link.png")] private static var ImgEuEmailSelfieMiniLink:Class;
         [Embed(source="/../assets/images/ui/popups/eu_email/small_emailselfie.png")] private static var ImgEuMiniSelfieEmail:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/forcibby.png")] private static var ImgForCibby:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/forcibby_icon.png")] private static var ImgForCibbyIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/selfie1.png")] private static var ImgEUSelfie1:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/selfie1_icon.png")] private static var ImgEUSelfie1Icon:Class;
 
         public static function build():Dictionary {
             var struc:Dictionary = new Dictionary();
@@ -318,6 +322,24 @@ package com.starmaid.Cibele.management {
                     "icon_pos": new DHPoint(305, 33),
                     "dim": new DHPoint(530, 356),
                     "contents": ImgEuFile1Ollld
+                }
+            ]};
+            struc[PopUpManager.EU_DOWNLOADS] = { "contents": [
+                {
+                    "name": "forcibby",
+                    "icon": ImgForCibbyIcon,
+                    "icon_dim": new DHPoint(70, 85),
+                    "icon_pos": new DHPoint(18, 32),
+                    "dim": new DHPoint(512, 356),
+                    "contents": ImgForCibby
+                },
+                {
+                    "name": "eu selfie 1",
+                    "icon": ImgEUSelfie1Icon,
+                    "icon_dim": new DHPoint(104, 86),
+                    "icon_pos": new DHPoint(120, 32),
+                    "dim": new DHPoint(512, 356),
+                    "contents": ImgEUSelfie1
                 }
             ]};
             return struc;

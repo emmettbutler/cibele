@@ -164,7 +164,7 @@ package com.starmaid.Cibele.states {
                 FlxG.switchState(
                     new PlayVideoState("/../assets/video/sexy_selfie.flv",
                         function():void {
-                            FlxG.switchState(new StartScreen());
+                            FlxG.switchState(new EuryaleDesktop());
                             PopUpManager.GAME_ACTIVE = false;
                         }, SoundManager.getInstance().getSoundByName(BGM)
                     )
