@@ -198,11 +198,6 @@ package com.starmaid.Cibele.base {
             }
             if (ScreenManager.getInstance().DEBUG) {
                 DebugConsoleManager.getInstance().update();
-
-                DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.pos", "player.pos");
-                DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getStateString", "player.state");
-                DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getWalkTarget", "player.walkTarget");
-                DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getFinalTarget", "player.finalTarget");
             }
 
             if (!this.containsPauseLayer()) {

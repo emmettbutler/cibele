@@ -97,7 +97,7 @@ package com.starmaid.Cibele.management {
                     curAttr = FlxG;
                 } else if (curPart == "ScreenManager") {
                     curAttr = ScreenManager;
-                } else if (curPart in curAttr || curAttr.hasOwnProperty(curPart)) {
+                } else if (curAttr != null && (curPart in curAttr || curAttr.hasOwnProperty(curPart))) {
                     if (curAttr[curPart] is Function) {
                         curAttr = curAttr[curPart]();
                     } else {

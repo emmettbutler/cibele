@@ -1,5 +1,6 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.Path;
+    import com.starmaid.Cibele.management.DebugConsoleManager;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.states.LevelMapState;
@@ -123,6 +124,11 @@ package com.starmaid.Cibele.entities {
             this.lastPositions = new Deque(3);
             GlobalTimer.getInstance().setMark("trail_update",
                 .1*GameSound.MSEC_PER_SEC, this.pushPos, true);
+
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.pos", "player.pos");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getStateString", "player.state");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getWalkTarget", "player.walkTarget");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getFinalTarget", "player.finalTarget");
         }
 
         public function setMapNodes(nodes:MapNodeContainer):void {
