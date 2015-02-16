@@ -6,7 +6,7 @@ package com.starmaid.Cibele.utils {
     import org.flixel.*;
 
     public class FPSCounter extends FlxText {
-        public var startTime:Number, framesNumber:Number = 0;
+        public var startTime:Number, framesNumber:Number = 0, _fps:Number = 0;
 
         public function FPSCounter() {
             super(50, 50, 400, "");
@@ -23,7 +23,7 @@ package com.starmaid.Cibele.utils {
         public function checkFPS(e:Event):void {
             var currentTime:Number = (getTimer() - startTime) / 1000;
             framesNumber++;
-            var _fps:Number = Math.floor((framesNumber / currentTime) * 10000.0) / 10000.0;
+            _fps = Math.floor((framesNumber / currentTime) * 10000.0) / 10000.0;
             if (currentTime > 1) {
                 if (this != null) {
                     //this.text = " FPS: " + _fps;
