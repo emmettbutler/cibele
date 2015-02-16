@@ -308,12 +308,6 @@ package com.starmaid.Cibele.entities {
                     this.moveToNextNode();
                 }
             }
-
-            if(this.attackAnim.frame >= 20) {
-                attackAnim.play("idle");
-                attackAnim.visible = false;
-                this.visible = true;
-            }
         }
 
         public function addAttackAnim():void {
@@ -344,6 +338,8 @@ package com.starmaid.Cibele.entities {
             } else {
                 this.moveToNextNode();
             }
+            this.attackAnim.visible = false;
+            this.visible = true;
         }
 
         public function getClosestEnemy():Enemy {
@@ -445,19 +441,19 @@ package com.starmaid.Cibele.entities {
         }
 
         public function reverseAttackAnim():void {
-            play("reverse_attack");
-            GlobalTimer.getInstance().setMark("attack anim stuff reverse", 1*GameSound.MSEC_PER_SEC, this.resolveStatePostAttack);
+            this.attackAnim.play("reverse_attack");
+            GlobalTimer.getInstance().setMark("attack anim stuff reverse" + Math.random()*254545, 1*GameSound.MSEC_PER_SEC, this.resolveStatePostAttack, false);
         }
 
         override public function attack():void {
             super.attack();
             if (this._state == STATE_IN_ATTACK) {
-                play("attack");
-                GlobalTimer.getInstance().setMark("attack anim stuff", 1*GameSound.MSEC_PER_SEC, this.reverseAttackAnim);
-                attackAnim.x = this.x + 20;
-                attackAnim.y = this.y;
-                attackAnim.visible = true;
-                attackAnim.play("attack");
+                //TODO reverse attack anim
+                GlobalTimer.getInstance().setMark("attack anim stuff" + Math.random()*25434, 1*GameSound.MSEC_PER_SEC, this.reverseAttackAnim, false);
+                this.attackAnim.x = this.x + 20;
+                this.attackAnim.y = this.y;
+                this.attackAnim.visible = true;
+                this.attackAnim.play("attack");
                 this.visible = false;
 
                 var snd:Class = SfxAttack1;
