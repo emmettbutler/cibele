@@ -358,7 +358,7 @@ package com.starmaid.Cibele.management {
             this.popups[GUIL_1] = new PopUp(ImgGuilEmail1, 631, 356, 0, GUIL_1);
             this.popups[BULLDOG_HELL] = new PopUp(ImgBHEmail, 631, 356, 0, BULLDOG_HELL);
             this.popups[ICHI_SELFIE1] = new PopUp(ImgIchiSelfie1, 631, 356, 0, ICHI_SELFIE1);
-            this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibCamDisconnect, 253, 139, 0, CIB_SELFIE_FOLDER);
+            this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibCamDisconnect, 286, 184, 0, CIB_SELFIE_FOLDER);
 
             //euryale
             this.popups[EU_EMAIL_1] = new PopUp(ImgEuEmail1, 631, 356, 0, EU_EMAIL_1);

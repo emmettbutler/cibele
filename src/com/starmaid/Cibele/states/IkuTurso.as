@@ -39,26 +39,26 @@ package com.starmaid.Cibele.states {
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo1, "len": 60*GameSound.MSEC_PER_SEC,
+                    "audio": Convo1, "len": 1*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showIchiDownloadWindow
                 },
                 {
-                    "audio": Convo2, "len": 80*GameSound.MSEC_PER_SEC,
+                    "audio": Convo2, "len": 1*GameSound.MSEC_PER_SEC,
                     "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showSelfiesWindow
                 },
                 {
-                    "audio": Convo3, "len": 30*GameSound.MSEC_PER_SEC,
+                    "audio": Convo3, "len": 1*GameSound.MSEC_PER_SEC,
                     "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showGuilEmail
                 },
                 {
-                    "audio": Convo4, "len": 110*GameSound.MSEC_PER_SEC,
+                    "audio": Convo4, "len": 1*GameSound.MSEC_PER_SEC,
                     "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showIchiSelfie1
                 },
                 {
-                    "audio": Convo5, "len": 23*GameSound.MSEC_PER_SEC,
+                    "audio": Convo5, "len": 1*GameSound.MSEC_PER_SEC,
                     "delay": 20*GameSound.MSEC_PER_SEC,
                     "endfn": this.showCibSelfieFolder
                 },

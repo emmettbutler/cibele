@@ -160,7 +160,7 @@ package com.starmaid.Cibele.management {
                             "icon": ImgBHIcon,
                             "icon_dim": new DHPoint(74, 14),
                             "icon_pos": new DHPoint(180, 106),
-                            "dim": new DHPoint(1030, 510),
+                            "dim": new DHPoint(1030, 437),
                             "contents": ImgBH
                         }]
                 }
@@ -170,15 +170,15 @@ package com.starmaid.Cibele.management {
                     "name": "cib camera selfies 1",
                     "icon": ImgCibCamDisconnectIcon,
                     "icon_dim": new DHPoint(204, 34),
-                    "icon_pos": new DHPoint(29, 93),
+                    "icon_pos": new DHPoint(43, 124),
                     "folder_dim": new DHPoint(631, 356),
                     "folder_img": ImgCibSelfieFolder,
                     "contents": [
                         {
                             "name": "cam selfies",
                             "icon": ImgCibCam1Icon,
-                            "icon_dim": new DHPoint(70, 81),
-                            "icon_pos": new DHPoint(49, 64),
+                            "icon_dim": new DHPoint(103, 81),
+                            "icon_pos": new DHPoint(118, 135),
                             "dim": new DHPoint(530, 356),
                             "contents": ImgCibCam1
                         },
