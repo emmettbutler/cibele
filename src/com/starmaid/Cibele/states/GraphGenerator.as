@@ -12,6 +12,7 @@ package com.starmaid.Cibele.states {
 
     public class GraphGenerator extends LevelMapState {
         public var generateLock:Boolean = false;
+        public var graphWriteFile:File;
 
         public function GraphGenerator(state:LevelMapState):void {
             this.filename = state.filename;
@@ -23,7 +24,7 @@ package com.starmaid.Cibele.states {
             this.colliderScaleFactor = state.colliderScaleFactor;
             this.shouldAddEnemies = false;
 
-            this.writeFile = File.applicationStorageDirectory.resolvePath(
+            this.graphWriteFile = File.applicationStorageDirectory.resolvePath(
                 this.graph_filename);
             this.backupFile = File.applicationStorageDirectory.resolvePath(
                 this.graph_filename + ".bak");
@@ -90,7 +91,7 @@ package com.starmaid.Cibele.states {
                 }
             }
 
-            var f:File = this.writeFile;
+            var f:File = this.graphWriteFile;
             var str:FileStream = new FileStream();
             str.open(f, FileMode.WRITE);
             str.writeUTFBytes(fString);
@@ -98,7 +99,7 @@ package com.starmaid.Cibele.states {
         }
 
         override public function writeBackup():void {
-            var f:File = this.writeFile;
+            var f:File = this.graphWriteFile;
             var str:FileStream = new FileStream();
             if (!f.exists) {
                 return;

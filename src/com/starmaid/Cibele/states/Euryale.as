@@ -73,9 +73,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0
                 }
             ];
-        }
 
-        override public function create():void {
             this.filename = "data/euryale_path.txt";
             this.graph_filename = "data/euryale_graph.txt";
             this.mapTilePrefix = "euryale";
@@ -83,7 +81,9 @@ package com.starmaid.Cibele.states {
             this.estTileDimensions = new DHPoint(2266, 1365);
             this.playerStartPos = new DHPoint(3427, 7657);
             this.colliderScaleFactor = 3.54;
+        }
 
+        override public function create():void {
             this.registerPopupCallback();
 
             super.create();
