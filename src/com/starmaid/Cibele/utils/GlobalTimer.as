@@ -52,14 +52,6 @@ package com.starmaid.Cibele.utils {
             return false;
         }
 
-        public function markAlive(name:String):Boolean {
-            var mark:GlobalTimerMark = this.marks[name];
-            if (mark != null) {
-                return true;
-            }
-            return false;
-        }
-
         public function pause():void {
             var cur:Number = new Date().valueOf();
             if (!this.paused) {
