@@ -10,6 +10,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.states.PathEditorState;
+    import com.starmaid.Cibele.states.LevelMapState;
 
     import org.flixel.*;
 
@@ -441,6 +442,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function reverseAttackAnim():void {
+            if (!(FlxG.state is LevelMapState)) {
+                return;
+            }
             this.attackAnim.play("reverse_attack");
             GlobalTimer.getInstance().setMark("attack anim stuff reverse", 1*GameSound.MSEC_PER_SEC, this.resolveStatePostAttack, true);
         }

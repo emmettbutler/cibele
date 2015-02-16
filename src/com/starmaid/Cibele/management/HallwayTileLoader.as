@@ -4,6 +4,7 @@ package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.GameState;
 
     import org.flixel.*;
 
@@ -63,7 +64,7 @@ package com.starmaid.Cibele.management {
                     cur = this.tiles[i][j];
                     cur.update();
                     if (cur.pos.y >= front) {
-                        GlobalTimer.getInstance().setMark("appear_" + i + "_" + j,
+                        GlobalTimer.getInstance().setMark(GameState.cur_level + "_appear_" + i + "_" + j,
                             .01*GameSound.MSEC_PER_SEC*Math.random()*50,
                             cur.appear);
                         this.rowLoads[i] = true;
@@ -75,7 +76,7 @@ package com.starmaid.Cibele.management {
                         cur = row[j];
                         if(Math.random() * 2 > 1) {
                             GlobalTimer.getInstance().setMark(
-                                "appear_" + i + "_" + j,
+                                GameState.cur_level + "_appear_" + i + "_" + j,
                                 .01*GameSound.MSEC_PER_SEC*Math.random()*50,
                                 cur.appear);
                             this.rowLoads[i] = true;
