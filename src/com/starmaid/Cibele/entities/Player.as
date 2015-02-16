@@ -29,7 +29,7 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/audio/effects/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
         [Embed(source="/../assets/audio/effects/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
 
-        private var walkSpeed:Number = 8, mouseDownTime:Number;
+        private var walkSpeed:Number = 7, mouseDownTime:Number;
         private var walkTarget:DHPoint, finalTarget:DHPoint, hitboxOffset:DHPoint,
                     hitboxDim:DHPoint;
         private var curPath:Path;
@@ -97,6 +97,7 @@ package com.starmaid.Cibele.entities {
             this.attack_sprite.basePos = new DHPoint(0, 0);
             this.attack_sprite.loadGraphic(ImgAttack,true,false,173,230);
             this.attack_sprite.addAnimation("attack",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22],13,false);
+            this.attack_sprite.addAnimation("reverse_attack",[22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0],13,false);
             this.attack_sprite.visible = false;
 
             this.click_anim = new GameObject(this.pos);
@@ -607,6 +608,14 @@ package com.starmaid.Cibele.entities {
             this.mapHitbox.y = pos.y + this.hitboxOffset.y;
         }
 
+        public function playReverseAttack():void {
+            this.attack_sprite.play("reverse_attack");
+            GlobalTimer.getInstance().setMark("attack_finished_reverse",
+                    (23.0/13.0)*GameSound.MSEC_PER_SEC, function():void {
+                        resolveStatePostAttack();
+                    }, true);
+        }
+
         override public function attack():void {
             super.attack();
             if (this._state == STATE_IN_ATTACK) {
@@ -615,8 +624,8 @@ package com.starmaid.Cibele.entities {
                 this.shadow_sprite.visible = false;
                 this.attack_sprite.play("attack");
                 GlobalTimer.getInstance().setMark("attack_finished",
-                    (23.0/10.0)*GameSound.MSEC_PER_SEC, function():void {
-                        resolveStatePostAttack();
+                    (23.0/13.0)*GameSound.MSEC_PER_SEC, function():void {
+                        playReverseAttack();
                     }, true);
 
                 var snd:Class = SfxAttack1;

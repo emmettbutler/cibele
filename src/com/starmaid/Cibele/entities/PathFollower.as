@@ -30,7 +30,7 @@ package com.starmaid.Cibele.entities {
         public var targetPathNode:PathNode, targetMapNode:MapNode;
         public var lastInViewTime:Number = 0;
 
-        public var runSpeed:Number = 8;
+        public var runSpeed:Number = 7;
         public var bossRef:BossEnemy;
 
         public var closestEnemy:Enemy;
