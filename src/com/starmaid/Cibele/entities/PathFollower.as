@@ -442,14 +442,14 @@ package com.starmaid.Cibele.entities {
 
         public function reverseAttackAnim():void {
             this.attackAnim.play("reverse_attack");
-            GlobalTimer.getInstance().setMark("attack anim stuff reverse" + Math.random()*254545, 1*GameSound.MSEC_PER_SEC, this.resolveStatePostAttack, false);
+            GlobalTimer.getInstance().setMark("attack anim stuff reverse", 1*GameSound.MSEC_PER_SEC, this.resolveStatePostAttack, true);
         }
 
         override public function attack():void {
             super.attack();
             if (this._state == STATE_IN_ATTACK) {
                 //TODO reverse attack anim
-                GlobalTimer.getInstance().setMark("attack anim stuff" + Math.random()*25434, 1*GameSound.MSEC_PER_SEC, this.reverseAttackAnim, false);
+                GlobalTimer.getInstance().setMark("attack anim stuff", 1*GameSound.MSEC_PER_SEC, this.reverseAttackAnim, true);
                 this.attackAnim.x = this.x + 20;
                 this.attackAnim.y = this.y;
                 this.attackAnim.visible = true;
