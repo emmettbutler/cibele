@@ -1,5 +1,6 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.Path;
+    import com.starmaid.Cibele.management.DebugConsoleManager;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.states.LevelMapState;
@@ -123,10 +124,27 @@ package com.starmaid.Cibele.entities {
             this.lastPositions = new Deque(3);
             GlobalTimer.getInstance().setMark("trail_update",
                 .1*GameSound.MSEC_PER_SEC, this.pushPos, true);
+
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.pos", "player.pos");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getStateString", "player.state");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getWalkTarget", "player.walkTarget");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getFinalTarget", "player.finalTarget");
         }
 
         public function setMapNodes(nodes:MapNodeContainer):void {
             this._mapnodes = nodes;
+        }
+
+        public function getStateString():String {
+            return Player.stateMap[this._state] == null ? "unknown" : Player.stateMap[this._state];
+        }
+
+        public function getWalkTarget():DHPoint {
+            return this.walkTarget;
+        }
+
+        public function getFinalTarget():DHPoint {
+            return this.finalTarget;
         }
 
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint,
@@ -410,7 +428,7 @@ package com.starmaid.Cibele.entities {
             }
 
             if (ScreenManager.getInstance().DEBUG) {
-                this.debugText.text = (Player.stateMap[this._state] == null ? "unknown" : Player.stateMap[this._state]) +
+                this.debugText.text = this.getStateString() +
                     "\nposition: " + this.pos.x + "x" + this.pos.y +
                     "\nwalkTarget: " + this.walkTarget.x + "x" + this.walkTarget.y +
                     "\nfinalTarget: " + this.finalTarget.x + "x" + this.finalTarget.y;

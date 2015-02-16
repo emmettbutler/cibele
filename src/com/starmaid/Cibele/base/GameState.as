@@ -1,11 +1,13 @@
 package com.starmaid.Cibele.base {
     import com.starmaid.Cibele.entities.LoadingScreen;
+    import com.starmaid.Cibele.management.DebugConsoleManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.states.PlayVideoState;
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.utils.FPSCounter;
     import com.starmaid.Cibele.utils.GlobalTimer;
 
     import org.flixel.*;
@@ -24,6 +26,7 @@ package com.starmaid.Cibele.base {
         public var loadingScreen:LoadingScreen;
         public var use_loading_screen:Boolean = true;
         public var call_button:GameObject;
+        public var fpsCounter:FPSCounter;
 
         public var ui_color_flag:Number;
         public static const UICOLOR_DEFAULT:Number = 0;
@@ -80,6 +83,10 @@ package com.starmaid.Cibele.base {
                 0xaa000000
             );
             this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
+
+            CONFIG::debug {
+                this.fpsCounter = new FPSCounter();
+            }
         }
 
         public function postCreate():void {
@@ -103,6 +110,11 @@ package com.starmaid.Cibele.base {
             if(this.use_loading_screen) {
                 this.loadingScreen = new LoadingScreen();
             }
+
+            if (ScreenManager.getInstance().DEBUG) {
+                DebugConsoleManager.getInstance().addVisibleObjects();
+            }
+
             this.game_cursor = new GameCursor();
         }
 
@@ -189,6 +201,10 @@ package com.starmaid.Cibele.base {
             }
             if (this.updateMessages) {
                 MessageManager.getInstance().update();
+            }
+            if (ScreenManager.getInstance().DEBUG) {
+                DebugConsoleManager.getInstance().update();
+                DebugConsoleManager.getInstance().trackAttribute("FlxG.state.fpsCounter._fps", "FPS");
             }
 
             if (!this.containsPauseLayer()) {

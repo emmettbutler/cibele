@@ -1,6 +1,5 @@
 package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.ScreenManager;
-    import com.starmaid.Cibele.utils.FPSCounter;
     import com.starmaid.Cibele.utils.EnemyGroup;
     import com.starmaid.Cibele.utils.MapNodeContainer;
     import com.starmaid.Cibele.entities.PathFollower;
@@ -30,7 +29,6 @@ package com.starmaid.Cibele.states {
         public var filename:String, graph_filename:String;
         public var dataFile:File, backupFile:File, writeFile:File,
                    graphDataFile:File;
-        public var fpsCounter:FPSCounter;
         public var shouldAddEnemies:Boolean = true;
         public var readExistingGraph:Boolean = true;
 
@@ -92,8 +90,6 @@ package com.starmaid.Cibele.states {
                 this.pathWalker.moveToNextPathNode();
             }
 
-            this.fpsCounter = new FPSCounter();
-
             this.boss = new BossEnemy(new DHPoint(0, 0));
             add(this.boss);
             this.boss.visible = false;
@@ -111,11 +107,6 @@ package com.starmaid.Cibele.states {
             super.postCreate();
 
             add(pathWalker.debugText);
-        }
-
-        override public function destroy():void {
-            this.fpsCounter.destroy();
-            super.destroy();
         }
 
         override public function update():void {

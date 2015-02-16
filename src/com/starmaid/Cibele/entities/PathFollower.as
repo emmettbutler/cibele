@@ -2,6 +2,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.Path;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.DebugConsoleManager;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.EnemyGroup;
     import com.starmaid.Cibele.utils.MapNodeContainer;
@@ -108,6 +109,13 @@ package com.starmaid.Cibele.entities {
             this.disp = new DHPoint(0, 0);
 
             this.debugText.color = 0xff444444;
+
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.pos", "ichi.pos");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.getStateString", "ichi.state");
+        }
+
+        public function getStateString():String {
+            return PathFollower.stateMap[this._state] == null ? "unknown" : PathFollower.stateMap[this._state];
         }
 
         override public function addVisibleObjects():void {
@@ -155,7 +163,6 @@ package com.starmaid.Cibele.entities {
             super.update();
 
             if (ScreenManager.getInstance().DEBUG) {
-                this.debugText.text = PathFollower.stateMap[this._state];
             }
 
             if((FlxG.state as PathEditorState).editorMode == PathEditorState.MODE_EDIT) {
