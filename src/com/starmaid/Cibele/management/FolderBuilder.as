@@ -98,44 +98,49 @@ package com.starmaid.Cibele.management {
                         }
                     } else if (mouse_rect.overlaps(cur[this.getHitboxKey(cur)]._getRect())) {
                         if(cur[this.getHitboxKey(cur)].visible) {
-                            //checkForVisiblePopups needs fixing bc
-                            //when this is uncommented some subfolders
-                            //wont open TODO
-                            //if(this.checkForVisiblePopups(cur[this.getHitboxKey(cur)]._getRect(), root)) {
+                            if(this.iconIsNotHidden(cur[this.getHitboxKey(cur)]._getRect(), root, cur)) {
                                 cur["folder_sprite"].visible = true;
                                 cur["x_sprite"].visible = true;
                                 this.setIconVisibility(cur, true);
                                 propagateClick = false;
-                            //}
+                            }
                         }
                     }
                     if (propagateClick) {
                         this.resolveClick(cur, mouse_rect);
                     }
                 } else {
-                    if (mouse_rect.overlaps(cur["icon_sprite"]._getRect()) && cur["icon_sprite"].visible)
-                    {
-                        cur["full_sprite"].visible = true;
-                        cur["x_sprite"].visible = true;
-                    }
                     if (cur["x_sprite"].visible && mouse_rect.overlaps(cur["x_sprite"]._getRect())){
                         cur["full_sprite"].visible = false;
                         cur["x_sprite"].visible = false;
+                    } else if (mouse_rect.overlaps(cur["icon_sprite"]._getRect()) && cur["icon_sprite"].visible)
+                    {
+                        if(this.iconIsNotHidden(cur["icon_sprite"]._getRect(), root, cur)) {
+                            cur["full_sprite"].visible = true;
+                            cur["x_sprite"].visible = true;
+                        }
                     }
                 }
             }
         }
 
-        public function checkForVisiblePopups(hitbox:FlxRect, root:Object):Boolean {
+        public function iconIsNotHidden(hitbox:FlxRect, root:Object, obj:Object):Boolean {
             var cur:Object;
             var i:Number = 0;
+            var overlap:Boolean = true;
             for (i = 0; i < root["contents"].length; i++) {
                 cur = root["contents"][i];
 
                 if (cur["contents"] is Array) {
                     if("folder_sprite" in cur) {
                         if(cur["folder_sprite"].visible && cur["folder_sprite"]._getRect().overlaps(hitbox)) {
-                            return false;
+                            overlap = false;
+                        }
+                    }
+                } else {
+                    if("full_sprite" in cur) {
+                        if(cur["full_sprite"].visible && cur["full_sprite"]._getRect().overlaps(hitbox)) {
+                            overlap = false;
                         }
                     }
                 }
@@ -144,12 +149,20 @@ package com.starmaid.Cibele.management {
                 for(i = 0; i < PopUpManager.getInstance().open_popups.length; i++) {
                     if(PopUpManager.getInstance().open_popups[i] != null) {
                         if(PopUpManager.getInstance().open_popups[i].visible && PopUpManager.getInstance().open_popups[i]._getRect().overlaps(hitbox)) {
-                            return false;
+                                if(obj["struc"] != PopUpManager.getInstance().open_popups[i].tag) {
+                                    overlap = false;
+                                }
+                        }
+                        if(PopUpManager.getInstance().open_popups[i].visible && PopUpManager.getInstance().open_popups[i].x_sprite._getRect().overlaps(hitbox)) {
+                                if(obj["struc"] != PopUpManager.getInstance().open_popups[i].tag) {
+                                    overlap = false;
+                                }
                         }
                     }
                 }
             }
-            return true;
+            FlxG.log(overlap);
+            return overlap;
         }
 
         public function getHitboxKey(obj:Object):String {
