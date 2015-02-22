@@ -179,7 +179,7 @@ package com.starmaid.Cibele.entities {
                             return;
                         }
                         if (mouseWorldRect.overlaps(worldRect)) {
-                            if(!this.active_enemy) {
+                            if(!this.active_enemy && this.targetEnemy == null) {
                                 this.active_enemy = true;
                                 this.targetEnemy = cur as Enemy;
                                 this.targetEnemy.activeTarget();
