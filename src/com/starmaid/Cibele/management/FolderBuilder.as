@@ -137,6 +137,11 @@ package com.starmaid.Cibele.management {
                             overlap = false;
                         }
                     }
+                    if("full_sprite" in cur) {
+                        if(cur["full_sprite"].visible && cur["full_sprite"]._getRect().overlaps(hitbox)) {
+                            overlap = false;
+                        }
+                    }
                 } else {
                     if("full_sprite" in cur) {
                         if(cur["full_sprite"].visible && cur["full_sprite"]._getRect().overlaps(hitbox)) {

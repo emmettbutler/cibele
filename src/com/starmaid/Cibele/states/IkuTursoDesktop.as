@@ -101,7 +101,7 @@ package com.starmaid.Cibele.states {
                             "icon": ImgTiredIcon,
                             "icon_dim": new DHPoint(70, 84),
                             "icon_pos": new DHPoint(320, 32),
-                            "dim": new DHPoint(512, 356),
+                            "dim": new DHPoint(530, 356),
                             "contents": ImgTired
                         },
                         {
