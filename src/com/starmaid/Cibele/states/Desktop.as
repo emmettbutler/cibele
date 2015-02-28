@@ -54,14 +54,19 @@ package com.starmaid.Cibele.states {
 
             SoundManager.getInstance().clearSoundsByType(GameSound.BGM);
             SoundManager.getInstance().clearSoundsByType(GameSound.SFX);
-            SoundManager.getInstance().playSound(SFXRoomTone, 0, null, true, 1, Math.random()*2938+93082, Desktop.ROOMTONE);
+            SoundManager.getInstance().playSound(SFXRoomTone, 0, null, true, 1,
+                                                 Math.random()*2938+93082,
+                                                 Desktop.ROOMTONE);
         }
 
         override public function update():void{
             super.update();
+            var mouseScreenRect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
+            var clicked:GameObject;
             if(FlxG.mouse.justPressed()) {
+                clicked = this.folder_builder.getClickedElement(mouseScreenRect);
                 this.folder_builder.resolveClick(this.folder_structure,
-                    new FlxRect(FlxG.mouse.x, FlxG.mouse.y));
+                                                 mouseScreenRect, clicked);
             }
         }
     }
