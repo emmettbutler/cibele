@@ -110,6 +110,8 @@ package com.starmaid.Cibele.entities {
             this.attack_sprite.play("attack");
             disp = new DHPoint(0, 0);
             footPos = new DHPoint(0, 0);
+            this.attack_sprite.zSorted = true;
+            this.attack_sprite.basePos = new DHPoint(this.x, this.y + this.height);
             this.zSorted = true;
             this.basePos = new DHPoint(this.x, this.y + this.height);
 
@@ -250,6 +252,7 @@ package com.starmaid.Cibele.entities {
             this.footPos.x = this.x + this.width/2;
             this.footPos.y = this.y + this.height;
             this.basePos.y = this.y + this.height;
+            this.attack_sprite.basePos.y = this.y + this.height;
 
             this.target_sprite.x = this.footPos.x - this.target_sprite.width / 2;
             this.target_sprite.y = this.footPos.y - 10;
