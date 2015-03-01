@@ -14,6 +14,8 @@ package com.starmaid.Cibele.entities {
     public class Enemy extends GameObject {
         [Embed(source="/../assets/images/characters/squid_baby.png")] private var ImgIT1:Class;
         [Embed(source="/../assets/images/characters/Enemy2_sprite.png")] private var ImgIT2:Class;
+        [Embed(source="/../assets/images/characters/squid_attack.png")] private var ImgIT1_Attack:Class;
+        [Embed(source="/../assets/images/characters/enemy2_attack.png")] private var ImgIT2_Attack:Class;
         [Embed(source="/../assets/images/ui/enemy_highlight.png")] private var ImgActive:Class;
         [Embed(source="/../assets/images/ui/enemy2_highlight.png")] private var ImgActive2:Class;
         public var enemyType:String = "enemy";
@@ -41,6 +43,7 @@ package com.starmaid.Cibele.entities {
         public var _mapnodes:MapNodeContainer;
         public var footPos:DHPoint;
         public var target_sprite:GameObject;
+        public var attack_sprite:GameObject;
         public var fade_active:Boolean = false;
         public var fade:Boolean = false;
         public var bar:GameObject;
@@ -82,6 +85,12 @@ package com.starmaid.Cibele.entities {
                 this.target_sprite.visible = false;
 
                 loadGraphic(ImgIT1, false, false, 152, 104);
+
+                this.attack_sprite = new GameObject(pos);
+                this.attack_sprite.loadGraphic(ImgIT1_Attack, true, false, 165, 115);
+                this.attack_sprite.addAnimation("attack", [0,1,2,3,4,5,6,7,8,9,10,11,10,9,8,7,6,5,4,3,2,1,0], 12, true);
+                FlxG.state.add(attack_sprite);
+                this.attack_sprite.visible = false;
             } else {
                 this.target_sprite = new GameObject(pos);
                 this.target_sprite.loadGraphic(ImgActive2,false,false,67,15);
@@ -89,9 +98,16 @@ package com.starmaid.Cibele.entities {
                 this.target_sprite.visible = false;
 
                 loadGraphic(ImgIT2, false, false, 70, 160);
+
+                this.attack_sprite = new GameObject(pos);
+                this.attack_sprite.loadGraphic(ImgIT2_Attack, true, false, 71, 163);
+                this.attack_sprite.addAnimation("attack", [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0], 12, true);
+                FlxG.state.add(attack_sprite);
+                this.attack_sprite.visible = false;
             }
             addAnimation("run_enemy", [0, 1, 2, 3, 4, 5], 12, true);
             play("run_enemy");
+            this.attack_sprite.play("attack");
             disp = new DHPoint(0, 0);
             footPos = new DHPoint(0, 0);
             this.zSorted = true;
@@ -195,6 +211,7 @@ package com.starmaid.Cibele.entities {
             this.dead = true;
             this.visible = false;
             this.target_sprite.visible = false;
+            this.attack_sprite.visible = false;
             this.bar.visible = false;
             this._state = STATE_DEAD;
             this.dir = new DHPoint(0,0);
@@ -240,6 +257,9 @@ package com.starmaid.Cibele.entities {
             this.bar.x = this.x + (this.width * .5);
             this.bar.y = this.pos.y-30;
 
+            this.attack_sprite.x = this.x;
+            this.attack_sprite.y = this.y;
+
             if(this._state != STATE_DEAD) {
                 if (this.player == null) {
                     this.playerDisp = new DHPoint(0, 0);
@@ -248,11 +268,15 @@ package com.starmaid.Cibele.entities {
                 }
 
                 if(this.attacker != null){
+                    this.visible = false;
+                    this.attack_sprite.visible = true;
                     if (this.attacker == this.player) {
                         this.attackerDisp = this.playerDisp;
                     } else if (this.attacker == this.path_follower) {
                         this.attackerDisp = this.path_follower.footPos.sub(this.getAttackPos());
                     }
+                } else {
+                    this.attack_sprite.visible = false;
                 }
 
                 if(this.hitpoints <= 0){
