@@ -98,6 +98,12 @@ package com.starmaid.Cibele.management {
             }
         }
 
+        public function addElementsFrom(other:FolderBuilder):void {
+            for (var i:int = 0; i < other.allClickableElements.length; i++) {
+                this.allClickableElements.push(other.allClickableElements[i]);
+            }
+        }
+
         public function getClickedElement(mouse_rect:FlxRect):GameObject {
             var cur:GameObject, curClicked:GameObject, isAbove:Boolean;
             for(var i:int = 0; i < this.allClickableElements.length; i++) {
@@ -151,11 +157,9 @@ package com.starmaid.Cibele.management {
                             cur["x_sprite"].visible = false;
                         }
                     } else if (mouse_rect.overlaps(cur["icon_sprite"]._getRect()) && cur["icon_sprite"].visible) {
-                        if(this.iconIsNotHidden(cur["icon_sprite"]._getRect(), root, cur)) {
-                            if (cur["icon_sprite"] == clicked) {
-                                cur["full_sprite"].visible = true;
-                                cur["x_sprite"].visible = true;
-                            }
+                        if (cur["icon_sprite"] == clicked) {
+                            cur["full_sprite"].visible = true;
+                            cur["x_sprite"].visible = true;
                         }
                     }
                 }
