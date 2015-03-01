@@ -9,7 +9,7 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/characters/boss1.png")] private var ImgBoss:Class;
 
         private var debug_hasWarpedToPlayer:Boolean = false,
-                    debug_testBoss:Boolean = true;
+                    debug_testBoss:Boolean = false;
 
         public function BossEnemy(pos:DHPoint) {
             super(pos);
