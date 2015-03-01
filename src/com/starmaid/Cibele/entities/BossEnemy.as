@@ -70,7 +70,8 @@ package com.starmaid.Cibele.entities {
             }
 
             GlobalTimer.getInstance().setMark(
-                "tentacle_" + new Date().valueOf(), 3*GameSound.MSEC_PER_SEC,
+                "tentacle_" + new Date().valueOf(),
+                (Math.random()*10+3)*GameSound.MSEC_PER_SEC,
                 this.addTentacles
             );
         }
