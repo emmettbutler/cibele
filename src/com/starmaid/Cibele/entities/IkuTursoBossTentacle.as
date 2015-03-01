@@ -18,7 +18,9 @@ package com.starmaid.Cibele.entities {
         public function IkuTursoBossTentacle(pos:DHPoint) {
             super(pos);
 
-            var frameRate:Number = 12;
+            this.basePos = new DHPoint(0, 0);
+
+            var frameRate:Number = 16;
             this.zSorted = true;
 
             this.loadGraphic(ImgBossTentacle, false, false, 435*.2, 1069*.2);
@@ -65,6 +67,9 @@ package com.starmaid.Cibele.entities {
 
         override public function update():void{
             super.update();
+
+            this.basePos.x = this.pos.x + this.width / 2;
+            this.basePos.y = this.pos.y + this.height;
 
             if(this._state == STATE_STEADY) {
                 this.play("steady");
