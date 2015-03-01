@@ -1,10 +1,14 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.utils.GlobalTimer;
+    import com.starmaid.Cibele.base.GameSound;
 
     import org.flixel.*;
 
     public class BossEnemy extends Enemy {
         [Embed(source="/../assets/images/characters/boss1.png")] private var ImgBoss:Class;
+
+        private var debug_hasWarpedToPlayer:Boolean = false;
 
         public function BossEnemy(pos:DHPoint) {
             super(pos);
@@ -26,6 +30,17 @@ package com.starmaid.Cibele.entities {
 
         override public function update():void{
             super.update();
+
+            if (!debug_hasWarpedToPlayer) {
+                debug_hasWarpedToPlayer = true;
+                warpToPlayer();
+                visible = true;
+                this.alpha = 1;
+                GlobalTimer.getInstance().setMark(
+                    "tentacle", 3*GameSound.MSEC_PER_SEC, this.addTentacles
+                );
+            }
+
             if(this.dead) {
                 this.die();
             } else if (this.hitpoints < 10) {
@@ -35,13 +50,27 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        public function addTentacles():void {
+            var tentacle:IkuTursoBossTentacle;
+            for (var i:int = 0; i < Math.random()*6; i++) {
+                tentacle = new IkuTursoBossTentacle(new DHPoint(0, 0));
+                tentacle.setPos(this.footPos.add(new DHPoint(
+                    Math.random()*500-250, Math.random()*100-75 - tentacle.height
+                )));
+            }
+
+            GlobalTimer.getInstance().setMark(
+                "tentacle_" + new Date().valueOf(), 3*GameSound.MSEC_PER_SEC,
+                this.addTentacles
+            );
+        }
+
         override public function die():void {
             if(this.alpha > 0) {
                 this.alpha -= .01;
             } else {
                 this.alpha = 0;
             }
-
         }
     }
 }
