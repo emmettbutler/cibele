@@ -17,6 +17,7 @@ package com.starmaid.Cibele.base {
         public var zSorted:Boolean = false;
         // the "foot position" of this object. used for z-index sorting
         public var basePos:DHPoint = null;
+        public var slug:String;
         public var observeGlobalPause:Boolean = true;
         {
             public static var ZERO_POINT:DHPoint = new DHPoint(0, 0);
@@ -31,6 +32,7 @@ package com.starmaid.Cibele.base {
         public function GameObject(pos:DHPoint) {
             super(pos.x, pos.y);
             this.pos = pos;
+            this.slug = "";
             this.bornTime = new Date().valueOf();
             this.timeAlive = 0;
             this.dir = new DHPoint(0, 0);

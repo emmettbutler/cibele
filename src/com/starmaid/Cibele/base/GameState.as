@@ -230,6 +230,14 @@ package com.starmaid.Cibele.base {
             }
         }
 
+        public function getZIndex(elem:GameObject):int {
+            if (elem == null) {
+                return -1;
+            }
+            var idx:int = this.members.indexOf(elem);
+            return idx;
+        }
+
         public function containsPauseLayer():Boolean {
             for (var i:int = 0; i < this.members.length; i++) {
                 if (this.members[i] == this.pauseLayer) {

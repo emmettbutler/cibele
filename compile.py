@@ -188,7 +188,7 @@ if __name__ == "__main__":
     parser.add_argument('--package', '-p', action="store_true",
                         help="Build an executable")
     parser.add_argument('--platform', '-t', type=str, default="air",
-                        help="The platform for which to build an executable")
+                        help="The platform for which to build an executable (mac | air)")
     parser.add_argument('--copy_path', '-a', action="store_true",
                         help="Copy editor path files to source control")
     parser.add_argument('--run_only', '-r', action="store_true",

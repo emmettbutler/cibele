@@ -7,6 +7,7 @@ package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.base.GameState;
+    import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.UIElement;
     import com.starmaid.Cibele.utils.GlobalTimer;
@@ -125,7 +126,8 @@ package com.starmaid.Cibele.management {
 
             for(var key:Object in this.folder_structure) {
                 var _val:Object = this.folder_structure[key];
-                this.folder_builder.resolveClick(_val, mouseScreenRect);
+                var clicked:GameObject = this.folder_builder.getClickedElement(mouseScreenRect);
+                this.folder_builder.resolveClick(_val, mouseScreenRect, clicked);
             }
 
             var curButton:DockButton;
