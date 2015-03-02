@@ -92,6 +92,7 @@ package com.starmaid.Cibele.states {
 
             this.boss = new BossEnemy(new DHPoint(0, 0));
             add(this.boss);
+            this.boss.addVisibleObjects();
             //this.boss.visible = false;
             this.boss._mapnodes = this._mapnodes;
             this.pathWalker.bossRef = this.boss;

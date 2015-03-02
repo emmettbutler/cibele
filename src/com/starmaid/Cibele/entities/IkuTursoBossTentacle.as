@@ -3,8 +3,11 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.GlobalTimer;
+    import com.starmaid.Cibele.management.ScreenManager;
 
     import org.flixel.*;
+
+    import flash.utils.Dictionary;
 
     public class IkuTursoBossTentacle extends GameObject {
         [Embed(source="/../assets/images/characters/ikuturso_boss_tentacle.png")] private var ImgBossTentacle:Class;
@@ -12,6 +15,14 @@ package com.starmaid.Cibele.entities {
         public static const STATE_APPEARING:Number = 40;
         public static const STATE_STEADY:Number = 50;
         public static const STATE_DISAPPEARING:Number = 69;
+
+        {
+            public static var stateMap:Dictionary = new Dictionary();
+            stateMap[STATE_APPEARING] = "STATE_APPEARING";
+            stateMap[STATE_STEADY] = "STATE_STEADY";
+            stateMap[STATE_DISAPPEARING] = "STATE_DISAPPEARING";
+            stateMap[STATE_NULL] = "STATE_NULL";
+        }
 
         public var lifetimeSec:Number = 2;
 
@@ -32,37 +43,46 @@ package com.starmaid.Cibele.entities {
                               [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
                               frameRate, true);
 
-            FlxG.state.add(this);
+            this._state = STATE_NULL;
+            this.visible = false;
+            this.slug = "tentacle_" + (Math.random() * 100000).toString();
+        }
 
+        public function appear():void {
             this._state = STATE_APPEARING;
-
+            this.visible = true;
             this.slug = "tentacle_" + (Math.random() * 100000).toString();
 
-            var that:IkuTursoBossTentacle = this;
             GlobalTimer.getInstance().setMark(
-                "tentacle_has_appeared_" + that.slug,
+                "tentacle_has_appeared_" + this.slug,
                 1*GameSound.MSEC_PER_SEC,
-                function():void {
-                    that._state = STATE_STEADY;
-
-                    GlobalTimer.getInstance().setMark(
-                        "tentacle_lifetime_end_" + that.slug,
-                        lifetimeSec*GameSound.MSEC_PER_SEC,
-                        function():void {
-                            that._state = STATE_DISAPPEARING;
-
-                            GlobalTimer.getInstance().setMark(
-                                "tentacle_has_disappeared_" + that.slug,
-                                1*GameSound.MSEC_PER_SEC,
-                                function():void {
-                                    that.active = false;
-                                    FlxG.state.remove(that);
-                                }
-                            );
-                        }
-                    );
-                }
+                this.enterSteadyState
             );
+        }
+
+        public function enterSteadyState():void {
+            this._state = STATE_STEADY;
+
+            GlobalTimer.getInstance().setMark(
+                "tentacle_lifetime_end_" + this.slug,
+                lifetimeSec*GameSound.MSEC_PER_SEC,
+                this.leaveSteadyState
+            );
+        }
+
+        public function leaveSteadyState():void {
+            this._state = STATE_DISAPPEARING;
+
+            GlobalTimer.getInstance().setMark(
+                "tentacle_has_disappeared_" + this.slug,
+                1*GameSound.MSEC_PER_SEC,
+                this.makeInactive
+            );
+        }
+
+        public function makeInactive():void {
+            this._state = STATE_NULL;
+            this.visible = false;
         }
 
         override public function update():void{
@@ -70,6 +90,10 @@ package com.starmaid.Cibele.entities {
 
             this.basePos.x = this.pos.x + this.width / 2;
             this.basePos.y = this.pos.y + this.height;
+
+            if(ScreenManager.getInstance().DEBUG) {
+                this.debugText.text = this._state in IkuTursoBossTentacle.stateMap ? IkuTursoBossTentacle.stateMap[this._state] : "unknown";
+            }
 
             if(this._state == STATE_STEADY) {
                 this.play("steady");

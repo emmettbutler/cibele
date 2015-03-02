@@ -90,8 +90,8 @@ package com.starmaid.Cibele.entities {
 
                 loadGraphic(ImgIT2, false, false, 70, 160);
             }
-            addAnimation("run", [0, 1, 2, 3, 4, 5], 12, true);
-            play("run");
+            addAnimation("run_enemy", [0, 1, 2, 3, 4, 5], 12, true);
+            //play("run_enemy");
             disp = new DHPoint(0, 0);
             footPos = new DHPoint(0, 0);
             this.zSorted = true;
@@ -100,6 +100,10 @@ package com.starmaid.Cibele.entities {
             this.bar = new GameObject(new DHPoint(pos.x,pos.y));
             this.bar.makeGraphic(1,8,0xffe2678e);
             this.bar.scale.x = this.hitpoints;
+        }
+
+        public function getStateString():String {
+            return Enemy.stateMap[this._state] == null ? "unknown" : Enemy.stateMap[this._state];
         }
 
         public function warpToPlayer():void {
