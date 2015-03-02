@@ -271,8 +271,10 @@ package com.starmaid.Cibele.entities {
                 }
 
                 if(this.attacker != null){
-                    this.visible = false;
-                    this.attack_sprite.visible = true;
+                    if (!(this is BossEnemy)) {
+                        this.visible = false;
+                        this.attack_sprite.visible = true;
+                    }
                     if (this.attacker == this.player) {
                         this.attackerDisp = this.playerDisp;
                     } else if (this.attacker == this.path_follower) {
