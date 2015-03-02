@@ -12,6 +12,8 @@ package com.starmaid.Cibele.states {
     import flash.events.*;
 
     public class Euryale extends LevelMapState {
+        [Embed(source="/../assets/audio/music/bgm_euryale_intro.mp3")] private var EUBGMIntro:Class;
+        [Embed(source="/../assets/audio/music/bgm_euryale_loop.mp3")] private var EUBGMLoop:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_hey.mp3")] private var Convo1:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_teleport.mp3")] private var Convo1_2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_breakups.mp3")] private var Convo2:Class;
@@ -24,6 +26,8 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/voiceover/voc_euryale_dredge.mp3")] private var Convo5:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_canicallyou.mp3")] private var Convo5_2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_cibyeah.mp3")] private var Convo5_3:Class;
+
+        public static var BGM:String = "euryale bgm loop";
 
         public function Euryale() {
             PopUpManager.GAME_ACTIVE = true;
@@ -87,6 +91,17 @@ package com.starmaid.Cibele.states {
             this.registerPopupCallback();
 
             super.create();
+
+            function _bgmCallback():void {
+                SoundManager.getInstance().playSound(
+                    EUBGMLoop, 0, null, true, .07, GameSound.BGM, Euryale.BGM,
+                    false, false
+                );
+            }
+            SoundManager.getInstance().playSound(
+                EUBGMIntro, 2.6*GameSound.MSEC_PER_SEC, _bgmCallback, false,
+                .07, Math.random()*928+298, Euryale.BGM, false, false, true
+            );
 
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
                 SoundManager.getInstance().playSound(
