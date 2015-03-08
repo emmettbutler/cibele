@@ -63,25 +63,45 @@ package com.starmaid.Cibele.management {
             this.threads = new Array(
                 new Thread(this.img_inbox,
                     ["Rusher", "did you get that link i sent you on aim last night? its an anime you might like :D", 1],
-                    [SENT_BY_CIBELE, "yeah! the fairies were very very cute and i think that VA was in sailor moon??", -1],
-                    ["Rusher", "the little pink haired one looks just like you :3", 10*1000],
-                    [SENT_BY_CIBELE, "i always do my best to look anime ^_^", -1]
+                    [SENT_BY_CIBELE, "yeah! i think that one of the VAs was in sailor moon??", 1],
+                    ["Rusher", "the little pink haired one looks just like you :3", 1],
+                    [SENT_BY_CIBELE, "i always do my best to look anime ^_^", -1],
+                    ["Rusher", "did you see my selfie i put up on the forums?", 2*3000],
+                    [SENT_BY_CIBELE, "yeah! it's a good picture!", -1],
+                    ["Rusher", "thanks, i was hoping you'd like it :)", 2*3000],
+                    [SENT_BY_CIBELE, "i really like knowing what everyone looks like irl!", -1]
                 ),
                 new Thread(this.img_inbox,
                     ["GuyverGuy", "hey giiiiiirl how are things? you never chat with me anymore </3", 1],
-                    [SENT_BY_CIBELE, ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", -1],
-                    ["GuyverGuy", "everyone bowing to ichis whip as usual i see", 2*1000],
-                    [SENT_BY_CIBELE, "omg guyver stop lol", -1]
+                    [SENT_BY_CIBELE, ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", 1],
+                    ["GuyverGuy", "everyone bowing to ichis whip as usual i see", 1],
+                    [SENT_BY_CIBELE, "omg guyver stop lol", 1],
+                    ["GuyverGuy", "are u seriously defending him lol he is an A S S", 1],
+                    [SENT_BY_CIBELE, "he's nice to me", -1],
+                    ["GuyverGuy", "lol of course he is, ur a girl", 2*3000],
+                    [SENT_BY_CIBELE, "whatever guyver lol that's not true", -1],
+                    ["GuyverGuy", "i bet he thinks ur hot", 2*3000],
+                    [SENT_BY_CIBELE, "i doubt that", -1]
                 ),
                 new Thread(this.img_inbox,
                     ["Airia", "Cib! Wanna do a euryale run w/ me on friday?", 1],
-                    [SENT_BY_CIBELE, "ok! <3 see you then girl~", -1]
+                    [SENT_BY_CIBELE, "ok! <3 see you then girl~", 1],
+                    ["Airia", "ichi usually comes but lets go just us, girls night out", 1],
+                    [SENT_BY_CIBELE, "yes! i have so much i wanna talk about with youuu", -1],
+                    ["Airia", "ooooh? ;) something happen??", 2*3000],
+                    [SENT_BY_CIBELE, "i just need your opinion on someone ahhhhh you know", -1],
+                    ["Airia", "OMG who is it??? guil? ICHI?", 2*3000],
+                    [SENT_BY_CIBELE, "lol shhhh we will talk on friday", -1]
                 ),
                 new Thread(this.img_inbox,
                     ["Guillen", "where u at", 1],
-                    [SENT_BY_CIBELE, "hey sorry duoing with ichi now", -1],
-                    ["Guillen", "omg stop hogging ichi come oooonnnn", 7*1000],
-                    [SENT_BY_CIBELE, "^_^;", -1]
+                    [SENT_BY_CIBELE, "hey sorry duoing with ichi now", 1],
+                    ["Guillen", "omg ur always with ichi come oooonnnn", 7*1000],
+                    [SENT_BY_CIBELE, "sorry! lets hang tomorrow maybe?", 1],
+                    ["Guillen", "i wanna hang now cibby! can i meet u after in hiisi or something", 1],
+                    [SENT_BY_CIBELE, "maybe, i will let you know what ichi and i end up doing", -1],
+                    ["Guillen", "when did u start liking ichi more than me lol", 2*3000],
+                    [SENT_BY_CIBELE, "whaaat are you talking about lol stop", -1]
                 )
             );
 
