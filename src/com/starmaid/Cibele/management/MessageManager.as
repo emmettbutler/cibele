@@ -3,6 +3,7 @@ package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.UIElement;
+    import com.starmaid.Cibele.base.GameSound;
 
     import org.flixel.*;
 
@@ -44,8 +45,9 @@ package com.starmaid.Cibele.management {
         public static const STATE_VIEW_LIST:Number = 1;
         public static const STATE_VIEW_MESSAGE:Number = 2;
         public var _state:Number = STATE_HIDE_INBOX;
+        public static const CIBELE_MSG:String = "Cibele";
 
-        public static const SENT_BY_CIBELE:String = "Cibele";
+        public static var SENT_BY_CIBELE:String = CIBELE_MSG;
 
         public var elements:Array;
 
@@ -66,90 +68,90 @@ package com.starmaid.Cibele.management {
             this.it_threads = new Array(
                 new Thread(this.img_inbox,
                     ["Rusher", "did you get that link i sent you on aim last night? its an anime you might like :D", 1],
-                    [SENT_BY_CIBELE, "yeah! i think that one of the VAs was in sailor moon??", 1],
+                    [MessageManager.SENT_BY_CIBELE, "yeah! i think that one of the VAs was in sailor moon??", 1],
                     ["Rusher", "the little pink haired one looks just like you :3", 1],
-                    [SENT_BY_CIBELE, "i always do my best to look anime ^_^", -1],
-                    ["Rusher", "did you see my selfie i put up on the forums?", 2*3000],
-                    [SENT_BY_CIBELE, "yeah! it's a good picture!", -1],
-                    ["Rusher", "thanks, i was hoping you'd like it :)", 2*3000],
-                    [SENT_BY_CIBELE, "i really like knowing what everyone looks like irl!", -1]
+                    [MessageManager.SENT_BY_CIBELE, "i always do my best to look anime ^_^", -1],
+                    ["Rusher", "did you see my selfie i put up on the forums?", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "yeah! it's a good picture!", -1],
+                    ["Rusher", "thanks, i was hoping you'd like it :)", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "i really like knowing what everyone looks like irl!", -1]
                 ),
                 new Thread(this.img_inbox,
                     ["GuyverGuy", "hey giiiiiirl how are things? you never chat with me anymore </3", 1],
-                    [SENT_BY_CIBELE, ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", 1],
+                    [MessageManager.SENT_BY_CIBELE, ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", 1],
                     ["GuyverGuy", "everyone bowing to ichis whip as usual i see", 1],
-                    [SENT_BY_CIBELE, "omg guyver stop lol", 1],
+                    [MessageManager.SENT_BY_CIBELE, "omg guyver stop lol", 1],
                     ["GuyverGuy", "are u seriously defending him lol he is an A S S", 1],
-                    [SENT_BY_CIBELE, "he's nice to me", -1],
-                    ["GuyverGuy", "lol of course he is, ur a girl", 2*3000],
-                    [SENT_BY_CIBELE, "whatever guyver lol that's not true", -1],
-                    ["GuyverGuy", "i bet he thinks ur hot", 2*3000],
-                    [SENT_BY_CIBELE, "i doubt that", -1]
+                    [MessageManager.SENT_BY_CIBELE, "he's nice to me", -1],
+                    ["GuyverGuy", "lol of course he is, ur a girl", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "whatever guyver lol that's not true", -1],
+                    ["GuyverGuy", "i bet he thinks ur hot", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "i doubt that", -1]
                 ),
                 new Thread(this.img_inbox,
                     ["Airia", "Cib! Wanna do a euryale run w/ me on friday?", 1],
-                    [SENT_BY_CIBELE, "ok! <3 see you then girl~", 1],
+                    [MessageManager.SENT_BY_CIBELE, "ok! <3 see you then girl~", 1],
                     ["Airia", "ichi usually comes but lets go just us, girls night out", 1],
-                    [SENT_BY_CIBELE, "yes! i have so much i wanna talk about with youuu", -1],
-                    ["Airia", "ooooh? ;) something happen??", 2*3000],
-                    [SENT_BY_CIBELE, "i just need your opinion on someone ahhhhh you know", -1],
-                    ["Airia", "OMG who is it??? guil? ICHI?", 2*3000],
-                    [SENT_BY_CIBELE, "lol shhhh we will talk on friday", -1]
+                    [MessageManager.SENT_BY_CIBELE, "yes! i have so much i wanna talk about with youuu", -1],
+                    ["Airia", "ooooh? ;) something happen??", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "i just need your opinion on someone ahhhhh you know", -1],
+                    ["Airia", "OMG who is it??? guil? ICHI?", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "lol shhhh we will talk on friday", -1]
                 ),
                 new Thread(this.img_inbox,
                     ["Guillen", "where u at", 1],
-                    [SENT_BY_CIBELE, "hey sorry duoing with ichi now", 1],
-                    ["Guillen", "omg ur always with ichi come oooonnnn", 7*1000],
-                    [SENT_BY_CIBELE, "sorry! lets hang tomorrow maybe?", 1],
+                    [MessageManager.SENT_BY_CIBELE, "hey sorry duoing with ichi now", 1],
+                    ["Guillen", "omg ur always with ichi come oooonnnn", 1],
+                    [MessageManager.SENT_BY_CIBELE, "sorry! lets hang tomorrow maybe?", 1],
                     ["Guillen", "i wanna hang now cibby! can i meet u after in hiisi or something", 1],
-                    [SENT_BY_CIBELE, "maybe, i will let you know what ichi and i end up doing", -1],
-                    ["Guillen", "when did u start liking ichi more than me lol", 2*3000],
-                    [SENT_BY_CIBELE, "whaaat are you talking about lol stop", -1]
+                    [MessageManager.SENT_BY_CIBELE, "maybe, i will let you know what ichi and i end up doing", -1],
+                    ["Guillen", "when did u start liking ichi more than me lol", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "whaaat are you talking about lol stop", -1]
                 )
             );
 
             this.eu_threads = new Array(
                 new Thread(this.img_inbox,
                     ["Rusher", "cibby! we should talk on the phone sometime", 1],
-                    [SENT_BY_CIBELE, "oh yeah? we can voice chat in the game tho", 1],
+                    [MessageManager.SENT_BY_CIBELE, "oh yeah? we can voice chat in the game tho", 1],
                     ["Rusher", "phone is more fun! then we can text and be ~real~ friends", 1],
-                    [SENT_BY_CIBELE, "haha yeah we could text", -1],
-                    ["Rusher", "soooo what do you think?", 2*3000],
-                    [SENT_BY_CIBELE, "i dont text really haha", -1],
-                    ["Rusher", ":(", 2*3000],
-                    [SENT_BY_CIBELE, "ahhh sorry i am just kinda busy but i will msg you later", -1]
+                    [MessageManager.SENT_BY_CIBELE, "haha yeah we could text", -1],
+                    ["Rusher", "soooo what do you think?", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "i dont text really haha", -1],
+                    ["Rusher", ":(", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "ahhh sorry i am just kinda busy but i will msg you later", -1]
                 ),
                 new Thread(this.img_inbox,
                     ["GuyverGuy", "<3 <3 <3", 1],
-                    [SENT_BY_CIBELE, "lol hi guyver whats up", 1],
+                    [MessageManager.SENT_BY_CIBELE, "lol hi guyver whats up", 1],
                     ["GuyverGuy", "ur cute", 1],
-                    [SENT_BY_CIBELE, "uhhh haha thanks", 1],
+                    [MessageManager.SENT_BY_CIBELE, "uhhh haha thanks", 1],
                     ["GuyverGuy", "firesss showed me a pic of u", 1],
-                    [SENT_BY_CIBELE, "the one i put on our forums?", -1],
-                    ["GuyverGuy", "no, he said its a special one from a while ago ;)", 2*3000],
-                    [SENT_BY_CIBELE, "uhhh what lol what are you talking about", -1],
-                    ["GuyverGuy", "its a sexy pic u sent him", 2*3000],
-                    [SENT_BY_CIBELE, "wow what the fuck why did he show you", -1],
-                    ["GuyverGuy", "lol hes jealous of u hangin with ichi", 2*3000],
-                    [SENT_BY_CIBELE, "we had a thing but its over and he knows that wtf", -1]
+                    [MessageManager.SENT_BY_CIBELE, "the one i put on our forums?", -1],
+                    ["GuyverGuy", "no, he said its a special one from a while ago ;)", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "uhhh what lol what are you talking about", -1],
+                    ["GuyverGuy", "its a sexy pic u sent him", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "wow what the fuck why did he show you", -1],
+                    ["GuyverGuy", "lol hes jealous of u hangin with ichi", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "we had a thing but its over and he knows that wtf", -1]
                 ),
                 new Thread(this.img_inbox,
                     ["Airia", "ciiiiib ichi never shuts up about u lol", 1],
-                    [SENT_BY_CIBELE, ":3 he was talking about me to you? what did he say", 1],
+                    [MessageManager.SENT_BY_CIBELE, ":3 he was talking about me to you? what did he say", 1],
                     ["Airia", "he was just gushing about how chill you are compared to other girls", 1],
-                    [SENT_BY_CIBELE, "chill?", -1],
-                    ["Airia", "like ur down to log on for runs whenever. he said u get shit done", 2*3000],
-                    [SENT_BY_CIBELE, "haha yeah i have been getting online for every run lately", -1],
-                    ["Airia", "sounds like u two have been on the phone a lot too~", 2*3000],
-                    [SENT_BY_CIBELE, "we have been talking on the phone a lot... its nice :3", -1]
+                    [MessageManager.SENT_BY_CIBELE, "chill?", -1],
+                    ["Airia", "like ur down to log on for runs whenever. he said u get shit done", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "haha yeah i have been getting online for every run lately", -1],
+                    ["Airia", "sounds like u two have been on the phone a lot too~", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "we have been talking on the phone a lot... its nice :3", -1]
                 ),
                 new Thread(this.img_inbox,
                     ["Guillen", "we really need to meet up next time im in nyc!!!", 1],
-                    [SENT_BY_CIBELE, "i knowww im sorry i keep cancelling", 1],
+                    [MessageManager.SENT_BY_CIBELE, "i knowww im sorry i keep cancelling", 1],
                     ["Guillen", "stop being so busy ;_; ill be in town next weekend if ur free", 1],
-                    [SENT_BY_CIBELE, "depends on what ichi has the ampule doing", -1],
-                    ["Guillen", "aw come on you can take a break for one day", 2*3000],
-                    [SENT_BY_CIBELE, "ill let you know~", -1]
+                    [MessageManager.SENT_BY_CIBELE, "depends on what ichi has the ampule doing", -1],
+                    ["Guillen", "aw come on you can take a break for one day", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "ill let you know~", -1]
                 )
             );
             this.setCurrentThreads();

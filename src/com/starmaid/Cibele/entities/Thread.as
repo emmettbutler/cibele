@@ -4,6 +4,8 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.management.MessageManager;
+    import com.starmaid.Cibele.base.GameSound;
 
     import org.flixel.*;
 
@@ -199,7 +201,7 @@ package com.starmaid.Cibele.entities {
             for (var i:int = 0; i < this.messages.length; i++) {
                 next = this.messages[i + 1];
                 if (!this.messages[i].sent &&
-                    this.messages[i].sent_by != this.messages[i - 1].sent_by)
+                    this.messages[i].sent_by == MessageManager.SENT_BY_CIBELE && (i == 0 || this.messages[i - 1].sent))
                 {
                     this.messages[i].send();
                     this.messages[i].show();
