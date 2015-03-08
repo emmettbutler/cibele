@@ -26,6 +26,10 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/voiceover/voc_euryale_cibyeah.mp3")] private var Convo5_3:Class;
 
         public function Euryale() {
+            if(GameState.cur_level != GameState.LVL_EU) {
+                GameState.cur_level = GameState.LVL_EU;
+            }
+
             PopUpManager.GAME_ACTIVE = true;
             this.ui_color_flag = GameState.UICOLOR_PINK;
             this.conversationCounter = -1;
