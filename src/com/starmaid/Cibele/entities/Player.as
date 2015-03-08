@@ -482,14 +482,12 @@ package com.starmaid.Cibele.entities {
             } else if (this._state == STATE_MOVE_TO_ENEMY) {
                 if(this.targetEnemy != null) {
                     this.finalTarget = this.targetEnemy.getAttackPos();
-                    this.walk();
                     this.doMovementState();
                     if (this.enemyIsInAttackRange(this.targetEnemy)) {
                         this._state = STATE_AT_ENEMY;
                     }
-                } else {
-                    this.walk();
                 }
+                this.walk();
             } else if (this._state == STATE_AT_ENEMY) {
                 this.attack();
                 this.dir = ZERO_POINT;
