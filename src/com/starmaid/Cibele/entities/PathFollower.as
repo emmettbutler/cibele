@@ -16,8 +16,7 @@ package com.starmaid.Cibele.entities {
 
     import flash.utils.Dictionary;
 
-    public class PathFollower extends PartyMember
-    {
+    public class PathFollower extends PartyMember {
         [Embed(source="/../assets/images/characters/Sprite_Ichi_Walk_Cycle.png")] private var ImgIchi:Class;
         [Embed(source="/../assets/images/characters/Ichi_attack sprite.png")] private var ImgIchiAttack:Class;
         [Embed(source="/../assets/images/characters/cib_shadow.png")] private var ImgShadow:Class;
@@ -43,6 +42,7 @@ package com.starmaid.Cibele.entities {
         public var leftRightFootstepOffset:DHPoint;
 
         public var attackAnim:GameObject;
+        private var attackSounds:Array;
 
         public static const STATE_MOVE_TO_PATH_NODE:Number = 2;
         public static const STATE_IDLE_AT_PATH_NODE:Number = 3;
@@ -75,6 +75,9 @@ package com.starmaid.Cibele.entities {
             this.shadow_sprite.zSorted = true;
             this.shadow_sprite.loadGraphic(ImgShadow,false,false,70,42);
             this.shadow_sprite.alpha = .7;
+
+            this.attackSounds = new Array(SfxAttack1, SfxAttack2, SfxAttack3, SfxAttack4);
+            this.attackAnimDuration = 2*GameSound.MSEC_PER_SEC;
 
             this.tag = PartyMember.ichi;
 
@@ -161,149 +164,173 @@ package com.starmaid.Cibele.entities {
             }
         }
 
-        override public function update():void {
-            super.update();
-
-            if (ScreenManager.getInstance().DEBUG) {
+        public function setAuxPositions():void {
+            // set shadow sprite position based on facing
+            switch(this.facing) {
+                case LEFT:
+                    this.shadow_sprite.x = this.pos.center(this).x - 15;
+                    this.shadow_sprite.y = this.pos.center(this).y + 60;
+                    break;
+                case RIGHT:
+                    this.shadow_sprite.x = this.pos.center(this).x - 35;
+                    this.shadow_sprite.y = this.pos.center(this).y + 60;
+                    break;
+                case UP:
+                    this.shadow_sprite.x = this.pos.center(this).x - 35;
+                    this.shadow_sprite.y = this.pos.center(this).y + 60;
+                    break;
+                case DOWN:
+                    this.shadow_sprite.x = this.pos.center(this).x - 35;
+                    this.shadow_sprite.y = this.pos.center(this).y + 60;
+                    break;
             }
 
-            if((FlxG.state as PathEditorState).editorMode == PathEditorState.MODE_EDIT) {
-                return;
-            }
-
-            if(this.facing == LEFT) {
-                this.shadow_sprite.x = this.pos.center(this).x - 15;
-                this.shadow_sprite.y = this.pos.center(this).y + 60;
-            } else if(this.facing == RIGHT) {
-                this.shadow_sprite.x = this.pos.center(this).x - 35;
-                this.shadow_sprite.y = this.pos.center(this).y + 60;
-            } else if(this.facing == UP) {
-                this.shadow_sprite.x = this.pos.center(this).x - 35;
-                this.shadow_sprite.y = this.pos.center(this).y + 60;
-            } else if(this.facing == DOWN) {
-                this.shadow_sprite.x = this.pos.center(this).x - 35;
-                this.shadow_sprite.y = this.pos.center(this).y + 60;
-            }
-
+            // maintain base position for y-axis based z-sorting
+            this.basePos.x = this.x;
             this.basePos.y = this.y + (this.height - 10);
+            this.attackAnim.basePos.x = this.attackAnim.x;
             this.attackAnim.basePos.y = this.attackAnim.y + (this.attackAnim.height - 10);
+        }
 
-            this.closestEnemy = this.getClosestEnemy();
+        public function setTargetEnemy():void {
             if (this.bossRef != null && this.bossRef.bossHasAppeared) {
                 this.targetEnemy = this.bossRef;
             } else {
                 this.targetEnemy = this.closestEnemy;
             }
+        }
+
+        public function performPlayerWarpLogic():void {
             if (this.inViewOfPlayer()) {
-                lastInViewTime = this.currentTime;
+                this.lastInViewTime = this.currentTime;
             }
-            if (this.shouldWarpToPlayer()) {
+            if (this.currentTime - this.lastInViewTime >= 7*GameSound.MSEC_PER_SEC) {
                 this.warpToPlayer();
+            }
+        }
+
+        override public function update():void {
+            super.update();
+
+            // don't run the PathFollower while in edit mode
+            if((FlxG.state as PathEditorState).editorMode == PathEditorState.MODE_EDIT) {
+                return;
             }
 
             this.setFacing();
+            this.setAuxPositions();
+            this.setClosestEnemy();
+            this.setTargetEnemy();
+            this.performPlayerWarpLogic();
 
-            if (this._state == STATE_MOVE_TO_PATH_NODE) {
-                this.walk();
-                if (!this._path.hasNodes()) {
-                    this._state = STATE_NULL;
-                } else {
-                    disp = this.targetPathNode.pos.sub(this.pos);
-                    if (disp._length() < 10) {
-                        this._state = STATE_IDLE_AT_PATH_NODE;
+            switch(this._state) {
+                case STATE_MOVE_TO_PATH_NODE:
+                    this.walk();
+                    if (!this._path.hasNodes()) {
+                        this._state = STATE_NULL;
                     } else {
-                        this.dir = disp.normalized().mulScl(this.runSpeed);
-                    }
-                }
-                if (this.enemyIsInAttackRange(this.targetEnemy)) {
-                    this._state = STATE_AT_ENEMY;
-                } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
-                    if (this.targetEnemy.getAttackPos().sub(this.footPos)._length() > (this.targetEnemy is BossEnemy ? this.bossSightRange : this.sightRange))
-                    {
-                        //TODO write moveToNextMapNode since
-                        //path node could be weirdly far...
-                        this.moveToNextPathNode();
-                    } else {
-                        this.walkTarget = this.targetEnemy.getAttackPos();
-                        this._state = STATE_MOVE_TO_ENEMY;
-                    }
-                }
-            } else if (this._state == STATE_MOVE_TO_MAP_NODE) {
-                this.walk();
-                if (!this._mapnodes.hasNodes()) {
-                    this._state = STATE_NULL;
-                } else {
-                    disp = this.targetMapNode.pos.sub(this.pos);
-                    if (disp._length() < 10) {
-                        if(this.targetMapNode._type == MapNode.TYPE_PATH){
+                        disp = this.targetPathNode.pos.sub(this.pos);
+                        if (disp._length() < 10) {
                             this._state = STATE_IDLE_AT_PATH_NODE;
-                        } else if(this.targetMapNode._type == MapNode.TYPE_MAP){
-                            this._state = STATE_IDLE_AT_MAP_NODE;
+                        } else {
+                            this.dir = disp.normalized().mulScl(this.runSpeed);
                         }
-                        if (this.enemyIsInAttackRange(this.targetEnemy)) {
+                    }
+                    if (this.enemyIsInAttackRange(this.targetEnemy)) {
+                        this._state = STATE_AT_ENEMY;
+                    } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
+                        if (this.targetEnemy.getAttackPos().sub(this.footPos)._length() > (this.targetEnemy is BossEnemy ? this.bossSightRange : this.sightRange))
+                        {
+                            this.moveToNextPathNode();
+                        } else {
+                            this.walkTarget = this.targetEnemy.getAttackPos();
+                            this._state = STATE_MOVE_TO_ENEMY;
+                        }
+                    }
+                    break;
+                case STATE_MOVE_TO_MAP_NODE:
+                    this.walk();
+                    if (!this._mapnodes.hasNodes()) {
+                        this._state = STATE_NULL;
+                    } else {
+                        disp = this.targetMapNode.pos.sub(this.pos);
+                        if (disp._length() < 10) {
+                            if(this.targetMapNode._type == MapNode.TYPE_PATH){
+                                this._state = STATE_IDLE_AT_PATH_NODE;
+                            } else if(this.targetMapNode._type == MapNode.TYPE_MAP){
+                                this._state = STATE_IDLE_AT_MAP_NODE;
+                            }
+                            if (this.enemyIsInAttackRange(this.targetEnemy)) {
+                                this._state = STATE_AT_ENEMY;
+                            } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
+                                this.walkTarget = this.targetEnemy.getAttackPos();
+                                this._state = STATE_MOVE_TO_ENEMY;
+                            }
+                        } else {
+                            this.dir = disp.normalized().mulScl(this.runSpeed);
+                        }
+                    }
+                    break;
+                case STATE_IDLE_AT_PATH_NODE:
+                    if(teamAttack()) {
+                        this.attackPlayerTargetEnemy();
+                    } else {
+                        this.markCurrentNode();
+                        if(this.playerIsInMovementRange()){
+                            this.moveToNextPathNode();
+                        } else if (this.enemyIsInAttackRange(this.targetEnemy)) {
                             this._state = STATE_AT_ENEMY;
                         } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
                             this.walkTarget = this.targetEnemy.getAttackPos();
                             this._state = STATE_MOVE_TO_ENEMY;
                         }
+                        this.dir = ZERO_POINT;
+                    }
+                    break;
+                case STATE_IDLE_AT_MAP_NODE:
+                    if(teamAttack()) {
+                        this.attackPlayerTargetEnemy();
                     } else {
-                        this.dir = disp.normalized().mulScl(this.runSpeed);
+                        if(this.playerIsInMovementRange()){
+                            this.moveToNextNode();
+                        }
+                        //if (this.enemyIsInAttackRange(this.targetEnemy)) {
+                        //    this._state = STATE_AT_ENEMY;
+                        //} else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
+                        //    this._state = STATE_MOVE_TO_ENEMY;
+                        //}
+                        this.dir = ZERO_POINT;
                     }
-                }
-            } else if (this._state == STATE_IDLE_AT_PATH_NODE) {
-                if(teamAttack()) {
-                    this.attackPlayerTargetEnemy();
-                } else {
-                    this.markCurrentNode();
-                    if(this.playerIsInMovementRange()){
-                        this.moveToNextPathNode();
-                    } else if (this.enemyIsInAttackRange(this.targetEnemy)) {
-                        this._state = STATE_AT_ENEMY;
-                    } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
-                        this.walkTarget = this.targetEnemy.getAttackPos();
-                        this._state = STATE_MOVE_TO_ENEMY;
-                    }
+                    break;
+                case STATE_AT_ENEMY:
+                    this.attack();
                     this.dir = ZERO_POINT;
-                }
-            } else if (this._state == STATE_IDLE_AT_MAP_NODE) {
-                if(teamAttack()) {
-                    this.attackPlayerTargetEnemy();
-                } else {
-                    if(this.playerIsInMovementRange()){
+                    break;
+                case STATE_MOVE_TO_ENEMY:
+                    this.walk();
+                    this.walkTarget = this.targetEnemy.getAttackPos();
+                    this.disp = this.walkTarget.sub(this.footPos).normalized();
+                    this.dir = this.disp.mulScl(this.runSpeed);
+                    if (this.enemyIsInAttackRange(this.targetEnemy)) {
+                        this._state = STATE_AT_ENEMY;
+                    } else if (this.targetEnemy.getAttackPos()
+                        .sub(this.footPos)._length() >
+                        (this.targetEnemy is BossEnemy ? this.bossSightRange : this.sightRange) && !this.teamAttack())
+                    {
                         this.moveToNextNode();
                     }
-                    //if (this.enemyIsInAttackRange(this.targetEnemy)) {
-                    //    this._state = STATE_AT_ENEMY;
-                    //} else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
-                    //    this._state = STATE_MOVE_TO_ENEMY;
-                    //}
+                    break;
+                case STATE_IN_ATTACK:
                     this.dir = ZERO_POINT;
-                }
-            } else if (this._state == STATE_AT_ENEMY) {
-                this.attack();
-                this.dir = ZERO_POINT;
-            } else if (this._state == STATE_MOVE_TO_ENEMY){
-                this.walk();
-                this.walkTarget = this.targetEnemy.getAttackPos();
-                this.disp = this.walkTarget.sub(this.footPos).normalized();
-                this.dir = this.disp.mulScl(this.runSpeed);
-                if (this.enemyIsInAttackRange(this.targetEnemy)) {
-                    this._state = STATE_AT_ENEMY;
-                } else if (this.targetEnemy.getAttackPos()
-                    .sub(this.footPos)._length() >
-                    (this.targetEnemy is BossEnemy ? this.bossSightRange : this.sightRange) && !this.teamAttack())
-                {
-                    this.moveToNextNode();
-                }
-            } else if (this._state == STATE_IN_ATTACK) {
-                this.dir = ZERO_POINT;
-            } else if (this._state == STATE_MOVE_TO_PLAYER) {
-                this.walk();
-                this.disp = this.playerRef.pos.sub(this.footPos).normalized();
-                this.dir = this.disp.mulScl(this.runSpeed);
-                if (this.playerIsInMovementRange()) {
-                    this.moveToNextNode();
-                }
+                    break;
+                case STATE_MOVE_TO_PLAYER:
+                    this.walk();
+                    this.disp = this.playerRef.pos.sub(this.footPos).normalized();
+                    this.dir = this.disp.mulScl(this.runSpeed);
+                    if (this.playerIsInMovementRange()) {
+                        this.moveToNextNode();
+                    }
+                    break;
             }
         }
 
@@ -321,7 +348,6 @@ package com.starmaid.Cibele.entities {
 
         override public function resolveStatePostAttack():void {
             super.resolveStatePostAttack();
-            // TODO - which state were you in before attacking? go back to that one
             if (this.targetEnemy != null && !this.targetEnemy.dead && this.targetEnemy.visible == true)
             {
                 if (this.enemyIsInAttackRange(this.targetEnemy))
@@ -338,7 +364,7 @@ package com.starmaid.Cibele.entities {
             this.visible = true;
         }
 
-        public function getClosestEnemy():Enemy {
+        public function setClosestEnemy():void {
             var shortest:Number = 99999999;
             var ret:Enemy = null;
             var en_disp:Number;
@@ -351,7 +377,7 @@ package com.starmaid.Cibele.entities {
                     ret = cur;
                 }
             }
-            return ret;
+            this.closestEnemy = ret;
         }
 
         public function setPath(path:Path):void {
@@ -418,11 +444,6 @@ package com.starmaid.Cibele.entities {
 
         public function warpToPlayer():void {
             var dir:DHPoint = new DHPoint(this.playerRef.dir.x, this.playerRef.dir.y);
-            //if (dir.x == 0 && dir.y == 0) {
-            //    dir.x = 10;
-            //    dir.y = 10;
-            //}
-            //TODO if you're standing still for too long, he should walk to you
             var targetPoint:DHPoint = this.playerRef.pos.add(dir.normalized().mulScl(555));
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint, null, false);
             if (warpNode != null) {
@@ -431,38 +452,32 @@ package com.starmaid.Cibele.entities {
             this._state = STATE_MOVE_TO_PLAYER;
         }
 
-        public function shouldWarpToPlayer():Boolean {
-            return this.currentTime - this.lastInViewTime >= 7*1000;
-        }
-
         public function reverseAttackAnim():void {
+            // since this is called asynchronously, don't do it if we've switched states
             if (!(FlxG.state is LevelMapState)) {
                 return;
             }
             this.attackAnim.play("reverse_attack");
-            GlobalTimer.getInstance().setMark("attack anim stuff reverse", 1*GameSound.MSEC_PER_SEC, this.resolveStatePostAttack, true);
+            GlobalTimer.getInstance().setMark(
+                "attack anim stuff reverse", 1*GameSound.MSEC_PER_SEC,
+                this.resolveStatePostAttack, true
+            );
         }
 
         override public function attack():void {
             super.attack();
             if (this._state == STATE_IN_ATTACK) {
-                //TODO reverse attack anim
-                GlobalTimer.getInstance().setMark("attack anim stuff", 1*GameSound.MSEC_PER_SEC, this.reverseAttackAnim, true);
+                GlobalTimer.getInstance().setMark(
+                    "attack anim stuff", 1*GameSound.MSEC_PER_SEC,
+                    this.reverseAttackAnim, true
+                );
                 this.attackAnim.x = this.x + 20;
                 this.attackAnim.y = this.y;
                 this.attackAnim.visible = true;
                 this.attackAnim.play("attack");
                 this.visible = false;
 
-                var snd:Class = SfxAttack1;
-                var rand:Number = Math.random() * 4;
-                if (rand > 3) {
-                    snd = SfxAttack2;
-                } else if (rand > 2) {
-                    snd = SfxAttack3;
-                } else if (rand > 1) {
-                    snd = SfxAttack4;
-                }
+                var snd:Class = this.attackSounds[Math.floor(Math.random() * this.attackSounds.length)];
                 SoundManager.getInstance().playSound(
                     snd, 2*GameSound.MSEC_PER_SEC, null, false, .3, GameSound.SFX,
                     "" + Math.random()

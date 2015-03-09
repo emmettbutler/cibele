@@ -1,6 +1,7 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.base.GameSound;
 
     import org.flixel.*;
 
@@ -21,6 +22,7 @@ package com.starmaid.Cibele.entities {
         public var sightRange:Number;
         public var bossSightRange:Number;
         public var targetEnemy:Enemy;
+        public var attackAnimDuration:Number;
 
         public var tag:String;
         public static const cib:String = "cibelelele";
@@ -33,6 +35,7 @@ package com.starmaid.Cibele.entities {
             this.footPos = new DHPoint(0, 0);
             this.sightRange = 280;
             this.bossSightRange = 1200;
+            this.attackAnimDuration = 2*GameSound.MSEC_PER_SEC;
         }
 
         public function initFootsteps():void {
@@ -81,7 +84,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function canAttack():Boolean {
-            return this.timeSinceLastAttack() > 2*MSEC_PER_SEC;
+            return this.timeSinceLastAttack() > this.attackAnimDuration;
         }
 
         public function enemyIsInAttackRange(en:Enemy):Boolean {
