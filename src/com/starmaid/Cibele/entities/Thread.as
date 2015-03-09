@@ -35,6 +35,8 @@ package com.starmaid.Cibele.entities {
         public var list_hitbox_width:Number = 380;
         public var list_hitbox_height:Number = 25;
 
+        public static const MSG_PADDING:Number = 10;
+
         public function Thread(inbox:GameObject,
                                ... messages) {
             this.inbox_ref = inbox;
@@ -99,13 +101,33 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        public function setBaseMsgPos():void {
+            var allSent:Array = new Array();
+            for (var i:int = 0; i < this.messages.length; i++) {
+                if (this.messages[i].sent) {
+                    allSent.push(this.messages[i]);
+                }
+            }
+            var totalVisibleHeight:Number = 0,
+                invisibleMsgStackHeight:Number = 0;
+            for (var k:int = allSent.length - 1; k >= 0; k--) {
+                if (totalVisibleHeight + allSent[k].textbox.height <=
+                    this.inbox_ref.height - 55)
+                {
+                    totalVisibleHeight += allSent[k].textbox.height + MSG_PADDING;
+                } else {
+                    invisibleMsgStackHeight += allSent[k].textbox.height + MSG_PADDING;
+                }
+            }
+            this.messages[0].pos.y = this.inbox_ref.y - invisibleMsgStackHeight + 20;
+        }
+
         public function rotate():void {
+            this.setBaseMsgPos();
             for (var i:int = 0; i < this.messages.length; i++) {
                 if (this.messages[i].sent) {
                     if (i != 0) {
-                        this.messages[i].pos.y = this.messages[i - 1].pos.y + 50;
-                    } else {
-                        this.messages[i].pos.y -= 50;
+                        this.messages[i].pos.y = this.messages[i - 1].pos.y + this.messages[i - 1].textbox.height + MSG_PADDING;
                     }
                     if (this.messages[i].pos.y < this.inbox_ref.y) {
                         this.messages[i].hide();
@@ -205,16 +227,14 @@ package com.starmaid.Cibele.entities {
                 {
                     this.messages[i].send();
                     this.messages[i].show();
-                    this.messages[i].pos.y = this.messages[i - 1].pos.y + 50;
+                    //this.messages[i].pos.y = this.messages[i - 1].pos.y + 50;
                     if (next != null) {
                         GlobalTimer.getInstance().setMark(
                             next.display_text, next.send_time
                         );
                     }
                     this.sent_count++;
-                    if (this.sent_count > 3) {
-                        this.rotate();
-                    }
+                    this.rotate();
                     break;
                 }
             }
