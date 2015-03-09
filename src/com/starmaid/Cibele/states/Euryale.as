@@ -30,6 +30,10 @@ package com.starmaid.Cibele.states {
         public static var BGM:String = "euryale bgm loop";
 
         public function Euryale() {
+            if(GameState.cur_level != GameState.LVL_EU) {
+                GameState.cur_level = GameState.LVL_EU;
+            }
+
             PopUpManager.GAME_ACTIVE = true;
             this.ui_color_flag = GameState.UICOLOR_PINK;
             this.conversationCounter = -1;
