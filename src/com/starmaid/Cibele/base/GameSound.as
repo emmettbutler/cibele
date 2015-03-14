@@ -1,5 +1,6 @@
 package com.starmaid.Cibele.base {
     import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.utils.GlobalTimer;
 
     import org.flixel.*;
@@ -51,6 +52,9 @@ package com.starmaid.Cibele.base {
             soundObject.play();
             if (GlobalTimer.getInstance().isPaused()) {
                 soundObject.pause();
+            }
+            if (ScreenManager.getInstance().MUTE) {
+                soundObject.stop();
             }
         }
 
