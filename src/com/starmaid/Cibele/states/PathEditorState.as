@@ -3,7 +3,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.utils.EnemyGroup;
     import com.starmaid.Cibele.utils.MapNodeContainer;
     import com.starmaid.Cibele.entities.PathFollower;
-    import com.starmaid.Cibele.entities.BossEnemy;
+    import com.starmaid.Cibele.entities.IkuTursoBoss;
     import com.starmaid.Cibele.entities.MapNode;
     import com.starmaid.Cibele.management.Path;
     import com.starmaid.Cibele.entities.PathNode;
@@ -24,7 +24,7 @@ package com.starmaid.Cibele.states {
         public var _path:Path;
         public var _mapnodes:MapNodeContainer;
         public var enemies:EnemyGroup;
-        public var boss:BossEnemy;
+        public var boss:IkuTursoBoss;
         public var showNodes:Boolean;
         public var filename:String, graph_filename:String;
         public var dataFile:File, backupFile:File, writeFile:File,
@@ -90,7 +90,7 @@ package com.starmaid.Cibele.states {
                 this.pathWalker.moveToNextPathNode();
             }
 
-            this.boss = new BossEnemy(new DHPoint(0, 0));
+            this.boss = new IkuTursoBoss(new DHPoint(0, 0));
             add(this.boss);
             this.boss.addVisibleObjects();
             //this.boss.visible = false;
@@ -131,7 +131,7 @@ package com.starmaid.Cibele.states {
                     add(en);
                     this.enemies.addEnemy(en);
                 } else if (FlxG.keys["Q"]) {
-                    var boss:BossEnemy = new BossEnemy(new DHPoint(FlxG.mouse.x,
+                    var boss:IkuTursoBoss = new IkuTursoBoss(new DHPoint(FlxG.mouse.x,
                                                                    FlxG.mouse.y));
                     add(boss);
                     this.enemies.addEnemy(boss);
@@ -303,7 +303,7 @@ package com.starmaid.Cibele.states {
                     this.enemies.addEnemy(en);
                 } else if (prefix_.indexOf("boss") == 0 && this.shouldAddEnemies) {
                     coords = line[1].split("x");
-                    var bo:BossEnemy = new BossEnemy(
+                    var bo:IkuTursoBoss = new IkuTursoBoss(
                         new DHPoint(Number(coords[0]), Number(coords[1])));
                     add(bo);
                     this.enemies.addEnemy(bo);
