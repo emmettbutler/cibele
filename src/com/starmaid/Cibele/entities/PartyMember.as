@@ -23,6 +23,8 @@ package com.starmaid.Cibele.entities {
         public var bossSightRange:Number;
         public var targetEnemy:Enemy;
         public var attackAnimDuration:Number;
+        protected var walkTarget:DHPoint;
+        protected var shadow_sprite:GameObject;
 
         public var tag:String;
         public static const cib:String = "cibelelele";

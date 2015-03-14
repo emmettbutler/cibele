@@ -33,8 +33,7 @@ package com.starmaid.Cibele.entities {
         private var walkTarget:DHPoint, finalTarget:DHPoint, hitboxOffset:DHPoint,
                     hitboxDim:DHPoint;
         private var curPath:Path;
-        private var click_anim:GameObject, attack_sprite:GameObject,
-                    shadow_sprite:GameObject;
+        private var click_anim:GameObject, attack_sprite:GameObject;
         private var click_anim_lock:Boolean = false, clickWait:Boolean,
                     active_enemy:Boolean = false, mouseHeld:Boolean = false;
         private var upDownFootstepOffset:DHPoint, leftFootstepOffset:DHPoint,

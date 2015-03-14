@@ -25,23 +25,18 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/audio/effects/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
         [Embed(source="/../assets/audio/effects/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
 
-        public var _path:Path;
-        public var _mapnodes:MapNodeContainer;
-        public var _enemies:EnemyGroup;
-        public var targetPathNode:PathNode, targetMapNode:MapNode;
-        public var lastInViewTime:Number = 0;
-
-        public var runSpeed:Number = 7;
-        public var bossRef:BossEnemy;
-
-        public var closestEnemy:Enemy;
-        public var playerRef:Player;
-        public var walkTarget:DHPoint;
-        public var disp:DHPoint;
-        public var upDownFootstepOffset:DHPoint;
-        public var leftRightFootstepOffset:DHPoint;
-
-        public var attackAnim:GameObject;
+        private var _path:Path;
+        private var _mapnodes:MapNodeContainer;
+        private var _enemies:EnemyGroup;
+        private var targetPathNode:PathNode, targetMapNode:MapNode;
+        private var lastInViewTime:Number = 0, runSpeed:Number = 7;
+        private var bossRef:BossEnemy;
+        private var closestEnemy:Enemy;
+        private var playerRef:Player;
+        private var disp:DHPoint,
+                    upDownFootstepOffset:DHPoint,
+                    leftRightFootstepOffset:DHPoint;
+        private var attackAnim:GameObject;
         private var attackSounds:Array;
 
         public static const STATE_MOVE_TO_PATH_NODE:Number = 2;
@@ -49,9 +44,6 @@ package com.starmaid.Cibele.entities {
         public static const STATE_MOVE_TO_MAP_NODE:Number = 6;
         public static const STATE_IDLE_AT_MAP_NODE:Number = 7;
         public static const STATE_MOVE_TO_PLAYER:Number = 8;
-
-        public var shadow_sprite:GameObject;
-
         public static const ATTACK_RANGE:Number = 150;
 
         {
@@ -117,6 +109,14 @@ package com.starmaid.Cibele.entities {
 
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.pos", "ichi.pos");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.getStateString", "ichi.state");
+        }
+
+        public function setBossRef(ref:BossEnemy):void {
+            this.bossRef = ref;
+        }
+
+        public function getPath():Path {
+            return this._path;
         }
 
         public function getStateString():String {
