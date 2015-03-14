@@ -29,14 +29,12 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/audio/effects/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
 
         private var walkSpeed:Number = 7, mouseDownTime:Number;
-        private var walkTarget:DHPoint, finalTarget:DHPoint, hitboxOffset:DHPoint,
+        private var finalTarget:DHPoint, hitboxOffset:DHPoint,
                     hitboxDim:DHPoint;
         private var curPath:Path;
         private var click_anim:GameObject, attack_sprite:GameObject;
         private var click_anim_lock:Boolean = false, clickWait:Boolean,
                     active_enemy:Boolean = false, mouseHeld:Boolean = false;
-        private var upDownFootstepOffset:DHPoint, leftFootstepOffset:DHPoint,
-                    rightFootstepOffset:DHPoint;
 
         public var colliding:Boolean = false;
         public var mapHitbox:GameObject, cameraPos:GameObject;
@@ -107,11 +105,12 @@ package com.starmaid.Cibele.entities {
             this.mapHitbox.makeGraphic(this.hitboxDim.x, this.hitboxDim.y,
                                        0xff000000);
 
-            this.upDownFootstepOffset = new DHPoint(70, this.height);
-            this.leftFootstepOffset = new DHPoint(90, this.height-20);
-            this.rightFootstepOffset = new DHPoint(40, this.height-20);
-            this.footstepOffset = this.upDownFootstepOffset;
-            this.walkTarget = new DHPoint(0, 0);
+            this.footstepOffsets.up = new DHPoint(70, this.height);
+            this.footstepOffsets.down = this.footstepOffsets.up;
+            this.footstepOffsets.left = new DHPoint(90, this.height-20);
+            this.footstepOffsets.right = new DHPoint(40, this.height-20);
+            this.footstepOffset = this.footstepOffsets.up as DHPoint;
+
             this.finalTarget = new DHPoint(0, 0);
             this.debugText.color = 0xff444444;
 
@@ -230,14 +229,18 @@ package com.starmaid.Cibele.entities {
                     if(Math.abs(this.dir.y) > Math.abs(this.dir.x)){
                         if(this.dir.y <= 0){
                             this.facing = UP;
+                            this.text_facing = "up";
                         } else {
                             this.facing = DOWN;
+                            this.text_facing = "down";
                         }
                     } else {
                         if(this.dir.x >= 0){
                             this.facing = RIGHT;
+                            this.text_facing = "right";
                         } else {
                             this.facing = LEFT;
+                            this.text_facing = "left";
                         }
                     }
                 }
@@ -337,23 +340,21 @@ package com.starmaid.Cibele.entities {
         public function walk():void {
             var walkDirection:DHPoint = walkTarget.sub(footPos).normalized();
             this.dir = walkDirection.mulScl(this.walkSpeed);
-            if(this.facing == LEFT){
-                this.play("walk_l");
-                this.text_facing = "left";
-                this.footstepOffset = this.leftFootstepOffset;
-            } else if (this.facing == RIGHT){
-                this.play("walk_r");
-                this.text_facing = "right";
-                this.footstepOffset = this.rightFootstepOffset;
-            } else if(this.facing == UP){
-                this.play("walk_u");
-                this.text_facing = "up";
-                this.footstepOffset = this.upDownFootstepOffset;
-            } else if(this.facing == DOWN){
-                this.play("walk_d");
-                this.text_facing = "down";
-                this.footstepOffset = this.upDownFootstepOffset;
+            switch(this.facing) {
+                case LEFT:
+                    this.play("walk_l");
+                    break;
+                case RIGHT:
+                    this.play("walk_r");
+                    break;
+                case UP:
+                    this.play("walk_u");
+                    break;
+                case DOWN:
+                    this.play("walk_d");
+                    break;
             }
+            this.footstepOffset = this.footstepOffsets[this.text_facing] as DHPoint;
         }
 
         override public function addVisibleObjects():void {

@@ -2,6 +2,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.utils.LRUDVector;
 
     import org.flixel.*;
 
@@ -26,6 +27,7 @@ package com.starmaid.Cibele.entities {
         public var attackAnimDuration:Number;
         protected var walkTarget:DHPoint;
         protected var shadow_sprite:GameObject;
+        protected var footstepOffsets:LRUDVector;
 
         public function PartyMember(pos:DHPoint) {
             super(pos);
@@ -35,7 +37,11 @@ package com.starmaid.Cibele.entities {
             this.sightRange = 280;
             this.bossSightRange = 1200;
             this.attackAnimDuration = 2*GameSound.MSEC_PER_SEC;
+            this.walkTarget = new DHPoint(0, 0);
+            this.footstepOffsets = new LRUDVector();
         }
+
+        public function setupSprites():void { }
 
         public function initFootsteps():void {
             this.footsteps = new FootstepTrail(this);
