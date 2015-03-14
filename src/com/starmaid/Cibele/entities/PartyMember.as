@@ -129,7 +129,7 @@ package com.starmaid.Cibele.entities {
             if (en is BossEnemy) {
                 range = this.bossSightRange;
             }
-            return en.pos.sub(this.pos)._length() < range;
+            return en.getAttackPos().sub(this.footPos)._length() < range;
         }
 
         public function resolveStatePostAttack():void {}
