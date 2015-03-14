@@ -105,11 +105,8 @@ package com.starmaid.Cibele.entities {
             this.mapHitbox.makeGraphic(this.hitboxDim.x, this.hitboxDim.y,
                                        0xff000000);
 
-            this.footstepOffsets.up = new DHPoint(70, this.height);
-            this.footstepOffsets.down = this.footstepOffsets.up;
-            this.footstepOffsets.left = new DHPoint(90, this.height-20);
-            this.footstepOffsets.right = new DHPoint(40, this.height-20);
-            this.footstepOffset = this.footstepOffsets.up as DHPoint;
+            this.setupFootsteps();
+            this.attackSounds = new Array(SfxAttack1, SfxAttack2, SfxAttack3, SfxAttack4);
 
             this.finalTarget = new DHPoint(0, 0);
             this.debugText.color = 0xff444444;
@@ -123,6 +120,14 @@ package com.starmaid.Cibele.entities {
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getStateString", "player.state");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getWalkTarget", "player.walkTarget");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getFinalTarget", "player.finalTarget");
+        }
+
+        override public function setupFootsteps():void {
+            this.footstepOffsets.up = new DHPoint(70, this.height);
+            this.footstepOffsets.down = this.footstepOffsets.up;
+            this.footstepOffsets.left = new DHPoint(90, this.height-20);
+            this.footstepOffsets.right = new DHPoint(40, this.height-20);
+            this.footstepOffset = this.footstepOffsets.up as DHPoint;
         }
 
         public function setMapNodes(nodes:MapNodeContainer):void {
@@ -624,19 +629,7 @@ package com.starmaid.Cibele.entities {
                         playReverseAttack();
                     }, true);
 
-                var snd:Class = SfxAttack1;
-                var rand:Number = Math.random() * 4;
-                if (rand > 3) {
-                    snd = SfxAttack2;
-                } else if (rand > 2) {
-                    snd = SfxAttack3;
-                } else if (rand > 1) {
-                    snd = SfxAttack4;
-                }
-                SoundManager.getInstance().playSound(
-                    snd, 2*GameSound.MSEC_PER_SEC, null, false, .3, GameSound.SFX,
-                    "" + Math.random()
-                );
+                this.playAttackSound();
             }
         }
 

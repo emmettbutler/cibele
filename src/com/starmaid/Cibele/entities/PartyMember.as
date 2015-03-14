@@ -1,8 +1,9 @@
 package com.starmaid.Cibele.entities {
-    import com.starmaid.Cibele.utils.DHPoint;
-    import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.utils.LRUDVector;
+    import com.starmaid.Cibele.utils.DHPoint;
 
     import org.flixel.*;
 
@@ -28,6 +29,7 @@ package com.starmaid.Cibele.entities {
         protected var walkTarget:DHPoint;
         protected var shadow_sprite:GameObject;
         protected var footstepOffsets:LRUDVector;
+        protected var attackSounds:Array;
 
         public function PartyMember(pos:DHPoint) {
             super(pos);
@@ -42,6 +44,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function setupSprites():void { }
+        public function setupFootsteps():void { }
 
         public function initFootsteps():void {
             this.footsteps = new FootstepTrail(this);
@@ -60,6 +63,16 @@ package com.starmaid.Cibele.entities {
         }
 
         public function addVisibleObjects():void { }
+
+        public function playAttackSound():void {
+            var snd:Class = this.attackSounds[
+                Math.floor(Math.random() * this.attackSounds.length)
+            ];
+            SoundManager.getInstance().playSound(
+                snd, 2*GameSound.MSEC_PER_SEC, null, false, .3, GameSound.SFX,
+                "" + Math.random()
+            );
+        }
 
         override public function update():void {
             super.update();

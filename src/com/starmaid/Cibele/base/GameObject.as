@@ -25,7 +25,7 @@ package com.starmaid.Cibele.base {
 
         public static const STATE_NULL:Number = -1;
         public static const STATE_IDLE:Number = 0;
-        public var _state:Number;
+        public var _state:Number = STATE_NULL;
 
         public static const MSEC_PER_SEC:Number = 1000;
 

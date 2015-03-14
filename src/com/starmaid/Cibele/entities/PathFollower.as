@@ -34,7 +34,6 @@ package com.starmaid.Cibele.entities {
         private var playerRef:Player;
         private var disp:DHPoint;
         private var attackAnim:GameObject;
-        private var attackSounds:Array;
 
         public static const STATE_MOVE_TO_PATH_NODE:Number = 2;
         public static const STATE_IDLE_AT_PATH_NODE:Number = 3;
@@ -62,28 +61,24 @@ package com.starmaid.Cibele.entities {
             this.nameText.text = "Ichi";
             this.zSorted = true;
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
+            this.debugText.color = 0xff444444;
+            this.disp = new DHPoint(0, 0);
+            this.attackRange = 90;
+            this.attackSounds = new Array(SfxAttack1, SfxAttack2, SfxAttack3, SfxAttack4);
 
             this.setupSprites();
+            this.setupFootsteps();
 
-            this.attackSounds = new Array(SfxAttack1, SfxAttack2, SfxAttack3, SfxAttack4);
-            this.attackAnimDuration = 2*GameSound.MSEC_PER_SEC;
-            this.attackRange = 90;
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.pos", "ichi.pos");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.getStateString", "ichi.state");
+        }
 
-            this.targetPathNode = null;
-            this._state = STATE_NULL;
-
+        override public function setupFootsteps():void {
             this.footstepOffsets.up = new DHPoint(70, this.height);
             this.footstepOffsets.down = this.footstepOffsets.up;
             this.footstepOffsets.left = new DHPoint(90, this.height-20);
             this.footstepOffsets.right = this.footstepOffsets.left;
             this.footstepOffset = this.footstepOffsets.up as DHPoint;
-
-            this.disp = new DHPoint(0, 0);
-
-            this.debugText.color = 0xff444444;
-
-            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.pos", "ichi.pos");
-            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.getStateString", "ichi.state");
         }
 
         override public function setupSprites():void {
@@ -473,11 +468,7 @@ package com.starmaid.Cibele.entities {
                 this.attackAnim.play("attack");
                 this.visible = false;
 
-                var snd:Class = this.attackSounds[Math.floor(Math.random() * this.attackSounds.length)];
-                SoundManager.getInstance().playSound(
-                    snd, 2*GameSound.MSEC_PER_SEC, null, false, .3, GameSound.SFX,
-                    "" + Math.random()
-                );
+                this.playAttackSound();
             }
         }
 
