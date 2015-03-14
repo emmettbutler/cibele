@@ -2,6 +2,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.Emote;
+    import com.starmaid.Cibele.entities.BlankScreen;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameSound;
@@ -93,7 +94,6 @@ package com.starmaid.Cibele.states {
 
         override public function create():void {
             this.registerPopupCallback();
-
             super.create();
 
             function _bgmCallback():void {
@@ -153,14 +153,16 @@ package com.starmaid.Cibele.states {
         public function playEndFilm():void {
             //SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
                     //false, 1, GameSound.BGM);
-                FlxG.switchState(
+            FlxG.switchState(new BlankScreen(5*GameSound.MSEC_PER_SEC,
+                function():void {
                     new PlayVideoState("/../assets/video/Phone Talk_v1.mp4",
                         function():void {
                             FlxG.switchState(new StartScreen());
                             PopUpManager.GAME_ACTIVE = false;
                         }, null
                     )
-                );
+                }
+            ));
         }
     }
 }
