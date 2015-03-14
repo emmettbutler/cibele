@@ -45,6 +45,9 @@ package com.starmaid.Cibele.management {
                     endCallback();
                 }
             };
+            if (ScreenManager.getInstance().MUTE) {
+                _vol = 0;
+            }
             var newSound:GameSound = new GameSound(embeddedSound, dur, _loop,
                                                    _vol, _kind, name, fadeIn,
                                                    fadeOut, _callback, duck);

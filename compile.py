@@ -65,7 +65,7 @@ package
     return preloader_class
 
 
-def compile_main(entry_point_class, libpath, debug_level):
+def compile_main(entry_point_class, libpath, debug_level, mute=False):
     stacktraces = "true"
     omit_trace = "false"
     debug = "true"
@@ -90,7 +90,8 @@ def compile_main(entry_point_class, libpath, debug_level):
                "-debug={}".format(debug),
                "-omit-trace-statements={}".format(omit_trace),
                "-define=CONFIG::debug,{}".format(debug_flag),
-               "-define=CONFIG::test,{}".format(test_flag), ]
+               "-define=CONFIG::test,{}".format(test_flag),
+               "-define=CONFIG::mute,{}".format("true" if mute else "false")]
     print " ".join(command)
     subprocess.check_call(command)
     return swfpath
@@ -159,7 +160,8 @@ def main():
         run_main(get_conf_path(entry_point_class), args.runtime[0])
     else:
         preloader_class = write_preloader()
-        swf_path = compile_main(entry_point_class.split('.')[-1], libpath, args.debug_level[0])
+        swf_path = compile_main(entry_point_class.split('.')[-1], libpath,
+                                args.debug_level[0], mute=args.mute)
         conf_path = write_conf_file(swf_path, entry_point_class, args.version_id[0])
 
         if args.package:
@@ -187,6 +189,8 @@ if __name__ == "__main__":
                         help="Debug level to compile under. One of [debug|test|release]")
     parser.add_argument('--package', '-p', action="store_true",
                         help="Build an executable")
+    parser.add_argument('--mute', '-e', action="store_true",
+                        help="Mute all sounds in this build")
     parser.add_argument('--platform', '-t', type=str, default="air",
                         help="The platform for which to build an executable (mac | air)")
     parser.add_argument('--copy_path', '-a', action="store_true",
