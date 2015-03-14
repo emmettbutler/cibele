@@ -23,10 +23,8 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/characters/cib_attack.png")] private var ImgAttack:Class;
         [Embed(source="/../assets/images/characters/cib_shadow_blue.png")] private var ImgShadowBlue:Class;
         [Embed(source="/../assets/audio/effects/sfx_uigeneral.mp3")] private var SfxUI:Class;
-        [Embed(source="/../assets/audio/effects/sfx_protoattack1.mp3")] private var SfxAttack1:Class;
-        [Embed(source="/../assets/audio/effects/sfx_protoattack2.mp3")] private var SfxAttack2:Class;
-        [Embed(source="/../assets/audio/effects/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
-        [Embed(source="/../assets/audio/effects/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
+        [Embed(source="/../assets/audio/effects/sfx_cibattack.mp3")] private var SfxAttack1:Class;
+        [Embed(source="/../assets/audio/effects/sfx_cibattack2.mp3")] private var SfxAttack2:Class;
 
         private var walkSpeed:Number = 7, mouseDownTime:Number;
         private var finalTarget:DHPoint, hitboxOffset:DHPoint,
@@ -106,7 +104,7 @@ package com.starmaid.Cibele.entities {
                                        0xff000000);
 
             this.setupFootsteps();
-            this.attackSounds = new Array(SfxAttack1, SfxAttack2, SfxAttack3, SfxAttack4);
+            this.attackSounds = new Array(SfxAttack1, SfxAttack2);
 
             this.finalTarget = new DHPoint(0, 0);
             this.debugText.color = 0xff444444;
