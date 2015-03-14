@@ -27,7 +27,7 @@ package com.starmaid.Cibele.entities {
         private var _path:Path;
         private var _mapnodes:MapNodeContainer;
         private var _enemies:EnemyGroup;
-        private var targetPathNode:PathNode, targetMapNode:MapNode;
+        private var targetNode:MapNode;
         private var lastInViewTime:Number = 0, runSpeed:Number = 7;
         private var _bossRef:BossEnemy;
         private var closestEnemy:Enemy;
@@ -188,7 +188,7 @@ package com.starmaid.Cibele.entities {
                     break;
             }
 
-            // maintain base position for y-axis based z-sorting
+            // maintain base positions for y-axis based z-sorting
             this.basePos.x = this.x;
             this.basePos.y = this.y + (this.height - 10);
             this.attackAnim.basePos.x = this.attackAnim.x;
@@ -232,7 +232,7 @@ package com.starmaid.Cibele.entities {
                     if (!this._path.hasNodes()) {
                         this._state = STATE_NULL;
                     } else {
-                        disp = this.targetPathNode.pos.sub(this.pos);
+                        disp = this.targetNode.pos.sub(this.pos);
                         if (disp._length() < 10) {
                             this._state = STATE_IDLE_AT_PATH_NODE;
                         } else {
@@ -251,16 +251,17 @@ package com.starmaid.Cibele.entities {
                         }
                     }
                     break;
+
                 case STATE_MOVE_TO_MAP_NODE:
                     this.walk();
                     if (!this._mapnodes.hasNodes()) {
                         this._state = STATE_NULL;
                     } else {
-                        disp = this.targetMapNode.pos.sub(this.pos);
+                        disp = this.targetNode.pos.sub(this.pos);
                         if (disp._length() < 10) {
-                            if(this.targetMapNode._type == MapNode.TYPE_PATH){
+                            if(this.targetNode._type == MapNode.TYPE_PATH){
                                 this._state = STATE_IDLE_AT_PATH_NODE;
-                            } else if(this.targetMapNode._type == MapNode.TYPE_MAP){
+                            } else if(this.targetNode._type == MapNode.TYPE_MAP){
                                 this._state = STATE_IDLE_AT_MAP_NODE;
                             }
                             if (this.enemyIsInAttackRange(this.targetEnemy)) {
@@ -274,6 +275,7 @@ package com.starmaid.Cibele.entities {
                         }
                     }
                     break;
+
                 case STATE_IDLE_AT_PATH_NODE:
                     if(teamAttack()) {
                         this.attackPlayerTargetEnemy();
@@ -290,6 +292,7 @@ package com.starmaid.Cibele.entities {
                         this.dir = ZERO_POINT;
                     }
                     break;
+
                 case STATE_IDLE_AT_MAP_NODE:
                     if(teamAttack()) {
                         this.attackPlayerTargetEnemy();
@@ -305,10 +308,12 @@ package com.starmaid.Cibele.entities {
                         this.dir = ZERO_POINT;
                     }
                     break;
+
                 case STATE_AT_ENEMY:
                     this.attack();
                     this.dir = ZERO_POINT;
                     break;
+
                 case STATE_MOVE_TO_ENEMY:
                     this.walk();
                     this.walkTarget = this.targetEnemy.getAttackPos();
@@ -323,9 +328,11 @@ package com.starmaid.Cibele.entities {
                         this.moveToNextNode();
                     }
                     break;
+
                 case STATE_IN_ATTACK:
                     this.dir = ZERO_POINT;
                     break;
+
                 case STATE_MOVE_TO_PLAYER:
                     this.walk();
                     this.disp = this.playerRef.pos.sub(this.footPos).normalized();
@@ -385,27 +392,25 @@ package com.starmaid.Cibele.entities {
 
         public function moveToNextPathNode():void {
             this._path.advance();
-            this.targetPathNode = this._path.currentNode;
+            this.targetNode = this._path.currentNode;
             this._state = STATE_MOVE_TO_PATH_NODE;
         }
 
         public function moveToNextNode():void {
-            this.targetMapNode = this._mapnodes.getClosestNode(this.pos, this.targetMapNode);
-            if (this.targetMapNode == null) {
+            this.targetNode = this._mapnodes.getClosestNode(this.pos, this.targetNode);
+            if (this.targetNode == null) {
                 return;
             }
-            if(this.targetMapNode._type == MapNode.TYPE_MAP) {
+            if(this.targetNode._type == MapNode.TYPE_MAP) {
                 this._state = STATE_MOVE_TO_MAP_NODE;
-                this.targetMapNode = this.targetMapNode;
-            } else if(this.targetMapNode._type == MapNode.TYPE_PATH) {
+            } else if(this.targetNode._type == MapNode.TYPE_PATH) {
                 this._state = STATE_MOVE_TO_PATH_NODE;
-                this.targetPathNode = this.targetMapNode as PathNode;
-                this._path.setCurrentNode(this.targetPathNode);
+                this._path.setCurrentNode(this.targetNode as PathNode);
             }
         }
 
         public function markCurrentNode():void{
-            this.targetPathNode.mark();
+            this.targetNode.mark();
         }
 
         public function setPlayerReference(pl:Player):void {
