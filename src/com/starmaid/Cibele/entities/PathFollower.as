@@ -19,7 +19,6 @@ package com.starmaid.Cibele.entities {
     public class PathFollower extends PartyMember {
         [Embed(source="/../assets/images/characters/Sprite_Ichi_Walk_Cycle.png")] private var ImgIchi:Class;
         [Embed(source="/../assets/images/characters/Ichi_attack sprite.png")] private var ImgIchiAttack:Class;
-        [Embed(source="/../assets/images/characters/cib_shadow.png")] private var ImgShadow:Class;
         [Embed(source="/../assets/audio/effects/sfx_protoattack1.mp3")] private var SfxAttack1:Class;
         [Embed(source="/../assets/audio/effects/sfx_protoattack2.mp3")] private var SfxAttack2:Class;
         [Embed(source="/../assets/audio/effects/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
@@ -63,19 +62,14 @@ package com.starmaid.Cibele.entities {
             super(pos);
 
             this.nameText.text = "Ichi";
-            this.shadow_sprite = new GameObject(this.pos);
-            this.shadow_sprite.zSorted = true;
-            this.shadow_sprite.loadGraphic(ImgShadow,false,false,70,42);
-            this.shadow_sprite.alpha = .7;
+            this.zSorted = true;
+            this.basePos = new DHPoint(this.x, this.y + (this.height-10));
+
+            this.buildShadowSprite();
 
             this.attackSounds = new Array(SfxAttack1, SfxAttack2, SfxAttack3, SfxAttack4);
             this.attackAnimDuration = 2*GameSound.MSEC_PER_SEC;
 
-            this.tag = PartyMember.ichi;
-
-            this.basePos = new DHPoint(this.x, this.y + (this.height-10));
-
-            this.zSorted = true;
 
             loadGraphic(ImgIchi, true, false, 151, 175);
 

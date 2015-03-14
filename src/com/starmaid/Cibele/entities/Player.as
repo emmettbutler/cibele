@@ -21,7 +21,6 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/ui/click_anim.png")] private var ImgWalkTo:Class;
         [Embed(source="/../assets/images/characters/c_walk.png")] private var ImgCibWalk:Class;
         [Embed(source="/../assets/images/characters/cib_attack.png")] private var ImgAttack:Class;
-        [Embed(source="/../assets/images/characters/cib_shadow.png")] private var ImgShadow:Class;
         [Embed(source="/../assets/images/characters/cib_shadow_blue.png")] private var ImgShadowBlue:Class;
         [Embed(source="/../assets/audio/effects/sfx_uigeneral.mp3")] private var SfxUI:Class;
         [Embed(source="/../assets/audio/effects/sfx_protoattack1.mp3")] private var SfxAttack1:Class;
@@ -65,14 +64,10 @@ package com.starmaid.Cibele.entities {
             this.cameraPos = new GameObject(new DHPoint(x, y));
 
             this.nameText.text = "Cibele";
-            this.tag = PartyMember.cib;
 
             this.zSorted = true;
 
-            this.shadow_sprite = new GameObject(this.pos);
-            this.shadow_sprite.loadGraphic(ImgShadow,false,false,70,42);
-            this.shadow_sprite.alpha = .7;
-            this.shadow_sprite.zSorted = true;
+            this.buildShadowSprite();
 
             loadGraphic(ImgCibWalk, true, false, 143, 150);
             addAnimation("walk_u",
@@ -648,9 +643,5 @@ package com.starmaid.Cibele.entities {
             return this._state == STATE_WALK || this._state == STATE_WALK_HARD;
         }
 
-        public function setBlueShadow():void {
-            this.shadow_sprite.loadGraphic(ImgShadow,false,false,70,42);
-            this.shadow_sprite.alpha = .7;
-        }
     }
 }

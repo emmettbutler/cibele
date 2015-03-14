@@ -7,6 +7,7 @@ package com.starmaid.Cibele.entities {
 
     public class PartyMember extends GameObject {
         [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
+        [Embed(source="/../assets/images/characters/cib_shadow.png")] private var ImgShadow:Class;
 
         public static const STATE_IN_ATTACK:Number = 1;
         public static const STATE_MOVE_TO_ENEMY:Number = 34987651333;
@@ -26,10 +27,6 @@ package com.starmaid.Cibele.entities {
         protected var walkTarget:DHPoint;
         protected var shadow_sprite:GameObject;
 
-        public var tag:String;
-        public static const cib:String = "cibelelele";
-        public static const ichi:String = "ichichichi";
-
         public function PartyMember(pos:DHPoint) {
             super(pos);
             this.nameText = new FlxText(pos.x, pos.y, 500, "My Name");
@@ -42,6 +39,18 @@ package com.starmaid.Cibele.entities {
 
         public function initFootsteps():void {
             this.footsteps = new FootstepTrail(this);
+        }
+
+        public function buildShadowSprite():void {
+            this.shadow_sprite = new GameObject(this.pos);
+            this.shadow_sprite.zSorted = true;
+            this.shadow_sprite.loadGraphic(ImgShadow,false,false,70,42);
+            this.shadow_sprite.alpha = .7;
+        }
+
+        public function setBlueShadow():void {
+            this.shadow_sprite.loadGraphic(ImgShadow,false,false,70,42);
+            this.shadow_sprite.alpha = .7;
         }
 
         public function addVisibleObjects():void { }
