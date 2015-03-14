@@ -29,7 +29,7 @@ package com.starmaid.Cibele.entities {
         private var _enemies:EnemyGroup;
         private var targetPathNode:PathNode, targetMapNode:MapNode;
         private var lastInViewTime:Number = 0, runSpeed:Number = 7;
-        private var bossRef:BossEnemy;
+        private var _bossRef:BossEnemy;
         private var closestEnemy:Enemy;
         private var playerRef:Player;
         private var disp:DHPoint,
@@ -187,8 +187,8 @@ package com.starmaid.Cibele.entities {
         }
 
         public function setTargetEnemy():void {
-            if (this.bossRef != null && this.bossRef.bossHasAppeared) {
-                this.targetEnemy = this.bossRef;
+            if (this._bossRef != null && this._bossRef.bossHasAppeared) {
+                this.targetEnemy = this._bossRef;
             } else {
                 this.targetEnemy = this.closestEnemy;
             }
@@ -477,6 +477,14 @@ package com.starmaid.Cibele.entities {
                     "" + Math.random()
                 );
             }
+        }
+
+        public function set bossRef(ref:BossEnemy):void {
+            this._bossRef = ref;
+        }
+
+        public function get pathRef():Path {
+            return this._path;
         }
     }
 }
