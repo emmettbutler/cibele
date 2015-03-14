@@ -46,6 +46,7 @@ package com.starmaid.Cibele.management {
         public static const STATE_VIEW_MESSAGE:Number = 2;
         public var _state:Number = STATE_HIDE_INBOX;
         public static const CIBELE_MSG:String = "Cibele";
+        public static const FONT_SIZE:Number = 21;
 
         public static var SENT_BY_CIBELE:String = CIBELE_MSG;
 
@@ -216,11 +217,11 @@ package com.starmaid.Cibele.management {
                                                 _screen.screenHeight * .4);
 
             imgClass = ImgInbox;
-            imgSize = new DHPoint(406, 260);
+            imgSize = new DHPoint(528, 338);
             if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
             {
                 imgClass = ImgInboxPink;
-                imgSize = new DHPoint(404, 258);
+                imgSize = new DHPoint(525, 335);
             }
             this.img_inbox = new UIElement(inbox_pos.x, inbox_pos.y);
             this.img_inbox.loadGraphic(imgClass, false, false, imgSize.x, imgSize.y);
@@ -233,12 +234,12 @@ package com.starmaid.Cibele.management {
 
             imgClass = ImgInboxX;
             imgSize = new DHPoint(13, 12);
-            var imgPos:DHPoint = new DHPoint(this.img_inbox.x + (this.img_inbox.width - 24), this.img_inbox.y + 7);
+            var imgPos:DHPoint = new DHPoint(this.img_inbox.x + (this.img_inbox.width - 20), this.img_inbox.y + 5);
             if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
             {
                 imgClass = ImgInboxXPink;
                 imgSize = new DHPoint(23, 18);
-                imgPos = new DHPoint(imgPos.x-5, imgPos.y-5);
+                imgPos = new DHPoint(imgPos.x-2, imgPos.y-5);
             }
             this.exit_ui = new UIElement(imgPos.x, imgPos.y);
             this.exit_ui.loadGraphic(imgClass, false, false, imgSize.x, imgSize.y);
@@ -261,7 +262,7 @@ package com.starmaid.Cibele.management {
             this.exit_msg = new FlxText(this.img_inbox.x + 20,
                 this.img_inbox.y + (this.img_inbox.height-40),
                 this.img_inbox.width, "Back");
-            this.exit_msg.setFormat("NexaBold-Regular",16,0xff616161,"left");
+            this.exit_msg.setFormat("NexaBold-Regular",FONT_SIZE,0xff616161,"left");
             this.exit_msg.scrollFactor = new FlxPoint(0, 0);
             this.exit_msg.visible = false;
             this.exit_msg.active = false;
@@ -269,12 +270,12 @@ package com.starmaid.Cibele.management {
                 FlxG.state.add(this.exit_msg);
             }
 
-            this.exit_box = new FlxRect(this.exit_msg.x, this.exit_msg.y, 50, 50);
+            this.exit_box = new FlxRect(this.exit_msg.x, this.exit_msg.y, 57, this.exit_msg.height);
 
-            this.reply_to_msg = new FlxText(this.img_inbox.x + 60,
+            this.reply_to_msg = new FlxText(this.img_inbox.x + 70,
                 this.img_inbox.y + (this.img_inbox.height - 40),
                 this.img_inbox.width, "| Reply");
-            this.reply_to_msg.setFormat("NexaBold-Regular",16,0xff616161,"left");
+            this.reply_to_msg.setFormat("NexaBold-Regular",FONT_SIZE,0xff616161,"left");
             this.reply_to_msg.scrollFactor = new FlxPoint(0, 0);
             this.reply_to_msg.visible = false;
             this.reply_to_msg.active = false;
@@ -282,8 +283,7 @@ package com.starmaid.Cibele.management {
                 FlxG.state.add(this.reply_to_msg);
             }
 
-            this.reply_box = new FlxRect(this.reply_to_msg.x, this.reply_to_msg.y,
-                                         50, 50);
+            this.reply_box = new FlxRect(this.reply_to_msg.x, this.reply_to_msg.y, 64, this.reply_to_msg.height);
 
             this.debugText = new FlxText(_screen.screenWidth * .01,
                                          _screen.screenHeight * .01, 500, "");
@@ -352,6 +352,7 @@ package com.starmaid.Cibele.management {
                 this.reply_to_msg.visible = true;
                 this.exit_msg.visible = true;
                 this._state = STATE_VIEW_MESSAGE;
+                thread.rotate();
                 for(var i:int = 0; i < this.threads.length; i++) {
                     this.threads[i].hidePreview();
                 }

@@ -24,7 +24,7 @@ package com.starmaid.Cibele.entities {
 
         public var pos:DHPoint;
 
-        public var font_size:Number = 17, list_offset:Number = 40,
+        public var list_offset:Number = 40,
                    sent_count:Number = 0;
 
         public var font_color:uint = 0xff616161;
@@ -64,7 +64,7 @@ package com.starmaid.Cibele.entities {
                 this.sent_by + " >> " +
                 this.display_text.slice(0, this.sent_by.length + 10) +
                 "...");
-            this.truncated_textbox.setFormat("NexaBold-Regular",this.font_size,this.font_color,"left");
+            this.truncated_textbox.setFormat("NexaBold-Regular",MessageManager.FONT_SIZE,this.font_color,"left");
             this.truncated_textbox.scrollFactor = new FlxPoint(0, 0);
             this.truncated_textbox.visible = false;
             this.truncated_textbox.active = false;
