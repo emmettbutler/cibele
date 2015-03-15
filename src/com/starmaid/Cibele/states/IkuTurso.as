@@ -26,12 +26,10 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/voiceover/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
         [Embed(source="/../assets/audio/voiceover/voc_extra_areyoucoming.mp3")] private var SndRUComing:Class;
 
-        public var bossHasAppeared:Boolean;
         private var convo1Sound:GameSound;
         private var convo1Ready:Boolean;
 
         public static var BGM:String = "ikuturso bgm loop";
-        public static const BOSS_MARK:String = "boss_iku_turso";
 
         public function IkuTurso() {
             PopUpManager.GAME_ACTIVE = true;
@@ -215,17 +213,6 @@ package com.starmaid.Cibele.states {
             if(snd != null) {
                 snd.fadeOutSound();
                 snd.fading = true;
-            }
-
-            this.boss.update();
-
-            if (GlobalTimer.getInstance().hasPassed(BOSS_MARK) &&
-                !this.bossHasAppeared && FlxG.state.ID == LevelMapState.LEVEL_ID)
-            {
-                this.bossHasAppeared = true;
-                this.boss.bossHasAppeared = true;
-                this.boss.warpToPlayer();
-                this.boss.visible = true;
             }
         }
     }

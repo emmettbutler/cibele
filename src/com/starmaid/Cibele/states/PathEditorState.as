@@ -4,12 +4,15 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.utils.MapNodeContainer;
     import com.starmaid.Cibele.entities.PathFollower;
     import com.starmaid.Cibele.entities.IkuTursoBoss;
+    import com.starmaid.Cibele.entities.EuryaleBoss;
+    import com.starmaid.Cibele.entities.BossEnemy;
     import com.starmaid.Cibele.entities.MapNode;
     import com.starmaid.Cibele.management.Path;
     import com.starmaid.Cibele.entities.PathNode;
     import com.starmaid.Cibele.entities.SmallEnemy;
     import com.starmaid.Cibele.entities.Enemy;
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.base.GameState;
 
     import org.flixel.*;
 
@@ -24,7 +27,7 @@ package com.starmaid.Cibele.states {
         public var _path:Path;
         public var _mapnodes:MapNodeContainer;
         public var enemies:EnemyGroup;
-        public var boss:IkuTursoBoss;
+        public var boss:BossEnemy;
         public var showNodes:Boolean;
         public var filename:String, graph_filename:String;
         public var dataFile:File, backupFile:File, writeFile:File,
@@ -90,7 +93,12 @@ package com.starmaid.Cibele.states {
                 this.pathWalker.moveToNextPathNode();
             }
 
-            this.boss = new IkuTursoBoss(new DHPoint(0, 0));
+            if(GameState.cur_level == GameState.LVL_IT) {
+                this.boss = new IkuTursoBoss(new DHPoint(0, 0));
+            } else if(GameState.cur_level == GameState.LVL_EU) {
+                this.boss = new EuryaleBoss(new DHPoint(0, 0));
+            }
+
             add(this.boss);
             this.boss.addVisibleObjects();
             //this.boss.visible = false;
@@ -131,8 +139,13 @@ package com.starmaid.Cibele.states {
                     add(en);
                     this.enemies.addEnemy(en);
                 } else if (FlxG.keys["Q"]) {
-                    var boss:IkuTursoBoss = new IkuTursoBoss(new DHPoint(FlxG.mouse.x,
-                                                                   FlxG.mouse.y));
+                    var boss:BossEnemy;
+                    if(GameState.cur_level == GameState.LVL_IT) {
+                        boss = new IkuTursoBoss(new DHPoint(FlxG.mouse.x,FlxG.mouse.y));
+                    } else if(GameState.cur_level == GameState.LVL_EU) {
+                        boss = new EuryaleBoss(new DHPoint(FlxG.mouse.x,FlxG.mouse.y));
+                    }
+
                     add(boss);
                     this.enemies.addEnemy(boss);
                 }
