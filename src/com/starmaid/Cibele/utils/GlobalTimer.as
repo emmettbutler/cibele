@@ -36,6 +36,15 @@ package com.starmaid.Cibele.utils {
                                                    0, callback);
         }
 
+        public function deleteMark(name:String):void {
+            var existing:GlobalTimerMark = this.marks[name];
+            if(existing == null) {
+                return;
+            } else {
+                delete this.marks[name];
+            }
+        }
+
         public function timeRemaining(name:String):Number {
             return this.marks[name].timeRemaining();
         }

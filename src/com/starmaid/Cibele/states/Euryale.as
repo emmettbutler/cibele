@@ -37,6 +37,7 @@ package com.starmaid.Cibele.states {
 
             PopUpManager.GAME_ACTIVE = true;
 
+            GlobalTimer.getInstance().deleteMark(BOSS_MARK);
             this.bossHasAppeared = false;
 
             this.conversationCounter = -1;
@@ -138,6 +139,7 @@ package com.starmaid.Cibele.states {
 
         public function showDredgeSelfie():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.EU_DREDGE);
+            GlobalTimer.getInstance().setMark(BOSS_MARK, 50*GameSound.MSEC_PER_SEC);
         }
 
         override public function update():void{
