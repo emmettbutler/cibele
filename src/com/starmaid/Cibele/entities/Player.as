@@ -2,6 +2,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.Path;
     import com.starmaid.Cibele.management.DebugConsoleManager;
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.BackgroundLoader;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.states.LevelMapState;
     import com.starmaid.Cibele.states.PathEditorState;
@@ -33,6 +34,7 @@ package com.starmaid.Cibele.entities {
         private var click_anim:GameObject, attack_sprite:GameObject;
         private var click_anim_lock:Boolean = false, clickWait:Boolean,
                     active_enemy:Boolean = false, mouseHeld:Boolean = false;
+        private var _bgLoaderRef:BackgroundLoader;
 
         public var colliding:Boolean = false;
         public var mapHitbox:GameObject, cameraPos:GameObject;
@@ -126,6 +128,10 @@ package com.starmaid.Cibele.entities {
             this.footstepOffsets.left = new DHPoint(90, this.height-20);
             this.footstepOffsets.right = new DHPoint(40, this.height-20);
             this.footstepOffset = this.footstepOffsets.up as DHPoint;
+        }
+
+        public function set bgLoaderRef(ref:BackgroundLoader):void {
+            this._bgLoaderRef = ref;
         }
 
         public function setMapNodes(nodes:MapNodeContainer):void {
@@ -500,6 +506,8 @@ package com.starmaid.Cibele.entities {
                 this.shadow_sprite.visible = true;
                 this.attack_sprite.visible = false;
             }
+
+            this._bgLoaderRef.shouldCollide = this.curPath == null;
 
             if (this.curPath == null && this.colliding) {
                 if (this.collisionDirection != null) {

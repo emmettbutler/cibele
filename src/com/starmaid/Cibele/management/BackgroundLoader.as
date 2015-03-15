@@ -30,7 +30,7 @@ package com.starmaid.Cibele.management {
         public var colliderScaleFactor:Number;
         public var loadPositionThreshold:DHPoint;
         public var collisionData:Array;
-        public var shouldLoadMap:Boolean;
+        public var shouldLoadMap:Boolean, shouldCollide:Boolean = true;
         public var allTilesHaveLoaded:Boolean = false;
 
         public var dbgText:FlxText;
@@ -309,10 +309,12 @@ package com.starmaid.Cibele.management {
                                   this.colliderReceivingMachines,
                                   this.colliderName, true);
                 } else {
-                    collisionData = this.getCollisionData(row, col)
-                    if (collisionData[0]) {
-                        contact = true;
-                        this.playerRef.collisionDirection = collisionData[1];
+                    if (this.shouldCollide) {
+                        collisionData = this.getCollisionData(row, col)
+                        if (collisionData[0]) {
+                            contact = true;
+                            this.playerRef.collisionDirection = collisionData[1];
+                        }
                     }
                 }
             }
@@ -328,6 +330,7 @@ package com.starmaid.Cibele.management {
 
         public function setPlayerReference(pl:Player):void {
             this.playerRef = pl;
+            this.playerRef.bgLoaderRef = this;
         }
 
         public function loadSingleTileBG(path:String):FlxExtSprite {
