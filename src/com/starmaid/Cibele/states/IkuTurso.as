@@ -3,6 +3,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.Emote;
     import com.starmaid.Cibele.entities.IkuTursoBoss;
+    import com.starmaid.Cibele.entities.BlankScreen;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.base.GameSound;
@@ -165,8 +166,12 @@ package com.starmaid.Cibele.states {
                 FlxG.switchState(
                     new PlayVideoState("/../assets/video/sexy_selfie.flv",
                         function():void {
-                            FlxG.switchState(new EuryaleDesktop());
                             PopUpManager.GAME_ACTIVE = false;
+                            FlxG.switchState(new BlankScreen(6*GameSound.MSEC_PER_SEC,
+                                function():void {
+                                    FlxG.switchState(new EuryaleDesktop());
+                                })
+                            );
                         }, SoundManager.getInstance().getSoundByName(BGM)
                     )
                 );
