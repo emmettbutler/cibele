@@ -31,7 +31,7 @@ package com.starmaid.Cibele.states {
 
         public function firstConvoPartTwo():void {
             SoundManager.getInstance().playSound(
-                    Convo1_2, 34*GameSound.MSEC_PER_SEC, startEuryaleConvo, false, 1, GameSound.VOCAL,
+                    Convo1_2, 33*GameSound.MSEC_PER_SEC, startEuryaleConvo, false, 1, GameSound.VOCAL,
                     "eu_convo_1_2_hall"
                 );
         }

@@ -35,6 +35,7 @@ package com.starmaid.Cibele.states {
                 GameState.cur_level = GameState.LVL_EU;
             }
 
+            this.bitDialogueLock = false;
             PopUpManager.GAME_ACTIVE = true;
 
             GlobalTimer.getInstance().deleteMark(BOSS_MARK);
@@ -120,7 +121,7 @@ package com.starmaid.Cibele.states {
 
         public function firstConvoPartTwo():void {
             SoundManager.getInstance().playSound(
-                    Convo1_2, 27*GameSound.MSEC_PER_SEC, this.showFriendEmail, false, 1, GameSound.VOCAL,
+                    Convo1_2, 33*GameSound.MSEC_PER_SEC, this.showFriendEmail, false, 1, GameSound.VOCAL,
                     "eu_convo_1_2_hall"
                 );
         }
