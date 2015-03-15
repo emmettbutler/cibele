@@ -33,6 +33,7 @@ package com.starmaid.Cibele.base {
             super(pos.x, pos.y);
             this.pos = pos;
             this.slug = "";
+            this.solid = false;
             this.bornTime = new Date().valueOf();
             this.timeAlive = 0;
             this.dir = new DHPoint(0, 0);

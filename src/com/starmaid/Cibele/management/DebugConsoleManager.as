@@ -14,6 +14,11 @@ package com.starmaid.Cibele.management {
         public var textObjects:Array;
 
         public function DebugConsoleManager() {
+            this.trackedAttributes = {};
+            this.initTextObjects();
+        }
+
+        public function initTextObjects():void {
             var bgWidth:Number = ScreenManager.getInstance().screenWidth/3;
             this.consoleBackground = new GameObject(
                 new DHPoint(ScreenManager.getInstance().screenWidth - bgWidth, 0)
@@ -26,7 +31,6 @@ package com.starmaid.Cibele.management {
                 0x77333333
             );
 
-            this.trackedAttributes = {};
             this.textObjects = new Array();
             var curText:FlxText;
             for (var i:int = 0; i < MAX_ATTRS; i++) {
@@ -39,13 +43,18 @@ package com.starmaid.Cibele.management {
                 curText.color = 0xffffffff;
                 this.textObjects.push(curText);
             }
+
+            for (var k:Object in this.trackedAttributes) {
+                var attr:Object = this.trackedAttributes[k];
+                attr['text'] = this.getTextObject();
+            }
         }
 
         private function getTextObject():FlxText {
             var cur:FlxText;
             for(var i:int = 0; i < this.textObjects.length; i++) {
                 cur = this.textObjects[i];
-                if (cur.text == "") {
+                if (cur._textField != null && cur.text == "") {
                     cur.text = "-";
                     return cur;
                 }
