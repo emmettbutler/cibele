@@ -177,7 +177,7 @@ package com.starmaid.Cibele.base {
                     this.sortedObjects.push(members[i]);
                 }
                 basic = members[i++] as GameObject;
-                if(basic != null && basic.scale != null && basic.exists && basic.active) {
+                if(basic != null && basic.active && basic.exists && basic.scale != null) {
                     if ((GlobalTimer.getInstance().isPaused() &&
                          !basic.observeGlobalPause) ||
                         !GlobalTimer.getInstance().isPaused())
@@ -206,6 +206,7 @@ package com.starmaid.Cibele.base {
             if (ScreenManager.getInstance().DEBUG) {
                 DebugConsoleManager.getInstance().update();
                 DebugConsoleManager.getInstance().trackAttribute("FlxG.state.fpsCounter._fps", "FPS");
+                DebugConsoleManager.getInstance().trackAttribute("FlxG.state.length", "sprites onscreen");
             }
 
             if (!this.containsPauseLayer()) {
@@ -228,6 +229,17 @@ package com.starmaid.Cibele.base {
                 SoundManager.getInstance().decreaseVolume();
             } else if (FlxG.keys.justPressed("ESCAPE")) {
                 this.pause();
+            }
+        }
+
+        override public function draw():void {
+            var basic:FlxBasic;
+            var i:uint = 0;
+            while(i < length) {
+                basic = members[i++] as FlxBasic;
+                if((basic != null) && basic.exists && basic.visible) {
+                    basic.draw();
+                }
             }
         }
 

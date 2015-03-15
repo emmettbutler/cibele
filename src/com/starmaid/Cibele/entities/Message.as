@@ -31,8 +31,6 @@ package com.starmaid.Cibele.entities {
 
             this.display_text = txt;
             this.send_time = sec;
-
-            this.initVisibleObjects();
         }
 
         public function initVisibleObjects():void {
