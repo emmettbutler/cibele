@@ -159,10 +159,10 @@ package com.starmaid.Cibele.states {
                     //false, 1, GameSound.BGM);
             FlxG.switchState(new BlankScreen(5*GameSound.MSEC_PER_SEC,
                 function():void {
+                    PopUpManager.GAME_ACTIVE = false;
                     new PlayVideoState("/../assets/video/Phone Talk_v1.mp4",
                         function():void {
                             FlxG.switchState(new StartScreen());
-                            PopUpManager.GAME_ACTIVE = false;
                         }, null
                     )
                 }
