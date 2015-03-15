@@ -72,10 +72,10 @@ package com.starmaid.Cibele.management {
                     [MessageManager.SENT_BY_CIBELE, "yeah! i think that one of the VAs was in sailor moon??", 1],
                     ["Rusher", "the little pink haired one looks just like you :3", 1],
                     [MessageManager.SENT_BY_CIBELE, "i always do my best to look anime ^_^", -1],
-                    ["Rusher", "did you see my selfie i put up on the forums?", 10*GameSound.MSEC_PER_SEC],
-                    [MessageManager.SENT_BY_CIBELE, "yeah! it's a good picture!", -1],
-                    ["Rusher", "thanks, i was hoping you'd like it :)", 10*GameSound.MSEC_PER_SEC],
-                    [MessageManager.SENT_BY_CIBELE, "i really like knowing what everyone looks like irl!", -1]
+                    ["Rusher", "did you see that picture i put up on the forums?", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "yeah! it's nice!", -1],
+                    ["Rusher", "thanks :3", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "i really like knowing what everyone looks like irl~", -1]
                 ),
                 new Thread(this.img_inbox,
                     ["GuyverGuy", "hey giiiiiirl how are things? you never chat with me anymore </3", 1],
@@ -114,13 +114,13 @@ package com.starmaid.Cibele.management {
             this.eu_threads = new Array(
                 new Thread(this.img_inbox,
                     ["Rusher", "cibby! we should talk on the phone sometime", 1],
-                    [MessageManager.SENT_BY_CIBELE, "oh yeah? we can voice chat in the game tho", 1],
-                    ["Rusher", "phone is more fun! then we can text and be ~real~ friends", 1],
-                    [MessageManager.SENT_BY_CIBELE, "haha yeah we could text", -1],
-                    ["Rusher", "soooo what do you think?", 10*GameSound.MSEC_PER_SEC],
-                    [MessageManager.SENT_BY_CIBELE, "i dont text really haha", -1],
-                    ["Rusher", ":(", 10*GameSound.MSEC_PER_SEC],
-                    [MessageManager.SENT_BY_CIBELE, "ahhh sorry i am just kinda busy but i will msg you later", -1]
+                    [MessageManager.SENT_BY_CIBELE, "yeah we could do that :D", 1],
+                    ["Rusher", "we can text too and be ~real~ friends", 1],
+                    [MessageManager.SENT_BY_CIBELE, "haha im kinda surprised, i asked for yours awhile ago didnt i?", -1],
+                    ["Rusher", "yeah i was all awkward back then i guess", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, ";_; it made me sad", -1],
+                    ["Rusher", ":( sorry", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "i am kinda busy right now actually. i will msg my # to you later", -1]
                 ),
                 new Thread(this.img_inbox,
                     ["GuyverGuy", "<3 <3 <3", 1],
@@ -134,7 +134,7 @@ package com.starmaid.Cibele.management {
                     ["GuyverGuy", "its a sexy pic u sent him", 10*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "wow what the fuck why did he show you", -1],
                     ["GuyverGuy", "lol hes jealous of u hangin with ichi", 10*GameSound.MSEC_PER_SEC],
-                    [MessageManager.SENT_BY_CIBELE, "we had a thing but its over and he knows that wtf", -1]
+                    [MessageManager.SENT_BY_CIBELE, "fire and i had a thing but its over and he knows that wtf", -1]
                 ),
                 new Thread(this.img_inbox,
                     ["Airia", "ciiiiib ichi never shuts up about u lol", 1],
