@@ -290,13 +290,16 @@ package com.starmaid.Cibele.entities {
             }
         }
 
-        public function evaluateEnemyDistance():void {
+        public function evaluateEnemyDistance():Boolean {
             if (this.enemyIsInAttackRange(this.targetEnemy)) {
                 this._state = STATE_AT_ENEMY;
+                return true;
             } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
                 this.walkTarget = this.targetEnemy.getAttackPos();
                 this._state = STATE_MOVE_TO_ENEMY;
+                return true;
             }
+            return false;
         }
 
         override public function resolveStatePostAttack():void {
@@ -304,7 +307,9 @@ package com.starmaid.Cibele.entities {
             if (this.targetEnemy != null && !this.targetEnemy.dead &&
                 this.targetEnemy.visible == true)
             {
-                this.evaluateEnemyDistance();
+                if (!this.evaluateEnemyDistance()) {
+                    this.moveToNextNode();
+                }
             } else {
                 this.moveToNextNode();
             }
