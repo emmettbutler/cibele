@@ -16,7 +16,6 @@ package com.starmaid.Cibele.base {
     public class GameState extends FlxState {
         [Embed(source="/../assets/audio/effects/sfx_mouseclick.mp3")] private var SfxClick:Class;
         [Embed(source="/../assets/audio/effects/sfx_mouseclick2.mp3")] private var SfxClick2:Class;
-        [Embed(source="/../assets/images/ui/incomingcall.png")] private var ImgCall:Class;
 
         protected var updateSound:Boolean, updatePopup:Boolean,
                       updateMessages:Boolean, showEmoji:Boolean = true;
@@ -25,7 +24,6 @@ package com.starmaid.Cibele.base {
         private var sortedObjects:Array;
         public var loadingScreen:LoadingScreen;
         public var use_loading_screen:Boolean = true;
-        public var call_button:GameObject;
         public var fpsCounter:FPSCounter;
 
         public var ui_color_flag:Number;
@@ -100,23 +98,20 @@ package com.starmaid.Cibele.base {
                 PopUpManager.getInstance().loadPopUps();
             }
 
-            var _screen:ScreenManager = ScreenManager.getInstance();
-            call_button = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .3));
-            call_button.loadGraphic(ImgCall,false,false,406,260);
-            call_button.scrollFactor = new DHPoint(0, 0);
-            FlxG.state.add(call_button);
-            call_button.visible = false;
-
             if(this.use_loading_screen) {
                 this.loadingScreen = new LoadingScreen();
+                this.loadingScreen.endCallback = this.loadingScreenEndCallback;
             }
 
             if (ScreenManager.getInstance().DEBUG) {
+                DebugConsoleManager.getInstance().initTextObjects();
                 DebugConsoleManager.getInstance().addVisibleObjects();
             }
 
             this.game_cursor = new GameCursor();
         }
+
+        public function loadingScreenEndCallback():void { }
 
         public function updateCursor():void {
             if (this.game_cursor != null) {

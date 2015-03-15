@@ -7,7 +7,7 @@ package com.starmaid.Cibele.entities {
 
     import org.flixel.*;
 
-    public class LoadingScreen extends GameObject{
+    public class LoadingScreen {
         [Embed(source="/../assets/images/ui/loading_icon.png")] private var ImgLoadingIcon:Class;
         [Embed(source="/../assets/images/ui/loading_text.png")] private var ImgLoadingText:Class;
 
@@ -16,9 +16,9 @@ package com.starmaid.Cibele.entities {
         public var bg:GameObject;
         public var fade_up:Boolean = false;
         public var showing:Boolean = false;
+        public var endCallback:Function;
 
         public function LoadingScreen() {
-            super(new DHPoint(0,0));
             var _screen:ScreenManager = ScreenManager.getInstance();
 
             this.bg = new GameObject(new DHPoint(0,0));
@@ -44,7 +44,7 @@ package com.starmaid.Cibele.entities {
             this.showing = true;
         }
 
-        override public function update():void {
+        public function update():void {
             if(this.showing) {
                 if(this.loading_text.alpha == 0) {
                     fade_up = true;
@@ -64,6 +64,10 @@ package com.starmaid.Cibele.entities {
             this.bg.visible = false;
             this.loading_icon.visible = false;
             this.loading_text.visible = false;
+            FlxG.state.remove(this.loading_text);
+            if (this.endCallback != null) {
+                this.endCallback();
+            }
         }
     }
 }

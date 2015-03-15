@@ -16,6 +16,7 @@ package com.starmaid.Cibele.states {
     public class Hallway extends PlayerState {
         [Embed(source="/../assets/audio/music/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
         [Embed(source="/../assets/audio/music/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
+        [Embed(source="/../assets/images/ui/incomingcall.png")] private var ImgCall:Class;
 
         public var accept_call:Boolean = false;
 
@@ -23,6 +24,7 @@ package com.starmaid.Cibele.states {
         public var wall_left:GameObject;
         public var wall_right:GameObject;
         public var collisionData:Array;
+        public var call_button:GameObject;
         public var leftBound:Number, rightBound:Number;
         public var tileLoader:HallwayTileLoader;
 
@@ -97,11 +99,14 @@ package com.starmaid.Cibele.states {
 
             this.postCreate();
 
+
+            this.player.nameText.color = 0xffffffff;
+        }
+
+        override public function loadingScreenEndCallback():void {
             if(_state == STATE_PRE){
                 call_button.visible = true;
             }
-
-            this.player.nameText.color = 0xffffffff;
         }
 
         override public function update():void {
@@ -158,6 +163,13 @@ package com.starmaid.Cibele.states {
         override public function postCreate():void {
             super.postCreate();
             player.setBlueShadow();
+
+            var _screen:ScreenManager = ScreenManager.getInstance();
+            call_button = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .3));
+            call_button.loadGraphic(ImgCall,false,false,406,260);
+            call_button.scrollFactor = new DHPoint(0, 0);
+            FlxG.state.add(call_button);
+            call_button.visible = false;
         }
 
         override public function clickCallback(screenPos:DHPoint,
