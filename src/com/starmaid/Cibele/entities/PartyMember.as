@@ -31,7 +31,8 @@ package com.starmaid.Cibele.entities {
         protected var shadow_sprite:GameObject;
         protected var footstepOffsets:LRUDVector;
         protected var attackSounds:Array;
-        protected var _debug_sightRadius:CircleSprite;
+        protected var _debug_sightRadius:CircleSprite,
+                      _debug_attackRadius:CircleSprite;
 
         public function PartyMember(pos:DHPoint) {
             super(pos);
@@ -46,6 +47,8 @@ package com.starmaid.Cibele.entities {
             if (ScreenManager.getInstance().DEBUG) {
                 this._debug_sightRadius = new CircleSprite(this.pos,
                                                            this.sightRange);
+                this._debug_attackRadius = new CircleSprite(this.pos,
+                                                            this.attackRange);
             }
         }
 
@@ -71,6 +74,7 @@ package com.starmaid.Cibele.entities {
         public function addVisibleObjects():void {
             if (ScreenManager.getInstance().DEBUG) {
                 FlxG.state.add(this._debug_sightRadius);
+                FlxG.state.add(this._debug_attackRadius);
             }
         }
 
@@ -88,9 +92,13 @@ package com.starmaid.Cibele.entities {
             super.update();
 
             if (ScreenManager.getInstance().DEBUG) {
-                this._debug_sightRadius.setPos(this.pos.sub(
+                this._debug_sightRadius.setPos(this.footPos.sub(
                     new DHPoint(this._debug_sightRadius.radius,
                                 this._debug_sightRadius.radius)
+                ));
+                this._debug_attackRadius.setPos(this.footPos.sub(
+                    new DHPoint(this._debug_attackRadius.radius,
+                                this._debug_attackRadius.radius)
                 ));
             }
 
