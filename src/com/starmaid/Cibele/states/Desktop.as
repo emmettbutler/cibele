@@ -55,9 +55,7 @@ package com.starmaid.Cibele.states {
 
             SoundManager.getInstance().clearSoundsByType(GameSound.BGM);
             SoundManager.getInstance().clearSoundsByType(GameSound.SFX);
-            SoundManager.getInstance().playSound(SFXRoomTone, 0, null, true, 1,
-                                                 Math.random()*2938+93082,
-                                                 Desktop.ROOMTONE);
+            SoundManager.getInstance().playSound(SFXRoomTone, 0, null, true, 1, Math.random()*2938, Desktop.ROOMTONE);
         }
 
         override public function update():void{
