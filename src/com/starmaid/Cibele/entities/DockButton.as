@@ -34,8 +34,7 @@ package com.starmaid.Cibele.entities {
             this.hasOpened = false;
             this.alerting = true;
             SoundManager.getInstance().playSound(
-                    SfxNotification, 2*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.SFX,
-                    "" + Math.random()
+                    SfxNotification, 2*GameSound.MSEC_PER_SEC, null, false, 1, Math.random()
                 );
         }
 
