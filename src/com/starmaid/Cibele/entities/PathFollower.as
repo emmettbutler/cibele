@@ -195,6 +195,8 @@ package com.starmaid.Cibele.entities {
         public function setTargetEnemy():void {
             if (this._bossRef != null && this._bossRef.bossHasAppeared) {
                 this.targetEnemy = this._bossRef;
+            } else if(this.playerIsAttacking()) {
+                this.targetEnemy = this.playerRef.targetEnemy;
             } else {
                 this.targetEnemy = this.closestEnemy;
             }
@@ -229,7 +231,7 @@ package com.starmaid.Cibele.entities {
                     if (!this._mapnodes.hasNodes() && !this._path.hasNodes()) {
                         this._state = STATE_NULL;
                     } else {
-                        disp = this.targetNode.pos.sub(this.pos);
+                        disp = this.targetNode.pos.sub(this.footPos);
                         if (disp._length() < 10) {
                             this._state = STATE_IDLE_AT_NODE;
                         } else {
@@ -242,7 +244,6 @@ package com.starmaid.Cibele.entities {
                 case STATE_IDLE_AT_NODE:
                     this.dir = ZERO_POINT;
                     if(this.playerIsAttacking()) {
-                        this.targetEnemy = playerRef.targetEnemy;
                         this._state = STATE_MOVE_TO_ENEMY;
                     } else {
                         if(this.playerIsInMovementRange()){
