@@ -260,8 +260,7 @@ package com.starmaid.Cibele.entities {
             this.bar.x = this.x + (this.width * .5);
             this.bar.y = this.pos.y-30;
 
-            this.attack_sprite.x = this.x;
-            this.attack_sprite.y = this.y;
+            this.attack_sprite.setPos(this.pos);
 
             if(this._state != STATE_DEAD) {
                 if (this.player == null) {
