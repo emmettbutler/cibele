@@ -302,7 +302,7 @@ package com.starmaid.Cibele.management {
             var dock:UIElement = new UIElement(
                 -dockOffset, _screen.screenHeight - 71
             );
-            dock.alpha = 1;
+            dock.visible = true;
             dock.loadGraphic(ImgDock, false, false, 570, 52);
             dock.scrollFactor = new FlxPoint(0, 0);
             this.elements.push(dock);
@@ -311,7 +311,7 @@ package com.starmaid.Cibele.management {
             this.game_button = new DockButton(
                 dock.x + dockOffset + 10, dock.y - 60, [], BUTTON_GAME);
             this.game_button.loadGraphic(ImgGameButton, false, false, 62, 95);
-            this.game_button.alpha = 1;
+            this.game_button.visible = true;
             this.game_button.scrollFactor.x = 0;
             this.game_button.scrollFactor.y = 0;
             FlxG.state.add(this.game_button);
@@ -323,7 +323,7 @@ package com.starmaid.Cibele.management {
                 dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_1, EU_EMAIL_SELFIE, EU_EMAIL_2], BUTTON_INTERNET);
             this.internet_button.loadGraphic(ImgInternetButton, false, false,
                                              88, 75);
-            this.internet_button.alpha = 1;
+            this.internet_button.visible = true;
             this.internet_button.scrollFactor.x = 0;
             this.internet_button.scrollFactor.y = 0;
             FlxG.state.add(this.internet_button);
@@ -332,7 +332,7 @@ package com.starmaid.Cibele.management {
 
             this.file_button = new DockButton(this.internet_button.x + this.internet_button.width + 30, dock.y - 30, [CIB_SELFIE_FOLDER, EU_HIGHSCHOOL], BUTTON_FILES);
             this.file_button.loadGraphic(ImgFileButton, false, false, 88, 60);
-            this.file_button.alpha = 1;
+            this.file_button.visible = true;
             this.file_button.scrollFactor.x = 0;
             this.file_button.scrollFactor.y = 0;
             FlxG.state.add(this.file_button);
@@ -343,7 +343,7 @@ package com.starmaid.Cibele.management {
                 this.file_button.x + this.file_button.width + 30,
                 dock.y - 25, [ICHI_PICLY_1 , SELFIES_1, EU_DREDGE], BUTTON_PHOTO);
             this.photo_button.loadGraphic(ImgPhotoButton, false, false, 82, 65);
-            this.photo_button.alpha = 1;
+            this.photo_button.visible = true;
             this.photo_button.scrollFactor.x = 0;
             this.photo_button.scrollFactor.y = 0;
             FlxG.state.add(this.photo_button);

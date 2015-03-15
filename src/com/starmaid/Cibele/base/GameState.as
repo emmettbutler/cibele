@@ -162,6 +162,7 @@ package com.starmaid.Cibele.base {
             // DO NOT call super here, since that breaks pausing
             // the following loop is copypasta from FlxGroup update, altered to
             // support pausing
+
             if(this.use_loading_screen) {
                 if(this.loadingScreen != null) {
                     this.loadingScreen.update();

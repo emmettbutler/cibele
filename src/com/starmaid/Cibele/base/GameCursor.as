@@ -87,17 +87,17 @@ package com.starmaid.Cibele.base {
                 }
 
                 if(this._state == GAME) {
-                    this.game_mouse.alpha = 1;
-                    this.enemy_mouse.alpha = 0;
-                    this.pc_mouse.alpha = 0;
+                    this.game_mouse.visible = true;
+                    this.enemy_mouse.visible = false;
+                    this.pc_mouse.visible = false;
                 } else if (this._state == ENEMY) {
-                    this.enemy_mouse.alpha = 1;
-                    this.game_mouse.alpha = 0;
-                    this.pc_mouse.alpha = 0;
+                    this.enemy_mouse.visible = true;
+                    this.game_mouse.visible = false;
+                    this.pc_mouse.visible = false;
                 } else if (this._state == PC) {
-                    this.pc_mouse.alpha = 1;
-                    this.game_mouse.alpha = 0;
-                    this.enemy_mouse.alpha = 0;
+                    this.pc_mouse.visible = true;
+                    this.game_mouse.visible = false;
+                    this.enemy_mouse.visible = false;
                 }
             }
 
@@ -109,17 +109,17 @@ package com.starmaid.Cibele.base {
             this.enemy_mouse = new GameObject(new DHPoint(0,0));
             this.enemy_mouse.loadGraphic(ImgEnemy,false,false,28,63);
             FlxG.state.add(enemy_mouse);
-            this.enemy_mouse.alpha = 0;
+            this.enemy_mouse.visible = false;
 
             this.game_mouse = new GameObject(new DHPoint(0,0));
-            this.game_mouse.loadGraphic(ImgGameCursor,false,false,39,39);
+            this.game_mouse.loadGraphic(ImgGameCursor,false,false,24,30);
             FlxG.state.add(game_mouse);
-            this.game_mouse.alpha = 0;
+            this.game_mouse.visible = false;
 
             this.pc_mouse = new GameObject(new DHPoint(0, 0));
             this.pc_mouse.loadGraphic(ImgPCCursor,false,false,15,16);
             FlxG.state.add(pc_mouse);
-            this.pc_mouse.alpha = 1;
+            this.pc_mouse.visible = true;
 
             if (ScreenManager.getInstance().DEBUG) {
                 this.debugText.scrollFactor = new DHPoint(0, 0);

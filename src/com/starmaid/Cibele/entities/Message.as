@@ -46,7 +46,7 @@ package com.starmaid.Cibele.entities {
                                        this.sent_by + " << " + this.display_text);
             }
             this.textbox.scrollFactor = new FlxPoint(0, 0);
-            this.textbox.alpha = 0;
+            this.textbox.visible = false;
             this.textbox.active = false;
             this.textbox.setFormat("NexaBold-Regular",MessageManager.FONT_SIZE,this.font_color,"left");
             FlxG.state.add(this.textbox);
@@ -57,11 +57,11 @@ package com.starmaid.Cibele.entities {
         }
 
         public function hide():void {
-            this.textbox.alpha = 0;
+            this.textbox.visible = false;
         }
 
         public function show():void {
-            this.textbox.alpha = 1;
+            this.textbox.visible = true;
         }
 
         public function send():void {
