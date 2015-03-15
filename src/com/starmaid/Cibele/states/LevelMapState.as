@@ -10,6 +10,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.utils.Utils;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.DataEvent;
+    import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.GameSound;
 
@@ -24,12 +25,14 @@ package com.starmaid.Cibele.states {
         public var currentTime:Number = -1;
 
         public var bitDialogueLock:Boolean = true;
+        public var bossHasAppeared:Boolean;
 
         public static const LEVEL_ID:int = 2837465;
         public static const NORTH:int = 948409;
         public static const SOUTH:int = 94876;
         public static const EAST:int = 9987;
         public static const WEST:int = 3447;
+        public static const BOSS_MARK:String = "boss_mark";
 
         public var bitDialogue:ProceduralDialogueGenerator;
         public var last_convo_playing:Boolean = false;
@@ -77,6 +80,17 @@ package com.starmaid.Cibele.states {
 
             if (!this.bitDialogueLock) {
                 this.bitDialogue.update();
+            }
+
+            this.boss.update();
+
+            if (GlobalTimer.getInstance().hasPassed(BOSS_MARK) &&
+                !this.bossHasAppeared && FlxG.state.ID == LevelMapState.LEVEL_ID)
+            {
+                this.bossHasAppeared = true;
+                this.boss.bossHasAppeared = true;
+                this.boss.warpToPlayer();
+                this.boss.visible = true;
             }
         }
 

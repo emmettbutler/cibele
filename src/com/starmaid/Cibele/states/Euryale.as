@@ -36,6 +36,9 @@ package com.starmaid.Cibele.states {
             }
 
             PopUpManager.GAME_ACTIVE = true;
+
+            this.bossHasAppeared = false;
+
             this.conversationCounter = -1;
 
             // embedded sound, length in ms, time to wait before playing
