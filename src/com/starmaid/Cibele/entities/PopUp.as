@@ -30,13 +30,9 @@ package com.starmaid.Cibele.entities {
             this.links = links;
             this.loadGraphic(img,false,false,w,h);
 
-            var imgXSize:DHPoint = new DHPoint(13, 12);
-            var imgClass:Class = ImgXBlue;
-            if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK) {
-                imgXSize.x = 23;
-                imgXSize.y = 18;
-                imgClass = ImgXPink;
-            }
+            var imgXSize:DHPoint = new DHPoint(23, 18);
+            var imgClass:Class = ImgXPink;
+
             this.x_sprite = UIElement.fromPoint(new DHPoint((this.x+w)-imgXSize.x, this.y+1));
             this.x_sprite.loadGraphic(imgClass, false, false, imgXSize.x, imgXSize.y);
 
