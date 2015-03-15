@@ -559,8 +559,7 @@ package com.starmaid.Cibele.entities {
         override public function resolveStatePostAttack():void {
             super.resolveStatePostAttack();
 
-            if (this.targetEnemy != null && !this.targetEnemy.dead
-                && this.targetEnemy.visible == true)
+            if (this.targetEnemy != null && !this.targetEnemy.dead)
             {
                 if(this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
