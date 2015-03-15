@@ -236,17 +236,14 @@ package com.starmaid.Cibele.entities {
                             this.dir = disp.normalized().mulScl(this.runSpeed);
                         }
                     }
-                    if (this.enemyIsInAttackRange(this.targetEnemy)) {
-                        this._state = STATE_AT_ENEMY;
-                    } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
-                        this.walkTarget = this.targetEnemy.getAttackPos();
-                        this._state = STATE_MOVE_TO_ENEMY;
-                    }
+                    this.evaluateEnemyDistance();
                     break;
 
                 case STATE_IDLE_AT_NODE:
-                    if(teamAttack()) {
-                        this.attackPlayerTargetEnemy();
+                    this.dir = ZERO_POINT;
+                    if(this.playerIsAttacking()) {
+                        this.targetEnemy = playerRef.targetEnemy;
+                        this._state = STATE_MOVE_TO_ENEMY;
                     } else {
                         if(this.playerIsInMovementRange()){
                             if (this.targetNode._type == MapNode.TYPE_PATH) {
@@ -254,13 +251,8 @@ package com.starmaid.Cibele.entities {
                             } else {
                                 this.moveToNextNode();
                             }
-                        } else if (this.enemyIsInAttackRange(this.targetEnemy)) {
-                            this._state = STATE_AT_ENEMY;
-                        } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
-                            this.walkTarget = this.targetEnemy.getAttackPos();
-                            this._state = STATE_MOVE_TO_ENEMY;
                         }
-                        this.dir = ZERO_POINT;
+                        this.evaluateEnemyDistance();
                     }
                     break;
 
@@ -271,16 +263,15 @@ package com.starmaid.Cibele.entities {
 
                 case STATE_MOVE_TO_ENEMY:
                     this.walk();
-                    this.walkTarget = this.targetEnemy.getAttackPos();
-                    this.disp = this.walkTarget.sub(this.footPos).normalized();
-                    this.dir = this.disp.mulScl(this.runSpeed);
-                    if (this.enemyIsInAttackRange(this.targetEnemy)) {
-                        this._state = STATE_AT_ENEMY;
-                    } else if (this.targetEnemy.getAttackPos()
-                        .sub(this.footPos)._length() >
-                        (this.targetEnemy is BossEnemy ? this.bossSightRange : this.sightRange) && !this.teamAttack())
-                    {
+                    if (this.targetEnemy.dead) {
                         this.moveToNextNode();
+                    } else {
+                        this.walkTarget = this.targetEnemy.getAttackPos();
+                        this.disp = this.walkTarget.sub(this.footPos).normalized();
+                        this.dir = this.disp.mulScl(this.runSpeed);
+                        if (this.enemyIsInAttackRange(this.targetEnemy)) {
+                            this._state = STATE_AT_ENEMY;
+                        }
                     }
                     break;
 
@@ -299,17 +290,21 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        public function evaluateEnemyDistance():void {
+            if (this.enemyIsInAttackRange(this.targetEnemy)) {
+                this._state = STATE_AT_ENEMY;
+            } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
+                this.walkTarget = this.targetEnemy.getAttackPos();
+                this._state = STATE_MOVE_TO_ENEMY;
+            }
+        }
+
         override public function resolveStatePostAttack():void {
             super.resolveStatePostAttack();
-            if (this.targetEnemy != null && !this.targetEnemy.dead && this.targetEnemy.visible == true)
+            if (this.targetEnemy != null && !this.targetEnemy.dead &&
+                this.targetEnemy.visible == true)
             {
-                if (this.enemyIsInAttackRange(this.targetEnemy))
-                {
-                    this._state = STATE_AT_ENEMY;
-                } else {
-                    this.walkTarget = this.targetEnemy.getAttackPos();
-                    this._state = STATE_MOVE_TO_ENEMY;
-                }
+                this.evaluateEnemyDistance();
             } else {
                 this.moveToNextNode();
             }
@@ -376,15 +371,8 @@ package com.starmaid.Cibele.entities {
                     ScreenManager.getInstance().screenWidth / 2);
         }
 
-        public function teamAttack():Boolean {
+        public function playerIsAttacking():Boolean {
             return (inViewOfPlayer() && playerRef.inAttack() && playerRef.targetEnemy != null);
-        }
-
-        public function attackPlayerTargetEnemy():void {
-            if(playerRef.targetEnemy != null) {
-                this.targetEnemy = playerRef.targetEnemy;
-                this._state = STATE_MOVE_TO_ENEMY;
-            }
         }
 
         public function warpToPlayer():void {
