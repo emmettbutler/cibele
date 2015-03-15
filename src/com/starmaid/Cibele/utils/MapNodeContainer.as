@@ -29,7 +29,7 @@ package com.starmaid.Cibele.utils {
 
         public function addNode(point:DHPoint, showNodes:Boolean=false):MapNode {
             var node:MapNode = new MapNode(point, showNodes);
-            node.alpha = showNodes ? 1 : 0;
+            node.visible = showNodes;
             node.active = false;
             this.nodes.push(node);
             this.nodesHash[node.node_id] = node;

@@ -16,7 +16,6 @@ package com.starmaid.Cibele.base {
     public class GameState extends FlxState {
         [Embed(source="/../assets/audio/effects/sfx_mouseclick.mp3")] private var SfxClick:Class;
         [Embed(source="/../assets/audio/effects/sfx_mouseclick2.mp3")] private var SfxClick2:Class;
-        [Embed(source="/../assets/images/ui/incomingcall.png")] private var ImgCall:Class;
 
         protected var updateSound:Boolean, updatePopup:Boolean,
                       updateMessages:Boolean, showEmoji:Boolean = true;
@@ -25,7 +24,6 @@ package com.starmaid.Cibele.base {
         private var sortedObjects:Array;
         public var loadingScreen:LoadingScreen;
         public var use_loading_screen:Boolean = true;
-        public var call_button:GameObject;
         public var fpsCounter:FPSCounter;
 
         public var ui_color_flag:Number;
@@ -100,23 +98,20 @@ package com.starmaid.Cibele.base {
                 PopUpManager.getInstance().loadPopUps();
             }
 
-            var _screen:ScreenManager = ScreenManager.getInstance();
-            call_button = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .3));
-            call_button.loadGraphic(ImgCall,false,false,406,260);
-            call_button.scrollFactor = new DHPoint(0, 0);
-            FlxG.state.add(call_button);
-            call_button.visible = false;
-
             if(this.use_loading_screen) {
                 this.loadingScreen = new LoadingScreen();
+                this.loadingScreen.endCallback = this.loadingScreenEndCallback;
             }
 
             if (ScreenManager.getInstance().DEBUG) {
+                DebugConsoleManager.getInstance().initTextObjects();
                 DebugConsoleManager.getInstance().addVisibleObjects();
             }
 
             this.game_cursor = new GameCursor();
         }
+
+        public function loadingScreenEndCallback():void { }
 
         public function updateCursor():void {
             if (this.game_cursor != null) {
@@ -162,6 +157,7 @@ package com.starmaid.Cibele.base {
             // DO NOT call super here, since that breaks pausing
             // the following loop is copypasta from FlxGroup update, altered to
             // support pausing
+
             if(this.use_loading_screen) {
                 if(this.loadingScreen != null) {
                     this.loadingScreen.update();
@@ -176,7 +172,7 @@ package com.starmaid.Cibele.base {
                     this.sortedObjects.push(members[i]);
                 }
                 basic = members[i++] as GameObject;
-                if(basic != null && basic.scale != null && basic.exists && basic.active) {
+                if(basic != null && basic.active && basic.exists && basic.scale != null) {
                     if ((GlobalTimer.getInstance().isPaused() &&
                          !basic.observeGlobalPause) ||
                         !GlobalTimer.getInstance().isPaused())
@@ -205,6 +201,7 @@ package com.starmaid.Cibele.base {
             if (ScreenManager.getInstance().DEBUG) {
                 DebugConsoleManager.getInstance().update();
                 DebugConsoleManager.getInstance().trackAttribute("FlxG.state.fpsCounter._fps", "FPS");
+                DebugConsoleManager.getInstance().trackAttribute("FlxG.state.length", "sprites onscreen");
             }
 
             if (!this.containsPauseLayer()) {
@@ -227,6 +224,17 @@ package com.starmaid.Cibele.base {
                 SoundManager.getInstance().decreaseVolume();
             } else if (FlxG.keys.justPressed("ESCAPE")) {
                 this.pause();
+            }
+        }
+
+        override public function draw():void {
+            var basic:FlxBasic;
+            var i:uint = 0;
+            while(i < length) {
+                basic = members[i++] as FlxBasic;
+                if((basic != null) && basic.exists && basic.visible) {
+                    basic.draw();
+                }
             }
         }
 

@@ -27,12 +27,12 @@ package com.starmaid.Cibele.states {
 
             door = new GameObject(new DHPoint(_screen.screenWidth * .3, _screen.screenHeight * .4));
             door.makeGraphic(500, 20, 0xffff0000);
-            door.alpha = 0;
+            door.visible = false;
             add(door);
 
             door_fern = new GameObject(new DHPoint(_screen.screenWidth * .4, _screen.screenHeight * .9));
             door_fern.makeGraphic(300,100,0xffff0000);
-            door_fern.alpha = 0;
+            door_fern.visible = false;
             add(door_fern);
 
             this.postCreate();

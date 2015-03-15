@@ -183,9 +183,9 @@ package com.starmaid.Cibele.states {
                     add(login);
                     add(char_info);
                     play_screen = true;
-                    login.alpha = 1;
-                    title_text.alpha = 0;
-                    crystal_icon.alpha = 0;
+                    login.visible = true;
+                    title_text.visible = false;
+                    crystal_icon.visible = false;
                 }
                 if (mouse_rect.overlaps(play_game_rect) && play_screen){
                     if(GameState.cur_level == GameState.LVL_IT) {
