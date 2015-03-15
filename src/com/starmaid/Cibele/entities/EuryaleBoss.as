@@ -17,9 +17,5 @@ package com.starmaid.Cibele.entities {
             play("run_boss");
 
         }
-
-        override public function update():void{
-            super.update();
-        }
     }
 }
