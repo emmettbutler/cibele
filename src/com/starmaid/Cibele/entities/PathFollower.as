@@ -117,6 +117,7 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function addVisibleObjects():void {
+            super.addVisibleObjects();
             FlxG.state.add(this);
             FlxG.state.add(this.attackAnim);
             FlxG.state.add(this.shadow_sprite);

@@ -1,5 +1,6 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.utils.LRUDVector;
@@ -30,6 +31,7 @@ package com.starmaid.Cibele.entities {
         protected var shadow_sprite:GameObject;
         protected var footstepOffsets:LRUDVector;
         protected var attackSounds:Array;
+        protected var _debug_sightRadius:CircleSprite;
 
         public function PartyMember(pos:DHPoint) {
             super(pos);
@@ -41,6 +43,10 @@ package com.starmaid.Cibele.entities {
             this.attackAnimDuration = 2*GameSound.MSEC_PER_SEC;
             this.walkTarget = new DHPoint(0, 0);
             this.footstepOffsets = new LRUDVector();
+            if (ScreenManager.getInstance().DEBUG) {
+                this._debug_sightRadius = new CircleSprite(this.pos,
+                                                           this.sightRange);
+            }
         }
 
         public function setupSprites():void { }
@@ -62,7 +68,11 @@ package com.starmaid.Cibele.entities {
             this.shadow_sprite.alpha = .7;
         }
 
-        public function addVisibleObjects():void { }
+        public function addVisibleObjects():void {
+            if (ScreenManager.getInstance().DEBUG) {
+                FlxG.state.add(this._debug_sightRadius);
+            }
+        }
 
         public function playAttackSound():void {
             var snd:Class = this.attackSounds[
@@ -76,6 +86,14 @@ package com.starmaid.Cibele.entities {
 
         override public function update():void {
             super.update();
+
+            if (ScreenManager.getInstance().DEBUG) {
+                this._debug_sightRadius.setPos(this.pos.sub(
+                    new DHPoint(this._debug_sightRadius.radius,
+                                this._debug_sightRadius.radius)
+                ));
+            }
+
             if (this.footsteps != null) {
                 this.footsteps.update();
             }
