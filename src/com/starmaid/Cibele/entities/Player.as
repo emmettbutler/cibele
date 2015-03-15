@@ -43,7 +43,6 @@ package com.starmaid.Cibele.entities {
 
         public static const STATE_WALK:Number = 2398476188;
         public static const STATE_WALK_HARD:Number = 23981333333;
-        public static const STATE_MOVE_TO_PATH_NODE:Number = 384759813734;
 
         {
             public static var stateMap:Dictionary = new Dictionary();
@@ -54,7 +53,6 @@ package com.starmaid.Cibele.entities {
             stateMap[STATE_MOVE_TO_ENEMY] = "STATE_MOVE_TO_ENEMY";
             stateMap[STATE_WALK] = "STATE_WALK";
             stateMap[STATE_WALK_HARD] = "STATE_WALK_HARD";
-            stateMap[STATE_MOVE_TO_PATH_NODE] = "STATE_MOVE_TO_PATH_NODE";
         }
 
         public function Player(x:Number, y:Number):void{
@@ -507,7 +505,9 @@ package com.starmaid.Cibele.entities {
                 this.attack_sprite.visible = false;
             }
 
-            this._bgLoaderRef.shouldCollide = this.curPath == null;
+            this._bgLoaderRef.shouldCollide = this.curPath == null &&
+                (this._state == STATE_MOVE_TO_ENEMY ||
+                 this._state == STATE_WALK);
 
             if (this.curPath == null && this.colliding) {
                 if (this.collisionDirection != null) {
