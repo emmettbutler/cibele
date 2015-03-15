@@ -24,6 +24,7 @@ package com.starmaid.Cibele.utils {
             this.path = p;
             this.player = player;
             this.dbgText = new FlxText(100, 250, FlxG.width, "");
+            this.dbgText.active = false;
             FlxG.state.add(this.dbgText);
         }
 
@@ -34,9 +35,9 @@ package com.starmaid.Cibele.utils {
             this.nodes.push(node);
             this.nodesHash[node.node_id] = node;
             if (ScreenManager.getInstance().DEBUG) {
-                var lbl:FlxText = new FlxText(node.pos.x + 10, node.pos.y, 400, node.node_id);
-                lbl.color = 0xff444444;
-                FlxG.state.add(lbl);
+                //var lbl:FlxText = new FlxText(node.pos.x + 10, node.pos.y, 400, node.node_id);
+                //lbl.color = 0xff444444;
+                //FlxG.state.add(lbl);
             }
             return node;
         }
