@@ -1,6 +1,8 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.management.MessageManager;
 
     import org.flixel.*;
 
@@ -16,7 +18,7 @@ package com.starmaid.Cibele.entities {
         public var inbox_ref:GameObject;
         public var textbox:FlxText;
 
-        public var send_time:Number, font_size:Number = 16, list_offset:Number = 30;
+        public var send_time:Number, font_size:Number = 21, list_offset:Number = 30;
 
         public var font_color:uint = 0xff616161;
         public var unread_color:uint = 0xffc1698a;
@@ -34,13 +36,19 @@ package com.starmaid.Cibele.entities {
         }
 
         public function initVisibleObjects():void {
-            this.textbox = new FlxText(this.pos.x, this.pos.y,
+            if(this.sent_by == MessageManager.SENT_BY_CIBELE) {
+                this.textbox = new FlxText(this.pos.x, this.pos.y,
                                        this.inbox_ref.width - 50,
                                        this.sent_by + " >> " + this.display_text);
+            } else {
+                this.textbox = new FlxText(this.pos.x, this.pos.y,
+                                       this.inbox_ref.width - 50,
+                                       this.sent_by + " << " + this.display_text);
+            }
             this.textbox.scrollFactor = new FlxPoint(0, 0);
             this.textbox.alpha = 0;
             this.textbox.active = false;
-            this.textbox.setFormat("NexaBold-Regular",this.font_size,this.font_color,"left");
+            this.textbox.setFormat("NexaBold-Regular",MessageManager.FONT_SIZE,this.font_color,"left");
             FlxG.state.add(this.textbox);
         }
 

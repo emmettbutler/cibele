@@ -20,6 +20,7 @@ package com.starmaid.Cibele.management {
 
         // global debug flag
         public var DEBUG:Boolean = false;
+        public var MUTE:Boolean = false;
 
         public var letterbox1:FlxSprite = null, letterbox2:FlxSprite = null, letterbox3:FlxSprite = null, letterbox4:FlxSprite = null;
 
@@ -28,6 +29,9 @@ package com.starmaid.Cibele.management {
         public function ScreenManager() {
             CONFIG::debug {
                 this.DEBUG = true;
+            }
+            CONFIG::mute {
+                this.MUTE = true;
             }
 
             FlxG.stage.frameRate = 60;

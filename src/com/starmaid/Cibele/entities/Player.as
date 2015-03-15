@@ -21,24 +21,18 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/ui/click_anim.png")] private var ImgWalkTo:Class;
         [Embed(source="/../assets/images/characters/c_walk.png")] private var ImgCibWalk:Class;
         [Embed(source="/../assets/images/characters/cib_attack.png")] private var ImgAttack:Class;
-        [Embed(source="/../assets/images/characters/cib_shadow.png")] private var ImgShadow:Class;
         [Embed(source="/../assets/images/characters/cib_shadow_blue.png")] private var ImgShadowBlue:Class;
         [Embed(source="/../assets/audio/effects/sfx_uigeneral.mp3")] private var SfxUI:Class;
-        [Embed(source="/../assets/audio/effects/sfx_protoattack1.mp3")] private var SfxAttack1:Class;
-        [Embed(source="/../assets/audio/effects/sfx_protoattack2.mp3")] private var SfxAttack2:Class;
-        [Embed(source="/../assets/audio/effects/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
-        [Embed(source="/../assets/audio/effects/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
+        [Embed(source="/../assets/audio/effects/sfx_cibattack.mp3")] private var SfxAttack1:Class;
+        [Embed(source="/../assets/audio/effects/sfx_cibattack2.mp3")] private var SfxAttack2:Class;
 
         private var walkSpeed:Number = 7, mouseDownTime:Number;
-        private var walkTarget:DHPoint, finalTarget:DHPoint, hitboxOffset:DHPoint,
+        private var finalTarget:DHPoint, hitboxOffset:DHPoint,
                     hitboxDim:DHPoint;
         private var curPath:Path;
-        private var click_anim:GameObject, attack_sprite:GameObject,
-                    shadow_sprite:GameObject;
+        private var click_anim:GameObject, attack_sprite:GameObject;
         private var click_anim_lock:Boolean = false, clickWait:Boolean,
                     active_enemy:Boolean = false, mouseHeld:Boolean = false;
-        private var upDownFootstepOffset:DHPoint, leftFootstepOffset:DHPoint,
-                    rightFootstepOffset:DHPoint;
 
         public var colliding:Boolean = false;
         public var mapHitbox:GameObject, cameraPos:GameObject;
@@ -66,14 +60,10 @@ package com.starmaid.Cibele.entities {
             this.cameraPos = new GameObject(new DHPoint(x, y));
 
             this.nameText.text = "Cibele";
-            this.tag = PartyMember.cib;
 
             this.zSorted = true;
 
-            this.shadow_sprite = new GameObject(this.pos);
-            this.shadow_sprite.loadGraphic(ImgShadow,false,false,70,42);
-            this.shadow_sprite.alpha = .7;
-            this.shadow_sprite.zSorted = true;
+            this.buildShadowSprite();
 
             loadGraphic(ImgCibWalk, true, false, 143, 150);
             addAnimation("walk_u",
@@ -113,11 +103,9 @@ package com.starmaid.Cibele.entities {
             this.mapHitbox.makeGraphic(this.hitboxDim.x, this.hitboxDim.y,
                                        0xff000000);
 
-            this.upDownFootstepOffset = new DHPoint(70, this.height);
-            this.leftFootstepOffset = new DHPoint(90, this.height-20);
-            this.rightFootstepOffset = new DHPoint(40, this.height-20);
-            this.footstepOffset = this.upDownFootstepOffset;
-            this.walkTarget = new DHPoint(0, 0);
+            this.setupFootsteps();
+            this.attackSounds = new Array(SfxAttack1, SfxAttack2);
+
             this.finalTarget = new DHPoint(0, 0);
             this.debugText.color = 0xff444444;
 
@@ -130,6 +118,14 @@ package com.starmaid.Cibele.entities {
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getStateString", "player.state");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getWalkTarget", "player.walkTarget");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getFinalTarget", "player.finalTarget");
+        }
+
+        override public function setupFootsteps():void {
+            this.footstepOffsets.up = new DHPoint(70, this.height);
+            this.footstepOffsets.down = this.footstepOffsets.up;
+            this.footstepOffsets.left = new DHPoint(90, this.height-20);
+            this.footstepOffsets.right = new DHPoint(40, this.height-20);
+            this.footstepOffset = this.footstepOffsets.up as DHPoint;
         }
 
         public function setMapNodes(nodes:MapNodeContainer):void {
@@ -236,14 +232,18 @@ package com.starmaid.Cibele.entities {
                     if(Math.abs(this.dir.y) > Math.abs(this.dir.x)){
                         if(this.dir.y <= 0){
                             this.facing = UP;
+                            this.text_facing = "up";
                         } else {
                             this.facing = DOWN;
+                            this.text_facing = "down";
                         }
                     } else {
                         if(this.dir.x >= 0){
                             this.facing = RIGHT;
+                            this.text_facing = "right";
                         } else {
                             this.facing = LEFT;
+                            this.text_facing = "left";
                         }
                     }
                 }
@@ -343,23 +343,21 @@ package com.starmaid.Cibele.entities {
         public function walk():void {
             var walkDirection:DHPoint = walkTarget.sub(footPos).normalized();
             this.dir = walkDirection.mulScl(this.walkSpeed);
-            if(this.facing == LEFT){
-                this.play("walk_l");
-                this.text_facing = "left";
-                this.footstepOffset = this.leftFootstepOffset;
-            } else if (this.facing == RIGHT){
-                this.play("walk_r");
-                this.text_facing = "right";
-                this.footstepOffset = this.rightFootstepOffset;
-            } else if(this.facing == UP){
-                this.play("walk_u");
-                this.text_facing = "up";
-                this.footstepOffset = this.upDownFootstepOffset;
-            } else if(this.facing == DOWN){
-                this.play("walk_d");
-                this.text_facing = "down";
-                this.footstepOffset = this.upDownFootstepOffset;
+            switch(this.facing) {
+                case LEFT:
+                    this.play("walk_l");
+                    break;
+                case RIGHT:
+                    this.play("walk_r");
+                    break;
+                case UP:
+                    this.play("walk_u");
+                    break;
+                case DOWN:
+                    this.play("walk_d");
+                    break;
             }
+            this.footstepOffset = this.footstepOffsets[this.text_facing] as DHPoint;
         }
 
         override public function addVisibleObjects():void {
@@ -482,14 +480,12 @@ package com.starmaid.Cibele.entities {
             } else if (this._state == STATE_MOVE_TO_ENEMY) {
                 if(this.targetEnemy != null) {
                     this.finalTarget = this.targetEnemy.getAttackPos();
-                    this.walk();
                     this.doMovementState();
                     if (this.enemyIsInAttackRange(this.targetEnemy)) {
                         this._state = STATE_AT_ENEMY;
                     }
-                } else {
-                    this.walk();
                 }
+                this.walk();
             } else if (this._state == STATE_AT_ENEMY) {
                 this.attack();
                 this.dir = ZERO_POINT;
@@ -630,19 +626,7 @@ package com.starmaid.Cibele.entities {
                         playReverseAttack();
                     }, true);
 
-                var snd:Class = SfxAttack1;
-                var rand:Number = Math.random() * 4;
-                if (rand > 3) {
-                    snd = SfxAttack2;
-                } else if (rand > 2) {
-                    snd = SfxAttack3;
-                } else if (rand > 1) {
-                    snd = SfxAttack4;
-                }
-                SoundManager.getInstance().playSound(
-                    snd, 2*GameSound.MSEC_PER_SEC, null, false, .3, GameSound.SFX,
-                    "" + Math.random()
-                );
+                this.playAttackSound();
             }
         }
 
@@ -650,9 +634,5 @@ package com.starmaid.Cibele.entities {
             return this._state == STATE_WALK || this._state == STATE_WALK_HARD;
         }
 
-        public function setBlueShadow():void {
-            this.shadow_sprite.loadGraphic(ImgShadow,false,false,70,42);
-            this.shadow_sprite.alpha = .7;
-        }
     }
 }

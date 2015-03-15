@@ -56,7 +56,7 @@ package com.starmaid.Cibele.states {
 
             _screen = ScreenManager.getInstance();
 
-            bottomY = 7000;
+            bottomY = 5000;
             var startPos:DHPoint = new DHPoint(_screen.screenWidth * .5,
                                                bottomY - _screen.screenHeight * .5);
             if (this._state == STATE_RETURN) {

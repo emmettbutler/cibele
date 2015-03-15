@@ -2,6 +2,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.Emote;
+    import com.starmaid.Cibele.entities.BlankScreen;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameSound;
@@ -30,8 +31,16 @@ package com.starmaid.Cibele.states {
         public static var BGM:String = "euryale bgm loop";
 
         public function Euryale() {
+            if(GameState.cur_level != GameState.LVL_EU) {
+                GameState.cur_level = GameState.LVL_EU;
+            }
+
+            this.bitDialogueLock = false;
             PopUpManager.GAME_ACTIVE = true;
-            this.ui_color_flag = GameState.UICOLOR_PINK;
+
+            GlobalTimer.getInstance().deleteMark(BOSS_MARK);
+            this.bossHasAppeared = false;
+
             this.conversationCounter = -1;
 
             // embedded sound, length in ms, time to wait before playing
@@ -89,7 +98,6 @@ package com.starmaid.Cibele.states {
 
         override public function create():void {
             this.registerPopupCallback();
-
             super.create();
 
             function _bgmCallback():void {
@@ -113,7 +121,7 @@ package com.starmaid.Cibele.states {
 
         public function firstConvoPartTwo():void {
             SoundManager.getInstance().playSound(
-                    Convo1_2, 27*GameSound.MSEC_PER_SEC, this.showFriendEmail, false, 1, GameSound.VOCAL,
+                    Convo1_2, 33*GameSound.MSEC_PER_SEC, this.showFriendEmail, false, 1, GameSound.VOCAL,
                     "eu_convo_1_2_hall"
                 );
         }
@@ -132,6 +140,7 @@ package com.starmaid.Cibele.states {
 
         public function showDredgeSelfie():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.EU_DREDGE);
+            GlobalTimer.getInstance().setMark(BOSS_MARK, 50*GameSound.MSEC_PER_SEC);
         }
 
         override public function update():void{
@@ -149,14 +158,16 @@ package com.starmaid.Cibele.states {
         public function playEndFilm():void {
             //SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
                     //false, 1, GameSound.BGM);
-                FlxG.switchState(
+            FlxG.switchState(new BlankScreen(5*GameSound.MSEC_PER_SEC,
+                function():void {
+                    PopUpManager.GAME_ACTIVE = false;
                     new PlayVideoState("/../assets/video/Phone Talk_v1.mp4",
                         function():void {
                             FlxG.switchState(new StartScreen());
-                            PopUpManager.GAME_ACTIVE = false;
                         }, null
                     )
-                );
+                }
+            ));
         }
     }
 }

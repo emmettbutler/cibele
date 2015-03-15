@@ -3,6 +3,8 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.utils.EnemyGroup;
     import com.starmaid.Cibele.utils.MapNodeContainer;
     import com.starmaid.Cibele.entities.PathFollower;
+    import com.starmaid.Cibele.entities.IkuTursoBoss;
+    import com.starmaid.Cibele.entities.EuryaleBoss;
     import com.starmaid.Cibele.entities.BossEnemy;
     import com.starmaid.Cibele.entities.MapNode;
     import com.starmaid.Cibele.management.Path;
@@ -10,6 +12,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.entities.SmallEnemy;
     import com.starmaid.Cibele.entities.Enemy;
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.base.GameState;
 
     import org.flixel.*;
 
@@ -90,7 +93,12 @@ package com.starmaid.Cibele.states {
                 this.pathWalker.moveToNextPathNode();
             }
 
-            this.boss = new BossEnemy(new DHPoint(0, 0));
+            if(GameState.cur_level == GameState.LVL_IT) {
+                this.boss = new IkuTursoBoss(new DHPoint(0, 0));
+            } else if(GameState.cur_level == GameState.LVL_EU) {
+                this.boss = new EuryaleBoss(new DHPoint(0, 0));
+            }
+
             add(this.boss);
             this.boss.addVisibleObjects();
             //this.boss.visible = false;
@@ -131,8 +139,13 @@ package com.starmaid.Cibele.states {
                     add(en);
                     this.enemies.addEnemy(en);
                 } else if (FlxG.keys["Q"]) {
-                    var boss:BossEnemy = new BossEnemy(new DHPoint(FlxG.mouse.x,
-                                                                   FlxG.mouse.y));
+                    var boss:BossEnemy;
+                    if(GameState.cur_level == GameState.LVL_IT) {
+                        boss = new IkuTursoBoss(new DHPoint(FlxG.mouse.x,FlxG.mouse.y));
+                    } else if(GameState.cur_level == GameState.LVL_EU) {
+                        boss = new EuryaleBoss(new DHPoint(FlxG.mouse.x,FlxG.mouse.y));
+                    }
+
                     add(boss);
                     this.enemies.addEnemy(boss);
                 }
@@ -303,7 +316,7 @@ package com.starmaid.Cibele.states {
                     this.enemies.addEnemy(en);
                 } else if (prefix_.indexOf("boss") == 0 && this.shouldAddEnemies) {
                     coords = line[1].split("x");
-                    var bo:BossEnemy = new BossEnemy(
+                    var bo:IkuTursoBoss = new IkuTursoBoss(
                         new DHPoint(Number(coords[0]), Number(coords[1])));
                     add(bo);
                     this.enemies.addEnemy(bo);

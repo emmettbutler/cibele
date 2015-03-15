@@ -264,7 +264,7 @@ package com.starmaid.Cibele.management {
                     "icon": ImgEuEmailSelfieLink,
                     "icon_dim": new DHPoint(154, 19),
                     "icon_pos": new DHPoint(18, 186),
-                    "dim": new DHPoint(998, 606),
+                    "dim": new DHPoint(1030,437),
                     "struc": PopUpManager.EU_EMAIL_SELFIE,
                     "contents": ImgEuEmailSelfieNetThread
                 },
@@ -293,7 +293,7 @@ package com.starmaid.Cibele.management {
                     "icon": ImgEuEmail2Link2,
                     "icon_dim": new DHPoint(225, 18),
                     "icon_pos": new DHPoint(20, 219),
-                    "dim": new DHPoint(1023, 515),
+                    "dim": new DHPoint(1030, 437),
                     "struc": PopUpManager.EU_EMAIL_2,
                     "contents": ImgEuEmail2Flight
                 },
@@ -311,7 +311,7 @@ package com.starmaid.Cibele.management {
                             "icon": ImgEuEmailSelfieLink,
                             "icon_dim": new DHPoint(154, 19),
                             "icon_pos": new DHPoint(20, 184),
-                            "dim": new DHPoint(998, 606),
+                            "dim": new DHPoint(1030,437),
                             "struc": PopUpManager.EU_EMAIL_2,
                             "contents": ImgEuEmailSelfieNetThread
                         }]

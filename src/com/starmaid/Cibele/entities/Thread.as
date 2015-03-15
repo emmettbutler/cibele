@@ -4,6 +4,8 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.management.MessageManager;
+    import com.starmaid.Cibele.base.GameSound;
 
     import org.flixel.*;
 
@@ -22,7 +24,7 @@ package com.starmaid.Cibele.entities {
 
         public var pos:DHPoint;
 
-        public var font_size:Number = 17, list_offset:Number = 40,
+        public var list_offset:Number = 40,
                    sent_count:Number = 0;
 
         public var font_color:uint = 0xff616161;
@@ -32,6 +34,8 @@ package com.starmaid.Cibele.entities {
 
         public var list_hitbox_width:Number = 380;
         public var list_hitbox_height:Number = 25;
+
+        public static const MSG_PADDING:Number = 10;
 
         public function Thread(inbox:GameObject,
                                ... messages) {
@@ -60,7 +64,7 @@ package com.starmaid.Cibele.entities {
                 this.sent_by + " >> " +
                 this.display_text.slice(0, this.sent_by.length + 10) +
                 "...");
-            this.truncated_textbox.setFormat("NexaBold-Regular",this.font_size,this.font_color,"left");
+            this.truncated_textbox.setFormat("NexaBold-Regular",MessageManager.FONT_SIZE,this.font_color,"left");
             this.truncated_textbox.scrollFactor = new FlxPoint(0, 0);
             this.truncated_textbox.visible = false;
             this.truncated_textbox.active = false;
@@ -97,13 +101,33 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        public function setBaseMsgPos():void {
+            var allSent:Array = new Array();
+            for (var i:int = 0; i < this.messages.length; i++) {
+                if (this.messages[i].sent) {
+                    allSent.push(this.messages[i]);
+                }
+            }
+            var totalVisibleHeight:Number = 0,
+                invisibleMsgStackHeight:Number = 0;
+            for (var k:int = allSent.length - 1; k >= 0; k--) {
+                if (totalVisibleHeight + allSent[k].textbox.height <=
+                    this.inbox_ref.height - 55)
+                {
+                    totalVisibleHeight += allSent[k].textbox.height + MSG_PADDING;
+                } else {
+                    invisibleMsgStackHeight += allSent[k].textbox.height + MSG_PADDING;
+                }
+            }
+            this.messages[0].pos.y = this.inbox_ref.y - invisibleMsgStackHeight + 20;
+        }
+
         public function rotate():void {
+            this.setBaseMsgPos();
             for (var i:int = 0; i < this.messages.length; i++) {
                 if (this.messages[i].sent) {
                     if (i != 0) {
-                        this.messages[i].pos.y = this.messages[i - 1].pos.y + 50;
-                    } else {
-                        this.messages[i].pos.y -= 50;
+                        this.messages[i].pos.y = this.messages[i - 1].pos.y + this.messages[i - 1].textbox.height + MSG_PADDING;
                     }
                     if (this.messages[i].pos.y < this.inbox_ref.y) {
                         this.messages[i].hide();
@@ -199,20 +223,18 @@ package com.starmaid.Cibele.entities {
             for (var i:int = 0; i < this.messages.length; i++) {
                 next = this.messages[i + 1];
                 if (!this.messages[i].sent &&
-                    this.messages[i].sent_by != this.messages[i - 1].sent_by)
+                    this.messages[i].sent_by == MessageManager.SENT_BY_CIBELE && (i == 0 || this.messages[i - 1].sent))
                 {
                     this.messages[i].send();
                     this.messages[i].show();
-                    this.messages[i].pos.y = this.messages[i - 1].pos.y + 50;
+                    //this.messages[i].pos.y = this.messages[i - 1].pos.y + 50;
                     if (next != null) {
                         GlobalTimer.getInstance().setMark(
                             next.display_text, next.send_time
                         );
                     }
                     this.sent_count++;
-                    if (this.sent_count > 3) {
-                        this.rotate();
-                    }
+                    this.rotate();
                     break;
                 }
             }

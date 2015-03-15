@@ -1,11 +1,15 @@
 package com.starmaid.Cibele.entities {
-    import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.utils.LRUDVector;
+    import com.starmaid.Cibele.utils.DHPoint;
 
     import org.flixel.*;
 
     public class PartyMember extends GameObject {
         [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
+        [Embed(source="/../assets/images/characters/cib_shadow.png")] private var ImgShadow:Class;
 
         public static const STATE_IN_ATTACK:Number = 1;
         public static const STATE_MOVE_TO_ENEMY:Number = 34987651333;
@@ -21,10 +25,11 @@ package com.starmaid.Cibele.entities {
         public var sightRange:Number;
         public var bossSightRange:Number;
         public var targetEnemy:Enemy;
-
-        public var tag:String;
-        public static const cib:String = "cibelelele";
-        public static const ichi:String = "ichichichi";
+        public var attackAnimDuration:Number;
+        protected var walkTarget:DHPoint;
+        protected var shadow_sprite:GameObject;
+        protected var footstepOffsets:LRUDVector;
+        protected var attackSounds:Array;
 
         public function PartyMember(pos:DHPoint) {
             super(pos);
@@ -33,13 +38,41 @@ package com.starmaid.Cibele.entities {
             this.footPos = new DHPoint(0, 0);
             this.sightRange = 280;
             this.bossSightRange = 1200;
+            this.attackAnimDuration = 2*GameSound.MSEC_PER_SEC;
+            this.walkTarget = new DHPoint(0, 0);
+            this.footstepOffsets = new LRUDVector();
         }
+
+        public function setupSprites():void { }
+        public function setupFootsteps():void { }
 
         public function initFootsteps():void {
             this.footsteps = new FootstepTrail(this);
         }
 
+        public function buildShadowSprite():void {
+            this.shadow_sprite = new GameObject(this.pos);
+            this.shadow_sprite.zSorted = true;
+            this.shadow_sprite.loadGraphic(ImgShadow,false,false,70,42);
+            this.shadow_sprite.alpha = .7;
+        }
+
+        public function setBlueShadow():void {
+            this.shadow_sprite.loadGraphic(ImgShadow,false,false,70,42);
+            this.shadow_sprite.alpha = .7;
+        }
+
         public function addVisibleObjects():void { }
+
+        public function playAttackSound():void {
+            var snd:Class = this.attackSounds[
+                Math.floor(Math.random() * this.attackSounds.length)
+            ];
+            SoundManager.getInstance().playSound(
+                snd, 2*GameSound.MSEC_PER_SEC, null, false, .3, GameSound.SFX,
+                "" + Math.random()
+            );
+        }
 
         override public function update():void {
             super.update();
@@ -81,7 +114,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function canAttack():Boolean {
-            return this.timeSinceLastAttack() > 2*MSEC_PER_SEC;
+            return this.timeSinceLastAttack() > this.attackAnimDuration;
         }
 
         public function enemyIsInAttackRange(en:Enemy):Boolean {

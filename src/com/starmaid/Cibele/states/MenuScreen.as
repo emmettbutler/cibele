@@ -129,7 +129,7 @@ package com.starmaid.Cibele.states {
 
             //todo this should probs not trigger every time if there's other music playing
             function _musicCallback():void {
-                if(!(FlxG.state is Hallway)) {
+                if(FlxG.state is MenuScreen) {
                     SoundManager.getInstance().playSound(MenuBGMLoop, 0, null,
                         true, 1, GameSound.BGM, MenuScreen.BGM);
                 }

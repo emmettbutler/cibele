@@ -210,22 +210,22 @@ package com.starmaid.Cibele.management {
                     this.programButtons[i].sendPopup(this.popups[key]);
                     this.sentPopups[key] = 1;
                     this.reminder_ding = true;
-                    GlobalTimer.getInstance().setMark("new popup", 10*GameSound.MSEC_PER_SEC, this.reminderDing);
+                    GlobalTimer.getInstance().setMark("new popup" + Math.random(), 10*GameSound.MSEC_PER_SEC, this.reminderDing);
                 }
             }
         }
 
         public function reminderDing():void {
+            FlxG.log(this.reminder_ding);
             if(this.reminder_ding) {
                 playNotificationSound();
-                GlobalTimer.getInstance().setMark("new popup", 10*GameSound.MSEC_PER_SEC, this.reminderDing);
+                GlobalTimer.getInstance().setMark("new popup" + Math.random(), 10*GameSound.MSEC_PER_SEC, this.reminderDing);
             }
         }
 
         public function playNotificationSound():void {
             SoundManager.getInstance().playSound(
-                    SfxNotification, 2*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.SFX,
-                    "" + Math.random()
+                    SfxNotification, 2*GameSound.MSEC_PER_SEC, null, false, 1, Math.random()
                 );
         }
 
