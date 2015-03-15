@@ -468,7 +468,9 @@ package com.starmaid.Cibele.entities {
                 this.attackAnim.play("attack");
                 this.visible = false;
 
-                this.playAttackSound();
+                if(this.inViewOfPlayer()) {
+                    this.playAttackSound();
+                }
             }
         }
 
