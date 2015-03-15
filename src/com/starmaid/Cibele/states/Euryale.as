@@ -36,7 +36,6 @@ package com.starmaid.Cibele.states {
             }
 
             PopUpManager.GAME_ACTIVE = true;
-            this.ui_color_flag = GameState.UICOLOR_PINK;
             this.conversationCounter = -1;
 
             // embedded sound, length in ms, time to wait before playing
