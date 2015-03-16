@@ -389,6 +389,8 @@ package com.starmaid.Cibele.entities {
                 this.setPos(warpNode.pos);
             }
             this._state = STATE_MOVE_TO_PLAYER;
+            this.attackAnim.visible = false;
+            this.visible = true;
         }
 
         public function reverseAttackAnim():void {
