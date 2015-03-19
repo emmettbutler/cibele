@@ -1,5 +1,6 @@
 package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.PopUpManager;
+    import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.Emote;
     import com.starmaid.Cibele.entities.IkuTursoBoss;
