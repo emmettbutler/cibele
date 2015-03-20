@@ -505,9 +505,11 @@ package com.starmaid.Cibele.entities {
                 this.attack_sprite.visible = false;
             }
 
-            this._bgLoaderRef.shouldCollide = this.curPath == null &&
-                (this._state == STATE_MOVE_TO_ENEMY ||
-                 this._state == STATE_WALK);
+            if (this._bgLoaderRef != null) {
+                this._bgLoaderRef.shouldCollide = this.curPath == null &&
+                    (this._state == STATE_MOVE_TO_ENEMY ||
+                    this._state == STATE_WALK);
+            }
 
             if (this.curPath == null && this.colliding) {
                 if (this.collisionDirection != null) {
