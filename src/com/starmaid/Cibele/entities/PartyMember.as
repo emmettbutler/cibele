@@ -116,6 +116,9 @@ package com.starmaid.Cibele.entities {
                 if (curNode != null) {
                     res = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, curNode.pos);
                 }
+                if (ScreenManager.getInstance().DEBUG) {
+                    trace(this.slug + ": trying again...");
+                }
                 tries += 1;
             }
 
@@ -131,18 +134,22 @@ package com.starmaid.Cibele.entities {
                 this.finalTarget = worldPos;
 
                 if (ScreenManager.getInstance().DEBUG) {
-                    trace("Path: " + this._cur_path.toString());
+                    trace(this.slug + ": path: " + this._cur_path.toString());
                 }
             }
         }
 
         public function initWalk(worldPos:DHPoint, usePaths:Boolean=true):void {
+            this.setFootPos();
             var useNodes:Boolean = true;
             if (this._mapnodes != null) {
                 var closestNode:MapNode = this._mapnodes.getClosestGenericNode(this.pos);
                 var connectInfo:Object = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, worldPos);
                 if (closestNode == null || connectInfo["canConnect"]) {
                     useNodes = false;
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace(this.slug + ": not using pathfinding (closestNode == " + closestNode + ")");
+                    }
                 } else {
                     var destinationDisp:Number = this.footPos.sub(worldPos)._length();
                     var nearestNodeDisp:Number = this.footPos.sub(closestNode.pos)._length();
@@ -194,7 +201,10 @@ package com.starmaid.Cibele.entities {
             }
 
             this.nameText.y = this.pos.y-30;
+            this.setFootPos();
+        }
 
+        protected function setFootPos():void {
             this.footPos.x = this.x + this.width/2;
             this.footPos.y = this.y + this.height;
         }

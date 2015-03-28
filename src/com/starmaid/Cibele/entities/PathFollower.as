@@ -48,7 +48,7 @@ package com.starmaid.Cibele.entities {
             stateMap[STATE_WALK] = "STATE_WALK";
             stateMap[STATE_AT_ENEMY] = "STATE_AT_ENEMY";
             stateMap[STATE_IN_ATTACK] = "STATE_IN_ATTACK";
-            stateMap[STATE_IDLE] = "STATE_IDLE_AT_NODE";
+            stateMap[STATE_IDLE] = "STATE_IDLE";
 
             public static var targetTypeMap:Dictionary = new Dictionary();
             targetTypeMap[TARGET_PLAYER] = "TARGET_PLAYER";
@@ -60,6 +60,7 @@ package com.starmaid.Cibele.entities {
             super(pos);
 
             this.nameText.text = "Ichi";
+            this.slug = "PathFollower";
             this.zSorted = true;
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
             this.debugText.color = 0xff444444;
@@ -241,7 +242,7 @@ package com.starmaid.Cibele.entities {
         public function doAtTargetState():void {
             switch (this._cur_target_type) {
                 case TARGET_PLAYER:
-                    this.moveToNextNode();
+                    this._state = STATE_IDLE;
                     break;
                 case TARGET_ENEMY:
                     this._state = STATE_AT_ENEMY;
@@ -266,7 +267,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function inAttack():Boolean {
-            return (this._state == STATE_IN_ATTACK || this._state == STATE_AT_ENEMY || (this._state == STATE_WALK && this._cur_target_type == TARGET_ENEMY));
+            return (this._state == STATE_IN_ATTACK || this._state == STATE_AT_ENEMY);
         }
 
         public function doMovementState():void {
@@ -320,9 +321,6 @@ package com.starmaid.Cibele.entities {
                 case STATE_WALK:
                     this.updateFinalTarget();
                     this.walk();
-                    if (this._cur_target_type == TARGET_ENEMY && this.targetEnemy.dead) {
-                        this.moveToNextNode();
-                    }
                     this.dir = disp.normalized().mulScl(this.runSpeed);
                     this.doMovementState();
                     this.evaluateEnemyDistance();
@@ -331,15 +329,14 @@ package com.starmaid.Cibele.entities {
                 case STATE_IDLE:
                     this.dir = ZERO_POINT;
                     if(this.playerIsAttacking()) {
-                        this._state = STATE_WALK;
-                        this.walkTarget = this.targetEnemy.getAttackPos();
+                        this.initWalk(this.targetEnemy.getAttackPos());
                         this._cur_target_type = TARGET_ENEMY;
                     } else {
                         if(this.playerIsInMovementRange()){
-                            if (this.targetNode._type == MapNode.TYPE_PATH) {
+                            if (this._cur_target_type == TARGET_NODE) {
                                 this.moveToNextPathNode();
                             } else {
-                                this.moveToNextNode();
+                                this.moveToNearestPathNode();
                             }
                         }
                         this.evaluateEnemyDistance();
@@ -362,8 +359,9 @@ package com.starmaid.Cibele.entities {
                 this._state = STATE_AT_ENEMY;
                 return true;
             } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
-                this.walkTarget = this.targetEnemy.getAttackPos();
-                this._state = STATE_WALK;
+                if (this._state != STATE_WALK) {
+                    this.initWalk(this.targetEnemy.getAttackPos());
+                }
                 this._cur_target_type = TARGET_ENEMY;
                 return true;
             }
@@ -372,13 +370,7 @@ package com.starmaid.Cibele.entities {
 
         override public function resolveStatePostAttack():void {
             super.resolveStatePostAttack();
-            if (this.targetEnemy != null && !this.targetEnemy.dead &&
-                this.targetEnemy.visible == true)
-            {
-                if (!this.evaluateEnemyDistance()) {
-                    this.moveToNextNode();
-                }
-            } else {
+            if (!this.evaluateEnemyDistance()) {
                 this.moveToNextNode();
             }
             this.attackAnim.visible = false;
@@ -417,13 +409,19 @@ package com.starmaid.Cibele.entities {
             this._cur_target_type = TARGET_NODE;
         }
 
+        public function moveToNearestPathNode():void {
+            this.targetNode = this._precon_path.getClosestNode(this.footPos);
+            this._precon_path.setCurrentNode(this.targetNode as PathNode);
+            this.initWalk(this.targetNode.pos);
+            this._cur_target_type = TARGET_NODE;
+        }
+
         public function moveToNextNode():void {
             this.targetNode = this._mapnodes.getClosestNode(this.pos, this.targetNode);
             if (this.targetNode == null) {
                 return;
             }
-            this.walkTarget = this.targetNode.pos;
-            this._state = STATE_WALK;
+            this.initWalk(this.targetNode.pos);
             this._cur_target_type = TARGET_NODE;
             if(this.targetNode._type == MapNode.TYPE_PATH) {
                 this._precon_path.setCurrentNode(this.targetNode as PathNode);
@@ -453,10 +451,9 @@ package com.starmaid.Cibele.entities {
             var targetPoint:DHPoint = this.playerRef.pos.add(dir.normalized().mulScl(555));
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint, null, false);
             if (warpNode != null) {
-                this.setPos(warpNode.pos);
+                this.setPos(warpNode.pos.sub(this.footPos.sub(this.pos)));
             }
-            this.walkTarget = this.playerRef.pos;
-            this._state = STATE_WALK;
+            this.initWalk(this.playerRef.footPos);
             this._cur_target_type = TARGET_PLAYER;
             this.attackAnim.visible = false;
             this.visible = true;

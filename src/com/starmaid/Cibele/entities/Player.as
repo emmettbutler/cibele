@@ -55,6 +55,7 @@ package com.starmaid.Cibele.entities {
             this.cameraPos = new GameObject(new DHPoint(x, y));
 
             this.nameText.text = "Cibele";
+            this.slug = "Player";
 
             this.zSorted = true;
 
