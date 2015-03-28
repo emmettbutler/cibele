@@ -25,7 +25,6 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/audio/effects/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
 
         private var _precon_path:Path;
-        private var _mapnodes:MapNodeContainer;
         private var _enemies:EnemyGroup;
         private var targetNode:MapNode;
         private var lastInViewTime:Number = 0, runSpeed:Number = 7;
@@ -360,10 +359,6 @@ package com.starmaid.Cibele.entities {
 
         public function set precon_path(path:Path):void {
             this._precon_path = path;
-        }
-
-        public function setMapNodes(nodes:MapNodeContainer):void {
-            this._mapnodes = nodes;
         }
 
         public function setEnemyGroupReference(_group:EnemyGroup):void {

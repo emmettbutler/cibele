@@ -5,14 +5,12 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.BackgroundLoader;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.states.LevelMapState;
-    import com.starmaid.Cibele.states.PathEditorState;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.Deque;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.UIElement;
     import com.starmaid.Cibele.utils.GlobalTimer;
-    import com.starmaid.Cibele.utils.MapNodeContainer;
 
     import org.flixel.*;
 
@@ -28,7 +26,7 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/audio/effects/sfx_cibattack2.mp3")] private var SfxAttack2:Class;
 
         private var walkSpeed:Number = 7, mouseDownTime:Number;
-        private var finalTarget:DHPoint, hitboxOffset:DHPoint,
+        private var hitboxOffset:DHPoint,
                     hitboxDim:DHPoint;
         private var click_anim:GameObject, attack_sprite:GameObject;
         private var click_anim_lock:Boolean = false, clickWait:Boolean,
@@ -38,7 +36,6 @@ package com.starmaid.Cibele.entities {
         public var colliding:Boolean = false;
         public var mapHitbox:GameObject, cameraPos:GameObject;
         public var collisionDirection:Array, lastPositions:Deque;
-        public var _mapnodes:MapNodeContainer;
 
         public static const STATE_WALK_HARD:Number = 23981333333;
 
@@ -128,10 +125,6 @@ package com.starmaid.Cibele.entities {
 
         public function set bgLoaderRef(ref:BackgroundLoader):void {
             this._bgLoaderRef = ref;
-        }
-
-        public function setMapNodes(nodes:MapNodeContainer):void {
-            this._mapnodes = nodes;
         }
 
         public function getStateString():String {
@@ -272,74 +265,6 @@ package com.starmaid.Cibele.entities {
                 SfxUI, 1*GameSound.MSEC_PER_SEC, null, false, .3, GameSound.SFX,
                 "" + Math.random()
             );
-        }
-
-        public function buildBestPath(worldPos:DHPoint):void {
-            // examine nearby nodes to find the shortest path along the graph
-            // from current position to worldPos
-
-            var maxTries:Number = 10;
-
-            // get closest N nodes to player
-            var closeNodes:Array = this._mapnodes.getNClosestGenericNodes(maxTries, this.footPos);
-            var curNode:MapNode = closeNodes[0]['node'], tries:Number = 0;
-
-            // check each of these nodes for obstructions
-            var res:Object = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, curNode.pos);
-            while (!res["canConnect"] && tries < maxTries && curNode != null) {
-                curNode = closeNodes[tries]['node'];
-                if (curNode != null) {
-                    res = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, curNode.pos);
-                }
-                tries += 1;
-            }
-
-            // if we found an unobstructed node, generate a path and initialize state
-            if (res["canConnect"]) {
-                this._cur_path = Path.shortestPath(
-                    curNode,
-                    this._mapnodes.getClosestGenericNode(worldPos)
-                );
-                (FlxG.state as PathEditorState).clearAllAStarMeasures();
-
-                this.walkTarget = this._cur_path.currentNode.pos;
-                this.finalTarget = worldPos;
-
-                if (ScreenManager.getInstance().DEBUG) {
-                    trace("Path: " + this._cur_path.toString());
-                }
-            }
-        }
-
-        public function initWalk(worldPos:DHPoint, usePaths:Boolean=true):void {
-            var useNodes:Boolean = true;
-            if (this._mapnodes != null) {
-                var closestNode:MapNode = this._mapnodes.getClosestGenericNode(this.pos);
-                var connectInfo:Object = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, worldPos);
-                if (closestNode == null || connectInfo["canConnect"]) {
-                    useNodes = false;
-                } else {
-                    var destinationDisp:Number = this.footPos.sub(worldPos)._length();
-                    var nearestNodeDisp:Number = this.footPos.sub(closestNode.pos)._length();
-                    if (!usePaths || destinationDisp < nearestNodeDisp) {
-                        this.walkTarget = worldPos;
-                        this.finalTarget = worldPos;
-                        this._cur_path = null;
-                    } else {
-                        this.buildBestPath(worldPos);
-                    }
-                }
-            } else {
-                useNodes = false;
-            }
-
-            if (!useNodes) {
-                this.walkTarget = worldPos;
-                this.finalTarget = worldPos;
-                this._cur_path = null;
-            }
-
-            this._state = STATE_WALK;
         }
 
         public function walk():void {
