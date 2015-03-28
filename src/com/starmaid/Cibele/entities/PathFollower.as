@@ -24,7 +24,7 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/audio/effects/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
         [Embed(source="/../assets/audio/effects/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
 
-        private var _path:Path;
+        private var _precon_path:Path;
         private var _mapnodes:MapNodeContainer;
         private var _enemies:EnemyGroup;
         private var targetNode:MapNode;
@@ -228,7 +228,7 @@ package com.starmaid.Cibele.entities {
             switch(this._state) {
                 case STATE_MOVE_TO_NODE:
                     this.walk();
-                    if (!this._mapnodes.hasNodes() && !this._path.hasNodes()) {
+                    if (!this._mapnodes.hasNodes() && !this._precon_path.hasNodes()) {
                         this._state = STATE_NULL;
                     } else {
                         disp = this.targetNode.pos.sub(this.footPos);
@@ -334,8 +334,8 @@ package com.starmaid.Cibele.entities {
             this.closestEnemy = ret;
         }
 
-        public function setPath(path:Path):void {
-            this._path = path;
+        public function set precon_path(path:Path):void {
+            this._precon_path = path;
         }
 
         public function setMapNodes(nodes:MapNodeContainer):void {
@@ -347,8 +347,8 @@ package com.starmaid.Cibele.entities {
         }
 
         public function moveToNextPathNode():void {
-            this._path.advance();
-            this.targetNode = this._path.currentNode;
+            this._precon_path.advance();
+            this.targetNode = this._precon_path.currentNode;
             this._state = STATE_MOVE_TO_NODE;
         }
 
@@ -359,7 +359,7 @@ package com.starmaid.Cibele.entities {
             }
             this._state = STATE_MOVE_TO_NODE;
             if(this.targetNode._type == MapNode.TYPE_PATH) {
-                this._path.setCurrentNode(this.targetNode as PathNode);
+                this._precon_path.setCurrentNode(this.targetNode as PathNode);
             }
         }
 
@@ -429,7 +429,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function get pathRef():Path {
-            return this._path;
+            return this._precon_path;
         }
     }
 }

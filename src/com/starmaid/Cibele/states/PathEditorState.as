@@ -74,7 +74,7 @@ package com.starmaid.Cibele.states {
             pathWalker.initFootsteps();
 
             _path = new Path();
-            pathWalker.setPath(_path);
+            pathWalker.precon_path = _path;
             pathWalker.setPlayerReference(player);
 
             _mapnodes = new MapNodeContainer(_path, player);
