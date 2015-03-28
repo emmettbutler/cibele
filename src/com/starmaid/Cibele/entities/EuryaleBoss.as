@@ -7,13 +7,13 @@ package com.starmaid.Cibele.entities {
     import org.flixel.*;
 
     public class EuryaleBoss extends BossEnemy {
-        [Embed(source="/../assets/images/characters/boss1.png")] private var ImgBoss:Class;
+        [Embed(source="/../assets/images/characters/boss2.png")] private var ImgBoss:Class;
 
         public function EuryaleBoss(pos:DHPoint) {
             super(pos);
-            loadGraphic(ImgBoss, false, false, 5613/11, 600);
+            loadGraphic(ImgBoss, false, false, 632, 800);
 
-            addAnimation("run_boss", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], 12, true);
+            addAnimation("run_boss", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], 12, true);
             play("run_boss");
 
         }
