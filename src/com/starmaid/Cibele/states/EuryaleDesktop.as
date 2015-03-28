@@ -23,9 +23,11 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/forum.png")] private var ImgPicturesFolderForum:Class;
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/friends.png")] private var ImgPicturesFolderFriends:Class;
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/cosmo.png")] private var ImgCosmo:Class;
-        [Embed(source="/../assets/images/ui/popups/selfiedesktop/midterm_prop.png")] private var ImgMidtermProp:Class;
+        [Embed(source="/../assets/images/ui/popups/files/blog1draft.png")] private var ImgBlog1Draft:Class;
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/cosmo_icon.png")] private var ImgCosmoIcon:Class;
-        [Embed(source="/../assets/images/ui/popups/selfiedesktop/midterm_prop_icon.png")] private var ImgMidtermPropIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/files/blog1draft_icon.png")] private var ImgBlog1DraftIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/files/blog7draft.png")] private var ImgBlog7Draft:Class;
+        [Embed(source="/../assets/images/ui/popups/files/blog7draft_icon.png")] private var ImgBlog7DraftIcon:Class;
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/partypoem1icon.png")] private var ImgUntitledFolderPartyPoem1Icon:Class;
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/partypoem1.png")] private var ImgUntitledFolderPartyPoem1:Class;
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/kawaii.png")] private var ImgUntitledFolderKawaii:Class;
@@ -139,13 +141,21 @@ package com.starmaid.Cibele.states {
                             "contents": ImgCosmo
                         },
                         {
-                            "name": "midterm_prop",
-                            "icon": ImgMidtermPropIcon,
-                            "icon_dim": new DHPoint(115, 84),
+                            "name": "blog1",
+                            "icon": ImgBlog1DraftIcon,
+                            "icon_dim": new DHPoint(115, 93),
                             "icon_pos": new DHPoint(129, 36),
                             "dim": new DHPoint(631, 356),
-                            "contents": ImgMidtermProp
+                            "contents": ImgBlog1Draft
                         },
+                        {
+                            "name": "blog7",
+                            "icon": ImgBlog7DraftIcon,
+                            "icon_dim": new DHPoint(115, 93),
+                            "icon_pos": new DHPoint(250, 36),
+                            "dim": new DHPoint(631, 356),
+                            "contents": ImgBlog7Draft
+                        }
                     ]
                 }
             ]};
