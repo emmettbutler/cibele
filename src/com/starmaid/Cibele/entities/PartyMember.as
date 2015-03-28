@@ -5,6 +5,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.utils.LRUDVector;
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.management.Path;
 
     import org.flixel.*;
 
@@ -27,6 +28,7 @@ package com.starmaid.Cibele.entities {
         public var bossSightRange:Number;
         public var targetEnemy:Enemy;
         public var attackAnimDuration:Number;
+        protected var _cur_path:Path;
         protected var walkTarget:DHPoint;
         protected var shadow_sprite:GameObject;
         protected var footstepOffsets:LRUDVector;

@@ -30,7 +30,6 @@ package com.starmaid.Cibele.entities {
         private var walkSpeed:Number = 7, mouseDownTime:Number;
         private var finalTarget:DHPoint, hitboxOffset:DHPoint,
                     hitboxDim:DHPoint;
-        private var curPath:Path;
         private var click_anim:GameObject, attack_sprite:GameObject;
         private var click_anim_lock:Boolean = false, clickWait:Boolean,
                     active_enemy:Boolean = false, mouseHeld:Boolean = false;
@@ -298,18 +297,18 @@ package com.starmaid.Cibele.entities {
 
             // if we found an unobstructed node, generate a path and initialize state
             if (res["canConnect"]) {
-                this.curPath = Path.shortestPath(
+                this._cur_path = Path.shortestPath(
                     curNode,
                     this._mapnodes.getClosestGenericNode(worldPos)
                 );
                 (FlxG.state as PathEditorState).clearAllAStarMeasures();
 
-                this.walkTarget = this.curPath.currentNode.pos;
+                this.walkTarget = this._cur_path.currentNode.pos;
                 this.finalTarget = worldPos;
             }
 
             if (ScreenManager.getInstance().DEBUG) {
-                trace("Path: " + this.curPath.toString());
+                trace("Path: " + this._cur_path.toString());
             }
         }
 
@@ -326,7 +325,7 @@ package com.starmaid.Cibele.entities {
                     if (!usePaths || destinationDisp < nearestNodeDisp) {
                         this.walkTarget = worldPos;
                         this.finalTarget = worldPos;
-                        this.curPath = null;
+                        this._cur_path = null;
                     } else {
                         this.buildBestPath(worldPos);
                     }
@@ -338,7 +337,7 @@ package com.starmaid.Cibele.entities {
             if (!useNodes) {
                 this.walkTarget = worldPos;
                 this.finalTarget = worldPos;
-                this.curPath = null;
+                this._cur_path = null;
             }
 
             this._state = STATE_WALK;
@@ -384,7 +383,7 @@ package com.starmaid.Cibele.entities {
                 this._state = STATE_IDLE;
                 this.dir = ZERO_POINT;
             } else if (this.walkTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
-                if (curPath == null) {
+                if (_cur_path == null) {
                     if (this.inAttack()) {
                         this.initWalk(this.targetEnemy.getAttackPos());
                         this._state = STATE_MOVE_TO_ENEMY;
@@ -393,9 +392,9 @@ package com.starmaid.Cibele.entities {
                         this.dir = ZERO_POINT;
                     }
                 } else {
-                    this.curPath.advance();
+                    this._cur_path.advance();
 
-                    if (this.curPath.isAtFirstNode()) {
+                    if (this._cur_path.isAtFirstNode()) {
                         var destinationDisp:Number = this.footPos.sub(this.finalTarget)._length();
                         if (destinationDisp > 100) {
                             this.walkTarget = this.finalTarget;
@@ -403,9 +402,9 @@ package com.starmaid.Cibele.entities {
                             // end the path early to avoid jerky movements at the end
                             this.finalTarget = this.footPos;
                         }
-                        this.curPath = null;
+                        this._cur_path = null;
                     } else {
-                        this.walkTarget = this.curPath.currentNode.pos;
+                        this.walkTarget = this._cur_path.currentNode.pos;
                     }
                 }
             } else if (this.finalTarget.sub(this.footPos)._length() < 100) {
@@ -416,7 +415,7 @@ package com.starmaid.Cibele.entities {
             {
                 this._state = STATE_IDLE;
                 this.dir = ZERO_POINT;
-                this.curPath = null;
+                this._cur_path = null;
             }
         }
 
@@ -436,8 +435,8 @@ package com.starmaid.Cibele.entities {
                     "\nposition: " + this.pos.x + "x" + this.pos.y +
                     "\nwalkTarget: " + this.walkTarget.x + "x" + this.walkTarget.y +
                     "\nfinalTarget: " + this.finalTarget.x + "x" + this.finalTarget.y;
-                if (this.curPath != null) {
-                    this.debugText.text += "\nisAtFirstNode: " + this.curPath.isAtFirstNode();
+                if (this._cur_path != null) {
+                    this.debugText.text += "\nisAtFirstNode: " + this._cur_path.isAtFirstNode();
                 }
             }
 
@@ -509,10 +508,10 @@ package com.starmaid.Cibele.entities {
             if (this._bgLoaderRef != null) {
                 this._bgLoaderRef.shouldCollide = this.curPath == null &&
                     (this._state == STATE_MOVE_TO_ENEMY ||
-                    this._state == STATE_WALK);
+                     this._state == STATE_WALK);
             }
 
-            if (this.curPath == null && this.colliding) {
+            if (this._cur_path == null && this.colliding) {
                 if (this.collisionDirection != null) {
                     if (this.collisionDirection[0] == 1 &&
                         this.collisionDirection[1] == 1 &&
