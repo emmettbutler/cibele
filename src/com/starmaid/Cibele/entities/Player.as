@@ -40,7 +40,6 @@ package com.starmaid.Cibele.entities {
         public var collisionDirection:Array, lastPositions:Deque;
         public var _mapnodes:MapNodeContainer;
 
-        public static const STATE_WALK:Number = 2398476188;
         public static const STATE_WALK_HARD:Number = 23981333333;
 
         {

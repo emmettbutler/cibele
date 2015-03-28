@@ -16,6 +16,7 @@ package com.starmaid.Cibele.entities {
         public static const STATE_IN_ATTACK:Number = 1;
         public static const STATE_MOVE_TO_ENEMY:Number = 34987651333;
         public static const STATE_AT_ENEMY:Number = 91823419673;
+        public static const STATE_WALK:Number = 2398476188;
 
         public var lastAttackTime:Number = 0;
         public var footsteps:FootstepTrail = null;
