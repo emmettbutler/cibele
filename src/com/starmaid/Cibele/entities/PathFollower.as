@@ -31,15 +31,15 @@ package com.starmaid.Cibele.entities {
         private var _bossRef:BossEnemy;
         private var closestEnemy:Enemy;
         private var playerRef:Player;
-        private var disp:DHPoint;
         private var attackAnim:GameObject;
+        public var disp:DHPoint;
 
         private static const TARGET_PLAYER:Number = 1;
         private static const TARGET_ENEMY:Number = 2;
         private static const TARGET_NODE:Number = 3;
         private var _cur_target_type:Number;
 
-        public static const STATE_IDLE_AT_NODE:Number = 7;
+        public static const STATE_IDLE:Number = 7;
         public static const ATTACK_RANGE:Number = 150;
 
         {
@@ -48,7 +48,12 @@ package com.starmaid.Cibele.entities {
             stateMap[STATE_WALK] = "STATE_WALK";
             stateMap[STATE_AT_ENEMY] = "STATE_AT_ENEMY";
             stateMap[STATE_IN_ATTACK] = "STATE_IN_ATTACK";
-            stateMap[STATE_IDLE_AT_NODE] = "STATE_IDLE_AT_NODE";
+            stateMap[STATE_IDLE] = "STATE_IDLE_AT_NODE";
+
+            public static var targetTypeMap:Dictionary = new Dictionary();
+            targetTypeMap[TARGET_PLAYER] = "TARGET_PLAYER";
+            targetTypeMap[TARGET_ENEMY] = "TARGET_ENEMY";
+            targetTypeMap[TARGET_NODE] = "TARGET_NODE";
         }
 
         public function PathFollower(pos:DHPoint) {
@@ -67,6 +72,11 @@ package com.starmaid.Cibele.entities {
 
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.pos", "ichi.pos");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.getStateString", "ichi.state");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.getTargetTypeString", "ichi.targetType");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.isAtTarget", "ichi.isAtTarget");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.disp._length", "ichi.disp");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.walkTarget", "ichi.walkTarget");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.hasCurPath", "ichi.hasPath");
         }
 
         override public function setupFootsteps():void {
@@ -114,6 +124,10 @@ package com.starmaid.Cibele.entities {
 
         public function getStateString():String {
             return PathFollower.stateMap[this._state] == null ? "unknown" : PathFollower.stateMap[this._state];
+        }
+
+        public function getTargetTypeString():String {
+            return PathFollower.targetTypeMap[this._cur_target_type] == null ? "unknown" : PathFollower.targetTypeMap[this._cur_target_type];
         }
 
         override public function addVisibleObjects():void {
@@ -233,21 +247,57 @@ package com.starmaid.Cibele.entities {
                     this._state = STATE_AT_ENEMY;
                     break;
                 case TARGET_NODE:
-                    this._state = STATE_IDLE_AT_NODE;
+                    this._state = STATE_IDLE;
                     break;
             }
         }
 
-        public function updateWalkTarget():void {
+        public function updateFinalTarget():void {
             switch (this._cur_target_type) {
                 case TARGET_PLAYER:
-                    this.walkTarget = this.playerRef.pos;
+                    this.finalTarget = this.playerRef.pos;
                     break;
                 case TARGET_ENEMY:
-                    this.walkTarget = this.targetEnemy.getAttackPos();
+                    this.finalTarget = this.targetEnemy.getAttackPos();
                     break;
                 case TARGET_NODE:
                     break;
+            }
+        }
+
+        public function inAttack():Boolean {
+            return (this._state == STATE_IN_ATTACK || this._state == STATE_AT_ENEMY || (this._state == STATE_WALK && this._cur_target_type == TARGET_ENEMY));
+        }
+
+        public function doMovementState():void {
+            if (this.isAtTarget()) {
+                this.doAtTargetState();
+            } else if (this.walkTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
+                if (this._cur_path == null) {
+                    if (this.inAttack()) {
+                        this.walkTarget = this.targetEnemy.getAttackPos();
+                        this._state = STATE_WALK;
+                        this._cur_target_type = TARGET_ENEMY;
+                    } else {
+                        this._state = STATE_IDLE;
+                        this.dir = ZERO_POINT;
+                    }
+                } else {
+                    this._cur_path.advance();
+
+                    if (this._cur_path.isAtFirstNode()) {
+                        var destinationDisp:Number = this.footPos.sub(this.finalTarget)._length();
+                        if (destinationDisp > 100) {
+                            this.walkTarget = this.finalTarget;
+                        } else {
+                            // end the path early to avoid jerky movements at the end
+                            this.finalTarget = this.footPos;
+                        }
+                        this._cur_path = null;
+                    } else {
+                        this.walkTarget = this._cur_path.currentNode.pos;
+                    }
+                }
             }
         }
 
@@ -268,23 +318,17 @@ package com.starmaid.Cibele.entities {
 
             switch(this._state) {
                 case STATE_WALK:
-                    this.updateWalkTarget();
+                    this.updateFinalTarget();
                     this.walk();
-
                     if (this._cur_target_type == TARGET_ENEMY && this.targetEnemy.dead) {
                         this.moveToNextNode();
                     }
-
-                    if (this.isAtTarget()) {
-                        this.doAtTargetState();
-                    } else {
-                        this.dir = disp.normalized().mulScl(this.runSpeed);
-                    }
-
+                    this.dir = disp.normalized().mulScl(this.runSpeed);
+                    this.doMovementState();
                     this.evaluateEnemyDistance();
                     break;
 
-                case STATE_IDLE_AT_NODE:
+                case STATE_IDLE:
                     this.dir = ZERO_POINT;
                     if(this.playerIsAttacking()) {
                         this._state = STATE_WALK;
@@ -375,10 +419,10 @@ package com.starmaid.Cibele.entities {
 
         public function moveToNextNode():void {
             this.targetNode = this._mapnodes.getClosestNode(this.pos, this.targetNode);
-            this.walkTarget = this.targetNode.pos;
             if (this.targetNode == null) {
                 return;
             }
+            this.walkTarget = this.targetNode.pos;
             this._state = STATE_WALK;
             this._cur_target_type = TARGET_NODE;
             if(this.targetNode._type == MapNode.TYPE_PATH) {
@@ -411,8 +455,8 @@ package com.starmaid.Cibele.entities {
             if (warpNode != null) {
                 this.setPos(warpNode.pos);
             }
-            this._state = STATE_WALK;;
             this.walkTarget = this.playerRef.pos;
+            this._state = STATE_WALK;
             this._cur_target_type = TARGET_PLAYER;
             this.attackAnim.visible = false;
             this.visible = true;

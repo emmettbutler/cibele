@@ -32,9 +32,9 @@ package com.starmaid.Cibele.entities {
         public var bossSightRange:Number;
         public var targetEnemy:Enemy;
         public var attackAnimDuration:Number;
+        public var walkTarget:DHPoint, finalTarget:DHPoint;
         protected var _mapnodes:MapNodeContainer;
         protected var _cur_path:Path;
-        protected var walkTarget:DHPoint, finalTarget:DHPoint;
         protected var shadow_sprite:GameObject;
         protected var footstepOffsets:LRUDVector;
         protected var attackSounds:Array;
@@ -212,6 +212,10 @@ package com.starmaid.Cibele.entities {
                 this._state = STATE_IN_ATTACK;
                 this.lastAttackTime = this.currentTime;
             }
+        }
+
+        public function hasCurPath():Boolean {
+            return this._cur_path != null;
         }
 
         public function timeSinceLastAttack():Number {
