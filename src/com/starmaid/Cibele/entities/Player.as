@@ -304,10 +304,10 @@ package com.starmaid.Cibele.entities {
 
                 this.walkTarget = this._cur_path.currentNode.pos;
                 this.finalTarget = worldPos;
-            }
 
-            if (ScreenManager.getInstance().DEBUG) {
-                trace("Path: " + this._cur_path.toString());
+                if (ScreenManager.getInstance().DEBUG) {
+                    trace("Path: " + this._cur_path.toString());
+                }
             }
         }
 
