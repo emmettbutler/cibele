@@ -222,7 +222,7 @@ package com.starmaid.Cibele.states {
                 if(audioInfo["audio"] == null) {
                     GlobalTimer.getInstance().setMark(
                         "no audio" + Math.random(), audioInfo["len"],
-                        audioInfo["endfn"]
+                        endfn
                     );
                 } else {
                     SoundManager.getInstance().playSound(
