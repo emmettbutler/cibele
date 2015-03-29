@@ -10,6 +10,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.Path;
     import com.starmaid.Cibele.entities.PathNode;
     import com.starmaid.Cibele.entities.SmallEnemy;
+    import com.starmaid.Cibele.entities.IkuTursoEnemy;
     import com.starmaid.Cibele.entities.Enemy;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameState;
@@ -134,7 +135,7 @@ package com.starmaid.Cibele.states {
                                            this.showNodes);
                     this.pathWalker.moveToNextPathNode();
                 } else if (FlxG.keys["Z"]) {
-                    var en:SmallEnemy = new SmallEnemy(new DHPoint(FlxG.mouse.x,
+                    var en:SmallEnemy = new IkuTursoEnemy(new DHPoint(FlxG.mouse.x,
                                                                    FlxG.mouse.y));
                     add(en);
                     this.enemies.addEnemy(en);
@@ -310,7 +311,7 @@ package com.starmaid.Cibele.states {
                         this.showNodes);
                 } else if (prefix_.indexOf("enemy") == 0 && this.shouldAddEnemies) {
                     coords = line[1].split("x");
-                    var en:SmallEnemy = new SmallEnemy(
+                    var en:SmallEnemy = new IkuTursoEnemy(
                         new DHPoint(Number(coords[0]), Number(coords[1])));
                     add(en);
                     this.enemies.addEnemy(en);

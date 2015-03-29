@@ -12,12 +12,6 @@ package com.starmaid.Cibele.entities {
     import flash.utils.Dictionary;
 
     public class Enemy extends GameObject {
-        [Embed(source="/../assets/images/characters/squid_baby.png")] private var ImgIT1:Class;
-        [Embed(source="/../assets/images/characters/Enemy2_sprite.png")] private var ImgIT2:Class;
-        [Embed(source="/../assets/images/characters/squid_attack.png")] private var ImgIT1_Attack:Class;
-        [Embed(source="/../assets/images/characters/enemy2_attack.png")] private var ImgIT2_Attack:Class;
-        [Embed(source="/../assets/images/ui/enemy_highlight.png")] private var ImgActive:Class;
-        [Embed(source="/../assets/images/ui/enemy2_highlight.png")] private var ImgActive2:Class;
         public var enemyType:String = "enemy";
         public var hitpoints:Number = 100;
         public var damage:Number = 3;
@@ -29,14 +23,14 @@ package com.starmaid.Cibele.entities {
         public static const STATE_ESCAPE:Number = 5;
         public static const STATE_MOVE_TO_PATH_NODE:Number = 6;
         public static const STATE_DEAD:Number = 7;
-        public var dead:Boolean = false;
 
-        public var player:Player;
+        public var dead:Boolean = false;
+        public var playerRef:Player;
         public var recoilPower:Number = 3;
         public var playerDisp:DHPoint;
         public var attackOffset:DHPoint;
         public var disp:DHPoint;
-        private var followerDisp:DHPoint;
+        private var spriteSetupComplete:Boolean = false;
         private var attackerDisp:DHPoint;
         public var path_follower:PathFollower;
         public var attacker:PartyMember;
@@ -48,7 +42,6 @@ package com.starmaid.Cibele.entities {
         public var fade:Boolean = false;
         public var bar:GameObject;
         public var sightRange:Number = 308;
-        public var canEscape:Boolean = false;
         public var original_pos:DHPoint;
 
         public var _path:Path = null;
@@ -77,55 +70,23 @@ package com.starmaid.Cibele.entities {
 
             this.attackOffset = new DHPoint(0, 0);
 
-            var rand:Number = Math.random() * 2;
-            if(rand > 1) {
-                this.target_sprite = new GameObject(pos);
-                this.target_sprite.loadGraphic(ImgActive,false,false,147,24);
-                FlxG.state.add(this.target_sprite);
-                this.target_sprite.visible = false;
+            trace("calling");
+            this.setupSprites();
 
-                loadGraphic(ImgIT1, false, false, 152, 104);
-
-                this.attack_sprite = new GameObject(pos);
-                this.attack_sprite.loadGraphic(ImgIT1_Attack, true, false, 165, 115);
-                this.attack_sprite.addAnimation("attack", [0,1,2,3,4,5,6,7,8,9,10,11,10,9,8,7,6,5,4,3,2,1,0], 12, true);
-                FlxG.state.add(attack_sprite);
-                this.attack_sprite.visible = false;
-            } else {
-                this.target_sprite = new GameObject(pos);
-                this.target_sprite.loadGraphic(ImgActive2,false,false,67,15);
-                FlxG.state.add(this.target_sprite);
-                this.target_sprite.visible = false;
-
-                loadGraphic(ImgIT2, false, false, 70, 160);
-
-                this.attack_sprite = new GameObject(pos);
-                this.attack_sprite.loadGraphic(ImgIT2_Attack, true, false, 71, 163);
-                this.attack_sprite.addAnimation("attack", [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0], 12, true);
-                FlxG.state.add(attack_sprite);
-                this.attack_sprite.visible = false;
-            }
-            addAnimation("run_enemy", [0, 1, 2, 3, 4, 5], 12, true);
-            play("run_enemy");
-            this.attack_sprite.play("attack");
-            disp = new DHPoint(0, 0);
             footPos = new DHPoint(0, 0);
-            this.attack_sprite.zSorted = true;
-            this.attack_sprite.basePos = new DHPoint(this.x, this.y + this.height);
+            disp = new DHPoint(0, 0);
             this.zSorted = true;
             this.basePos = new DHPoint(this.x, this.y + this.height);
-
-            this.bar = new GameObject(new DHPoint(pos.x,pos.y));
-            this.bar.makeGraphic(1,8,0xffe2678e);
-            this.bar.scale.x = this.hitpoints;
         }
+
+        public function setupSprites():void { }
 
         public function getStateString():String {
             return Enemy.stateMap[this._state] == null ? "unknown" : Enemy.stateMap[this._state];
         }
 
         public function warpToPlayer():void {
-            var targetPoint:DHPoint = this.player.pos.add(this.player.dir.normalized().mulScl(1000));
+            var targetPoint:DHPoint = this.playerRef.pos.add(this.playerRef.dir.normalized().mulScl(1000));
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint);
             var headFootDisp:DHPoint = this.pos.sub(this.footPos);
             this.setPos(warpNode.pos.add(headFootDisp));
@@ -139,7 +100,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function setPlayerRef(p:Player):void{
-            this.player = p;
+            this.playerRef = p;
         }
 
         public function setFollowerRef(f:PathFollower):void{
@@ -262,10 +223,10 @@ package com.starmaid.Cibele.entities {
             this.attack_sprite.setPos(this.pos);
 
             if(this._state != STATE_DEAD) {
-                if (this.player == null) {
+                if (this.playerRef == null) {
                     this.playerDisp = new DHPoint(0, 0);
                 } else {
-                    this.playerDisp = this.player.footPos.sub(this.getAttackPos());
+                    this.playerDisp = this.playerRef.footPos.sub(this.getAttackPos());
                 }
 
                 if(this.attacker != null){
@@ -273,7 +234,7 @@ package com.starmaid.Cibele.entities {
                         this.visible = false;
                         this.attack_sprite.visible = true;
                     }
-                    if (this.attacker == this.player) {
+                    if (this.attacker == this.playerRef) {
                         this.attackerDisp = this.playerDisp;
                     } else if (this.attacker == this.path_follower) {
                         this.attackerDisp = this.path_follower.footPos.sub(this.getAttackPos());
@@ -314,7 +275,7 @@ package com.starmaid.Cibele.entities {
                 {
                     this._state = STATE_IDLE;
                 }
-                this.disp = this.player.footPos.sub(this.getAttackPos());
+                this.disp = this.playerRef.footPos.sub(this.getAttackPos());
                 this.dir = disp.normalized();
             } else if (this._state == STATE_RECOIL) {
                 if (this.attackerDisp._length() > 120) {
