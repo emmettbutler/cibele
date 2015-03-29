@@ -207,15 +207,24 @@ package com.starmaid.Cibele.states {
             if (audioInfo != null) {
                 var endfn:Function = this.playNextConvoPiece;
                 if (audioInfo["endfn"] != null) {
-                    endfn = function():void {
-                        registerPopupCallback();
-                        audioInfo["endfn"]();
-                    };
+                    if(audioInfo["audio"] != null) {
+                        endfn = function():void {
+                            registerPopupCallback();
+                            audioInfo["endfn"]();
+                        };
+                    }
                 }
-                SoundManager.getInstance().playSound(
-                    audioInfo["audio"], audioInfo["len"], endfn, false, 1,
-                    GameSound.VOCAL
-                );
+                if(audioInfo["audio"] == null) {
+                    GlobalTimer.getInstance().setMark(
+                        "no audio" + Math.random(), audioInfo["len"],
+                        audioInfo["endfn"]
+                    );
+                } else {
+                    SoundManager.getInstance().playSound(
+                        audioInfo["audio"], audioInfo["len"], endfn,
+                        false, 1, GameSound.VOCAL
+                    );
+                }
             } else {
                 this.finalConvoDone();
             }
@@ -233,6 +242,14 @@ package com.starmaid.Cibele.states {
                     FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
                                                     arguments.callee);
                 });
+        }
+
+        public function manuallyContinueConversation():void {
+            this.playNextConvoPiece();
+            this.playTimedEmotes(this.conversationCounter);
+            if(this.conversationPieces.length == this.conversationCounter + 1) {
+                this.last_convo_playing = true;
+            }
         }
 
         public function finalConvoDone():void {}
