@@ -29,7 +29,7 @@ package com.starmaid.Cibele.entities {
         public var nameText:FlxText;
         public var text_facing:String = "up";
         public var footPos:DHPoint;
-        public var sightRange:Number;
+        public var sightRange:Number = 280;
         public var bossSightRange:Number;
         public var targetEnemy:Enemy;
         public var attackAnimDuration:Number;
@@ -47,11 +47,17 @@ package com.starmaid.Cibele.entities {
             this.nameText = new FlxText(pos.x, pos.y, 500, "My Name");
             this.nameText.setFormat("NexaBold-Regular",16,0xff616161,"left");
             this.footPos = new DHPoint(0, 0);
-            this.sightRange = 280;
             this.bossSightRange = 1200;
             this.attackAnimDuration = 2*GameSound.MSEC_PER_SEC;
             this.walkTarget = new DHPoint(0, 0);
             this.footstepOffsets = new LRUDVector();
+            this.setupDebugSprites();
+        }
+
+        public function setupSprites():void { }
+        public function setupFootsteps():void { }
+
+        public function setupDebugSprites():void {
             if (ScreenManager.getInstance().DEBUG) {
                 this._debug_sightRadius = new CircleSprite(this.pos,
                                                            this.sightRange);
@@ -59,9 +65,6 @@ package com.starmaid.Cibele.entities {
                                                             this.attackRange);
             }
         }
-
-        public function setupSprites():void { }
-        public function setupFootsteps():void { }
 
         public function initFootsteps():void {
             this.footsteps = new FootstepTrail(this);

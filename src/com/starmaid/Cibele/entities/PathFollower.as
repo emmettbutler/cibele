@@ -61,6 +61,7 @@ package com.starmaid.Cibele.entities {
         public function PathFollower(pos:DHPoint) {
             super(pos);
 
+            this.sightRange = 800;
             this.nameText.text = "Ichi";
             this.slug = "PathFollower";
             this.zSorted = true;
@@ -72,6 +73,7 @@ package com.starmaid.Cibele.entities {
 
             this.setupSprites();
             this.setupFootsteps();
+            this.setupDebugSprites();
 
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.pos", "ichi.pos");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.getStateString", "ichi.state");
@@ -81,6 +83,7 @@ package com.starmaid.Cibele.entities {
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.walkTarget", "ichi.walkTarget");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.hasCurPath", "ichi.hasPath");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.inAttack", "ichi.inAttack");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.sightRange", "ichi.sightRange");
         }
 
         override public function setupFootsteps():void {
