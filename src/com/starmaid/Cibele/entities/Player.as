@@ -431,7 +431,7 @@ package com.starmaid.Cibele.entities {
             }
 
             if (this._bgLoaderRef != null) {
-                this._bgLoaderRef.shouldCollide = this.curPath == null &&
+                this._bgLoaderRef.shouldCollide = this._cur_path == null &&
                     (this._state == STATE_MOVE_TO_ENEMY ||
                      this._state == STATE_WALK);
             }
