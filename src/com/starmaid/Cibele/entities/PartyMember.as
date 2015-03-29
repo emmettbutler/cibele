@@ -6,6 +6,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.states.PathEditorState;
     import com.starmaid.Cibele.states.LevelMapState;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.utils.LRUDVector;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.management.Path;
@@ -99,7 +100,7 @@ package com.starmaid.Cibele.entities {
             );
         }
 
-        public function buildBestPath(worldPos:DHPoint):void {
+        public function buildBestPath(worldPos:DHPoint):Boolean {
             // examine nearby nodes to find the shortest path along the graph
             // from current position to worldPos
 
@@ -136,7 +137,9 @@ package com.starmaid.Cibele.entities {
                 if (ScreenManager.getInstance().DEBUG) {
                     trace(this.slug + ": path: " + this._cur_path.toString());
                 }
+                return true;
             }
+            return false;
         }
 
         public function initWalk(worldPos:DHPoint, usePaths:Boolean=true):void {
@@ -158,7 +161,7 @@ package com.starmaid.Cibele.entities {
                         this.finalTarget = worldPos;
                         this._cur_path = null;
                     } else {
-                        this.buildBestPath(worldPos);
+                        useNodes = this.buildBestPath(worldPos);
                     }
                 }
             } else {

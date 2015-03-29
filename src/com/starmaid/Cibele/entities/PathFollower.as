@@ -27,7 +27,7 @@ package com.starmaid.Cibele.entities {
         private var _precon_path:Path;
         private var _enemies:EnemyGroup;
         private var targetNode:MapNode;
-        private var lastInViewTime:Number = 0, runSpeed:Number = 7;
+        private var runSpeed:Number = 7;
         private var _bossRef:BossEnemy;
         private var closestEnemy:Enemy;
         private var playerRef:Player;
@@ -222,10 +222,11 @@ package com.starmaid.Cibele.entities {
 
         public function performPlayerWarpLogic():void {
             if (this.inViewOfPlayer()) {
-                this.lastInViewTime = this.currentTime;
+                GlobalTimer.getInstance().setMark("inview", 7*GameSound.MSEC_PER_SEC, null, true);
             }
-            if (this.currentTime - this.lastInViewTime >= 7*GameSound.MSEC_PER_SEC) {
+            if (GlobalTimer.getInstance().hasPassed("inview")) {
                 this.warpToPlayer();
+                GlobalTimer.getInstance().deleteMark("inview");
             }
         }
 
