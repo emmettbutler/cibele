@@ -227,7 +227,7 @@ package com.starmaid.Cibele.entities {
             if (!this.inViewOfPlayer()) {
                 GlobalTimer.getInstance().setMark(MARK_INVIEW, 7*GameSound.MSEC_PER_SEC);
             } else {
-                GlobalTimer.getInstance().deleteMark(MARK_INVIEW
+                GlobalTimer.getInstance().deleteMark(MARK_INVIEW);
             }
             if (GlobalTimer.getInstance().hasPassed(MARK_INVIEW)) {
                 GlobalTimer.getInstance().deleteMark(MARK_INVIEW);
