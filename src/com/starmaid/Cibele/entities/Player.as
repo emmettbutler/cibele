@@ -114,6 +114,7 @@ package com.starmaid.Cibele.entities {
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getStateString", "player.state");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getWalkTarget", "player.walkTarget");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getFinalTarget", "player.finalTarget");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.text_facing", "player.facing");
         }
 
         override public function setupFootsteps():void {
@@ -226,18 +227,18 @@ package com.starmaid.Cibele.entities {
             if(!at_enemy){
                 if(this.dir != null){
                     if(Math.abs(this.dir.y) > Math.abs(this.dir.x)){
-                        if(this.dir.y <= 0){
+                        if(this.dir.y < 0){
                             this.facing = UP;
                             this.text_facing = "up";
-                        } else {
+                        } else if (this.dir.y > 0){
                             this.facing = DOWN;
                             this.text_facing = "down";
                         }
-                    } else {
-                        if(this.dir.x >= 0){
+                    } else if (Math.abs(this.dir.y) < Math.abs(this.dir.x)) {
+                        if(this.dir.x > 0){
                             this.facing = RIGHT;
                             this.text_facing = "right";
-                        } else {
+                        } else if (this.dir.x < 0){
                             this.facing = LEFT;
                             this.text_facing = "left";
                         }
