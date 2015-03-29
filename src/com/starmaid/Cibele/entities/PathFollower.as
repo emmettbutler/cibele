@@ -467,8 +467,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function inViewOfPlayer():Boolean {
-            return !(this.playerRef.pos.sub(this.pos)._length() >
-                    ScreenManager.getInstance().screenWidth);
+            return this.isOnscreen();
         }
 
         public function playerIsAttacking():Boolean {
