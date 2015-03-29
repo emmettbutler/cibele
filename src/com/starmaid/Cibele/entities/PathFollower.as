@@ -24,53 +24,66 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/audio/effects/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
         [Embed(source="/../assets/audio/effects/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
 
-        private var _path:Path;
-        private var _mapnodes:MapNodeContainer;
+        private var _precon_path:Path;
         private var _enemies:EnemyGroup;
-        private var targetPathNode:PathNode, targetMapNode:MapNode;
-        private var lastInViewTime:Number = 0, runSpeed:Number = 7;
+        private var targetNode:MapNode;
+        private var runSpeed:Number = 7;
         private var _bossRef:BossEnemy;
-        private var closestEnemy:Enemy;
         private var playerRef:Player;
-        private var disp:DHPoint;
         private var attackAnim:GameObject;
+        private var playerPosAtLastWarp:DHPoint;
 
-        public static const STATE_MOVE_TO_PATH_NODE:Number = 2;
-        public static const STATE_IDLE_AT_PATH_NODE:Number = 3;
-        public static const STATE_MOVE_TO_MAP_NODE:Number = 6;
-        public static const STATE_IDLE_AT_MAP_NODE:Number = 7;
-        public static const STATE_MOVE_TO_PLAYER:Number = 8;
+        private static const TARGET_PLAYER:Number = 1;
+        private static const TARGET_ENEMY:Number = 2;
+        private static const TARGET_NODE:Number = 3;
+        private static const TARGET_NONE:Number = 0;
+        private var _cur_target_type:Number;
+
+        private static const MARK_PLAYER_MOVE:String = "pmovemark";
+        private static const MARK_INVIEW:String = "inviewmark";
+
+        public static const STATE_IDLE:Number = 7;
         public static const ATTACK_RANGE:Number = 150;
 
         {
             public static var stateMap:Dictionary = new Dictionary();
             stateMap[STATE_NULL] = "STATE_NULL";
-            stateMap[STATE_MOVE_TO_PATH_NODE] = "STATE_MOVE_TO_PATH_NODE";
-            stateMap[STATE_IDLE_AT_PATH_NODE] = "STATE_IDLE_AT_PATH_NODE";
+            stateMap[STATE_WALK] = "STATE_WALK";
             stateMap[STATE_AT_ENEMY] = "STATE_AT_ENEMY";
             stateMap[STATE_IN_ATTACK] = "STATE_IN_ATTACK";
-            stateMap[STATE_MOVE_TO_ENEMY] = "STATE_MOVE_TO_ENEMY";
-            stateMap[STATE_MOVE_TO_MAP_NODE] = "STATE_MOVE_TO_MAP_NODE";
-            stateMap[STATE_IDLE_AT_MAP_NODE] = "STATE_IDLE_AT_MAP_NODE";
-            stateMap[STATE_MOVE_TO_PLAYER] = "STATE_MOVE_TO_PLAYER";
+            stateMap[STATE_IDLE] = "STATE_IDLE";
+
+            public static var targetTypeMap:Dictionary = new Dictionary();
+            targetTypeMap[TARGET_PLAYER] = "TARGET_PLAYER";
+            targetTypeMap[TARGET_ENEMY] = "TARGET_ENEMY";
+            targetTypeMap[TARGET_NODE] = "TARGET_NODE";
+            targetTypeMap[TARGET_NONE] = "TARGET_NONE";
         }
 
         public function PathFollower(pos:DHPoint) {
             super(pos);
 
+            this.sightRange = 800;
             this.nameText.text = "Ichi";
+            this.slug = "PathFollower";
             this.zSorted = true;
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
             this.debugText.color = 0xff444444;
-            this.disp = new DHPoint(0, 0);
             this.attackRange = 90;
             this.attackSounds = new Array(SfxAttack1, SfxAttack2, SfxAttack3, SfxAttack4);
 
             this.setupSprites();
             this.setupFootsteps();
+            this.setupDebugSprites();
 
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.pos", "ichi.pos");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.getStateString", "ichi.state");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.getTargetTypeString", "ichi.targetType");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.isAtTarget", "ichi.isAtTarget");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.walkTarget", "ichi.walkTarget");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.hasCurPath", "ichi.hasPath");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.inAttack", "ichi.inAttack");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.sightRange", "ichi.sightRange");
         }
 
         override public function setupFootsteps():void {
@@ -120,7 +133,12 @@ package com.starmaid.Cibele.entities {
             return PathFollower.stateMap[this._state] == null ? "unknown" : PathFollower.stateMap[this._state];
         }
 
+        public function getTargetTypeString():String {
+            return PathFollower.targetTypeMap[this._cur_target_type] == null ? "unknown" : PathFollower.targetTypeMap[this._cur_target_type];
+        }
+
         override public function addVisibleObjects():void {
+            super.addVisibleObjects();
             FlxG.state.add(this);
             FlxG.state.add(this.attackAnim);
             FlxG.state.add(this.shadow_sprite);
@@ -188,7 +206,7 @@ package com.starmaid.Cibele.entities {
                     break;
             }
 
-            // maintain base position for y-axis based z-sorting
+            // maintain base positions for y-axis based z-sorting
             this.basePos.x = this.x;
             this.basePos.y = this.y + (this.height - 10);
             this.attackAnim.basePos.x = this.attackAnim.x;
@@ -198,18 +216,109 @@ package com.starmaid.Cibele.entities {
         public function setTargetEnemy():void {
             if (this._bossRef != null && this._bossRef.bossHasAppeared) {
                 this.targetEnemy = this._bossRef;
+            } else if(this.playerIsAttacking() && !this.playerRef.targetEnemy.dead) {
+                this.targetEnemy = this.playerRef.targetEnemy;
             } else {
-                this.targetEnemy = this.closestEnemy;
+                this.targetEnemy = this.setClosestEnemy();
             }
         }
 
         public function performPlayerWarpLogic():void {
-            if (this.inViewOfPlayer()) {
-                this.lastInViewTime = this.currentTime;
+            if (!this.inViewOfPlayer()) {
+                GlobalTimer.getInstance().setMark(MARK_INVIEW, 7*GameSound.MSEC_PER_SEC);
+            } else {
+                GlobalTimer.getInstance().deleteMark(MARK_INVIEW);
             }
-            if (this.currentTime - this.lastInViewTime >= 7*GameSound.MSEC_PER_SEC) {
-                this.warpToPlayer();
+            if (GlobalTimer.getInstance().hasPassed(MARK_INVIEW)) {
+                GlobalTimer.getInstance().deleteMark(MARK_INVIEW);
+                // when deciding whether to warp, only do it if the player is not
+                // in the same position as it was at the time of the last warp
+                if(this.playerHasMovedSinceLastWarp()) {
+                    this.warpToPlayer();
+                    this.playerPosAtLastWarp = this.playerRef.pos;
+                }
             }
+        }
+
+        public function playerHasMovedSinceLastWarp():Boolean {
+            return this.playerPosAtLastWarp.sub(this.playerRef.pos)._length() > 200;
+        }
+
+        public function isAtTarget():Boolean {
+            switch (this._cur_target_type) {
+                case TARGET_PLAYER:
+                    return this.playerIsInMovementRange();
+                case TARGET_ENEMY:
+                    return this.enemyIsInAttackRange(this.targetEnemy);
+                case TARGET_NODE:
+                    return this.finalTarget.sub(this.footPos)._length() < 10;
+                default:
+                    return false;
+            }
+        }
+
+        public function doAtTargetState():void {
+            switch (this._cur_target_type) {
+                case TARGET_PLAYER:
+                    this.moveToNearestPathNode();
+                    break;
+                case TARGET_ENEMY:
+                    this._state = STATE_AT_ENEMY;
+                    break;
+                case TARGET_NODE:
+                    this.enterIdleState();
+                    break;
+            }
+        }
+
+        override public function toggleActive(player:Player):void {
+            this.active = true;
+        }
+
+        public function updateFinalTarget():void {
+            switch (this._cur_target_type) {
+                case TARGET_PLAYER:
+                    this.finalTarget = this.playerRef.pos;
+                    break;
+                case TARGET_ENEMY:
+                    this.finalTarget = this.targetEnemy.getAttackPos();
+                    break;
+                case TARGET_NODE:
+                    break;
+            }
+        }
+
+        public function inAttack():Boolean {
+            return (this._state == STATE_IN_ATTACK || this._state == STATE_AT_ENEMY);
+        }
+
+        public function isMovingToEnemy():Boolean {
+            return (this._state == STATE_WALK && this._cur_target_type == TARGET_ENEMY);
+        }
+
+        public function doMovementState():void {
+            if (this.isAtTarget()) {
+                this.doAtTargetState();
+            } else if (this.walkTarget.sub(this.footPos)._length() < 10) {
+                if (this._cur_path != null) {
+                    this._cur_path.advance();
+                    if (this._cur_path.isAtFirstNode()) {
+                        var destinationDisp:Number = this.footPos.sub(this.finalTarget)._length();
+                        if (destinationDisp > 100) {
+                            this.walkTarget = this.finalTarget;
+                        }
+                        this._cur_path = null;
+                    } else {
+                        this.walkTarget = this._cur_path.currentNode.pos;
+                    }
+                } else {
+                    this.enterIdleState();
+                }
+            }
+        }
+
+        public function playerWaitHasTimedOut():Boolean {
+            return GlobalTimer.getInstance().hasPassed(MARK_PLAYER_MOVE);
         }
 
         override public function update():void {
@@ -227,135 +336,67 @@ package com.starmaid.Cibele.entities {
             this.performPlayerWarpLogic();
 
             switch(this._state) {
-                case STATE_MOVE_TO_PATH_NODE:
+                case STATE_WALK:
+                    this.updateFinalTarget();
                     this.walk();
-                    if (!this._path.hasNodes()) {
-                        this._state = STATE_NULL;
-                    } else {
-                        disp = this.targetPathNode.pos.sub(this.pos);
-                        if (disp._length() < 10) {
-                            this._state = STATE_IDLE_AT_PATH_NODE;
-                        } else {
-                            this.dir = disp.normalized().mulScl(this.runSpeed);
-                        }
-                    }
-                    if (this.enemyIsInAttackRange(this.targetEnemy)) {
-                        this._state = STATE_AT_ENEMY;
-                    } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
-                        if (this.targetEnemy.getAttackPos().sub(this.footPos)._length() > (this.targetEnemy is BossEnemy ? this.bossSightRange : this.sightRange))
-                        {
-                            this.moveToNextPathNode();
-                        } else {
-                            this.walkTarget = this.targetEnemy.getAttackPos();
-                            this._state = STATE_MOVE_TO_ENEMY;
-                        }
-                    }
+                    this.dir = this.walkTarget.sub(this.footPos).normalized().mulScl(this.runSpeed);
+                    this.doMovementState();
+                    this.evaluateEnemyDistance();
                     break;
-                case STATE_MOVE_TO_MAP_NODE:
-                    this.walk();
-                    if (!this._mapnodes.hasNodes()) {
-                        this._state = STATE_NULL;
-                    } else {
-                        disp = this.targetMapNode.pos.sub(this.pos);
-                        if (disp._length() < 10) {
-                            if(this.targetMapNode._type == MapNode.TYPE_PATH){
-                                this._state = STATE_IDLE_AT_PATH_NODE;
-                            } else if(this.targetMapNode._type == MapNode.TYPE_MAP){
-                                this._state = STATE_IDLE_AT_MAP_NODE;
-                            }
-                            if (this.enemyIsInAttackRange(this.targetEnemy)) {
-                                this._state = STATE_AT_ENEMY;
-                            } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
-                                this.walkTarget = this.targetEnemy.getAttackPos();
-                                this._state = STATE_MOVE_TO_ENEMY;
-                            }
-                        } else {
-                            this.dir = disp.normalized().mulScl(this.runSpeed);
-                        }
+
+                case STATE_IDLE:
+                    this.dir = ZERO_POINT;
+                    if(this.playerIsInMovementRange() || this.playerWaitHasTimedOut()) {
+                        this.moveToNextPathNode();
                     }
+                    this.evaluateEnemyDistance();
                     break;
-                case STATE_IDLE_AT_PATH_NODE:
-                    if(teamAttack()) {
-                        this.attackPlayerTargetEnemy();
-                    } else {
-                        this.markCurrentNode();
-                        if(this.playerIsInMovementRange()){
-                            this.moveToNextPathNode();
-                        } else if (this.enemyIsInAttackRange(this.targetEnemy)) {
-                            this._state = STATE_AT_ENEMY;
-                        } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
-                            this.walkTarget = this.targetEnemy.getAttackPos();
-                            this._state = STATE_MOVE_TO_ENEMY;
-                        }
-                        this.dir = ZERO_POINT;
-                    }
-                    break;
-                case STATE_IDLE_AT_MAP_NODE:
-                    if(teamAttack()) {
-                        this.attackPlayerTargetEnemy();
-                    } else {
-                        if(this.playerIsInMovementRange()){
-                            this.moveToNextNode();
-                        }
-                        //if (this.enemyIsInAttackRange(this.targetEnemy)) {
-                        //    this._state = STATE_AT_ENEMY;
-                        //} else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
-                        //    this._state = STATE_MOVE_TO_ENEMY;
-                        //}
-                        this.dir = ZERO_POINT;
-                    }
-                    break;
+
                 case STATE_AT_ENEMY:
                     this.attack();
                     this.dir = ZERO_POINT;
                     break;
-                case STATE_MOVE_TO_ENEMY:
-                    this.walk();
-                    this.walkTarget = this.targetEnemy.getAttackPos();
-                    this.disp = this.walkTarget.sub(this.footPos).normalized();
-                    this.dir = this.disp.mulScl(this.runSpeed);
-                    if (this.enemyIsInAttackRange(this.targetEnemy)) {
-                        this._state = STATE_AT_ENEMY;
-                    } else if (this.targetEnemy.getAttackPos()
-                        .sub(this.footPos)._length() >
-                        (this.targetEnemy is BossEnemy ? this.bossSightRange : this.sightRange) && !this.teamAttack())
-                    {
-                        this.moveToNextNode();
-                    }
-                    break;
+
                 case STATE_IN_ATTACK:
                     this.dir = ZERO_POINT;
-                    break;
-                case STATE_MOVE_TO_PLAYER:
-                    this.walk();
-                    this.disp = this.playerRef.pos.sub(this.footPos).normalized();
-                    this.dir = this.disp.mulScl(this.runSpeed);
-                    if (this.playerIsInMovementRange()) {
-                        this.moveToNextNode();
-                    }
                     break;
             }
         }
 
+        public function evaluateEnemyDistance():Boolean {
+            // don't move to offscreen enemies unless the player is moving
+            if (!this.targetEnemy.isOnscreen()) {
+                return false;
+            }
+            if (this.enemyIsInAttackRange(this.targetEnemy)) {
+                this._state = STATE_AT_ENEMY;
+                return true;
+            } else if(this.enemyIsInMoveTowardsRange(this.targetEnemy)) {
+                if (!this.isMovingToEnemy()) {
+                    this.initWalk(this.targetEnemy.getAttackPos());
+                    this._cur_target_type = TARGET_ENEMY;
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public function enterIdleState():void {
+            this._state = STATE_IDLE;
+            GlobalTimer.getInstance().setMark(MARK_PLAYER_MOVE, (Math.random()*3)*GameSound.MSEC_PER_SEC, null, true);
+            this.setNearestPathNodeCurrent();
+        }
+
         override public function resolveStatePostAttack():void {
             super.resolveStatePostAttack();
-            if (this.targetEnemy != null && !this.targetEnemy.dead && this.targetEnemy.visible == true)
-            {
-                if (this.enemyIsInAttackRange(this.targetEnemy))
-                {
-                    this._state = STATE_AT_ENEMY;
-                } else {
-                    this.walkTarget = this.targetEnemy.getAttackPos();
-                    this._state = STATE_MOVE_TO_ENEMY;
-                }
-            } else {
-                this.moveToNextNode();
+            if (!this.evaluateEnemyDistance()) {
+                this.enterIdleState();
             }
             this.attackAnim.visible = false;
             this.visible = true;
         }
 
-        public function setClosestEnemy():void {
+        public function setClosestEnemy():Enemy {
             var shortest:Number = 99999999;
             var ret:Enemy = null;
             var en_disp:Number;
@@ -368,15 +409,11 @@ package com.starmaid.Cibele.entities {
                     ret = cur;
                 }
             }
-            this.closestEnemy = ret;
+            return ret;
         }
 
-        public function setPath(path:Path):void {
-            this._path = path;
-        }
-
-        public function setMapNodes(nodes:MapNodeContainer):void {
-            this._mapnodes = nodes;
+        public function set precon_path(path:Path):void {
+            this._precon_path = path;
         }
 
         public function setEnemyGroupReference(_group:EnemyGroup):void {
@@ -384,63 +421,54 @@ package com.starmaid.Cibele.entities {
         }
 
         public function moveToNextPathNode():void {
-            this._path.advance();
-            this.targetPathNode = this._path.currentNode;
-            this._state = STATE_MOVE_TO_PATH_NODE;
+            this._precon_path.advance();
+            this.targetNode = this._precon_path.currentNode;
+            this.initWalk(this.targetNode.pos);
+            this._cur_target_type = TARGET_NODE;
         }
 
-        public function moveToNextNode():void {
-            this.targetMapNode = this._mapnodes.getClosestNode(this.pos, this.targetMapNode);
-            if (this.targetMapNode == null) {
-                return;
-            }
-            if(this.targetMapNode._type == MapNode.TYPE_MAP) {
-                this._state = STATE_MOVE_TO_MAP_NODE;
-                this.targetMapNode = this.targetMapNode;
-            } else if(this.targetMapNode._type == MapNode.TYPE_PATH) {
-                this._state = STATE_MOVE_TO_PATH_NODE;
-                this.targetPathNode = this.targetMapNode as PathNode;
-                this._path.setCurrentNode(this.targetPathNode);
-            }
+        public function setNearestPathNodeCurrent():MapNode {
+            var n:MapNode = this._precon_path.getClosestNode(this.footPos);
+            this._precon_path.setCurrentNode(this.targetNode as PathNode);
+            return n;
         }
 
-        public function markCurrentNode():void{
-            this.targetPathNode.mark();
+        public function moveToNearestPathNode():void {
+            this.targetNode = this.setNearestPathNodeCurrent();
+            this.initWalk(this.targetNode.pos);
+            this._cur_target_type = TARGET_NODE;
         }
 
         public function setPlayerReference(pl:Player):void {
             this.playerRef = pl;
+            this.playerPosAtLastWarp = this.playerRef.pos;
         }
 
         public function playerIsInMovementRange():Boolean {
             if (this.playerRef == null) { return false; }
-            return this.playerRef.pos.sub(this.pos)._length() < 300;
+            return this.playerRef.pos.sub(this.pos)._length() < this.playerRef.sightRange;
         }
 
         public function inViewOfPlayer():Boolean {
-            return !(this.playerRef.pos.sub(this.pos)._length() >
-                    ScreenManager.getInstance().screenWidth / 2);
+            return this.isOnscreen();
         }
 
-        public function teamAttack():Boolean {
+        public function playerIsAttacking():Boolean {
             return (inViewOfPlayer() && playerRef.inAttack() && playerRef.targetEnemy != null);
-        }
-
-        public function attackPlayerTargetEnemy():void {
-            if(playerRef.targetEnemy != null) {
-                this.targetEnemy = playerRef.targetEnemy;
-                this._state = STATE_MOVE_TO_ENEMY;
-            }
         }
 
         public function warpToPlayer():void {
             var dir:DHPoint = new DHPoint(this.playerRef.dir.x, this.playerRef.dir.y);
-            var targetPoint:DHPoint = this.playerRef.pos.add(dir.normalized().mulScl(555));
+            var targetPoint:DHPoint = this.playerRef.pos.add(dir.normalized()
+                .mulScl(ScreenManager.getInstance().screenWidth));
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint, null, false);
             if (warpNode != null) {
-                this.setPos(warpNode.pos);
+                this.setPos(warpNode.pos.sub(this.footPos.sub(this.pos)));
             }
-            this._state = STATE_MOVE_TO_PLAYER;
+            this.initWalk(this.playerRef.footPos);
+            this._cur_target_type = TARGET_PLAYER;
+            this.attackAnim.visible = false;
+            this.visible = true;
         }
 
         public function reverseAttackAnim():void {
@@ -479,7 +507,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function get pathRef():Path {
-            return this._path;
+            return this._precon_path;
         }
     }
 }

@@ -5,14 +5,12 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.BackgroundLoader;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.states.LevelMapState;
-    import com.starmaid.Cibele.states.PathEditorState;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.Deque;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.UIElement;
     import com.starmaid.Cibele.utils.GlobalTimer;
-    import com.starmaid.Cibele.utils.MapNodeContainer;
 
     import org.flixel.*;
 
@@ -28,9 +26,8 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/audio/effects/sfx_cibattack2.mp3")] private var SfxAttack2:Class;
 
         private var walkSpeed:Number = 7, mouseDownTime:Number;
-        private var finalTarget:DHPoint, hitboxOffset:DHPoint,
+        private var hitboxOffset:DHPoint,
                     hitboxDim:DHPoint;
-        private var curPath:Path;
         private var click_anim:GameObject, attack_sprite:GameObject;
         private var click_anim_lock:Boolean = false, clickWait:Boolean,
                     active_enemy:Boolean = false, mouseHeld:Boolean = false;
@@ -39,9 +36,7 @@ package com.starmaid.Cibele.entities {
         public var colliding:Boolean = false;
         public var mapHitbox:GameObject, cameraPos:GameObject;
         public var collisionDirection:Array, lastPositions:Deque;
-        public var _mapnodes:MapNodeContainer;
 
-        public static const STATE_WALK:Number = 2398476188;
         public static const STATE_WALK_HARD:Number = 23981333333;
 
         {
@@ -60,6 +55,7 @@ package com.starmaid.Cibele.entities {
             this.cameraPos = new GameObject(new DHPoint(x, y));
 
             this.nameText.text = "Cibele";
+            this.slug = "Player";
 
             this.zSorted = true;
 
@@ -118,6 +114,7 @@ package com.starmaid.Cibele.entities {
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getStateString", "player.state");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getWalkTarget", "player.walkTarget");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getFinalTarget", "player.finalTarget");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.text_facing", "player.facing");
         }
 
         override public function setupFootsteps():void {
@@ -130,10 +127,6 @@ package com.starmaid.Cibele.entities {
 
         public function set bgLoaderRef(ref:BackgroundLoader):void {
             this._bgLoaderRef = ref;
-        }
-
-        public function setMapNodes(nodes:MapNodeContainer):void {
-            this._mapnodes = nodes;
         }
 
         public function getStateString():String {
@@ -234,18 +227,18 @@ package com.starmaid.Cibele.entities {
             if(!at_enemy){
                 if(this.dir != null){
                     if(Math.abs(this.dir.y) > Math.abs(this.dir.x)){
-                        if(this.dir.y <= 0){
+                        if(this.dir.y < 0){
                             this.facing = UP;
                             this.text_facing = "up";
-                        } else {
+                        } else if (this.dir.y > 0){
                             this.facing = DOWN;
                             this.text_facing = "down";
                         }
-                    } else {
-                        if(this.dir.x >= 0){
+                    } else if (Math.abs(this.dir.y) < Math.abs(this.dir.x)) {
+                        if(this.dir.x > 0){
                             this.facing = RIGHT;
                             this.text_facing = "right";
-                        } else {
+                        } else if (this.dir.x < 0){
                             this.facing = LEFT;
                             this.text_facing = "left";
                         }
@@ -276,74 +269,6 @@ package com.starmaid.Cibele.entities {
             );
         }
 
-        public function buildBestPath(worldPos:DHPoint):void {
-            // examine nearby nodes to find the shortest path along the graph
-            // from current position to worldPos
-
-            var maxTries:Number = 10;
-
-            // get closest N nodes to player
-            var closeNodes:Array = this._mapnodes.getNClosestGenericNodes(maxTries, this.footPos);
-            var curNode:MapNode = closeNodes[0]['node'], tries:Number = 0;
-
-            // check each of these nodes for obstructions
-            var res:Object = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, curNode.pos);
-            while (!res["canConnect"] && tries < maxTries && curNode != null) {
-                curNode = closeNodes[tries]['node'];
-                if (curNode != null) {
-                    res = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, curNode.pos);
-                }
-                tries += 1;
-            }
-
-            // if we found an unobstructed node, generate a path and initialize state
-            if (res["canConnect"]) {
-                this.curPath = Path.shortestPath(
-                    curNode,
-                    this._mapnodes.getClosestGenericNode(worldPos)
-                );
-                (FlxG.state as PathEditorState).clearAllAStarMeasures();
-
-                this.walkTarget = this.curPath.currentNode.pos;
-                this.finalTarget = worldPos;
-            }
-
-            if (ScreenManager.getInstance().DEBUG) {
-                trace("Path: " + this.curPath.toString());
-            }
-        }
-
-        public function initWalk(worldPos:DHPoint, usePaths:Boolean=true):void {
-            var useNodes:Boolean = true;
-            if (this._mapnodes != null) {
-                var closestNode:MapNode = this._mapnodes.getClosestGenericNode(this.pos);
-                var connectInfo:Object = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, worldPos);
-                if (closestNode == null || connectInfo["canConnect"]) {
-                    useNodes = false;
-                } else {
-                    var destinationDisp:Number = this.footPos.sub(worldPos)._length();
-                    var nearestNodeDisp:Number = this.footPos.sub(closestNode.pos)._length();
-                    if (!usePaths || destinationDisp < nearestNodeDisp) {
-                        this.walkTarget = worldPos;
-                        this.finalTarget = worldPos;
-                        this.curPath = null;
-                    } else {
-                        this.buildBestPath(worldPos);
-                    }
-                }
-            } else {
-                useNodes = false;
-            }
-
-            if (!useNodes) {
-                this.walkTarget = worldPos;
-                this.finalTarget = worldPos;
-                this.curPath = null;
-            }
-
-            this._state = STATE_WALK;
-        }
-
         public function walk():void {
             var walkDirection:DHPoint = walkTarget.sub(footPos).normalized();
             this.dir = walkDirection.mulScl(this.walkSpeed);
@@ -365,6 +290,7 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function addVisibleObjects():void {
+            super.addVisibleObjects();
             FlxG.state.add(this.click_anim);
             FlxG.state.add(this.attack_sprite);
             FlxG.state.add(this.shadow_sprite);
@@ -383,7 +309,7 @@ package com.starmaid.Cibele.entities {
                 this._state = STATE_IDLE;
                 this.dir = ZERO_POINT;
             } else if (this.walkTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
-                if (curPath == null) {
+                if (_cur_path == null) {
                     if (this.inAttack()) {
                         this.initWalk(this.targetEnemy.getAttackPos());
                         this._state = STATE_MOVE_TO_ENEMY;
@@ -392,9 +318,9 @@ package com.starmaid.Cibele.entities {
                         this.dir = ZERO_POINT;
                     }
                 } else {
-                    this.curPath.advance();
+                    this._cur_path.advance();
 
-                    if (this.curPath.isAtFirstNode()) {
+                    if (this._cur_path.isAtFirstNode()) {
                         var destinationDisp:Number = this.footPos.sub(this.finalTarget)._length();
                         if (destinationDisp > 100) {
                             this.walkTarget = this.finalTarget;
@@ -402,9 +328,9 @@ package com.starmaid.Cibele.entities {
                             // end the path early to avoid jerky movements at the end
                             this.finalTarget = this.footPos;
                         }
-                        this.curPath = null;
+                        this._cur_path = null;
                     } else {
-                        this.walkTarget = this.curPath.currentNode.pos;
+                        this.walkTarget = this._cur_path.currentNode.pos;
                     }
                 }
             } else if (this.finalTarget.sub(this.footPos)._length() < 100) {
@@ -415,7 +341,7 @@ package com.starmaid.Cibele.entities {
             {
                 this._state = STATE_IDLE;
                 this.dir = ZERO_POINT;
-                this.curPath = null;
+                this._cur_path = null;
             }
         }
 
@@ -435,8 +361,8 @@ package com.starmaid.Cibele.entities {
                     "\nposition: " + this.pos.x + "x" + this.pos.y +
                     "\nwalkTarget: " + this.walkTarget.x + "x" + this.walkTarget.y +
                     "\nfinalTarget: " + this.finalTarget.x + "x" + this.finalTarget.y;
-                if (this.curPath != null) {
-                    this.debugText.text += "\nisAtFirstNode: " + this.curPath.isAtFirstNode();
+                if (this._cur_path != null) {
+                    this.debugText.text += "\nisAtFirstNode: " + this._cur_path.isAtFirstNode();
                 }
             }
 
@@ -506,12 +432,12 @@ package com.starmaid.Cibele.entities {
             }
 
             if (this._bgLoaderRef != null) {
-                this._bgLoaderRef.shouldCollide = this.curPath == null &&
+                this._bgLoaderRef.shouldCollide = this._cur_path == null &&
                     (this._state == STATE_MOVE_TO_ENEMY ||
-                    this._state == STATE_WALK);
+                     this._state == STATE_WALK);
             }
 
-            if (this.curPath == null && this.colliding) {
+            if (this._cur_path == null && this.colliding) {
                 if (this.collisionDirection != null) {
                     if (this.collisionDirection[0] == 1 &&
                         this.collisionDirection[1] == 1 &&

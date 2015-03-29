@@ -1,9 +1,15 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.utils.MapNodeContainer;
+    import com.starmaid.Cibele.states.PathEditorState;
+    import com.starmaid.Cibele.states.LevelMapState;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.utils.LRUDVector;
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.management.Path;
 
     import org.flixel.*;
 
@@ -14,6 +20,7 @@ package com.starmaid.Cibele.entities {
         public static const STATE_IN_ATTACK:Number = 1;
         public static const STATE_MOVE_TO_ENEMY:Number = 34987651333;
         public static const STATE_AT_ENEMY:Number = 91823419673;
+        public static const STATE_WALK:Number = 2398476188;
 
         public var lastAttackTime:Number = 0;
         public var footsteps:FootstepTrail = null;
@@ -22,32 +29,49 @@ package com.starmaid.Cibele.entities {
         public var nameText:FlxText;
         public var text_facing:String = "up";
         public var footPos:DHPoint;
-        public var sightRange:Number;
+        public var sightRange:Number = 280;
         public var bossSightRange:Number;
         public var targetEnemy:Enemy;
         public var attackAnimDuration:Number;
-        protected var walkTarget:DHPoint;
+        public var walkTarget:DHPoint, finalTarget:DHPoint;
+        protected var _mapnodes:MapNodeContainer;
+        protected var _cur_path:Path;
         protected var shadow_sprite:GameObject;
         protected var footstepOffsets:LRUDVector;
         protected var attackSounds:Array;
+        protected var _debug_sightRadius:CircleSprite,
+                      _debug_attackRadius:CircleSprite;
 
         public function PartyMember(pos:DHPoint) {
             super(pos);
             this.nameText = new FlxText(pos.x, pos.y, 500, "My Name");
             this.nameText.setFormat("NexaBold-Regular",16,0xff616161,"left");
             this.footPos = new DHPoint(0, 0);
-            this.sightRange = 280;
             this.bossSightRange = 1200;
             this.attackAnimDuration = 2*GameSound.MSEC_PER_SEC;
             this.walkTarget = new DHPoint(0, 0);
             this.footstepOffsets = new LRUDVector();
+            this.setupDebugSprites();
         }
 
         public function setupSprites():void { }
         public function setupFootsteps():void { }
 
+        public function setupDebugSprites():void {
+            if (ScreenManager.getInstance().DEBUG) {
+                this._debug_sightRadius = new CircleSprite(this.pos,
+                                                           this.sightRange);
+                this._debug_attackRadius = new CircleSprite(this.pos,
+                                                            this.attackRange);
+            }
+        }
+
         public function initFootsteps():void {
             this.footsteps = new FootstepTrail(this);
+        }
+
+        public function setMapNodes(nodes:MapNodeContainer):void {
+            this._mapnodes = nodes;
         }
 
         public function buildShadowSprite():void {
@@ -62,7 +86,12 @@ package com.starmaid.Cibele.entities {
             this.shadow_sprite.alpha = .7;
         }
 
-        public function addVisibleObjects():void { }
+        public function addVisibleObjects():void {
+            if (ScreenManager.getInstance().DEBUG) {
+                FlxG.state.add(this._debug_sightRadius);
+                FlxG.state.add(this._debug_attackRadius);
+            }
+        }
 
         public function playAttackSound():void {
             var snd:Class = this.attackSounds[
@@ -74,8 +103,97 @@ package com.starmaid.Cibele.entities {
             );
         }
 
+        public function buildBestPath(worldPos:DHPoint):Boolean {
+            // examine nearby nodes to find the shortest path along the graph
+            // from current position to worldPos
+
+            var maxTries:Number = 10;
+
+            // get closest N nodes to player
+            var closeNodes:Array = this._mapnodes.getNClosestGenericNodes(maxTries, this.footPos);
+            var curNode:MapNode = closeNodes[0]['node'], tries:Number = 0;
+
+            // check each of these nodes for obstructions
+            var res:Object = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, curNode.pos);
+            while (!res["canConnect"] && tries < maxTries && curNode != null) {
+                curNode = closeNodes[tries]['node'];
+                if (curNode != null) {
+                    res = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, curNode.pos);
+                }
+                if (ScreenManager.getInstance().DEBUG) {
+                    trace(this.slug + ": trying again...");
+                }
+                tries += 1;
+            }
+
+            // if we found an unobstructed node, generate a path and initialize state
+            if (res["canConnect"]) {
+                this._cur_path = Path.shortestPath(
+                    curNode,
+                    this._mapnodes.getClosestGenericNode(worldPos)
+                );
+                (FlxG.state as PathEditorState).clearAllAStarMeasures();
+
+                this.walkTarget = this._cur_path.currentNode.pos;
+                this.finalTarget = worldPos;
+
+                if (ScreenManager.getInstance().DEBUG) {
+                    trace(this.slug + ": path: " + this._cur_path.toString());
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public function initWalk(worldPos:DHPoint, usePaths:Boolean=true):void {
+            this.setFootPos();
+            var useNodes:Boolean = true;
+            if (this._mapnodes != null) {
+                var closestNode:MapNode = this._mapnodes.getClosestGenericNode(this.pos);
+                var connectInfo:Object = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, worldPos);
+                if (closestNode == null || connectInfo["canConnect"]) {
+                    useNodes = false;
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace(this.slug + ": not using pathfinding (closestNode == " + closestNode + ")");
+                    }
+                } else {
+                    var destinationDisp:Number = this.footPos.sub(worldPos)._length();
+                    var nearestNodeDisp:Number = this.footPos.sub(closestNode.pos)._length();
+                    if (!usePaths || destinationDisp < nearestNodeDisp) {
+                        this.walkTarget = worldPos;
+                        this.finalTarget = worldPos;
+                        this._cur_path = null;
+                    } else {
+                        useNodes = this.buildBestPath(worldPos);
+                    }
+                }
+            } else {
+                useNodes = false;
+            }
+
+            if (!useNodes) {
+                this.walkTarget = worldPos;
+                this.finalTarget = worldPos;
+                this._cur_path = null;
+            }
+
+            this._state = STATE_WALK;
+        }
+
         override public function update():void {
             super.update();
+
+            if (ScreenManager.getInstance().DEBUG) {
+                this._debug_sightRadius.setPos(this.footPos.sub(
+                    new DHPoint(this._debug_sightRadius.radius,
+                                this._debug_sightRadius.radius)
+                ));
+                this._debug_attackRadius.setPos(this.footPos.sub(
+                    new DHPoint(this._debug_attackRadius.radius,
+                                this._debug_attackRadius.radius)
+                ));
+            }
+
             if (this.footsteps != null) {
                 this.footsteps.update();
             }
@@ -89,7 +207,10 @@ package com.starmaid.Cibele.entities {
             }
 
             this.nameText.y = this.pos.y-30;
+            this.setFootPos();
+        }
 
+        protected function setFootPos():void {
             this.footPos.x = this.x + this.width/2;
             this.footPos.y = this.y + this.height;
         }
@@ -107,6 +228,10 @@ package com.starmaid.Cibele.entities {
                 this._state = STATE_IN_ATTACK;
                 this.lastAttackTime = this.currentTime;
             }
+        }
+
+        public function hasCurPath():Boolean {
+            return this._cur_path != null;
         }
 
         public function timeSinceLastAttack():Number {
@@ -129,7 +254,7 @@ package com.starmaid.Cibele.entities {
             if (en is BossEnemy) {
                 range = this.bossSightRange;
             }
-            return en.pos.sub(this.pos)._length() < range;
+            return en.getAttackPos().sub(this.footPos)._length() < range;
         }
 
         public function resolveStatePostAttack():void {}

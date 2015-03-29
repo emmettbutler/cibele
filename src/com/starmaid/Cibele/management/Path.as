@@ -12,7 +12,6 @@ package com.starmaid.Cibele.management {
         public var nodes:Array;
         public var nodesHash:Object;
         public var currentNode:PathNode;
-        public var nodeStatusCounter:Number;
         public var complete_:Boolean = false;
         public var closestNode:PathNode;
 
@@ -99,21 +98,6 @@ package com.starmaid.Cibele.management {
         }
 
         public function update():void {
-        }
-
-        public function isPathComplete():Boolean{
-            var _status:Boolean = false;
-            nodeStatusCounter = 0;
-            for(var i:Number = 0; i < this.nodes.length; i++){
-                _status = this.nodes[i].status_();
-                if(_status == true){
-                    nodeStatusCounter++;
-                }
-            }
-            if(nodeStatusCounter >= this.nodes.length){
-                complete_ = true;
-            }
-            return complete_;
         }
 
         public function getClosestNode(pos:DHPoint):PathNode{

@@ -22,9 +22,5 @@ package com.starmaid.Cibele.entities {
         override public function mark():void{
             marked = true;
         }
-
-        public function status_():Boolean{
-            return marked;
-        }
     }
 }
