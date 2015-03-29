@@ -75,11 +75,11 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": Convo5, "len": 92*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": startBoss
+                    "delay": 0, "endfn": startBoss, "ends_with_popup": false
                 },
                 {
                     "audio": null, "len": 20*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": killBoss
+                    "delay": 0, "endfn": killBoss, "ends_with_popup": false
                 },
                 {
                     "audio": Convo5_2, "len": 5*GameSound.MSEC_PER_SEC,
@@ -148,14 +148,12 @@ package com.starmaid.Cibele.states {
 
         public function startBoss():void {
             GlobalTimer.getInstance().setMark(BOSS_MARK, 1*GameSound.MSEC_PER_SEC);
-            this.manuallyContinueConversation();
         }
 
         public function killBoss():void {
             if(this.boss != null) {
                 this.boss.dead = true;
             }
-            this.manuallyContinueConversation();
         }
 
         override public function update():void{

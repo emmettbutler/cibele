@@ -207,9 +207,14 @@ package com.starmaid.Cibele.states {
             if (audioInfo != null) {
                 var endfn:Function = this.playNextConvoPiece;
                 if (audioInfo["endfn"] != null) {
-                    if(audioInfo["audio"] != null) {
+                    if(audioInfo["ends_with_popup"] == null || audioInfo["ends_with_popup"] == true) {
                         endfn = function():void {
                             registerPopupCallback();
+                            audioInfo["endfn"]();
+                        };
+                    } else {
+                        endfn = function():void {
+                            incrementConversation();
                             audioInfo["endfn"]();
                         };
                     }
@@ -244,7 +249,7 @@ package com.starmaid.Cibele.states {
                 });
         }
 
-        public function manuallyContinueConversation():void {
+        public function incrementConversation():void {
             this.playNextConvoPiece();
             this.playTimedEmotes(this.conversationCounter);
             if(this.conversationPieces.length == this.conversationCounter + 1) {
