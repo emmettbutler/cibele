@@ -24,6 +24,7 @@ package com.starmaid.Cibele.base {
         private var sortedObjects:Array;
         public var loadingScreen:LoadingScreen;
         public var use_loading_screen:Boolean = true;
+        public var loading_screen_timer:Number = 3;
         public var fpsCounter:FPSCounter;
 
         public var ui_color_flag:Number;
@@ -99,7 +100,7 @@ package com.starmaid.Cibele.base {
             }
 
             if(this.use_loading_screen) {
-                this.loadingScreen = new LoadingScreen();
+                this.loadingScreen = new LoadingScreen(loading_screen_timer);
                 this.loadingScreen.endCallback = this.loadingScreenEndCallback;
             }
 

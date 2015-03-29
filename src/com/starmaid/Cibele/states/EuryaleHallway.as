@@ -12,6 +12,7 @@ package com.starmaid.Cibele.states {
 
         public function EuryaleHallway(state:Number=0){
             _state = state;
+            loading_screen_timer = 9;
         }
 
         override public function create():void {

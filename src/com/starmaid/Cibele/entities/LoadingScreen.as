@@ -1,5 +1,6 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.utils.GlobalTimer;
@@ -10,15 +11,15 @@ package com.starmaid.Cibele.entities {
     public class LoadingScreen {
         [Embed(source="/../assets/images/ui/loading_icon.png")] private var ImgLoadingIcon:Class;
         [Embed(source="/../assets/images/ui/loading_text.png")] private var ImgLoadingText:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_cibsoslow.mp3")] private var CibSlow:Class;
 
         public var loading_icon:GameObject;
         public var loading_text:GameObject;
         public var bg:GameObject;
-        public var fade_up:Boolean = false;
         public var showing:Boolean = false;
         public var endCallback:Function;
 
-        public function LoadingScreen() {
+        public function LoadingScreen(len:Number=3) {
             var _screen:ScreenManager = ScreenManager.getInstance();
 
             this.bg = new GameObject(new DHPoint(0,0));
@@ -39,24 +40,22 @@ package com.starmaid.Cibele.entities {
             FlxG.state.add(this.loading_text);
             this.loading_text.visible = true;
 
-            GlobalTimer.getInstance().setMark("deactivate loading screen", 3*GameSound.MSEC_PER_SEC, this.deactivate, true);
+            GlobalTimer.getInstance().setMark("deactivate loading screen", len*GameSound.MSEC_PER_SEC, this.deactivate, true);
+            if(len > 3) {
+                GlobalTimer.getInstance().setMark("say slow", 4*GameSound.MSEC_PER_SEC, this.slowDialogue, true);
+            }
 
             this.showing = true;
         }
 
         public function update():void {
-            if(this.showing) {
-                if(this.loading_text.alpha == 0) {
-                    fade_up = true;
-                } else if(this.loading_text.alpha == 1) {
-                    fade_up = false;
-                }
-                if(this.fade_up) {
-                    this.loading_text.alpha += .01;
-                } else {
-                    this.loading_text.alpha -= .01;
-                }
-            }
+        }
+
+        public function slowDialogue():void {
+            SoundManager.getInstance().playSound(
+                CibSlow, 2*GameSound.MSEC_PER_SEC, null,
+                false, 1, GameSound.VOCAL
+            );
         }
 
         public function deactivate():void {
