@@ -366,9 +366,7 @@ package com.starmaid.Cibele.entities {
         public function evaluateEnemyDistance():Boolean {
             // don't move to offscreen enemies unless the player is moving
             if (!this.targetEnemy.isOnscreen()) {
-                if (this.playerRef.dir.x == this.playerRef.dir.y == 0) {
-                    return false;
-                }
+                return false;
             }
             if (this.enemyIsInAttackRange(this.targetEnemy)) {
                 this._state = STATE_AT_ENEMY;
@@ -448,7 +446,7 @@ package com.starmaid.Cibele.entities {
 
         public function playerIsInMovementRange():Boolean {
             if (this.playerRef == null) { return false; }
-            return this.playerRef.pos.sub(this.pos)._length() < this.sightRange;
+            return this.playerRef.pos.sub(this.pos)._length() < this.playerRef.sightRange;
         }
 
         public function inViewOfPlayer():Boolean {
