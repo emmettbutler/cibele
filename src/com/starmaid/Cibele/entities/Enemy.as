@@ -242,8 +242,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function inViewOfPlayer():Boolean {
-            return !(this.player.pos.sub(this.pos)._length() >
-                    ScreenManager.getInstance().screenWidth);
+            return this.isOnscreen();
         }
 
         override public function update():void{

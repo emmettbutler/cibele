@@ -132,7 +132,7 @@ package com.starmaid.Cibele.states {
                 } else if(FlxG.keys["S"]){
                     this._mapnodes.addNode(new DHPoint(FlxG.mouse.x, FlxG.mouse.y),
                                            this.showNodes);
-                    this.pathWalker.moveToNextNode();
+                    this.pathWalker.moveToNextPathNode();
                 } else if (FlxG.keys["Z"]) {
                     var en:SmallEnemy = new SmallEnemy(new DHPoint(FlxG.mouse.x,
                                                                    FlxG.mouse.y));

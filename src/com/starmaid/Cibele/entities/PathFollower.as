@@ -29,10 +29,9 @@ package com.starmaid.Cibele.entities {
         private var targetNode:MapNode;
         private var runSpeed:Number = 7;
         private var _bossRef:BossEnemy;
-        private var closestEnemy:Enemy;
         private var playerRef:Player;
         private var attackAnim:GameObject;
-        public var disp:DHPoint, playerPosAtLastWarp:DHPoint;
+        private var playerPosAtLastWarp:DHPoint;
 
         private static const TARGET_PLAYER:Number = 1;
         private static const TARGET_ENEMY:Number = 2;
@@ -41,6 +40,7 @@ package com.starmaid.Cibele.entities {
         private var _cur_target_type:Number;
 
         private static const MARK_PLAYER_MOVE:String = "pmovemark";
+        private static const MARK_INVIEW:String = "inviewmark";
 
         public static const STATE_IDLE:Number = 7;
         public static const ATTACK_RANGE:Number = 150;
@@ -69,7 +69,6 @@ package com.starmaid.Cibele.entities {
             this.zSorted = true;
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
             this.debugText.color = 0xff444444;
-            this.disp = new DHPoint(0, 0);
             this.attackRange = 90;
             this.attackSounds = new Array(SfxAttack1, SfxAttack2, SfxAttack3, SfxAttack4);
 
@@ -81,7 +80,6 @@ package com.starmaid.Cibele.entities {
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.getStateString", "ichi.state");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.getTargetTypeString", "ichi.targetType");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.isAtTarget", "ichi.isAtTarget");
-            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.disp._length", "ichi.disp");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.walkTarget", "ichi.walkTarget");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.hasCurPath", "ichi.hasPath");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.inAttack", "ichi.inAttack");
@@ -221,18 +219,18 @@ package com.starmaid.Cibele.entities {
             } else if(this.playerIsAttacking() && !this.playerRef.targetEnemy.dead) {
                 this.targetEnemy = this.playerRef.targetEnemy;
             } else {
-                this.targetEnemy = this.closestEnemy;
+                this.targetEnemy = this.setClosestEnemy();
             }
         }
 
         public function performPlayerWarpLogic():void {
             if (!this.inViewOfPlayer()) {
-                GlobalTimer.getInstance().setMark("inview", 7*GameSound.MSEC_PER_SEC);
+                GlobalTimer.getInstance().setMark(MARK_INVIEW, 7*GameSound.MSEC_PER_SEC);
             } else {
-                GlobalTimer.getInstance().deleteMark("inview");
+                GlobalTimer.getInstance().deleteMark(MARK_INVIEW
             }
-            if (GlobalTimer.getInstance().hasPassed("inview")) {
-                GlobalTimer.getInstance().deleteMark("inview");
+            if (GlobalTimer.getInstance().hasPassed(MARK_INVIEW)) {
+                GlobalTimer.getInstance().deleteMark(MARK_INVIEW);
                 // when deciding whether to warp, only do it if the player is not
                 // in the same position as it was at the time of the last warp
                 if(this.playerHasMovedSinceLastWarp()) {
@@ -336,13 +334,12 @@ package com.starmaid.Cibele.entities {
             this.setClosestEnemy();
             this.setTargetEnemy();
             this.performPlayerWarpLogic();
-            this.disp = this.walkTarget.sub(this.footPos);
 
             switch(this._state) {
                 case STATE_WALK:
                     this.updateFinalTarget();
                     this.walk();
-                    this.dir = disp.normalized().mulScl(this.runSpeed);
+                    this.dir = this.walkTarget.sub(this.footPos).normalized().mulScl(this.runSpeed);
                     this.doMovementState();
                     this.evaluateEnemyDistance();
                     break;
@@ -401,7 +398,7 @@ package com.starmaid.Cibele.entities {
             this.visible = true;
         }
 
-        public function setClosestEnemy():void {
+        public function setClosestEnemy():Enemy {
             var shortest:Number = 99999999;
             var ret:Enemy = null;
             var en_disp:Number;
@@ -414,7 +411,7 @@ package com.starmaid.Cibele.entities {
                     ret = cur;
                 }
             }
-            this.closestEnemy = ret;
+            return ret;
         }
 
         public function set precon_path(path:Path):void {
@@ -444,18 +441,6 @@ package com.starmaid.Cibele.entities {
             this._cur_target_type = TARGET_NODE;
         }
 
-        public function moveToNextNode():void {
-            this.targetNode = this._mapnodes.getClosestNode(this.pos, this.targetNode);
-            if (this.targetNode == null) {
-                return;
-            }
-            this.initWalk(this.targetNode.pos);
-            this._cur_target_type = TARGET_NODE;
-            if(this.targetNode._type == MapNode.TYPE_PATH) {
-                this._precon_path.setCurrentNode(this.targetNode as PathNode);
-            }
-        }
-
         public function setPlayerReference(pl:Player):void {
             this.playerRef = pl;
             this.playerPosAtLastWarp = this.playerRef.pos;
@@ -463,7 +448,7 @@ package com.starmaid.Cibele.entities {
 
         public function playerIsInMovementRange():Boolean {
             if (this.playerRef == null) { return false; }
-            return this.playerRef.pos.sub(this.pos)._length() < 300;
+            return this.playerRef.pos.sub(this.pos)._length() < this.sightRange;
         }
 
         public function inViewOfPlayer():Boolean {
