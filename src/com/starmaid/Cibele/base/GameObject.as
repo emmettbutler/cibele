@@ -54,8 +54,7 @@ package com.starmaid.Cibele.base {
         }
 
         public function toggleActive(player:Player):void {
-            var disp:DHPoint = this.pos.sub(player.pos);
-            this.active = disp._length() < ScreenManager.getInstance().screenWidth;
+            this.active = this.isOnscreen();
         }
 
         public function setPos(pos:DHPoint):void {
