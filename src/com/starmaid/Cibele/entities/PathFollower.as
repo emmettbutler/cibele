@@ -224,8 +224,10 @@ package com.starmaid.Cibele.entities {
         }
 
         public function performPlayerWarpLogic():void {
-            if (this.inViewOfPlayer()) {
-                GlobalTimer.getInstance().setMark("inview", 7*GameSound.MSEC_PER_SEC, null, true);
+            if (!this.inViewOfPlayer()) {
+                GlobalTimer.getInstance().setMark("inview", 7*GameSound.MSEC_PER_SEC);
+            } else {
+                GlobalTimer.getInstance().deleteMark("inview");
             }
             if (GlobalTimer.getInstance().hasPassed("inview")) {
                 this.warpToPlayer();
