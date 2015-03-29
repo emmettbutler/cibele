@@ -55,7 +55,7 @@ package com.starmaid.Cibele.base {
 
         public function toggleActive(player:Player):void {
             var disp:DHPoint = this.pos.sub(player.pos);
-            this.active = disp._length() < ScreenManager.getInstance().screenWidth/2;
+            this.active = disp._length() < ScreenManager.getInstance().screenWidth;
         }
 
         public function setPos(pos:DHPoint):void {
@@ -66,6 +66,14 @@ package com.starmaid.Cibele.base {
 
         public function _getRect():FlxRect {
             return new FlxRect(this.x, this.y, this.width, this.height);
+        }
+
+        public function isOnscreen():Boolean {
+            var screenPos:DHPoint = new DHPoint(0, 0);
+            this.getScreenXY(screenPos);
+            return (screenPos.x < ScreenManager.getInstance().screenWidth &&
+                screenPos.x > 0 && screenPos.y > 0 &&
+                screenPos.y < ScreenManager.getInstance().screenHeight);
         }
     }
 }

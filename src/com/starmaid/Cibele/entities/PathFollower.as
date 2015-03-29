@@ -32,13 +32,15 @@ package com.starmaid.Cibele.entities {
         private var closestEnemy:Enemy;
         private var playerRef:Player;
         private var attackAnim:GameObject;
-        public var disp:DHPoint;
+        public var disp:DHPoint, playerPosAtLastWarp:DHPoint;
 
         private static const TARGET_PLAYER:Number = 1;
         private static const TARGET_ENEMY:Number = 2;
         private static const TARGET_NODE:Number = 3;
         private static const TARGET_NONE:Number = 0;
         private var _cur_target_type:Number;
+
+        private static const MARK_PLAYER_MOVE:String = "pmovemark";
 
         public static const STATE_IDLE:Number = 7;
         public static const ATTACK_RANGE:Number = 150;
@@ -216,7 +218,7 @@ package com.starmaid.Cibele.entities {
         public function setTargetEnemy():void {
             if (this._bossRef != null && this._bossRef.bossHasAppeared) {
                 this.targetEnemy = this._bossRef;
-            } else if(this.playerIsAttacking()) {
+            } else if(this.playerIsAttacking() && !this.playerRef.targetEnemy.dead) {
                 this.targetEnemy = this.playerRef.targetEnemy;
             } else {
                 this.targetEnemy = this.closestEnemy;
@@ -230,9 +232,18 @@ package com.starmaid.Cibele.entities {
                 GlobalTimer.getInstance().deleteMark("inview");
             }
             if (GlobalTimer.getInstance().hasPassed("inview")) {
-                this.warpToPlayer();
                 GlobalTimer.getInstance().deleteMark("inview");
+                // when deciding whether to warp, only do it if the player is not
+                // in the same position as it was at the time of the last warp
+                if(this.playerHasMovedSinceLastWarp()) {
+                    this.warpToPlayer();
+                    this.playerPosAtLastWarp = this.playerRef.pos;
+                }
             }
+        }
+
+        public function playerHasMovedSinceLastWarp():Boolean {
+            return this.playerPosAtLastWarp.sub(this.playerRef.pos)._length() > 200;
         }
 
         public function isAtTarget():Boolean {
@@ -257,10 +268,13 @@ package com.starmaid.Cibele.entities {
                     this._state = STATE_AT_ENEMY;
                     break;
                 case TARGET_NODE:
-                    this._state = STATE_IDLE;
-                    this.setNearestPathNodeCurrent();
+                    this.enterIdleState();
                     break;
             }
+        }
+
+        override public function toggleActive(player:Player):void {
+            this.active = true;
         }
 
         public function updateFinalTarget():void {
@@ -299,8 +313,14 @@ package com.starmaid.Cibele.entities {
                     } else {
                         this.walkTarget = this._cur_path.currentNode.pos;
                     }
+                } else {
+                    this.enterIdleState();
                 }
             }
+        }
+
+        public function playerWaitHasTimedOut():Boolean {
+            return GlobalTimer.getInstance().hasPassed(MARK_PLAYER_MOVE);
         }
 
         override public function update():void {
@@ -329,7 +349,7 @@ package com.starmaid.Cibele.entities {
 
                 case STATE_IDLE:
                     this.dir = ZERO_POINT;
-                    if(this.playerIsInMovementRange()) {
+                    if(this.playerIsInMovementRange() || this.playerWaitHasTimedOut()) {
                         this.moveToNextPathNode();
                     }
                     this.evaluateEnemyDistance();
@@ -347,6 +367,12 @@ package com.starmaid.Cibele.entities {
         }
 
         public function evaluateEnemyDistance():Boolean {
+            // don't move to offscreen enemies unless the player is moving
+            if (!this.targetEnemy.isOnscreen()) {
+                if (this.playerRef.dir.x == this.playerRef.dir.y == 0) {
+                    return false;
+                }
+            }
             if (this.enemyIsInAttackRange(this.targetEnemy)) {
                 this._state = STATE_AT_ENEMY;
                 return true;
@@ -360,11 +386,16 @@ package com.starmaid.Cibele.entities {
             return false;
         }
 
+        public function enterIdleState():void {
+            this._state = STATE_IDLE;
+            GlobalTimer.getInstance().setMark(MARK_PLAYER_MOVE, (Math.random()*3)*GameSound.MSEC_PER_SEC, null, true);
+            this.setNearestPathNodeCurrent();
+        }
+
         override public function resolveStatePostAttack():void {
             super.resolveStatePostAttack();
             if (!this.evaluateEnemyDistance()) {
-                this._state = STATE_IDLE;
-                this.setNearestPathNodeCurrent();
+                this.enterIdleState();
             }
             this.attackAnim.visible = false;
             this.visible = true;
@@ -427,6 +458,7 @@ package com.starmaid.Cibele.entities {
 
         public function setPlayerReference(pl:Player):void {
             this.playerRef = pl;
+            this.playerPosAtLastWarp = this.playerRef.pos;
         }
 
         public function playerIsInMovementRange():Boolean {
@@ -436,7 +468,7 @@ package com.starmaid.Cibele.entities {
 
         public function inViewOfPlayer():Boolean {
             return !(this.playerRef.pos.sub(this.pos)._length() >
-                    ScreenManager.getInstance().screenWidth / 2);
+                    ScreenManager.getInstance().screenWidth);
         }
 
         public function playerIsAttacking():Boolean {
@@ -445,7 +477,8 @@ package com.starmaid.Cibele.entities {
 
         public function warpToPlayer():void {
             var dir:DHPoint = new DHPoint(this.playerRef.dir.x, this.playerRef.dir.y);
-            var targetPoint:DHPoint = this.playerRef.pos.add(dir.normalized().mulScl(555));
+            var targetPoint:DHPoint = this.playerRef.pos.add(dir.normalized()
+                .mulScl(ScreenManager.getInstance().screenWidth));
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint, null, false);
             if (warpNode != null) {
                 this.setPos(warpNode.pos.sub(this.footPos.sub(this.pos)));
