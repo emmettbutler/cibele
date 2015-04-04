@@ -20,40 +20,53 @@ package com.starmaid.Cibele.entities {
             var rand:Number = Math.floor(Math.random() * 2);
             switch(rand) {
                 case 1:
-                    this.target_sprite = new GameObject(pos);
-                    this.target_sprite.loadGraphic(ImgActive,false,false,147,24);
-                    FlxG.state.add(this.target_sprite);
-                    this.target_sprite.visible = false;
+                    this.loadGraphic(ImgIT1, false, false, 152, 104);
 
-                    loadGraphic(ImgIT1, false, false, 152, 104);
+                    this.target_sprite = new GameObject(pos);
+                    this.target_sprite.loadGraphic(ImgActive, false, false,
+                                                   147, 24);
+                    this.target_sprite.visible = false;
+                    FlxG.state.add(this.target_sprite);
 
                     this.attack_sprite = new GameObject(pos);
-                    this.attack_sprite.loadGraphic(ImgIT1_Attack, true, false, 165, 115);
-                    this.attack_sprite.addAnimation("attack", [0,1,2,3,4,5,6,7,8,9,10,11,10,9,8,7,6,5,4,3,2,1,0], 12, true);
-                    FlxG.state.add(attack_sprite);
+                    this.attack_sprite.loadGraphic(ImgIT1_Attack, true, false,
+                                                   165, 115);
+                    this.attack_sprite.addAnimation("attack",
+                        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 10, 9, 8, 7, 6,
+                         5, 4, 3, 2, 1, 0], 12, true);
                     this.attack_sprite.visible = false;
+                    FlxG.state.add(attack_sprite);
                     break;
-                default:
-                    this.target_sprite = new GameObject(pos);
-                    this.target_sprite.loadGraphic(ImgActive2,false,false,67,15);
-                    FlxG.state.add(this.target_sprite);
-                    this.target_sprite.visible = false;
 
-                    loadGraphic(ImgIT2, false, false, 70, 160);
+                default:
+                    this.loadGraphic(ImgIT2, false, false, 70, 160);
+
+                    this.target_sprite = new GameObject(pos);
+                    this.target_sprite.loadGraphic(ImgActive2, false, false,
+                                                   67, 15);
+                    this.target_sprite.visible = false;
+                    FlxG.state.add(this.target_sprite);
 
                     this.attack_sprite = new GameObject(pos);
-                    this.attack_sprite.loadGraphic(ImgIT2_Attack, true, false, 71, 163);
-                    this.attack_sprite.addAnimation("attack", [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0], 12, true);
-                    FlxG.state.add(attack_sprite);
+                    this.attack_sprite.loadGraphic(ImgIT2_Attack, true, false,
+                                                   71, 163);
+                    this.attack_sprite.addAnimation("attack",
+                        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+                         16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+                         29, 30, 31, 32, 33, 32, 31, 30, 29, 28, 27, 26, 25,
+                         24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12,
+                         11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], 12, true);
                     this.attack_sprite.visible = false;
+                    FlxG.state.add(attack_sprite);
                     break;
             }
 
-            addAnimation("run_enemy", [0, 1, 2, 3, 4, 5], 12, true);
-            play("run_enemy");
+            this.addAnimation("run_enemy", [0, 1, 2, 3, 4, 5], 12, true);
             this.attack_sprite.play("attack");
             this.attack_sprite.zSorted = true;
-            this.attack_sprite.basePos = new DHPoint(this.x, this.y + this.height);
+            this.attack_sprite.basePos = new DHPoint(this.x,
+                                                     this.y + this.height);
+            this.play("run_enemy");
 
             this.bar = new GameObject(new DHPoint(pos.x,pos.y));
             this.bar.makeGraphic(1,8,0xffe2678e);
