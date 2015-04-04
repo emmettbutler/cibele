@@ -169,6 +169,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function die():void {
+            if (this._state == STATE_DEAD) {
+                return;
+            }
             // don't destroy() or state.remove() here. doing so breaks z-sorting
             this.dead = true;
             this.visible = false;
@@ -252,7 +255,6 @@ package com.starmaid.Cibele.entities {
             this.hitPoints = Math.max(0, this.hitPoints);
             this.setAuxPositions();
             this.doHighlighterFade();
-
             if(this.hitPoints == 0){
                 this.die();
             }
