@@ -27,7 +27,6 @@ package com.starmaid.Cibele.entities {
         public var closestPartyMemberDisp:DHPoint;
         public var disp:DHPoint;
         private var closestPartyMember:PartyMember;
-        private var attackerDisp:DHPoint;
         public var attacker:PartyMember;
         public var _mapnodes:MapNodeContainer;
         public var footPos:DHPoint;
@@ -231,6 +230,7 @@ package com.starmaid.Cibele.entities {
             }
 
             this.closestPartyMember = this.getClosestPartyMember();
+            this.closestPartyMemberDisp = this.closestPartyMember.footPos.sub(this.getAttackPos());
 
             this.footPos.x = this.x + this.width/2;
             this.footPos.y = this.y + this.height;
@@ -246,14 +246,11 @@ package com.starmaid.Cibele.entities {
             this.attack_sprite.setPos(this.pos);
 
             if(this._state != STATE_DEAD) {
-                this.closestPartyMemberDisp = this.closestPartyMember.footPos.sub(this.getAttackPos());
-
                 if(this.attacker != null){
                     if (!(this is BossEnemy)) {
                         this.visible = false;
                         this.attack_sprite.visible = true;
                     }
-                    this.attackerDisp = this.attacker.footPos.sub(this.getAttackPos());
                 } else {
                     this.attack_sprite.visible = false;
                 }
@@ -293,7 +290,7 @@ package com.starmaid.Cibele.entities {
                 this.disp = this.closestPartyMemberDisp;
                 this.dir = disp.normalized();
             } else if (this._state == STATE_RECOIL) {
-                if (this.attackerDisp._length() > 120) {
+                if (this.closestPartyMemberDisp._length() > 120) {
                     this._state = STATE_TRACKING;
                 }
             } else if (this._state == STATE_ESCAPE) {
