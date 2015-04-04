@@ -24,9 +24,7 @@ package com.starmaid.Cibele.entities {
         public var playerRef:Player;
         public var playerDisp:DHPoint;
         public var disp:DHPoint;
-        private var spriteSetupComplete:Boolean = false;
         private var attackerDisp:DHPoint;
-        public var path_follower:PathFollower;
         public var attacker:PartyMember;
         public var _mapnodes:MapNodeContainer;
         public var footPos:DHPoint;
@@ -103,10 +101,6 @@ package com.starmaid.Cibele.entities {
 
         public function setPlayerRef(p:Player):void{
             this.playerRef = p;
-        }
-
-        public function setFollowerRef(f:PathFollower):void{
-            this.path_follower = f;
         }
 
         public function takeDamage(p:PartyMember):void{
@@ -246,11 +240,7 @@ package com.starmaid.Cibele.entities {
                         this.visible = false;
                         this.attack_sprite.visible = true;
                     }
-                    if (this.attacker == this.playerRef) {
-                        this.attackerDisp = this.playerDisp;
-                    } else if (this.attacker == this.path_follower) {
-                        this.attackerDisp = this.path_follower.footPos.sub(this.getAttackPos());
-                    }
+                    this.attackerDisp = this.attacker.footPos.sub(this.getAttackPos());
                 } else {
                     this.attack_sprite.visible = false;
                 }

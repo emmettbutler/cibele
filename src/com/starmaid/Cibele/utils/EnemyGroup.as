@@ -17,7 +17,6 @@ package com.starmaid.Cibele.utils {
 
         public function addEnemy(en:Enemy):void {
             en.setPlayerRef(this.player);
-            en.setFollowerRef(this.path_follower);
             en.setPath(this.path_follower.pathRef);
             this.enemies.push(en);
         }
