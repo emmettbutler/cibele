@@ -44,7 +44,6 @@ package com.starmaid.Cibele.entities {
 
 
         public static const STATE_IDLE:Number = 1;
-        public static const STATE_DAMAGED:Number = 2;
         public static const STATE_TRACKING:Number = 3;
         public static const STATE_RECOIL:Number = 4;
         public static const STATE_ESCAPE:Number = 5;
@@ -54,7 +53,6 @@ package com.starmaid.Cibele.entities {
         {
             public static var stateMap:Dictionary = new Dictionary();
             stateMap[STATE_IDLE] = "STATE_IDLE";
-            stateMap[STATE_DAMAGED] = "STATE_DAMAGED";
             stateMap[STATE_TRACKING] = "STATE_TRACKING";
             stateMap[STATE_RECOIL] = "STATE_RECOIL";
             stateMap[STATE_DEAD] = "STATE_DEAD";
@@ -122,10 +120,6 @@ package com.starmaid.Cibele.entities {
             this.bar.scale.x = this.hitPoints;
         }
 
-        public function setIdle():void {
-            this._state = STATE_IDLE;
-        }
-
         public function isFollowing():Boolean {
             return this._state == STATE_TRACKING;
         }
@@ -191,7 +185,7 @@ package com.starmaid.Cibele.entities {
                 this.hitPoints = 100;
                 this.dead = false;
                 this.visible = true;
-                this.setIdle();
+                this._state = STATE_IDLE;
                 this.x = originalPos.x;
                 this.y = originalPos.y;
             } else {
@@ -220,8 +214,33 @@ package com.starmaid.Cibele.entities {
             return this.playerRef;
         }
 
+        public function setAuxPositions():void {
+            this.footPos.x = this.x + this.width/2;
+            this.footPos.y = this.y + this.height;
+            this.basePos.y = this.y + this.height;
+
+            this.target_sprite.x = this.footPos.x - this.target_sprite.width / 2;
+            this.target_sprite.y = this.footPos.y - 10;
+
+            this.attack_sprite.setPos(this.pos);
+            this.attack_sprite.basePos.y = this.y + this.height;
+
+            this.bar.x = this.x + (this.width * .5);
+            this.bar.y = this.pos.y-30;
+        }
+
+        public function doHighlighterFade():void {
+            if(this.fade_active && this.use_active_highlighter) {
+                this.fadeTarget(this.target_sprite);
+            }
+        }
+
         override public function update():void{
             super.update();
+
+            if (this._state == STATE_DEAD) {
+                return;
+            }
 
             if (this.attack_sprite == null) {
                 return;
@@ -229,41 +248,13 @@ package com.starmaid.Cibele.entities {
 
             this.closestPartyMember = this.getClosestPartyMember();
             this.closestPartyMemberDisp = this.closestPartyMember.footPos.sub(this.getAttackPos());
+            // TODO - cap hitPoints at some reasonable value
+            this.hitPoints = Math.max(0, this.hitPoints);
+            this.setAuxPositions();
+            this.doHighlighterFade();
 
-            this.footPos.x = this.x + this.width/2;
-            this.footPos.y = this.y + this.height;
-            this.basePos.y = this.y + this.height;
-            this.attack_sprite.basePos.y = this.y + this.height;
-
-            this.target_sprite.x = this.footPos.x - this.target_sprite.width / 2;
-            this.target_sprite.y = this.footPos.y - 10;
-
-            this.bar.x = this.x + (this.width * .5);
-            this.bar.y = this.pos.y-30;
-
-            this.attack_sprite.setPos(this.pos);
-
-            if(this._state != STATE_DEAD) {
-                if (!(this is BossEnemy)) {
-                    this.visible = false;
-                    this.attack_sprite.visible = true;
-                }
-
-                if(this.hitPoints <= 0){
-                    this.die();
-                } else {
-                    if(fade_active && this.use_active_highlighter) {
-                        this.fadeTarget(this.target_sprite);
-                    }
-                }
-            } else {
-                this.visible = false;
-                this.target_sprite.visible = false;
-                this.bar.visible = false;
-            }
-
-            if(this.hitPoints <= 0){
-                this.hitPoints = 0;
+            if(this.hitPoints == 0){
+                this.die();
             }
 
             if (this._state == STATE_IDLE) {
