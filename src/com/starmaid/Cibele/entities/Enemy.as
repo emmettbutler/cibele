@@ -12,17 +12,12 @@ package com.starmaid.Cibele.entities {
     import flash.utils.Dictionary;
 
     public class Enemy extends GameObject {
-        public var enemyType:String = "enemy";
+        protected static const TYPE_SMALL:String = "enemy";
+        protected static const TYPE_BOSS:String = "boss";
+        protected var _enemyType:String = TYPE_SMALL;
+
         public var hitpoints:Number = 100;
         public var damage:Number = 3;
-
-        public static const STATE_IDLE:Number = 1;
-        public static const STATE_DAMAGED:Number = 2;
-        public static const STATE_TRACKING:Number = 3;
-        public static const STATE_RECOIL:Number = 4;
-        public static const STATE_ESCAPE:Number = 5;
-        public static const STATE_MOVE_TO_PATH_NODE:Number = 6;
-        public static const STATE_DEAD:Number = 7;
 
         public var dead:Boolean = false;
         public var playerRef:Player;
@@ -42,7 +37,7 @@ package com.starmaid.Cibele.entities {
         public var fade:Boolean = false;
         public var bar:GameObject;
         public var sightRange:Number = 308;
-        public var original_pos:DHPoint;
+        public var originalPos:DHPoint;
 
         public var _path:Path = null;
         public var targetPathNode:PathNode;
@@ -51,6 +46,14 @@ package com.starmaid.Cibele.entities {
         public var bossHasAppeared:Boolean = false;
 
         public var use_active_highlighter:Boolean = true;
+
+        public static const STATE_IDLE:Number = 1;
+        public static const STATE_DAMAGED:Number = 2;
+        public static const STATE_TRACKING:Number = 3;
+        public static const STATE_RECOIL:Number = 4;
+        public static const STATE_ESCAPE:Number = 5;
+        public static const STATE_MOVE_TO_PATH_NODE:Number = 6;
+        public static const STATE_DEAD:Number = 7;
 
         {
             public static var stateMap:Dictionary = new Dictionary();
@@ -65,20 +68,23 @@ package com.starmaid.Cibele.entities {
 
         public function Enemy(pos:DHPoint) {
             super(pos);
-            this.original_pos = pos;
+
+            this.originalPos = pos;
             this._state = STATE_IDLE;
-
             this.attackOffset = new DHPoint(0, 0);
-
-            this.setupSprites();
-
-            footPos = new DHPoint(0, 0);
-            disp = new DHPoint(0, 0);
+            this.footPos = new DHPoint(0, 0);
+            this.disp = new DHPoint(0, 0);
             this.zSorted = true;
             this.basePos = new DHPoint(this.x, this.y + this.height);
+
+            this.setupSprites();
         }
 
         public function setupSprites():void { }
+
+        public function get enemyType():String {
+            return this._enemyType;
+        }
 
         public function getStateString():String {
             return Enemy.stateMap[this._state] == null ? "unknown" : Enemy.stateMap[this._state];
@@ -93,7 +99,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function bossFollowPlayer():void {
-            if(!inViewOfPlayer() && this.enemyType == "boss" && this.bossHasAppeared) {
+            if(!inViewOfPlayer() && this._enemyType == TYPE_BOSS && this.bossHasAppeared) {
                 this.warpToPlayer();
             }
         }
@@ -192,8 +198,8 @@ package com.starmaid.Cibele.entities {
                 this.dead = false;
                 this.visible = true;
                 this.setIdle();
-                this.x = original_pos.x;
-                this.y = original_pos.y;
+                this.x = originalPos.x;
+                this.y = originalPos.y;
             } else {
                 GlobalTimer.getInstance().setMark("respawn timer" + Math.random()*200, 10*GameSound.MSEC_PER_SEC, this.respawn, true);
             }

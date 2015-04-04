@@ -7,12 +7,9 @@ package com.starmaid.Cibele.entities {
     import org.flixel.*;
 
     public class BossEnemy extends Enemy {
-        private var debug_hasWarpedToPlayer:Boolean = false,
-                    debug_testBoss:Boolean = false;
-
         public function BossEnemy(pos:DHPoint) {
             super(pos);
-            enemyType = "boss";
+            this._enemyType = Enemy.TYPE_BOSS;
             hitpoints = 600;
             sightRange = 750;
             damage = .5;
@@ -28,13 +25,6 @@ package com.starmaid.Cibele.entities {
 
         override public function update():void{
             super.update();
-
-            if (debug_testBoss && !debug_hasWarpedToPlayer) {
-                debug_hasWarpedToPlayer = true;
-                warpToPlayer();
-                visible = true;
-                this.alpha = 1;
-            }
 
             if(this.dead) {
                 this.die();
