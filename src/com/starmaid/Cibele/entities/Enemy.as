@@ -259,47 +259,57 @@ package com.starmaid.Cibele.entities {
                 this.die();
             }
 
-            if (this._state == STATE_IDLE) {
-                if (this.closestPartyMemberDisp._length() < this.sightRange &&
-                    this.closestPartyMemberDisp._length() > 100) {
-                    this._state = STATE_TRACKING;
-                }
-                this.dir = ZERO_POINT;
-                this.bossFollowPlayer();
-            } else if (this._state == STATE_TRACKING) {
-                if (this.closestPartyMemberDisp._length() > this.sightRange - 100 ||
-                    this.closestPartyMemberDisp._length() < 10)
-                {
-                    this._state = STATE_IDLE;
-                }
-                this.disp = this.closestPartyMemberDisp;
-                this.dir = disp.normalized();
-            } else if (this._state == STATE_RECOIL) {
-                if (this.closestPartyMemberDisp._length() > 120) {
-                    this._state = STATE_TRACKING;
-                }
-            } else if (this._state == STATE_ESCAPE) {
-                if(this.targetPathNode == null) {
-                    this._path.setCurrentNode(_path.getClosestNode(this.footPos));
-                    this._state = STATE_MOVE_TO_PATH_NODE;
-                } else {
-                    disp = this.targetPathNode.pos.sub(this.footPos);
-                    if (disp._length() < 10) {
+            switch(this._state) {
+                case STATE_IDLE:
+                    if (this.closestPartyMemberDisp._length() < this.sightRange &&
+                        this.closestPartyMemberDisp._length() > 100) {
+                        this._state = STATE_TRACKING;
+                    }
+                    this.dir = ZERO_POINT;
+                    this.bossFollowPlayer();
+                    break;
+
+                case STATE_TRACKING:
+                    if (this.closestPartyMemberDisp._length() > this.sightRange - 100 ||
+                        this.closestPartyMemberDisp._length() < 10)
+                    {
+                        this._state = STATE_IDLE;
+                    }
+                    this.disp = this.closestPartyMemberDisp;
+                    this.dir = disp.normalized();
+                    break;
+
+                case STATE_RECOIL:
+                    if (this.closestPartyMemberDisp._length() > 120) {
+                        this._state = STATE_TRACKING;
+                    }
+                    break;
+
+                case STATE_ESCAPE:
+                    if(this.targetPathNode == null) {
+                        this._path.setCurrentNode(_path.getClosestNode(this.footPos));
                         this._state = STATE_MOVE_TO_PATH_NODE;
                     } else {
-                        this.dir = disp.normalized().mulScl(1.5);
+                        disp = this.targetPathNode.pos.sub(this.footPos);
+                        if (disp._length() < 10) {
+                            this._state = STATE_MOVE_TO_PATH_NODE;
+                        } else {
+                            this.dir = disp.normalized().mulScl(1.5);
+                        }
                     }
-                }
-            } else if (this._state == STATE_MOVE_TO_PATH_NODE) {
-                this.escape_counter += 1;
-                this._path.advance();
-                this.targetPathNode = this._path.currentNode;
-                if(this.escape_counter <= 10) {
-                    this._state = STATE_ESCAPE;
-                } else {
-                    this._state = STATE_TRACKING;
-                    this.escape_counter = 0;
-                }
+                    break;
+
+                case STATE_MOVE_TO_PATH_NODE:
+                    this.escape_counter += 1;
+                    this._path.advance();
+                    this.targetPathNode = this._path.currentNode;
+                    if(this.escape_counter <= 10) {
+                        this._state = STATE_ESCAPE;
+                    } else {
+                        this._state = STATE_TRACKING;
+                        this.escape_counter = 0;
+                    }
+                    break;
             }
         }
     }
