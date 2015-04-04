@@ -70,7 +70,6 @@ package com.starmaid.Cibele.entities {
 
             this.attackOffset = new DHPoint(0, 0);
 
-            trace("calling");
             this.setupSprites();
 
             footPos = new DHPoint(0, 0);
@@ -132,6 +131,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function activeTarget():void {
+            if (this.bar == null) {
+                return;
+            }
             if(this.fade_active != true && use_active_highlighter) {
                 this.fade_active = true;
                 this.target_sprite.visible = true;
@@ -140,6 +142,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function inactiveTarget():void {
+            if (this.bar == null) {
+                return;
+            }
             if(this.fade_active != false) {
                 this.fade_active = false;
                 this.target_sprite.visible = false;
@@ -208,6 +213,10 @@ package com.starmaid.Cibele.entities {
 
         override public function update():void{
             super.update();
+
+            if (this.attack_sprite == null) {
+                return;
+            }
 
             this.footPos.x = this.x + this.width/2;
             this.footPos.y = this.y + this.height;

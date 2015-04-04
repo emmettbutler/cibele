@@ -17,7 +17,6 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function setupSprites():void {
-            trace("in call");
             var rand:Number = Math.floor(Math.random() * 2);
             switch(rand) {
                 case 1:
