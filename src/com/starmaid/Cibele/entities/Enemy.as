@@ -19,7 +19,8 @@ package com.starmaid.Cibele.entities {
         protected var hitPoints:Number = 100,
                       hitDamage:Number = 3,
                       recoilPower:Number = 3,
-                      sightRange:Number = 308;
+                      sightRange:Number = 308,
+                      recoilTrackingThreshold:Number = 120;
         protected var use_active_highlighter:Boolean = true;
         public var dead:Boolean = false;
         protected var _pathFollower:PathFollower;
@@ -108,8 +109,7 @@ package com.starmaid.Cibele.entities {
         public function takeDamage(p:PartyMember):void{
             if (this._state != STATE_MOVE_TO_PATH_NODE && this._state != STATE_ESCAPE) {
                 this._state = STATE_RECOIL;
-                this.disp = this.closestPartyMemberDisp;
-                this.dir = this.disp.normalized().mulScl(this.recoilPower).reflectX();
+                this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
             }
             this.hitPoints -= this.hitDamage;
             if(this.hitPoints % 100 == 0) {
@@ -118,10 +118,6 @@ package com.starmaid.Cibele.entities {
                 }
             }
             this.bar.scale.x = this.hitPoints;
-        }
-
-        public function isFollowing():Boolean {
-            return this._state == STATE_TRACKING;
         }
 
         public function activeTarget():void {
@@ -238,6 +234,14 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        public function closestPartyMemberIsInTrackingRange():Boolean {
+            return this.closestPartyMemberDisp._length() < this.sightRange;
+        }
+
+        public function closestPartyMemberIsAboveRecoilTrackingThreshold():Boolean {
+            return this.closestPartyMemberDisp._length() > this.recoilTrackingThreshold;
+        }
+
         override public function update():void{
             super.update();
 
@@ -261,26 +265,24 @@ package com.starmaid.Cibele.entities {
 
             switch(this._state) {
                 case STATE_IDLE:
-                    if (this.closestPartyMemberDisp._length() < this.sightRange &&
-                        this.closestPartyMemberDisp._length() > 100) {
-                        this._state = STATE_TRACKING;
-                    }
                     this.dir = ZERO_POINT;
                     this.bossFollowPlayer();
+                    if (this.closestPartyMemberIsInTrackingRange()) {
+                        this._state = STATE_TRACKING;
+                    }
                     break;
 
                 case STATE_TRACKING:
-                    if (this.closestPartyMemberDisp._length() > this.sightRange - 100 ||
-                        this.closestPartyMemberDisp._length() < 10)
-                    {
+                    this.dir = this.closestPartyMemberDisp.normalized();
+                    if (!this.closestPartyMemberIsInTrackingRange()) {
                         this._state = STATE_IDLE;
                     }
-                    this.disp = this.closestPartyMemberDisp;
-                    this.dir = disp.normalized();
                     break;
 
                 case STATE_RECOIL:
-                    if (this.closestPartyMemberDisp._length() > 120) {
+                    if (this.closestPartyMemberIsAboveRecoilTrackingThreshold()
+                        && this.closestPartyMemberIsInTrackingRange())
+                    {
                         this._state = STATE_TRACKING;
                     }
                     break;
