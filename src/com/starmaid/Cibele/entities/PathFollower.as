@@ -331,7 +331,6 @@ package com.starmaid.Cibele.entities {
 
             this.setFacing();
             this.setAuxPositions();
-            this.setClosestEnemy();
             this.setTargetEnemy();
             this.performPlayerWarpLogic();
 
