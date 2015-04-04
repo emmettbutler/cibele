@@ -20,10 +20,13 @@ package com.starmaid.Cibele.entities {
                       hitDamage:Number = 3,
                       recoilPower:Number = 3,
                       sightRange:Number = 308;
+        protected var use_active_highlighter:Boolean = true;
         public var dead:Boolean = false;
+        protected var _pathFollower:PathFollower;
         public var playerRef:Player;
-        public var playerDisp:DHPoint;
+        public var closestPartyMemberDisp:DHPoint;
         public var disp:DHPoint;
+        private var closestPartyMember:PartyMember;
         private var attackerDisp:DHPoint;
         public var attacker:PartyMember;
         public var _mapnodes:MapNodeContainer;
@@ -41,7 +44,6 @@ package com.starmaid.Cibele.entities {
 
         public var bossHasAppeared:Boolean = false;
 
-        public var use_active_highlighter:Boolean = true;
 
         public static const STATE_IDLE:Number = 1;
         public static const STATE_DAMAGED:Number = 2;
@@ -101,6 +103,10 @@ package com.starmaid.Cibele.entities {
 
         public function setPlayerRef(p:Player):void{
             this.playerRef = p;
+        }
+
+        public function setFollowerRef(f:PathFollower):void {
+            this._pathFollower = f;
         }
 
         public function takeDamage(p:PartyMember):void{
@@ -208,12 +214,23 @@ package com.starmaid.Cibele.entities {
             return this.isOnscreen();
         }
 
+        public function getClosestPartyMember():PartyMember {
+            var playerDisp:DHPoint = this.playerRef.pos.sub(this.getAttackPos());
+            var followerDisp:DHPoint = this._pathFollower.pos.sub(this.getAttackPos());
+            if (playerDisp._length() > followerDisp._length()) {
+                return this._pathFollower;
+            }
+            return this.playerRef;
+        }
+
         override public function update():void{
             super.update();
 
             if (this.attack_sprite == null) {
                 return;
             }
+
+            this.closestPartyMember = this.getClosestPartyMember();
 
             this.footPos.x = this.x + this.width/2;
             this.footPos.y = this.y + this.height;
@@ -229,11 +246,7 @@ package com.starmaid.Cibele.entities {
             this.attack_sprite.setPos(this.pos);
 
             if(this._state != STATE_DEAD) {
-                if (this.playerRef == null) {
-                    this.playerDisp = new DHPoint(0, 0);
-                } else {
-                    this.playerDisp = this.playerRef.footPos.sub(this.getAttackPos());
-                }
+                this.closestPartyMemberDisp = this.closestPartyMember.footPos.sub(this.getAttackPos());
 
                 if(this.attacker != null){
                     if (!(this is BossEnemy)) {
@@ -265,19 +278,19 @@ package com.starmaid.Cibele.entities {
             }
 
             if (this._state == STATE_IDLE) {
-                if (this.playerDisp._length() < this.sightRange &&
-                    this.playerDisp._length() > 100) {
+                if (this.closestPartyMemberDisp._length() < this.sightRange &&
+                    this.closestPartyMemberDisp._length() > 100) {
                     this._state = STATE_TRACKING;
                 }
                 this.dir = ZERO_POINT;
                 this.bossFollowPlayer();
             } else if (this._state == STATE_TRACKING) {
-                if (this.playerDisp._length() > this.sightRange - 100 ||
-                    this.playerDisp._length() < 10)
+                if (this.closestPartyMemberDisp._length() > this.sightRange - 100 ||
+                    this.closestPartyMemberDisp._length() < 10)
                 {
                     this._state = STATE_IDLE;
                 }
-                this.disp = this.playerRef.footPos.sub(this.getAttackPos());
+                this.disp = this.closestPartyMemberDisp;
                 this.dir = disp.normalized();
             } else if (this._state == STATE_RECOIL) {
                 if (this.attackerDisp._length() > 120) {
