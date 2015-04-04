@@ -14,21 +14,24 @@ package com.starmaid.Cibele.entities {
 
         public function IkuTursoBoss(pos:DHPoint) {
             super(pos);
-            loadGraphic(ImgBoss, false, false, 5613/11, 600);
+            GlobalTimer.getInstance().setMark(
+                "tentacle", 3*GameSound.MSEC_PER_SEC, this.addTentacles
+            );
+        }
+
+        override public function setupSprites():void {
+            this.loadGraphic(ImgBoss, false, false, 5613/11, 600);
+            this.addAnimation("run_boss",
+                [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
+                12, true);
+            this.play("run_boss");
+
             this.tentacles = new Array();
-
-            addAnimation("run_boss", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], 12, true);
-            play("run_boss");
-
             var tentacle:IkuTursoBossTentacle;
             for (var i:int = 0; i < NUM_TENTACLES; i++) {
                 tentacle = new IkuTursoBossTentacle(this.pos)
                 this.tentacles.push(tentacle);
             }
-
-            GlobalTimer.getInstance().setMark(
-                "tentacle", 3*GameSound.MSEC_PER_SEC, this.addTentacles
-            );
         }
 
         override public function addVisibleObjects():void {

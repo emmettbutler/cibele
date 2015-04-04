@@ -16,14 +16,13 @@ package com.starmaid.Cibele.entities {
         protected static const TYPE_BOSS:String = "boss";
         protected var _enemyType:String = TYPE_SMALL;
 
-        public var hitpoints:Number = 100;
-        public var damage:Number = 3;
-
+        protected var hitPoints:Number = 100,
+                      hitDamage:Number = 3,
+                      recoilPower:Number = 3,
+                      sightRange:Number = 308;
         public var dead:Boolean = false;
         public var playerRef:Player;
-        public var recoilPower:Number = 3;
         public var playerDisp:DHPoint;
-        public var attackOffset:DHPoint;
         public var disp:DHPoint;
         private var spriteSetupComplete:Boolean = false;
         private var attackerDisp:DHPoint;
@@ -36,7 +35,6 @@ package com.starmaid.Cibele.entities {
         public var fade_active:Boolean = false;
         public var fade:Boolean = false;
         public var bar:GameObject;
-        public var sightRange:Number = 308;
         public var originalPos:DHPoint;
 
         public var _path:Path = null;
@@ -71,7 +69,6 @@ package com.starmaid.Cibele.entities {
 
             this.originalPos = pos;
             this._state = STATE_IDLE;
-            this.attackOffset = new DHPoint(0, 0);
             this.footPos = new DHPoint(0, 0);
             this.disp = new DHPoint(0, 0);
             this.zSorted = true;
@@ -119,13 +116,13 @@ package com.starmaid.Cibele.entities {
                 this.disp = this.attacker.footPos.sub(this.getAttackPos());
                 this.dir = this.disp.normalized().mulScl(this.recoilPower).reflectX();
             }
-            this.hitpoints -= damage;
-            if(this.hitpoints%100 == 0) {
+            this.hitPoints -= this.hitDamage;
+            if(this.hitPoints % 100 == 0) {
                 if (this._state != STATE_MOVE_TO_PATH_NODE && this._state != STATE_ESCAPE) {
                     this._state = STATE_ESCAPE;
                 }
             }
-            this.bar.scale.x = this.hitpoints;
+            this.bar.scale.x = this.hitPoints;
         }
 
         public function setIdle():void {
@@ -140,7 +137,7 @@ package com.starmaid.Cibele.entities {
             if (this.bar == null) {
                 return;
             }
-            if(this.fade_active != true && use_active_highlighter) {
+            if(this.fade_active != true && this.use_active_highlighter) {
                 this.fade_active = true;
                 this.target_sprite.visible = true;
             }
@@ -194,7 +191,7 @@ package com.starmaid.Cibele.entities {
 
         public function respawn():void {
             if(!this.inViewOfPlayer()) {
-                this.hitpoints = 100;
+                this.hitPoints = 100;
                 this.dead = false;
                 this.visible = true;
                 this.setIdle();
@@ -206,7 +203,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function getAttackPos():DHPoint {
-            return this.footPos.add(this.attackOffset);
+            return this.footPos;
         }
 
         public function setPath(path:Path):void {
@@ -258,10 +255,10 @@ package com.starmaid.Cibele.entities {
                     this.attack_sprite.visible = false;
                 }
 
-                if(this.hitpoints <= 0){
+                if(this.hitPoints <= 0){
                     this.die();
                 } else {
-                    if(fade_active && use_active_highlighter) {
+                    if(fade_active && this.use_active_highlighter) {
                         if(this.attacker != null) {
                             this.fadeTarget(this.target_sprite);
                         }
@@ -273,8 +270,8 @@ package com.starmaid.Cibele.entities {
                 this.bar.visible = false;
             }
 
-            if(this.hitpoints <= 0){
-                this.hitpoints = 0;
+            if(this.hitPoints <= 0){
+                this.hitPoints = 0;
             }
 
             if (this._state == STATE_IDLE) {
