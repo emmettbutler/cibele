@@ -59,11 +59,11 @@ package com.starmaid.Cibele.entities {
                     break;
             }
 
-            this.addAnimation("run_enemy", [0, 1, 2, 3, 4, 5], 12, true);
             this.attack_sprite.play("attack");
             this.attack_sprite.zSorted = true;
             this.attack_sprite.basePos = new DHPoint(this.x,
                                                      this.y + this.height);
+            this.addAnimation("run_enemy", [0, 1, 2, 3, 4, 5], 12, true);
             this.play("run_enemy");
 
             super.setupSprites();

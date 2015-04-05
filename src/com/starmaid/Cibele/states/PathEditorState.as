@@ -158,8 +158,6 @@ package com.starmaid.Cibele.states {
                 this._path.clearPath();
                 this._mapnodes.clearNodes();
             }
-
-            this.enemies.update();
         }
 
         public function writeBackup():void {

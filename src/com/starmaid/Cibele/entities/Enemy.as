@@ -230,6 +230,10 @@ package com.starmaid.Cibele.entities {
             return this.closestPartyMemberDisp._length() > this.recoilTrackingThreshold;
         }
 
+        override public function toggleActive():void {
+            this.active = this.isOnscreen();
+        }
+
         override public function update():void{
             super.update();
 

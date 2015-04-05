@@ -37,8 +37,6 @@ package com.starmaid.Cibele.states {
             this.bossHasAppeared = false;
             this.ui_color_flag = GameState.UICOLOR_PINK;
 
-            GlobalTimer.getInstance().setMark(BOSS_MARK, 5*GameSound.MSEC_PER_SEC);
-
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {

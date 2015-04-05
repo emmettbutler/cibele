@@ -53,7 +53,7 @@ package com.starmaid.Cibele.base {
             this.debugText.y = this.pos.y;
         }
 
-        public function toggleActive(player:Player):void {
+        public function toggleActive():void {
             this.active = this.isOnscreen();
         }
 

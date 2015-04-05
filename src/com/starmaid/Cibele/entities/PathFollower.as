@@ -271,8 +271,10 @@ package com.starmaid.Cibele.entities {
             }
         }
 
-        override public function toggleActive(player:Player):void {
-            this.active = true;
+        override public function toggleActive():void {
+            if (!this.active) {
+                this.active = true;
+            }
         }
 
         public function updateFinalTarget():void {

@@ -141,6 +141,12 @@ package com.starmaid.Cibele.entities {
             return this.finalTarget;
         }
 
+        override public function toggleActive():void {
+            if (!this.active) {
+                this.active = true;
+            }
+        }
+
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint,
                                       group:Array=null):void
         {

@@ -29,11 +29,5 @@ package com.starmaid.Cibele.utils {
         public function get_(i:int):Enemy {
             return this.enemies[i];
         }
-
-        public function update():void {
-            for(var i:int = 0; i < this.enemies.length; i++) {
-                this.enemies[i].toggleActive(this.player);
-            }
-        }
     }
 }

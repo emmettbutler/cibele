@@ -23,6 +23,12 @@ package com.starmaid.Cibele.entities {
 
         public function addVisibleObjects():void {}
 
+        override public function toggleActive():void {
+            if (!this.active) {
+                this.active = true;
+            }
+        }
+
         override public function update():void{
             super.update();
 

@@ -48,6 +48,10 @@ package com.starmaid.Cibele.entities {
             this.slug = "tentacle_" + (Math.random() * 100000).toString();
         }
 
+        override public function toggleActive():void {
+            this.active = this.isOnscreen();
+        }
+
         public function appear():void {
             this._state = STATE_APPEARING;
             this.visible = true;
