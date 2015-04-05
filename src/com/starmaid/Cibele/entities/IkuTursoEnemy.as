@@ -69,6 +69,8 @@ package com.starmaid.Cibele.entities {
             this.bar = new GameObject(new DHPoint(pos.x,pos.y));
             this.bar.makeGraphic(1,8,0xffe2678e);
             this.bar.scale.x = this.hitPoints;
+
+            super.setupSprites();
         }
     }
 }

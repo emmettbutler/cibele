@@ -43,7 +43,6 @@ package com.starmaid.Cibele.entities {
 
         public var bossHasAppeared:Boolean = false;
 
-
         public static const STATE_IDLE:Number = 1;
         public static const STATE_TRACKING:Number = 3;
         public static const STATE_RECOIL:Number = 4;
@@ -74,7 +73,10 @@ package com.starmaid.Cibele.entities {
             this.setupSprites();
         }
 
-        public function setupSprites():void { }
+        public function setupSprites():void {
+            this.attack_sprite.visible = false;
+            this.visible = true;
+        }
 
         public function get enemyType():String {
             return this._enemyType;
@@ -89,7 +91,13 @@ package com.starmaid.Cibele.entities {
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint);
             var headFootDisp:DHPoint = this.pos.sub(this.footPos);
             this.setPos(warpNode.pos.add(headFootDisp));
+            this.startTracking();
+        }
+
+        public function startTracking():void {
             this._state = STATE_TRACKING;
+            this.attack_sprite.visible = true;
+            this.visible = false;
         }
 
         public function bossFollowPlayer():void {
@@ -268,7 +276,7 @@ package com.starmaid.Cibele.entities {
                     this.dir = ZERO_POINT;
                     this.bossFollowPlayer();
                     if (this.closestPartyMemberIsInTrackingRange()) {
-                        this._state = STATE_TRACKING;
+                        this.startTracking();
                     }
                     break;
 
@@ -283,7 +291,7 @@ package com.starmaid.Cibele.entities {
                     if (this.closestPartyMemberIsAboveRecoilTrackingThreshold()
                         && this.closestPartyMemberIsInTrackingRange())
                     {
-                        this._state = STATE_TRACKING;
+                        this.startTracking();
                     }
                     break;
 
@@ -308,7 +316,7 @@ package com.starmaid.Cibele.entities {
                     if(this.escape_counter <= 10) {
                         this._state = STATE_ESCAPE;
                     } else {
-                        this._state = STATE_TRACKING;
+                        this.startTracking();
                         this.escape_counter = 0;
                     }
                     break;

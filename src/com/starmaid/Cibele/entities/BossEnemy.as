@@ -35,6 +35,10 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        override public function startTracking():void {
+            this._state = STATE_TRACKING;
+        }
+
         override public function die():void {
             if(this.alpha > 0) {
                 this.alpha -= .01;
