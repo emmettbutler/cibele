@@ -32,6 +32,8 @@ package com.starmaid.Cibele.entities {
                 tentacle = new IkuTursoBossTentacle(this.pos)
                 this.tentacles.push(tentacle);
             }
+
+            super.setupSprites();
         }
 
         override public function addVisibleObjects():void {

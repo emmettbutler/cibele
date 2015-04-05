@@ -30,8 +30,6 @@ package com.starmaid.Cibele.entities {
         private var closestPartyMember:PartyMember;
         public var _mapnodes:MapNodeContainer;
         public var footPos:DHPoint;
-        public var target_sprite:GameObject;
-        public var attack_sprite:GameObject;
         public var fade_active:Boolean = false;
         public var fade:Boolean = false;
         public var bar:GameObject;
@@ -74,8 +72,11 @@ package com.starmaid.Cibele.entities {
         }
 
         public function setupSprites():void {
-            this.attack_sprite.visible = false;
             this.visible = true;
+
+            this.bar = new GameObject(new DHPoint(pos.x,pos.y));
+            this.bar.makeGraphic(1,8,0xffe2678e);
+            this.bar.scale.x = this.hitPoints;
         }
 
         public function get enemyType():String {
@@ -96,7 +97,6 @@ package com.starmaid.Cibele.entities {
 
         public function startTracking():void {
             this._state = STATE_TRACKING;
-            this.attack_sprite.visible = true;
             this.visible = false;
         }
 
@@ -132,20 +132,12 @@ package com.starmaid.Cibele.entities {
             if (this.bar == null) {
                 return;
             }
-            if(this.fade_active != true && this.use_active_highlighter) {
-                this.fade_active = true;
-                this.target_sprite.visible = true;
-            }
             this.bar.visible = true;
         }
 
         public function inactiveTarget():void {
             if (this.bar == null) {
                 return;
-            }
-            if(this.fade_active != false) {
-                this.fade_active = false;
-                this.target_sprite.visible = false;
             }
             this.bar.visible = false;
         }
@@ -179,8 +171,6 @@ package com.starmaid.Cibele.entities {
             // don't destroy() or state.remove() here. doing so breaks z-sorting
             this.dead = true;
             this.visible = false;
-            this.target_sprite.visible = false;
-            this.attack_sprite.visible = false;
             this.bar.visible = false;
             this._state = STATE_DEAD;
             this.dir = new DHPoint(0,0);
@@ -226,21 +216,11 @@ package com.starmaid.Cibele.entities {
             this.footPos.y = this.y + this.height;
             this.basePos.y = this.y + this.height;
 
-            this.target_sprite.x = this.footPos.x - this.target_sprite.width / 2;
-            this.target_sprite.y = this.footPos.y - 10;
-
-            this.attack_sprite.setPos(this.pos);
-            this.attack_sprite.basePos.y = this.y + this.height;
-
             this.bar.x = this.x + (this.width * .5);
             this.bar.y = this.pos.y-30;
         }
 
-        public function doHighlighterFade():void {
-            if(this.fade_active && this.use_active_highlighter) {
-                this.fadeTarget(this.target_sprite);
-            }
-        }
+        public function doHighlighterFade():void { }
 
         public function closestPartyMemberIsInTrackingRange():Boolean {
             return this.closestPartyMemberDisp._length() < this.sightRange;
@@ -254,10 +234,6 @@ package com.starmaid.Cibele.entities {
             super.update();
 
             if (this._state == STATE_DEAD) {
-                return;
-            }
-
-            if (this.attack_sprite == null) {
                 return;
             }
 
