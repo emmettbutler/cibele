@@ -1,6 +1,7 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.GlobalTimer;
+    import com.starmaid.Cibele.states.LevelMapState;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.management.DebugConsoleManager;
 
@@ -69,6 +70,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function addTentacles():void {
+            if (!FlxG.state is LevelMapState) {
+                return;
+            }
             var rand:Number = Math.random()*1000000;
             for (var i:int = 0; i < Math.random()*NUM_TENTACLES; i++) {
                 GlobalTimer.getInstance().setMark(
