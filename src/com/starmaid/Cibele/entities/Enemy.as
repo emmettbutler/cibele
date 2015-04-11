@@ -54,6 +54,7 @@ package com.starmaid.Cibele.entities {
             this.basePos = new DHPoint(this.x, this.y + this.height);
 
             this.setupSprites();
+            this.inactiveTarget();
         }
 
         public function isDead():Boolean {
