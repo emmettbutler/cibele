@@ -124,6 +124,7 @@ package com.starmaid.Cibele.entities {
             this._healthBar.visible = false;
             this._state = STATE_DEAD;
             this.dir = new DHPoint(0,0);
+            this.inactiveTarget();
             GlobalTimer.getInstance().setMark(
                 MARK_RESPAWN + Math.random() * 200,
                 30 * GameSound.MSEC_PER_SEC, this.respawn, true
@@ -202,7 +203,7 @@ package com.starmaid.Cibele.entities {
             // TODO - cap hitPoints at some reasonable value
             this.hitPoints = Math.max(0, this.hitPoints);
             this.setAuxPositions();
-            if(this.hitPoints == 0){
+            if(this.hitPoints >= 0){
                 this.die();
             }
 
