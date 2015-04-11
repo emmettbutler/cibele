@@ -6,17 +6,9 @@ package com.starmaid.Cibele.entities {
 
     public class SmallEnemy extends Enemy {
         public var target_sprite:GameObject, attack_sprite:GameObject;
-        private var use_active_highlighter:Boolean = true;
-        private var fade_active:Boolean = false;
 
         public function SmallEnemy(pos:DHPoint) {
             super(pos);
-        }
-
-        override public function doHighlighterFade():void {
-            if(this.fade_active && this.use_active_highlighter) {
-                this.fadeTarget(this.target_sprite);
-            }
         }
 
         override public function setupSprites():void {
@@ -51,8 +43,7 @@ package com.starmaid.Cibele.entities {
         override public function activeTarget():void {
             super.activeTarget();
 
-            if(this.fade_active != true && this.use_active_highlighter) {
-                this.fade_active = true;
+            if(!this.target_sprite.visible) {
                 this.target_sprite.visible = true;
             }
         }
@@ -60,11 +51,9 @@ package com.starmaid.Cibele.entities {
         override public function inactiveTarget():void {
             super.inactiveTarget();
 
-            if(this.fade_active != false) {
-                this.fade_active = false;
+            if(this.target_sprite.visible) {
                 this.target_sprite.visible = false;
             }
         }
-
     }
 }

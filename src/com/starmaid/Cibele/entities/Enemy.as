@@ -25,7 +25,6 @@ package com.starmaid.Cibele.entities {
         protected var bar:GameObject;
         protected var closestPartyMemberDisp:DHPoint;
         private var closestPartyMember:PartyMember;
-        private var fade:Boolean = false;
         private var originalPos:DHPoint;
         public var footPos:DHPoint;
 
@@ -113,28 +112,6 @@ package com.starmaid.Cibele.entities {
             this.bar.visible = false;
         }
 
-        public function fadeTarget(obj:GameObject, soften:Boolean=false):void {
-            if(!soften) {
-                if(obj.alpha == 1) {
-                    this.fade = true;
-                } else if(obj.alpha == 0) {
-                    this.fade = false;
-                }
-            } else {
-                if(obj.alpha == .6) {
-                    this.fade = true;
-                } else if(obj.alpha == 0) {
-                    this.fade = false;
-                }
-            }
-
-            if(this.fade) {
-                obj.alpha -= .1;
-            } else {
-                obj.alpha += .1;
-            }
-        }
-
         public function die():void {
             if (this._state == STATE_DEAD) {
                 return;
@@ -185,8 +162,6 @@ package com.starmaid.Cibele.entities {
             this.bar.y = this.pos.y-30;
         }
 
-        public function doHighlighterFade():void { }
-
         public function closestPartyMemberIsInTrackingRange():Boolean {
             return this.closestPartyMemberDisp._length() < this.sightRange;
         }
@@ -218,7 +193,6 @@ package com.starmaid.Cibele.entities {
             // TODO - cap hitPoints at some reasonable value
             this.hitPoints = Math.max(0, this.hitPoints);
             this.setAuxPositions();
-            this.doHighlighterFade();
             if(this.hitPoints == 0){
                 this.die();
             }
