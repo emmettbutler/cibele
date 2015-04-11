@@ -23,11 +23,11 @@ package com.starmaid.Cibele.entities {
                       recoilTrackingThreshold:Number = 120;
         protected var pathFollowerRef:PathFollower;
         protected var playerRef:Player;
-        private var closestPartyMemberDisp:DHPoint;
-        private var disp:DHPoint;
+        protected var disp:DHPoint;
+        protected var bar:GameObject;
+        protected var closestPartyMemberDisp:DHPoint;
         private var closestPartyMember:PartyMember;
         private var fade:Boolean = false;
-        private var bar:GameObject;
         private var originalPos:DHPoint;
         public var footPos:DHPoint;
 
@@ -39,8 +39,6 @@ package com.starmaid.Cibele.entities {
         public static const STATE_IDLE:Number = 1;
         public static const STATE_TRACKING:Number = 3;
         public static const STATE_RECOIL:Number = 4;
-        public static const STATE_ESCAPE:Number = 5;
-        public static const STATE_MOVE_TO_PATH_NODE:Number = 6;
         public static const STATE_DEAD:Number = 7;
 
         {
@@ -49,8 +47,6 @@ package com.starmaid.Cibele.entities {
             stateMap[STATE_TRACKING] = "STATE_TRACKING";
             stateMap[STATE_RECOIL] = "STATE_RECOIL";
             stateMap[STATE_DEAD] = "STATE_DEAD";
-            stateMap[STATE_ESCAPE] = "STATE_ESCAPE";
-            stateMap[STATE_MOVE_TO_PATH_NODE] = "STATE_MOVE_TO_PATH_NODE";
         }
 
         public function Enemy(pos:DHPoint) {
@@ -90,14 +86,6 @@ package com.starmaid.Cibele.entities {
             return Enemy.stateMap[this._state] == null ? "unknown" : Enemy.stateMap[this._state];
         }
 
-        public function warpToPlayer():void {
-            var targetPoint:DHPoint = this.playerRef.pos.add(this.playerRef.dir.normalized().mulScl(1000));
-            var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint);
-            var headFootDisp:DHPoint = this.pos.sub(this.footPos);
-            this.setPos(warpNode.pos.add(headFootDisp));
-            this.startTracking();
-        }
-
         public function startTracking():void {
             this._state = STATE_TRACKING;
             this.visible = false;
@@ -112,16 +100,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function takeDamage(p:PartyMember):void{
-            if (this._state != STATE_MOVE_TO_PATH_NODE && this._state != STATE_ESCAPE) {
-                this._state = STATE_RECOIL;
-                this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
-            }
+            this._state = STATE_RECOIL;
+            this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
             this.hitPoints -= this.hitDamage;
-            if(this.hitPoints % 100 == 0) {
-                if (this._state != STATE_MOVE_TO_PATH_NODE && this._state != STATE_ESCAPE) {
-                    this._state = STATE_ESCAPE;
-                }
-            }
             this.bar.scale.x = this.hitPoints;
         }
 
@@ -270,32 +251,6 @@ package com.starmaid.Cibele.entities {
                         && this.closestPartyMemberIsInTrackingRange())
                     {
                         this.startTracking();
-                    }
-                    break;
-
-                case STATE_ESCAPE:
-                    if(this.targetPathNode == null) {
-                        this._path.setCurrentNode(_path.getClosestNode(this.footPos));
-                        this._state = STATE_MOVE_TO_PATH_NODE;
-                    } else {
-                        disp = this.targetPathNode.pos.sub(this.footPos);
-                        if (disp._length() < 10) {
-                            this._state = STATE_MOVE_TO_PATH_NODE;
-                        } else {
-                            this.dir = disp.normalized().mulScl(1.5);
-                        }
-                    }
-                    break;
-
-                case STATE_MOVE_TO_PATH_NODE:
-                    this.escape_counter += 1;
-                    this._path.advance();
-                    this.targetPathNode = this._path.currentNode;
-                    if(this.escape_counter <= 10) {
-                        this._state = STATE_ESCAPE;
-                    } else {
-                        this.startTracking();
-                        this.escape_counter = 0;
                     }
                     break;
             }
