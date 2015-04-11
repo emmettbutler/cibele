@@ -94,11 +94,7 @@ package com.starmaid.Cibele.states {
                 this.pathWalker.moveToNextPathNode();
             }
 
-            if(GameState.cur_level == GameState.LVL_IT) {
-                this.boss = new IkuTursoBoss(new DHPoint(0, 0));
-            } else if(GameState.cur_level == GameState.LVL_EU) {
-                this.boss = new EuryaleBoss(new DHPoint(0, 0));
-            }
+            this.boss = new (this.getBossClass())(new DHPoint(0, 0));
 
             add(this.boss);
             this.boss.addVisibleObjects();
@@ -135,17 +131,12 @@ package com.starmaid.Cibele.states {
                                            this.showNodes);
                     this.pathWalker.moveToNextPathNode();
                 } else if (FlxG.keys["Z"]) {
-                    var en:SmallEnemy = new IkuTursoEnemy(new DHPoint(FlxG.mouse.x,
+                    var en:SmallEnemy = new (this.getEnemyClass())(new DHPoint(FlxG.mouse.x,
                                                                    FlxG.mouse.y));
                     add(en);
                     this.enemies.addEnemy(en);
                 } else if (FlxG.keys["Q"]) {
-                    var boss:BossEnemy;
-                    if(GameState.cur_level == GameState.LVL_IT) {
-                        boss = new IkuTursoBoss(new DHPoint(FlxG.mouse.x,FlxG.mouse.y));
-                    } else if(GameState.cur_level == GameState.LVL_EU) {
-                        boss = new EuryaleBoss(new DHPoint(FlxG.mouse.x,FlxG.mouse.y));
-                    }
+                    var boss:BossEnemy = new (this.getBossClass())(new DHPoint(FlxG.mouse.x,FlxG.mouse.y));
 
                     add(boss);
                     this.enemies.addEnemy(boss);
@@ -309,18 +300,40 @@ package com.starmaid.Cibele.states {
                         this.showNodes);
                 } else if (prefix_.indexOf("enemy") == 0 && this.shouldAddEnemies) {
                     coords = line[1].split("x");
-                    var en:SmallEnemy = new IkuTursoEnemy(
+                    var en:SmallEnemy = new (this.getEnemyClass())(
                         new DHPoint(Number(coords[0]), Number(coords[1])));
                     add(en);
                     this.enemies.addEnemy(en);
                 } else if (prefix_.indexOf("boss") == 0 && this.shouldAddEnemies) {
                     coords = line[1].split("x");
-                    var bo:IkuTursoBoss = new IkuTursoBoss(
+                    var bo:BossEnemy = new (this.getBossClass())(
                         new DHPoint(Number(coords[0]), Number(coords[1])));
                     add(bo);
                     this.enemies.addEnemy(bo);
                 }
             }
+        }
+
+        private function getEnemyClass():Class {
+            if (this is IkuTurso) {
+                return IkuTursoEnemy;
+            } else if (this is Euryale) {
+                return IkuTursoEnemy;
+            } /*else if (this is Hiisi) {
+                return HiisiEnemy;
+            }*/
+            return IkuTursoEnemy;
+        }
+
+        private function getBossClass():Class {
+            if (this is IkuTurso) {
+                return IkuTursoBoss;
+            } else if (this is Euryale) {
+                return EuryaleBoss;
+            } /*else if (this is Hiisi) {
+                return HiisiEnemy;
+            }*/
+            return IkuTursoBoss;
         }
     }
 }
