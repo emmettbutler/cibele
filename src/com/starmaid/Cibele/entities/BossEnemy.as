@@ -84,6 +84,14 @@ package com.starmaid.Cibele.entities {
                         this.escape_counter = 0;
                     }
                     break;
+
+                case STATE_DEAD:
+                    if(this.alpha > 0) {
+                        this.alpha -= .01;
+                    } else {
+                        this.alpha = 0;
+                    }
+                    break;
             }
         }
 
@@ -132,11 +140,6 @@ package com.starmaid.Cibele.entities {
 
         override public function die():void {
             this._state = STATE_DEAD;
-            if(this.alpha > 0) {
-                this.alpha -= .01;
-            } else {
-                this.alpha = 0;
-            }
         }
     }
 }
