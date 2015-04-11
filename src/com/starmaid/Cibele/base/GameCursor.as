@@ -44,6 +44,8 @@ package com.starmaid.Cibele.base {
             this.observeGlobalPause = false;
 
             this.addCursorSprites();
+            Mouse.show(); //believe it or not, you do need to show it before you hide it for it to truly hide the system mouse
+            Mouse.hide();
         }
 
         override public function update():void {
