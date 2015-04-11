@@ -331,7 +331,7 @@ package com.starmaid.Cibele.states {
             } else if (this is Euryale) {
                 return EuryaleBoss;
             } /*else if (this is Hiisi) {
-                return HiisiEnemy;
+                return HiisiBoss;
             }*/
             return IkuTursoBoss;
         }
