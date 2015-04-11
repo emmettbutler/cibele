@@ -21,24 +21,21 @@ package com.starmaid.Cibele.entities {
                       recoilPower:Number = 3,
                       sightRange:Number = 308,
                       recoilTrackingThreshold:Number = 120;
-        protected var use_active_highlighter:Boolean = true;
         public var dead:Boolean = false;
-        protected var _pathFollower:PathFollower;
-        public var playerRef:Player;
-        public var closestPartyMemberDisp:DHPoint;
-        public var disp:DHPoint;
+        protected var pathFollowerRef:PathFollower;
+        protected var playerRef:Player;
+        private var closestPartyMemberDisp:DHPoint;
+        private var disp:DHPoint;
         private var closestPartyMember:PartyMember;
-        public var _mapnodes:MapNodeContainer;
         public var footPos:DHPoint;
-        public var fade_active:Boolean = false;
         public var fade:Boolean = false;
         public var bar:GameObject;
         public var originalPos:DHPoint;
 
+        public var _mapnodes:MapNodeContainer;
         public var _path:Path = null;
         public var targetPathNode:PathNode;
         public var escape_counter:Number = 0;
-
         public var bossHasAppeared:Boolean = false;
 
         public static const STATE_IDLE:Number = 1;
@@ -111,7 +108,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function setFollowerRef(f:PathFollower):void {
-            this._pathFollower = f;
+            this.pathFollowerRef = f;
         }
 
         public function takeDamage(p:PartyMember):void{
@@ -204,9 +201,9 @@ package com.starmaid.Cibele.entities {
 
         public function getClosestPartyMember():PartyMember {
             var playerDisp:DHPoint = this.playerRef.pos.sub(this.getAttackPos());
-            var followerDisp:DHPoint = this._pathFollower.pos.sub(this.getAttackPos());
+            var followerDisp:DHPoint = this.pathFollowerRef.pos.sub(this.getAttackPos());
             if (playerDisp._length() > followerDisp._length()) {
-                return this._pathFollower;
+                return this.pathFollowerRef;
             }
             return this.playerRef;
         }

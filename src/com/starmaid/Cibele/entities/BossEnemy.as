@@ -15,7 +15,6 @@ package com.starmaid.Cibele.entities {
             this.hitDamage = .5;
             this.recoilPower = 0;
 
-            this.use_active_highlighter = false;
             this.alpha = 0;
 
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.getStateString", "boss.state");

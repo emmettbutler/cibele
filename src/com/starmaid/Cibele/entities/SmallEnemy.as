@@ -6,6 +6,8 @@ package com.starmaid.Cibele.entities {
 
     public class SmallEnemy extends Enemy {
         public var target_sprite:GameObject, attack_sprite:GameObject;
+        private var use_active_highlighter:Boolean = true;
+        private var fade_active:Boolean = false;
 
         public function SmallEnemy(pos:DHPoint) {
             super(pos);
