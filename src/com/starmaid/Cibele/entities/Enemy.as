@@ -1,9 +1,7 @@
 package com.starmaid.Cibele.entities {
-    import com.starmaid.Cibele.management.Path;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
-    import com.starmaid.Cibele.utils.MapNodeContainer;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameSound;
 
@@ -30,11 +28,6 @@ package com.starmaid.Cibele.entities {
         private var fade:Boolean = false;
         private var originalPos:DHPoint;
         public var footPos:DHPoint;
-
-        public var _mapnodes:MapNodeContainer;
-        public var _path:Path = null;
-        public var targetPathNode:PathNode;
-        public var escape_counter:Number = 0;
 
         public static const STATE_IDLE:Number = 1;
         public static const STATE_TRACKING:Number = 3;
@@ -168,10 +161,6 @@ package com.starmaid.Cibele.entities {
 
         public function getAttackPos():DHPoint {
             return this.footPos;
-        }
-
-        public function setPath(path:Path):void {
-            this._path = path;
         }
 
         public function inViewOfPlayer():Boolean {

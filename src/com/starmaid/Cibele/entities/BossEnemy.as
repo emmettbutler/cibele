@@ -3,11 +3,18 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.management.DebugConsoleManager;
+    import com.starmaid.Cibele.utils.MapNodeContainer;
+    import com.starmaid.Cibele.management.Path;
 
     import org.flixel.*;
 
     public class BossEnemy extends Enemy {
         public var bossHasAppeared:Boolean = false;
+        public var _mapnodes:MapNodeContainer;
+        private var _path:Path = null;
+        private var targetPathNode:PathNode;
+        private var escape_counter:Number = 0;
+
 
         public static const STATE_ESCAPE:Number = 5948573;
         public static const STATE_MOVE_TO_PATH_NODE:Number = 693857487;
@@ -31,6 +38,10 @@ package com.starmaid.Cibele.entities {
         }
 
         public function addVisibleObjects():void {}
+
+        public function setPath(path:Path):void {
+            this._path = path;
+        }
 
         override public function toggleActive():void {
             if (!this.active) {

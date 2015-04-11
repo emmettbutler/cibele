@@ -2,6 +2,7 @@ package com.starmaid.Cibele.utils {
     import com.starmaid.Cibele.entities.Player;
     import com.starmaid.Cibele.entities.PathFollower;
     import com.starmaid.Cibele.entities.Enemy;
+    import com.starmaid.Cibele.entities.BossEnemy;
     import org.flixel.*;
 
     public class EnemyGroup {
@@ -18,7 +19,9 @@ package com.starmaid.Cibele.utils {
         public function addEnemy(en:Enemy):void {
             en.setPlayerRef(this.player);
             en.setFollowerRef(this.path_follower);
-            en.setPath(this.path_follower.pathRef);
+            if (en is BossEnemy) {
+                (en as BossEnemy).setPath(this.path_follower.pathRef);
+            }
             this.enemies.push(en);
         }
 
