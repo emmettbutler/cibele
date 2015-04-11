@@ -81,8 +81,6 @@ package com.starmaid.Cibele.states {
                 this.bitDialogue.update();
             }
 
-            this.boss.update();
-
             if (GlobalTimer.getInstance().hasPassed(BOSS_MARK) &&
                 !this.boss.hasAppeared() && FlxG.state.ID == LevelMapState.LEVEL_ID)
             {
