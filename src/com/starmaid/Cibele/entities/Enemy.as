@@ -24,7 +24,7 @@ package com.starmaid.Cibele.entities {
         protected var pathFollowerRef:PathFollower;
         protected var playerRef:Player;
         protected var disp:DHPoint;
-        protected var bar:GameObject;
+        protected var _healthBar:GameObject;
         protected var closestPartyMemberDisp:DHPoint;
         private var closestPartyMember:PartyMember;
         private var originalPos:DHPoint;
@@ -61,15 +61,15 @@ package com.starmaid.Cibele.entities {
         }
 
         public function get healthBar():GameObject {
-            return this.bar;
+            return this._healthBar;
         }
 
         public function setupSprites():void {
             this.visible = true;
 
-            this.bar = new GameObject(new DHPoint(pos.x,pos.y));
-            this.bar.makeGraphic(1,8,0xffe2678e);
-            this.bar.scale.x = this.hitPoints;
+            this._healthBar = new GameObject(new DHPoint(pos.x,pos.y));
+            this._healthBar.makeGraphic(1,8,0xffe2678e);
+            this._healthBar.scale.x = this.hitPoints;
         }
 
         public function get enemyType():String {
@@ -97,21 +97,21 @@ package com.starmaid.Cibele.entities {
             this._state = STATE_RECOIL;
             this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
             this.hitPoints -= this.hitDamage;
-            this.bar.scale.x = this.hitPoints;
+            this._healthBar.scale.x = this.hitPoints;
         }
 
         public function activeTarget():void {
-            if (this.bar == null) {
+            if (this._healthBar == null) {
                 return;
             }
-            this.bar.visible = true;
+            this._healthBar.visible = true;
         }
 
         public function inactiveTarget():void {
-            if (this.bar == null) {
+            if (this._healthBar == null) {
                 return;
             }
-            this.bar.visible = false;
+            this._healthBar.visible = false;
         }
 
         public function die():void {
@@ -120,7 +120,7 @@ package com.starmaid.Cibele.entities {
             }
             // don't destroy() or state.remove() here. doing so breaks z-sorting
             this.visible = false;
-            this.bar.visible = false;
+            this._healthBar.visible = false;
             this._state = STATE_DEAD;
             this.dir = new DHPoint(0,0);
             GlobalTimer.getInstance().setMark(
@@ -166,8 +166,8 @@ package com.starmaid.Cibele.entities {
             this.footPos.y = this.y + this.height;
             this.basePos.y = this.y + this.height;
 
-            this.bar.x = this.x + (this.width * .5);
-            this.bar.y = this.pos.y-30;
+            this._healthBar.x = this.x + (this.width * .5);
+            this._healthBar.y = this.pos.y-30;
         }
 
         public function closestPartyMemberIsInTrackingRange():Boolean {
