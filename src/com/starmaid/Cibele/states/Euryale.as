@@ -148,6 +148,7 @@ package com.starmaid.Cibele.states {
 
         public function startBoss():void {
             GlobalTimer.getInstance().setMark(BOSS_MARK, 1*GameSound.MSEC_PER_SEC);
+            this.bitDialogueLock = true;
         }
 
         public function killBoss():void {
