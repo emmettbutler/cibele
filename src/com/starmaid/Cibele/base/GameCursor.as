@@ -43,23 +43,7 @@ package com.starmaid.Cibele.base {
             this._state = PC;
             this.observeGlobalPause = false;
 
-            this.hideSystemCursor();
             this.addCursorSprites();
-        }
-
-        public function hideSystemCursor():void {
-            if(Mouse.supportsNativeCursor){
-                clearCursor = new ClearCursor();
-                cursorBitmapData = new BitmapData(1, 1, true, 0x000000);
-                cursorBitmapData.draw(clearCursor as IBitmapDrawable);
-                cursorVector = new Vector.<BitmapData>();
-                cursorVector[0] = cursorBitmapData;
-                cursorData = new MouseCursorData();
-                cursorData.hotSpot = new Point(10, 10);
-                cursorData.data = cursorVector;
-                Mouse.registerCursor("clearCursor", cursorData);
-                Mouse.cursor = "clearCursor";
-            }
         }
 
         override public function update():void {

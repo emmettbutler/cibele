@@ -4,6 +4,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.states.IkuTursoDesktop;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameState;
+    import flash.ui.Mouse;
 
     import org.flixel.*;
 
@@ -40,6 +41,8 @@ package com.starmaid.Cibele.states {
             if(FlxG.keys.SPACE) {
                 SoundManager.getInstance().playSound(VidBGMLoop, 24*GameSound.MSEC_PER_SEC, null, false, 1, Math.random()*5000+100);
                 startGame();
+                Mouse.show(); //believe it or not, you do need to show it before you hide it for it to truly hide the system mouse
+                Mouse.hide();
             }
         }
     }
