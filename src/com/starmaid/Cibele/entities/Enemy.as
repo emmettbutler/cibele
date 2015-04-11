@@ -14,6 +14,8 @@ package com.starmaid.Cibele.entities {
         protected static const TYPE_BOSS:String = "boss";
         protected var _enemyType:String = TYPE_SMALL;
 
+        private static const MARK_RESPAWN:String = "mrespawn";
+
         protected var hitPoints:Number = 100,
                       hitDamage:Number = 3,
                       recoilPower:Number = 3,
@@ -121,7 +123,10 @@ package com.starmaid.Cibele.entities {
             this.bar.visible = false;
             this._state = STATE_DEAD;
             this.dir = new DHPoint(0,0);
-            GlobalTimer.getInstance().setMark("respawn timer" + Math.random()*200, 30*GameSound.MSEC_PER_SEC, this.respawn, true);
+            GlobalTimer.getInstance().setMark(
+                MARK_RESPAWN + Math.random() * 200,
+                30 * GameSound.MSEC_PER_SEC, this.respawn, true
+            );
         }
 
         public function respawn():void {
@@ -132,7 +137,10 @@ package com.starmaid.Cibele.entities {
                 this.x = originalPos.x;
                 this.y = originalPos.y;
             } else {
-                GlobalTimer.getInstance().setMark("respawn timer" + Math.random()*200, 10*GameSound.MSEC_PER_SEC, this.respawn, true);
+                GlobalTimer.getInstance().setMark(
+                    MARK_RESPAWN + Math.random() * 200,
+                    10 * GameSound.MSEC_PER_SEC, this.respawn, true
+                );
             }
         }
 
