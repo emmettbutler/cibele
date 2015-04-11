@@ -35,7 +35,6 @@ package com.starmaid.Cibele.entities {
         public var _path:Path = null;
         public var targetPathNode:PathNode;
         public var escape_counter:Number = 0;
-        public var bossHasAppeared:Boolean = false;
 
         public static const STATE_IDLE:Number = 1;
         public static const STATE_TRACKING:Number = 3;
@@ -102,12 +101,6 @@ package com.starmaid.Cibele.entities {
         public function startTracking():void {
             this._state = STATE_TRACKING;
             this.visible = false;
-        }
-
-        public function bossFollowPlayer():void {
-            if(!inViewOfPlayer() && this._enemyType == TYPE_BOSS && this.bossHasAppeared) {
-                this.warpToPlayer();
-            }
         }
 
         public function setPlayerRef(p:Player):void{
@@ -236,6 +229,13 @@ package com.starmaid.Cibele.entities {
             this.active = this.isOnscreen();
         }
 
+        public function doState__IDLE():void {
+            this.dir = ZERO_POINT;
+            if (this.closestPartyMemberIsInTrackingRange()) {
+                this.startTracking();
+            }
+        }
+
         override public function update():void{
             super.update();
 
@@ -255,11 +255,7 @@ package com.starmaid.Cibele.entities {
 
             switch(this._state) {
                 case STATE_IDLE:
-                    this.dir = ZERO_POINT;
-                    this.bossFollowPlayer();
-                    if (this.closestPartyMemberIsInTrackingRange()) {
-                        this.startTracking();
-                    }
+                    this.doState__IDLE();
                     break;
 
                 case STATE_TRACKING:

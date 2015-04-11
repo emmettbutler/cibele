@@ -7,6 +7,8 @@ package com.starmaid.Cibele.entities {
     import org.flixel.*;
 
     public class BossEnemy extends Enemy {
+        public var bossHasAppeared:Boolean = false;
+
         public function BossEnemy(pos:DHPoint) {
             super(pos);
             this._enemyType = Enemy.TYPE_BOSS;
@@ -31,9 +33,7 @@ package com.starmaid.Cibele.entities {
         override public function update():void{
             super.update();
 
-            if(this._state == STATE_DEAD) {
-                this.die();
-            } else if (this.hitPoints < 10) {
+            if (this.hitPoints < 10) {
                 this.hitPoints = 200;
             } else if(this._state != STATE_DEAD && this.alpha < 1 && this.bossHasAppeared) {
                 this.alpha += .01;
@@ -44,7 +44,22 @@ package com.starmaid.Cibele.entities {
             this._state = STATE_TRACKING;
         }
 
+        public function bossFollowPlayer():void {
+            if(!this.inViewOfPlayer() && this.bossHasAppeared) {
+                this.warpToPlayer();
+            }
+        }
+
+        override public function doState__IDLE():void {
+            this.dir = ZERO_POINT;
+            this.bossFollowPlayer();
+            if (this.closestPartyMemberIsInTrackingRange()) {
+                this.startTracking();
+            }
+        }
+
         override public function die():void {
+            this._state = STATE_DEAD;
             if(this.alpha > 0) {
                 this.alpha -= .01;
             } else {
