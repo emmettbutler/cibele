@@ -2,6 +2,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.utils.GlobalTimer;
 
     import org.flixel.*;
     import org.flixel.plugin.photonstorm.FlxCollision;
@@ -26,7 +27,7 @@ package com.starmaid.Cibele.states {
         public function startEuryaleConvo():void {
             if(!(FlxG.state is Euryale)) {
             } else {
-                (FlxG.state as Euryale).showFriendEmail();
+                GlobalTimer.getInstance().setMark("show friend email from hall", 10*GameSound.MSEC_PER_SEC, (FlxG.state as Euryale).showFriendEmail);
             }
         }
 
