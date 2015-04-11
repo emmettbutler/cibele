@@ -1,13 +1,22 @@
 package com.starmaid.Cibele.management {
     import org.flixel.*;
 
+    import flash.filesystem.File;
+    import flash.filesystem.FileMode;
+    import flash.filesystem.FileStream;
+
     public class LevelTracker {
         public static const LVL_IT:String = "it";
         public static const LVL_EU:String = "eu";
         public static const LVL_HI:String = "hi";
         private var cur_level:String = LVL_IT;
 
+        private var saveFile:File
+        private static const SAVE_FILE_NAME:String = "cibele_progress";
+
         public function LevelTracker() {
+            this.saveFile = File.applicationStorageDirectory.resolvePath(
+                SAVE_FILE_NAME);
         }
 
         public function get level():String {
@@ -16,6 +25,7 @@ package com.starmaid.Cibele.management {
 
         public function set level(lvl:String):void {
             this.cur_level = lvl;
+            this.saveProgress();
         }
 
         public function it():Boolean {
@@ -28,6 +38,13 @@ package com.starmaid.Cibele.management {
 
         public function hi():Boolean {
             return this.cur_level == LVL_HI;
+        }
+
+        private function saveProgress():void {
+            var str:FileStream = new FileStream();
+            str.open(this.saveFile, FileMode.WRITE);
+            str.writeUTFBytes(this.cur_level);
+            str.close();
         }
     }
 }
