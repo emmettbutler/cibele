@@ -188,17 +188,17 @@ package com.starmaid.Cibele.states {
                     crystal_icon.visible = false;
                 }
                 if (mouse_rect.overlaps(play_game_rect) && play_screen){
-                    if(GameState.cur_level == GameState.LVL_IT) {
+                    if(ScreenManager.getInstance().levelTracker.it()) {
                         FlxG.switchState(new IkuTursoHallway());
-                    } else if(GameState.cur_level == GameState.LVL_EU) {
+                    } else if(ScreenManager.getInstance().levelTracker.eu()) {
                         FlxG.switchState(new EuryaleHallway());
                     }
                 }
                 if (mouse_rect.overlaps(quit_rect) && !play_screen){
                     PopUpManager.GAME_ACTIVE = false;
-                    if(GameState.cur_level == GameState.LVL_IT) {
+                    if(ScreenManager.getInstance().levelTracker.it()) {
                         FlxG.switchState(new IkuTursoDesktop());
-                    } else if(GameState.cur_level == GameState.LVL_EU) {
+                    } else if(ScreenManager.getInstance().levelTracker.eu()) {
                         FlxG.switchState(new EuryaleDesktop());
                     }
                 }

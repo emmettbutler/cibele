@@ -43,14 +43,12 @@ package com.starmaid.Cibele.states {
             player.setBlueShadow();
         }
 
+        public function nextState():void { }
+
         override public function update():void{
             super.update();
             if(player.mapHitbox.overlaps(door_fern)) {
-                if(GameState.cur_level == GameState.LVL_IT) {
-                    FlxG.switchState(new IkuTursoHallway(Hallway.STATE_RETURN));
-                } else if(GameState.cur_level == GameState.LVL_EU) {
-                    FlxG.switchState(new EuryaleHallway(Hallway.STATE_RETURN));
-                }
+                this.nextState();
             }
         }
     }

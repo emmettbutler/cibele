@@ -23,6 +23,8 @@ package com.starmaid.Cibele.management {
         public var MUTE:Boolean = false;
         public var RELEASE:Boolean = true;
 
+        public var levelTracker:LevelTracker;
+
         public var letterbox1:FlxSprite = null, letterbox2:FlxSprite = null, letterbox3:FlxSprite = null, letterbox4:FlxSprite = null;
 
         public static var _instance:ScreenManager = null;
@@ -41,6 +43,7 @@ package com.starmaid.Cibele.management {
 
             FlxG.stage.frameRate = 60;
             //this needs to be set in order to scale using gpu instead of in the software
+
             //needs to be set before put in full screen
             screenWidth = FlxG.stage.fullScreenWidth;
             screenHeight = FlxG.stage.fullScreenHeight;
@@ -66,6 +69,8 @@ package com.starmaid.Cibele.management {
                 (screenHeight - screenHeight/aspect_ratio) / 2);
             zero_point = new FlxPoint((letterbox_dimensions.x),
                                       (letterbox_dimensions.y));
+
+            this.levelTracker = new LevelTracker();
         }
 
         public function calcFullscreenDimensions(aspect:Number=DEFAULT_ASPECT):DHPoint {

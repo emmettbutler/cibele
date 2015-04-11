@@ -37,11 +37,6 @@ package com.starmaid.Cibele.base {
         public static const EVENT_CHAT_RECEIVED:String = "chat_received";
         public static const EVENT_SINGLETILE_BG_LOADED:String = "bg_loaded";
 
-        public static const LVL_IT:String = "it";
-        public static const LVL_EU:String = "eu";
-        public static const LVL_HI:String = "hi";
-        public static var cur_level:String = GameState.LVL_IT;
-
         public function GameState(snd:Boolean=true, popup:Boolean=true,
                                   messages:Boolean=true){
             this.updateSound = snd;

@@ -1,5 +1,7 @@
 package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.PopUpManager;
+    import com.starmaid.Cibele.management.LevelTracker;
+    import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.Emote;
     import com.starmaid.Cibele.entities.BlankScreen;
@@ -31,9 +33,7 @@ package com.starmaid.Cibele.states {
         public static var BGM:String = "euryale bgm loop";
 
         public function Euryale() {
-            if(GameState.cur_level != GameState.LVL_EU) {
-                GameState.cur_level = GameState.LVL_EU;
-            }
+            ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
 
             this.bitDialogueLock = false;
             PopUpManager.GAME_ACTIVE = true;

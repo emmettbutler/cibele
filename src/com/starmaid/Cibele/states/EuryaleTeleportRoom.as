@@ -8,6 +8,10 @@ package com.starmaid.Cibele.states {
             super.create();
         }
 
+        override public function nextState():void {
+            FlxG.switchState(new EuryaleHallway(Hallway.STATE_RETURN));
+        }
+
         override public function update():void{
             super.update();
 
