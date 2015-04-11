@@ -154,7 +154,7 @@ package com.starmaid.Cibele.states {
                     false, 1, GameSound.VOCAL
                 );
                 if(that.boss != null) {
-                    that.boss.dead = true;
+                    that.boss.die();
                 }
             });
         }

@@ -21,16 +21,15 @@ package com.starmaid.Cibele.entities {
                       recoilPower:Number = 3,
                       sightRange:Number = 308,
                       recoilTrackingThreshold:Number = 120;
-        public var dead:Boolean = false;
         protected var pathFollowerRef:PathFollower;
         protected var playerRef:Player;
         private var closestPartyMemberDisp:DHPoint;
         private var disp:DHPoint;
         private var closestPartyMember:PartyMember;
+        private var fade:Boolean = false;
+        private var bar:GameObject;
+        private var originalPos:DHPoint;
         public var footPos:DHPoint;
-        public var fade:Boolean = false;
-        public var bar:GameObject;
-        public var originalPos:DHPoint;
 
         public var _mapnodes:MapNodeContainer;
         public var _path:Path = null;
@@ -66,6 +65,14 @@ package com.starmaid.Cibele.entities {
             this.basePos = new DHPoint(this.x, this.y + this.height);
 
             this.setupSprites();
+        }
+
+        public function isDead():Boolean {
+            return this._state == STATE_DEAD;
+        }
+
+        public function get healthBar():GameObject {
+            return this.bar;
         }
 
         public function setupSprites():void {
@@ -166,7 +173,6 @@ package com.starmaid.Cibele.entities {
                 return;
             }
             // don't destroy() or state.remove() here. doing so breaks z-sorting
-            this.dead = true;
             this.visible = false;
             this.bar.visible = false;
             this._state = STATE_DEAD;
@@ -177,7 +183,6 @@ package com.starmaid.Cibele.entities {
         public function respawn():void {
             if(!this.inViewOfPlayer()) {
                 this.hitPoints = 100;
-                this.dead = false;
                 this.visible = true;
                 this._state = STATE_IDLE;
                 this.x = originalPos.x;

@@ -31,11 +31,11 @@ package com.starmaid.Cibele.entities {
         override public function update():void{
             super.update();
 
-            if(this.dead) {
+            if(this._state == STATE_DEAD) {
                 this.die();
             } else if (this.hitPoints < 10) {
                 this.hitPoints = 200;
-            } else if(!this.dead && this.alpha < 1 && this.bossHasAppeared) {
+            } else if(this._state != STATE_DEAD && this.alpha < 1 && this.bossHasAppeared) {
                 this.alpha += .01;
             }
         }

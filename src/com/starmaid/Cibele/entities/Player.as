@@ -182,7 +182,7 @@ package com.starmaid.Cibele.entities {
                                 this.active_enemy = true;
                                 this.targetEnemy = cur as Enemy;
                                 this.targetEnemy.activeTarget();
-                                if(this.targetEnemy.dead) {
+                                if(this.targetEnemy.isDead()) {
                                     this.targetEnemy = null;
                                 }
                             }
@@ -501,7 +501,7 @@ package com.starmaid.Cibele.entities {
         override public function resolveStatePostAttack():void {
             super.resolveStatePostAttack();
 
-            if (this.targetEnemy != null && !this.targetEnemy.dead)
+            if (this.targetEnemy != null && !this.targetEnemy.isDead())
             {
                 if(this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
@@ -511,7 +511,7 @@ package com.starmaid.Cibele.entities {
                 }
             } else {
                 if (this.targetEnemy != null) {
-                    if (this.targetEnemy.dead) {
+                    if (this.targetEnemy.isDead()) {
                         this.targetEnemy = null;
                     }
                 }

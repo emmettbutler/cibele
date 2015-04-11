@@ -154,7 +154,7 @@ package com.starmaid.Cibele.base {
                         cur = curGroup[k];
                         rect = new FlxRect(cur.x, cur.y, cur.width, cur.height);
                         if (cur is Enemy) {
-                            if (this.mouse_rect.overlaps(rect) && !(cur as Enemy).dead) {
+                            if (this.mouse_rect.overlaps(rect) && !(cur as Enemy).isDead()) {
                                 _on_enemy = true;
                             }
                         }
