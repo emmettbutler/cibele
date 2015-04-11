@@ -22,7 +22,7 @@ package com.starmaid.Cibele.entities {
 
         public var lastStateChangeTime:Number = -1;
 
-        public function Emote(pos:DHPoint,mood:Number,col:Number=GameState.UICOLOR_DEFAULT) {
+        public function Emote(pos:DHPoint,mood:Number,col:Number=0) {
             super(pos);
             if(col == GameState.UICOLOR_DEFAULT) {
                 if(mood == HAPPY) {

@@ -12,7 +12,7 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/ui/enemy_highlight.png")] private var ImgActive:Class;
         [Embed(source="/../assets/images/ui/enemy2_highlight.png")] private var ImgActive2:Class;
 
-        public function IkuTursoEnemy(pos) {
+        public function IkuTursoEnemy(pos:DHPoint) {
             super(pos);
         }
 
