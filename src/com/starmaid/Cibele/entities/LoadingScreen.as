@@ -53,7 +53,7 @@ package com.starmaid.Cibele.entities {
 
         public function slowDialogue():void {
             SoundManager.getInstance().playSound(
-                CibSlow, 2*GameSound.MSEC_PER_SEC, null,
+                CibSlow, 3*GameSound.MSEC_PER_SEC, null,
                 false, 1, GameSound.SFX
             );
         }
