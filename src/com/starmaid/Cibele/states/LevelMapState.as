@@ -25,7 +25,6 @@ package com.starmaid.Cibele.states {
         public var currentTime:Number = -1;
 
         public var bitDialogueLock:Boolean = true;
-        public var bossHasAppeared:Boolean;
 
         public static const LEVEL_ID:int = 2837465;
         public static const NORTH:int = 948409;
@@ -85,12 +84,9 @@ package com.starmaid.Cibele.states {
             this.boss.update();
 
             if (GlobalTimer.getInstance().hasPassed(BOSS_MARK) &&
-                !this.bossHasAppeared && FlxG.state.ID == LevelMapState.LEVEL_ID)
+                !this.boss.hasAppeared() && FlxG.state.ID == LevelMapState.LEVEL_ID)
             {
-                this.bossHasAppeared = true;
-                this.boss.bossHasAppeared = true;
-                this.boss.warpToPlayer();
-                this.boss.visible = true;
+                this.boss.appear();
             }
         }
 

@@ -9,17 +9,18 @@ package com.starmaid.Cibele.entities {
     import org.flixel.*;
 
     public class BossEnemy extends Enemy {
-        public var bossHasAppeared:Boolean = false;
         public var _mapnodes:MapNodeContainer;
         private var _path:Path = null;
         private var targetPathNode:PathNode;
         private var escape_counter:Number = 0;
 
 
+        public static const STATE_PRE_APPEAR:Number = 39485723987;
         public static const STATE_ESCAPE:Number = 5948573;
         public static const STATE_MOVE_TO_PATH_NODE:Number = 693857487;
 
         {
+            stateMap[STATE_PRE_APPEAR] = "STATE_PRE_APPEAR";
             stateMap[STATE_ESCAPE] = "STATE_ESCAPE";
             stateMap[STATE_MOVE_TO_PATH_NODE] = "STATE_MOVE_TO_PATH_NODE";
         }
@@ -34,6 +35,9 @@ package com.starmaid.Cibele.entities {
 
             this.alpha = 0;
 
+            this._state = STATE_PRE_APPEAR;
+            this.visible = false;
+
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.getStateString", "boss.state");
         }
 
@@ -41,6 +45,16 @@ package com.starmaid.Cibele.entities {
 
         public function setPath(path:Path):void {
             this._path = path;
+        }
+
+        public function appear():void {
+            this._state = STATE_IDLE;
+            this.visible = true;
+            this.warpToPlayer();
+        }
+
+        public function hasAppeared():Boolean {
+            return this._state != STATE_PRE_APPEAR;
         }
 
         override public function toggleActive():void {
@@ -54,7 +68,7 @@ package com.starmaid.Cibele.entities {
 
             if (this.hitPoints < 10) {
                 this.hitPoints = 200;
-            } else if(this._state != STATE_DEAD && this.alpha < 1 && this.bossHasAppeared) {
+            } else if(this._state != STATE_DEAD && this.alpha < 1 && this.hasAppeared()) {
                 this.alpha += .01;
             }
 
@@ -100,7 +114,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function bossFollowPlayer():void {
-            if(!this.inViewOfPlayer() && this.bossHasAppeared) {
+            if(!this.inViewOfPlayer() && this.hasAppeared()) {
                 this.warpToPlayer();
             }
         }
