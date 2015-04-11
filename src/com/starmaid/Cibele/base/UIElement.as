@@ -26,6 +26,12 @@ package com.starmaid.Cibele.base {
             this.alerting = false;
         }
 
+        override public function toggleActive():void {
+            if (!this.active) {
+                this.active = true;
+            }
+        }
+
         override public function update():void {
             super.update();
             if (this.alerting) {
