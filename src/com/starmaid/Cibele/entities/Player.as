@@ -30,7 +30,7 @@ package com.starmaid.Cibele.entities {
                     hitboxDim:DHPoint;
         private var click_anim:GameObject, attack_sprite:GameObject;
         private var click_anim_lock:Boolean = false, clickWait:Boolean,
-                    mouseHeld:Boolean = false;
+                    mouseHeld:Boolean = false, attack_sound_lock:Boolean = false;
         private var _bgLoaderRef:BackgroundLoader;
 
         public var colliding:Boolean = false;
@@ -501,6 +501,8 @@ package com.starmaid.Cibele.entities {
             }
             super.resolveStatePostAttack();
 
+            this.attack_sound_lock = false;
+
             if (this.targetEnemy != null && !this.targetEnemy.isDead())
             {
                 if(this.enemyIsInAttackRange(this.targetEnemy)) {
@@ -568,7 +570,10 @@ package com.starmaid.Cibele.entities {
                         playReverseAttack();
                     }, true);
 
-                this.playAttackSound();
+                if (!this.attack_sound_lock) {
+                    this.playAttackSound();
+                    this.attack_sound_lock = true;
+                }
             }
         }
 
