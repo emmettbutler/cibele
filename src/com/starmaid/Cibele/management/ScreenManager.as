@@ -22,6 +22,7 @@ package com.starmaid.Cibele.management {
         public var DEBUG:Boolean = false;
         public var MUTE:Boolean = false;
         public var SAVES:Boolean = true;
+        public var WINDOWED:Boolean = false;
         public var RELEASE:Boolean = true;
 
         private var resizeTimer:Timer;
@@ -43,13 +44,20 @@ package com.starmaid.Cibele.management {
             CONFIG::disable_saves {
                 this.SAVES = false;
             }
+            CONFIG::windowed {
+                this.WINDOWED = true;
+            }
             CONFIG::test {
                 this.RELEASE = false;
             }
 
             FlxG.stage.frameRate = 60;
 
-            this.setupFullscreenMode();
+            if (this.WINDOWED) {
+                this.setupWindowedMode();
+            } else {
+                this.setupFullscreenMode();
+            }
 
             resizeTimer = new Timer(resizeInterval);
             resizeTimer.addEventListener(TimerEvent.TIMER, timerHandler);
@@ -89,6 +97,7 @@ package com.starmaid.Cibele.management {
             FlxG.stage.fullScreenSourceRect = new Rectangle(0, 0, screenWidth,
                                                             screenHeight);
             FlxG.stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+            this.setupCamera(cam != null ? cam.target as GameObject : null);
         }
 
         private function setupWindowedMode():void {
@@ -101,7 +110,7 @@ package com.starmaid.Cibele.management {
             screenHeight = FlxG.stage.nativeWindow.height;
             FlxG.width = screenWidth;
             FlxG.height = screenHeight;
-            this.setupCamera(cam.target as GameObject);
+            this.setupCamera(cam != null ? cam.target as GameObject : null);
         }
 
         private function resizeHandler(e:Event):void {
