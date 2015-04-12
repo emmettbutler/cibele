@@ -12,7 +12,7 @@ package com.starmaid.Cibele.base {
         private var callbackLock:Boolean = false;
         public var stopped:Boolean = false;
         public var endCallback:Function = null;
-        public var virtualVolume:Number, dur:Number;
+        public var virtualVolume:Number, dur:Number, baseVolume:Number;
         public var running:Boolean = false;
 
         public static const VOCAL:Number = 0;
@@ -36,6 +36,7 @@ package com.starmaid.Cibele.base {
             }
             this.name = name;
             this.virtualVolume = _vol;
+            this.baseVolume = _vol;
             this._type = _kind;
             this.dur = dur;
             this.running = true;
@@ -102,6 +103,10 @@ package com.starmaid.Cibele.base {
 
         public function fadeOutSound():void {
             this.soundObject.volume -= .005;
+        }
+
+        public function curVolume():Number {
+            return this.soundObject.volume;
         }
 
         public function defaultEnd():void { }

@@ -13,7 +13,13 @@ package com.starmaid.Cibele.management {
         public var ducking:Boolean = false;
 
         public static const VOLUME_STEP:Number = .1;
-        public static const DUCK_STEP:Number = .05;
+        public static const DUCK_LEVEL:Number = .05;
+        public static const DUCK_STEP:Number = .001;
+        public static const DUCK_FADE:Number = 0;
+        public static const UNDUCK_FADE:Number = 1;
+        public static const STATE_NULL:Number = -1;
+
+        public var _state:Number = STATE_NULL;
 
         public function SoundManager() {
             this.runningSounds = new Array();
@@ -37,7 +43,7 @@ package com.starmaid.Cibele.management {
             var _callback:Function = function():void {
                 if (this._type == GameSound.VOCAL) {
                     if (ducking) {
-                        unduckMusic();
+                        _state = UNDUCK_FADE;
                         ducking = false;
                     }
                 }
@@ -51,7 +57,7 @@ package com.starmaid.Cibele.management {
             this.runningSounds.push(newSound);
             if (_kind == GameSound.VOCAL && !this.ducking) {
                 this.ducking = true;
-                this.duckMusic();
+                this._state = DUCK_FADE;
             }
             if (this.ducking && (_kind == GameSound.BGM || duck)) {
                 newSound.decreaseVolume(DUCK_STEP);
@@ -64,21 +70,35 @@ package com.starmaid.Cibele.management {
 
         public function duckMusic():void {
             var cur:GameSound
+            var ducked_sound:GameSound;
             for(var i:int = 0; i < this.runningSounds.length; i++) {
                 cur = this.runningSounds[i];
                 if ((cur.ducks || cur._type == GameSound.BGM) && !cur.fading) {
-                    this.runningSounds[i].decreaseVolume(DUCK_STEP);
+                    if(this.runningSounds[i].curVolume() > DUCK_LEVEL) {
+                        this.runningSounds[i].decreaseVolume(DUCK_STEP);
+                    }
+                    ducked_sound = cur;
                 }
+            }
+            if(ducked_sound.curVolume() <= DUCK_LEVEL) {
+                this._state = STATE_NULL;
             }
         }
 
         public function unduckMusic():void {
             var cur:GameSound
+            var ducked_sound:GameSound;
             for(var i:int = 0; i < this.runningSounds.length; i++) {
                 cur = this.runningSounds[i];
                 if ((cur.ducks || cur._type == GameSound.BGM) && !cur.fading) {
-                    this.runningSounds[i].increaseVolume(DUCK_STEP);
+                    if(this.runningSounds[i].curVolume() < this.runningSounds[i].baseVolume) {
+                        this.runningSounds[i].increaseVolume(DUCK_STEP);
+                    }
+                    ducked_sound = cur;
                 }
+            }
+            if(ducked_sound.curVolume() >= ducked_sound.baseVolume) {
+                this._state = STATE_NULL;
             }
         }
 
@@ -90,6 +110,15 @@ package com.starmaid.Cibele.management {
                 if (snd.dur != 0 && GlobalTimer.getInstance().hasPassed(snd.name)) {
                     this.stopSound(snd);
                 }
+            }
+
+            switch(this._state) {
+                case DUCK_FADE:
+                    this.duckMusic();
+                    break;
+                case UNDUCK_FADE:
+                    this.unduckMusic();
+                    break;
             }
         }
 
