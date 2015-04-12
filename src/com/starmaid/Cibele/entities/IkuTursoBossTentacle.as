@@ -53,6 +53,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function appear():void {
+            if (this.scale == null) {
+                return;
+            }
             this._state = STATE_APPEARING;
             this.play("appear");
             this.visible = true;
@@ -66,6 +69,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function enterSteadyState():void {
+            if (this.scale == null) {
+                return;
+            }
             this._state = STATE_STEADY;
             this.play("steady");
 
@@ -77,6 +83,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function leaveSteadyState():void {
+            if (this.scale == null) {
+                return;
+            }
             this._state = STATE_DISAPPEARING;
             this.play("disappear");
 
@@ -88,6 +97,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function makeInactive():void {
+            if (this.scale == null) {
+                return;
+            }
             this._state = STATE_NULL;
             this.visible = false;
         }
