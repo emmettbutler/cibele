@@ -201,7 +201,7 @@ package com.starmaid.Cibele.entities {
             }
 
             this.initWalk(worldPos);
-            if (this.targetEnemy != null) {
+            if (this.targetEnemy != null && !this.targetEnemy.isDead()) {
                 this._state = STATE_MOVE_TO_ENEMY;
                 this.targetEnemy.activeTarget();
             }
