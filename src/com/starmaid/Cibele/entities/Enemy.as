@@ -203,7 +203,7 @@ package com.starmaid.Cibele.entities {
             // TODO - cap hitPoints at some reasonable value
             this.hitPoints = Math.max(0, this.hitPoints);
             this.setAuxPositions();
-            if(this.hitPoints >= 0){
+            if(this.hitPoints <= 0){
                 this.die();
             }
 
