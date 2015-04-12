@@ -86,6 +86,8 @@ package com.starmaid.Cibele.base {
             CONFIG::debug {
                 this.fpsCounter = new FPSCounter();
             }
+
+            this.game_cursor = new GameCursor();
         }
 
         public function postCreate():void {
@@ -109,7 +111,7 @@ package com.starmaid.Cibele.base {
                 DebugConsoleManager.getInstance().addVisibleObjects();
             }
 
-            this.game_cursor = new GameCursor();
+            this.game_cursor.addCursorSprites();
         }
 
         public function loadingScreenEndCallback():void { }
