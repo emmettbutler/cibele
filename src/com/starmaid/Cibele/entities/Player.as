@@ -182,6 +182,8 @@ package com.starmaid.Cibele.entities {
                                 prevTargetEnemy = this.targetEnemy;
                                 this.targetEnemy = cur as Enemy;
                             }
+                        } else {
+                            (cur as Enemy).inactiveTarget();
                         }
                     }
                 }
@@ -201,7 +203,7 @@ package com.starmaid.Cibele.entities {
             }
 
             this.initWalk(worldPos);
-            if (this.targetEnemy != null && !this.targetEnemy.isDead()) {
+            if (got_enemy && this.targetEnemy != null && !this.targetEnemy.isDead()) {
                 this._state = STATE_MOVE_TO_ENEMY;
                 this.targetEnemy.activeTarget();
             }
