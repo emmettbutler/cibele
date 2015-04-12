@@ -95,6 +95,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function takeDamage(p:PartyMember):void{
+            if (this.isDead()) {
+                return;
+            }
             this._state = STATE_RECOIL;
             this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
             this.hitPoints -= this.hitDamage;
@@ -102,7 +105,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function activeTarget():void {
-            if (this._healthBar == null) {
+            if (this._healthBar == null || this.isDead()) {
                 return;
             }
             this._healthBar.visible = true;

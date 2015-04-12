@@ -128,6 +128,9 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function takeDamage(p:PartyMember):void{
+            if (this.isDead()) {
+                return;
+            }
             this.hitPoints -= this.hitDamage;
             this.healthBar.scale.x = this.hitPoints;
             if (!this.isEscaping()) {
