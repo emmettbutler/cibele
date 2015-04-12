@@ -152,7 +152,7 @@ package com.starmaid.Cibele.states {
 
         public function killBoss():void {
             if(this.boss != null) {
-                this.boss.dead = true;
+                this.boss.die();
             }
         }
 
