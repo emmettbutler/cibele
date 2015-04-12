@@ -64,9 +64,11 @@ package com.starmaid.Cibele.management {
                     cur = this.tiles[i][j];
                     cur.update();
                     if (cur.pos.y >= front) {
-                        GlobalTimer.getInstance().setMark(GameState.cur_level + "_appear_" + i + "_" + j,
+                        GlobalTimer.getInstance().setMark(
+                            ScreenManager.getInstance().levelTracker.level + "_appear_" + i + "_" + j,
                             .01*GameSound.MSEC_PER_SEC*Math.random()*50,
-                            cur.appear);
+                            cur.appear
+                        );
                         this.rowLoads[i] = true;
                     }
                 }
@@ -76,9 +78,10 @@ package com.starmaid.Cibele.management {
                         cur = row[j];
                         if(Math.random() * 2 > 1) {
                             GlobalTimer.getInstance().setMark(
-                                GameState.cur_level + "_appear_" + i + "_" + j,
+                                ScreenManager.getInstance().levelTracker.level + "_appear_" + i + "_" + j,
                                 .01*GameSound.MSEC_PER_SEC*Math.random()*50,
-                                cur.appear);
+                                cur.appear
+                            );
                             this.rowLoads[i] = true;
                         }
                     }

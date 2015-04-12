@@ -30,6 +30,10 @@ package com.starmaid.Cibele.states {
             super.update();
         }
 
+        override public function nextState():void {
+            FlxG.switchState(new IkuTursoTeleportRoom());
+        }
+
         public function firstConvo():void {
             if(!(FlxG.state is IkuTurso)) {
             } else {

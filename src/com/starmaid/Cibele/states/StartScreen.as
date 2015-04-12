@@ -2,6 +2,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.states.IkuTursoDesktop;
+    import com.starmaid.Cibele.states.EuryaleDesktop;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameState;
 
@@ -28,11 +29,20 @@ package com.starmaid.Cibele.states {
         }
 
         public function startGame():void {
-            function _innerCallback():void {
-                FlxG.switchState(new IkuTursoDesktop());
+            ScreenManager.getInstance().levelTracker.loadProgress();
+
+            if(ScreenManager.getInstance().levelTracker.it()) {
+                FlxG.switchState(
+                    new PlayVideoState(
+                        "/../assets/video/computer_open.flv",
+                        function ():void {
+                            FlxG.switchState(new IkuTursoDesktop());
+                        }
+                    ));
+            } else if(ScreenManager.getInstance().levelTracker.eu()) {
+                FlxG.switchState(new EuryaleDesktop());
+            } else if(ScreenManager.getInstance().levelTracker.hi()) {
             }
-            FlxG.switchState(new PlayVideoState("/../assets/video/computer_open.flv",
-                                                _innerCallback));
         }
 
         override public function update():void{

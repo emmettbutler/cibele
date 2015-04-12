@@ -147,14 +147,12 @@ package com.starmaid.Cibele.states {
 
             for (var i:int = 0; i < loader.doors.length; i++) {
                 if(player.mapHitbox.overlaps(loader.doors[i]["object"])){
-                    if(GameState.cur_level == GameState.LVL_IT) {
-                        FlxG.switchState(new IkuTursoTeleportRoom());
-                    } else if(GameState.cur_level == GameState.LVL_EU) {
-                        FlxG.switchState(new EuryaleTeleportRoom());
-                    }
+                    this.nextState();
                 }
             }
         }
+
+        public function nextState():void { }
 
         public function getCollisionData(wall:GameObject):Array {
             return FlxCollision.pixelPerfectCheck(player.mapHitbox, wall, 255, FlxG.camera, 30, 30, ScreenManager.getInstance().DEBUG);

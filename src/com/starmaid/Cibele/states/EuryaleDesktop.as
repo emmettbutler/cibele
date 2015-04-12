@@ -5,6 +5,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.management.FolderBuilder;
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.management.PopUpManager;
 
     public class EuryaleDesktop extends Desktop {
@@ -35,9 +36,7 @@ package com.starmaid.Cibele.states {
 
 
         public function EuryaleDesktop() {
-            if(GameState.cur_level != GameState.LVL_EU) {
-                GameState.cur_level = GameState.LVL_EU;
-            }
+            ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
         }
 
         override public function create():void {

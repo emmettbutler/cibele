@@ -24,6 +24,10 @@ package com.starmaid.Cibele.states {
             super.update();
         }
 
+        override public function nextState():void {
+            FlxG.switchState(new EuryaleTeleportRoom());
+        }
+
         public function startEuryaleConvo():void {
             if(!(FlxG.state is Euryale)) {
             } else {

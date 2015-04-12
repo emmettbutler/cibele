@@ -4,6 +4,7 @@ package com.starmaid.Cibele.states {
     import flash.utils.Dictionary;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.management.FolderBuilder;
+    import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.management.ScreenManager;
 
     public class IkuTursoDesktop extends Desktop {
@@ -44,9 +45,7 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/mom_icon.png")] private var ImgMomIcon:Class;
 
         public function IkuTursoDesktop() {
-            if(GameState.cur_level != GameState.LVL_IT) {
-                GameState.cur_level = GameState.LVL_IT;
-            }
+            ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_IT;
         }
 
         override public function create():void {

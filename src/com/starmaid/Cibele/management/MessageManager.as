@@ -167,11 +167,11 @@ package com.starmaid.Cibele.management {
         }
 
         public function setCurrentThreads():void {
-            if (GameState.cur_level == GameState.LVL_IT) {
+            if (ScreenManager.getInstance().levelTracker.it()) {
                 this.threads = this.it_threads;
-            } else if (GameState.cur_level == GameState.LVL_EU) {
+            } else if (ScreenManager.getInstance().levelTracker.eu()) {
                 this.threads = this.eu_threads;
-            } else if (GameState.cur_level == GameState.LVL_HI) {
+            } else if (ScreenManager.getInstance().levelTracker.hi()) {
                 this.threads = this.hi_threads;
             }
         }
