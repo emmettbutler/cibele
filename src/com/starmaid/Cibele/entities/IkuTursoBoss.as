@@ -58,6 +58,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function addTentacle():void {
+            if (!FlxG.state is LevelMapState) {
+                return;
+            }
             var tentacle:IkuTursoBossTentacle;
             tentacle = this.getAvailableTentacle();
             if (tentacle != null) {
