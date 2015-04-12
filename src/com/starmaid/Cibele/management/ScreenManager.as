@@ -80,6 +80,7 @@ package com.starmaid.Cibele.management {
                 this.fullscreen = true;
                 this.setupFullscreenMode();
             }
+            (FlxG.state as GameState).handleResize();
         }
 
         private function setupFullscreenMode():void {
@@ -92,8 +93,10 @@ package com.starmaid.Cibele.management {
 
         private function setupWindowedMode():void {
             FlxG.stage.displayState = StageDisplayState.NORMAL;
-            FlxG.stage.nativeWindow.width = 1000;
-            FlxG.stage.nativeWindow.height = 700;
+            FlxG.stage.nativeWindow.width = FlxG.stage.fullScreenWidth;
+            FlxG.stage.nativeWindow.height = FlxG.stage.fullScreenHeight - 100;
+            FlxG.stage.nativeWindow.x = 0;
+            FlxG.stage.nativeWindow.y = 0;
             screenWidth = FlxG.stage.nativeWindow.width;
             screenHeight = FlxG.stage.nativeWindow.height;
             FlxG.width = screenWidth;
@@ -118,6 +121,7 @@ package com.starmaid.Cibele.management {
             FlxG.width = screenWidth;
             FlxG.height = screenHeight;
             this.setupCamera(cam.target as GameObject);
+            (FlxG.state as GameState).handleResize();
         }
 
         public function calcFullscreenDimensions(aspect:Number=DEFAULT_ASPECT):DHPoint {
