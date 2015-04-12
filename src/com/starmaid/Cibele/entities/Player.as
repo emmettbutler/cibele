@@ -368,16 +368,16 @@ package com.starmaid.Cibele.entities {
             this.attack_sprite.x = this.x;
             this.attack_sprite.y = this.y - 45;
 
-            if(this.text_facing == "left") {
+            if(this.facing == LEFT) {
                 this.shadow_sprite.x = this.pos.center(this).x - 15;
                 this.shadow_sprite.y = this.pos.center(this).y + 50;
-            } else if(this.text_facing == "right") {
+            } else if(this.facing == RIGHT) {
                 this.shadow_sprite.x = this.pos.center(this).x - 60;
                 this.shadow_sprite.y = this.pos.center(this).y + 50;
-            } else if(this.text_facing == "up") {
+            } else if(this.facing == UP) {
                 this.shadow_sprite.x = this.pos.center(this).x - 35;
                 this.shadow_sprite.y = this.pos.center(this).y + 50;
-            } else if(this.text_facing == "down") {
+            } else if(this.facing == DOWN) {
                 this.shadow_sprite.x = this.pos.center(this).x - 35;
                 this.shadow_sprite.y = this.pos.center(this).y + 50;
             }
@@ -518,13 +518,13 @@ package com.starmaid.Cibele.entities {
         }
 
         public function setIdleAnim():void {
-            if(this.text_facing == "up") {
+            if(this.facing == UP) {
                 this.play("idle_u");
-            } else if(this.text_facing == "down") {
+            } else if(this.facing == DOWN) {
                 this.play("idle_d");
-            } else if(this.text_facing == "left") {
+            } else if(this.facing == LEFT) {
                 this.play("idle_l");
-            } else if(this.text_facing == "right") {
+            } else if(this.facing == RIGHT) {
                 this.play("idle_r");
             }
         }
