@@ -30,7 +30,7 @@ package com.starmaid.Cibele.entities {
                     hitboxDim:DHPoint;
         private var click_anim:GameObject, attack_sprite:GameObject;
         private var click_anim_lock:Boolean = false, clickWait:Boolean,
-                    active_enemy:Boolean = false, mouseHeld:Boolean = false;
+                    mouseHeld:Boolean = false, attack_sound_lock:Boolean = false;
         private var _bgLoaderRef:BackgroundLoader;
 
         public var colliding:Boolean = false;
@@ -141,11 +141,17 @@ package com.starmaid.Cibele.entities {
             return this.finalTarget;
         }
 
+        override public function toggleActive():void {
+            if (!this.active) {
+                this.active = true;
+            }
+        }
+
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint,
                                       group:Array=null):void
         {
-            this.targetEnemy = null;
-            var ui_clicked:Boolean = false;
+            var ui_clicked:Boolean = false, got_enemy:Boolean = false,
+                prevTargetEnemy:Enemy = null;
 
             if (group != null) {
                 var cur:GameObject, screenRect:FlxRect, worldRect:FlxRect;
@@ -165,24 +171,19 @@ package com.starmaid.Cibele.entities {
                         cur is UIElement && cur.visible)
                     {
                         ui_clicked = true;
-                        this.active_enemy = false;
                         this.playUIGeneralSFX();
                     } else if (cur is Enemy) {
                         if(this._state == STATE_IN_ATTACK) {
                             return;
                         }
-                        if (mouseWorldRect.overlaps(worldRect)) {
-                            if(!this.active_enemy && this.targetEnemy == null) {
-                                this.active_enemy = true;
+                        if (mouseWorldRect.overlaps(worldRect) && !(cur as Enemy).isDead()) {
+                            if(!got_enemy) {
+                                got_enemy = true;
+                                prevTargetEnemy = this.targetEnemy;
                                 this.targetEnemy = cur as Enemy;
-                                this.targetEnemy.activeTarget();
-                                if(this.targetEnemy.dead) {
-                                    this.targetEnemy = null;
-                                }
                             }
                         } else {
                             (cur as Enemy).inactiveTarget();
-                            this.active_enemy = false;
                         }
                     }
                 }
@@ -202,8 +203,12 @@ package com.starmaid.Cibele.entities {
             }
 
             this.initWalk(worldPos);
-            if (this.targetEnemy != null) {
+            if (got_enemy && this.targetEnemy != null && !this.targetEnemy.isDead()) {
                 this._state = STATE_MOVE_TO_ENEMY;
+                this.targetEnemy.activeTarget();
+            }
+            if (prevTargetEnemy != null) {
+                prevTargetEnemy.inactiveTarget();
             }
 
             this.clickWait = true;
@@ -493,9 +498,14 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function resolveStatePostAttack():void {
+            if (!(FlxG.state is LevelMapState)) {
+                return;
+            }
             super.resolveStatePostAttack();
 
-            if (this.targetEnemy != null && !this.targetEnemy.dead)
+            this.attack_sound_lock = false;
+
+            if (this.targetEnemy != null && !this.targetEnemy.isDead())
             {
                 if(this.enemyIsInAttackRange(this.targetEnemy)) {
                     this._state = STATE_AT_ENEMY;
@@ -505,7 +515,7 @@ package com.starmaid.Cibele.entities {
                 }
             } else {
                 if (this.targetEnemy != null) {
-                    if (this.targetEnemy.dead) {
+                    if (this.targetEnemy.isDead()) {
                         this.targetEnemy = null;
                     }
                 }
@@ -562,7 +572,10 @@ package com.starmaid.Cibele.entities {
                         playReverseAttack();
                     }, true);
 
-                this.playAttackSound();
+                if (!this.attack_sound_lock) {
+                    this.playAttackSound();
+                    this.attack_sound_lock = true;
+                }
             }
         }
 

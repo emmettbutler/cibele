@@ -39,7 +39,6 @@ package com.starmaid.Cibele.states {
             PopUpManager.GAME_ACTIVE = true;
 
             GlobalTimer.getInstance().deleteMark(BOSS_MARK);
-            this.bossHasAppeared = false;
 
             this.conversationCounter = -1;
 

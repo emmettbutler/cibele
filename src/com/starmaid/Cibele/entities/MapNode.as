@@ -40,6 +40,12 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        override public function toggleActive():void {
+            if (this.active) {
+                this.active = false;
+            }
+        }
+
         public function setAStarMeasures(g:Number, h:Number):void {
             this.g = g;
             this.h = h;

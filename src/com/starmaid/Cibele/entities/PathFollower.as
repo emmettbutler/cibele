@@ -214,9 +214,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function setTargetEnemy():void {
-            if (this._bossRef != null && this._bossRef.bossHasAppeared) {
+            if (this._bossRef != null && this._bossRef.hasAppeared()) {
                 this.targetEnemy = this._bossRef;
-            } else if(this.playerIsAttacking() && !this.playerRef.targetEnemy.dead) {
+            } else if(this.playerIsAttacking() && !this.playerRef.targetEnemy.isDead()) {
                 this.targetEnemy = this.playerRef.targetEnemy;
             } else {
                 this.targetEnemy = this.setClosestEnemy();
@@ -271,8 +271,10 @@ package com.starmaid.Cibele.entities {
             }
         }
 
-        override public function toggleActive(player:Player):void {
-            this.active = true;
+        override public function toggleActive():void {
+            if (!this.active) {
+                this.active = true;
+            }
         }
 
         public function updateFinalTarget():void {
@@ -403,7 +405,7 @@ package com.starmaid.Cibele.entities {
             for (var i:int = 0; i < this._enemies.length(); i++) {
                 cur = this._enemies.get_(i);
                 en_disp = cur.pos.sub(this.pos)._length();
-                if (en_disp < shortest && !cur.dead) {
+                if (en_disp < shortest && !cur.isDead()) {
                     shortest = en_disp;
                     ret = cur;
                 }

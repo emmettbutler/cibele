@@ -173,14 +173,17 @@ package com.starmaid.Cibele.base {
                     this.sortedObjects.push(members[i]);
                 }
                 basic = members[i++] as GameObject;
-                if(basic != null && basic.active && basic.exists && basic.scale != null) {
-                    if ((GlobalTimer.getInstance().isPaused() &&
-                         !basic.observeGlobalPause) ||
-                        !GlobalTimer.getInstance().isPaused())
-                    {
-                        basic.preUpdate();
-                        basic.update();
-                        basic.postUpdate();
+                if (basic != null) {
+                    basic.toggleActive();
+                    if(basic.active && basic.exists && basic.scale != null) {
+                        if ((GlobalTimer.getInstance().isPaused() &&
+                            !basic.observeGlobalPause) ||
+                            !GlobalTimer.getInstance().isPaused())
+                        {
+                            basic.preUpdate();
+                            basic.update();
+                            basic.postUpdate();
+                        }
                     }
                 }
             }

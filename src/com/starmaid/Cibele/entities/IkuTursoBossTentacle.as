@@ -37,31 +37,43 @@ package com.starmaid.Cibele.entities {
             this.loadGraphic(ImgBossTentacle, false, false, 435*.2, 1069*.2);
             this.addAnimation("appear",
                               [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-                              frameRate, true);
+                              frameRate, false);
             this.addAnimation("steady", [12, 13, 14, 15, 14, 13], frameRate, true);
             this.addAnimation("disappear",
                               [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
-                              frameRate, true);
+                              frameRate, false);
 
             this._state = STATE_NULL;
             this.visible = false;
             this.slug = "tentacle_" + (Math.random() * 100000).toString();
         }
 
+        override public function toggleActive():void {
+            this.active = this.isOnscreen();
+        }
+
         public function appear():void {
+            if (this.scale == null) {
+                return;
+            }
             this._state = STATE_APPEARING;
+            this.play("appear");
             this.visible = true;
             this.slug = "tentacle_" + (Math.random() * 100000).toString();
 
             GlobalTimer.getInstance().setMark(
                 "tentacle_has_appeared_" + this.slug,
-                1*GameSound.MSEC_PER_SEC,
+                .8*GameSound.MSEC_PER_SEC,
                 this.enterSteadyState
             );
         }
 
         public function enterSteadyState():void {
+            if (this.scale == null) {
+                return;
+            }
             this._state = STATE_STEADY;
+            this.play("steady");
 
             GlobalTimer.getInstance().setMark(
                 "tentacle_lifetime_end_" + this.slug,
@@ -71,16 +83,23 @@ package com.starmaid.Cibele.entities {
         }
 
         public function leaveSteadyState():void {
+            if (this.scale == null) {
+                return;
+            }
             this._state = STATE_DISAPPEARING;
+            this.play("disappear");
 
             GlobalTimer.getInstance().setMark(
                 "tentacle_has_disappeared_" + this.slug,
-                1*GameSound.MSEC_PER_SEC,
+                .8*GameSound.MSEC_PER_SEC,
                 this.makeInactive
             );
         }
 
         public function makeInactive():void {
+            if (this.scale == null) {
+                return;
+            }
             this._state = STATE_NULL;
             this.visible = false;
         }
@@ -93,14 +112,6 @@ package com.starmaid.Cibele.entities {
 
             if(ScreenManager.getInstance().DEBUG) {
                 this.debugText.text = this._state in IkuTursoBossTentacle.stateMap ? IkuTursoBossTentacle.stateMap[this._state] : "unknown";
-            }
-
-            if(this._state == STATE_STEADY) {
-                this.play("steady");
-            } else if(this._state == STATE_APPEARING){
-                this.play("appear");
-            } else if(this._state == STATE_DISAPPEARING){
-                this.play("disappear");
             }
         }
     }

@@ -53,7 +53,7 @@ package com.starmaid.Cibele.base {
             this.debugText.y = this.pos.y;
         }
 
-        public function toggleActive(player:Player):void {
+        public function toggleActive():void {
             this.active = this.isOnscreen();
         }
 
@@ -70,9 +70,9 @@ package com.starmaid.Cibele.base {
         public function isOnscreen():Boolean {
             var screenPos:DHPoint = new DHPoint(0, 0);
             this.getScreenXY(screenPos);
-            return (screenPos.x < ScreenManager.getInstance().screenWidth &&
-                screenPos.x > 0 && screenPos.y > 0 &&
-                screenPos.y < ScreenManager.getInstance().screenHeight);
+            return (screenPos.x < ScreenManager.getInstance().screenWidth + this.width &&
+                screenPos.x > 0 - this.width && screenPos.y > 0 - this.height &&
+                screenPos.y < ScreenManager.getInstance().screenHeight + this.height);
         }
     }
 }
