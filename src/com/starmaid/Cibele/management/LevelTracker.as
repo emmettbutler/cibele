@@ -46,5 +46,23 @@ package com.starmaid.Cibele.management {
             str.writeUTFBytes(this.cur_level);
             str.close();
         }
+
+        public function loadProgress():void {
+            var str:FileStream = new FileStream();
+            if (!this.saveFile.exists) {
+                return;
+            }
+            str.open(this.saveFile, FileMode.READ);
+            var fileContents:String = str.readUTFBytes(this.saveFile.size);
+            str.close();
+
+            if (fileContents == LVL_IT) {
+                this.cur_level = LVL_IT;
+            } else if (fileContents == LVL_EU) {
+                this.cur_level = LVL_EU;
+            } else if (fileContents == LVL_HI) {
+                this.cur_level = LVL_HI;
+            }
+        }
     }
 }
