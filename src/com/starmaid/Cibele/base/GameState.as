@@ -111,13 +111,6 @@ package com.starmaid.Cibele.base {
 
         public function loadingScreenEndCallback():void { }
 
-        public function handleResize():void {
-            // TODO - move UI elements that need to be moved
-            // maybe do this automatically in an update loop in
-            // managers instead of in this callback
-            // ......or maybe not
-        }
-
         public function updateCursor():void {
             if (this.game_cursor != null) {
                 this.game_cursor.update();

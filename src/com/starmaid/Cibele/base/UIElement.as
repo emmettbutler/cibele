@@ -6,12 +6,12 @@ package com.starmaid.Cibele.base {
     import org.flixel.*;
 
     public class UIElement extends GameObject {
-        private var anchor:DHPoint;
+        private var _anchor:DHPoint;
         public var alerting:Boolean = false;
 
         public function UIElement(x:Number, y:Number) {
-            this.anchor = new DHPoint(x, y);
-            super(this.anchor);
+            this._anchor = new DHPoint(x, y);
+            super(this._anchor);
         }
 
         public static function fromPoint(pos:DHPoint):UIElement {
@@ -26,6 +26,10 @@ package com.starmaid.Cibele.base {
             this.alerting = false;
         }
 
+        public function set anchor(pt:DHPoint):void {
+            this._anchor = pt;
+        }
+
         override public function toggleActive():void {
             if (!this.active) {
                 this.active = true;
@@ -35,9 +39,9 @@ package com.starmaid.Cibele.base {
         override public function update():void {
             super.update();
             if (this.alerting) {
-                this.y = this.anchor.y + 10 * Math.sin(.01 * GlobalTimer.getInstance().pausingTimer());
+                this.y = this._anchor.y + 10 * Math.sin(.01 * GlobalTimer.getInstance().pausingTimer());
             } else {
-                this.y = this.anchor.y;
+                this.y = this._anchor.y;
             }
         }
     }
