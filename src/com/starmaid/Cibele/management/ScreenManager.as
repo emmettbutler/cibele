@@ -118,6 +118,7 @@ package com.starmaid.Cibele.management {
             }
             this.resizeTimer.start();
         }
+
         private function timerHandler(e:Event):void {
             this.resizeTimer.stop();
             this.resizeCompletehandler();
