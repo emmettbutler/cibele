@@ -210,25 +210,23 @@ package com.starmaid.Cibele.management {
             var _screen:ScreenManager = ScreenManager.getInstance();
 
             targetDockY = _screen.screenHeight - 71;
-            if (dock.y != targetDockY) {
-                dock.x = -dockOffset;
-                dock.y = _screen.screenHeight - 71;
+            dock.x = -dockOffset;
+            dock.y = _screen.screenHeight - 71;
 
-                this.game_button.anchor = new DHPoint(dock.x + dockOffset + 10,
-                                                      dock.y - 60);
+            this.game_button.anchor = new DHPoint(dock.x + dockOffset + 10,
+                                                  dock.y - 60);
 
-                this.internet_button.anchor = new DHPoint(
-                    this.game_button.x + this.game_button.width + 30,
-                    dock.y - 50);
+            this.internet_button.anchor = new DHPoint(
+                this.game_button.x + this.game_button.width + 30,
+                dock.y - 50);
 
-                this.file_button.anchor = new DHPoint(
-                    this.internet_button.x + this.internet_button.width + 30,
-                    dock.y - 30);
+            this.file_button.anchor = new DHPoint(
+                this.internet_button.x + this.internet_button.width + 30,
+                dock.y - 30);
 
-                this.photo_button.anchor = new DHPoint(
-                    this.file_button.x + this.file_button.width + 30,
-                    dock.y - 25);
-            }
+            this.photo_button.anchor = new DHPoint(
+                this.file_button.x + this.file_button.width + 30,
+                dock.y - 25);
         }
 
         public function sendPopup(key:String):void {
