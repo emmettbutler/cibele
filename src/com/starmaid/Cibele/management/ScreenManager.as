@@ -21,6 +21,7 @@ package com.starmaid.Cibele.management {
         // global debug flag
         public var DEBUG:Boolean = false;
         public var MUTE:Boolean = false;
+        public var SAVES:Boolean = true;
         public var RELEASE:Boolean = true;
 
         public var levelTracker:LevelTracker;
@@ -36,6 +37,9 @@ package com.starmaid.Cibele.management {
             }
             CONFIG::mute {
                 this.MUTE = true;
+            }
+            CONFIG::disable_saves {
+                this.SAVES = false;
             }
             CONFIG::test {
                 this.RELEASE = false;

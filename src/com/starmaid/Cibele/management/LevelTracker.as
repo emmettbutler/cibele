@@ -49,7 +49,7 @@ package com.starmaid.Cibele.management {
 
         public function loadProgress():void {
             var str:FileStream = new FileStream();
-            if (!this.saveFile.exists) {
+            if (!ScreenManager.getInstance().SAVES || !this.saveFile.exists) {
                 return;
             }
             str.open(this.saveFile, FileMode.READ);
