@@ -265,7 +265,11 @@ package com.starmaid.Cibele.base {
             } else if (FlxG.keys.justPressed("O")) {
                 SoundManager.getInstance().decreaseVolume();
             } else if (FlxG.keys.justPressed("ESCAPE")) {
-                this.pause();
+                if (GlobalTimer.getInstance().isPaused()) {
+                    this.resume();
+                } else {
+                    this.pause();
+                }
             }
         }
 
@@ -325,6 +329,12 @@ package com.starmaid.Cibele.base {
         public function pause():void {
             GlobalTimer.getInstance().pause();
             SoundManager.getInstance().pause();
+            this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
+        }
+
+        public function resume():void {
+            GlobalTimer.getInstance().resume();
+            SoundManager.getInstance().resume();
             this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
         }
 

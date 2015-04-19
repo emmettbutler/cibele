@@ -99,6 +99,12 @@ package com.starmaid.Cibele.management {
             }
         }
 
+        public function resume():void {
+            for(var i:int = 0; i < this.runningSounds.length; i++) {
+                this.runningSounds[i].resume();
+            }
+        }
+
         public function clearSoundsByType(_kind:Number):void {
             for(var i:int = 0; i < this.runningSounds.length; i++) {
                 if(this.runningSounds[i]._type == _kind) {

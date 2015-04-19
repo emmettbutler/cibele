@@ -168,7 +168,7 @@ package com.starmaid.Cibele.management {
         }
 
         public function onFocus(e:Event):void {
-            (FlxG.state as GameState).pause();
+            (FlxG.state as GameState).resume();
         }
 
         public function onFocusLost(e:Event):void {

@@ -61,19 +61,22 @@ package com.starmaid.Cibele.utils {
             return false;
         }
 
+        public function resume():void {
+            var cur:Number = new Date().valueOf();
+            this.totalPausedTime += cur - this.pauseStart;
+            for (var key:Object in this.marks) {
+                this.marks[key].pause(cur, this.pauseStart);
+            }
+            this.paused = false;
+        }
+
         public function pause():void {
             var cur:Number = new Date().valueOf();
-            if (!this.paused) {
-                this.pauseStart = cur;
-            } else {
-                this.totalPausedTime += cur - this.pauseStart;
-            }
-
+            this.pauseStart = cur;
             for (var key:Object in this.marks) {
-                this.marks[key].pause(cur, this.paused ? this.pauseStart : -1);
+                this.marks[key].pause(cur, -1);
             }
-
-            this.paused = !this.paused;
+            this.paused = true;
         }
 
         public function pausingTimer():Number {

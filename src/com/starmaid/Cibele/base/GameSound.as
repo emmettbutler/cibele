@@ -9,7 +9,7 @@ package com.starmaid.Cibele.base {
         public var name:String;
         public var embeddedSound:Class;
         private var soundObject:FlxSound;
-        private var callbackLock:Boolean = false;
+        private var callbackLock:Boolean = false, paused:Boolean = false;
         public var stopped:Boolean = false;
         public var endCallback:Function = null;
         public var virtualVolume:Number, dur:Number;
@@ -52,7 +52,7 @@ package com.starmaid.Cibele.base {
             if (!ScreenManager.getInstance().MUTE) {
                 soundObject.play();
                 if (GlobalTimer.getInstance().isPaused()) {
-                    soundObject.pause();
+                    this.pause();
                 }
             }
         }
@@ -72,11 +72,15 @@ package com.starmaid.Cibele.base {
         }
 
         public function pause():void {
-            if (!GlobalTimer.getInstance().isPaused()) {
-                this.soundObject.resume();
-            } else {
+            if (!this.paused) {
                 this.soundObject.pause();
+                this.paused = true;
             }
+        }
+
+        public function resume():void {
+            this.soundObject.resume();
+            this.paused = false;
         }
 
         public function update():void {
