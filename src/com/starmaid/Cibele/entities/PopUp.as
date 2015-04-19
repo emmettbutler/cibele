@@ -52,6 +52,12 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        public function updatePos():void {
+            var _screen:ScreenManager = ScreenManager.getInstance();
+            this.x = _screen.screenWidth - this.width - 100;
+            this.y = _screen.screenHeight * .1;
+        }
+
         public function open():void {
             this.visible = true;
         }

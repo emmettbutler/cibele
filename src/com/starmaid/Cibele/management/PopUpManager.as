@@ -227,6 +227,10 @@ package com.starmaid.Cibele.management {
             this.photo_button.anchor = new DHPoint(
                 this.file_button.x + this.file_button.width + 30,
                 dock.y - 25);
+
+            for (var key:Object in this.popups) {
+                this.popups[key].updatePos();
+            }
         }
 
         public function sendPopup(key:String):void {
