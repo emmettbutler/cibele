@@ -49,12 +49,12 @@ package com.starmaid.Cibele.states {
 
             function _musicCallback():void {
                 SoundManager.getInstance().playSound(FernBGMLoop, 0, null,
-                    true, .15, GameSound.BGM, Hallway.BGM, false, false, true);
+                    true, .15, GameSound.BGM, Hallway.BGM, false, false, SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL));
             }
             SoundManager.getInstance().playSound(
                 FernBGMIntro, 12.4*GameSound.MSEC_PER_SEC, _musicCallback,
                 false, .15, Math.random()*932+102, Hallway.BGM, false,
-                false, true);
+                false, SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL));
 
             _screen = ScreenManager.getInstance();
 

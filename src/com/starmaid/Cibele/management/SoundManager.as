@@ -55,12 +55,13 @@ package com.starmaid.Cibele.management {
                                                    _vol, _kind, name, fadeIn,
                                                    fadeOut, _callback, duck);
             this.runningSounds.push(newSound);
+            FlxG.log(this.ducking);
             if (_kind == GameSound.VOCAL && !this.ducking) {
                 this.ducking = true;
                 this._state = DUCK_FADE;
             }
             if (this.ducking && (_kind == GameSound.BGM || duck)) {
-                newSound.decreaseVolume(DUCK_STEP);
+                newSound.decreaseVolume(DUCK_LEVEL);
             }
 
             GlobalTimer.getInstance().setMark(name, dur);
@@ -76,11 +77,14 @@ package com.starmaid.Cibele.management {
                 if ((cur.ducks || cur._type == GameSound.BGM) && !cur.fading) {
                     if(this.runningSounds[i].curVolume() > DUCK_LEVEL) {
                         this.runningSounds[i].decreaseVolume(DUCK_STEP);
+                        FlxG.log("duck" + Math.random());
                     }
                     ducked_sound = cur;
                 }
             }
-            if(ducked_sound.curVolume() <= DUCK_LEVEL) {
+            if(!this.soundOfTypeIsPlaying(GameSound.BGM)) {
+                this._state = STATE_NULL;
+            } else if(ducked_sound.curVolume() <= DUCK_LEVEL) {
                 this._state = STATE_NULL;
             }
         }
@@ -93,11 +97,14 @@ package com.starmaid.Cibele.management {
                 if ((cur.ducks || cur._type == GameSound.BGM) && !cur.fading) {
                     if(this.runningSounds[i].curVolume() < this.runningSounds[i].baseVolume) {
                         this.runningSounds[i].increaseVolume(DUCK_STEP);
+                        FlxG.log("unduck" + Math.random());
                     }
                     ducked_sound = cur;
                 }
             }
-            if(ducked_sound.curVolume() >= ducked_sound.baseVolume) {
+            if(!this.soundOfTypeIsPlaying(GameSound.BGM)) {
+                this._state = STATE_NULL;
+            } else if(ducked_sound.curVolume() >= ducked_sound.baseVolume) {
                 this._state = STATE_NULL;
             }
         }

@@ -31,12 +31,12 @@ package com.starmaid.Cibele.base {
                                   _kind:Number=0, name:String=null,
                                   fadeIn:Boolean=false, fadeOut:Boolean=false,
                                   endCallback:Function=null, ducks:Boolean=false) {
+            this.baseVolume = _vol;
             if (_kind == BGM || ducks) {
-                _vol += SoundManager.DUCK_STEP;
+                _vol -= SoundManager.DUCK_LEVEL;
             }
             this.name = name;
             this.virtualVolume = _vol;
-            this.baseVolume = _vol;
             this._type = _kind;
             this.dur = dur;
             this.running = true;
