@@ -116,6 +116,7 @@ package com.starmaid.Cibele.management {
         public static const HI_EMAIL_1:String = "hi_flight_email";
         public static const HI_EMAIL_2:String = "hi_class_email";
         public static const HI_PICLY_1:String = "hi_picly_1";
+        public static const HI_SELFIE_DC:String = "hi_selfie_dc";
 
         public function PopUpManager() {
             this.elements = new Array();
@@ -340,7 +341,7 @@ package com.starmaid.Cibele.management {
             this.elements.push(this.internet_button);
             this.programButtons.push(this.internet_button);
 
-            this.file_button = new DockButton(this.internet_button.x + this.internet_button.width + 30, dock.y - 30, [CIB_SELFIE_FOLDER, EU_HIGHSCHOOL], BUTTON_FILES);
+            this.file_button = new DockButton(this.internet_button.x + this.internet_button.width + 30, dock.y - 30, [CIB_SELFIE_FOLDER, EU_HIGHSCHOOL, HI_SELFIE_DC], BUTTON_FILES);
             this.file_button.loadGraphic(ImgFileButton, false, false, 88, 60);
             this.file_button.visible = true;
             this.file_button.scrollFactor.x = 0;
@@ -388,6 +389,7 @@ package com.starmaid.Cibele.management {
             this.popups[HI_EMAIL_1] = new PopUp(ImgHiFlightEmail, 631, 356, 0, HI_EMAIL_1);
             this.popups[HI_PICLY_1] = new PopUp(ImgHiPicly1, 356, 463, 0, HI_PICLY_1);
             this.popups[HI_EMAIL_2] = new PopUp(ImgHiClassEmail, 631, 356, 0, HI_EMAIL_2);
+            this.popups[HI_SELFIE_DC] = new PopUp(ImgCibCamDisconnect, 286, 184, 0, HI_SELFIE_DC);
 
             this.setDefaultDockPopups();
 
