@@ -10,12 +10,15 @@ package com.starmaid.Cibele.states {
 
     import org.flixel.*;
 
+    import flash.desktop.NativeApplication;
+
     public class StartScreen extends GameState {
         [Embed(source="/../assets/audio/music/vid_intro.mp3")] private var VidBGMLoop:Class;
         [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
         public var startText:FlxText;
-        private var _startButton:MenuButton, _loadButton:MenuButton;
+        private var _startButton:MenuButton, _loadButton:MenuButton,
+                    _quitButton:MenuButton;
 
         override public function create():void {
             this.enable_fade = true;
@@ -37,7 +40,7 @@ package com.starmaid.Cibele.states {
             this._startButton = new MenuButton(
                 new DHPoint(
                     ScreenManager.getInstance().screenWidth / 2 - _startButtonWidth / 2,
-                    ScreenManager.getInstance().screenHeight - 150
+                    ScreenManager.getInstance().screenHeight - 120
                 ),
                 new DHPoint(_startButtonWidth, 30),
                 "New Game",
@@ -48,13 +51,24 @@ package com.starmaid.Cibele.states {
             this._loadButton = new MenuButton(
                 new DHPoint(
                     ScreenManager.getInstance().screenWidth / 2 - _startButtonWidth / 2,
-                    ScreenManager.getInstance().screenHeight - 50
+                    ScreenManager.getInstance().screenHeight - 80
                 ),
                 new DHPoint(_startButtonWidth, 30),
                 "Continue",
                 function ():void { startGame(true); }
             );
             this.menuButtons.push(this._loadButton);
+
+            this._quitButton = new MenuButton(
+                new DHPoint(
+                    ScreenManager.getInstance().screenWidth / 2 - _startButtonWidth / 2,
+                    ScreenManager.getInstance().screenHeight - 40
+                ),
+                new DHPoint(_startButtonWidth, 30),
+                "Exit",
+                function ():void { NativeApplication.nativeApplication.exit(); }
+            );
+            this.menuButtons.push(this._quitButton);
 
             super.postCreate();
         }
