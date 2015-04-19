@@ -406,7 +406,7 @@ package com.starmaid.Cibele.entities {
 
             if (this._state == STATE_WALK || this._state == STATE_WALK_HARD) {
                 this.walk();
-                if(FlxG.mouse.pressed()) {
+                if(this.mouseHeld) {
                     this.walkTarget = new DHPoint(FlxG.mouse.x, FlxG.mouse.y);
                 } else if(FlxG.mouse.justReleased()) {
                     this.click_anim_lock = false;
