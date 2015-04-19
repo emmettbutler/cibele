@@ -124,6 +124,8 @@ def write_conf_file(swf_path, entry_point_class, version_id):
         <visible>true</visible>
         <width>640</width>
         <height>480</height>
+        <maximizable>false</maximizable>
+        <resizable>false</resizable>
     </initialWindow>
 </application>
 """.format(version_id=version_id,
