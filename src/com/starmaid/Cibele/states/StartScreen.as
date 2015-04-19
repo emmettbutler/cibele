@@ -18,6 +18,7 @@ package com.starmaid.Cibele.states {
         private var _startButton:MenuButton, _loadButton:MenuButton;
 
         override public function create():void {
+            this.enable_fade = true;
             super.create();
             FlxG.bgColor = 0xff000000;
 
@@ -29,6 +30,7 @@ package com.starmaid.Cibele.states {
 
             this.updatePopup = false;
             this.updateMessages = false;
+            this.use_loading_screen = false;
 
             var _startButtonWidth:Number = 200;
 
@@ -62,19 +64,27 @@ package com.starmaid.Cibele.states {
                 ScreenManager.getInstance().levelTracker.loadProgress();
             }
 
+            var fn:Function;
+
             if(ScreenManager.getInstance().levelTracker.it()) {
-                SoundManager.getInstance().playSound(VidBGMLoop, 24*GameSound.MSEC_PER_SEC, null, false, 1, Math.random()*5000+100);
-                FlxG.switchState(
-                    new PlayVideoState(
-                        "/../assets/video/computer_open.flv",
-                        function ():void {
-                            FlxG.switchState(new IkuTursoDesktop());
-                        }
-                    ));
+                fn = function ():void {
+                    SoundManager.getInstance().playSound(VidBGMLoop, 24*GameSound.MSEC_PER_SEC, null, false, 1, Math.random()*5000+100);
+                    FlxG.switchState(
+                        new PlayVideoState(
+                            "/../assets/video/computer_open.flv",
+                            function ():void {
+                                FlxG.switchState(new IkuTursoDesktop());
+                            }
+                        ));
+                }
             } else if(ScreenManager.getInstance().levelTracker.eu()) {
-                FlxG.switchState(new EuryaleDesktop());
+                fn = function():void {
+                    FlxG.switchState(new EuryaleDesktop());
+                }
             } else if(ScreenManager.getInstance().levelTracker.hi()) {
             }
+
+            this.fadeOut(fn, 4 * GameSound.MSEC_PER_SEC);
         }
     }
 }
