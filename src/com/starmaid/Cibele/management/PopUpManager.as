@@ -52,6 +52,7 @@ package com.starmaid.Cibele.management {
 
         //Hiisi Popups
         [Embed(source="/../assets/images/ui/popups/hi_email/flight_email.png")] private static var ImgHiFlightEmail:Class;
+        [Embed(source="/../assets/images/ui/popups/picly/hi_ichi_1.png")] private static var ImgHiPicly1:Class;
 
         public static var _instance:PopUpManager = null;
 
@@ -117,6 +118,7 @@ package com.starmaid.Cibele.management {
 
         //hiisi
         public static const HI_EMAIL_1:String = "hi_flight_email";
+        public static const HI_PICLY_1:String = "hi_picly_1";
 
         public function PopUpManager() {
             this.elements = new Array();
@@ -378,7 +380,7 @@ package com.starmaid.Cibele.management {
 
             this.photo_button = new DockButton(
                 this.file_button.x + this.file_button.width + 30,
-                dock.y - 25, [ICHI_PICLY_1 , SELFIES_1, EU_DREDGE], BUTTON_PHOTO);
+                dock.y - 25, [ICHI_PICLY_1 , SELFIES_1, EU_DREDGE, HI_PICLY_1], BUTTON_PHOTO);
             this.photo_button.loadGraphic(ImgPhotoButton, false, false, 82, 65);
             this.photo_button.visible = true;
             this.photo_button.scrollFactor.x = 0;
@@ -413,6 +415,7 @@ package com.starmaid.Cibele.management {
 
             //hiisi
             this.popups[HI_EMAIL_1] = new PopUp(ImgHiFlightEmail, 631, 356, 0, HI_EMAIL_1);
+            this.popups[HI_PICLY_1] = new PopUp(ImgHiPicly1, 356, 463, 0, HI_PICLY_1);
 
             this.setDefaultDockPopups();
 

@@ -48,7 +48,7 @@ package com.starmaid.Cibele.states {
             this.conversationPieces = [
                 {
                     "audio": Convo3, "len": 33*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "delay": 0, endfn: showBlakeSelfie
                 },
                 {
                     "audio": Convo4, "len": 61*GameSound.MSEC_PER_SEC,
@@ -139,8 +139,8 @@ package com.starmaid.Cibele.states {
             PopUpManager.getInstance().sendPopup(PopUpManager.HI_EMAIL_1);
         }
 
-        public function showSelfiePostEmail():void {
-            PopUpManager.getInstance().sendPopup(PopUpManager.EU_EMAIL_SELFIE);
+        public function showBlakeSelfie():void {
+            PopUpManager.getInstance().sendPopup(PopUpManager.HI_PICLY_1);
         }
 
         public function showFriendEmail2():void {
