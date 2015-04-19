@@ -68,7 +68,7 @@ package com.starmaid.Cibele.management {
                 function(e:KeyboardEvent):void {
                     if (e.keyCode == Keyboard.ESCAPE) {
                         e.preventDefault();
-                    } else if (e.keyCode == Keyboard.F) {
+                    } else if (!this.RELEASE && e.keyCode == Keyboard.F) {
                         that.toggleFullscreen();
                     }
                 });
