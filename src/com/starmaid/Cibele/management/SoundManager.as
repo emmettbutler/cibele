@@ -5,6 +5,8 @@ package com.starmaid.Cibele.management {
     import org.flixel.*;
 
     public class SoundManager {
+        [Embed(source="/../assets/audio/effects/sfx_uigeneral.mp3")] private var SfxUI:Class;
+
         public static var _instance:SoundManager = null;
 
         public var runningSounds:Array;
@@ -160,6 +162,13 @@ package com.starmaid.Cibele.management {
                 }
             }
             return null;
+        }
+
+        public function playUIGeneralSFX():void {
+            this.playSound(
+                SfxUI, 1*GameSound.MSEC_PER_SEC, null, false, .3, GameSound.SFX,
+                "" + Math.random()
+            );
         }
 
         public static function getInstance():SoundManager {
