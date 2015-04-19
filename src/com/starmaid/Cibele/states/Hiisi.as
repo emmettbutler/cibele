@@ -47,12 +47,12 @@ package com.starmaid.Cibele.states {
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo3, "len": 33*GameSound.MSEC_PER_SEC,
+                    "audio": Convo3, "len": 1*GameSound.MSEC_PER_SEC,
                     "delay": 0, endfn: showBlakeSelfie
                 },
                 {
-                    "audio": Convo4, "len": 61*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "audio": Convo4, "len": 1*GameSound.MSEC_PER_SEC,
+                    "delay": 0, endfn: showBeccaEmail
                 },
                 {
                     "audio": Convo5, "len": 20*GameSound.MSEC_PER_SEC,
@@ -122,7 +122,7 @@ package com.starmaid.Cibele.states {
 
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
                 SoundManager.getInstance().playSound(
-                        Convo1, 19*GameSound.MSEC_PER_SEC, firstConvoPartTwo, false, 1, GameSound.VOCAL,
+                        Convo1, 1*GameSound.MSEC_PER_SEC, firstConvoPartTwo, false, 1, GameSound.VOCAL,
                         "hi_convo_1_hall"
                     );
                 }
@@ -130,7 +130,7 @@ package com.starmaid.Cibele.states {
 
         public function firstConvoPartTwo():void {
             SoundManager.getInstance().playSound(
-                    Convo2, 24*GameSound.MSEC_PER_SEC, this.showFlightEmail, false, 1, GameSound.VOCAL,
+                    Convo2, 1*GameSound.MSEC_PER_SEC, this.showFlightEmail, false, 1, GameSound.VOCAL,
                     "hi_convo_2_hall"
                 );
         }
@@ -143,8 +143,8 @@ package com.starmaid.Cibele.states {
             PopUpManager.getInstance().sendPopup(PopUpManager.HI_PICLY_1);
         }
 
-        public function showFriendEmail2():void {
-            PopUpManager.getInstance().sendPopup(PopUpManager.EU_EMAIL_2);
+        public function showBeccaEmail():void {
+            PopUpManager.getInstance().sendPopup(PopUpManager.HI_EMAIL_2);
         }
 
         public function showDredgeSelfie():void {

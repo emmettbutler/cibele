@@ -53,6 +53,7 @@ package com.starmaid.Cibele.management {
         //Hiisi Popups
         [Embed(source="/../assets/images/ui/popups/hi_email/flight_email.png")] private static var ImgHiFlightEmail:Class;
         [Embed(source="/../assets/images/ui/popups/picly/hi_ichi_1.png")] private static var ImgHiPicly1:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_email/class_email.png")] private static var ImgHiClassEmail:Class;
 
         public static var _instance:PopUpManager = null;
 
@@ -113,6 +114,7 @@ package com.starmaid.Cibele.management {
 
         //hiisi
         public static const HI_EMAIL_1:String = "hi_flight_email";
+        public static const HI_EMAIL_2:String = "hi_class_email";
         public static const HI_PICLY_1:String = "hi_picly_1";
 
         public function PopUpManager() {
@@ -328,7 +330,7 @@ package com.starmaid.Cibele.management {
 
             this.internet_button = new DockButton(
                 this.game_button.x + this.game_button.width + 30,
-                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_1, EU_EMAIL_SELFIE, EU_EMAIL_2, HI_EMAIL_1], BUTTON_INTERNET);
+                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_1, EU_EMAIL_SELFIE, EU_EMAIL_2, HI_EMAIL_1, HI_EMAIL_2], BUTTON_INTERNET);
             this.internet_button.loadGraphic(ImgInternetButton, false, false,
                                              88, 75);
             this.internet_button.visible = true;
@@ -385,6 +387,7 @@ package com.starmaid.Cibele.management {
             //hiisi
             this.popups[HI_EMAIL_1] = new PopUp(ImgHiFlightEmail, 631, 356, 0, HI_EMAIL_1);
             this.popups[HI_PICLY_1] = new PopUp(ImgHiPicly1, 356, 463, 0, HI_PICLY_1);
+            this.popups[HI_EMAIL_2] = new PopUp(ImgHiClassEmail, 631, 356, 0, HI_EMAIL_2);
 
             this.setDefaultDockPopups();
 

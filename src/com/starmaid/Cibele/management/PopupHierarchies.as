@@ -56,6 +56,8 @@ package com.starmaid.Cibele.management {
         //hiisi
         [Embed(source="/../assets/images/ui/popups/hi_email/flight_link.png")] private static var ImgHiFlightLink:Class;
         [Embed(source="/../assets/images/ui/popups/hi_email/flight_expired.png")] private static var ImgHiFlightExpired:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_email/mini_flight_email_link.png")] private static var ImgHiMiniFlightLink:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_email/mini_flight_email.png")] private static var ImgHiMiniFlight:Class;
 
         public static function build():Dictionary {
             var struc:Dictionary = new Dictionary();
@@ -388,6 +390,27 @@ package com.starmaid.Cibele.management {
                     "dim": new DHPoint(945, 437),
                     "struc": PopUpManager.HI_EMAIL_1,
                     "contents": ImgHiFlightExpired
+                }
+            ]};
+            struc[PopUpManager.HI_EMAIL_2] = { "contents": [
+                {
+                    "name": "hi link to email 1",
+                    "icon": ImgHiMiniFlightLink,
+                    "icon_dim": new DHPoint(323, 22),
+                    "icon_pos": new DHPoint(294, 99),
+                    "folder_dim": new DHPoint(284, 356),
+                    "struc": PopUpManager.HI_EMAIL_2,
+                    "folder_img": ImgHiMiniFlight,
+                    "contents": [
+                        {
+                            "name": "mini link to expired flight in email 2",
+                            "icon": ImgHiFlightLink,
+                            "icon_dim": new DHPoint(225,18),
+                            "icon_pos": new DHPoint(23, 218),
+                            "dim": new DHPoint(945, 437),
+                            "struc": PopUpManager.HI_EMAIL_2,
+                            "contents": ImgHiFlightExpired
+                        }]
                 }
             ]};
             return struc;
