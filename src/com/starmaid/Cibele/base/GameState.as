@@ -135,7 +135,7 @@ package com.starmaid.Cibele.base {
 
         public function loadingScreenEndCallback():void { }
 
-        public function fadeOut(fn:Function, postFadeWait:Number):void {
+        public function fadeOut(fn:Function, postFadeWait:Number=1):void {
             this.fading = true;
             this.postFadeWait = postFadeWait;
             this.postFadeFn = fn;
