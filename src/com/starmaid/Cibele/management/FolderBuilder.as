@@ -21,6 +21,29 @@ package com.starmaid.Cibele.management {
             allClickableElements = new Array();
         }
 
+        public function updateFolderPositions(root:Object):void {
+            var _screen:ScreenManager = ScreenManager.getInstance();
+            var cur:Object, curX:UIElement, spr:GameObject, icon_pos:DHPoint;
+            for (var i:int = 0; i < root["contents"].length; i++) {
+                cur = root["contents"][i];
+                if ("icon" in cur && cur["icon"] != null) {
+                    cur["icon_sprite"].setPos(cur["icon_pos"].add(root["folder_sprite"].pos));
+                }
+                if("hitbox_pos" in cur && "hitbox_dim" in cur) {
+                    cur["hitbox_sprite"].updatePos();
+                }
+                if (cur["contents"] is Array) {
+                    cur["folder_sprite"].updatePos();
+                    cur["x_sprite"].setPos(new DHPoint(cur["folder_sprite"].x + cur["folder_sprite"].width - 23 - 2, cur["folder_sprite"].y + 2));
+
+                    this.updateFolderPositions(cur);
+                } else {
+                    cur["full_sprite"].updatePos();
+                    cur["x_sprite"].setPos(new DHPoint(cur['full_sprite'].x + cur["full_sprite"].width - 23 - 2, cur["full_sprite"].y + 2));
+                }
+            }
+        }
+
         public function populateFolders(root:Object, elements:Array=null, root_folder:UIElement=null):void {
             var _screen:ScreenManager = ScreenManager.getInstance();
             var cur:Object, curX:UIElement, spr:GameObject, icon_pos:DHPoint;

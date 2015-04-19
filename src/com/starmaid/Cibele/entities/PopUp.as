@@ -17,6 +17,7 @@ package com.starmaid.Cibele.entities {
         public var links:Array;
         public var x_sprite:UIElement;
         public var was_opened:Boolean = false;
+        private var imgXSize:DHPoint;
 
         public function PopUp(img:Class, w:Number, h:Number,
                               functionality:Number=0, tag:String=null,
@@ -30,8 +31,8 @@ package com.starmaid.Cibele.entities {
             this.links = links;
             this.loadGraphic(img,false,false,w,h);
 
-            var imgXSize:DHPoint = new DHPoint(23, 18);
             var imgClass:Class = ImgXPink;
+            imgXSize = new DHPoint(23, 18);
 
             this.x_sprite = UIElement.fromPoint(new DHPoint((this.x+w)-imgXSize.x, this.y+1));
             this.x_sprite.loadGraphic(imgClass, false, false, imgXSize.x, imgXSize.y);
@@ -52,10 +53,10 @@ package com.starmaid.Cibele.entities {
             }
         }
 
-        public function updatePos():void {
-            var _screen:ScreenManager = ScreenManager.getInstance();
-            this.x = _screen.screenWidth - this.width - 100;
-            this.y = _screen.screenHeight * .1;
+        override public function updatePos():void {
+            super.updatePos();
+            this.x_sprite.x = (this.x + this.width) - imgXSize.x;
+            this.x_sprite.y = this.y + 1;
         }
 
         public function open():void {

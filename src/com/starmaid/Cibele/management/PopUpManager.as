@@ -230,6 +230,9 @@ package com.starmaid.Cibele.management {
 
             for (var key:Object in this.popups) {
                 this.popups[key].updatePos();
+                if(this.folder_structure[key] != null) {
+                    this.folder_builder.updateFolderPositions(this.folder_structure[key]);
+                }
             }
         }
 
