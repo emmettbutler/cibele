@@ -15,7 +15,7 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
         public var startText:FlxText;
-        private var _startButton:MenuButton;
+        private var _startButton:MenuButton, _loadButton:MenuButton;
 
         override public function create():void {
             super.create();
@@ -30,25 +30,37 @@ package com.starmaid.Cibele.states {
             this.updatePopup = false;
             this.updateMessages = false;
 
-            var _startButtonWidth:Number = 300;
+            var _startButtonWidth:Number = 200;
+
             this._startButton = new MenuButton(
                 new DHPoint(
                     ScreenManager.getInstance().screenWidth / 2 - _startButtonWidth / 2,
-                    ScreenManager.getInstance().screenHeight - 100
+                    ScreenManager.getInstance().screenHeight - 150
                 ),
-                new DHPoint(_startButtonWidth, 50),
-                "START",
-                function ():void {
-                    startGame();
-                }
+                new DHPoint(_startButtonWidth, 30),
+                "New Game",
+                function ():void { startGame(); }
             );
             this.menuButtons.push(this._startButton);
+
+            this._loadButton = new MenuButton(
+                new DHPoint(
+                    ScreenManager.getInstance().screenWidth / 2 - _startButtonWidth / 2,
+                    ScreenManager.getInstance().screenHeight - 50
+                ),
+                new DHPoint(_startButtonWidth, 30),
+                "Continue",
+                function ():void { startGame(true); }
+            );
+            this.menuButtons.push(this._loadButton);
 
             super.postCreate();
         }
 
-        public function startGame():void {
-            ScreenManager.getInstance().levelTracker.loadProgress();
+        public function startGame(shouldLoad:Boolean=false):void {
+            if (shouldLoad) {
+                ScreenManager.getInstance().levelTracker.loadProgress();
+            }
 
             if(ScreenManager.getInstance().levelTracker.it()) {
                 SoundManager.getInstance().playSound(VidBGMLoop, 24*GameSound.MSEC_PER_SEC, null, false, 1, Math.random()*5000+100);
