@@ -18,7 +18,7 @@ package com.starmaid.Cibele.entities {
 
         public var viewing:Boolean = false, unread:Boolean = true;
 
-        public var inbox_ref:GameObject;
+        private var _inbox_ref:GameObject;
         public var list_hitbox:FlxRect;
         public var truncated_textbox:FlxText;
 
@@ -39,9 +39,9 @@ package com.starmaid.Cibele.entities {
 
         public function Thread(inbox:GameObject,
                                ... messages) {
-            this.inbox_ref = inbox;
+            this._inbox_ref = inbox;
             this.sent_by = messages[0][0];
-            this.pos = new DHPoint(this.inbox_ref.x + 20, this.inbox_ref.y + 30);
+            this.pos = new DHPoint(this._inbox_ref.x + 20, this._inbox_ref.y + 30);
 
             this.messages = new Array();
             var cur_message:Array;
@@ -59,8 +59,29 @@ package com.starmaid.Cibele.entities {
             this.initVisibleObjects();
         }
 
+        public function set inbox_ref(ref:GameObject):void {
+            if (this._inbox_ref != ref) {
+                this._inbox_ref = ref;
+                for (var i:int = 0; i < this.messages.length; i++) {
+                    this.messages[i].inbox_ref = ref;
+                }
+            }
+        }
+
+        public function updatePos():void {
+            this.pos.x = this._inbox_ref.x + 20;
+            this.pos.y = this._inbox_ref.y + 30;
+
+            this.truncated_textbox.x = pos.x;
+            this.truncated_textbox.y = pos.y;
+            this.list_hitbox.x = this.truncated_textbox.x;
+            this.list_hitbox.y = this.truncated_textbox.y;
+
+            this.rotate();
+        }
+
         public function initVisibleObjects():void {
-            this.truncated_textbox = new FlxText(pos.x, pos.y, inbox_ref.width,
+            this.truncated_textbox = new FlxText(pos.x, pos.y, _inbox_ref.width,
                 this.sent_by + " >> " +
                 this.display_text.slice(0, this.sent_by.length + 10) +
                 "...");
@@ -95,13 +116,9 @@ package com.starmaid.Cibele.entities {
             this.truncated_textbox.text = this.sent_by + " >> " +
                 this.display_text.slice(0, this.sent_by.length + 10) +
                 "...";
-
-            if (this.sent_count > 3) {
-                this.rotate();
-            }
         }
 
-        public function setBaseMsgPos():void {
+        private function setBaseMsgPos():void {
             var allSent:Array = new Array();
             for (var i:int = 0; i < this.messages.length; i++) {
                 if (this.messages[i].sent) {
@@ -112,14 +129,14 @@ package com.starmaid.Cibele.entities {
                 invisibleMsgStackHeight:Number = 0;
             for (var k:int = allSent.length - 1; k >= 0; k--) {
                 if (totalVisibleHeight + allSent[k].textbox.height <=
-                    this.inbox_ref.height - 55)
+                    this._inbox_ref.height - 55)
                 {
                     totalVisibleHeight += allSent[k].textbox.height + MSG_PADDING;
                 } else {
                     invisibleMsgStackHeight += allSent[k].textbox.height + MSG_PADDING;
                 }
             }
-            this.messages[0].pos.y = this.inbox_ref.y - invisibleMsgStackHeight + 20;
+            this.messages[0].pos.y = this._inbox_ref.y - invisibleMsgStackHeight + 20;
         }
 
         public function rotate():void {
@@ -129,7 +146,7 @@ package com.starmaid.Cibele.entities {
                     if (i != 0) {
                         this.messages[i].pos.y = this.messages[i - 1].pos.y + this.messages[i - 1].textbox.height + MSG_PADDING;
                     }
-                    if (this.messages[i].pos.y < this.inbox_ref.y) {
+                    if (this.messages[i].pos.y < this._inbox_ref.y) {
                         this.messages[i].hide();
                     }
                 }
@@ -204,7 +221,7 @@ package com.starmaid.Cibele.entities {
             this.truncated_textbox.visible = false;
             for (var i:int = 0; i < this.messages.length; i++) {
                 if (this.messages[i].sent) {
-                    if (this.messages[i].pos.y >= this.inbox_ref.y) {
+                    if (this.messages[i].pos.y >= this._inbox_ref.y) {
                         this.messages[i].show();
                     }
                 }
@@ -234,7 +251,6 @@ package com.starmaid.Cibele.entities {
                         );
                     }
                     this.sent_count++;
-                    this.rotate();
                     break;
                 }
             }

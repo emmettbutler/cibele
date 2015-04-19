@@ -358,8 +358,7 @@ package com.starmaid.Cibele.management {
             inbox_pos.x = _screen.screenWidth / 2 - this.img_inbox.width / 2;
             inbox_pos.y = _screen.screenHeight / 2 - this.img_inbox.height / 2;
 
-            this.img_inbox.x = inbox_pos.x;
-            this.img_inbox.y = inbox_pos.y;
+            this.img_inbox.setPos(inbox_pos);
 
             this.exit_ui.x = this.img_inbox.x + (this.img_inbox.width - 20);
             this.exit_ui.y = this.img_inbox.y + 5;
@@ -375,9 +374,9 @@ package com.starmaid.Cibele.management {
                                          this.reply_to_msg.y, 64,
                                          this.reply_to_msg.height);
 
-            this.threads[0].pos.x = this.img_inbox.x + 20;
-            this.threads[0].pos.y = this.img_inbox.y + 30;
             for(var i:int = 0; i < this.threads.length; i++) {
+                this.threads[i].inbox_ref = this.img_inbox;
+                this.threads[i].updatePos();
                 if(i != 0){
                     this.threads[i].setListPos(this.threads[i - 1].pos);
                 }

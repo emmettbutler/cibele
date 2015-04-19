@@ -15,7 +15,8 @@ package com.starmaid.Cibele.entities {
 
         public var pos:DHPoint;
 
-        public var inbox_ref:GameObject;
+        private var _inbox_ref:GameObject;
+        private var _parent:Thread;
         public var textbox:FlxText;
 
         public var send_time:Number, font_size:Number = 21, list_offset:Number = 30;
@@ -25,9 +26,10 @@ package com.starmaid.Cibele.entities {
 
         public function Message(txt:String, sec:Number,
                                 inbox:GameObject, sender:String, parent:Thread) {
-            this.inbox_ref = inbox;
+            this._inbox_ref = inbox;
             this.sent_by = sender;
             this.pos = new DHPoint(parent.pos.x, parent.pos.y);
+            this._parent = parent;
 
             this.display_text = txt;
             this.send_time = sec;
@@ -36,11 +38,11 @@ package com.starmaid.Cibele.entities {
         public function initVisibleObjects():void {
             if(this.sent_by == MessageManager.SENT_BY_CIBELE) {
                 this.textbox = new FlxText(this.pos.x, this.pos.y,
-                                       this.inbox_ref.width - 50,
+                                       this._inbox_ref.width - 50,
                                        this.sent_by + " >> " + this.display_text);
             } else {
                 this.textbox = new FlxText(this.pos.x, this.pos.y,
-                                       this.inbox_ref.width - 50,
+                                       this._inbox_ref.width - 50,
                                        this.sent_by + " << " + this.display_text);
             }
             this.textbox.scrollFactor = new FlxPoint(0, 0);
@@ -50,7 +52,13 @@ package com.starmaid.Cibele.entities {
             FlxG.state.add(this.textbox);
         }
 
+        public function set inbox_ref(ref:GameObject):void {
+            this._inbox_ref = ref;
+        }
+
         public function update():void {
+            this.pos.x = _parent.pos.x;
+            this.textbox.x = this.pos.x;
             this.textbox.y = this.pos.y;
         }
 
