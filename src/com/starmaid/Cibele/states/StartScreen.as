@@ -3,6 +3,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.states.IkuTursoDesktop;
     import com.starmaid.Cibele.states.EuryaleDesktop;
+    import com.starmaid.Cibele.entities.MenuButton;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.utils.DHPoint;
@@ -14,7 +15,7 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
         public var startText:FlxText;
-        private var _startButton:FlxText;
+        private var _startButton:MenuButton;
 
         override public function create():void {
             super.create();
@@ -30,14 +31,18 @@ package com.starmaid.Cibele.states {
             this.updateMessages = false;
 
             var _startButtonWidth:Number = 300;
-            this._startButton = new FlxText(
-                ScreenManager.getInstance().screenWidth / 2 - _startButtonWidth / 2,
-                ScreenManager.getInstance().screenHeight - 100,
-                _startButtonWidth,
-                "START"
+            this._startButton = new MenuButton(
+                new DHPoint(
+                    ScreenManager.getInstance().screenWidth / 2 - _startButtonWidth / 2,
+                    ScreenManager.getInstance().screenHeight - 100
+                ),
+                new DHPoint(_startButtonWidth, 50),
+                "START",
+                function ():void {
+                    startGame();
+                }
             );
-            this._startButton.setFormat("NexaBold-Regular", 24, 0xffffffff, "center");
-            this.add(this._startButton);
+            this.menuButtons.push(this._startButton);
 
             super.postCreate();
         }
@@ -57,17 +62,6 @@ package com.starmaid.Cibele.states {
             } else if(ScreenManager.getInstance().levelTracker.eu()) {
                 FlxG.switchState(new EuryaleDesktop());
             } else if(ScreenManager.getInstance().levelTracker.hi()) {
-            }
-        }
-
-        override public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
-            var _mouseRect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 1, 1);
-            var _startButtonRect:FlxRect = new FlxRect(this._startButton.x,
-                                                       this._startButton.y,
-                                                       this._startButton.width,
-                                                       this._startButton.height);
-            if (_mouseRect.overlaps(_startButtonRect)) {
-                this.startGame();
             }
         }
     }

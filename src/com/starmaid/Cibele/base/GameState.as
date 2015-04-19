@@ -22,6 +22,7 @@ package com.starmaid.Cibele.base {
         protected var game_cursor:GameCursor, baseLayer:GameObject;
         private var pauseLayer:GameObject;
         private var sortedObjects:Array;
+        protected var menuButtons:Array;
         public var loadingScreen:LoadingScreen;
         public var use_loading_screen:Boolean = true;
         public var loading_screen_timer:Number = 3;
@@ -42,6 +43,8 @@ package com.starmaid.Cibele.base {
             this.updateSound = snd;
             this.updatePopup = popup;
             this.updateMessages = messages;
+
+            this.menuButtons = new Array();
 
             this.ui_color_flag = UICOLOR_DEFAULT;
 
@@ -290,6 +293,18 @@ package com.starmaid.Cibele.base {
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
             if (this.updatePopup) {
                 PopUpManager.getInstance().clickCallback(screenPos, worldPos);
+            }
+
+            var _mouseRect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 1, 1);
+            var _curRect:FlxRect;
+            for (var i:int = 0; i < this.menuButtons.length; i++) {
+                _curRect = new FlxRect(this.menuButtons[i].x,
+                                       this.menuButtons[i].y,
+                                       this.menuButtons[i].width,
+                                       this.menuButtons[i].height);
+                if (_mouseRect.overlaps(_curRect)) {
+                    this.menuButtons[i].clickCallback();
+                }
             }
         }
 
