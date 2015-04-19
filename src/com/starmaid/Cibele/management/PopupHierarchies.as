@@ -58,6 +58,18 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/hi_email/flight_expired.png")] private static var ImgHiFlightExpired:Class;
         [Embed(source="/../assets/images/ui/popups/hi_email/mini_flight_email_link.png")] private static var ImgHiMiniFlightLink:Class;
         [Embed(source="/../assets/images/ui/popups/hi_email/mini_flight_email.png")] private static var ImgHiMiniFlight:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/friend_1.png")] private static var ImgHiFriend1:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/friend_1_icon.png")] private static var ImgHiFriend1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/friend_2.png")] private static var ImgHiFriend2:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/friend_2_icon.png")] private static var ImgHiFriend2Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/friend_3.png")] private static var ImgHiFriend3:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/friend_3_icon.png")] private static var ImgHiFriend3Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/selfie_1.png")] private static var ImgHiSelfie1:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/selfie_1_icon.png")] private static var ImgHiSelfie1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/selfie_2.png")] private static var ImgHiSelfie2:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/selfie_2_icon.png")] private static var ImgHiSelfie2Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/selfie_3.png")] private static var ImgHiSelfie3:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/selfie_3_icon.png")] private static var ImgHiSelfie3Icon:Class;
 
         public static function build():Dictionary {
             var struc:Dictionary = new Dictionary();
@@ -411,6 +423,73 @@ package com.starmaid.Cibele.management {
                             "struc": PopUpManager.HI_EMAIL_2,
                             "contents": ImgHiFlightExpired
                         }]
+                }
+            ]};
+            struc[PopUpManager.HI_SELFIE_DC] = { "contents": [
+                {
+                    "name": "hi cib camera selfies 1",
+                    "icon": ImgCibCamDisconnectIcon,
+                    "icon_dim": new DHPoint(204, 34),
+                    "icon_pos": new DHPoint(43, 124),
+                    "folder_dim": new DHPoint(631, 356),
+                    "struc": PopUpManager.HI_SELFIE_DC,
+                    "folder_img": ImgCibSelfieFolder,
+                    "contents": [
+                        {
+                            "name": "hi friend 1",
+                            "icon": ImgHiFriend1Icon,
+                            "icon_dim": new DHPoint(70, 81),
+                            "icon_pos": new DHPoint(28, 135),
+                            "dim": new DHPoint(464, 356),
+                            "struc": PopUpManager.HI_SELFIE_DC,
+                            "contents": ImgHiFriend1
+                        },
+                        {
+                            "name": "hi friend 2",
+                            "icon": ImgHiFriend2Icon,
+                            "icon_dim": new DHPoint(72, 79),
+                            "icon_pos": new DHPoint(28, 35),
+                            "dim": new DHPoint(464, 356),
+                            "struc": PopUpManager.HI_SELFIE_DC,
+                            "contents": ImgHiFriend2
+                        },
+                        {
+                            "name": "hi friend 3",
+                            "icon": ImgHiFriend3Icon,
+                            "icon_dim": new DHPoint(70, 82),
+                            "icon_pos": new DHPoint(108, 35),
+                            "dim": new DHPoint(464, 356),
+                            "struc": PopUpManager.HI_SELFIE_DC,
+                            "contents": ImgHiFriend3
+                        },
+                        {
+                            "name": "hi selfie 1",
+                            "icon": ImgHiSelfie1Icon,
+                            "icon_dim": new DHPoint(70, 80),
+                            "icon_pos": new DHPoint(200, 35),
+                            "dim": new DHPoint(464, 356),
+                            "struc": PopUpManager.HI_SELFIE_DC,
+                            "contents": ImgHiSelfie1
+                        },
+                        {
+                            "name": "hi selfie 2",
+                            "icon": ImgHiSelfie2Icon,
+                            "icon_dim": new DHPoint(70, 81),
+                            "icon_pos": new DHPoint(285, 35),
+                            "dim": new DHPoint(336, 448),
+                            "struc": PopUpManager.HI_SELFIE_DC,
+                            "contents": ImgHiSelfie2
+                        },
+                        {
+                            "name": "hi selfie 3",
+                            "icon": ImgHiSelfie3Icon,
+                            "icon_dim": new DHPoint(102, 82),
+                            "icon_pos": new DHPoint(371, 35),
+                            "dim": new DHPoint(336, 448),
+                            "struc": PopUpManager.HI_SELFIE_DC,
+                            "contents": ImgHiSelfie3
+                        }
+                    ]
                 }
             ]};
             return struc;
