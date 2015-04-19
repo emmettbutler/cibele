@@ -50,6 +50,9 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/eu_files/highschool.png")] private static var ImgEuHighSchool:Class;
         [Embed(source="/../assets/images/ui/popups/picly/ninabday.png")] private static var ImgNinaBday:Class;
 
+        //Hiisi Popups
+        [Embed(source="/../assets/images/ui/popups/hi_email/flight_email.png")] private static var ImgHiFlightEmail:Class;
+
         public static var _instance:PopUpManager = null;
 
         public var _player:Player;
@@ -111,6 +114,9 @@ package com.starmaid.Cibele.management {
         public static const EU_HIGHSCHOOL:String = "euhighschool";
         public static const EU_DOWNLOADS:String = "eudls";
         public static const EU_PICLY_1:String = "eudpicly1";
+
+        //hiisi
+        public static const HI_EMAIL_1:String = "hi_flight_email";
 
         public function PopUpManager() {
             this.elements = new Array();
@@ -351,7 +357,7 @@ package com.starmaid.Cibele.management {
 
             this.internet_button = new DockButton(
                 this.game_button.x + this.game_button.width + 30,
-                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_1, EU_EMAIL_SELFIE, EU_EMAIL_2], BUTTON_INTERNET);
+                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_1, EU_EMAIL_SELFIE, EU_EMAIL_2, HI_EMAIL_1], BUTTON_INTERNET);
             this.internet_button.loadGraphic(ImgInternetButton, false, false,
                                              88, 75);
             this.internet_button.visible = true;
@@ -404,6 +410,9 @@ package com.starmaid.Cibele.management {
             this.popups[EU_HIGHSCHOOL] = new PopUp(ImgEuHighSchool, 631, 356, 0, EU_HIGHSCHOOL);
             this.popups[EU_DOWNLOADS] = new PopUp(ImgIchiDL2, 631, 356, 0, EU_DOWNLOADS);
             this.popups[EU_PICLY_1] = new PopUp(ImgNinaBday, 356, 463, 0, EU_PICLY_1);
+
+            //hiisi
+            this.popups[HI_EMAIL_1] = new PopUp(ImgHiFlightEmail, 631, 356, 0, HI_EMAIL_1);
 
             this.setDefaultDockPopups();
 

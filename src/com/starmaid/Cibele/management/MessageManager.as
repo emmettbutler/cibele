@@ -160,6 +160,20 @@ package com.starmaid.Cibele.management {
                     [MessageManager.SENT_BY_CIBELE, "ill let you know~", -1]
                 )
             );
+
+            //TODO write these
+            this.hi_threads = new Array(
+                new Thread(this.img_inbox,
+                    ["Rusher", "cibby! we should talk on the phone sometime", 1],
+                    [MessageManager.SENT_BY_CIBELE, "yeah we could do that :D", 1],
+                    ["Rusher", "we can text too and be ~real~ friends", 1],
+                    [MessageManager.SENT_BY_CIBELE, "haha im kinda surprised, i asked for yours awhile ago didnt i?", -1],
+                    ["Rusher", "yeah i was all awkward back then i guess", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, ";_; it made me sad", -1],
+                    ["Rusher", ":( sorry", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "i am kinda busy right now actually. i will msg my # to you later", -1]
+                )
+            );
             this.setCurrentThreads();
 
             this.loadVisibleMessageObjects();

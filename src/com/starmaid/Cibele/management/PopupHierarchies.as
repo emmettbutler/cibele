@@ -53,6 +53,10 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/eu_files/selfie1.png")] private static var ImgEUSelfie1:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/selfie1_icon.png")] private static var ImgEUSelfie1Icon:Class;
 
+        //hiisi
+        [Embed(source="/../assets/images/ui/popups/hi_email/flight_link.png")] private static var ImgHiFlightLink:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_email/flight_expired.png")] private static var ImgHiFlightExpired:Class;
+
         public static function build():Dictionary {
             var struc:Dictionary = new Dictionary();
             struc[PopUpManager.ICHI_DL_2] = { "contents": [
@@ -373,6 +377,17 @@ package com.starmaid.Cibele.management {
                     "dim": new DHPoint(512, 356),
                     "struc": PopUpManager.EU_DOWNLOADS,
                     "contents": ImgEUSelfie1
+                }
+            ]};
+            struc[PopUpManager.HI_EMAIL_1] = { "contents": [
+                {
+                    "name": "link to expired flight",
+                    "icon": ImgHiFlightLink,
+                    "icon_dim": new DHPoint(225,18),
+                    "icon_pos": new DHPoint(23, 218),
+                    "dim": new DHPoint(945, 437),
+                    "struc": PopUpManager.HI_EMAIL_1,
+                    "contents": ImgHiFlightExpired
                 }
             ]};
             return struc;
