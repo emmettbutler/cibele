@@ -18,16 +18,21 @@ package com.starmaid.Cibele.base {
         [Embed(source="/../assets/audio/effects/sfx_mouseclick2.mp3")] private var SfxClick2:Class;
 
         protected var updateSound:Boolean, updatePopup:Boolean,
-                      updateMessages:Boolean, showEmoji:Boolean = true;
+                      updateMessages:Boolean, showEmoji:Boolean = true,
+                      enable_fade:Boolean = false;
         protected var game_cursor:GameCursor, baseLayer:GameObject;
-        private var pauseLayer:GameObject;
+        private var pauseLayer:GameObject, fadeLayer:GameObject;
         private var sortedObjects:Array;
+        private var postFadeFn:Function;
+        private var postFadeWait:Number;
+        protected var menuButtons:Array;
         public var loadingScreen:LoadingScreen;
         public var use_loading_screen:Boolean = true;
         public var loading_screen_timer:Number = 3;
         public var fpsCounter:FPSCounter;
 
         public var ui_color_flag:Number;
+        public var fading:Boolean;
         public static const UICOLOR_DEFAULT:Number = 0;
         public static const UICOLOR_PINK:Number = 1;
 
@@ -38,10 +43,13 @@ package com.starmaid.Cibele.base {
         public static const EVENT_SINGLETILE_BG_LOADED:String = "bg_loaded";
 
         public function GameState(snd:Boolean=true, popup:Boolean=true,
-                                  messages:Boolean=true){
+                                  messages:Boolean=true, fade:Boolean=false){
             this.updateSound = snd;
             this.updatePopup = popup;
             this.updateMessages = messages;
+            this.enable_fade = fade;
+
+            this.menuButtons = new Array();
 
             this.ui_color_flag = UICOLOR_DEFAULT;
 
@@ -82,6 +90,18 @@ package com.starmaid.Cibele.base {
                 this.fpsCounter = new FPSCounter();
             }
 
+            if (this.enable_fade) {
+                this.fadeLayer = new GameObject(new DHPoint(0, 0));
+                this.fadeLayer.scrollFactor = new DHPoint(0, 0);
+                this.fadeLayer.active = false;
+                this.fadeLayer.makeGraphic(
+                    ScreenManager.getInstance().screenWidth,
+                    ScreenManager.getInstance().screenHeight,
+                    0xff000000
+                );
+                this.fadeLayer.alpha = 0;
+            }
+
             this.game_cursor = new GameCursor();
         }
 
@@ -101,6 +121,10 @@ package com.starmaid.Cibele.base {
                 this.loadingScreen.endCallback = this.loadingScreenEndCallback;
             }
 
+            if (this.enable_fade) {
+                this.add(this.fadeLayer);
+            }
+
             if (ScreenManager.getInstance().DEBUG) {
                 DebugConsoleManager.getInstance().initTextObjects();
                 DebugConsoleManager.getInstance().addVisibleObjects();
@@ -110,6 +134,12 @@ package com.starmaid.Cibele.base {
         }
 
         public function loadingScreenEndCallback():void { }
+
+        public function fadeOut(fn:Function, postFadeWait:Number=1):void {
+            this.fading = true;
+            this.postFadeWait = postFadeWait;
+            this.postFadeFn = fn;
+        }
 
         public function updateCursor():void {
             if (this.game_cursor != null) {
@@ -211,7 +241,7 @@ package com.starmaid.Cibele.base {
 
             this.updateCursor();
 
-            if(FlxG.mouse.justReleased() && !(FlxG.state is PlayVideoState)) {
+            if(!this.fading && FlxG.mouse.justReleased() && !(FlxG.state is PlayVideoState)) {
                 this.playClick();
                 this.clickCallback(
                     new DHPoint(FlxG.mouse.screenX, FlxG.mouse.screenY),
@@ -219,12 +249,27 @@ package com.starmaid.Cibele.base {
                 );
             }
 
+            if (this.fading) {
+                if (this.fadeLayer.alpha < 1) {
+                    this.fadeLayer.alpha += .01;
+                } else {
+                    this.fading = false;
+                    GlobalTimer.getInstance().setMark("endfade",
+                                                      this.postFadeWait,
+                                                      this.postFadeFn);
+                }
+            }
+
             if (FlxG.keys.justPressed("P")) {
                 SoundManager.getInstance().increaseVolume();
             } else if (FlxG.keys.justPressed("O")) {
                 SoundManager.getInstance().decreaseVolume();
             } else if (FlxG.keys.justPressed("ESCAPE")) {
-                this.pause();
+                if (GlobalTimer.getInstance().isPaused()) {
+                    this.resume();
+                } else {
+                    this.pause();
+                }
             }
         }
 
@@ -287,9 +332,27 @@ package com.starmaid.Cibele.base {
             this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
         }
 
+        public function resume():void {
+            GlobalTimer.getInstance().resume();
+            SoundManager.getInstance().resume();
+            this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
+        }
+
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
             if (this.updatePopup) {
                 PopUpManager.getInstance().clickCallback(screenPos, worldPos);
+            }
+
+            var _mouseRect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 1, 1);
+            var _curRect:FlxRect;
+            for (var i:int = 0; i < this.menuButtons.length; i++) {
+                _curRect = new FlxRect(this.menuButtons[i].x,
+                                       this.menuButtons[i].y,
+                                       this.menuButtons[i].width,
+                                       this.menuButtons[i].height);
+                if (_mouseRect.overlaps(_curRect)) {
+                    this.menuButtons[i].clickCallback();
+                }
             }
         }
 

@@ -25,8 +25,10 @@ package com.starmaid.Cibele.management {
         public var exit_ui:UIElement;
         public var img_msg:UIElement;
 
-        public var notifications_box:FlxRect, exit_inbox_rect:FlxRect,
+        public var notifications_box:FlxRect,
                    exit_box:FlxRect, reply_box:FlxRect;
+
+        private var inbox_pos:DHPoint;
 
         public var threads:Array;
         public var it_threads:Array;
@@ -62,6 +64,9 @@ package com.starmaid.Cibele.management {
         public function MessageManager() {
             this.elements = new Array();
             this.bornTime = new Date().valueOf();
+            var _screen:ScreenManager = ScreenManager.getInstance();
+            inbox_pos = new DHPoint(_screen.screenWidth * .4,
+                                    _screen.screenHeight * .4);
             this.initNotifications();
             // forgive me
             this.notifications_text._textField = null
@@ -227,9 +232,6 @@ package com.starmaid.Cibele.management {
             this.notifications_box.x = this.img_msg.x;
             this.notifications_box.y = this.img_msg.y;
 
-            var inbox_pos:DHPoint = new DHPoint(_screen.screenWidth * .4,
-                                                _screen.screenHeight * .4);
-
             imgClass = ImgInbox;
             imgSize = new DHPoint(528, 338);
             if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
@@ -241,6 +243,7 @@ package com.starmaid.Cibele.management {
             this.img_inbox.loadGraphic(imgClass, false, false, imgSize.x, imgSize.y);
             this.img_inbox.scrollFactor = new FlxPoint(0, 0);
             this.img_inbox.active = false;
+            this.img_inbox.visible = false;
             if (addToState) {
                 FlxG.state.add(this.img_inbox);
             }
@@ -263,15 +266,6 @@ package com.starmaid.Cibele.management {
             if (addToState){
                 FlxG.state.add(this.exit_ui);
             }
-
-            this.exit_inbox_rect = new FlxRect(this.exit_ui.x,
-                                               this.exit_ui.y,
-                                               this.exit_ui.width,
-                                               this.exit_ui.height);
-            this.exit_inbox_rect.x = this.exit_ui.x;
-            this.exit_inbox_rect.y = this.exit_ui.y;
-
-            this.img_inbox.visible = false;
 
             this.exit_msg = new FlxText(this.img_inbox.x + 20,
                 this.img_inbox.y + (this.img_inbox.height-40),
@@ -373,11 +367,42 @@ package com.starmaid.Cibele.management {
             }
         }
 
+        public function updateUIPositions():void {
+            var _screen:ScreenManager = ScreenManager.getInstance();
+            inbox_pos.x = _screen.screenWidth / 2 - this.img_inbox.width / 2;
+            inbox_pos.y = _screen.screenHeight / 2 - this.img_inbox.height / 2;
+
+            this.img_inbox.setPos(inbox_pos);
+
+            this.exit_ui.x = this.img_inbox.x + (this.img_inbox.width - 20);
+            this.exit_ui.y = this.img_inbox.y + 5;
+
+            this.exit_msg.x = this.img_inbox.x + 20;
+            this.exit_msg.y = this.img_inbox.y + (this.img_inbox.height-40);
+            this.exit_box = new FlxRect(this.exit_msg.x, this.exit_msg.y, 57,
+                                        this.exit_msg.height);
+
+            this.reply_to_msg.x = this.img_inbox.x + 70;
+            this.reply_to_msg.y = this.img_inbox.y + (this.img_inbox.height - 40);
+            this.reply_box = new FlxRect(this.reply_to_msg.x,
+                                         this.reply_to_msg.y, 64,
+                                         this.reply_to_msg.height);
+
+            for(var i:int = 0; i < this.threads.length; i++) {
+                this.threads[i].inbox_ref = this.img_inbox;
+                this.threads[i].updatePos();
+                if(i != 0){
+                    this.threads[i].setListPos(this.threads[i - 1].pos);
+                }
+            }
+        }
+
         public function update():void {
             this.currentTime = new Date().valueOf();
             this.timeAlive = this.currentTime - this.bornTime;
 
             this.updateUnreadNotification();
+            this.updateUIPositions();
 
             var cur_thread:Thread;
             this.unread_count = 0;

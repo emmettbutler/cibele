@@ -1,4 +1,5 @@
 package com.starmaid.Cibele.entities {
+    import com.starmaid.Cibele.utils.Utils;
     import com.starmaid.Cibele.management.Path;
     import com.starmaid.Cibele.management.DebugConsoleManager;
     import com.starmaid.Cibele.management.ScreenManager;
@@ -21,7 +22,6 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/characters/c_walk.png")] private var ImgCibWalk:Class;
         [Embed(source="/../assets/images/characters/cib_attack.png")] private var ImgAttack:Class;
         [Embed(source="/../assets/images/characters/cib_shadow_blue.png")] private var ImgShadowBlue:Class;
-        [Embed(source="/../assets/audio/effects/sfx_uigeneral.mp3")] private var SfxUI:Class;
         [Embed(source="/../assets/audio/effects/sfx_cibattack.mp3")] private var SfxAttack1:Class;
         [Embed(source="/../assets/audio/effects/sfx_cibattack2.mp3")] private var SfxAttack2:Class;
 
@@ -171,7 +171,7 @@ package com.starmaid.Cibele.entities {
                         cur is UIElement && cur.visible)
                     {
                         ui_clicked = true;
-                        this.playUIGeneralSFX();
+                        SoundManager.getInstance().playUIGeneralSFX();
                     } else if (cur is Enemy) {
                         if(this._state == STATE_IN_ATTACK) {
                             return;
@@ -267,12 +267,6 @@ package com.starmaid.Cibele.entities {
             }
         }
 
-        public function playUIGeneralSFX():void {
-            SoundManager.getInstance().playSound(
-                SfxUI, 1*GameSound.MSEC_PER_SEC, null, false, .3, GameSound.SFX,
-                "" + Math.random()
-            );
-        }
 
         public function walk():void {
             var walkDirection:DHPoint = walkTarget.sub(footPos).normalized();
@@ -302,11 +296,6 @@ package com.starmaid.Cibele.entities {
             FlxG.state.add(this);
             FlxG.state.add(this.nameText);
             FlxG.state.add(this.debugText);
-        }
-
-        public static function interpolate(normValue:Number, minimum:Number,
-                                           maximum:Number):Number {
-            return minimum + (maximum - minimum) * normValue;
         }
 
         public function doMovementState():void {
@@ -355,9 +344,9 @@ package com.starmaid.Cibele.entities {
                 this.mouseDownTime = new Date().valueOf();
             }
             if(this.walkTarget != null) {
-                this.cameraPos.x = interpolate(.1, this.cameraPos.x,
+                this.cameraPos.x = Utils.interpolate(.1, this.cameraPos.x,
                                                this.pos.center(this).x);
-                this.cameraPos.y = interpolate(.1, this.cameraPos.y,
+                this.cameraPos.y = Utils.interpolate(.1, this.cameraPos.y,
                                                this.pos.center(this).y);
             }
 
@@ -406,7 +395,7 @@ package com.starmaid.Cibele.entities {
 
             if (this._state == STATE_WALK || this._state == STATE_WALK_HARD) {
                 this.walk();
-                if(FlxG.mouse.pressed()) {
+                if(this.mouseHeld) {
                     this.walkTarget = new DHPoint(FlxG.mouse.x, FlxG.mouse.y);
                 } else if(FlxG.mouse.justReleased()) {
                     this.click_anim_lock = false;
