@@ -18,7 +18,7 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/effects/sfx_roomtone.mp3")] private var SFXRoomTone:Class;
 
         public var bg:GameObject, folder_structure:Object, leafPopups:Array;
-        public var folder_builder:FolderBuilder, folderElementListsMerged:Boolean;
+        public var folder_builder:FolderBuilder;
 
         public static var ROOMTONE:String = "desktop room tone";
 
@@ -60,12 +60,6 @@ package com.starmaid.Cibele.states {
 
         override public function update():void{
             super.update();
-
-            if (!folderElementListsMerged) {
-                folderElementListsMerged = true;
-                this.folder_builder.addElementsFrom(PopUpManager.getInstance().folder_builder);
-                PopUpManager.getInstance().folder_builder.addElementsFrom(this.folder_builder);
-            }
 
             var mouseScreenRect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
             var clicked:GameObject;

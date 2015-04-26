@@ -133,8 +133,11 @@ package com.starmaid.Cibele.management {
                 cur = this.allClickableElements[i];
                 isAbove = (FlxG.state as GameState).getZIndex(cur) >
                           (FlxG.state as GameState).getZIndex(curClicked);
+                if (cur.slug == HITBOX_TAG) {
+                    isAbove = curClicked == null;
+                }
                 if(mouse_rect.overlaps(cur._getRect()) && cur.visible) {
-                    if (isAbove || (curClicked != null && curClicked.slug == HITBOX_TAG)) {
+                    if (isAbove) {
                         curClicked = cur;
                     }
                 }
@@ -151,9 +154,7 @@ package com.starmaid.Cibele.management {
                 if (cur["contents"] is Array) {
                     if (cur["folder_sprite"].visible) {
                         if(mouse_rect.overlaps(cur["x_sprite"]._getRect())) {
-                            FlxG.log("1" + cur["name"]); //for x bug, this prints
                             if(cur["x_sprite"] == clicked) {
-                                FlxG.log("2" + cur["name"]); // but not this
                                 propagateClick = false;
                                 cur["folder_sprite"].visible = false;
                                 cur["x_sprite"].visible = false;
