@@ -72,7 +72,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": Convo9, "len": 11*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "delay": 0, endfn: showProfEmail
                 },
                 {
                     "audio": Convo10, "len": 59*GameSound.MSEC_PER_SEC,
@@ -149,6 +149,10 @@ package com.starmaid.Cibele.states {
 
         public function showFirstSelfie():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.HI_SELFIE_DC);
+        }
+
+        public function showProfEmail():void {
+            PopUpManager.getInstance().sendPopup(PopUpManager.HI_EMAIL_3);
         }
 
         public function startBoss():void {

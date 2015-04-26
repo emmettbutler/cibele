@@ -54,6 +54,7 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/hi_email/flight_email.png")] private static var ImgHiFlightEmail:Class;
         [Embed(source="/../assets/images/ui/popups/picly/hi_ichi_1.png")] private static var ImgHiPicly1:Class;
         [Embed(source="/../assets/images/ui/popups/hi_email/class_email.png")] private static var ImgHiClassEmail:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_email/prof_email.png")] private static var ImgHiProfEmail:Class;
 
         public static var _instance:PopUpManager = null;
 
@@ -122,6 +123,7 @@ package com.starmaid.Cibele.management {
         public static const HI_EMAIL_2:String = "hi_class_email";
         public static const HI_PICLY_1:String = "hi_picly_1";
         public static const HI_SELFIE_DC:String = "hi_selfie_dc";
+        public static const HI_EMAIL_3:String = "hi_prof_dc";
 
         public function PopUpManager() {
             this.elements = new Array();
@@ -362,7 +364,7 @@ package com.starmaid.Cibele.management {
 
             this.internet_button = new DockButton(
                 this.game_button.x + this.game_button.width + 30,
-                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_1, EU_EMAIL_SELFIE, EU_EMAIL_2, HI_EMAIL_1, HI_EMAIL_2], BUTTON_INTERNET);
+                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_1, EU_EMAIL_SELFIE, EU_EMAIL_2, HI_EMAIL_1, HI_EMAIL_2, HI_EMAIL_3], BUTTON_INTERNET);
             this.internet_button.loadGraphic(ImgInternetButton, false, false,
                                              88, 75);
             this.internet_button.visible = true;
@@ -421,6 +423,7 @@ package com.starmaid.Cibele.management {
             this.popups[HI_PICLY_1] = new PopUp(ImgHiPicly1, 356, 463, 0, HI_PICLY_1);
             this.popups[HI_EMAIL_2] = new PopUp(ImgHiClassEmail, 631, 356, 0, HI_EMAIL_2);
             this.popups[HI_SELFIE_DC] = new PopUp(ImgCibCamDisconnect, 286, 184, 0, HI_SELFIE_DC);
+            this.popups[HI_EMAIL_3] = new PopUp(ImgHiProfEmail, 631, 356, 0, HI_EMAIL_3);
 
             this.setDefaultDockPopups();
 
