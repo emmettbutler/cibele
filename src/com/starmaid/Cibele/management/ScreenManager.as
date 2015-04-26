@@ -93,6 +93,8 @@ package com.starmaid.Cibele.management {
         private function setupFullscreenMode():void {
             screenWidth = FlxG.stage.fullScreenWidth;
             screenHeight = FlxG.stage.fullScreenHeight;
+            FlxG.width = screenWidth;
+            FlxG.height = screenHeight;
             FlxG.stage.fullScreenSourceRect = new Rectangle(0, 0, screenWidth,
                                                             screenHeight);
             FlxG.stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
