@@ -143,16 +143,16 @@ def run_main(conf_file, runtime):
     subprocess.call(command.split())
 
 
-def package_application(entry_point_class, swf_path, platform="air"):
+def package_application(entry_point_class, swf_path, platform="air", outfile_name="CibeleBeta"):
     """
     To generate cibelecert.pfx:
         adt -certificate -cn SelfSign -ou QE -o "Star Maid Games" -c US 2048-RSA cibelecert.pfx AmanoJyakku!
     """
-    outfile = "CibeleBeta.air"
+    outfile = "{}.air".format(outfile_name)
     target = ""
     if platform == "mac":
         target = "-target bundle"
-        outfile = "CibeleBeta.app"
+        outfile = "{}.app".format(outfile_name)
     command = "adt -package -storetype pkcs12 -keystore cibelecert.pfx {target} {outfile} {entry_point_class}.xml {swf_path} assets".format(
         entry_point_class=entry_point_class, swf_path=swf_path, target=target, outfile=outfile)
     print command
@@ -178,7 +178,8 @@ def main():
         conf_path = write_conf_file(swf_path, entry_point_class, args.version_id[0])
 
         if args.package:
-            package_application(entry_point_class, swf_path, platform=args.platform)
+            package_application(entry_point_class, swf_path, platform=args.platform,
+                                outfile_name=args.outfile_name)
         else:
             run_main(conf_path, args.runtime[0])
 
@@ -194,6 +195,9 @@ if __name__ == "__main__":
     parser.add_argument('--version_id', '-v', metavar="VERSION_ID", type=str,
                         nargs=1, default=["3.1"],
                         help="The xml namespace version to compile against")
+    parser.add_argument('--outfile_name', '-o', metavar="OUTFILE_NAME", type=str,
+                        default="CibeleBeta",
+                        help="The name of the output file to generate during packaging, without extension")
     parser.add_argument('--config', '-c', metavar="CONFIG", type=str,
                         default="settings.ini", nargs=1,
                         help="The config file to use")
