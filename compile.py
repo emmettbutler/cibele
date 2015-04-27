@@ -91,8 +91,8 @@ def compile_main(entry_point_class,
     command = [
         "amxmlc", "src/{entry_point_class}.as".format(entry_point_class=entry_point_class), "-o",
         swfpath,
-        "-use-network=false", "-verbose-stacktraces={}".format(stacktraces),
         "-compiler.include-libraries", libpath,
+        "-use-network=false", "-verbose-stacktraces={}".format(stacktraces),
         "-debug={}".format(debug),
         "-omit-trace-statements={}".format(omit_trace),
         "-define=CONFIG::debug,{}".format(debug_flag),
@@ -102,7 +102,7 @@ def compile_main(entry_point_class,
         "-define=CONFIG::disable_saves,{}".format("true" if disable_saves else "false")
     ]
     print " ".join(command)
-    subprocess.check_call(command)
+    subprocess.check_call(command, shell=True)
     return swfpath
 
 
@@ -153,10 +153,13 @@ def package_application(entry_point_class, swf_path, platform="air", outfile_nam
     if platform == "mac":
         target = "-target bundle"
         outfile = "{}.app".format(outfile_name)
+    elif platform == "windows":
+        target = "-target bundle"
+        outfile = outfile_name
     command = "adt -package -storetype pkcs12 -keystore cibelecert.pfx {target} {outfile} {entry_point_class}.xml {swf_path} assets".format(
         entry_point_class=entry_point_class, swf_path=swf_path, target=target, outfile=outfile)
     print command
-    subprocess.call(command.split())
+    subprocess.call(command.split(), shell=True)
 
 
 def main():
@@ -213,7 +216,7 @@ if __name__ == "__main__":
     parser.add_argument('--windowed', '-w', action="store_true",
                         help="Default this build to windowed mode")
     parser.add_argument('--platform', '-t', type=str, default="air",
-                        help="The platform for which to build an executable (mac | air)")
+                        help="The platform for which to build an executable (windows | mac | air)")
     parser.add_argument('--copy_path', '-a', action="store_true",
                         help="Copy editor path files to source control")
     parser.add_argument('--run_only', '-r', action="store_true",
