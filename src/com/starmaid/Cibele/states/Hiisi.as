@@ -37,7 +37,8 @@ package com.starmaid.Cibele.states {
         public function Hiisi() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_HI;
 
-            this.bitDialogueLock = false;
+            //currently no bit dialogue is playing in this act. may want to change later.
+            this.bitDialogueLock = true;
             PopUpManager.GAME_ACTIVE = true;
 
             GlobalTimer.getInstance().deleteMark(BOSS_MARK);
@@ -51,20 +52,20 @@ package com.starmaid.Cibele.states {
                     "delay": 0, endfn: showBlakeSelfie
                 },
                 {
-                    "audio": Convo4, "len": 61*GameSound.MSEC_PER_SEC,
+                    "audio": Convo4, "len": 71*GameSound.MSEC_PER_SEC,
                     "delay": 0, endfn: showBeccaEmail
                 },
                 {
-                    "audio": Convo5, "len": 20*GameSound.MSEC_PER_SEC,
+                    "audio": Convo5, "len": 30*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": Convo6, "len": 21*GameSound.MSEC_PER_SEC,
+                    "audio": Convo6, "len": 31*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": Convo7, "len": 36*GameSound.MSEC_PER_SEC,
-                    "delay": 0, endfn: showFirstSelfie
+                    "audio": Convo7, "len": 50*GameSound.MSEC_PER_SEC,
+                    "delay": 0
                 },
                 {
                     "audio": Convo8, "len": 58*GameSound.MSEC_PER_SEC,
@@ -79,7 +80,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0
                 },
                 {
-                    "audio": Convo11, "len": 22*GameSound.MSEC_PER_SEC,
+                    "audio": Convo11, "len": 40*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
@@ -87,7 +88,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0, endfn: startBoss, "ends_with_popup": false
                 },
                 {
-                    "audio": null, "len": 20*GameSound.MSEC_PER_SEC,
+                    "audio": null, "len": 60*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": killBoss, "ends_with_popup": false
                 },
                 {
@@ -95,11 +96,11 @@ package com.starmaid.Cibele.states {
                     "delay": 0
                 },
                 {
-                    "audio": Convo13, "len": 27*GameSound.MSEC_PER_SEC,
+                    "audio": Convo13, "len": 37*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": Convo14, "len": 41*GameSound.MSEC_PER_SEC,
+                    "audio": Convo14, "len": 45*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 }
             ];
@@ -130,7 +131,7 @@ package com.starmaid.Cibele.states {
 
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
                 SoundManager.getInstance().playSound(
-                        Convo1, 19*GameSound.MSEC_PER_SEC, firstConvoPartTwo, false, 1, GameSound.VOCAL,
+                        Convo1, 29*GameSound.MSEC_PER_SEC, firstConvoPartTwo, false, 1, GameSound.VOCAL,
                         "hi_convo_1_hall"
                     );
                 }
@@ -138,7 +139,7 @@ package com.starmaid.Cibele.states {
 
         public function firstConvoPartTwo():void {
             SoundManager.getInstance().playSound(
-                    Convo2, 24*GameSound.MSEC_PER_SEC, this.showFlightEmail, false, 1, GameSound.VOCAL,
+                    Convo2, 27*GameSound.MSEC_PER_SEC, this.showFlightEmail, false, 1, GameSound.VOCAL,
                     "hi_convo_2_hall"
                 );
         }
@@ -165,7 +166,6 @@ package com.starmaid.Cibele.states {
 
         public function startBoss():void {
             GlobalTimer.getInstance().setMark(BOSS_MARK, 1*GameSound.MSEC_PER_SEC);
-            this.bitDialogueLock = true;
         }
 
         public function killBoss():void {
