@@ -70,7 +70,8 @@ def compile_main(entry_point_class,
                  debug_level,
                  mute=False,
                  disable_saves=False,
-                 windowed=False):
+                 windowed=False,
+                 platform="air"):
     stacktraces = "true"
     omit_trace = "false"
     debug = "true"
@@ -102,7 +103,7 @@ def compile_main(entry_point_class,
         "-define=CONFIG::disable_saves,{}".format("true" if disable_saves else "false")
     ]
     print " ".join(command)
-    subprocess.check_call(command, shell=True)
+    subprocess.check_call(command, shell=platform == "windows")
     return swfpath
 
 
@@ -159,7 +160,7 @@ def package_application(entry_point_class, swf_path, platform="air", outfile_nam
     command = "adt -package -storetype pkcs12 -keystore cibelecert.pfx {target} {outfile} {entry_point_class}.xml {swf_path} assets".format(
         entry_point_class=entry_point_class, swf_path=swf_path, target=target, outfile=outfile)
     print command
-    subprocess.call(command.split(), shell=True)
+    subprocess.call(command.split(), shell=platform == "windows")
 
 
 def main():
@@ -177,7 +178,8 @@ def main():
         swf_path = compile_main(entry_point_class.split('.')[-1], libpath,
                                 args.debug_level[0], mute=args.mute,
                                 disable_saves=args.disable_saves,
-                                windowed=args.windowed)
+                                windowed=args.windowed,
+                                platform=args.platform)
         conf_path = write_conf_file(swf_path, entry_point_class, args.version_id[0])
 
         if args.package:
