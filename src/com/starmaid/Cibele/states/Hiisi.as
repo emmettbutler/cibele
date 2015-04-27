@@ -183,21 +183,73 @@ package com.starmaid.Cibele.states {
         }
 
         override public function finalConvoDone():void {
-            GlobalTimer.getInstance().setMark("eu end", 5*GameSound.MSEC_PER_SEC, this.playEndFilm);
+            GlobalTimer.getInstance().setMark("hi end", 5*GameSound.MSEC_PER_SEC, this.playEndFilm);
+        }
+
+        public function playMeetupV1():void {
+            PopUpManager.GAME_ACTIVE = false;
+            FlxG.switchState(new PlayVideoState("/../assets/video/4.1 Meetup_v1.mp4",
+                        playHallways)
+            );
+        }
+
+        public function playHallways():void {
+            FlxG.switchState(new PlayVideoState("/../assets/video/4.2 Hallways_v1.mp4",
+                playBlankScreen1)
+            );
+        }
+
+        public function playBlankScreen1():void {
+            FlxG.switchState(new BlankScreen(7*GameSound.MSEC_PER_SEC,
+                playSexFilm)
+            );
+        }
+
+        public function playSexFilm():void {
+            FlxG.switchState(new PlayVideoState("/../assets/video/4.3 Sex_v1.mp4",
+                playBlankScreen2)
+            );
+        }
+
+        public function playBlankScreen2():void {
+            FlxG.switchState(new BlankScreen(7*GameSound.MSEC_PER_SEC,
+                playGoodbye)
+            );
+        }
+
+        public function playGoodbye():void {
+            FlxG.switchState(new PlayVideoState("/../assets/video/4.4 Goodbye_v1.mp4",
+                playBlankScreen3)
+            );
+        }
+
+        public function playBlankScreen3():void {
+            FlxG.switchState(new BlankScreen(7*GameSound.MSEC_PER_SEC,
+                playEnd)
+            );
+        }
+
+        public function playEnd():void {
+            FlxG.switchState(new PlayVideoState("/../assets/video/4.5 Turn off_v1.mp4",
+                playBlankScreen4)
+            );
+        }
+
+        public function playBlankScreen4():void {
+            FlxG.switchState(new BlankScreen(7*GameSound.MSEC_PER_SEC,
+                playCredits)
+            );
+        }
+
+        public function playCredits():void {
+            FlxG.switchState(new StartScreen());
         }
 
         public function playEndFilm():void {
             //SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
                     //false, 1, GameSound.BGM);
             FlxG.switchState(new BlankScreen(5*GameSound.MSEC_PER_SEC,
-                function():void {
-                    PopUpManager.GAME_ACTIVE = false;
-                    new PlayVideoState("/../assets/video/Phone Talk_v1.mp4",
-                        function():void {
-                            FlxG.switchState(new StartScreen());
-                        }, null
-                    )
-                }
+                playMeetupV1
             ));
         }
     }
