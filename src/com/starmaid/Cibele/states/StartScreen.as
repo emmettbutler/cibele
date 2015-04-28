@@ -47,6 +47,7 @@ package com.starmaid.Cibele.states {
                 function ():void { startGame(); }
             );
             this.menuButtons.push(this._startButton);
+            this._startButton.addToState();
 
             this._loadButton = new MenuButton(
                 new DHPoint(
@@ -58,6 +59,7 @@ package com.starmaid.Cibele.states {
                 function ():void { startGame(true); }
             );
             this.menuButtons.push(this._loadButton);
+            this._loadButton.addToState();
 
             this._quitButton = new MenuButton(
                 new DHPoint(
@@ -69,6 +71,7 @@ package com.starmaid.Cibele.states {
                 function ():void { NativeApplication.nativeApplication.exit(); }
             );
             this.menuButtons.push(this._quitButton);
+            this._quitButton.addToState();
 
             super.postCreate();
         }

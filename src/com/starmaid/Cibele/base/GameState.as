@@ -1,6 +1,7 @@
 package com.starmaid.Cibele.base {
     import com.starmaid.Cibele.entities.LoadingScreen;
     import com.starmaid.Cibele.entities.PauseScreen;
+    import com.starmaid.Cibele.entities.MenuButton;
     import com.starmaid.Cibele.management.DebugConsoleManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.management.MessageManager;
@@ -334,6 +335,10 @@ package com.starmaid.Cibele.base {
             this.pauseScreen.visible = GlobalTimer.getInstance().isPaused();
         }
 
+        public function addMenuButton(button:MenuButton):void {
+            this.menuButtons.push(button);
+        }
+
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
             if (this.updatePopup) {
                 PopUpManager.getInstance().clickCallback(screenPos, worldPos);
@@ -346,7 +351,7 @@ package com.starmaid.Cibele.base {
                                        this.menuButtons[i].y,
                                        this.menuButtons[i].width,
                                        this.menuButtons[i].height);
-                if (_mouseRect.overlaps(_curRect)) {
+                if (_mouseRect.overlaps(_curRect) && this.menuButtons[i].visible) {
                     this.menuButtons[i].clickCallback();
                 }
             }

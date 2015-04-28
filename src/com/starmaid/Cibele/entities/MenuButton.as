@@ -16,11 +16,19 @@ package com.starmaid.Cibele.entities {
             this._clickFn = clickFn;
 
             this.makeGraphic(dim.x, dim.y, 0xff9966ff);
-            FlxG.state.add(this);
 
             this._text = new FlxText(pos.x, pos.y, dim.x, txt);
             this._text.setFormat("NexaBold-Regular", 24, 0xffffffff, "center");
+        }
+
+        public function addToState():void {
+            FlxG.state.add(this);
             FlxG.state.add(this._text);
+        }
+
+        public function setVisible(val:Boolean):void {
+            this._text.visible = val;
+            this.visible = val;
         }
 
         public function clickCallback():void {
