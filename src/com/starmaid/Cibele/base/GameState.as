@@ -1,5 +1,6 @@
 package com.starmaid.Cibele.base {
     import com.starmaid.Cibele.entities.LoadingScreen;
+    import com.starmaid.Cibele.entities.PauseScreen;
     import com.starmaid.Cibele.management.DebugConsoleManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.management.MessageManager;
@@ -21,7 +22,8 @@ package com.starmaid.Cibele.base {
                       updateMessages:Boolean, showEmoji:Boolean = true,
                       enable_fade:Boolean = false;
         protected var game_cursor:GameCursor, baseLayer:GameObject;
-        private var pauseLayer:GameObject, fadeLayer:GameObject;
+        private var fadeLayer:GameObject;
+        private var pauseScreen:PauseScreen;
         private var sortedObjects:Array;
         private var postFadeFn:Function;
         private var postFadeWait:Number;
@@ -76,15 +78,7 @@ package com.starmaid.Cibele.base {
             );
             this.add(this.baseLayer);
 
-            this.pauseLayer = new GameObject(new DHPoint(0, 0));
-            this.pauseLayer.scrollFactor = new DHPoint(0, 0);
-            this.pauseLayer.active = false;
-            this.pauseLayer.makeGraphic(
-                ScreenManager.getInstance().screenWidth,
-                ScreenManager.getInstance().screenHeight,
-                0xaa000000
-            );
-            this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
+            this.pauseScreen = new PauseScreen();
 
             CONFIG::debug {
                 this.fpsCounter = new FPSCounter();
@@ -238,7 +232,7 @@ package com.starmaid.Cibele.base {
             }
 
             if (!this.containsPauseLayer()) {
-                FlxG.state.add(this.pauseLayer);
+                this.pauseScreen.addToState();
             }
 
             this.updateCursor();
@@ -296,7 +290,7 @@ package com.starmaid.Cibele.base {
 
         public function containsPauseLayer():Boolean {
             for (var i:int = 0; i < this.members.length; i++) {
-                if (this.members[i] == this.pauseLayer) {
+                if (this.members[i] == this.pauseScreen.base) {
                     return true;
                 }
             }
@@ -331,13 +325,13 @@ package com.starmaid.Cibele.base {
         public function pause():void {
             GlobalTimer.getInstance().pause();
             SoundManager.getInstance().pause();
-            this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
+            this.pauseScreen.visible = GlobalTimer.getInstance().isPaused();
         }
 
         public function resume():void {
             GlobalTimer.getInstance().resume();
             SoundManager.getInstance().resume();
-            this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
+            this.pauseScreen.visible = GlobalTimer.getInstance().isPaused();
         }
 
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
