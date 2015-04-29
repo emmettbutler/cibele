@@ -24,6 +24,7 @@ package com.starmaid.Cibele.base {
                       updateMessages:Boolean, showEmoji:Boolean = true,
                       enable_fade:Boolean = false;
         protected var game_cursor:GameCursor, baseLayer:GameObject;
+        protected var pausable:Boolean = true;
         private var fadeLayer:GameObject;
         private var pauseScreen:PauseScreen;
         private var sortedObjects:Array;
@@ -269,7 +270,7 @@ package com.starmaid.Cibele.base {
             } else if (FlxG.keys.justPressed("ESCAPE")) {
                 if (GlobalTimer.getInstance().isPaused()) {
                     this.resume();
-                } else {
+                } else if (this.pausable){
                     this.pause();
                 }
             }
@@ -352,7 +353,9 @@ package com.starmaid.Cibele.base {
             var _mouseRect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 1, 1);
             var _curRect:FlxRect;
             for (var i:int = 0; i < this.menuButtons.length; i++) {
-                if (!this.menuButtons[i].observeGlobalPause) {
+                if ((GlobalTimer.getInstance().isPaused() && !this.menuButtons[i].observeGlobalPause) ||
+                    !GlobalTimer.getInstance().isPaused())
+                {
                     _curRect = new FlxRect(this.menuButtons[i].x,
                                         this.menuButtons[i].y,
                                         this.menuButtons[i].width,

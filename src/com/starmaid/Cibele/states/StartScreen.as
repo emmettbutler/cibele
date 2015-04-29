@@ -22,6 +22,7 @@ package com.starmaid.Cibele.states {
 
         override public function create():void {
             this.enable_fade = true;
+            this.pausable = false;
             super.create();
             FlxG.bgColor = 0xff000000;
 
@@ -81,9 +82,11 @@ package com.starmaid.Cibele.states {
                 ScreenManager.getInstance().levelTracker.loadProgress();
             }
 
+            trace("starting");
+
             var fn:Function;
 
-            if(ScreenManager.getInstance().levelTracker.it()) {
+            if(!shouldLoad || ScreenManager.getInstance().levelTracker.it()) {
                 fn = function ():void {
                     SoundManager.getInstance().playSound(VidBGMLoop, 24*GameSound.MSEC_PER_SEC, null, false, 1, Math.random()*5000+100);
                     FlxG.switchState(
@@ -94,11 +97,11 @@ package com.starmaid.Cibele.states {
                             }
                         ));
                 }
-            } else if(ScreenManager.getInstance().levelTracker.eu()) {
+            } else if(shouldLoad && ScreenManager.getInstance().levelTracker.eu()) {
                 fn = function():void {
                     FlxG.switchState(new EuryaleDesktop());
                 }
-            } else if(ScreenManager.getInstance().levelTracker.hi()) {
+            } else if(shouldLoad && ScreenManager.getInstance().levelTracker.hi()) {
             }
 
             this.fadeOut(fn, 4 * GameSound.MSEC_PER_SEC);

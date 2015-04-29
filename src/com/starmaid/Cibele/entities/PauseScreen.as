@@ -1,9 +1,11 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.entities.MenuButton;
+    import com.starmaid.Cibele.states.StartScreen;
 
     import org.flixel.*;
 
@@ -11,7 +13,7 @@ package com.starmaid.Cibele.entities {
 
     public class PauseScreen {
         private var baseLayer:GameObject;
-        private var quitButton:MenuButton;
+        private var quitButton:MenuButton, titleScreenButton:MenuButton;
         private var _state:GameState;
         private var buttons:Array;
 
@@ -42,6 +44,22 @@ package com.starmaid.Cibele.entities {
             this.quitButton.observeGlobalPause = false;
             this.buttons.push(this.quitButton);
             this._state.addMenuButton(this.quitButton);
+
+            this.titleScreenButton = new MenuButton(
+                new DHPoint(
+                    ScreenManager.getInstance().screenWidth / 2 - _buttonWidth / 2,
+                    ScreenManager.getInstance().screenHeight - 160
+                ),
+                new DHPoint(_buttonWidth, 30),
+                "Title Screen",
+                function ():void {
+                    (FlxG.state as GameState).resume();
+                    FlxG.switchState(new StartScreen());
+                }
+            );
+            this.titleScreenButton.observeGlobalPause = false;
+            this.buttons.push(this.titleScreenButton);
+            this._state.addMenuButton(this.titleScreenButton);
 
             this.visible = false;
         }
