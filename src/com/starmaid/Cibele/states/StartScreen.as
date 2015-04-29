@@ -82,8 +82,6 @@ package com.starmaid.Cibele.states {
                 ScreenManager.getInstance().levelTracker.loadProgress();
             }
 
-            trace("starting");
-
             var fn:Function;
 
             if(!shouldLoad || ScreenManager.getInstance().levelTracker.it()) {

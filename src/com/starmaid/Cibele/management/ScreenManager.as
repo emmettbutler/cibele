@@ -1,7 +1,11 @@
 package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.states.StartScreen;
+    import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.PopUpManager;
 
     import org.flixel.*;
 
@@ -175,6 +179,16 @@ package com.starmaid.Cibele.management {
 
         public function onFocusLost(e:Event):void {
             (FlxG.state as GameState).pause();
+        }
+
+        public function resetGame():void {
+            PopUpManager.GAME_ACTIVE = false;
+            SoundManager.getInstance().resetAll();
+            GlobalTimer.resetInstance();
+            MessageManager.resetInstance();
+            PopUpManager.resetInstance();
+            (FlxG.state as GameState).resume();
+            FlxG.switchState(new StartScreen());
         }
 
         public static function getInstance():ScreenManager {

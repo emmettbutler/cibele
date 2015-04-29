@@ -519,6 +519,10 @@ package com.starmaid.Cibele.management {
             this.maximizeInboxFlag = true;
         }
 
+        public static function resetInstance():void {
+            _instance = new MessageManager();
+        }
+
         public static function getInstance():MessageManager {
             if (_instance == null) {
                 _instance = new MessageManager();

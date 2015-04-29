@@ -98,6 +98,11 @@ package com.starmaid.Cibele.utils {
             }
         }
 
+        public static function resetInstance():void {
+            _instance = new GlobalTimer();
+        }
+
+
         public static function getInstance():GlobalTimer {
             if (_instance == null) {
                 _instance = new GlobalTimer();

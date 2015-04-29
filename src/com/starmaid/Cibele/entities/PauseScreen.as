@@ -52,10 +52,7 @@ package com.starmaid.Cibele.entities {
                 ),
                 new DHPoint(_buttonWidth, 30),
                 "Title Screen",
-                function ():void {
-                    (FlxG.state as GameState).resume();
-                    FlxG.switchState(new StartScreen());
-                }
+                function ():void { ScreenManager.getInstance().resetGame(); }
             );
             this.titleScreenButton.observeGlobalPause = false;
             this.buttons.push(this.titleScreenButton);
