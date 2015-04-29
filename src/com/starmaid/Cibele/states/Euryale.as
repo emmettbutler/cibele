@@ -176,7 +176,7 @@ package com.starmaid.Cibele.states {
                     PopUpManager.GAME_ACTIVE = false;
                     new PlayVideoState("/../assets/video/Phone Talk_v1.mp4",
                         function():void {
-                            FlxG.switchState(new StartScreen());
+                            ScreenManager.getInstance.resetGame();
                         }, null
                     )
                 }

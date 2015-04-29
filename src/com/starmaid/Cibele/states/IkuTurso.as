@@ -168,7 +168,7 @@ package com.starmaid.Cibele.states {
                             FlxG.switchState(new BlankScreen(6*GameSound.MSEC_PER_SEC,
                                 function():void {
                                     if (ScreenManager.getInstance().RELEASE) {
-                                        FlxG.switchState(new StartScreen());
+                                        ScreenManager.getInstance().resetGame();
                                     } else {
                                         FlxG.switchState(new EuryaleDesktop());
                                     }
