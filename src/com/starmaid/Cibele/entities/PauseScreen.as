@@ -39,6 +39,7 @@ package com.starmaid.Cibele.entities {
                 "Quit",
                 function ():void { NativeApplication.nativeApplication.exit(); }
             );
+            this.quitButton.observeGlobalPause = false;
             this.buttons.push(this.quitButton);
             this._state.addMenuButton(this.quitButton);
 
