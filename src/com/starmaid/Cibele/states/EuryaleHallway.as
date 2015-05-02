@@ -31,14 +31,20 @@ package com.starmaid.Cibele.states {
         public function startEuryaleConvo():void {
             if(!(FlxG.state is Euryale)) {
             } else {
-                GlobalTimer.getInstance().setMark("show friend email from hall", 10*GameSound.MSEC_PER_SEC, (FlxG.state as Euryale).showFriendEmail);
+                if(!SoundManager.getInstance().
+                    soundOfTypeIsPlaying(GameSound.VOCAL))
+                {
+                    GlobalTimer.getInstance().setMark(Euryale.SHOW_FIRST_POPUP,
+                        10*GameSound.MSEC_PER_SEC,
+                        (FlxG.state as Euryale).showFriendEmail);
+                }
             }
         }
 
         public function firstConvoPartTwo():void {
             SoundManager.getInstance().playSound(
                     Convo1_2, 33*GameSound.MSEC_PER_SEC, startEuryaleConvo, false, 1, GameSound.VOCAL,
-                    "eu_convo_1_2_hall"
+                    Euryale.CONVO_1_2_HALL
                 );
         }
 
@@ -48,7 +54,7 @@ package com.starmaid.Cibele.states {
                 accept_call = true;
                 SoundManager.getInstance().playSound(
                     Convo1, 12*GameSound.MSEC_PER_SEC, firstConvoPartTwo, false, 1, GameSound.VOCAL,
-                    "eu_convo_1_hall"
+                    Euryale.CONVO_1_HALL
                 );
             } else {
                 super.clickCallback(screenPos, worldPos);
