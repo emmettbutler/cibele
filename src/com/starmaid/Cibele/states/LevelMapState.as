@@ -20,10 +20,6 @@ package com.starmaid.Cibele.states {
         public var debugText:FlxText;
         public var bgLoader:BackgroundLoader;
 
-        public var bornTime:Number = -1;
-        public var timeAlive:Number = 0;
-        public var currentTime:Number = -1;
-
         public var bitDialogueLock:Boolean = true;
 
         public static const LEVEL_ID:int = 2837465;
@@ -47,7 +43,6 @@ package com.starmaid.Cibele.states {
         override public function create():void {
             super.__create(this.playerStartPos);
 
-            this.bornTime = new Date().valueOf();
             this.ID = LEVEL_ID;
 
             this.bitDialogue = new ProceduralDialogueGenerator(this);
@@ -72,8 +67,6 @@ package com.starmaid.Cibele.states {
 
         override public function update():void {
             super.update();
-            this.currentTime = new Date().valueOf();
-            this.timeAlive = this.currentTime - this.bornTime;
             this.bgLoader.update();
             this.resolveAttacks();
 
