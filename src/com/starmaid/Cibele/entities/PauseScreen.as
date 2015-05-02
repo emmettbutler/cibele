@@ -174,11 +174,15 @@ package com.starmaid.Cibele.entities {
             return this.baseLayer;
         }
 
+        public function get quit_button():GameObject {
+            return this.quitButton;
+        }
+
         public function addToState():void {
             this._state.add(this.baseLayer);
             this.addConfirmDialogue();
             for(var i:int = 0; i < this.buttons.length; i++) {
-                this.buttons[i].addToState();
+                this.buttons[i].addToState(this._state);
             }
         }
     }

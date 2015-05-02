@@ -297,7 +297,7 @@ package com.starmaid.Cibele.base {
 
         public function containsPauseLayer():Boolean {
             for (var i:int = 0; i < this.members.length; i++) {
-                if (this.members[i] == this.pauseScreen.base) {
+                if (this.members[i] == this.pauseScreen.quit_button) {
                     return true;
                 }
             }
