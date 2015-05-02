@@ -2,6 +2,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameState;
+    import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.utils.DHPoint;
 
     import org.flixel.*;
@@ -14,10 +15,11 @@ package com.starmaid.Cibele.entities {
 
         private var lifespan:Number;
 
-        public function Particle(pos:DHPoint, t:Number, lifespan:Number) {
-            super(pos);
-            var rand:Number = Math.random(),
-                randParticle:Number = Math.floor(Math.random() * 2),
+        public function Particle(t:Number, lifespan:Number) {
+            super(new DHPoint(0, 0));
+            this.slug = "particle" + (Math.random() * 1000000);
+            this.lifespan = lifespan;
+            var randParticle:Number = Math.floor(Math.random() * 2),
                 partImage:Class;
             switch (t) {
                 case PartyMember.PARTICLE_ICHI:
@@ -36,22 +38,27 @@ package com.starmaid.Cibele.entities {
                     break;
             }
             this.loadGraphic(partImage, false, false, 10, 10);
+        }
+
+        public function makeAlive():void {
+            this.visible = true;
+            this.active = true;
+            var rand:Number = Math.random();
             this.scale.x = .2 + rand;
             this.scale.y = .2 + rand;
-            this.lifespan = lifespan;
-            (FlxG.state as GameState).add(this);
+            GlobalTimer.getInstance().setMark(this.slug, this.lifespan,
+                                              function():void {
+                                                visible = false;
+                                                active = false;
+                                              }, true);
         }
 
         override public function update():void {
             super.update();
 
-            if (Math.floor(this.timeAlive) % 20 == 0) {
+            if (Math.floor(this.timeAlive) % 15 == 0) {
                 this.scale.x *= .3;
                 this.scale.y *= .3;
-            }
-
-            if (this.timeAlive > this.lifespan) {
-                FlxG.state.remove(this);
             }
         }
     }

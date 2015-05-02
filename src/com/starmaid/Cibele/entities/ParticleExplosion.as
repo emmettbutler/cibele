@@ -11,36 +11,44 @@ package com.starmaid.Cibele.entities {
         private var lifespan:Number;
 
         public function ParticleExplosion(
-            pos:DHPoint,
             particleCount:Number=25,
             particleType:Number=PartyMember.PARTICLE_ICHI)
         {
-            this.pos = pos;
             this.particleCount = particleCount;
             this.particleSpeed = 15;
             this.particles = new Array();
             this.lifespan = 2 * GameSound.MSEC_PER_SEC;
 
             var curPart:Particle, speedMul:Number;
-            for (var angle:Number = 0;
-                 angle < Math.PI * 2;
-                 angle += (Math.PI * 2) / this.particleCount)
-            {
-                curPart = new Particle(this.pos, particleType, this.lifespan);
+            for (var i:int = 0; i < this.particleCount; i++) {
+                curPart = new Particle(particleType, this.lifespan);
+                this.particles.push(curPart);
+                FlxG.state.add(curPart);
+            }
+        }
+
+        public function run(pos:DHPoint):void {
+            this.pos = pos;
+            var speedMul:Number, angle:Number = 0;
+            for(var i:int = 0; i < this.particles.length; i++) {
+                this.particles[i].makeAlive();
+                this.particles[i].setPos(this.pos);
                 speedMul = Math.random() * .5;
-                curPart.dir = new DHPoint(
+                this.particles[i].dir = new DHPoint(
                     Math.cos(angle) * (this.particleSpeed * speedMul),
                     Math.sin(angle) * (this.particleSpeed * speedMul)
                 );
-                this.particles.push(curPart);
+                angle += (Math.PI * 2) / this.particleCount;
             }
         }
 
         public function update():void {
             for(var i:int = 0; i < this.particles.length; i++) {
-                this.particles[i].dir = this.particles[i].dir.add(
-                    new DHPoint(0, .25)
-                );
+                if (this.particles[i].active) {
+                    this.particles[i].dir = this.particles[i].dir.add(
+                        new DHPoint(0, .25)
+                    );
+                }
             }
         }
     }

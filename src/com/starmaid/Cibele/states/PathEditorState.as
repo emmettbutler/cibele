@@ -106,8 +106,7 @@ package com.starmaid.Cibele.states {
             this.pathWalker.addVisibleObjects();
 
             for (var i:int = 0; i < this.enemies.length(); i++) {
-                FlxG.state.add(this.enemies.get_(i).healthBar);
-                FlxG.state.add(this.enemies.get_(i).debugText);
+                this.enemies.get_(i).addVisibleObjects();
             }
 
             super.postCreate();
