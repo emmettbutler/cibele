@@ -114,7 +114,9 @@ package com.starmaid.Cibele.states {
             var current_enemy:Enemy;
             for (var i:int = 0; i < this.enemies.length(); i++) {
                 current_enemy = this.enemies.get_(i);
-                if (obj.enemyIsInAttackRange(current_enemy) && current_enemy == obj.targetEnemy) {
+                if (obj.enemyIsInAttackRange(current_enemy) &&
+                    current_enemy == obj.targetEnemy
+                ) {
                     current_enemy.takeDamage(obj);
                 }
             }

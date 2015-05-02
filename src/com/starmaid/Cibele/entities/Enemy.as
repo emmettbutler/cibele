@@ -26,8 +26,10 @@ package com.starmaid.Cibele.entities {
         protected var disp:DHPoint;
         protected var _healthBar:GameObject;
         protected var closestPartyMemberDisp:DHPoint;
+        protected var takeDamageEventSlug:String;
         private var closestPartyMember:PartyMember;
         private var originalPos:DHPoint;
+        private var damageLockMap:Dictionary;
         public var footPos:DHPoint;
 
         public static const STATE_IDLE:Number = 1;
@@ -52,6 +54,8 @@ package com.starmaid.Cibele.entities {
             this.disp = new DHPoint(0, 0);
             this.zSorted = true;
             this.basePos = new DHPoint(this.x, this.y + this.height);
+            this.takeDamageEventSlug = "damaged" + (Math.random() * 100000000);
+            this.damageLockMap = new Dictionary();
 
             this.setupSprites();
             this.inactiveTarget();
@@ -98,6 +102,15 @@ package com.starmaid.Cibele.entities {
             if (this.isDead()) {
                 return;
             }
+            if (this.damageLockMap[p.slug] == true) {
+                return;
+            }
+            this.damageLockMap[p.slug] = true;
+            GlobalTimer.getInstance().setMark(this.takeDamageEventSlug + p.slug,
+                                              1 * GameSound.MSEC_PER_SEC,
+                                              function():void {
+                                                damageLockMap[p.slug] = false;
+                                              }, true);
             this._state = STATE_RECOIL;
             this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
             this.hitPoints -= this.hitDamage;
