@@ -15,7 +15,7 @@ package com.starmaid.Cibele.entities {
         {
             this.pos = pos;
             this.particleCount = particleCount;
-            this.particleSpeed = 11;
+            this.particleSpeed = 13;
             this.particles = new Array();
 
             var curPart:Particle, speedMul:Number;
