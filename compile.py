@@ -70,7 +70,8 @@ def compile_main(entry_point_class,
                  debug_level,
                  mute=False,
                  disable_saves=False,
-                 windowed=False):
+                 windowed=False,
+                 platform="air"):
     stacktraces = "true"
     omit_trace = "false"
     debug = "true"
@@ -91,8 +92,8 @@ def compile_main(entry_point_class,
     command = [
         "amxmlc", "src/{entry_point_class}.as".format(entry_point_class=entry_point_class), "-o",
         swfpath,
-        "-use-network=false", "-verbose-stacktraces={}".format(stacktraces),
         "-compiler.include-libraries", libpath,
+        "-use-network=false", "-verbose-stacktraces={}".format(stacktraces),
         "-debug={}".format(debug),
         "-omit-trace-statements={}".format(omit_trace),
         "-define=CONFIG::debug,{}".format(debug_flag),
@@ -102,7 +103,7 @@ def compile_main(entry_point_class,
         "-define=CONFIG::disable_saves,{}".format("true" if disable_saves else "false")
     ]
     print " ".join(command)
-    subprocess.check_call(command)
+    subprocess.check_call(command, shell=platform == "windows")
     return swfpath
 
 
@@ -143,20 +144,23 @@ def run_main(conf_file, runtime):
     subprocess.call(command.split())
 
 
-def package_application(entry_point_class, swf_path, platform="air"):
+def package_application(entry_point_class, swf_path, platform="air", outfile_name="CibeleBeta"):
     """
     To generate cibelecert.pfx:
         adt -certificate -cn SelfSign -ou QE -o "Star Maid Games" -c US 2048-RSA cibelecert.pfx AmanoJyakku!
     """
-    outfile = "CibeleBeta.air"
+    outfile = "{}.air".format(outfile_name)
     target = ""
     if platform == "mac":
         target = "-target bundle"
-        outfile = "CibeleBeta.app"
+        outfile = "{}.app".format(outfile_name)
+    elif platform == "windows":
+        target = "-target bundle"
+        outfile = outfile_name
     command = "adt -package -storetype pkcs12 -keystore cibelecert.pfx {target} {outfile} {entry_point_class}.xml {swf_path} assets".format(
         entry_point_class=entry_point_class, swf_path=swf_path, target=target, outfile=outfile)
     print command
-    subprocess.call(command.split())
+    subprocess.call(command.split(), shell=platform == "windows")
 
 
 def main():
@@ -174,11 +178,13 @@ def main():
         swf_path = compile_main(entry_point_class.split('.')[-1], libpath,
                                 args.debug_level[0], mute=args.mute,
                                 disable_saves=args.disable_saves,
-                                windowed=args.windowed)
+                                windowed=args.windowed,
+                                platform=args.platform)
         conf_path = write_conf_file(swf_path, entry_point_class, args.version_id[0])
 
         if args.package:
-            package_application(entry_point_class, swf_path, platform=args.platform)
+            package_application(entry_point_class, swf_path, platform=args.platform,
+                                outfile_name=args.outfile_name)
         else:
             run_main(conf_path, args.runtime[0])
 
@@ -194,6 +200,9 @@ if __name__ == "__main__":
     parser.add_argument('--version_id', '-v', metavar="VERSION_ID", type=str,
                         nargs=1, default=["3.1"],
                         help="The xml namespace version to compile against")
+    parser.add_argument('--outfile_name', '-o', metavar="OUTFILE_NAME", type=str,
+                        default="CibeleBeta",
+                        help="The name of the output file to generate during packaging, without extension")
     parser.add_argument('--config', '-c', metavar="CONFIG", type=str,
                         default="settings.ini", nargs=1,
                         help="The config file to use")
@@ -209,7 +218,7 @@ if __name__ == "__main__":
     parser.add_argument('--windowed', '-w', action="store_true",
                         help="Default this build to windowed mode")
     parser.add_argument('--platform', '-t', type=str, default="air",
-                        help="The platform for which to build an executable (mac | air)")
+                        help="The platform for which to build an executable (windows | mac | air)")
     parser.add_argument('--copy_path', '-a', action="store_true",
                         help="Copy editor path files to source control")
     parser.add_argument('--run_only', '-r', action="store_true",

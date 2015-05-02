@@ -107,8 +107,14 @@ package com.starmaid.Cibele.management {
             }
         }
 
+        public function resetAll():void {
+            for(var i:int = this.runningSounds.length - 1; i >= 0; i--) {
+                this.stopSound(runningSounds[i]);
+            }
+        }
+
         public function clearSoundsByType(_kind:Number):void {
-            for(var i:int = 0; i < this.runningSounds.length; i++) {
+            for(var i:int = this.runningSounds.length - 1; i >= 0; i--) {
                 if(this.runningSounds[i]._type == _kind) {
                     this.stopSound(runningSounds[i]);
                 }

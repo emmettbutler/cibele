@@ -27,10 +27,14 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/voiceover/voc_euryale_meetup.mp3")] private var Convo4_2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_parents.mp3")] private var Convo4_3:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_dredge.mp3")] private var Convo5:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_iwish.mp3")] private var Convo5_1:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_canicallyou.mp3")] private var Convo5_2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_cibyeah.mp3")] private var Convo5_3:Class;
 
         public static var BGM:String = "euryale bgm loop";
+        public static const CONVO_1_HALL:String = "trigigioji";
+        public static const CONVO_1_2_HALL:String = "spiddlydiddlydee";
+        public static const SHOW_FIRST_POPUP:String = "pennisuyuyi";
 
         public function Euryale() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
@@ -45,7 +49,7 @@ package com.starmaid.Cibele.states {
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo2, "len": 40*GameSound.MSEC_PER_SEC,
+                    "audio": Convo2, "len": 47*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
@@ -53,7 +57,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0, "endfn": this.showSelfiePostEmail
                 },
                 {
-                    "audio": Convo3, "len": 30*GameSound.MSEC_PER_SEC,
+                    "audio": Convo3, "len": 35*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
@@ -61,24 +65,32 @@ package com.starmaid.Cibele.states {
                     "delay": 0, "endfn": this.showFriendEmail2
                 },
                 {
-                    "audio": Convo4, "len": 15*GameSound.MSEC_PER_SEC,
+                    "audio": Convo4, "len": 20*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": Convo4_2, "len": 72*GameSound.MSEC_PER_SEC,
+                    "audio": Convo4_2, "len": 74*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": Convo4_3, "len": 51*GameSound.MSEC_PER_SEC,
+                    "audio": Convo4_3, "len": 60*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": showDredgeSelfie
                 },
                 {
-                    "audio": Convo5, "len": 92*GameSound.MSEC_PER_SEC,
+                    "audio": Convo5, "len": 60*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": startBoss, "ends_with_popup": false
                 },
                 {
-                    "audio": null, "len": 20*GameSound.MSEC_PER_SEC,
+                    "audio": null, "len": 60*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": killBoss, "ends_with_popup": false
+                },
+                {
+                    "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": Convo5_1, "len": 42*GameSound.MSEC_PER_SEC,
+                    "delay": 0
                 },
                 {
                     "audio": Convo5_2, "len": 5*GameSound.MSEC_PER_SEC,
@@ -117,16 +129,20 @@ package com.starmaid.Cibele.states {
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
                 SoundManager.getInstance().playSound(
                         Convo1, 12*GameSound.MSEC_PER_SEC, firstConvoPartTwo, false, 1, GameSound.VOCAL,
-                        "eu_convo_1_hall"
+                        CONVO_1_HALL
                     );
                 }
         }
 
         public function firstConvoPartTwo():void {
             SoundManager.getInstance().playSound(
-                    Convo1_2, 33*GameSound.MSEC_PER_SEC, this.showFriendEmail, false, 1, GameSound.VOCAL,
-                    "eu_convo_1_2_hall"
+                    Convo1_2, 33*GameSound.MSEC_PER_SEC, this.delayShowFriendEmail, false, 1, GameSound.VOCAL,
+                    CONVO_1_2_HALL
                 );
+        }
+
+        public function delayShowFriendEmail():void {
+            GlobalTimer.getInstance().setMark(SHOW_FIRST_POPUP, 10*GameSound.MSEC_PER_SEC, this.showFriendEmail);
         }
 
         public function showFriendEmail():void {
@@ -176,7 +192,7 @@ package com.starmaid.Cibele.states {
                     PopUpManager.GAME_ACTIVE = false;
                     new PlayVideoState("/../assets/video/Phone Talk_v1.mp4",
                         function():void {
-                            FlxG.switchState(new StartScreen());
+                            ScreenManager.getInstance.resetGame();
                         }, null
                     )
                 }

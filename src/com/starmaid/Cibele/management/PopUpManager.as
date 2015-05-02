@@ -129,6 +129,7 @@ package com.starmaid.Cibele.management {
             this.elements = new Array();
             this.sentPopups = new Dictionary();
             this.open_popups = new Array();
+            this.programButtons = new Array();
 
             this.popupTags = {};
             this.popupTags[BUTTON_INTERNET] = EMPTY_INBOX;
@@ -489,6 +490,10 @@ package com.starmaid.Cibele.management {
             this.popupTags[BUTTON_FILES] = files;
             this.popupTags[BUTTON_PHOTO] = photo;
             this.setDefaultDockPopups();
+        }
+
+        public static function resetInstance():void {
+            _instance = new PopUpManager();
         }
 
         public static function getInstance():PopUpManager {

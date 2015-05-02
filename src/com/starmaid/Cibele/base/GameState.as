@@ -1,5 +1,7 @@
 package com.starmaid.Cibele.base {
     import com.starmaid.Cibele.entities.LoadingScreen;
+    import com.starmaid.Cibele.entities.PauseScreen;
+    import com.starmaid.Cibele.entities.MenuButton;
     import com.starmaid.Cibele.management.DebugConsoleManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.management.MessageManager;
@@ -12,6 +14,7 @@ package com.starmaid.Cibele.base {
 
     import org.flixel.*;
     import flash.events.Event;
+    import flash.events.MouseEvent;
 
     public class GameState extends FlxState {
         [Embed(source="/../assets/audio/effects/sfx_mouseclick.mp3")] private var SfxClick:Class;
@@ -21,7 +24,9 @@ package com.starmaid.Cibele.base {
                       updateMessages:Boolean, showEmoji:Boolean = true,
                       enable_fade:Boolean = false;
         protected var game_cursor:GameCursor, baseLayer:GameObject;
-        private var pauseLayer:GameObject, fadeLayer:GameObject;
+        protected var pausable:Boolean = true;
+        private var fadeLayer:GameObject;
+        private var pauseScreen:PauseScreen;
         private var sortedObjects:Array;
         private var postFadeFn:Function;
         private var postFadeWait:Number;
@@ -76,15 +81,7 @@ package com.starmaid.Cibele.base {
             );
             this.add(this.baseLayer);
 
-            this.pauseLayer = new GameObject(new DHPoint(0, 0));
-            this.pauseLayer.scrollFactor = new DHPoint(0, 0);
-            this.pauseLayer.active = false;
-            this.pauseLayer.makeGraphic(
-                ScreenManager.getInstance().screenWidth,
-                ScreenManager.getInstance().screenHeight,
-                0xaa000000
-            );
-            this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
+            this.pauseScreen = new PauseScreen();
 
             CONFIG::debug {
                 this.fpsCounter = new FPSCounter();
@@ -103,6 +100,8 @@ package com.starmaid.Cibele.base {
             }
 
             this.game_cursor = new GameCursor();
+
+            FlxG.stage.addEventListener(MouseEvent.CLICK, clickHandler);
         }
 
         public function postCreate():void {
@@ -181,6 +180,16 @@ package com.starmaid.Cibele.base {
             }
         }
 
+        public function clickHandler(event:MouseEvent):void {
+            if(!this.fading && !(FlxG.state is PlayVideoState)) {
+                this.playClick();
+                this.clickCallback(
+                    new DHPoint(FlxG.mouse.screenX, FlxG.mouse.screenY),
+                    new DHPoint(FlxG.mouse.x, FlxG.mouse.y)
+                );
+            }
+        }
+
         override public function update():void {
             // DO NOT call super here, since that breaks pausing
             // the following loop is copypasta from FlxGroup update, altered to
@@ -233,21 +242,15 @@ package com.starmaid.Cibele.base {
                 DebugConsoleManager.getInstance().update();
                 DebugConsoleManager.getInstance().trackAttribute("FlxG.state.fpsCounter._fps", "FPS");
                 DebugConsoleManager.getInstance().trackAttribute("FlxG.state.length", "sprites onscreen");
+                DebugConsoleManager.getInstance().trackAttribute("FlxG.mouse.x", "mouse x");
+                DebugConsoleManager.getInstance().trackAttribute("FlxG.mouse.y", "mouse y");
             }
 
             if (!this.containsPauseLayer()) {
-                FlxG.state.add(this.pauseLayer);
+                this.pauseScreen.addToState();
             }
 
             this.updateCursor();
-
-            if(!this.fading && FlxG.mouse.justReleased() && !(FlxG.state is PlayVideoState)) {
-                this.playClick();
-                this.clickCallback(
-                    new DHPoint(FlxG.mouse.screenX, FlxG.mouse.screenY),
-                    new DHPoint(FlxG.mouse.x, FlxG.mouse.y)
-                );
-            }
 
             if (this.fading) {
                 if (this.fadeLayer.alpha < 1) {
@@ -267,7 +270,7 @@ package com.starmaid.Cibele.base {
             } else if (FlxG.keys.justPressed("ESCAPE")) {
                 if (GlobalTimer.getInstance().isPaused()) {
                     this.resume();
-                } else {
+                } else if (this.pausable){
                     this.pause();
                 }
             }
@@ -294,7 +297,7 @@ package com.starmaid.Cibele.base {
 
         public function containsPauseLayer():Boolean {
             for (var i:int = 0; i < this.members.length; i++) {
-                if (this.members[i] == this.pauseLayer) {
+                if (this.members[i] == this.pauseScreen.quit_button) {
                     return true;
                 }
             }
@@ -329,29 +332,39 @@ package com.starmaid.Cibele.base {
         public function pause():void {
             GlobalTimer.getInstance().pause();
             SoundManager.getInstance().pause();
-            this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
+            this.pauseScreen.visible = GlobalTimer.getInstance().isPaused();
         }
 
         public function resume():void {
             GlobalTimer.getInstance().resume();
             SoundManager.getInstance().resume();
-            this.pauseLayer.visible = GlobalTimer.getInstance().isPaused();
+            this.pauseScreen.visible = GlobalTimer.getInstance().isPaused();
+        }
+
+        public function addMenuButton(button:MenuButton):void {
+            this.menuButtons.push(button);
         }
 
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
-            if (this.updatePopup) {
+            if (!GlobalTimer.getInstance().isPaused() && this.updatePopup) {
                 PopUpManager.getInstance().clickCallback(screenPos, worldPos);
             }
 
-            var _mouseRect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 1, 1);
+            var _mouseRect:FlxRect = new FlxRect(screenPos.x, screenPos.y, 1, 1);
             var _curRect:FlxRect;
+            var buttonScreenPos:DHPoint = new DHPoint(0, 0);
             for (var i:int = 0; i < this.menuButtons.length; i++) {
-                _curRect = new FlxRect(this.menuButtons[i].x,
-                                       this.menuButtons[i].y,
-                                       this.menuButtons[i].width,
-                                       this.menuButtons[i].height);
-                if (_mouseRect.overlaps(_curRect)) {
-                    this.menuButtons[i].clickCallback();
+                if ((GlobalTimer.getInstance().isPaused() && !this.menuButtons[i].observeGlobalPause) ||
+                    !GlobalTimer.getInstance().isPaused())
+                {
+                    this.menuButtons[i].getScreenXY(buttonScreenPos);
+                    _curRect = new FlxRect(buttonScreenPos.x,
+                                           buttonScreenPos.y,
+                                           this.menuButtons[i].width,
+                                           this.menuButtons[i].height);
+                    if (_mouseRect.overlaps(_curRect) && this.menuButtons[i].visible) {
+                        this.menuButtons[i].clickCallback();
+                    }
                 }
             }
         }

@@ -1,7 +1,11 @@
 package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.states.StartScreen;
+    import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.PopUpManager;
 
     import org.flixel.*;
 
@@ -68,7 +72,7 @@ package com.starmaid.Cibele.management {
                 function(e:KeyboardEvent):void {
                     if (e.keyCode == Keyboard.ESCAPE) {
                         e.preventDefault();
-                    } else if (!this.RELEASE && e.keyCode == Keyboard.F) {
+                    } else if (!that.RELEASE && e.keyCode == Keyboard.F) {
                         that.toggleFullscreen();
                     }
                 });
@@ -93,6 +97,8 @@ package com.starmaid.Cibele.management {
         private function setupFullscreenMode():void {
             screenWidth = FlxG.stage.fullScreenWidth;
             screenHeight = FlxG.stage.fullScreenHeight;
+            FlxG.width = screenWidth;
+            FlxG.height = screenHeight;
             FlxG.stage.fullScreenSourceRect = new Rectangle(0, 0, screenWidth,
                                                             screenHeight);
             FlxG.stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
@@ -173,6 +179,16 @@ package com.starmaid.Cibele.management {
 
         public function onFocusLost(e:Event):void {
             (FlxG.state as GameState).pause();
+        }
+
+        public function resetGame():void {
+            PopUpManager.GAME_ACTIVE = false;
+            SoundManager.getInstance().resetAll();
+            GlobalTimer.resetInstance();
+            MessageManager.resetInstance();
+            PopUpManager.resetInstance();
+            (FlxG.state as GameState).resume();
+            FlxG.switchState(new StartScreen());
         }
 
         public static function getInstance():ScreenManager {
