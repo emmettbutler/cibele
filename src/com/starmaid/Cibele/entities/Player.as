@@ -58,6 +58,7 @@ package com.starmaid.Cibele.entities {
             this.slug = "Player";
 
             this.zSorted = true;
+            this.particleType = PartyMember.PARTICLE_CIBELE;
 
             this.buildShadowSprite();
 

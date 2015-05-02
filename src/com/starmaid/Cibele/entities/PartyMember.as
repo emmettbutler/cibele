@@ -21,6 +21,8 @@ package com.starmaid.Cibele.entities {
         public static const STATE_MOVE_TO_ENEMY:Number = 34987651333;
         public static const STATE_AT_ENEMY:Number = 91823419673;
         public static const STATE_WALK:Number = 2398476188;
+        public static const PARTICLE_CIBELE:Number = 1;
+        public static const PARTICLE_ICHI:Number = 2;
 
         public var lastAttackTime:Number = 0;
         public var footsteps:FootstepTrail = null;
@@ -34,6 +36,7 @@ package com.starmaid.Cibele.entities {
         public var targetEnemy:Enemy;
         public var attackAnimDuration:Number;
         public var walkTarget:DHPoint, finalTarget:DHPoint;
+        public var particleType:Number;
         protected var _mapnodes:MapNodeContainer;
         protected var _cur_path:Path;
         protected var shadow_sprite:GameObject;

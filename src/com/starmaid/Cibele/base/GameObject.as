@@ -41,6 +41,10 @@ package com.starmaid.Cibele.base {
             this.debugText.color = 0xff444444;
         }
 
+        public function buildDefaultSprite(dim:DHPoint, col:uint=0xffff0000):void {
+            this.makeGraphic(dim.x, dim.y, col);
+        }
+
         override public function update():void {
             super.update();
             this.currentTime = new Date().valueOf();
@@ -65,6 +69,13 @@ package com.starmaid.Cibele.base {
 
         public function _getRect():FlxRect {
             return new FlxRect(this.x, this.y, this.width, this.height);
+        }
+
+        public function getMiddlePos():DHPoint {
+            return new DHPoint(
+                this.pos.x + this.width / 2,
+                this.pos.y + this.height / 2
+            );
         }
 
         public function isOnscreen():Boolean {
