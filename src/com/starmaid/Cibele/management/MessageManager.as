@@ -37,9 +37,6 @@ package com.starmaid.Cibele.management {
         public var cur_viewing:Thread;
 
         public var unread_count:Number = 0;
-        public var bornTime:Number = -1;
-        public var timeAlive:Number = 0;
-        public var currentTime:Number = -1;
 
         public var _screen:ScreenManager = ScreenManager.getInstance();
 
@@ -63,7 +60,6 @@ package com.starmaid.Cibele.management {
 
         public function MessageManager() {
             this.elements = new Array();
-            this.bornTime = new Date().valueOf();
             var _screen:ScreenManager = ScreenManager.getInstance();
             inbox_pos = new DHPoint(_screen.screenWidth * .4,
                                     _screen.screenHeight * .4);
@@ -384,9 +380,6 @@ package com.starmaid.Cibele.management {
         }
 
         public function update():void {
-            this.currentTime = new Date().valueOf();
-            this.timeAlive = this.currentTime - this.bornTime;
-
             this.updateUnreadNotification();
             this.updateUIPositions();
 
