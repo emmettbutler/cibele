@@ -192,7 +192,7 @@ package com.starmaid.Cibele.states {
                     PopUpManager.GAME_ACTIVE = false;
                     new PlayVideoState("/../assets/video/Phone Talk_v1.mp4",
                         function():void {
-                            ScreenManager.getInstance.resetGame();
+                            ScreenManager.getInstance().resetGame();
                         }, null
                     )
                 }
