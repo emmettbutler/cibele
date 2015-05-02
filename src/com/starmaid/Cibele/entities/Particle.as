@@ -7,22 +7,38 @@ package com.starmaid.Cibele.entities {
     import org.flixel.*;
 
     public class Particle extends GameObject {
+        [Embed(source="/../assets/images/misc/cibele_particle_1.png")] private var ImgCibParticle1:Class;
+        [Embed(source="/../assets/images/misc/cibele_particle_2.png")] private var ImgCibParticle2:Class;
+        [Embed(source="/../assets/images/misc/ichi_particle_1.png")] private var ImgIchiParticle1:Class;
+        [Embed(source="/../assets/images/misc/ichi_particle_2.png")] private var ImgIchiParticle2:Class;
+
         private var lifespan:Number;
 
         public function Particle(pos:DHPoint, t:Number) {
             super(pos);
-            var rand:Number = Math.random() * 3;
-            var col:uint = 0;
+            var rand:Number = Math.random(),
+                randParticle:Number = Math.floor(Math.random() * 2),
+                partImage:Class;
             switch (t) {
                 case PartyMember.PARTICLE_ICHI:
-                    col = 0xffff0000;
+                    if (randParticle == 0) {
+                        partImage = ImgIchiParticle1;
+                    } else {
+                        partImage = ImgIchiParticle2;
+                    }
                     break;
                 case PartyMember.PARTICLE_CIBELE:
-                    col = 0xff0000ff;
+                    if (randParticle == 0) {
+                        partImage = ImgCibParticle1;
+                    } else {
+                        partImage = ImgCibParticle2;
+                    }
                     break;
             }
-            this.buildDefaultSprite(new DHPoint(3 + rand, 3 + rand), col);
-            this.lifespan = .5 * GameSound.MSEC_PER_SEC;
+            this.loadGraphic(partImage, false, false, 10, 10);
+            this.scale.x = .2 + rand;
+            this.scale.y = .2 + rand;
+            this.lifespan = .4 * GameSound.MSEC_PER_SEC;
             (FlxG.state as GameState).add(this);
         }
 
