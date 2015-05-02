@@ -30,6 +30,7 @@ package com.starmaid.Cibele.entities {
         private var closestPartyMember:PartyMember;
         private var originalPos:DHPoint;
         private var damageLockMap:Dictionary;
+        private var particles:ParticleExplosion;
         public var footPos:DHPoint;
 
         public static const STATE_IDLE:Number = 1;
@@ -115,7 +116,7 @@ package com.starmaid.Cibele.entities {
             this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
             this.hitPoints -= this.hitDamage;
             this._healthBar.scale.x = this.hitPoints;
-            new ParticleExplosion(this.getMiddlePos(), 25, p.particleType);
+            this.particles = new ParticleExplosion(this.getMiddlePos(), 25, p.particleType);
         }
 
         public function activeTarget():void {
@@ -222,6 +223,9 @@ package com.starmaid.Cibele.entities {
             this.setAuxPositions();
             if(this.hitPoints <= 0){
                 this.die();
+            }
+            if (this.particles != null) {
+                this.particles.update();
             }
 
             switch(this._state) {

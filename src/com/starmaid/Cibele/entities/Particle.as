@@ -14,7 +14,7 @@ package com.starmaid.Cibele.entities {
 
         private var lifespan:Number;
 
-        public function Particle(pos:DHPoint, t:Number) {
+        public function Particle(pos:DHPoint, t:Number, lifespan:Number) {
             super(pos);
             var rand:Number = Math.random(),
                 randParticle:Number = Math.floor(Math.random() * 2),
@@ -38,12 +38,17 @@ package com.starmaid.Cibele.entities {
             this.loadGraphic(partImage, false, false, 10, 10);
             this.scale.x = .2 + rand;
             this.scale.y = .2 + rand;
-            this.lifespan = .4 * GameSound.MSEC_PER_SEC;
+            this.lifespan = lifespan;
             (FlxG.state as GameState).add(this);
         }
 
         override public function update():void {
             super.update();
+
+            if (Math.floor(this.timeAlive) % 20 == 0) {
+                this.scale.x *= .3;
+                this.scale.y *= .3;
+            }
 
             if (this.timeAlive > this.lifespan) {
                 FlxG.state.remove(this);
