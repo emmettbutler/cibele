@@ -350,16 +350,18 @@ package com.starmaid.Cibele.base {
                 PopUpManager.getInstance().clickCallback(screenPos, worldPos);
             }
 
-            var _mouseRect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y, 1, 1);
+            var _mouseRect:FlxRect = new FlxRect(screenPos.x, screenPos.y, 1, 1);
             var _curRect:FlxRect;
+            var buttonScreenPos:DHPoint = new DHPoint(0, 0);
             for (var i:int = 0; i < this.menuButtons.length; i++) {
                 if ((GlobalTimer.getInstance().isPaused() && !this.menuButtons[i].observeGlobalPause) ||
                     !GlobalTimer.getInstance().isPaused())
                 {
-                    _curRect = new FlxRect(this.menuButtons[i].x,
-                                        this.menuButtons[i].y,
-                                        this.menuButtons[i].width,
-                                        this.menuButtons[i].height);
+                    this.menuButtons[i].getScreenXY(buttonScreenPos);
+                    _curRect = new FlxRect(buttonScreenPos.x,
+                                           buttonScreenPos.y,
+                                           this.menuButtons[i].width,
+                                           this.menuButtons[i].height);
                     if (_mouseRect.overlaps(_curRect) && this.menuButtons[i].visible) {
                         this.menuButtons[i].clickCallback();
                     }

@@ -77,15 +77,17 @@ package com.starmaid.Cibele.entities {
                 ScreenManager.getInstance().screenWidth / 2 - confirmLayerDim.x / 2,
                 ScreenManager.getInstance().screenHeight / 2 - confirmLayerDim.y / 2
             ));
-            this.confirmLayer.scrollFactor = new DHPoint(0, 0);
             this.confirmLayer.active = false;
+            this.confirmLayer.scrollFactor = new DHPoint(0, 0);
             this.confirmLayer.makeGraphic(
                 confirmLayerDim.x, confirmLayerDim.y, 0xffaaaaaa
             );
             this.confirmLayer.visible = false;
+            this.confirmLayer.observeGlobalPause = false;
 
             this.confirmText = new FlxText(this.confirmLayer.x, this.confirmLayer.y,
                                            this.confirmLayer.width, "");
+            this.confirmText.scrollFactor = new DHPoint(0, 0);
             this.confirmText.setFormat("NexaBold-Regular",
                                              MessageManager.FONT_SIZE,
                                              0xff333333, "center");
@@ -154,8 +156,8 @@ package com.starmaid.Cibele.entities {
         }
 
         public function addConfirmDialogue():void {
-            FlxG.state.add(this.confirmLayer);
-            FlxG.state.add(this.confirmText);
+            this._state.add(this.confirmLayer);
+            this._state.add(this.confirmText);
         }
 
         public function set visible(val:Boolean):void {
