@@ -102,6 +102,7 @@ package com.starmaid.Cibele.entities {
             this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
             this.hitPoints -= this.hitDamage;
             this._healthBar.scale.x = this.hitPoints;
+            new ParticleExplosion(this.getMiddlePos(), 25, p.particleType);
         }
 
         public function activeTarget():void {

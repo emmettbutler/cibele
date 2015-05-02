@@ -64,6 +64,7 @@ package com.starmaid.Cibele.entities {
             super(pos);
 
             this.sightRange = 800;
+            this.particleType = PartyMember.PARTICLE_ICHI;
             this.nameText.text = "Ichi";
             this.slug = "PathFollower";
             this.zSorted = true;
