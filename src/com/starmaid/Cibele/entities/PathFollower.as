@@ -45,6 +45,9 @@ package com.starmaid.Cibele.entities {
         public static const STATE_IDLE:Number = 7;
         public static const ATTACK_RANGE:Number = 150;
 
+        public static var particleType:Number = PartyMember.PARTICLE_ICHI;
+        public static var _slug:String = "PathFollower";
+
         {
             public static var stateMap:Dictionary = new Dictionary();
             stateMap[STATE_NULL] = "STATE_NULL";
@@ -64,9 +67,8 @@ package com.starmaid.Cibele.entities {
             super(pos);
 
             this.sightRange = 800;
-            this.particleType = PartyMember.PARTICLE_ICHI;
             this.nameText.text = "Ichi";
-            this.slug = "PathFollower";
+            this.slug = _slug;
             this.zSorted = true;
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
             this.debugText.color = 0xff444444;

@@ -41,7 +41,9 @@ package com.starmaid.Cibele.entities {
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.getStateString", "boss.state");
         }
 
-        public function addVisibleObjects():void {}
+        override public function addVisibleObjects():void {
+            super.addVisibleObjects();
+        }
 
         public function setPath(path:Path):void {
             this._path = path;

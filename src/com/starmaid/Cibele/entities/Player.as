@@ -37,6 +37,9 @@ package com.starmaid.Cibele.entities {
         public var mapHitbox:GameObject, cameraPos:GameObject;
         public var collisionDirection:Array, lastPositions:Deque;
 
+        public static var particleType:Number = PartyMember.PARTICLE_CIBELE;
+        public static var _slug:String = "Player";
+
         public static const STATE_WALK_HARD:Number = 23981333333;
 
         {
@@ -55,10 +58,9 @@ package com.starmaid.Cibele.entities {
             this.cameraPos = new GameObject(new DHPoint(x, y));
 
             this.nameText.text = "Cibele";
-            this.slug = "Player";
+            this.slug = _slug;
 
             this.zSorted = true;
-            this.particleType = PartyMember.PARTICLE_CIBELE;
 
             this.buildShadowSprite();
 
