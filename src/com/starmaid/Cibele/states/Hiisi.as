@@ -33,6 +33,9 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_doingthis.mp3")] private var Convo14:Class;
 
         public static var BGM:String = "hiisi bgm loop";
+        public static const CONVO_1_HALL:String = "blahhhahshshd";
+        public static const CONVO_2_HALL:String = "blajfhkjsdhfksjh";
+        public static const SHOW_FIRST_POPUP:String = "yeaahhhahahjsdkah";
 
         public function Hiisi() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_HI;
@@ -132,16 +135,20 @@ package com.starmaid.Cibele.states {
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
                 SoundManager.getInstance().playSound(
                         Convo1, 29*GameSound.MSEC_PER_SEC, firstConvoPartTwo, false, 1, GameSound.VOCAL,
-                        "hi_convo_1_hall"
+                        CONVO_1_HALL
                     );
                 }
         }
 
         public function firstConvoPartTwo():void {
             SoundManager.getInstance().playSound(
-                    Convo2, 27*GameSound.MSEC_PER_SEC, this.showFlightEmail, false, 1, GameSound.VOCAL,
-                    "hi_convo_2_hall"
+                    Convo2, 27*GameSound.MSEC_PER_SEC, this.delayFlightEmail, false, 1, GameSound.VOCAL,
+                    CONVO_2_HALL
                 );
+        }
+
+        public function delayFlightEmail():void {
+            GlobalTimer.getInstance().setMark(SHOW_FIRST_POPUP, 10*GameSound.MSEC_PER_SEC, this.showFlightEmail);
         }
 
         public function showFlightEmail():void {
