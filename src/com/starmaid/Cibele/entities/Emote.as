@@ -1,7 +1,9 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameState;
+    import com.starmaid.Cibele.base.GameSound;
 
     import org.flixel.*;
 
@@ -19,8 +21,6 @@ package com.starmaid.Cibele.entities {
         public static const HAPPY:Number = 111;
         public static const SAD:Number = 112;
         public static const ANGRY:Number = 113;
-
-        public var lastStateChangeTime:Number = -1;
 
         public function Emote(pos:DHPoint,mood:Number,col:Number=0) {
             super(pos);
@@ -44,9 +44,33 @@ package com.starmaid.Cibele.entities {
             this.scale.x = .5;
             this.scale.y = .5;
             this.alpha = 0;
+            this.slug = "emote" + Math.random() * 10000000;
             FlxG.state.add(this);
 
+            var that:Emote = this;
             this._state = STATE_RISE;
+            GlobalTimer.getInstance().setMark(
+                this.slug + "hang",
+                .2 * GameSound.MSEC_PER_SEC,
+                function():void {
+                    that._state = STATE_HANG;
+                    GlobalTimer.getInstance().setMark(
+                        that.slug + "fade",
+                        .6 * GameSound.MSEC_PER_SEC,
+                        function():void {
+                            that._state = STATE_FADE;
+                            GlobalTimer.getInstance().setMark(
+                                that.slug + "remove",
+                                .6 * GameSound.MSEC_PER_SEC,
+                                function():void {
+                                    FlxG.state.remove(that);
+                                    that.destroy();
+                                }, false
+                            );
+                        }, false
+                    );
+                }, false
+            );
         }
 
         override public function update():void {
@@ -55,21 +79,8 @@ package com.starmaid.Cibele.entities {
             if (this._state == STATE_RISE) {
                 this.y -= 5;
                 this.alpha += .2;
-                if (this.timeAlive > .2*1000) {
-                    this._state = STATE_HANG;
-                    this.lastStateChangeTime = this.timeAlive;
-                }
-            } else if (this._state == STATE_HANG) {
-                if (this.timeAlive - this.lastStateChangeTime > .6*1000) {
-                    this._state = STATE_FADE;
-                    this.lastStateChangeTime = this.timeAlive;
-                }
             } else if (this._state ==  STATE_FADE) {
                 this.alpha -= .05;
-                if (this.timeAlive - this.lastStateChangeTime > .6*1000) {
-                    FlxG.state.remove(this);
-                    this.destroy();
-                }
             }
         }
     }
