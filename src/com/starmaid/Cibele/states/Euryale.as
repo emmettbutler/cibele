@@ -39,7 +39,7 @@ package com.starmaid.Cibele.states {
         public function Euryale() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
 
-            this.bitDialogueLock = false;
+            this.bitDialogueLock = true;
             PopUpManager.GAME_ACTIVE = true;
 
             GlobalTimer.getInstance().deleteMark(BOSS_MARK);
@@ -132,6 +132,11 @@ package com.starmaid.Cibele.states {
                         CONVO_1_HALL
                     );
                 }
+        }
+
+        override public function loadingScreenEndCallback():void {
+            super.loadingScreenEndCallback();
+            this.bitDialogueLock = false;
         }
 
         public function firstConvoPartTwo():void {
