@@ -50,6 +50,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function appear():void {
+            this.footPosOffset = new DHPoint(this.width / 2, this.height);
+            this.basePosOffset = new DHPoint(0, this.height);
+
             this._state = STATE_IDLE;
             this.visible = true;
             this.warpToPlayer();
