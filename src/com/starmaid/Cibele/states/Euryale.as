@@ -49,23 +49,43 @@ package com.starmaid.Cibele.states {
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo2, "len": 47*GameSound.MSEC_PER_SEC,
+                    "audio": Convo2, "len": 43*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": Convo2_2, "len": 25*GameSound.MSEC_PER_SEC,
+                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": Convo2_2, "len": 19*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showSelfiePostEmail
                 },
                 {
-                    "audio": Convo3, "len": 35*GameSound.MSEC_PER_SEC,
+                    "audio": Convo3, "len": 28*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": Convo3_2, "len": 50*GameSound.MSEC_PER_SEC,
+                    "audio": null, "len": 8*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": Convo3_2, "len": 44*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showFriendEmail2
                 },
                 {
-                    "audio": Convo4, "len": 20*GameSound.MSEC_PER_SEC,
+                    "audio": Convo4, "len": 11*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
@@ -73,11 +93,19 @@ package com.starmaid.Cibele.states {
                     "delay": 0
                 },
                 {
-                    "audio": Convo4_3, "len": 60*GameSound.MSEC_PER_SEC,
+                    "audio": Convo4_3, "len": 50*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": showDredgeSelfie
                 },
                 {
-                    "audio": Convo5, "len": 60*GameSound.MSEC_PER_SEC,
+                    "audio": Convo5, "len": 54*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": null, "len": 6*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": startBoss, "ends_with_popup": false
                 },
                 {
