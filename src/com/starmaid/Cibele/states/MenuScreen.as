@@ -131,12 +131,12 @@ package com.starmaid.Cibele.states {
             function _musicCallback():void {
                 if(FlxG.state is MenuScreen) {
                     SoundManager.getInstance().playSound(MenuBGMLoop, 0, null,
-                        true, 1, GameSound.BGM, MenuScreen.BGM);
+                        true, 1, GameSound.BGM, MenuScreen.BGM, false, false, false, true);
                 }
             }
             SoundManager.getInstance().playSound(MenuBGMIntro,
                 7.9*GameSound.MSEC_PER_SEC, _musicCallback, false, 1,
-                GameSound.SFX, MenuScreen.BGM);
+                GameSound.SFX, MenuScreen.BGM, false, false, false, true);
 
             super.postCreate();
         }
