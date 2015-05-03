@@ -14,26 +14,35 @@ package com.starmaid.Cibele.states {
         //desktop selfi/e folder assets
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/selfies_folder.png")] private var ImgSelfiesFolder:Class;
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/pics_icon.png")] private var ImgSelfiesFolderPicsIcon:Class;
-        [Embed(source="/../assets/images/ui/popups/selfiedesktop/me1_icon.png")] private var ImgSelfiesFolderMe1Icon:Class;
-        [Embed(source="/../assets/images/ui/popups/selfiedesktop/me1.png")] private var ImgSelfiesFolderMe1:Class;
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/pictures_folder.png")] private var ImgPicturesFolder:Class;
-        [Embed(source="/../assets/images/ui/popups/selfiedesktop/forichi_icon.png")] private var ImgPicturesFolderForIchiIcon:Class;
-        [Embed(source="/../assets/images/ui/popups/selfiedesktop/forum_icon.png")] private var ImgPicturesFolderForumIcon:Class;
-        [Embed(source="/../assets/images/ui/popups/selfiedesktop/friends_icon.png")] private var ImgPicturesFolderFriendsIcon:Class;
-        [Embed(source="/../assets/images/ui/popups/selfiedesktop/forichi.png")] private var ImgPicturesFolderForIchi:Class;
-        [Embed(source="/../assets/images/ui/popups/selfiedesktop/forum.png")] private var ImgPicturesFolderForum:Class;
-        [Embed(source="/../assets/images/ui/popups/selfiedesktop/friends.png")] private var ImgPicturesFolderFriends:Class;
-        [Embed(source="/../assets/images/ui/popups/selfiedesktop/cosmo.png")] private var ImgCosmo:Class;
-        [Embed(source="/../assets/images/ui/popups/files/blog1draft.png")] private var ImgBlog1Draft:Class;
-        [Embed(source="/../assets/images/ui/popups/selfiedesktop/cosmo_icon.png")] private var ImgCosmoIcon:Class;
-        [Embed(source="/../assets/images/ui/popups/files/blog1draft_icon.png")] private var ImgBlog1DraftIcon:Class;
-        [Embed(source="/../assets/images/ui/popups/files/blog7draft.png")] private var ImgBlog7Draft:Class;
-        [Embed(source="/../assets/images/ui/popups/files/blog7draft_icon.png")] private var ImgBlog7DraftIcon:Class;
-        [Embed(source="/../assets/images/ui/popups/selfiedesktop/partypoem1icon.png")] private var ImgUntitledFolderPartyPoem1Icon:Class;
-        [Embed(source="/../assets/images/ui/popups/selfiedesktop/partypoem1.png")] private var ImgUntitledFolderPartyPoem1:Class;
-        [Embed(source="/../assets/images/ui/popups/selfiedesktop/kawaii.png")] private var ImgUntitledFolderKawaii:Class;
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/untitled.png")] private var ImgUntitledFolder:Class;
 
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/blake_beach.png")] private var ImgBlakeBeach:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/blake_beach_icon.png")] private var ImgBlakeBeachIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/blake1.png")] private var ImgBlake1:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/blake1_icon.png")] private var ImgBlake1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/blake2.png")] private var ImgBlake2:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/blake2_icon.png")] private var ImgBlake2Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/blake3.png")] private var ImgBlake3:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/blake3_icon.png")] private var ImgBlake3Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/puppy.png")] private var ImgPuppy:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/puppy_icon.png")] private var ImgPuppyIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/hw1.png")] private var ImgHW1:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/hw1_icon.png")] private var ImgHW1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/nina1.png")] private var ImgNina1:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/nina1_icon.png")] private var ImgNina1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/blog_draft_21.png")] private var ImgBlogDraft21:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/blog_draft_21_icon.png")] private var ImgBlogDraft21Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/bow.png")] private var ImgBow:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/bow_icon.png")] private var ImgBowIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/nina2.png")] private var ImgNina2:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/nina2_icon.png")] private var ImgNina2Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/nina3.png")] private var ImgNina3:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/nina3_icon.png")] private var ImgNina3Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/nina4.png")] private var ImgNina4:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/nina4_icon.png")] private var ImgNina4Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/nina5.png")] private var ImgNina5:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/nina5_icon.png")] private var ImgNina5Icon:Class;
 
         public function HiisiDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_HI;
@@ -44,7 +53,7 @@ package com.starmaid.Cibele.states {
             ScreenManager.getInstance().setupCamera(null, 1);
             var _screen:ScreenManager = ScreenManager.getInstance();
 
-            PopUpManager.getInstance().setOpeningPopups(PopUpManager.EMPTY_INBOX, PopUpManager.EU_DOWNLOADS, PopUpManager.EU_PICLY_1);
+            PopUpManager.getInstance().setOpeningPopups(PopUpManager.EMPTY_INBOX, PopUpManager.HI_SELFIE_DC, PopUpManager.HI_PICLY_DEF);
 
             /*
               Directory tree definition
@@ -73,12 +82,44 @@ package com.starmaid.Cibele.states {
                     "name": "selfies",
                     "contents": [
                         {
-                            "name": "img_me_1",
-                            "icon": ImgSelfiesFolderMe1Icon,
-                            "icon_dim": new DHPoint(70, 81),
+                            "name": "nina1",
+                            "icon": ImgNina1Icon,
+                            "icon_dim": new DHPoint(70, 82),
                             "icon_pos": new DHPoint(149, 31),
-                            "dim": new DHPoint(530, 356),
-                            "contents": ImgSelfiesFolderMe1
+                            "dim": new DHPoint(479, 356),
+                            "contents": ImgNina1
+                        },
+                        {
+                            "name": "nina2",
+                            "icon": ImgNina2Icon,
+                            "icon_dim": new DHPoint(70, 84),
+                            "icon_pos": new DHPoint(239, 31),
+                            "dim": new DHPoint(384, 310),
+                            "contents": ImgNina2
+                        },
+                        {
+                            "name": "nina3",
+                            "icon": ImgNina3Icon,
+                            "icon_dim": new DHPoint(70, 82),
+                            "icon_pos": new DHPoint(327, 31),
+                            "dim": new DHPoint(336, 448),
+                            "contents": ImgNina3
+                        },
+                        {
+                            "name": "nina4",
+                            "icon": ImgNina4Icon,
+                            "icon_dim": new DHPoint(78, 82),
+                            "icon_pos": new DHPoint(410, 31),
+                            "dim": new DHPoint(336, 448),
+                            "contents": ImgNina4
+                        },
+                        {
+                            "name": "nina5",
+                            "icon": ImgNina5Icon,
+                            "icon_dim": new DHPoint(70, 81),
+                            "icon_pos": new DHPoint(31, 130),
+                            "dim": new DHPoint(384, 310),
+                            "contents": ImgNina5
                         },
                         {
                             "name": "pics_subfolder",
@@ -89,28 +130,44 @@ package com.starmaid.Cibele.states {
                             "folder_dim": new DHPoint(631, 356),
                             "contents": [
                                 {
-                                    "name": "forum",
-                                    "icon": ImgPicturesFolderForumIcon,
-                                    "icon_dim": new DHPoint(70, 85),
+                                    "name": "blake beach",
+                                    "icon": ImgBlakeBeachIcon,
+                                    "icon_dim": new DHPoint(73, 82),
                                     "icon_pos": new DHPoint(30, 32),
-                                    "dim": new DHPoint(530, 356),
-                                    "contents": ImgPicturesFolderForum
+                                    "dim": new DHPoint(512, 327),
+                                    "contents": ImgBlakeBeach
                                 },
                                 {
-                                    "name": "forichi",
-                                    "icon": ImgPicturesFolderForIchiIcon,
-                                    "icon_dim": new DHPoint(70, 84),
+                                    "name": "blake1",
+                                    "icon": ImgBlake1Icon,
+                                    "icon_dim": new DHPoint(70, 81),
                                     "icon_pos": new DHPoint(124, 32),
-                                    "dim": new DHPoint(530, 356),
-                                    "contents": ImgPicturesFolderForIchi
+                                    "dim": new DHPoint(479, 356),
+                                    "contents": ImgBlake1
                                 },
                                 {
-                                    "name": "friends",
-                                    "icon": ImgPicturesFolderFriendsIcon,
-                                    "icon_dim": new DHPoint(70, 85),
+                                    "name": "blake2",
+                                    "icon": ImgBlake2Icon,
+                                    "icon_dim": new DHPoint(70, 84),
                                     "icon_pos": new DHPoint(225, 32),
-                                    "dim": new DHPoint(488, 356),
-                                    "contents": ImgPicturesFolderFriends
+                                    "dim": new DHPoint(479, 356),
+                                    "contents": ImgBlake2
+                                },
+                                {
+                                    "name": "blake3",
+                                    "icon": ImgBlake3Icon,
+                                    "icon_dim": new DHPoint(76, 84),
+                                    "icon_pos": new DHPoint(124, 132),
+                                    "dim": new DHPoint(384, 310),
+                                    "contents": ImgBlake3
+                                },
+                                {
+                                    "name": "puppy",
+                                    "icon": ImgPuppyIcon,
+                                    "icon_dim": new DHPoint(70, 83),
+                                    "icon_pos": new DHPoint(30, 132),
+                                    "dim": new DHPoint(512, 356),
+                                    "contents": ImgPuppy
                                 }
                             ]
                         }
@@ -132,28 +189,28 @@ package com.starmaid.Cibele.states {
                     "hitbox_dim": new DHPoint(150, 100),
                     "contents": [
                         {
-                            "name": "cosmo",
-                            "icon": ImgCosmoIcon,
-                            "icon_dim": new DHPoint(61, 84),
+                            "name": "hw1",
+                            "icon": ImgHW1Icon,
+                            "icon_dim": new DHPoint(70, 83),
                             "icon_pos": new DHPoint(27, 36),
-                            "dim": new DHPoint(631, 356),
-                            "contents": ImgCosmo
+                            "dim": new DHPoint(594, 453),
+                            "contents": ImgHW1
                         },
                         {
-                            "name": "blog1",
-                            "icon": ImgBlog1DraftIcon,
-                            "icon_dim": new DHPoint(115, 93),
-                            "icon_pos": new DHPoint(129, 36),
+                            "name": "blog draft 21",
+                            "icon": ImgBlogDraft21Icon,
+                            "icon_dim": new DHPoint(100, 93),
+                            "icon_pos": new DHPoint(115, 36),
                             "dim": new DHPoint(631, 356),
-                            "contents": ImgBlog1Draft
+                            "contents": ImgBlogDraft21
                         },
                         {
-                            "name": "blog7",
-                            "icon": ImgBlog7DraftIcon,
-                            "icon_dim": new DHPoint(115, 93),
-                            "icon_pos": new DHPoint(250, 36),
-                            "dim": new DHPoint(631, 356),
-                            "contents": ImgBlog7Draft
+                            "name": "bow",
+                            "icon": ImgBowIcon,
+                            "icon_dim": new DHPoint(70, 81),
+                            "icon_pos": new DHPoint(220, 36),
+                            "dim": new DHPoint(384, 310),
+                            "contents": ImgBow
                         }
                     ]
                 }

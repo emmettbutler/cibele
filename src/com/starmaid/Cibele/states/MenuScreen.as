@@ -192,6 +192,8 @@ package com.starmaid.Cibele.states {
                         FlxG.switchState(new IkuTursoHallway());
                     } else if(ScreenManager.getInstance().levelTracker.eu()) {
                         FlxG.switchState(new EuryaleHallway());
+                    } else if(ScreenManager.getInstance().levelTracker.hi()) {
+                        FlxG.switchState(new HiisiHallway());
                     }
                 }
                 if (mouse_rect.overlaps(quit_rect) && !play_screen){
@@ -200,6 +202,8 @@ package com.starmaid.Cibele.states {
                         FlxG.switchState(new IkuTursoDesktop());
                     } else if(ScreenManager.getInstance().levelTracker.eu()) {
                         FlxG.switchState(new EuryaleDesktop());
+                    } else if(ScreenManager.getInstance().levelTracker.hi()) {
+                        FlxG.switchState(new HiisiDesktop());
                     }
                 }
             }
