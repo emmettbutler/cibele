@@ -45,7 +45,7 @@ package com.starmaid.Cibele.entities {
         public static const STATE_IDLE:Number = 7;
         public static const ATTACK_RANGE:Number = 150;
 
-        public static var particleType:Number = PartyMember.PARTICLE_ICHI;
+        public static var _particleType:Number = PartyMember.PARTICLE_ICHI;
         public static var _slug:String = "PathFollower";
 
         {
@@ -68,6 +68,7 @@ package com.starmaid.Cibele.entities {
 
             this.sightRange = 800;
             this.nameText.text = "Ichi";
+            this.particleType = _particleType;
             this.slug = _slug;
             this.zSorted = true;
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
@@ -77,6 +78,7 @@ package com.starmaid.Cibele.entities {
 
             this.setupSprites();
             this.setupFootsteps();
+            this.setupParticles();
             this.setupDebugSprites();
 
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.pathWalker.pos", "ichi.pos");
