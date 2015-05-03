@@ -133,8 +133,6 @@ package com.starmaid.Cibele.entities {
             if (this.isDead()) {
                 return;
             }
-            this.hitPoints -= this.hitDamage;
-            this.healthBar.scale.x = this.hitPoints;
             if (!this.isEscaping()) {
                 if(this.hitPoints % 100 == 0) {
                     this._state = STATE_ESCAPE;
@@ -143,6 +141,18 @@ package com.starmaid.Cibele.entities {
                     this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
                 }
             }
+            this.hitPoints -= this.hitDamage;
+            this.healthBar.scale.x = this.hitPoints;
+            if (this.damageLockMap[p.slug] == true) {
+                return;
+            }
+            this.damageLockMap[p.slug] = true;
+            GlobalTimer.getInstance().setMark(this.takeDamageEventSlug + p.slug,
+                                              1 * GameSound.MSEC_PER_SEC,
+                                              function():void {
+                                                damageLockMap[p.slug] = false;
+                                              }, true);
+            p.runParticles(this.footPos.add(new DHPoint(0, -20)));
         }
 
         private function isEscaping():Boolean {

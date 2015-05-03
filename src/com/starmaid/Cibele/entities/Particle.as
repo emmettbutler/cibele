@@ -38,6 +38,7 @@ package com.starmaid.Cibele.entities {
                     break;
             }
             this.loadGraphic(partImage, false, false, 10, 10);
+            this.zSorted = false;
             this.visible = false;
             this.active = false;
         }
