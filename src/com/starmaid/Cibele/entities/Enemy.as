@@ -30,7 +30,6 @@ package com.starmaid.Cibele.entities {
         private var closestPartyMember:PartyMember;
         private var originalPos:DHPoint;
         private var damageLockMap:Dictionary;
-        private var particlesMap:Dictionary;
         public var footPos:DHPoint;
 
         public static const STATE_IDLE:Number = 1;
@@ -57,7 +56,6 @@ package com.starmaid.Cibele.entities {
             this.basePos = new DHPoint(this.x, this.y + this.height);
             this.takeDamageEventSlug = "damaged" + (Math.random() * 100000000);
             this.damageLockMap = new Dictionary();
-            this.particlesMap = new Dictionary();
 
             this.setupSprites();
             this.inactiveTarget();
@@ -74,8 +72,6 @@ package com.starmaid.Cibele.entities {
         public function addVisibleObjects():void {
             FlxG.state.add(this._healthBar);
             FlxG.state.add(this.debugText);
-            this.particlesMap[PathFollower._slug] = new ParticleExplosion(25, PathFollower.particleType);
-            this.particlesMap[Player._slug] = new ParticleExplosion(25, Player.particleType);
         }
 
         public function setupSprites():void {
@@ -124,7 +120,7 @@ package com.starmaid.Cibele.entities {
             this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
             this.hitPoints -= this.hitDamage;
             this._healthBar.scale.x = this.hitPoints;
-            this.particlesMap[p.slug].run(this.getMiddlePos());
+            p.runParticles(this.getMiddlePos());
         }
 
         public function activeTarget():void {
@@ -231,11 +227,6 @@ package com.starmaid.Cibele.entities {
             this.setAuxPositions();
             if(this.hitPoints <= 0){
                 this.die();
-            }
-            if (this.particlesMap != null) {
-                for (var k:Object in this.particlesMap) {
-                    this.particlesMap[k].update();
-                }
             }
 
             switch(this._state) {

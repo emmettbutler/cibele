@@ -15,7 +15,7 @@ package com.starmaid.Cibele.entities {
             particleType:Number=PartyMember.PARTICLE_ICHI)
         {
             this.particleCount = particleCount;
-            this.particleSpeed = 15;
+            this.particleSpeed = 13;
             this.particles = new Array();
             this.lifespan = 2 * GameSound.MSEC_PER_SEC;
 
@@ -23,7 +23,12 @@ package com.starmaid.Cibele.entities {
             for (var i:int = 0; i < this.particleCount; i++) {
                 curPart = new Particle(particleType, this.lifespan);
                 this.particles.push(curPart);
-                FlxG.state.add(curPart);
+            }
+        }
+
+        public function addVisibleObjects():void {
+            for (var i:int = 0; i < this.particleCount; i++) {
+                FlxG.state.add(this.particles[i]);
             }
         }
 

@@ -37,6 +37,7 @@ package com.starmaid.Cibele.entities {
         public var attackAnimDuration:Number;
         public var walkTarget:DHPoint, finalTarget:DHPoint;
         public var particleType:Number;
+        private var particles:ParticleExplosion;
         protected var _mapnodes:MapNodeContainer;
         protected var _cur_path:Path;
         protected var shadow_sprite:GameObject;
@@ -69,6 +70,10 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        public function setupParticles():void {
+            this.particles = new ParticleExplosion(20, this.particleType);
+        }
+
         public function initFootsteps():void {
             this.footsteps = new FootstepTrail(this);
         }
@@ -94,6 +99,7 @@ package com.starmaid.Cibele.entities {
                 FlxG.state.add(this._debug_sightRadius);
                 FlxG.state.add(this._debug_attackRadius);
             }
+            this.particles.addVisibleObjects();
         }
 
         public function playAttackSound():void {
@@ -201,6 +207,10 @@ package com.starmaid.Cibele.entities {
                 this.footsteps.update();
             }
 
+            if (this.particles != null) {
+                this.particles.update();
+            }
+
             if(this.text_facing == "up" || this.text_facing == "down"){
                 this.nameText.x = this.pos.x+50;
             } else if(this.text_facing == "left") {
@@ -231,6 +241,10 @@ package com.starmaid.Cibele.entities {
                 this._state = STATE_IN_ATTACK;
                 this.lastAttackTime = this.currentTime;
             }
+        }
+
+        public function runParticles(pos:DHPoint):void {
+            this.particles.run(pos);
         }
 
         public function hasCurPath():Boolean {

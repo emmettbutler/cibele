@@ -38,6 +38,8 @@ package com.starmaid.Cibele.entities {
                     break;
             }
             this.loadGraphic(partImage, false, false, 10, 10);
+            this.visible = false;
+            this.active = false;
         }
 
         public function makeAlive():void {
@@ -56,7 +58,7 @@ package com.starmaid.Cibele.entities {
         override public function update():void {
             super.update();
 
-            if (Math.floor(this.timeAlive) % 15 == 0) {
+            if (Math.floor(this.timeAlive) % 20 == 0) {
                 this.scale.x *= .3;
                 this.scale.y *= .3;
             }
