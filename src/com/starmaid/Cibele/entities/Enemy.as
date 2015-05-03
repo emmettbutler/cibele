@@ -60,8 +60,15 @@ package com.starmaid.Cibele.entities {
             this.setupSprites();
             this.inactiveTarget();
 
-            this.footPosOffset = new DHPoint(this.width / 2, this.height);
-            this.basePosOffset = new DHPoint(0, this.height);
+            // this stuff should be before setupSprites, but it relies on width
+            // and height. thus, these null checks are necessary to avoid
+            // clobbering subclass settings
+            if (this.footPosOffset == null) {
+                this.footPosOffset = new DHPoint(this.width / 2, this.height);
+            }
+            if (this.basePosOffset == null) {
+                this.basePosOffset = new DHPoint(0, this.height);
+            }
         }
 
         public function isDead():Boolean {
