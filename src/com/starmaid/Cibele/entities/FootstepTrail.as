@@ -7,7 +7,7 @@ package com.starmaid.Cibele.entities {
     public class FootstepTrail extends GameObject {
         public var sprites:Array;
         public var count:Number;
-        public var interval:Number, lastTick:Number;
+        public var interval:Number;
         public var target_:PartyMember;
 
         public function FootstepTrail(tar:PartyMember) {
@@ -16,7 +16,6 @@ package com.starmaid.Cibele.entities {
             this.sprites = new Array();
             this.count = 17;
             this.interval = 300;
-            this.lastTick = 0;
             this.target_ = tar;
             this.slug = "footsteptrail" + Math.random() * 10000000;
 
