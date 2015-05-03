@@ -29,7 +29,6 @@ package com.starmaid.Cibele.entities {
         public var footstepOffset:DHPoint;
         public var attackRange:Number = 70;
         public var nameText:FlxText;
-        public var text_facing:String = "up";
         public var footPos:DHPoint;
         public var sightRange:Number = 280;
         public var bossSightRange:Number;
@@ -211,12 +210,12 @@ package com.starmaid.Cibele.entities {
                 this.particles.update();
             }
 
-            if(this.text_facing == "up" || this.text_facing == "down"){
-                this.nameText.x = this.pos.x+50;
-            } else if(this.text_facing == "left") {
-                this.nameText.x = this.pos.x+75;
-            } else if(this.text_facing == "right") {
-                this.nameText.x = this.pos.x+20;
+            if(this.facing == UP || this.facing == DOWN){
+                this.nameText.x = this.pos.x + 50;
+            } else if(this.facing == LEFT) {
+                this.nameText.x = this.pos.x + 75;
+            } else if(this.facing == RIGHT) {
+                this.nameText.x = this.pos.x + 20;
             }
 
             this.nameText.y = this.pos.y-30;

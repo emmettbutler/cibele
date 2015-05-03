@@ -154,18 +154,21 @@ package com.starmaid.Cibele.entities {
             switch(this.facing) {
                 case LEFT:
                     this.play("walk_l");
+                    this.footstepOffset = this.footstepOffsets.left as DHPoint;
                     break;
                 case RIGHT:
                     this.play("walk_r");
+                    this.footstepOffset = this.footstepOffsets.right as DHPoint;
                     break;
                 case UP:
                     this.play("walk_u");
+                    this.footstepOffset = this.footstepOffsets.up as DHPoint;
                     break;
                 case DOWN:
                     this.play("walk_d");
+                    this.footstepOffset = this.footstepOffsets.down as DHPoint;
                     break;
             }
-            this.footstepOffset = this.footstepOffsets[this.text_facing] as DHPoint;
         }
 
         public function setFacing():void {
@@ -173,18 +176,14 @@ package com.starmaid.Cibele.entities {
                 if(Math.abs(this.dir.y) > Math.abs(this.dir.x)){
                     if(this.dir.y <= 0){
                         this.facing = UP;
-                        this.text_facing = "up";
                     } else {
                         this.facing = DOWN;
-                        this.text_facing = "down";
                     }
                 } else {
                     if(this.dir.x >= 0){
                         this.facing = RIGHT;
-                        this.text_facing = "right";
                     } else {
                         this.facing = LEFT;
-                        this.text_facing = "left";
                     }
                 }
             }
