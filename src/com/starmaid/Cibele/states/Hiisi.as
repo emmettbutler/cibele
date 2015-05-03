@@ -207,7 +207,7 @@ package com.starmaid.Cibele.states {
         }
 
         public function playBlankScreen1():void {
-            FlxG.switchState(new BlankScreen(7*GameSound.MSEC_PER_SEC,
+            FlxG.switchState(new BlankScreen(6*GameSound.MSEC_PER_SEC,
                 playSexFilm)
             );
         }
@@ -219,7 +219,7 @@ package com.starmaid.Cibele.states {
         }
 
         public function playBlankScreen2():void {
-            FlxG.switchState(new BlankScreen(7*GameSound.MSEC_PER_SEC,
+            FlxG.switchState(new BlankScreen(10*GameSound.MSEC_PER_SEC,
                 playGoodbye)
             );
         }
@@ -231,7 +231,7 @@ package com.starmaid.Cibele.states {
         }
 
         public function playBlankScreen3():void {
-            FlxG.switchState(new BlankScreen(7*GameSound.MSEC_PER_SEC,
+            FlxG.switchState(new BlankScreen(10*GameSound.MSEC_PER_SEC,
                 playEnd)
             );
         }
@@ -243,7 +243,7 @@ package com.starmaid.Cibele.states {
         }
 
         public function playBlankScreen4():void {
-            FlxG.switchState(new BlankScreen(7*GameSound.MSEC_PER_SEC,
+            FlxG.switchState(new BlankScreen(10*GameSound.MSEC_PER_SEC,
                 playCredits)
             );
         }
