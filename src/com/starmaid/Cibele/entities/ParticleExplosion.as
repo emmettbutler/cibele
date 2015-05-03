@@ -11,7 +11,7 @@ package com.starmaid.Cibele.entities {
         private var lifespan:Number;
 
         public function ParticleExplosion(
-            particleCount:Number=25,
+            particleCount:Number=20,
             particleType:Number=PartyMember.PARTICLE_ICHI)
         {
             this.particleCount = particleCount;
