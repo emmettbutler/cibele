@@ -51,8 +51,6 @@ package com.starmaid.Cibele.entities {
             this.originalPos = pos;
             this._state = STATE_IDLE;
             this.footPos = new DHPoint(0, 0);
-            this.footPosOffset = new DHPoint(this.width / 2, this.height);
-            this.basePosOffset = new DHPoint(0, this.height);
             this.disp = new DHPoint(0, 0);
             this.zSorted = true;
             this.basePos = new DHPoint(this.x, this.y + this.height);
@@ -61,6 +59,9 @@ package com.starmaid.Cibele.entities {
 
             this.setupSprites();
             this.inactiveTarget();
+
+            this.footPosOffset = new DHPoint(this.width / 2, this.height);
+            this.basePosOffset = new DHPoint(0, this.height);
         }
 
         public function isDead():Boolean {
