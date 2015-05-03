@@ -119,7 +119,6 @@ package com.starmaid.Cibele.entities {
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getStateString", "player.state");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getWalkTarget", "player.walkTarget");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getFinalTarget", "player.finalTarget");
-            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.text_facing", "player.facing");
         }
 
         override public function setupFootsteps():void {
@@ -239,18 +238,14 @@ package com.starmaid.Cibele.entities {
                     if(Math.abs(this.dir.y) > Math.abs(this.dir.x)){
                         if(this.dir.y < 0){
                             this.facing = UP;
-                            this.text_facing = "up";
                         } else if (this.dir.y > 0){
                             this.facing = DOWN;
-                            this.text_facing = "down";
                         }
                     } else if (Math.abs(this.dir.y) < Math.abs(this.dir.x)) {
                         if(this.dir.x > 0){
                             this.facing = RIGHT;
-                            this.text_facing = "right";
                         } else if (this.dir.x < 0){
                             this.facing = LEFT;
-                            this.text_facing = "left";
                         }
                     }
                 }
@@ -279,18 +274,21 @@ package com.starmaid.Cibele.entities {
             switch(this.facing) {
                 case LEFT:
                     this.play("walk_l");
+                    this.footstepOffset = this.footstepOffsets.left as DHPoint;
                     break;
                 case RIGHT:
                     this.play("walk_r");
+                    this.footstepOffset = this.footstepOffsets.right as DHPoint;
                     break;
                 case UP:
                     this.play("walk_u");
+                    this.footstepOffset = this.footstepOffsets.up as DHPoint;
                     break;
                 case DOWN:
                     this.play("walk_d");
+                    this.footstepOffset = this.footstepOffsets.down as DHPoint;
                     break;
             }
-            this.footstepOffset = this.footstepOffsets[this.text_facing] as DHPoint;
         }
 
         override public function addVisibleObjects():void {
