@@ -1,5 +1,6 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.utils.GlobalTimer;
 
     import org.flixel.*;
 
@@ -17,6 +18,7 @@ package com.starmaid.Cibele.entities {
             this.interval = 300;
             this.lastTick = 0;
             this.target_ = tar;
+            this.slug = "footsteptrail" + Math.random() * 10000000;
 
             var spr:Footstep;
             for (var i:int = 0; i < this.count; i++) {
@@ -28,6 +30,26 @@ package com.starmaid.Cibele.entities {
 
                 this.sprites.push(spr);
             }
+
+            GlobalTimer.getInstance().setMark(
+                this.slug,
+                this.interval,
+                this.timerCallback,
+                true
+            );
+        }
+
+        public function timerCallback():void {
+            if (!this.target_.dir.eq(ZERO_POINT)) {
+                this.placeStep();
+            }
+
+            GlobalTimer.getInstance().setMark(
+                this.slug,
+                this.interval,
+                this.timerCallback,
+                true
+            );
         }
 
         override public function update():void {
@@ -35,12 +57,6 @@ package com.starmaid.Cibele.entities {
 
             for (var i:int = 0; i < this.sprites.length; i++) {
                 this.sprites[i].update();
-            }
-            if (!this.target_.dir.eq(ZERO_POINT)
-                && this.timeAlive - this.lastTick > this.interval)
-            {
-                this.lastTick = this.timeAlive;
-                this.placeStep();
             }
         }
 
@@ -51,6 +67,9 @@ package com.starmaid.Cibele.entities {
                 if (oldest == null || cur.age > oldest.age) {
                     oldest = cur;
                 }
+            }
+            if (oldest.scale == null) {
+                return;
             }
             oldest.scale.x = -1;
             cur.scale.x = 1;

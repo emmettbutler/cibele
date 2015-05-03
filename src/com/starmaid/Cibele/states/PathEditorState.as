@@ -72,7 +72,6 @@ package com.starmaid.Cibele.states {
 
             pathWalker = new PathFollower(new DHPoint(player.x-10, player.y-100));
 
-            player.initFootsteps();
             pathWalker.initFootsteps();
 
             _path = new Path();

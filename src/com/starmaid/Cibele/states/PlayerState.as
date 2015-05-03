@@ -29,6 +29,7 @@ package com.starmaid.Cibele.states {
         }
 
         override public function postCreate():void {
+            this.player.initFootsteps();
             this.player.addVisibleObjects();
             super.postCreate();
             this.game_cursor.setGameMouse();
