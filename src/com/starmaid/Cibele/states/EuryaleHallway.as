@@ -8,8 +8,8 @@ package com.starmaid.Cibele.states {
     import org.flixel.plugin.photonstorm.FlxCollision;
 
     public class EuryaleHallway extends Hallway {
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_hey.mp3")] private var Convo1:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_teleport.mp3")] private var Convo1_2:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_hey.mp3")] private static var Convo1:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_teleport.mp3")] private static var Convo1_2:Class;
 
         public function EuryaleHallway(state:Number=0){
             _state = state;
@@ -28,44 +28,32 @@ package com.starmaid.Cibele.states {
             FlxG.switchState(new EuryaleTeleportRoom());
         }
 
-        public function startEuryaleConvo():void {
+        public static function startEuryaleConvo():void {
             if(!(FlxG.state is Euryale)) {
             } else {
-                this.playEuryaleConvoFromHall();
+                GlobalTimer.getInstance().setMark(Euryale.SHOW_FIRST_POPUP,
+                    10*GameSound.MSEC_PER_SEC,
+                    (FlxG.state as Euryale).showFriendEmail);
             }
         }
 
-        public function playEuryaleConvoFromHall():void {
-            if(!SoundManager.getInstance().
-                    soundOfTypeIsPlaying(GameSound.VOCAL))
-                {
-                    GlobalTimer.getInstance().setMark(Euryale.SHOW_FIRST_POPUP,
-                        10*GameSound.MSEC_PER_SEC,
-                        (FlxG.state as Euryale).showFriendEmail);
-                }
-        }
-
-        public function firstConvoPartTwo():void {
+        public static function firstConvoPartTwo():void {
             GlobalTimer.getInstance().setMark("play first convo pt 2",
                         5*GameSound.MSEC_PER_SEC,
-                        this.playFirstConvoPartTwo);
+                        EuryaleHallway.playFirstConvoPartTwo);
         }
 
-        public function playFirstConvoPartTwo():void {
+        public static function playFirstConvoPartTwo():void {
             SoundManager.getInstance().playSound(
-                    Convo1_2, 30*GameSound.MSEC_PER_SEC, firstConvoPartTwoPause, false, 1, GameSound.VOCAL,
+                    EuryaleHallway.Convo1_2, 30*GameSound.MSEC_PER_SEC, EuryaleHallway.firstConvoPartTwoPause, false, 1, GameSound.VOCAL,
                     Euryale.CONVO_1_2_HALL
                 );
         }
 
-        public function firstConvoPartTwoPause():void {
-            if(!(FlxG.state is Euryale)) {
-                GlobalTimer.getInstance().setMark("pause after first convo pt 2",
-                        3*GameSound.MSEC_PER_SEC,
-                        this.startEuryaleConvo);
-            } else {
-               this.playEuryaleConvoFromHall();
-            }
+        public static function firstConvoPartTwoPause():void {
+            GlobalTimer.getInstance().setMark("pause after first convo pt 2",
+                    3*GameSound.MSEC_PER_SEC,
+                    EuryaleHallway.startEuryaleConvo);
         }
 
         override public function clickCallback(screenPos:DHPoint,
@@ -73,7 +61,7 @@ package com.starmaid.Cibele.states {
             if (this._state == STATE_PRE && !this.accept_call) {
                 accept_call = true;
                 SoundManager.getInstance().playSound(
-                    Convo1, 8*GameSound.MSEC_PER_SEC, firstConvoPartTwo, false, 1, GameSound.VOCAL,
+                    EuryaleHallway.Convo1, 8*GameSound.MSEC_PER_SEC, EuryaleHallway.firstConvoPartTwo, false, 1, GameSound.VOCAL,
                     Euryale.CONVO_1_HALL
                 );
             } else {
