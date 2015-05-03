@@ -29,7 +29,7 @@ package com.starmaid.Cibele.entities {
         protected var takeDamageEventSlug:String;
         private var closestPartyMember:PartyMember;
         private var originalPos:DHPoint;
-        private var damageLockMap:Dictionary;
+        protected var damageLockMap:Dictionary;
         public var footPos:DHPoint;
 
         public static const STATE_IDLE:Number = 1;
