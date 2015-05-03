@@ -42,9 +42,7 @@ package com.starmaid.Cibele.base {
             this.mouse_screen_rect = new FlxRect(0,0,5,5);
             this._state = PC;
             this.observeGlobalPause = false;
-
-            Mouse.show(); //believe it or not, you do need to show it before you hide it for it to truly hide the system mouse
-            Mouse.hide();
+            GameCursor.hideSystemMouse();
         }
 
         override public function update():void {
@@ -88,6 +86,13 @@ package com.starmaid.Cibele.base {
 
             this.debugText.text = "on enemy: " + this.on_enemy +
                                   "\non ui: " + this.on_ui;
+        }
+
+        public static function hideSystemMouse():void {
+            // believe it or not, you do need to show it before you hide it for
+            // it to truly hide the system mouse
+            Mouse.show();
+            Mouse.hide();
         }
 
         public function addCursorSprites():void {

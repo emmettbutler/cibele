@@ -2,6 +2,7 @@ package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameState;
+    import com.starmaid.Cibele.base.GameCursor;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.states.StartScreen;
     import com.starmaid.Cibele.management.SoundManager;
@@ -174,6 +175,7 @@ package com.starmaid.Cibele.management {
         }
 
         public function onFocus(e:Event):void {
+            GameCursor.hideSystemMouse();
             (FlxG.state as GameState).resume();
         }
 
