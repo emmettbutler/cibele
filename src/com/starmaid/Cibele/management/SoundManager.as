@@ -22,13 +22,17 @@ package com.starmaid.Cibele.management {
             this.globalVolume = .5;
         }
 
-        public function playSound(embeddedSound:Class, dur:Number,
+        public function playSound(embeddedSound:Class,
+                                  dur:Number,
                                   endCallback:Function=null,
-                                  _loop:Boolean=false, _vol:Number=1,
-                                  _kind:Number=0, name:String=null,
+                                  _loop:Boolean=false,
+                                  _vol:Number=1,
+                                  _kind:Number=0,
+                                  name:String=null,
                                   fadeIn:Boolean=false,
                                   fadeOut:Boolean=false,
-                                  duck:Boolean=false):GameSound
+                                  duck:Boolean=false,
+                                  overwriteTimer:Boolean=false):GameSound
         {
             if (name == null) {
                 name = "" + Math.random();
@@ -59,7 +63,7 @@ package com.starmaid.Cibele.management {
                 newSound.decreaseVolume(DUCK_STEP);
             }
 
-            GlobalTimer.getInstance().setMark(name, dur);
+            GlobalTimer.getInstance().setMark(name, dur, null, overwriteTimer);
 
             return newSound;
         }
