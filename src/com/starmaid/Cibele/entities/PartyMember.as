@@ -37,6 +37,7 @@ package com.starmaid.Cibele.entities {
         public var walkTarget:DHPoint, finalTarget:DHPoint;
         public var particleType:Number;
         private var particles:ParticleExplosion;
+        private var _nameTextOffset:DHPoint;
         protected var _mapnodes:MapNodeContainer;
         protected var _cur_path:Path;
         protected var shadow_sprite:GameObject;
@@ -47,6 +48,7 @@ package com.starmaid.Cibele.entities {
 
         public function PartyMember(pos:DHPoint) {
             super(pos);
+            this._nameTextOffset = new DHPoint(0, 0);
             this.nameText = new FlxText(pos.x, pos.y, 500, "My Name");
             this.nameText.setFormat("NexaBold-Regular",16,0xff616161,"left");
             this.footPos = new DHPoint(0, 0);
@@ -79,6 +81,10 @@ package com.starmaid.Cibele.entities {
 
         public function setMapNodes(nodes:MapNodeContainer):void {
             this._mapnodes = nodes;
+        }
+
+        public function get nameTextOffset():DHPoint {
+            return this._nameTextOffset;
         }
 
         public function buildShadowSprite():void {
@@ -211,14 +217,17 @@ package com.starmaid.Cibele.entities {
             }
 
             if(this.facing == UP || this.facing == DOWN){
-                this.nameText.x = this.pos.x + 50;
+                this._nameTextOffset.x = 50;
             } else if(this.facing == LEFT) {
-                this.nameText.x = this.pos.x + 75;
+                this._nameTextOffset.x = 75;
             } else if(this.facing == RIGHT) {
-                this.nameText.x = this.pos.x + 20;
+                this._nameTextOffset.x = 20;
             }
+            this._nameTextOffset.y = -30;
 
-            this.nameText.y = this.pos.y-30;
+            this.nameText.x = this.pos.x + this._nameTextOffset.x;
+            this.nameText.y = this.pos.y + this._nameTextOffset.y;
+
             this.setFootPos();
         }
 

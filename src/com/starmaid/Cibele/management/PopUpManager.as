@@ -460,10 +460,17 @@ package com.starmaid.Cibele.management {
             }
         }
 
-        public function emote(mouseScreenRect:FlxRect, char:PartyMember, procedural:Boolean=false, em:Number=111):void {
+        public function emote(mouseScreenRect:FlxRect,
+                              char:PartyMember,
+                              procedural:Boolean=false,
+                              em:Number=111):void
+        {
             if(procedural) {
-                new Emote(new DHPoint(char.pos.x + (char.width/4), char.pos.y), em,
-                                  (FlxG.state as GameState).ui_color_flag);
+                new Emote(new DHPoint(char.pos.x + char.nameTextOffset.x,
+                                      char.pos.y + char.nameTextOffset.y),
+                          em,
+                          (FlxG.state as GameState).ui_color_flag
+                );
             } else {
                 var overlap:Boolean, element:UIElement, mood:Number;
                 for (var k:Object in this.emojiButtons) {
@@ -474,7 +481,9 @@ package com.starmaid.Cibele.management {
                                     element.height)
                     );
                     if (overlap) {
-                        new Emote(new DHPoint(char.pos.x + (char.width/4), char.pos.y), mood,
+                        new Emote(new DHPoint(char.pos.x + char.nameTextOffset.x,
+                                              char.pos.y + char.nameTextOffset.y),
+                                  mood,
                                   (FlxG.state as GameState).ui_color_flag);
                     }
                 }

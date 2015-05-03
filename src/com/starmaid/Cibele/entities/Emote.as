@@ -22,7 +22,10 @@ package com.starmaid.Cibele.entities {
         public static const SAD:Number = 112;
         public static const ANGRY:Number = 113;
 
-        public function Emote(pos:DHPoint,mood:Number,col:Number=0) {
+        public function Emote(pos:DHPoint,
+                              mood:Number,
+                              col:Number=0)
+        {
             super(pos);
             if(col == GameState.UICOLOR_DEFAULT) {
                 if(mood == HAPPY) {
@@ -43,6 +46,9 @@ package com.starmaid.Cibele.entities {
             }
             this.scale.x = .5;
             this.scale.y = .5;
+            this.width *= .5;
+            this.height *= .5;
+            this.x = this.pos.x - this.width / 2;
             this.alpha = 0;
             this.slug = "emote" + Math.random() * 10000000;
             FlxG.state.add(this);
