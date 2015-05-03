@@ -17,6 +17,11 @@ package com.starmaid.Cibele.entities {
             this.attack_sprite.visible = false;
         }
 
+        override public function enterIdleState():void {
+            super.enterIdleState();
+            this.attack_sprite.visible = false;
+        }
+
         override public function startTracking():void {
             super.startTracking();
 

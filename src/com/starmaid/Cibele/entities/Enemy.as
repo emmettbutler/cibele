@@ -223,6 +223,11 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        public function enterIdleState():void {
+            this._state = STATE_IDLE;
+            this.visible = true;
+        }
+
         override public function update():void{
             super.update();
 
@@ -247,7 +252,7 @@ package com.starmaid.Cibele.entities {
                 case STATE_TRACKING:
                     this.dir = this.closestPartyMemberDisp.normalized();
                     if (!this.closestPartyMemberIsInTrackingRange()) {
-                        this._state = STATE_IDLE;
+                        this.enterIdleState();
                     }
                     break;
 
