@@ -37,7 +37,7 @@ package com.starmaid.Cibele.entities {
             this.target_sprite.y = this.footPos.y - 10;
 
             this.attack_sprite.setPos(this.pos);
-            this.attack_sprite.basePos.y = this.y + this.height;
+            this.attack_sprite.basePos.y = this.y + this.basePosOffset.y;
         }
 
         override public function activeTarget():void {

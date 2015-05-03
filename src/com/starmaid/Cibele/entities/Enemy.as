@@ -30,7 +30,7 @@ package com.starmaid.Cibele.entities {
         private var closestPartyMember:PartyMember;
         private var originalPos:DHPoint;
         protected var damageLockMap:Dictionary;
-        public var footPos:DHPoint;
+        public var footPos:DHPoint, footPosOffset:DHPoint, basePosOffset:DHPoint;
 
         public static const STATE_IDLE:Number = 1;
         public static const STATE_TRACKING:Number = 3;
@@ -51,6 +51,8 @@ package com.starmaid.Cibele.entities {
             this.originalPos = pos;
             this._state = STATE_IDLE;
             this.footPos = new DHPoint(0, 0);
+            this.footPosOffset = new DHPoint(this.width / 2, this.height);
+            this.basePosOffset = new DHPoint(0, this.height);
             this.disp = new DHPoint(0, 0);
             this.zSorted = true;
             this.basePos = new DHPoint(this.x, this.y + this.height);
@@ -186,9 +188,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function setAuxPositions():void {
-            this.footPos.x = this.x + this.width/2;
-            this.footPos.y = this.y + this.height;
-            this.basePos.y = this.y + this.height;
+            this.footPos.x = this.x + this.footPosOffset.x;
+            this.footPos.y = this.y + this.footPosOffset.y;
+            this.basePos.y = this.y + this.basePosOffset.y;
 
             this._healthBar.x = this.x + (this.width * .5);
             this._healthBar.y = this.pos.y-30;

@@ -8,7 +8,6 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/characters/dark_enemy.png")] private var ImgEn1:Class;
         [Embed(source="/../assets/images/characters/light_enemy.png")] private var ImgEn2:Class;
         [Embed(source="/../assets/images/ui/enemy_highlight.png")] private var ImgActive:Class;
-        [Embed(source="/../assets/images/ui/enemy2_highlight.png")] private var ImgActive2:Class;
 
         public function EuryaleEnemy(pos:DHPoint) {
             super(pos);
@@ -34,6 +33,9 @@ package com.starmaid.Cibele.entities {
                     this.attack_sprite.addAnimation("attack",
                         [0, 1, 2, 3, 4, 5, 6, 7], 12, true);
                     FlxG.state.add(attack_sprite);
+
+                    this.footPosOffset = new DHPoint(this.width / 2, 200);
+                    this.basePosOffset = this.footPosOffset;
                     break;
 
                 default:
@@ -42,8 +44,8 @@ package com.starmaid.Cibele.entities {
                         [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 12, true);
 
                     this.target_sprite = new GameObject(pos);
-                    this.target_sprite.loadGraphic(ImgActive2, false, false,
-                                                   67, 15);
+                    this.target_sprite.loadGraphic(ImgActive, false, false,
+                                                   147, 24);
                     this.target_sprite.visible = false;
                     FlxG.state.add(this.target_sprite);
 
@@ -53,6 +55,9 @@ package com.starmaid.Cibele.entities {
                     this.attack_sprite.addAnimation("attack",
                         [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 12, true);
                     FlxG.state.add(attack_sprite);
+
+                    this.footPosOffset = new DHPoint(this.width / 2 + 10, 228);
+                    this.basePosOffset = this.footPosOffset;
                     break;
             }
 
