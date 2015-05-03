@@ -10,11 +10,6 @@ package com.starmaid.Cibele.states {
 
     public class IkuTursoHallway extends Hallway {
         [Embed(source="/../assets/audio/voiceover/voc_firstconvo.mp3")] private var Convo1:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_start.mp3")] private var Convo2:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_wannaduo.mp3")] private var SndWannaDuo:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_ichiareyouthere.mp3")] private var SndRUThere:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_cibichi.mp3")] private var CibIchi:Class;
         [Embed(source="/../assets/audio/music/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
         [Embed(source="/../assets/audio/music/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
 
@@ -46,7 +41,7 @@ package com.starmaid.Cibele.states {
             if (this._state == STATE_PRE && !this.accept_call) {
                 accept_call = true;
                 SoundManager.getInstance().playSound(
-                    Convo1, 29*GameSound.MSEC_PER_SEC, firstConvo, false, 1, GameSound.VOCAL,
+                    Convo1, 24*GameSound.MSEC_PER_SEC, firstConvo, false, 1, GameSound.VOCAL,
                     "convo_1_hall"
                 );
             } else {
