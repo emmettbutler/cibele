@@ -125,7 +125,7 @@ package com.starmaid.Cibele.management {
                     ["Rusher", "yeah i was all awkward back then i guess", 10*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, ";_; it made me sad", -1],
                     ["Rusher", ":( sorry", 10*GameSound.MSEC_PER_SEC],
-                    [MessageManager.SENT_BY_CIBELE, "i am kinda busy right now actually. i will msg my # to you later", -1]
+                    [MessageManager.SENT_BY_CIBELE, "i am kinda busy right now actually. i will msg you later", -1]
                 ),
                 new Thread(this.img_inbox,
                     ["GuyverGuy", "<3 <3 <3", 1],
@@ -164,14 +164,53 @@ package com.starmaid.Cibele.management {
             //TODO write these
             this.hi_threads = new Array(
                 new Thread(this.img_inbox,
-                    ["Rusher", "cibby! we should talk on the phone sometime", 1],
-                    [MessageManager.SENT_BY_CIBELE, "yeah we could do that :D", 1],
-                    ["Rusher", "we can text too and be ~real~ friends", 1],
-                    [MessageManager.SENT_BY_CIBELE, "haha im kinda surprised, i asked for yours awhile ago didnt i?", -1],
-                    ["Rusher", "yeah i was all awkward back then i guess", 10*GameSound.MSEC_PER_SEC],
-                    [MessageManager.SENT_BY_CIBELE, ";_; it made me sad", -1],
-                    ["Rusher", ":( sorry", 10*GameSound.MSEC_PER_SEC],
-                    [MessageManager.SENT_BY_CIBELE, "i am kinda busy right now actually. i will msg my # to you later", -1]
+                    ["Rusher", "ninaaaaaa", 1],
+                    [MessageManager.SENT_BY_CIBELE, "hey what's up!", 1],
+                    ["Rusher", "rex is pissed at you lol", 1],
+                    [MessageManager.SENT_BY_CIBELE, "haha what why", -1],
+                    ["Rusher", "she's jealous that you never talk to her anymore. you're always with ichi~", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, ";_;", -1],
+                    ["Rusher", ":(", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "idk that feels kinda unfair. her and i still chat all the time.", -1],
+                    ["Rusher", "o rly? we barely chat anymore", 10*GameSound.MSEC_PER_SEC],
+                    ["Rusher", "i miss you cibby", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "; ;", -1]
+                ),
+                new Thread(this.img_inbox,
+                    ["GuyverGuy", "CIB stop ignoring me", 1],
+                    [MessageManager.SENT_BY_CIBELE, "what's up? i wasn't ignoring you lol", 1],
+                    ["GuyverGuy", "i was lookin at ur facebook", 1],
+                    [MessageManager.SENT_BY_CIBELE, "haha why", -1],
+                    ["GuyverGuy", "ur friend kate is really hot", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "yeah she's pretty lol", -1],
+                    ["GuyverGuy", "does she play valtameri ;)", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "nah, she's not into online games", -1],
+                    ["GuyverGuy", "u should hook us up", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "uh no lol", -1]
+                ),
+                new Thread(this.img_inbox,
+                    ["Airia", "cib! stop making rusher sad", 1],
+                    [MessageManager.SENT_BY_CIBELE, "whaaaat lol", 1],
+                    ["Airia", "i know you used to like him <3 what happened", 1],
+                    [MessageManager.SENT_BY_CIBELE, "yeah i did a while ago", -1],
+                    ["Airia", "so??? what happened?", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "he totally rejected me", -1],
+                    ["Airia", "really? then why is he trying to get with you now...", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "idk, we have always gone back and forth like this, but he always rejects me", -1],
+                    ["Airia", "do you still like him?", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "i'll always like him in a way, but he rejected me and it really hurt my feelings...", -1],
+                    ["Airia", "wow that sucks", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "yeah i can't really get past that", -1]
+                ),
+                new Thread(this.img_inbox,
+                    ["Guillen", "yo i know what's going on with you and ichi", 1],
+                    [MessageManager.SENT_BY_CIBELE, "what are you talking about lol", 1],
+                    ["Guillen", "everyone knows lol stop trying to hide it", 1],
+                    [MessageManager.SENT_BY_CIBELE, "knows what? lol whatttt are you going off about", -1],
+                    ["Guillen", "you two totally fcked", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "uhhh no lol", -1],
+                    ["Guillen", "come oooooon i bet he was good ;) is he bossy in bed like he is irl", 10*GameSound.MSEC_PER_SEC],
+                    [MessageManager.SENT_BY_CIBELE, "i wouldn't know -_-", -1]
                 )
             );
             this.setCurrentThreads();
