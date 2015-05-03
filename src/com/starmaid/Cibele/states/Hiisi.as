@@ -108,13 +108,13 @@ package com.starmaid.Cibele.states {
                 }
             ];
 
-            this.filename = "data/euryale_path.txt";
-            this.graph_filename = "data/euryale_graph.txt";
-            this.mapTilePrefix = "euryale";
-            this.tileGridDimensions = new DHPoint(6, 3);
-            this.estTileDimensions = new DHPoint(2266, 1365);
-            this.playerStartPos = new DHPoint(3427, 7657);
-            this.colliderScaleFactor = 3.54;
+            this.filename = "data/ikuturso_path.txt";
+            this.graph_filename = "data/ikuturso_graph.txt";
+            this.mapTilePrefix = "ikuturso";
+            this.tileGridDimensions = new DHPoint(10, 5);
+            this.estTileDimensions = new DHPoint(1359, 818);
+            this.playerStartPos = new DHPoint(4600, 7565);
+            this.colliderScaleFactor = 8.65;
         }
 
         override public function create():void {
