@@ -189,6 +189,20 @@ package com.starmaid.Cibele.states {
             PopUpManager.getInstance().emote(new FlxRect(0,0), this.pathWalker, true, Emote.ANGRY);
         }
 
+        public function ichiSadEmote():void {
+            PopUpManager.getInstance().emote(new FlxRect(0,0), this.pathWalker, true, Emote.SAD);
+        }
+
+        public function ichiHappyEmote():void {
+            PopUpManager.getInstance().emote(new FlxRect(0,0), this.pathWalker, true, Emote.HAPPY);
+        }
+
+        override public function playTimedEmotes(convoNum:Number):void {
+            if(convoNum == 6) {
+                GlobalTimer.getInstance().setMark("1st Convo Emote", 9*GameSound.MSEC_PER_SEC, this.ichiMadEmote);
+            }
+        }
+
         override public function finalConvoDone():void {
             GlobalTimer.getInstance().setMark("hi end", 5*GameSound.MSEC_PER_SEC, this.playEndFilm);
         }
