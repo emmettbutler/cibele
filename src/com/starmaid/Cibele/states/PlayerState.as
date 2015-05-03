@@ -1,6 +1,7 @@
 package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.MessageManager;
+    import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.entities.Player;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameState;
@@ -49,13 +50,15 @@ package com.starmaid.Cibele.states {
 
         override public function clickCallback(screenPos:DHPoint,
                                                worldPos:DHPoint):void {
-            var objects:Array = new Array();
-            for (var i:int = 0; i < this.clickObjectGroups.length; i++) {
-                for (var j:int = 0; j < this.clickObjectGroups[i].length; j++) {
-                    objects.push(this.clickObjectGroups[i][j]);
+            if (!GlobalTimer.getInstance().isPaused()) {
+                var objects:Array = new Array();
+                for (var i:int = 0; i < this.clickObjectGroups.length; i++) {
+                    for (var j:int = 0; j < this.clickObjectGroups[i].length; j++) {
+                        objects.push(this.clickObjectGroups[i][j]);
+                    }
                 }
+                this.player.clickCallback(screenPos, worldPos, objects);
             }
-            this.player.clickCallback(screenPos, worldPos, objects);
             super.clickCallback(screenPos, worldPos);
         }
     }

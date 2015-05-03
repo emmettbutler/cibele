@@ -182,7 +182,9 @@ package com.starmaid.Cibele.base {
 
         public function clickHandler(event:MouseEvent):void {
             if(!this.fading && !(FlxG.state is PlayVideoState)) {
-                this.playClick();
+                if (!GlobalTimer.getInstance().isPaused()) {
+                    this.playClick();
+                }
                 this.clickCallback(
                     new DHPoint(FlxG.mouse.screenX, FlxG.mouse.screenY),
                     new DHPoint(FlxG.mouse.x, FlxG.mouse.y)
