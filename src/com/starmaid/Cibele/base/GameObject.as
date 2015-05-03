@@ -10,6 +10,9 @@ package com.starmaid.Cibele.base {
         public var pos:DHPoint;
         public var dir:DHPoint;
         public var bornTime:Number = -1;
+        // should only be used for periodic actions that don't need to be pausable
+        // for most time-based actions (those for which timing is noticed by
+        // the player), GlobalTimer.setMark should be used
         public var timeAlive:Number = -1;
         public var currentTime:Number = -1;
         public var debugText:FlxText;
