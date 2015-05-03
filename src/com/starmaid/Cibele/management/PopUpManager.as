@@ -50,6 +50,14 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/eu_files/highschool.png")] private static var ImgEuHighSchool:Class;
         [Embed(source="/../assets/images/ui/popups/picly/ninabday.png")] private static var ImgNinaBday:Class;
 
+        //Hiisi Popups
+        [Embed(source="/../assets/images/ui/popups/hi_email/flight_email.png")] private static var ImgHiFlightEmail:Class;
+        [Embed(source="/../assets/images/ui/popups/picly/hi_ichi_1.png")] private static var ImgHiPicly1:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_email/class_email.png")] private static var ImgHiClassEmail:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_email/prof_email.png")] private static var ImgHiProfEmail:Class;
+        [Embed(source="/../assets/images/ui/popups/picly/hiisi.png")] private static var ImgHiPiclyDef:Class;
+        [Embed(source="/../assets/images/ui/popups/ichidownloads.png")] private static var ImgDownloadsFolder:Class;
+
         public static var _instance:PopUpManager = null;
 
         public var _player:Player;
@@ -111,6 +119,14 @@ package com.starmaid.Cibele.management {
         public static const EU_HIGHSCHOOL:String = "euhighschool";
         public static const EU_DOWNLOADS:String = "eudls";
         public static const EU_PICLY_1:String = "eudpicly1";
+
+        //hiisi
+        public static const HI_EMAIL_1:String = "hi_flight_email";
+        public static const HI_EMAIL_2:String = "hi_class_email";
+        public static const HI_PICLY_1:String = "hi_picly_1";
+        public static const HI_SELFIE_DC:String = "hi_selfie_dc";
+        public static const HI_EMAIL_3:String = "hi_prof_dc";
+        public static const HI_PICLY_DEF:String = "hi_picly_def";
 
         public function PopUpManager() {
             this.elements = new Array();
@@ -352,7 +368,7 @@ package com.starmaid.Cibele.management {
 
             this.internet_button = new DockButton(
                 this.game_button.x + this.game_button.width + 30,
-                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_1, EU_EMAIL_SELFIE, EU_EMAIL_2], BUTTON_INTERNET);
+                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_1, EU_EMAIL_SELFIE, EU_EMAIL_2, HI_EMAIL_1, HI_EMAIL_2, HI_EMAIL_3], BUTTON_INTERNET);
             this.internet_button.loadGraphic(ImgInternetButton, false, false,
                                              88, 75);
             this.internet_button.visible = true;
@@ -362,7 +378,7 @@ package com.starmaid.Cibele.management {
             this.elements.push(this.internet_button);
             this.programButtons.push(this.internet_button);
 
-            this.file_button = new DockButton(this.internet_button.x + this.internet_button.width + 30, dock.y - 30, [CIB_SELFIE_FOLDER, EU_HIGHSCHOOL], BUTTON_FILES);
+            this.file_button = new DockButton(this.internet_button.x + this.internet_button.width + 30, dock.y - 30, [CIB_SELFIE_FOLDER, EU_HIGHSCHOOL, HI_SELFIE_DC], BUTTON_FILES);
             this.file_button.loadGraphic(ImgFileButton, false, false, 88, 60);
             this.file_button.visible = true;
             this.file_button.scrollFactor.x = 0;
@@ -373,7 +389,7 @@ package com.starmaid.Cibele.management {
 
             this.photo_button = new DockButton(
                 this.file_button.x + this.file_button.width + 30,
-                dock.y - 25, [ICHI_PICLY_1 , SELFIES_1, EU_DREDGE], BUTTON_PHOTO);
+                dock.y - 25, [ICHI_PICLY_1 , SELFIES_1, EU_DREDGE, HI_PICLY_1], BUTTON_PHOTO);
             this.photo_button.loadGraphic(ImgPhotoButton, false, false, 82, 65);
             this.photo_button.visible = true;
             this.photo_button.scrollFactor.x = 0;
@@ -405,6 +421,14 @@ package com.starmaid.Cibele.management {
             this.popups[EU_HIGHSCHOOL] = new PopUp(ImgEuHighSchool, 631, 356, 0, EU_HIGHSCHOOL);
             this.popups[EU_DOWNLOADS] = new PopUp(ImgIchiDL2, 631, 356, 0, EU_DOWNLOADS);
             this.popups[EU_PICLY_1] = new PopUp(ImgNinaBday, 356, 463, 0, EU_PICLY_1);
+
+            //hiisi
+            this.popups[HI_EMAIL_1] = new PopUp(ImgHiFlightEmail, 631, 356, 0, HI_EMAIL_1);
+            this.popups[HI_PICLY_1] = new PopUp(ImgHiPicly1, 356, 463, 0, HI_PICLY_1);
+            this.popups[HI_EMAIL_2] = new PopUp(ImgHiClassEmail, 631, 356, 0, HI_EMAIL_2);
+            this.popups[HI_SELFIE_DC] = new PopUp(ImgDownloadsFolder, 631, 356, 0, HI_SELFIE_DC);
+            this.popups[HI_EMAIL_3] = new PopUp(ImgHiProfEmail, 631, 356, 0, HI_EMAIL_3);
+            this.popups[HI_PICLY_DEF] = new PopUp(ImgHiPiclyDef, 356, 463, 0, HI_PICLY_DEF);
 
             this.setDefaultDockPopups();
 

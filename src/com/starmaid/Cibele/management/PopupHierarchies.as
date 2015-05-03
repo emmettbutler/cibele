@@ -53,6 +53,28 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/eu_files/selfie1.png")] private static var ImgEUSelfie1:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/selfie1_icon.png")] private static var ImgEUSelfie1Icon:Class;
 
+        //hiisi
+        [Embed(source="/../assets/images/ui/popups/hi_email/flight_link.png")] private static var ImgHiFlightLink:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_email/flight_expired.png")] private static var ImgHiFlightExpired:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_email/mini_flight_email_link.png")] private static var ImgHiMiniFlightLink:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_email/mini_flight_email.png")] private static var ImgHiMiniFlight:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/friend_1.png")] private static var ImgHiFriend1:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/friend_1_icon.png")] private static var ImgHiFriend1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/friend_2.png")] private static var ImgHiFriend2:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/friend_2_icon.png")] private static var ImgHiFriend2Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/friend_3.png")] private static var ImgHiFriend3:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/friend_3_icon.png")] private static var ImgHiFriend3Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/selfie_1.png")] private static var ImgHiSelfie1:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/selfie_1_icon.png")] private static var ImgHiSelfie1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/selfie_2.png")] private static var ImgHiSelfie2:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/selfie_2_icon.png")] private static var ImgHiSelfie2Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/selfie_3.png")] private static var ImgHiSelfie3:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/selfie_3_icon.png")] private static var ImgHiSelfie3Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_email/thermal_icon.png")] private static var ImgHiThermalIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_email/thermal_poem.png")] private static var ImgHiThermalPoem:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_email/mini_class_email.png")] private static var ImgHiMiniClassEmail:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_email/mini_class_email_link.png")] private static var ImgHiMiniClassEmailLink:Class;
+
         public static function build():Dictionary {
             var struc:Dictionary = new Dictionary();
             struc[PopUpManager.ICHI_DL_2] = { "contents": [
@@ -373,6 +395,133 @@ package com.starmaid.Cibele.management {
                     "dim": new DHPoint(512, 356),
                     "struc": PopUpManager.EU_DOWNLOADS,
                     "contents": ImgEUSelfie1
+                }
+            ]};
+            struc[PopUpManager.HI_EMAIL_1] = { "contents": [
+                {
+                    "name": "link to expired flight",
+                    "icon": ImgHiFlightLink,
+                    "icon_dim": new DHPoint(225,18),
+                    "icon_pos": new DHPoint(23, 218),
+                    "dim": new DHPoint(945, 437),
+                    "struc": PopUpManager.HI_EMAIL_1,
+                    "contents": ImgHiFlightExpired
+                }
+            ]};
+            struc[PopUpManager.HI_EMAIL_2] = { "contents": [
+                {
+                    "name": "hi link to email 1",
+                    "icon": ImgHiMiniFlightLink,
+                    "icon_dim": new DHPoint(323, 22),
+                    "icon_pos": new DHPoint(294, 99),
+                    "folder_dim": new DHPoint(284, 356),
+                    "struc": PopUpManager.HI_EMAIL_2,
+                    "folder_img": ImgHiMiniFlight,
+                    "contents": [
+                        {
+                            "name": "mini link to expired flight in email 2",
+                            "icon": ImgHiFlightLink,
+                            "icon_dim": new DHPoint(225,18),
+                            "icon_pos": new DHPoint(23, 218),
+                            "dim": new DHPoint(945, 437),
+                            "struc": PopUpManager.HI_EMAIL_2,
+                            "contents": ImgHiFlightExpired
+                        }]
+                }
+            ]};
+            struc[PopUpManager.HI_SELFIE_DC] = { "contents": [
+                {
+                    "name": "hi friend 1",
+                    "icon": ImgHiFriend1Icon,
+                    "icon_dim": new DHPoint(70, 81),
+                    "icon_pos": new DHPoint(28, 135),
+                    "dim": new DHPoint(464, 356),
+                    "struc": PopUpManager.HI_SELFIE_DC,
+                    "contents": ImgHiFriend1
+                },
+                {
+                    "name": "hi friend 2",
+                    "icon": ImgHiFriend2Icon,
+                    "icon_dim": new DHPoint(72, 79),
+                    "icon_pos": new DHPoint(28, 35),
+                    "dim": new DHPoint(464, 356),
+                    "struc": PopUpManager.HI_SELFIE_DC,
+                    "contents": ImgHiFriend2
+                },
+                {
+                    "name": "hi friend 3",
+                    "icon": ImgHiFriend3Icon,
+                    "icon_dim": new DHPoint(70, 82),
+                    "icon_pos": new DHPoint(108, 35),
+                    "dim": new DHPoint(464, 356),
+                    "struc": PopUpManager.HI_SELFIE_DC,
+                    "contents": ImgHiFriend3
+                },
+                {
+                    "name": "hi selfie 1",
+                    "icon": ImgHiSelfie1Icon,
+                    "icon_dim": new DHPoint(70, 80),
+                    "icon_pos": new DHPoint(200, 35),
+                    "dim": new DHPoint(464, 356),
+                    "struc": PopUpManager.HI_SELFIE_DC,
+                    "contents": ImgHiSelfie1
+                },
+                {
+                    "name": "hi selfie 2",
+                    "icon": ImgHiSelfie2Icon,
+                    "icon_dim": new DHPoint(70, 81),
+                    "icon_pos": new DHPoint(285, 35),
+                    "dim": new DHPoint(336, 448),
+                    "struc": PopUpManager.HI_SELFIE_DC,
+                    "contents": ImgHiSelfie2
+                },
+                {
+                    "name": "hi selfie 3",
+                    "icon": ImgHiSelfie3Icon,
+                    "icon_dim": new DHPoint(102, 82),
+                    "icon_pos": new DHPoint(371, 35),
+                    "dim": new DHPoint(336, 448),
+                    "struc": PopUpManager.HI_SELFIE_DC,
+                    "contents": ImgHiSelfie3
+                }
+            ]};
+            struc[PopUpManager.HI_EMAIL_3] = { "contents": [
+                {
+                    "name": "hi link to thermal",
+                    "icon": ImgHiThermalIcon,
+                    "icon_dim": new DHPoint(76, 82),
+                    "icon_pos": new DHPoint(23, 230),
+                    "dim": new DHPoint(631, 531),
+                    "struc": PopUpManager.HI_EMAIL_3,
+                    "contents": ImgHiThermalPoem
+                },
+                {
+                    "name": "hi link to email 1 in 3",
+                    "icon": ImgHiMiniFlightLink,
+                    "icon_dim": new DHPoint(323, 22),
+                    "icon_pos": new DHPoint(290, 99),
+                    "folder_dim": new DHPoint(284, 356),
+                    "struc": PopUpManager.HI_EMAIL_3,
+                    "folder_img": ImgHiMiniFlight,
+                    "contents": [
+                        {
+                            "name": "mini link to expired flight in email 2",
+                            "icon": ImgHiFlightLink,
+                            "icon_dim": new DHPoint(225,18),
+                            "icon_pos": new DHPoint(23, 218),
+                            "dim": new DHPoint(945, 437),
+                            "struc": PopUpManager.HI_EMAIL_3,
+                            "contents": ImgHiFlightExpired
+                        }]
+                },
+                {
+                    "name": "hi link to email 2 in 3",
+                    "icon": ImgHiMiniClassEmailLink,
+                    "icon_dim": new DHPoint(323, 22),
+                    "icon_pos": new DHPoint(290, 125),
+                    "dim": new DHPoint(284, 356),
+                    "struc": PopUpManager.HI_EMAIL_3,
+                    "contents": ImgHiMiniClassEmail
                 }
             ]};
             return struc;
