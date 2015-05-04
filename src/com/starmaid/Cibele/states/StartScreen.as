@@ -2,6 +2,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.states.IkuTursoDesktop;
+    import com.starmaid.Cibele.management.BackgroundLoader;
     import com.starmaid.Cibele.states.EuryaleDesktop;
     import com.starmaid.Cibele.entities.MenuButton;
     import com.starmaid.Cibele.base.GameSound;
@@ -25,6 +26,7 @@ package com.starmaid.Cibele.states {
             this.pausable = false;
             super.create();
             FlxG.bgColor = 0xff000000;
+            (new BackgroundLoader()).loadSingleTileBG("/../assets/images/ui/UI_Startscreen_Background.png");
 
             startText = new FlxText(100,100,500,"Cibele\n\nCLICK to move and interact with objects.\nMake sure your sound is on.\n\nCOMMAND+Q or Alt+F4 to Quit.\n\nESC to pause.");
             add(startText);
