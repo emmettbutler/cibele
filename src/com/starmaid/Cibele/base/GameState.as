@@ -4,6 +4,7 @@ package com.starmaid.Cibele.base {
     import com.starmaid.Cibele.entities.MenuButton;
     import com.starmaid.Cibele.management.DebugConsoleManager;
     import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.PopUpManager;
@@ -118,6 +119,7 @@ package com.starmaid.Cibele.base {
             this.game_cursor = new GameCursor();
 
             FlxG.stage.addEventListener(MouseEvent.MOUSE_UP, clickHandler);
+            DialoguePlayer.getInstance();
         }
 
         override public function destroy():void {
