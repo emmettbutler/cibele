@@ -2,6 +2,8 @@ package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.utils.GlobalTimer;
 
+    import org.flixel.*;
+
     import flash.filesystem.File;
     import flash.filesystem.FileStream;
     import flash.filesystem.FileMode;
@@ -20,6 +22,8 @@ package com.starmaid.Cibele.management {
         public static const subtitlesFilename:String = "assets/data/subtitles.txt";
 
         private var subtitlesMap:Object;
+        private var subtitlesText:FlxText;
+        private var textWidth:Number;
         public static var _instance:DialoguePlayer = null;
 
         public function DialoguePlayer() {
@@ -47,9 +51,33 @@ package com.starmaid.Cibele.management {
             }
         }
 
+        private function initSubtitleText():void {
+            if (this.subtitlesText == null || this.subtitlesText.scale == null) {
+                this.textWidth = ScreenManager.getInstance().screenWidth * .6;
+                this.subtitlesText = new FlxText(
+                    ScreenManager.getInstance().screenWidth / 2 - this.textWidth / 2,
+                    ScreenManager.getInstance().screenHeight - 200,
+                    this.textWidth,
+                    ""
+                );
+                this.subtitlesText.setFormat("NexaBold-Regular", 22, 0xffffffff, "center");
+                FlxG.state.add(this.subtitlesText);
+            }
+        }
+
         private function buildSubtitleCallback(tx:String):Function {
+            var that:DialoguePlayer = this;
             return function():void {
-                trace(tx);
+                initSubtitleText();
+                that.subtitlesText.text = tx;
+
+                GlobalTimer.getInstance().setMark(
+                    "subtitle-remove",
+                    8 * GameSound.MSEC_PER_SEC,
+                    function():void {
+                        that.subtitlesText.text = "";
+                    }, true
+                );
             };
         }
 
