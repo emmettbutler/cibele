@@ -28,7 +28,7 @@ package com.starmaid.Cibele.states {
             FlxG.bgColor = 0xff000000;
             (new BackgroundLoader()).loadSingleTileBG("/../assets/images/ui/UI_Startscreen_Background.png");
 
-            startText = new FlxText(100,100,500,"Cibele\n\nCLICK to move and interact with objects.\nMake sure your sound is on.\n\nCOMMAND+Q or Alt+F4 to Quit.\n\nESC to pause.");
+            startText = new FlxText(100,100,500,"Cibele\n\nCLICK to move and interact with objects.\nMake sure your sound is on.\n\nCOMMAND+Q or Alt+F4 to Quit.\n\nESC to pause.\n\nThis build contains the full game. Please note that it is, however, still in development.\nPlease do not share this build with anyone.");
             add(startText);
             startText.setFormat("NexaBold-Regular",16,0xffffffff,"left");
 
