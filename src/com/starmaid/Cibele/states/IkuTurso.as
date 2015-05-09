@@ -183,11 +183,7 @@ package com.starmaid.Cibele.states {
                             PopUpManager.GAME_ACTIVE = false;
                             FlxG.switchState(new BlankScreen(6*GameSound.MSEC_PER_SEC,
                                 function():void {
-                                    if (ScreenManager.getInstance().RELEASE) {
-                                        ScreenManager.getInstance().resetGame();
-                                    } else {
-                                        FlxG.switchState(new EuryaleDesktop());
-                                    }
+                                    FlxG.switchState(new EuryaleDesktop());
                                 })
                             );
                         }, SoundManager.getInstance().getSoundByName(BGM)

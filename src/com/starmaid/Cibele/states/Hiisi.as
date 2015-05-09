@@ -263,7 +263,7 @@ package com.starmaid.Cibele.states {
         }
 
         public function playCredits():void {
-            FlxG.switchState(new StartScreen());
+            ScreenManager.getInstance().resetGame();
         }
 
         public function playEndFilm():void {
