@@ -12,7 +12,7 @@ package com.starmaid.Cibele.entities {
 
         public function ParticleExplosion(
             particleCount:Number=25,
-            particleType:Number=PartyMember.PARTICLE_ICHI)
+            particleType:Number=2)
         {
             this.particleCount = particleCount;
             this.particleSpeed = 13;
