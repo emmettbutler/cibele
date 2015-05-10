@@ -137,7 +137,7 @@ package com.starmaid.Cibele.states {
                         Convo1, 29*GameSound.MSEC_PER_SEC, firstConvoPartTwo, false, 1, GameSound.VOCAL,
                         CONVO_1_HALL
                     );
-                }
+            }
         }
 
         public function firstConvoPartTwo():void {
@@ -263,7 +263,7 @@ package com.starmaid.Cibele.states {
         }
 
         public function playCredits():void {
-            ScreenManager.getInstance().resetGame();
+            FlxG.switchState(new CreditsState());
         }
 
         public function playEndFilm():void {
