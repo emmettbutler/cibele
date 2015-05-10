@@ -1,10 +1,11 @@
 package com.starmaid.Cibele.states {
-    import org.flixel.*;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.management.ScreenManager;
+
+    import org.flixel.*;
 
     public class BlankScreen extends GameState {
         public var endCallback:Function;
