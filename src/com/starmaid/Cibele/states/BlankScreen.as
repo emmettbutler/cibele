@@ -1,4 +1,4 @@
-package com.starmaid.Cibele.entities {
+package com.starmaid.Cibele.states {
     import org.flixel.*;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameState;
