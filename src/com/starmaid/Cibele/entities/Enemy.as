@@ -17,7 +17,7 @@ package com.starmaid.Cibele.entities {
         private static const MARK_RESPAWN:String = "mrespawn";
 
         protected var hitPoints:Number = 100,
-                      hitDamage:Number = 3,
+                      hitDamage:Number = 10,
                       recoilPower:Number = 3,
                       sightRange:Number = 308,
                       recoilTrackingThreshold:Number = 120;

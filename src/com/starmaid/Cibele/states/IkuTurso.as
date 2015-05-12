@@ -145,7 +145,7 @@ package com.starmaid.Cibele.states {
 
         public function showGuilEmail():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.GUIL_1);
-            GlobalTimer.getInstance().setMark(BOSS_MARK, 50*GameSound.MSEC_PER_SEC);
+            GlobalTimer.getInstance().setMark(BOSS_MARK, 90*GameSound.MSEC_PER_SEC);
         }
 
         public function showIchiDownloadWindow():void {
