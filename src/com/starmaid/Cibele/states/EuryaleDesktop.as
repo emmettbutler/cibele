@@ -1,4 +1,5 @@
 package com.starmaid.Cibele.states {
+    //DATE CARD: April 13th, 2009
     import org.flixel.*;
     import com.starmaid.Cibele.base.GameState;
     import flash.utils.Dictionary;
