@@ -104,6 +104,11 @@ package com.starmaid.Cibele.base {
             FlxG.stage.addEventListener(MouseEvent.CLICK, clickHandler);
         }
 
+        override public function destroy():void {
+            FlxG.stage.removeEventListener(MouseEvent.CLICK, clickHandler);
+            super.destroy();
+        }
+
         public function postCreate():void {
             if (this.updatePopup && this.showEmoji) {
                 PopUpManager.getInstance().loadEmoji();
