@@ -54,8 +54,6 @@ package com.starmaid.Cibele.base {
             this.updateMessages = messages;
             this.enable_fade = fade;
 
-            this.menuButtons = new Array();
-
             this.ui_color_flag = UICOLOR_DEFAULT;
 
             this.sortedObjects = new Array();
@@ -63,6 +61,8 @@ package com.starmaid.Cibele.base {
 
         override public function create():void {
             super.create();
+
+            this.menuButtons = new Array();
 
             FlxG.bgColor = 0xff000000;
 

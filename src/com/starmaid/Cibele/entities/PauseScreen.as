@@ -6,7 +6,6 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.entities.MenuButton;
-    import com.starmaid.Cibele.states.StartScreen;
 
     import org.flixel.*;
 
