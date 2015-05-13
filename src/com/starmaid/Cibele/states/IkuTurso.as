@@ -181,10 +181,10 @@ package com.starmaid.Cibele.states {
                     new PlayVideoState("/../assets/video/sexy_selfie.flv",
                         function():void {
                             PopUpManager.GAME_ACTIVE = false;
-                            FlxG.switchState(new BlankScreen(6*GameSound.MSEC_PER_SEC,
+                            FlxG.switchState(new TextScreen(6*GameSound.MSEC_PER_SEC,
                                 function():void {
                                     FlxG.switchState(new EuryaleDesktop());
-                                })
+                                }, "April 13th, 2009")
                             );
                         }, SoundManager.getInstance().getSoundByName(BGM)
                     )

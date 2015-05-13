@@ -243,7 +243,8 @@ package com.starmaid.Cibele.states {
         public function playEndFilm():void {
             //SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
                     //false, 1, GameSound.BGM);
-            FlxG.switchState(new BlankScreen(5*GameSound.MSEC_PER_SEC,
+            FlxG.switchState(new TextScreen(
+                5*GameSound.MSEC_PER_SEC,
                 function():void {
                     PopUpManager.GAME_ACTIVE = false;
                     new PlayVideoState("/../assets/video/Phone Talk_v1.mp4",
@@ -251,7 +252,7 @@ package com.starmaid.Cibele.states {
                             FlxG.switchState(new HiisiDesktop());
                         }, null
                     )
-                }
+                }, "August 10th, 2009"
             ));
         }
     }
