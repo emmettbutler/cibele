@@ -89,13 +89,16 @@ package com.starmaid.Cibele.states {
             if(!shouldLoad || ScreenManager.getInstance().levelTracker.it()) {
                 fn = function ():void {
                     SoundManager.getInstance().playSound(VidBGMLoop, 24*GameSound.MSEC_PER_SEC, null, false, 1, Math.random()*5000+100);
-                    FlxG.switchState(
-                        new PlayVideoState(
-                            "/../assets/video/computer_open.flv",
-                            function ():void {
-                                FlxG.switchState(new IkuTursoDesktop());
-                            }
-                        ));
+                    FlxG.switchState(new TextScreen(6 * GameSound.MSEC_PER_SEC,
+                        function():void {
+                            FlxG.switchState(
+                                new PlayVideoState(
+                                    "/../assets/video/computer_open.flv",
+                                    function ():void {
+                                        FlxG.switchState(new IkuTursoDesktop());
+                                    }
+                                ));
+                        }, "February 18th, 2009"));
                 }
             } else if(shouldLoad && ScreenManager.getInstance().levelTracker.eu()) {
                 fn = function():void {
