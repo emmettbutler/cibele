@@ -2,6 +2,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.Emote;
     import com.starmaid.Cibele.states.BlankScreen;
@@ -39,6 +40,7 @@ package com.starmaid.Cibele.states {
 
         public function Hiisi() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_HI;
+            MessageManager.getInstance().setCurrentThreads();
 
             //currently no bit dialogue is playing in this act. may want to change later.
             this.bitDialogueLock = true;

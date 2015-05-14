@@ -2,6 +2,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.Emote;
     import com.starmaid.Cibele.states.BlankScreen;
@@ -38,6 +39,7 @@ package com.starmaid.Cibele.states {
 
         public function Euryale() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
+            MessageManager.getInstance().setCurrentThreads();
 
             this.bitDialogueLock = true;
             PopUpManager.GAME_ACTIVE = true;
@@ -243,17 +245,20 @@ package com.starmaid.Cibele.states {
         public function playEndFilm():void {
             //SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
                     //false, 1, GameSound.BGM);
-            FlxG.switchState(new TextScreen(
-                5*GameSound.MSEC_PER_SEC,
-                function():void {
-                    PopUpManager.GAME_ACTIVE = false;
-                    new PlayVideoState("/../assets/video/Phone Talk_v1.mp4",
-                        function():void {
-                            FlxG.switchState(new HiisiDesktop());
-                        }, null
-                    )
-                }, "August 10th, 2009"
-            ));
+            FlxG.switchState(
+                new PlayVideoState(
+                    "/../assets/video/Phone Talk_v1.mp4",
+                    function():void {
+                        PopUpManager.GAME_ACTIVE = false;
+                        FlxG.switchState(new TextScreen(
+                            5*GameSound.MSEC_PER_SEC,
+                            function():void {
+                                FlxG.switchState(new HiisiDesktop());
+                            }, "August 10th, 2009"
+                        ));
+                    }, null
+                )
+            );
         }
     }
 }
