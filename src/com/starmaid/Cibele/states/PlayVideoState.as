@@ -64,11 +64,12 @@ package com.starmaid.Cibele.states {
 
         override public function pause():void {
             super.pause();
-            if (GlobalTimer.getInstance().isPaused()) {
-                this.videoStream.pause();
-            } else {
-                this.videoStream.resume();
-            }
+            this.videoStream.pause();
+        }
+
+        override public function resume():void {
+            super.resume();
+            this.videoStream.resume();
         }
 
         private function netStatusHandler(evt:NetStatusEvent):void {
