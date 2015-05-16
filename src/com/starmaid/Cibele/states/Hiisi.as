@@ -64,7 +64,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0
                 },
                 {
-                    "audio": Convo6, "len": 31*GameSound.MSEC_PER_SEC,
+                    "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
@@ -136,21 +136,25 @@ package com.starmaid.Cibele.states {
 
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
                 SoundManager.getInstance().playSound(
-                        Convo1, 29*GameSound.MSEC_PER_SEC, firstConvoPartTwo, false, 1, GameSound.VOCAL,
+                        Convo1, 20*GameSound.MSEC_PER_SEC, delayFirstConvoPartTwo, false, 1, GameSound.VOCAL,
                         CONVO_1_HALL
                     );
             }
         }
 
+        public function delayFirstConvoPartTwo():void {
+            GlobalTimer.getInstance().setMark("delay convo 1 pt 2", 5*GameSound.MSEC_PER_SEC, this.firstConvoPartTwo);
+        }
+
         public function firstConvoPartTwo():void {
             SoundManager.getInstance().playSound(
-                    Convo2, 27*GameSound.MSEC_PER_SEC, this.delayFlightEmail, false, 1, GameSound.VOCAL,
+                    Convo2, 25*GameSound.MSEC_PER_SEC, this.delayFlightEmail, false, 1, GameSound.VOCAL,
                     CONVO_2_HALL
                 );
         }
 
         public function delayFlightEmail():void {
-            GlobalTimer.getInstance().setMark(SHOW_FIRST_POPUP, 10*GameSound.MSEC_PER_SEC, this.showFlightEmail);
+            GlobalTimer.getInstance().setMark(SHOW_FIRST_POPUP, 5*GameSound.MSEC_PER_SEC, this.showFlightEmail);
         }
 
         public function showFlightEmail():void {
