@@ -1,5 +1,6 @@
 package com.starmaid.Cibele.base {
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.entities.Enemy;
     import com.starmaid.Cibele.entities.Player;
     import com.starmaid.Cibele.utils.DHPoint;
@@ -52,40 +53,43 @@ package com.starmaid.Cibele.base {
                 this.mouse_rect.y = FlxG.mouse.y;
                 this.mouse_screen_rect.x = FlxG.mouse.screenX;
                 this.mouse_screen_rect.y = FlxG.mouse.screenY;
+
+                this.pc_mouse.x = FlxG.mouse.x;
+                this.pc_mouse.y = FlxG.mouse.y;
                 this.game_mouse.x = FlxG.mouse.x;
                 this.game_mouse.y = FlxG.mouse.y;
                 this.enemy_mouse.x = FlxG.mouse.x;
                 this.enemy_mouse.y = FlxG.mouse.y;
-                this.pc_mouse.x = FlxG.mouse.x;
-                this.pc_mouse.y = FlxG.mouse.y;
                 this.x = FlxG.mouse.screenX;
                 this.y = FlxG.mouse.screenY;
 
                 if (this.on_ui){
                     this._state = GAME;
-                } else if (this.on_enemy) {
+                } else if (!GlobalTimer.getInstance().isPaused() && this.on_enemy) {
                     this._state = ENEMY;
                 } else {
                     this._state = GAME;
                 }
 
-                if(this._state == GAME) {
+                if(this._state == GAME && !this.game_mouse.visible) {
                     this.game_mouse.visible = true;
                     this.enemy_mouse.visible = false;
                     this.pc_mouse.visible = false;
-                } else if (this._state == ENEMY) {
+                } else if (this._state == ENEMY && !this.enemy_mouse.visible) {
                     this.enemy_mouse.visible = true;
                     this.game_mouse.visible = false;
                     this.pc_mouse.visible = false;
-                } else if (this._state == PC) {
+                } else if (this._state == PC && !this.pc_mouse.visible) {
                     this.pc_mouse.visible = true;
                     this.game_mouse.visible = false;
                     this.enemy_mouse.visible = false;
                 }
             }
 
-            this.debugText.text = "on enemy: " + this.on_enemy +
-                                  "\non ui: " + this.on_ui;
+            if (ScreenManager.getInstance().DEBUG) {
+                this.debugText.text = "on enemy: " + this.on_enemy +
+                                      "\non ui: " + this.on_ui;
+            }
         }
 
         public static function hideSystemMouse():void {
@@ -135,6 +139,11 @@ package com.starmaid.Cibele.base {
         }
 
         public function checkObjectOverlap(groups:Array=null):void {
+            if (GlobalTimer.getInstance().isPaused()) {
+                _on_enemy = false;
+                _on_ui = false;
+                return;
+            }
             var _on_enemy:Boolean, _on_ui:Boolean;
             if (groups != null) {
                 var curGroup:Array, cur:GameObject, rect:FlxRect;
