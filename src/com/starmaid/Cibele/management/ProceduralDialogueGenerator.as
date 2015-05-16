@@ -51,6 +51,8 @@ package com.starmaid.Cibele.management {
 
         public var cib_nice_hit_lock:Boolean = false;
         public var ichi_nice_hit_lock:Boolean = false;
+        private var started:Boolean = false;
+        private var _lock:Boolean = false;
 
         public function ProceduralDialogueGenerator(containerState:LevelMapState) {
             this.containerState = containerState;
@@ -72,10 +74,14 @@ package com.starmaid.Cibele.management {
         }
 
         public function update():void {
-            var rand:Number = Math.random();
-            if (rand > .99 && !PopUpManager.getInstance().showingPopup() && !(FlxG.state as LevelMapState).lastConvoStarted()) {
-                playBitDialogue();
+            if (!started) {
+                started = true;
+                this.loopBitDialogueCallback();
             }
+        }
+
+        public function set lock(l:Boolean):void {
+            this._lock = l;
         }
 
         public function get player():Player {
@@ -86,7 +92,32 @@ package com.starmaid.Cibele.management {
             return this.containerState.pathWalker;
         }
 
-        public function playBitDialogue():void {
+        private function loopBitDialogueCallback():void {
+            if (this._lock || !(FlxG.state is LevelMapState)) {
+                return;
+            }
+            this.playBitDialogue();
+            GlobalTimer.getInstance().setMark(
+                "bit_dialogue",
+                (20 + (Math.random() * 15)) * GameSound.MSEC_PER_SEC,
+                function():void {
+                    if (_lock || !(FlxG.state is LevelMapState)) {
+                        return;
+                    }
+                    if (!PopUpManager.getInstance().showingPopup() &&
+                        !(FlxG.state as LevelMapState).lastConvoStarted())
+                    {
+                        loopBitDialogueCallback();
+                    }
+                },
+                true
+            );
+        }
+
+        private function playBitDialogue():void {
+            if (this._lock || !(FlxG.state is LevelMapState)) {
+                return;
+            }
             if(player.isAttacking() && !this.ichi_nice_hit_lock) {
                 if(pathWalker.inViewOfPlayer()){
                     GlobalTimer.getInstance().setMark("delayed_ichinicehit",
