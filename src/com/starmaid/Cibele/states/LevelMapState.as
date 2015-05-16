@@ -208,8 +208,8 @@ package com.starmaid.Cibele.states {
                         };
                     }
                 }
-                var prevEndFn = endfn;
-                var prevDialogueLock = this.bitDialogueLock;
+                var prevEndFn:Function = endfn;
+                var prevDialogueLock:Boolean = this.bitDialogueLock;
                 if(audioInfo["audio"] == null) {
                     endfn = function():void {
                         bitDialogueLock = prevDialogueLock;
