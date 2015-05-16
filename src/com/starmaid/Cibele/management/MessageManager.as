@@ -30,10 +30,8 @@ package com.starmaid.Cibele.management {
 
         private var inbox_pos:DHPoint;
 
+        public var threads_map:Object;
         public var threads:Array;
-        public var it_threads:Array;
-        public var eu_threads:Array;
-        public var hi_threads:Array;
         public var cur_viewing:Thread;
 
         public var unread_count:Number = 0;
@@ -67,7 +65,8 @@ package com.starmaid.Cibele.management {
             // forgive me
             this.notifications_text._textField = null
 
-            this.it_threads = new Array(
+            this.threads_map = {};
+            this.threads_map['it'] = new Array(
                 new Thread(this.img_inbox,
                     ["Rusher", "did you get that link i sent you on aim last night? its an anime you might like :D", 1],
                     [MessageManager.SENT_BY_CIBELE, "yeah! i think that one of the VAs was in sailor moon??", 1],
@@ -112,7 +111,7 @@ package com.starmaid.Cibele.management {
                 )
             );
 
-            this.eu_threads = new Array(
+            this.threads_map['eu'] = new Array(
                 new Thread(this.img_inbox,
                     ["Rusher", "cibby! we should talk on the phone sometime", 1],
                     [MessageManager.SENT_BY_CIBELE, "yeah we could do that :D", 1],
@@ -158,7 +157,7 @@ package com.starmaid.Cibele.management {
             );
 
             //TODO write these
-            this.hi_threads = new Array(
+            this.threads_map['hi'] = new Array(
                 new Thread(this.img_inbox,
                     ["Rusher", "ninaaaaaa", 1],
                     [MessageManager.SENT_BY_CIBELE, "hey what's up!", 1],
@@ -222,11 +221,11 @@ package com.starmaid.Cibele.management {
 
         public function setCurrentThreads():void {
             if (ScreenManager.getInstance().levelTracker.it()) {
-                this.threads = this.it_threads;
+                this.threads = this.threads_map['it'];
             } else if (ScreenManager.getInstance().levelTracker.eu()) {
-                this.threads = this.eu_threads;
+                this.threads = this.threads_map['eu'];
             } else if (ScreenManager.getInstance().levelTracker.hi()) {
-                this.threads = this.hi_threads;
+                this.threads = this.threads_map['hi'];
             }
         }
 
@@ -349,8 +348,12 @@ package com.starmaid.Cibele.management {
         }
 
         public function loadVisibleMessageObjects():void {
-            for (var i:int = 0; i < this.threads.length; i++) {
-                this.threads[i].initVisibleObjects();
+            var curThreads:Array;
+            for (var k:String in this.threads_map) {
+                curThreads = this.threads_map[k];
+                for (var i:int = 0; i < this.threads_map[k].length; i++) {
+                    this.threads_map[k][i].initVisibleObjects();
+                }
             }
         }
 
