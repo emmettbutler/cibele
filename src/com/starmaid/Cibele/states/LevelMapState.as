@@ -207,7 +207,14 @@ package com.starmaid.Cibele.states {
                         };
                     }
                 }
+                var prevEndFn = endfn;
+                var prevDialogueLock = this.bitDialogueLock;
                 if(audioInfo["audio"] == null) {
+                    endfn = function():void {
+                        bitDialogueLock = prevDialogueLock;
+                        prevEndFn();
+                    };
+                    this.bitDialogueLock = true;
                     GlobalTimer.getInstance().setMark(
                         "no audio" + Math.random(), audioInfo["len"],
                         endfn
