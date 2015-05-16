@@ -36,6 +36,7 @@ package com.starmaid.Cibele.states {
         public var estTileDimensions:DHPoint;
         public var playerStartPos:DHPoint;
         public var colliderScaleFactor:Number;
+        public var enemyDirMultiplier:Number = 1;
 
         protected var conversationPieces:Array;
         protected var conversationCounter:Number = 0;
