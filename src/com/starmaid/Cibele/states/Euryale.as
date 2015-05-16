@@ -245,17 +245,26 @@ package com.starmaid.Cibele.states {
             //SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
                     //false, 1, GameSound.BGM);
             FlxG.switchState(
-                new PlayVideoState(
-                    "/../assets/video/Phone Talk_v1.mp4",
+                new BlankScreen(4*GameSound.MSEC_PER_SEC,
                     function():void {
-                        PopUpManager.GAME_ACTIVE = false;
-                        FlxG.switchState(new TextScreen(
-                            5*GameSound.MSEC_PER_SEC,
+                        FlxG.switchState(new PlayVideoState(
+                            "/../assets/video/Phone Talk_v1.mp4",
                             function():void {
-                                FlxG.switchState(new HiisiDesktop());
-                            }, "August 10th, 2009"
+                                PopUpManager.GAME_ACTIVE = false;
+                                FlxG.switchState(new BlankScreen(
+                                    4*GameSound.MSEC_PER_SEC,
+                                    function():void {
+                                        FlxG.switchState(new TextScreen(
+                                            5*GameSound.MSEC_PER_SEC,
+                                            function():void {
+                                                FlxG.switchState(new HiisiDesktop());
+                                            }, "August 10th, 2009"
+                                        ));
+                                    }
+                                ));
+                            }, null
                         ));
-                    }, null
+                    }
                 )
             );
         }
