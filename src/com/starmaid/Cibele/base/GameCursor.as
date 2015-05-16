@@ -53,13 +53,6 @@ package com.starmaid.Cibele.base {
                 this.mouse_rect.y = FlxG.mouse.y;
                 this.mouse_screen_rect.x = FlxG.mouse.screenX;
                 this.mouse_screen_rect.y = FlxG.mouse.screenY;
-
-                this.pc_mouse.x = FlxG.mouse.x;
-                this.pc_mouse.y = FlxG.mouse.y;
-                this.game_mouse.x = FlxG.mouse.x;
-                this.game_mouse.y = FlxG.mouse.y;
-                this.enemy_mouse.x = FlxG.mouse.x;
-                this.enemy_mouse.y = FlxG.mouse.y;
                 this.x = FlxG.mouse.screenX;
                 this.y = FlxG.mouse.screenY;
 
@@ -71,18 +64,30 @@ package com.starmaid.Cibele.base {
                     this._state = GAME;
                 }
 
-                if(this._state == GAME && !this.game_mouse.visible) {
-                    this.game_mouse.visible = true;
-                    this.enemy_mouse.visible = false;
-                    this.pc_mouse.visible = false;
-                } else if (this._state == ENEMY && !this.enemy_mouse.visible) {
-                    this.enemy_mouse.visible = true;
-                    this.game_mouse.visible = false;
-                    this.pc_mouse.visible = false;
-                } else if (this._state == PC && !this.pc_mouse.visible) {
-                    this.pc_mouse.visible = true;
-                    this.game_mouse.visible = false;
-                    this.enemy_mouse.visible = false;
+                if(this._state == GAME) {
+                    if (!this.game_mouse.visible) {
+                        this.game_mouse.visible = true;
+                        this.enemy_mouse.visible = false;
+                        this.pc_mouse.visible = false;
+                    }
+                    this.game_mouse.x = FlxG.mouse.x;
+                    this.game_mouse.y = FlxG.mouse.y;
+                } else if (this._state == ENEMY) {
+                    if (!this.enemy_mouse.visible) {
+                        this.enemy_mouse.visible = true;
+                        this.game_mouse.visible = false;
+                        this.pc_mouse.visible = false;
+                    }
+                    this.enemy_mouse.x = FlxG.mouse.x;
+                    this.enemy_mouse.y = FlxG.mouse.y;
+                } else if (this._state == PC) {
+                    if (!this.pc_mouse.visible) {
+                        this.pc_mouse.visible = true;
+                        this.game_mouse.visible = false;
+                        this.enemy_mouse.visible = false;
+                    }
+                    this.pc_mouse.x = FlxG.mouse.x;
+                    this.pc_mouse.y = FlxG.mouse.y;
                 }
             }
 
