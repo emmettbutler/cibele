@@ -1,5 +1,7 @@
 package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.LevelTracker;
+    import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.utils.GlobalTimer;
@@ -14,6 +16,7 @@ package com.starmaid.Cibele.states {
         public function EuryaleHallway(state:Number=0){
             _state = state;
             loading_screen_timer = 9;
+            ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
         }
 
         override public function create():void {

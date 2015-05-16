@@ -1,5 +1,7 @@
 package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.LevelTracker;
+    import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.states.IkuTurso;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameSound;
@@ -15,6 +17,7 @@ package com.starmaid.Cibele.states {
 
         public function IkuTursoHallway(state:Number=0){
             _state = state;
+            ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_IT;
         }
 
         override public function create():void {
