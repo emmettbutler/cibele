@@ -27,10 +27,19 @@ package com.starmaid.Cibele.states {
                     'text': 'Written and designed by Nina Freeman'
                 },
                 {
-                    'text': 'Nina Freeman - design, code\n\nEmmett Butler - code\n\nDecky Coss - audio\n\nRebekka Dunlap - visual art\n\nSam Corey - video production'
+                    'text': 'Programmed by Emmett Butler'
                 },
                 {
-                    'text': 'Special thanks to:\n\n\nSteve Gaynor'
+                    'text': 'Soundtrack composed by Decky Coss'
+                },
+                {
+                    'text': 'Illustrated and animated by Rebekka Dunlap'
+                },
+                {
+                    'text': 'Short films produced by Samantha Corey'
+                },
+                {
+                    'text': 'Special thanks to:\n\n\nBennett Foddy\n\nSteve Gaynor\n\nAnd our many helpful playtesters.'
                 }
             );
 
