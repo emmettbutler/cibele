@@ -40,7 +40,6 @@ package com.starmaid.Cibele.states {
 
         public function Hiisi() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_HI;
-            MessageManager.getInstance().setCurrentThreads();
 
             //currently no bit dialogue is playing in this act. may want to change later.
             this.bitDialogueLock = true;

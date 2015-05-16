@@ -39,7 +39,6 @@ package com.starmaid.Cibele.states {
 
         public function Euryale() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
-            MessageManager.getInstance().setCurrentThreads();
 
             this.bitDialogueLock = true;
             PopUpManager.GAME_ACTIVE = true;

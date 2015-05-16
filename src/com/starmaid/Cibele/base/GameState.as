@@ -115,6 +115,7 @@ package com.starmaid.Cibele.base {
             }
             if (this.updateMessages) {
                 MessageManager.getInstance().reloadPersistentObjects();
+                MessageManager.getInstance().setCurrentThreads();
             }
             if (this.updatePopup) {
                 PopUpManager.getInstance().loadPopUps();
