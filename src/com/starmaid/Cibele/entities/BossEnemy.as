@@ -3,6 +3,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.management.DebugConsoleManager;
+    import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.utils.MapNodeContainer;
     import com.starmaid.Cibele.management.Path;
 
@@ -125,9 +126,13 @@ package com.starmaid.Cibele.entities {
         }
 
         public function warpToPlayer():void {
+            var dir:DHPoint = new DHPoint(this.playerRef.dir.x,
+                                          this.playerRef.dir.y);
+            if (dir.x == 0 && dir.y == 0) {
+                dir.y = -1;
+            }
             var targetPoint:DHPoint = this.playerRef.pos.add(
-                this.playerRef.dir.normalized().mulScl(
-                    ScreenManager.getInstance().screenWidth));
+                dir.normalized().mulScl(ScreenManager.getInstance().screenWidth));
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint);
             var headFootDisp:DHPoint = this.pos.sub(this.footPos);
             this.setPos(warpNode.pos.add(headFootDisp));
