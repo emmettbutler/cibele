@@ -125,7 +125,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function warpToPlayer():void {
-            var targetPoint:DHPoint = this.playerRef.pos.add(this.playerRef.dir.normalized().mulScl(1000));
+            var targetPoint:DHPoint = this.playerRef.pos.add(
+                this.playerRef.dir.normalized().mulScl(
+                    ScreenManager.getInstance().screenWidth));
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint);
             var headFootDisp:DHPoint = this.pos.sub(this.footPos);
             this.setPos(warpNode.pos.add(headFootDisp));
