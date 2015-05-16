@@ -47,6 +47,18 @@ package com.starmaid.Cibele.management {
             str.close();
         }
 
+        public function peekSaveFile():String {
+            var str:FileStream = new FileStream();
+            if (!ScreenManager.getInstance().SAVES || !this.saveFile.exists) {
+                return LVL_IT;
+            }
+            str.open(this.saveFile, FileMode.READ);
+            var fileContents:String = str.readUTFBytes(this.saveFile.size);
+            str.close();
+
+            return fileContents;
+        }
+
         public function loadProgress():void {
             var str:FileStream = new FileStream();
             if (!ScreenManager.getInstance().SAVES || !this.saveFile.exists) {

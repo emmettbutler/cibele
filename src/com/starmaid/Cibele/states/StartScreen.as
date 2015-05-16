@@ -3,7 +3,9 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.states.IkuTursoDesktop;
     import com.starmaid.Cibele.management.BackgroundLoader;
+    import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.states.EuryaleDesktop;
+    import com.starmaid.Cibele.states.HiisiDesktop;
     import com.starmaid.Cibele.entities.MenuButton;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameState;
@@ -52,17 +54,20 @@ package com.starmaid.Cibele.states {
             this.menuButtons.push(this._startButton);
             this._startButton.addToState();
 
-            this._loadButton = new MenuButton(
-                new DHPoint(
-                    ScreenManager.getInstance().screenWidth / 2 - _startButtonWidth / 2,
-                    ScreenManager.getInstance().screenHeight - 80
-                ),
-                new DHPoint(_startButtonWidth, 30),
-                "Continue",
-                function ():void { startGame(true); }
-            );
-            this.menuButtons.push(this._loadButton);
-            this._loadButton.addToState();
+            var fileLevel:String = ScreenManager.getInstance().levelTracker.peekSaveFile();
+            if (fileLevel != LevelTracker.LVL_IT) {
+                this._loadButton = new MenuButton(
+                    new DHPoint(
+                        ScreenManager.getInstance().screenWidth / 2 - _startButtonWidth / 2,
+                        ScreenManager.getInstance().screenHeight - 80
+                    ),
+                    new DHPoint(_startButtonWidth, 30),
+                    "Continue",
+                    function ():void { startGame(true); }
+                );
+                this.menuButtons.push(this._loadButton);
+                this._loadButton.addToState();
+            }
 
             this._quitButton = new MenuButton(
                 new DHPoint(
@@ -105,6 +110,9 @@ package com.starmaid.Cibele.states {
                     FlxG.switchState(new EuryaleDesktop());
                 }
             } else if(shouldLoad && ScreenManager.getInstance().levelTracker.hi()) {
+                fn = function():void {
+                    FlxG.switchState(new HiisiDesktop());
+                }
             }
 
             this.fadeOut(fn, 4 * GameSound.MSEC_PER_SEC);
