@@ -14,7 +14,8 @@ package com.starmaid.Cibele.entities {
     public class PauseScreen {
         private var baseLayer:GameObject, confirmLayer:GameObject;
         private var quitButton:MenuButton, titleScreenButton:MenuButton,
-                    confirmButton:MenuButton, cancelButton:MenuButton;
+                    confirmButton:MenuButton, cancelButton:MenuButton,
+                    resumeButton:MenuButton;
         private var confirmText:FlxText;
         private var _state:GameState;
         private var curConfirmFunction:Function;
@@ -70,6 +71,21 @@ package com.starmaid.Cibele.entities {
             this.titleScreenButton.observeGlobalPause = false;
             this.buttons.push(this.titleScreenButton);
             this._state.addMenuButton(this.titleScreenButton);
+
+            this.resumeButton = new MenuButton(
+                new DHPoint(
+                    ScreenManager.getInstance().screenWidth / 2 - _buttonWidth / 2,
+                    ScreenManager.getInstance().screenHeight - 200
+                ),
+                new DHPoint(_buttonWidth, 30),
+                "Resume",
+                function ():void {
+                    (FlxG.state as GameState).resume();
+                }
+            );
+            this.resumeButton.observeGlobalPause = false;
+            this.buttons.push(this.resumeButton);
+            this._state.addMenuButton(this.resumeButton);
 
             var confirmLayerDim:DHPoint = new DHPoint(600, 130);
             this.confirmLayer = new GameObject(new DHPoint(
