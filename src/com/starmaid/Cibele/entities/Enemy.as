@@ -4,6 +4,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.states.LevelMapState;
 
     import org.flixel.*;
 
@@ -159,7 +160,7 @@ package com.starmaid.Cibele.entities {
             this.inactiveTarget();
             GlobalTimer.getInstance().setMark(
                 MARK_RESPAWN + Math.random() * 200,
-                30 * GameSound.MSEC_PER_SEC, this.respawn, true
+                15 * GameSound.MSEC_PER_SEC, this.respawn, true
             );
         }
 
@@ -250,7 +251,7 @@ package com.starmaid.Cibele.entities {
                     break;
 
                 case STATE_TRACKING:
-                    this.dir = this.closestPartyMemberDisp.normalized();
+                    this.dir = this.closestPartyMemberDisp.normalized().mulScl((FlxG.state as LevelMapState).enemyDirMultiplier);
                     if (!this.closestPartyMemberIsInTrackingRange()) {
                         this.enterIdleState();
                     }

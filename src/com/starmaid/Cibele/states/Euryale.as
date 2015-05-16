@@ -138,6 +138,7 @@ package com.starmaid.Cibele.states {
             this.estTileDimensions = new DHPoint(2266, 1365);
             this.playerStartPos = new DHPoint(3427, 7657);
             this.colliderScaleFactor = 22.66;
+            this.enemyDirMultiplier = 2;
         }
 
         override public function create():void {
