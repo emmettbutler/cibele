@@ -156,7 +156,7 @@ package com.starmaid.Cibele.base {
                     curGroup = groups[i];
                     for (var k:int = 0; k < curGroup.length; k++) {
                         cur = curGroup[k];
-                        rect = new FlxRect(cur.x, cur.y, cur.width, cur.height);
+                        rect = cur._getRect();
                         if (cur is Enemy) {
                             if (this.mouse_rect.overlaps(rect) && !(cur as Enemy).isDead()) {
                                 _on_enemy = true;

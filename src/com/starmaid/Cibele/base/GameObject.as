@@ -74,6 +74,13 @@ package com.starmaid.Cibele.base {
             return new FlxRect(this.x, this.y, this.width, this.height);
         }
 
+        public function _getScreenRect():FlxRect {
+            var curScreenPos:DHPoint = new DHPoint(0, 0);
+            this.getScreenXY(curScreenPos);
+            return new FlxRect(curScreenPos.x, curScreenPos.y,
+                               this.width, this.height);
+        }
+
         public function getMiddlePos():DHPoint {
             return new DHPoint(
                 this.pos.x + this.width / 2,

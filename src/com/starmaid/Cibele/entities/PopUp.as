@@ -34,7 +34,7 @@ package com.starmaid.Cibele.entities {
             var imgClass:Class = ImgXPink;
             imgXSize = new DHPoint(23, 18);
 
-            this.x_sprite = UIElement.fromPoint(new DHPoint((this.x+w)-imgXSize.x, this.y+1));
+            this.x_sprite = XSprite.fromPoint(new DHPoint((this.x+w)-imgXSize.x, this.y+1));
             this.x_sprite.loadGraphic(imgClass, false, false, imgXSize.x, imgXSize.y);
 
             this.visible = false;

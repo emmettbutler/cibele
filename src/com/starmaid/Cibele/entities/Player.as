@@ -163,14 +163,10 @@ package com.starmaid.Cibele.entities {
                                                           5, 5);
                 var mouseWorldRect:FlxRect = new FlxRect(worldPos.x, worldPos.y,
                                                          5, 5);
-                var curScreenPos:DHPoint = new DHPoint(0, 0);
                 for (var i:int = 0; i < group.length; i++) {
                     cur = group[i];
-                    cur.getScreenXY(curScreenPos);
-                    screenRect = new FlxRect(curScreenPos.x, curScreenPos.y,
-                                             cur.width, cur.height);
-                    worldRect = new FlxRect(cur.x, cur.y,
-                                            cur.width, cur.height);
+                    screenRect = cur._getScreenRect();
+                    worldRect = cur._getRect();
                     if (mouseScreenRect.overlaps(screenRect) &&
                         cur is UIElement && cur.visible)
                     {

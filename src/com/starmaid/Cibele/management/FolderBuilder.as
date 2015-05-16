@@ -3,6 +3,7 @@ package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.UIElement;
+    import com.starmaid.Cibele.entities.XSprite;
 
     import org.flixel.*;
 
@@ -88,7 +89,7 @@ package com.starmaid.Cibele.management {
                     spr.scrollFactor = new DHPoint(0,0);
                     FlxG.state.add(spr);
                     cur["folder_sprite"] = spr;
-                    curX = UIElement.fromPoint(new DHPoint(spr.x + spr.width - 23 - 2, spr.y + 2));
+                    curX = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 23 - 2, spr.y + 2));
                     curX.loadGraphic(ImgInboxXPink, false, false, 23, 18);
                     curX.visible = false;
                     curX.scrollFactor = new DHPoint(0,0);
@@ -107,7 +108,7 @@ package com.starmaid.Cibele.management {
                     spr = UIElement.fromPoint(new DHPoint((_screen.screenWidth - cur["dim"].x) * Math.random(), (_screen.screenHeight - cur["dim"].y) * Math.random()));
                     spr.loadGraphic(cur["contents"], false, false, cur["dim"].x, cur["dim"].y);
                     spr.visible = false;
-                    curX = UIElement.fromPoint(new DHPoint(spr.x + spr.width - 23 - 2, spr.y + 2));
+                    curX = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 23 - 2, spr.y + 2));
                     curX.loadGraphic(ImgInboxXPink, false, false, 23, 18);
                     curX.visible = false;
                     this.leafPopups.push({"sprite": spr, "x": curX});
