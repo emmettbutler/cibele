@@ -52,23 +52,43 @@ package com.starmaid.Cibele.states {
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo3, "len": 33*GameSound.MSEC_PER_SEC,
+                    "audio": Convo3, "len": 25*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0, endfn: showBlakeSelfie
                 },
                 {
-                    "audio": Convo4, "len": 71*GameSound.MSEC_PER_SEC,
+                    "audio": Convo4, "len": 61*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0, endfn: showBeccaEmail
                 },
                 {
-                    "audio": Convo5, "len": 30*GameSound.MSEC_PER_SEC,
+                    "audio": Convo5, "len": 21*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC,
+                    "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": Convo7, "len": 50*GameSound.MSEC_PER_SEC,
+                    "audio": Convo6, "len": 21*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": Convo7, "len": 37*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
@@ -84,7 +104,11 @@ package com.starmaid.Cibele.states {
                     "delay": 0
                 },
                 {
-                    "audio": Convo11, "len": 40*GameSound.MSEC_PER_SEC,
+                    "audio": Convo11, "len": 23*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
@@ -92,19 +116,23 @@ package com.starmaid.Cibele.states {
                     "delay": 0, endfn: startBoss, "ends_with_popup": false
                 },
                 {
-                    "audio": null, "len": 45*GameSound.MSEC_PER_SEC,
+                    "audio": null, "len": 35*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": killBoss, "ends_with_popup": false
                 },
                 {
-                    "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
+                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": Convo13, "len": 37*GameSound.MSEC_PER_SEC,
+                    "audio": Convo13, "len": 27*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": Convo14, "len": 45*GameSound.MSEC_PER_SEC,
+                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
+                    "delay": 0
+                },
+                {
+                    "audio": Convo14, "len": 43*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 }
             ];
@@ -210,7 +238,7 @@ package com.starmaid.Cibele.states {
         }
 
         override public function finalConvoDone():void {
-            GlobalTimer.getInstance().setMark("hi end", 5*GameSound.MSEC_PER_SEC, this.playEndFilm);
+            GlobalTimer.getInstance().setMark("hi end", 1*GameSound.MSEC_PER_SEC, this.playEndFilm);
         }
 
         public function playMeetupV1():void {
@@ -275,7 +303,7 @@ package com.starmaid.Cibele.states {
         public function playEndFilm():void {
             //SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
                     //false, 1, GameSound.BGM);
-            FlxG.switchState(new BlankScreen(5*GameSound.MSEC_PER_SEC,
+            FlxG.switchState(new BlankScreen(7*GameSound.MSEC_PER_SEC,
                 playMeetupV1
             ));
         }
