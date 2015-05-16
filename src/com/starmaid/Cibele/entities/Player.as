@@ -177,9 +177,6 @@ package com.starmaid.Cibele.entities {
                         ui_clicked = true;
                         SoundManager.getInstance().playUIGeneralSFX();
                     } else if (cur is Enemy) {
-                        if(this._state == STATE_IN_ATTACK) {
-                            return;
-                        }
                         if (mouseWorldRect.overlaps(worldRect) && !(cur as Enemy).isDead()) {
                             if(!got_enemy) {
                                 got_enemy = true;
@@ -191,10 +188,6 @@ package com.starmaid.Cibele.entities {
                         }
                     }
                 }
-            }
-
-            if(this._state == STATE_IN_ATTACK) {
-                return;
             }
 
             if (ui_clicked) {
@@ -210,6 +203,8 @@ package com.starmaid.Cibele.entities {
             if (got_enemy && this.targetEnemy != null && !this.targetEnemy.isDead()) {
                 this._state = STATE_MOVE_TO_ENEMY;
                 this.targetEnemy.activeTarget();
+            } else if (!got_enemy) {
+                this.targetEnemy = null;
             }
             if (prevTargetEnemy != null) {
                 prevTargetEnemy.inactiveTarget();
@@ -490,7 +485,7 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function resolveStatePostAttack():void {
-            if (!(FlxG.state is LevelMapState)) {
+            if (!(FlxG.state is LevelMapState) || !this.inAttack()) {
                 return;
             }
             super.resolveStatePostAttack();
