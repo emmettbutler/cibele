@@ -254,7 +254,12 @@ package com.starmaid.Cibele.entities {
                 case STATE_TRACKING:
                     if (this.timeAlive - this.lastTrackingDirUpdateTime > 1300) {
                         this.lastTrackingDirUpdateTime = this.timeAlive;
-                        this.dir = this.closestPartyMemberDisp.normalized().mulScl((FlxG.state as LevelMapState).enemyDirMultiplier);
+                        var mul:Number = (FlxG.state as LevelMapState).enemyDirMultiplier;
+                        if (mul != 1) {
+                            this.dir = this.closestPartyMemberDisp.normalized().mulScl((FlxG.state as LevelMapState).enemyDirMultiplier);
+                        } else {
+                            this.dir = this.closestPartyMemberDisp.normalized();
+                        }
                     }
                     if (!this.closestPartyMemberIsInTrackingRange()) {
                         this.enterIdleState();
