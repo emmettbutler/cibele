@@ -32,6 +32,7 @@ package com.starmaid.Cibele.entities {
         private var originalPos:DHPoint;
         protected var damageLockMap:Dictionary;
         public var footPos:DHPoint, footPosOffset:DHPoint, basePosOffset:DHPoint;
+        private var lastTrackingDirUpdateTime:Number = -1;
 
         public static const STATE_IDLE:Number = 1;
         public static const STATE_TRACKING:Number = 3;
@@ -251,7 +252,10 @@ package com.starmaid.Cibele.entities {
                     break;
 
                 case STATE_TRACKING:
-                    this.dir = this.closestPartyMemberDisp.normalized().mulScl((FlxG.state as LevelMapState).enemyDirMultiplier);
+                    if (this.timeAlive - this.lastTrackingDirUpdateTime > 1300) {
+                        this.lastTrackingDirUpdateTime = this.timeAlive;
+                        this.dir = this.closestPartyMemberDisp.normalized().mulScl((FlxG.state as LevelMapState).enemyDirMultiplier);
+                    }
                     if (!this.closestPartyMemberIsInTrackingRange()) {
                         this.enterIdleState();
                     }
