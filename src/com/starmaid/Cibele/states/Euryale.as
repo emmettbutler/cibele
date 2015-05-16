@@ -126,7 +126,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0
                 },
                 {
-                    "audio": Convo5_3, "len": 5*GameSound.MSEC_PER_SEC,
+                    "audio": Convo5_3, "len": 4*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 }
             ];
@@ -138,6 +138,7 @@ package com.starmaid.Cibele.states {
             this.estTileDimensions = new DHPoint(2266, 1365);
             this.playerStartPos = new DHPoint(3427, 7657);
             this.colliderScaleFactor = 22.66;
+            this.enemyDirMultiplier = 2;
         }
 
         override public function create():void {
@@ -238,7 +239,7 @@ package com.starmaid.Cibele.states {
         }
 
         override public function finalConvoDone():void {
-            GlobalTimer.getInstance().setMark("eu end", 5*GameSound.MSEC_PER_SEC, this.playEndFilm);
+            GlobalTimer.getInstance().setMark("eu end", 1*GameSound.MSEC_PER_SEC, this.playEndFilm);
         }
 
         public function playEndFilm():void {
