@@ -67,7 +67,7 @@ package com.starmaid.Cibele.management {
 
             this.threads_map = {};
             this.threads_map['it'] = new Array(
-                new Thread(this.img_inbox,
+                new Thread(this.img_inbox, false,
                     ["Rusher", "did you get that link i sent you on aim last night? its an anime you might like :D", 1],
                     [MessageManager.SENT_BY_CIBELE, "yeah! i think that one of the VAs was in sailor moon??", 1],
                     ["Rusher", "the little pink haired one looks just like you :3", 1],
@@ -77,7 +77,7 @@ package com.starmaid.Cibele.management {
                     ["Rusher", "thanks :3", 10*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "i really like knowing what everyone looks like irl~", -1]
                 ),
-                new Thread(this.img_inbox,
+                new Thread(this.img_inbox, true,
                     ["GuyverGuy", "hey giiiiiirl how are things? you never chat with me anymore </3", 1],
                     [MessageManager.SENT_BY_CIBELE, ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", 1],
                     ["GuyverGuy", "everyone bowing to ichis whip as usual i see", 1],
@@ -89,7 +89,7 @@ package com.starmaid.Cibele.management {
                     ["GuyverGuy", "i bet he thinks ur hot", 10*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "i doubt that", -1]
                 ),
-                new Thread(this.img_inbox,
+                new Thread(this.img_inbox, true,
                     ["Airia", "Cib! Wanna do a euryale run w/ me on friday?", 1],
                     [MessageManager.SENT_BY_CIBELE, "ok! <3 see you then girl~", 1],
                     ["Airia", "ichi usually comes but lets go just us, girls night out", 1],
@@ -99,7 +99,7 @@ package com.starmaid.Cibele.management {
                     ["Airia", "OMG who is it??? guil? ICHI?", 10*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "lol shhhh we will talk on friday", -1]
                 ),
-                new Thread(this.img_inbox,
+                new Thread(this.img_inbox, false,
                     ["Guillen", "where u at", 1],
                     [MessageManager.SENT_BY_CIBELE, "hey sorry duoing with ichi now", 1],
                     ["Guillen", "omg ur always with ichi come oooonnnn", 1],
@@ -112,7 +112,7 @@ package com.starmaid.Cibele.management {
             );
 
             this.threads_map['eu'] = new Array(
-                new Thread(this.img_inbox,
+                new Thread(this.img_inbox, true,
                     ["Rusher", "cibby! we should talk on the phone sometime", 1],
                     [MessageManager.SENT_BY_CIBELE, "yeah we could do that :D", 1],
                     ["Rusher", "we can text too and be ~real~ friends", 1],
@@ -122,7 +122,7 @@ package com.starmaid.Cibele.management {
                     ["Rusher", ":( sorry", 10*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "i am kinda busy right now actually. i will msg you later", -1]
                 ),
-                new Thread(this.img_inbox,
+                new Thread(this.img_inbox, true,
                     ["GuyverGuy", "<3 <3 <3", 1],
                     [MessageManager.SENT_BY_CIBELE, "lol hi guyver whats up", 1],
                     ["GuyverGuy", "ur cute", 1],
@@ -136,7 +136,7 @@ package com.starmaid.Cibele.management {
                     ["GuyverGuy", "lol hes jealous of u hangin with ichi", 10*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "fire and i had a thing but its over and he knows that wtf", -1]
                 ),
-                new Thread(this.img_inbox,
+                new Thread(this.img_inbox, false,
                     ["Airia", "ciiiiib ichi never shuts up about u lol", 1],
                     [MessageManager.SENT_BY_CIBELE, ":3 he was talking about me to you? what did he say", 1],
                     ["Airia", "he was just gushing about how chill you are compared to other girls", 1],
@@ -146,7 +146,7 @@ package com.starmaid.Cibele.management {
                     ["Airia", "sounds like u two have been on the phone a lot too~", 10*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "we have been talking on the phone a lot... its nice :3", -1]
                 ),
-                new Thread(this.img_inbox,
+                new Thread(this.img_inbox, false,
                     ["Guillen", "we really need to meet up next time im in nyc!!!", 1],
                     [MessageManager.SENT_BY_CIBELE, "i knowww im sorry i keep cancelling", 1],
                     ["Guillen", "stop being so busy ;_; ill be in town next weekend if ur free", 1],
@@ -158,7 +158,7 @@ package com.starmaid.Cibele.management {
 
             //TODO write these
             this.threads_map['hi'] = new Array(
-                new Thread(this.img_inbox,
+                new Thread(this.img_inbox, false,
                     ["Rusher", "ninaaaaaa", 1],
                     [MessageManager.SENT_BY_CIBELE, "hey what's up!", 1],
                     ["Rusher", "rex is pissed at you lol", 1],
@@ -171,7 +171,7 @@ package com.starmaid.Cibele.management {
                     ["Rusher", "i miss you cibby", 10*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "; ;", -1]
                 ),
-                new Thread(this.img_inbox,
+                new Thread(this.img_inbox, true,
                     ["GuyverGuy", "CIB stop ignoring me", 1],
                     [MessageManager.SENT_BY_CIBELE, "what's up? i wasn't ignoring you lol", 1],
                     ["GuyverGuy", "i was lookin at ur facebook", 1],
@@ -183,7 +183,7 @@ package com.starmaid.Cibele.management {
                     ["GuyverGuy", "u should hook us up", 10*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "uh no lol", -1]
                 ),
-                new Thread(this.img_inbox,
+                new Thread(this.img_inbox, false,
                     ["Airia", "cib! stop making rusher sad", 1],
                     [MessageManager.SENT_BY_CIBELE, "whaaaat lol", 1],
                     ["Airia", "i know you used to like him <3 what happened", 1],
@@ -197,7 +197,7 @@ package com.starmaid.Cibele.management {
                     ["Airia", "wow that sucks", 10*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "yeah i can't really get past that", -1]
                 ),
-                new Thread(this.img_inbox,
+                new Thread(this.img_inbox, false,
                     ["Guillen", "yo i know what's going on with you and ichi", 1],
                     [MessageManager.SENT_BY_CIBELE, "what are you talking about lol", 1],
                     ["Guillen", "everyone knows lol stop trying to hide it", 1],
@@ -470,7 +470,7 @@ package com.starmaid.Cibele.management {
             for(i = 0; i < this.threads.length; i++) {
                 cur_thread = this.threads[i];
                 cur_thread.update();
-                if (cur_thread.unread) {
+                if (!cur_thread.read) {
                     this.unread_count++;
                 }
             }

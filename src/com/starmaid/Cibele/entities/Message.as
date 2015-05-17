@@ -22,10 +22,10 @@ package com.starmaid.Cibele.entities {
         public var send_time:Number, font_size:Number = 21, list_offset:Number = 30;
 
         public var font_color:uint = 0xff616161;
-        public var unread_color:uint = 0xffc1698a;
 
         public function Message(txt:String, sec:Number,
-                                inbox:GameObject, sender:String, parent:Thread) {
+                                inbox:GameObject, sender:String, parent:Thread,
+                                start_read:Boolean=false) {
             this._inbox_ref = inbox;
             this.sent_by = sender;
             this.pos = new DHPoint(parent.pos.x, parent.pos.y);
@@ -33,6 +33,8 @@ package com.starmaid.Cibele.entities {
 
             this.display_text = txt;
             this.send_time = sec;
+
+            this.read = start_read;
         }
 
         public function initVisibleObjects():void {

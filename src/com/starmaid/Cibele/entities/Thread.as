@@ -22,7 +22,7 @@ package com.starmaid.Cibele.entities {
         public var unread_icon:UIElement;
         public var read_icon:UIElement;
 
-        public var viewing:Boolean = false, unread:Boolean = true;
+        public var viewing:Boolean = false, read:Boolean = false;
 
         private var _inbox_ref:GameObject;
         public var list_hitbox:FlxRect;
@@ -33,8 +33,8 @@ package com.starmaid.Cibele.entities {
         public var list_offset:Number = 40,
                    sent_count:Number = 0;
 
-        public var font_color:uint = 0xff616161;
-        public var unread_color:uint = 0xffc1698a;
+        public var font_color:uint = 0xff8b8b8b;
+        public var unread_color:uint = 0xff616161;
 
         public var messages:Array;
 
@@ -43,25 +43,32 @@ package com.starmaid.Cibele.entities {
 
         public static const MSG_PADDING:Number = 10;
 
-        public function Thread(inbox:GameObject,
+        public var start_read_flag:Boolean = false;
+        public var start_read_lock:Boolean = false;
+
+        public function Thread(inbox:GameObject, start_read:Boolean=false,
                                ... messages) {
             this._inbox_ref = inbox;
             this.sent_by = messages[0][0];
             this.pos = new DHPoint(this._inbox_ref.x + 20, this._inbox_ref.y + 30);
+
+            if(start_read) {
+                this.read = true;
+                this.start_read_flag = true;
+            }
 
             this.messages = new Array();
             var cur_message:Array;
             for (var i:int = 0; i < messages.length; i++) {
                 cur_message = messages[i];
                 this.messages.push(new Message(cur_message[1], cur_message[2],
-                                               inbox, cur_message[0], this));
+                                               inbox, cur_message[0], this, this.read));
             }
 
             this.display_text = messages[0][1];
 
             GlobalTimer.getInstance().setMark(this.messages[0].display_text,
                                               this.messages[0].send_time);
-
             this.initVisibleObjects();
         }
 
@@ -100,6 +107,9 @@ package com.starmaid.Cibele.entities {
             this.truncated_textbox.visible = false;
             this.truncated_textbox.active = false;
             FlxG.state.add(truncated_textbox);
+            if(!this.read) {
+                this.truncated_textbox.color = this.unread_color;
+            }
 
             this.unread_icon = new UIElement(pos.x, pos.y);
             this.unread_icon.loadGraphic(ImgUnreadMsg, false, false, 38, 31);
@@ -126,16 +136,27 @@ package com.starmaid.Cibele.entities {
             cur.send();
             if (this.viewing) {
                 cur.show();
+                this.read = true;
             } else {
-                this.unread = true;
+                this.read = false;
+                if(this.truncated_textbox.visible) {
+                    this.unread_icon.visible = true;
+                    this.read_icon.visible = false;
+                }
             }
+
+            if(this.read) {
+                this.truncated_textbox.color = this.font_color;
+            } else {
+                this.truncated_textbox.color = this.unread_color;
+            }
+
             if (!first) {
                 cur.pos.y = prev.pos.y + 50;
             }
             this.sent_count++;
             GlobalTimer.getInstance().setMark(next.display_text, next.send_time);
             this.display_text = cur.display_text;
-            this.truncated_textbox.color = this.unread_color;
             this.truncated_textbox.text = this.sent_by + " >> " +
                 this.display_text.slice(0, this.sent_by.length + 10) +
                 "...";
@@ -230,10 +251,13 @@ package com.starmaid.Cibele.entities {
             for (var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].hide();
             }
+            if(this.messages[this.messages.length-1].read && this.start_read_flag && !this.start_read_lock) {
+                this.start_read_lock = true;
+                this.read = true;
+            }
             this.viewing = false;
             this.truncated_textbox.visible = true;
-
-            if(this.unread == false){
+            if(this.read){
                 this.truncated_textbox.color = this.font_color;
                 this.read_icon.visible = true;
                 this.read_icon.active = true;
@@ -254,7 +278,7 @@ package com.starmaid.Cibele.entities {
 
         public function show():void {
             this.viewing = true;
-            this.unread = false;
+            this.read = true;
             this.unread_icon.visible = false;
             this.unread_icon.active = false;
             this.read_icon.visible = false;
