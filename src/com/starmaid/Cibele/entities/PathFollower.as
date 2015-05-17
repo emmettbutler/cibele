@@ -440,8 +440,10 @@ package com.starmaid.Cibele.entities {
 
         public function moveToNearestPathNode():void {
             this.targetNode = this.setNearestPathNodeCurrent();
-            this.initWalk(this.targetNode.pos);
-            this._cur_target_type = TARGET_NODE;
+            if (this.targetNode != null) {
+                this.initWalk(this.targetNode.pos);
+                this._cur_target_type = TARGET_NODE;
+            }
         }
 
         public function setPlayerReference(pl:Player):void {
