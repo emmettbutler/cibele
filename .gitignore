@@ -17,3 +17,6 @@ todo.txt
 
 SigningCert.p12
 *.zip
+
+*.mpc
+*.cache
