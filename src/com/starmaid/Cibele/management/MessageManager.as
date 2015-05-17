@@ -352,7 +352,7 @@ package com.starmaid.Cibele.management {
             this.notifications_text.scrollFactor = new FlxPoint(0, 0);
             this.notifications_text.active = false;
             if (addToState) {
-                FlxG.state.add(this.notifications_text);
+                //FlxG.state.add(this.notifications_text);
             }
 
             this.ui_loaded = true;
