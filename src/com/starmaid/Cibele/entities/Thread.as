@@ -6,6 +6,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.UIElement;
 
     import org.flixel.*;
 
@@ -13,8 +14,13 @@ package com.starmaid.Cibele.entities {
 
     public class Thread {
         [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
+        [Embed(source="/../assets/images/ui/UI_unread_msg.png")] private var ImgUnreadMsg:Class;
+        [Embed(source="/../assets/images/ui/UI_read_msg.png")] private var ImgReadMsg:Class;
 
         public var display_text:String, sent_by:String;
+
+        public var unread_icon:UIElement;
+        public var read_icon:UIElement;
 
         public var viewing:Boolean = false, unread:Boolean = true;
 
@@ -32,7 +38,7 @@ package com.starmaid.Cibele.entities {
 
         public var messages:Array;
 
-        public var list_hitbox_width:Number = 380;
+        public var list_hitbox_width:Number = 400;
         public var list_hitbox_height:Number = 25;
 
         public static const MSG_PADDING:Number = 10;
@@ -72,10 +78,14 @@ package com.starmaid.Cibele.entities {
             this.pos.x = this._inbox_ref.x + 20;
             this.pos.y = this._inbox_ref.y + 30;
 
-            this.truncated_textbox.x = pos.x;
-            this.truncated_textbox.y = pos.y;
-            this.list_hitbox.x = this.truncated_textbox.x;
-            this.list_hitbox.y = this.truncated_textbox.y;
+            this.truncated_textbox.x = this.pos.x+40;
+            this.truncated_textbox.y = this.pos.y;
+            this.unread_icon.x = this.pos.x;
+            this.unread_icon.y = this.pos.y;
+            this.read_icon.x = this.pos.x;
+            this.read_icon.y = this.pos.y;
+            this.list_hitbox.x = this.pos.x;
+            this.list_hitbox.y = this.pos.y;
 
             this.rotate();
         }
@@ -91,9 +101,22 @@ package com.starmaid.Cibele.entities {
             this.truncated_textbox.active = false;
             FlxG.state.add(truncated_textbox);
 
+            this.unread_icon = new UIElement(pos.x, pos.y);
+            this.unread_icon.loadGraphic(ImgUnreadMsg, false, false, 38, 31);
+            this.unread_icon.visible = false;
+            this.unread_icon.active = false;
+            this.unread_icon.scrollFactor = new DHPoint(0,0);
+            FlxG.state.add(this.unread_icon);
 
-            this.list_hitbox = new FlxRect(this.truncated_textbox.x,
-                this.truncated_textbox.y, this.list_hitbox_width, this.list_hitbox_height);
+            this.read_icon = new UIElement(pos.x, pos.y);
+            this.read_icon.loadGraphic(ImgReadMsg, false, false, 38, 31);
+            this.read_icon.visible = false;
+            this.read_icon.active = false;
+            this.read_icon.scrollFactor = new DHPoint(0,0);
+            FlxG.state.add(this.read_icon);
+
+            this.list_hitbox = new FlxRect(pos.x,
+                pos.y, this.list_hitbox_width, this.list_hitbox_height);
             for (var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].initVisibleObjects();
             }
@@ -180,12 +203,18 @@ package com.starmaid.Cibele.entities {
         public function setListPos(new_pos:DHPoint):void {
             this.pos.y = new_pos.y + this.list_offset;
             this.truncated_textbox.y = this.pos.y;
-            this.list_hitbox = new FlxRect(this.truncated_textbox.x,
-                this.truncated_textbox.y, this.list_hitbox_width, this.list_hitbox_height);
+            this.unread_icon.y = this.pos.y;
+            this.read_icon.y = this.pos.y;
+            this.list_hitbox = new FlxRect(this.pos.x,
+                this.pos.y, this.list_hitbox_width, this.list_hitbox_height);
         }
 
         public function hide():void {
             this.truncated_textbox.visible = false;
+            this.unread_icon.visible = false;
+            this.unread_icon.active = false;
+            this.read_icon.visible = false;
+            this.read_icon.active = false;
             for (var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].hide();
             }
@@ -206,18 +235,30 @@ package com.starmaid.Cibele.entities {
 
             if(this.unread == false){
                 this.truncated_textbox.color = this.font_color;
+                this.read_icon.visible = true;
+                this.read_icon.active = true;
             } else {
                 this.truncated_textbox.color = this.unread_color;
+                this.unread_icon.visible = true;
+                this.unread_icon.active = true;
             }
         }
 
         public function hidePreview():void {
             this.truncated_textbox.visible = false;
+            this.unread_icon.visible = false;
+            this.unread_icon.active = false;
+            this.read_icon.visible = false;
+            this.read_icon.active = false;
         }
 
         public function show():void {
             this.viewing = true;
             this.unread = false;
+            this.unread_icon.visible = false;
+            this.unread_icon.active = false;
+            this.read_icon.visible = false;
+            this.read_icon.active = false;
             this.truncated_textbox.visible = false;
             for (var i:int = 0; i < this.messages.length; i++) {
                 if (this.messages[i].sent) {
