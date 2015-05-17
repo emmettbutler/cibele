@@ -17,6 +17,7 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/ui/UI_unread_msg.png")] private var ImgUnreadMsg:Class;
         [Embed(source="/../assets/images/ui/UI_read_msg.png")] private var ImgReadMsg:Class;
 
+
         public var display_text:String, sent_by:String;
 
         public var unread_icon:UIElement;
@@ -45,6 +46,8 @@ package com.starmaid.Cibele.entities {
 
         public var start_read_flag:Boolean = false;
         public var start_read_lock:Boolean = false;
+
+        public var awaiting_reply:Boolean = false;
 
         public function Thread(inbox:GameObject, start_read:Boolean=false,
                                ... messages) {
@@ -137,6 +140,10 @@ package com.starmaid.Cibele.entities {
             if (this.viewing) {
                 cur.show();
                 this.read = true;
+                if(cur.sent_by != MessageManager.SENT_BY_CIBELE) {
+                    MessageManager.getInstance().showReplyButton();
+                    this.awaiting_reply = false;
+                }
             } else {
                 this.read = false;
                 if(this.truncated_textbox.visible) {
@@ -216,6 +223,7 @@ package com.starmaid.Cibele.entities {
                         this.messages[i + 1],
                         i == 0
                     );
+                    this.awaiting_reply = false;
                     FlxG.stage.dispatchEvent(new Event(GameState.EVENT_CHAT_RECEIVED));
                 }
             }
@@ -311,6 +319,7 @@ package com.starmaid.Cibele.entities {
                     this.messages[i].show();
                     //this.messages[i].pos.y = this.messages[i - 1].pos.y + 50;
                     if (next != null) {
+                        this.awaiting_reply = true;
                         GlobalTimer.getInstance().setMark(
                             next.display_text, next.send_time
                         );

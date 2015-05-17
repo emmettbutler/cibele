@@ -14,6 +14,7 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/UI_text_box_x_blue.png")] private var ImgInboxX:Class;
         [Embed(source="/../assets/images/ui/UI_pink_msg_box.png")] private var ImgInboxPink:Class;
         [Embed(source="/../assets/images/ui/UI_pink_x.png")] private var ImgInboxXPink:Class;
+        [Embed(source="/../assets/images/ui/ellipse_anim.png")] private var ImgEllipse:Class;
         [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
         public static var _instance:MessageManager = null;
@@ -24,6 +25,7 @@ package com.starmaid.Cibele.management {
         public var img_inbox:UIElement;
         public var exit_ui:UIElement;
         public var img_msg:UIElement;
+        public var ellipse_anim:UIElement;
 
         public var notifications_box:FlxRect,
                    exit_box:FlxRect, reply_box:FlxRect;
@@ -303,7 +305,7 @@ package com.starmaid.Cibele.management {
 
             this.exit_msg = new FlxText(this.img_inbox.x + 20,
                 this.img_inbox.y + (this.img_inbox.height-40),
-                this.img_inbox.width, "Back");
+                this.img_inbox.width, "Back |");
             this.exit_msg.setFormat("NexaBold-Regular",FONT_SIZE,0xff616161,"left");
             this.exit_msg.scrollFactor = new FlxPoint(0, 0);
             this.exit_msg.visible = false;
@@ -314,9 +316,9 @@ package com.starmaid.Cibele.management {
 
             this.exit_box = new FlxRect(this.exit_msg.x, this.exit_msg.y, 57, this.exit_msg.height);
 
-            this.reply_to_msg = new FlxText(this.img_inbox.x + 70,
-                this.img_inbox.y + (this.img_inbox.height - 40),
-                this.img_inbox.width, "| Reply");
+            this.reply_to_msg = new FlxText(this.img_inbox.x + 85,
+                this.img_inbox.y + (this.img_inbox.height - 35),
+                this.img_inbox.width, "Reply");
             this.reply_to_msg.setFormat("NexaBold-Regular",FONT_SIZE,0xff616161,"left");
             this.reply_to_msg.scrollFactor = new FlxPoint(0, 0);
             this.reply_to_msg.visible = false;
@@ -326,6 +328,15 @@ package com.starmaid.Cibele.management {
             }
 
             this.reply_box = new FlxRect(this.reply_to_msg.x, this.reply_to_msg.y, 64, this.reply_to_msg.height);
+
+
+            this.ellipse_anim = new UIElement(reply_to_msg.x, reply_to_msg.y + 10);
+            this.ellipse_anim.loadGraphic(ImgEllipse, false, false, 23, 4);
+            this.ellipse_anim.addAnimation("ellipse", [0,1,2,3], 5, true);
+            this.ellipse_anim.play("ellipse");
+            this.ellipse_anim.scrollFactor = new DHPoint(0,0);
+            FlxG.state.add(this.ellipse_anim);
+            this.ellipse_anim.visible = false;
 
             this.debugText = new FlxText(_screen.screenWidth * .01,
                                          _screen.screenHeight * .01, 500, "");
@@ -387,6 +398,7 @@ package com.starmaid.Cibele.management {
                 this.threads[i].showPreview();
             }
             this.reply_to_msg.visible = false;
+            this.ellipse_anim.visible = false;
             this.exit_msg.visible = false;
         }
 
@@ -395,7 +407,11 @@ package com.starmaid.Cibele.management {
                 this.cur_viewing = thread;
                 this.cur_viewing.markAsRead();
                 this.cur_viewing.show();
-                this.reply_to_msg.visible = true;
+                if(thread.awaiting_reply) {
+                    this.ellipse_anim.visible = true;
+                } else {
+                    this.reply_to_msg.visible = true;
+                }
                 this.exit_msg.visible = true;
                 this._state = STATE_VIEW_MESSAGE;
                 thread.rotate();
@@ -420,11 +436,14 @@ package com.starmaid.Cibele.management {
             this.exit_box = new FlxRect(this.exit_msg.x, this.exit_msg.y, 57,
                                         this.exit_msg.height);
 
-            this.reply_to_msg.x = this.img_inbox.x + 70;
-            this.reply_to_msg.y = this.img_inbox.y + (this.img_inbox.height - 40);
+            this.reply_to_msg.x = this.img_inbox.x + 83;
+            this.reply_to_msg.y = this.img_inbox.y + (this.img_inbox.height - 39);
             this.reply_box = new FlxRect(this.reply_to_msg.x,
                                          this.reply_to_msg.y, 64,
                                          this.reply_to_msg.height);
+
+            this.ellipse_anim.x = this.reply_to_msg.x + 2;
+            this.ellipse_anim.y = this.reply_to_msg.y + 13;
 
             for(var i:int = 0; i < this.threads.length; i++) {
                 this.threads[i].inbox_ref = this.img_inbox;
@@ -500,6 +519,8 @@ package com.starmaid.Cibele.management {
                                 this._state = STATE_VIEW_LIST;
                             } else if((FlxG.state as GameState).cursorOverlaps(this.reply_box, true)) {
                                 cur_viewing.reply();
+                                this.ellipse_anim.visible = true;
+                                this.reply_to_msg.visible = false;
                             }
                         }
                     }
@@ -517,6 +538,11 @@ package com.starmaid.Cibele.management {
             }
         }
 
+        public function showReplyButton():void {
+            this.ellipse_anim.visible = false;
+            this.reply_to_msg.visible = true;
+        }
+
         public function exitInbox(minimize:Boolean=false):void {
             this._state = STATE_HIDE_INBOX;
             if(!minimize) {
@@ -527,6 +553,7 @@ package com.starmaid.Cibele.management {
             }
             this.exit_msg.visible = false;
             this.reply_to_msg.visible = false;
+            this.ellipse_anim.visible = false;
             for(var i:int = 0; i < this.threads.length; i++) {
                 this.threads[i].hide();
             }
