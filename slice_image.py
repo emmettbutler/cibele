@@ -89,7 +89,7 @@ def prepare_image(filename):
     filename_base = filename.split('/')[-1].split('.')[0]
     tempname = "{}.mpc".format(filename_base)
     if not os.path.isfile(tempname):
-        command = "convert {} {}".format(filename, tempname)
+        command = "convert -limit memory 8192 {} {}".format(filename, tempname)
         print command
         subprocess.check_call(command.split())
     return tempname
