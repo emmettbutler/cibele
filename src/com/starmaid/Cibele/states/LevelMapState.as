@@ -241,7 +241,7 @@ package com.starmaid.Cibele.states {
                         that.last_convo_playing = true;
                     }
                     FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
-                                                    arguments.callee);
+                                                   arguments.callee);
                 });
         }
 
