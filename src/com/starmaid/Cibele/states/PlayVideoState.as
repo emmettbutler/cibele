@@ -30,6 +30,7 @@ package com.starmaid.Cibele.states {
             var videoConnection:NetConnection = new NetConnection();
             videoConnection.connect(null);
             videoStream = new NetStream(videoConnection);
+            videoStream.useHardwareDecoder = true;
             videoStream.play(filename);
             videoStream.client = { onMetaData:function(obj:Object):void{} };
             videoStream.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
@@ -53,6 +54,13 @@ package com.starmaid.Cibele.states {
         override public function create():void {
             super.create();
             FlxG.bgColor = 0xff000000;
+        }
+
+        override public function destroy():void {
+            videoStream.removeEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
+            videoStream.dispose();
+            videoStream = null;
+            super.destroy();
         }
 
         override public function update():void {
