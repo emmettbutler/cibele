@@ -158,7 +158,7 @@ package com.starmaid.Cibele.states {
 
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
                 SoundManager.getInstance().playSound(
-                        Convo1, 12*GameSound.MSEC_PER_SEC, firstConvoPartTwo, false, 1, GameSound.VOCAL,
+                        Convo1, this.shortDialogue ? 1 : 12*GameSound.MSEC_PER_SEC, firstConvoPartTwo, false, 1, GameSound.VOCAL,
                         CONVO_1_HALL
                     );
                 }
@@ -171,13 +171,13 @@ package com.starmaid.Cibele.states {
 
         public function firstConvoPartTwo():void {
             SoundManager.getInstance().playSound(
-                    Convo1_2, 33*GameSound.MSEC_PER_SEC, this.delayShowFriendEmail, false, 1, GameSound.VOCAL,
+                    Convo1_2, this.shortDialogue ? 1 : 33*GameSound.MSEC_PER_SEC, this.delayShowFriendEmail, false, 1, GameSound.VOCAL,
                     CONVO_1_2_HALL
                 );
         }
 
         public function delayShowFriendEmail():void {
-            GlobalTimer.getInstance().setMark(SHOW_FIRST_POPUP, 10*GameSound.MSEC_PER_SEC, this.showFriendEmail);
+            GlobalTimer.getInstance().setMark(SHOW_FIRST_POPUP, this.shortDialogue ? 1 : 10*GameSound.MSEC_PER_SEC, this.showFriendEmail);
         }
 
         public function showFriendEmail():void {

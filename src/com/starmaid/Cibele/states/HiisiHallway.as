@@ -35,19 +35,19 @@ package com.starmaid.Cibele.states {
             if(!(FlxG.state is Hiisi)) {
             } else {
                 GlobalTimer.getInstance().setMark(Hiisi.SHOW_FIRST_POPUP,
-                    5*GameSound.MSEC_PER_SEC,
+                    this.shortDialogue ? 1 : 5*GameSound.MSEC_PER_SEC,
                     (FlxG.state as Hiisi).showFlightEmail);
             }
         }
 
         public static function firstConvoPartTwo():void {
             GlobalTimer.getInstance().setMark("play 1st convo pt 2",
-                5*GameSound.MSEC_PER_SEC, HiisiHallway.playFirstConvoPartTwo);
+                this.shortDialogue ? 1 : 5*GameSound.MSEC_PER_SEC, HiisiHallway.playFirstConvoPartTwo);
         }
 
         public static function playFirstConvoPartTwo():void {
             SoundManager.getInstance().playSound(HiisiHallway.Convo2,
-                25*GameSound.MSEC_PER_SEC,
+                this.shortDialogue ? 1 : 25*GameSound.MSEC_PER_SEC,
                 HiisiHallway.startHiisiConvo, false, 1, GameSound.VOCAL,
                 Hiisi.CONVO_2_HALL
             );
@@ -58,7 +58,7 @@ package com.starmaid.Cibele.states {
             if (this._state == STATE_PRE && !this.accept_call) {
                 accept_call = true;
                 SoundManager.getInstance().playSound(
-                    HiisiHallway.Convo1, 20*GameSound.MSEC_PER_SEC,
+                    HiisiHallway.Convo1, this.shortDialogue ? 1 : 20*GameSound.MSEC_PER_SEC,
                     HiisiHallway.firstConvoPartTwo, false, 1,
                     GameSound.VOCAL,
                     Hiisi.CONVO_1_HALL

@@ -217,12 +217,13 @@ package com.starmaid.Cibele.states {
                     };
                     this.bitDialogueLock = true;
                     GlobalTimer.getInstance().setMark(
-                        "no audio" + Math.random(), audioInfo["len"],
+                        "no audio" + Math.random(),
+                        this.shortDialogue ? 1 : audioInfo["len"],
                         endfn
                     );
                 } else {
                     SoundManager.getInstance().playSound(
-                        audioInfo["audio"], audioInfo["len"], endfn,
+                        audioInfo["audio"], this.shortDialogue ? 1 : audioInfo["len"], endfn,
                         false, 1, GameSound.VOCAL
                     );
                 }

@@ -35,7 +35,7 @@ package com.starmaid.Cibele.states {
         public function firstConvo():void {
             if(!(FlxG.state is IkuTurso)) {
             } else {
-                GlobalTimer.getInstance().setMark("First Convo", 7*GameSound.MSEC_PER_SEC, (FlxG.state as IkuTurso).bulldogHellPopup);
+                GlobalTimer.getInstance().setMark("First Convo", this.shortDialogue ? 1 : 7*GameSound.MSEC_PER_SEC, (FlxG.state as IkuTurso).bulldogHellPopup);
             }
         }
 
@@ -44,7 +44,7 @@ package com.starmaid.Cibele.states {
             if (this._state == STATE_PRE && !this.accept_call) {
                 accept_call = true;
                 SoundManager.getInstance().playSound(
-                    Convo1, 24*GameSound.MSEC_PER_SEC, firstConvo, false, 1, GameSound.VOCAL,
+                    Convo1, this.shortDialogue ? 1 : 24*GameSound.MSEC_PER_SEC, firstConvo, false, 1, GameSound.VOCAL,
                     "convo_1_hall"
                 );
             } else {
