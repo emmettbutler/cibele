@@ -203,11 +203,16 @@ package com.starmaid.Cibele.management {
                                                   ScreenManager.getInstance().DEBUG);
         }
 
-        public function getTileAtPoint(pt:DHPoint, arr:Array):FlxExtSprite {
+        public function getCoordsAtPoint(pt:DHPoint):Array {
             var relPos:DHPoint = new DHPoint(pt.x / this.estTileWidth, pt.y / this.estTileHeight);
             var row:Number = Math.floor(relPos.y);
             var col:Number = Math.floor(relPos.x);
-            return this.getTileByIndex(row, col, arr);
+            return [row, col];
+        }
+
+        public function getTileAtPoint(pt:DHPoint, arr:Array):FlxExtSprite {
+            var coords:Array = this.getCoordsAtPoint(pt);
+            return this.getTileByIndex(coords[0], coords[1], arr);
         }
 
         public function collideRay(ray:FlxSprite, pt1:DHPoint, pt2:DHPoint):Boolean {
