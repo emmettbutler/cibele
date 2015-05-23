@@ -5,6 +5,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.utils.GlobalTimer;
+    import com.starmaid.Cibele.base.GameState;
 
     import org.flixel.*;
     import org.flixel.plugin.photonstorm.FlxCollision;
@@ -42,20 +43,20 @@ package com.starmaid.Cibele.states {
 
         public static function firstConvoPartTwo():void {
             GlobalTimer.getInstance().setMark("play first convo pt 2",
-                        this.shortDialogue ? 1 : 5*GameSound.MSEC_PER_SEC,
+                        GameState.SHORT_DIALOGUE ? 1 : 5*GameSound.MSEC_PER_SEC,
                         EuryaleHallway.playFirstConvoPartTwo);
         }
 
         public static function playFirstConvoPartTwo():void {
             SoundManager.getInstance().playSound(
-                    EuryaleHallway.Convo1_2, this.shortDialogue ? 1 : 30*GameSound.MSEC_PER_SEC, EuryaleHallway.firstConvoPartTwoPause, false, 1, GameSound.VOCAL,
+                    EuryaleHallway.Convo1_2, GameState.SHORT_DIALOGUE ? 1 : 30*GameSound.MSEC_PER_SEC, EuryaleHallway.firstConvoPartTwoPause, false, 1, GameSound.VOCAL,
                     Euryale.CONVO_1_2_HALL
                 );
         }
 
         public static function firstConvoPartTwoPause():void {
             GlobalTimer.getInstance().setMark("pause after first convo pt 2",
-                    this.shortDialogue ? 1 : 3*GameSound.MSEC_PER_SEC,
+                    GameState.SHORT_DIALOGUE ? 1 : 3*GameSound.MSEC_PER_SEC,
                     EuryaleHallway.startEuryaleConvo);
         }
 
@@ -64,7 +65,7 @@ package com.starmaid.Cibele.states {
             if (this._state == STATE_PRE && !this.accept_call) {
                 accept_call = true;
                 SoundManager.getInstance().playSound(
-                    EuryaleHallway.Convo1, this.shortDialogue ? 1 : 8*GameSound.MSEC_PER_SEC, EuryaleHallway.firstConvoPartTwo, false, 1, GameSound.VOCAL,
+                    EuryaleHallway.Convo1, GameState.SHORT_DIALOGUE ? 1 : 8*GameSound.MSEC_PER_SEC, EuryaleHallway.firstConvoPartTwo, false, 1, GameSound.VOCAL,
                     Euryale.CONVO_1_HALL
                 );
             } else {

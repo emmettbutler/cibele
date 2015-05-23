@@ -20,7 +20,7 @@ package com.starmaid.Cibele.base {
         [Embed(source="/../assets/audio/effects/sfx_mouseclick.mp3")] private var SfxClick:Class;
         [Embed(source="/../assets/audio/effects/sfx_mouseclick2.mp3")] private var SfxClick2:Class;
 
-        public var shortDialogue:Boolean = false;
+        public static var SHORT_DIALOGUE:Boolean = false;
         protected var updateSound:Boolean, updatePopup:Boolean,
                       updateMessages:Boolean, showEmoji:Boolean = true,
                       enable_fade:Boolean = false;

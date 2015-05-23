@@ -100,7 +100,7 @@ package com.starmaid.Cibele.states {
             }
             SoundManager.getInstance().playSound(ITBGMIntro, 3.6*GameSound.MSEC_PER_SEC, _bgmCallback, false, .08, Math.random()*928+298, IkuTurso.BGM, false, false, true);
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
-                GlobalTimer.getInstance().setMark("First Convo", this.shortDialogue ? 1 : 7*GameSound.MSEC_PER_SEC, this.bulldogHellPopup);
+                GlobalTimer.getInstance().setMark("First Convo", GameState.SHORT_DIALOGUE ? 1 : 7*GameSound.MSEC_PER_SEC, this.bulldogHellPopup);
             }
             this.convo1Sound = null;
             this.bgLoader.loadAllTiles();

@@ -3,6 +3,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.states.IkuTurso;
+    import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.utils.GlobalTimer;
@@ -35,7 +36,7 @@ package com.starmaid.Cibele.states {
         public function firstConvo():void {
             if(!(FlxG.state is IkuTurso)) {
             } else {
-                GlobalTimer.getInstance().setMark("First Convo", this.shortDialogue ? 1 : 7*GameSound.MSEC_PER_SEC, (FlxG.state as IkuTurso).bulldogHellPopup);
+                GlobalTimer.getInstance().setMark("First Convo", GameState.SHORT_DIALOGUE ? 1 : 7*GameSound.MSEC_PER_SEC, (FlxG.state as IkuTurso).bulldogHellPopup);
             }
         }
 
@@ -44,7 +45,7 @@ package com.starmaid.Cibele.states {
             if (this._state == STATE_PRE && !this.accept_call) {
                 accept_call = true;
                 SoundManager.getInstance().playSound(
-                    Convo1, this.shortDialogue ? 1 : 24*GameSound.MSEC_PER_SEC, firstConvo, false, 1, GameSound.VOCAL,
+                    Convo1, GameState.SHORT_DIALOGUE ? 1 : 24*GameSound.MSEC_PER_SEC, firstConvo, false, 1, GameSound.VOCAL,
                     "convo_1_hall"
                 );
             } else {
