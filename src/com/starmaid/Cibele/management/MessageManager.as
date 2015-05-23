@@ -4,6 +4,7 @@ package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.UIElement;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.GameState;
 
     import org.flixel.*;
 
@@ -74,9 +75,9 @@ package com.starmaid.Cibele.management {
                     [MessageManager.SENT_BY_CIBELE, "yeah! i think that one of the VAs was in sailor moon??", 1],
                     ["Rusher", "the little pink haired one looks just like you :3", 1],
                     [MessageManager.SENT_BY_CIBELE, "i always do my best to look anime ^_^", -1],
-                    ["Rusher", "did you see that picture i put up on the forums?", 30*GameSound.MSEC_PER_SEC],
+                    ["Rusher", "did you see that picture i put up on the forums?", GameState.SHORT_DIALOGUE ? 5*GameSound.MSEC_PER_SEC : 30*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "yeah! it's nice!", -1],
-                    ["Rusher", "thanks :3", 30*GameSound.MSEC_PER_SEC],
+                    ["Rusher", "thanks :3", GameState.SHORT_DIALOGUE ? 1*GameSound.MSEC_PER_SEC : 30*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "i really like knowing what everyone looks like irl~", -1]
                 ),
                 new Thread(this.img_inbox, true,
@@ -86,9 +87,9 @@ package com.starmaid.Cibele.management {
                     [MessageManager.SENT_BY_CIBELE, "omg guyver stop lol", 1],
                     ["GuyverGuy", "are u seriously defending him lol he is an A S S", 1],
                     [MessageManager.SENT_BY_CIBELE, "he's nice to me", -1],
-                    ["GuyverGuy", "lol of course he is, ur a girl", 30*GameSound.MSEC_PER_SEC],
+                    ["GuyverGuy", "lol of course he is, ur a girl", GameState.SHORT_DIALOGUE ? 5*GameSound.MSEC_PER_SEC : 30*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "whatever guyver lol that's not true", -1],
-                    ["GuyverGuy", "i bet he thinks ur hot", 30*GameSound.MSEC_PER_SEC],
+                    ["GuyverGuy", "i bet he thinks ur hot", GameState.SHORT_DIALOGUE ? 1*GameSound.MSEC_PER_SEC : 30*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "i doubt that", -1]
                 ),
                 new Thread(this.img_inbox, true,
@@ -96,9 +97,9 @@ package com.starmaid.Cibele.management {
                     [MessageManager.SENT_BY_CIBELE, "ok! <3 see you then girl~", 1],
                     ["Airia", "ichi usually comes but lets go just us, girls night out", 1],
                     [MessageManager.SENT_BY_CIBELE, "yes! i have so much i wanna talk about with youuu", -1],
-                    ["Airia", "ooooh? ;) something happen??", 30*GameSound.MSEC_PER_SEC],
+                    ["Airia", "ooooh? ;) something happen??", GameState.SHORT_DIALOGUE ? 5*GameSound.MSEC_PER_SEC : 30*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "i just need your opinion on someone ahhhhh you know", -1],
-                    ["Airia", "OMG who is it??? guil? ICHI?", 30*GameSound.MSEC_PER_SEC],
+                    ["Airia", "OMG who is it??? guil? ICHI?", GameState.SHORT_DIALOGUE ? 1*GameSound.MSEC_PER_SEC : 30*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "lol shhhh we will talk on friday", -1]
                 ),
                 new Thread(this.img_inbox, false,
@@ -108,7 +109,7 @@ package com.starmaid.Cibele.management {
                     [MessageManager.SENT_BY_CIBELE, "sorry! lets hang tomorrow maybe?", 1],
                     ["Guillen", "i wanna hang now cibby! can i meet u after in hiisi or something", 1],
                     [MessageManager.SENT_BY_CIBELE, "maybe, i will let you know what ichi and i end up doing", -1],
-                    ["Guillen", "when did u start liking ichi more than me lol", 30*GameSound.MSEC_PER_SEC],
+                    ["Guillen", "when did u start liking ichi more than me lol", GameState.SHORT_DIALOGUE ? 5*GameSound.MSEC_PER_SEC : 30*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "whaaat are you talking about lol stop", -1]
                 )
             );
@@ -119,9 +120,9 @@ package com.starmaid.Cibele.management {
                     [MessageManager.SENT_BY_CIBELE, "yeah we could do that :D", 1],
                     ["Rusher", "we can text too and be ~real~ friends", 1],
                     [MessageManager.SENT_BY_CIBELE, "haha im kinda surprised, i asked for yours awhile ago didnt i?", -1],
-                    ["Rusher", "yeah i was all awkward back then i guess", 30*GameSound.MSEC_PER_SEC],
+                    ["Rusher", "yeah i was all awkward back then i guess", GameState.SHORT_DIALOGUE ? 1*GameSound.MSEC_PER_SEC : 30*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, ";_; it made me sad", -1],
-                    ["Rusher", ":( sorry", 30*GameSound.MSEC_PER_SEC],
+                    ["Rusher", ":( sorry", GameState.SHORT_DIALOGUE ? 1*GameSound.MSEC_PER_SEC : 30*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "i am kinda busy right now actually. i will msg you later", -1]
                 ),
                 new Thread(this.img_inbox, true,
@@ -131,11 +132,11 @@ package com.starmaid.Cibele.management {
                     [MessageManager.SENT_BY_CIBELE, "uhhh haha thanks", 1],
                     ["GuyverGuy", "firesss showed me a pic of u", 1],
                     [MessageManager.SENT_BY_CIBELE, "the one i put on our forums?", -1],
-                    ["GuyverGuy", "no, he said its a special one from a while ago ;)", 10*GameSound.MSEC_PER_SEC],
+                    ["GuyverGuy", "no, he said its a special one from a while ago ;)", GameState.SHORT_DIALOGUE ? 1*GameSound.MSEC_PER_SEC : 30*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "uhhh what lol what are you talking about", -1],
-                    ["GuyverGuy", "its a sexy pic u sent him", 30*GameSound.MSEC_PER_SEC],
+                    ["GuyverGuy", "its a sexy pic u sent him", GameState.SHORT_DIALOGUE ? 1*GameSound.MSEC_PER_SEC : 30*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "wow what the fuck why did he show you", -1],
-                    ["GuyverGuy", "lol hes jealous of u hangin with ichi", 30*GameSound.MSEC_PER_SEC],
+                    ["GuyverGuy", "lol hes jealous of u hangin with ichi", GameState.SHORT_DIALOGUE ? 1*GameSound.MSEC_PER_SEC : 30*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "fire and i had a thing but its over and he knows that wtf", -1]
                 ),
                 new Thread(this.img_inbox, false,
@@ -143,9 +144,9 @@ package com.starmaid.Cibele.management {
                     [MessageManager.SENT_BY_CIBELE, ":3 he was talking about me to you? what did he say", 1],
                     ["Airia", "he was just gushing about how chill you are compared to other girls", 1],
                     [MessageManager.SENT_BY_CIBELE, "chill?", -1],
-                    ["Airia", "like ur down to log on for runs whenever. he said u get shit done", 30*GameSound.MSEC_PER_SEC],
+                    ["Airia", "like ur down to log on for runs whenever. he said u get shit done", GameState.SHORT_DIALOGUE ? 1*GameSound.MSEC_PER_SEC : 30*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "haha yeah i have been getting online for every run lately", -1],
-                    ["Airia", "sounds like u two have been on the phone a lot too~", 30*GameSound.MSEC_PER_SEC],
+                    ["Airia", "sounds like u two have been on the phone a lot too~", GameState.SHORT_DIALOGUE ? 1*GameSound.MSEC_PER_SEC : 30*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "we have been talking on the phone a lot... its nice :3", -1]
                 ),
                 new Thread(this.img_inbox, false,
@@ -153,7 +154,7 @@ package com.starmaid.Cibele.management {
                     [MessageManager.SENT_BY_CIBELE, "i knowww im sorry i keep cancelling", 1],
                     ["Guillen", "stop being so busy ;_; ill be in town next weekend if ur free", 1],
                     [MessageManager.SENT_BY_CIBELE, "depends on what ichi has the ampule doing", -1],
-                    ["Guillen", "aw come on you can take a break for one day", 30*GameSound.MSEC_PER_SEC],
+                    ["Guillen", "aw come on you can take a break for one day", GameState.SHORT_DIALOGUE ? 1*GameSound.MSEC_PER_SEC : 30*GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "ill let you know~", -1]
                 )
             );
