@@ -20,10 +20,9 @@ package com.starmaid.Cibele.entities {
 
         public var display_text:String, sent_by:String;
 
-        public var unread_icon:UIElement;
-        public var read_icon:UIElement;
+        public var unread_icon:UIElement, read_icon:UIElement;
 
-        public var viewing:Boolean = false, read:Boolean = false;
+        private var _viewing:Boolean = false, _read:Boolean = false, start_read_flag:Boolean = false, start_read_lock:Boolean = false, _awaiting_reply:Boolean = false;
 
         private var _inbox_ref:GameObject;
         public var list_hitbox:FlxRect;
@@ -33,21 +32,14 @@ package com.starmaid.Cibele.entities {
 
         public var list_offset:Number = 40,
                    sent_count:Number = 0;
+        public var list_hitbox_width:Number = 400;
+        public var list_hitbox_height:Number = 25;
+        public static const MSG_PADDING:Number = 10;
 
         public var font_color:uint = 0xff8b8b8b;
         public var unread_color:uint = 0xff616161;
 
         public var messages:Array;
-
-        public var list_hitbox_width:Number = 400;
-        public var list_hitbox_height:Number = 25;
-
-        public static const MSG_PADDING:Number = 10;
-
-        public var start_read_flag:Boolean = false;
-        public var start_read_lock:Boolean = false;
-
-        private var _awaiting_reply:Boolean = false;
 
         public function Thread(inbox:GameObject, start_read:Boolean=false,
                                ... messages) {
@@ -81,6 +73,22 @@ package com.starmaid.Cibele.entities {
 
         public function get awaiting_reply():Boolean {
             return this._awaiting_reply;
+        }
+
+        public function set viewing(v:Boolean):void {
+            this._viewing = v;
+        }
+
+        public function get viewing():Boolean {
+            return this._viewing;
+        }
+
+        public function set read(r:Boolean):void {
+            this._read = r;
+        }
+
+        public function get read():Boolean {
+            return this._read;
         }
 
         public function set inbox_ref(ref:GameObject):void {
