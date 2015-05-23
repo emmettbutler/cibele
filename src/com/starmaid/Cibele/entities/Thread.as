@@ -330,6 +330,14 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        public function highlightTruncatedText():void {
+            this.truncated_textbox.alpha = .5;
+        }
+
+        public function regularTruncatedText():void {
+            this.truncated_textbox.alpha = 1;
+        }
+
         public function hideFull():void {
             this.viewing = false;
             for (var i:int = 0; i < this.messages.length; i++) {

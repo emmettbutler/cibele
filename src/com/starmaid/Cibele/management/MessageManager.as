@@ -305,7 +305,7 @@ package com.starmaid.Cibele.management {
 
             this.exit_msg = new FlxText(this.img_inbox.x + 20,
                 this.img_inbox.y + (this.img_inbox.height-40),
-                this.img_inbox.width, "Back |");
+                this.img_inbox.width, "Back /");
             this.exit_msg.setFormat("NexaBold-Regular",FONT_SIZE,0xff616161,"left");
             this.exit_msg.scrollFactor = new FlxPoint(0, 0);
             this.exit_msg.visible = false;
@@ -318,7 +318,7 @@ package com.starmaid.Cibele.management {
 
             this.reply_to_msg = new FlxText(this.img_inbox.x + 85,
                 this.img_inbox.y + (this.img_inbox.height - 35),
-                this.img_inbox.width, "Reply");
+                this.img_inbox.width, "/ Reply");
             this.reply_to_msg.setFormat("NexaBold-Regular",FONT_SIZE,0xff616161,"left");
             this.reply_to_msg.scrollFactor = new FlxPoint(0, 0);
             this.reply_to_msg.visible = false;
@@ -437,7 +437,7 @@ package com.starmaid.Cibele.management {
                                         this.exit_msg.height);
 
             this.reply_to_msg.x = this.img_inbox.x + 83;
-            this.reply_to_msg.y = this.img_inbox.y + (this.img_inbox.height - 39);
+            this.reply_to_msg.y = this.img_inbox.y + (this.img_inbox.height - 40);
             this.reply_box = new FlxRect(this.reply_to_msg.x,
                                          this.reply_to_msg.y, 64,
                                          this.reply_to_msg.height);
@@ -492,6 +492,27 @@ package com.starmaid.Cibele.management {
                 if (!cur_thread.read) {
                     this.unread_count++;
                 }
+                if(this._state == STATE_VIEW_LIST) {
+                    if((FlxG.state as GameState).cursorOverlaps(this.threads[i].list_hitbox, true))
+                        {
+                            this.threads[i].highlightTruncatedText();
+                        } else {
+                            this.threads[i].regularTruncatedText();
+                        }
+                } else if (this._state == STATE_VIEW_MESSAGE) {
+                    if(cur_viewing != null) {
+                        if((FlxG.state as GameState).cursorOverlaps(this.exit_box, true)) {
+                            this.highlightExit();
+                        } else {
+                            this.regularExit();
+                        }
+                        if((FlxG.state as GameState).cursorOverlaps(this.reply_box, true)) {
+                            this.highlightReply();
+                        } else {
+                            this.regularReply();
+                        }
+                    }
+                }
             }
 
             if(FlxG.mouse.justPressed()) {
@@ -536,6 +557,22 @@ package com.starmaid.Cibele.management {
                     }
                 }
             }
+        }
+
+        public function highlightReply():void {
+            this.reply_to_msg.alpha = .5;
+        }
+
+        public function regularReply():void {
+            this.reply_to_msg.alpha = 1;
+        }
+
+        public function highlightExit():void {
+            this.exit_msg.alpha = .5;
+        }
+
+        public function regularExit():void {
+            this.exit_msg.alpha = 1;
         }
 
         public function showReplyButton():void {
