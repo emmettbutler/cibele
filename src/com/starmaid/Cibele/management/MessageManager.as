@@ -29,6 +29,7 @@ package com.starmaid.Cibele.management {
         public var ellipse_anim:UIElement;
 
         public var notifications_box:FlxRect,
+                    notification_num_box:FlxRect,
                    exit_box:FlxRect, reply_box:FlxRect;
 
         private var inbox_pos:DHPoint;
@@ -358,6 +359,8 @@ package com.starmaid.Cibele.management {
                 FlxG.state.add(this.notifications_text);
             }
 
+            this.notification_num_box = new FlxRect(this.notifications_text.x-15, this.notifications_text.y-10, 50, 53);
+
             this.ui_loaded = true;
         }
 
@@ -537,7 +540,7 @@ package com.starmaid.Cibele.management {
                 }
 
                 if(this._state == STATE_HIDE_INBOX) {
-                    if ((FlxG.state as GameState).cursorOverlaps(this.notifications_box, true)) {
+                    if ((FlxG.state as GameState).cursorOverlaps(this.notifications_box, true) || (FlxG.state as GameState).cursorOverlaps(this.notification_num_box, true)) {
                         this._state = STATE_VIEW_LIST;
                         this.openInbox();
                     }
