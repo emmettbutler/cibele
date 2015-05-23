@@ -9,6 +9,7 @@ package com.starmaid.Cibele.base {
     public class UIElement extends GameObject {
         private var _anchor:DHPoint, _rightBottomDisp:DHPoint;
         public var alerting:Boolean = false;
+        public var bounce_height:Number = 10;
 
         public function UIElement(x:Number, y:Number) {
             this._anchor = new DHPoint(x, y);
@@ -42,6 +43,10 @@ package com.starmaid.Cibele.base {
             }
         }
 
+        public function setSmallBounce():void {
+            this.bounce_height = 3;
+        }
+
         public function updatePos():void {
             var _btr:DHPoint = new DHPoint(
                 ScreenManager.getInstance().screenWidth,
@@ -56,7 +61,7 @@ package com.starmaid.Cibele.base {
         override public function update():void {
             super.update();
             if (this.alerting) {
-                this.y = this._anchor.y + 10 * Math.sin(.01 * GlobalTimer.getInstance().pausingTimer());
+                this.y = this._anchor.y + this.bounce_height * Math.sin(.01 * GlobalTimer.getInstance().pausingTimer());
             } else {
                 this.y = this._anchor.y;
             }
