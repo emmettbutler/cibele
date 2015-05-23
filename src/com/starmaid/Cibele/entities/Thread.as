@@ -17,6 +17,7 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/ui/UI_unread_msg.png")] private var ImgUnreadMsg:Class;
         [Embed(source="/../assets/images/ui/UI_read_msg.png")] private var ImgReadMsg:Class;
 
+        public static const SEND_IMMEDIATELY:Number = 1;
 
         private var display_text:String, sent_by:String;
 
@@ -173,7 +174,7 @@ package com.starmaid.Cibele.entities {
                     MessageManager.getInstance().showReplyButton();
                     this.awaiting_reply = false;
                 }
-            } else if(cur.send_time == 1 && this.start_read_flag) {
+            } else if(cur.send_time == Thread.SEND_IMMEDIATELY && this.start_read_flag) {
                 this.read = true;
             } else {
                 this.read = false;
