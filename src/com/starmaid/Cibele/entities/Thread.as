@@ -323,6 +323,8 @@ package com.starmaid.Cibele.entities {
                         GlobalTimer.getInstance().setMark(
                             next.display_text, next.send_time
                         );
+                    } else if (next == null) {
+                        this.awaiting_reply = true;
                     }
                     this.sent_count++;
                     break;
