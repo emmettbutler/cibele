@@ -120,10 +120,6 @@ package com.starmaid.Cibele.states {
                 this.tileLoader.stopY = this.fernBase.y + this.fernBase.height / 2;
             }
 
-            if(SoundManager.getInstance().getSoundByName(MenuScreen.BGM) != null) {
-                SoundManager.getInstance().getSoundByName(MenuScreen.BGM).fadeOutSound();
-            }
-
             if (this.player.y > this.fernTop.y + this.fernTop.height) {
                 if (this.player.x < leftBound) {
                     this.player.x = leftBound;
