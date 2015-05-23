@@ -173,6 +173,8 @@ package com.starmaid.Cibele.entities {
                     MessageManager.getInstance().showReplyButton();
                     this.awaiting_reply = false;
                 }
+            } else if(cur.send_time == 1 && this.start_read_flag) {
+                this.read = true;
             } else {
                 this.read = false;
                 if(this.truncated_textbox.visible) {
