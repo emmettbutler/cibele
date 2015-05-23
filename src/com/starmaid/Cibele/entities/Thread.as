@@ -20,26 +20,23 @@ package com.starmaid.Cibele.entities {
 
         private var display_text:String, sent_by:String;
 
-        private var unread_icon:UIElement, read_icon:UIElement;
-
         private var _viewing:Boolean = false, _read:Boolean = false, start_read_flag:Boolean = false, start_read_lock:Boolean = false, _awaiting_reply:Boolean = false;
 
+        private var unread_icon:UIElement, read_icon:UIElement;
         private var _inbox_ref:GameObject;
         private var _list_hitbox:FlxRect;
         private var truncated_textbox:FlxText;
 
-        public var pos:DHPoint;
+        private var _pos:DHPoint;
+        private var messages:Array;
 
-        public var list_offset:Number = 40,
-                   sent_count:Number = 0;
-        public var list_hitbox_width:Number = 400;
-        public var list_hitbox_height:Number = 25;
+        private var list_offset:Number = 40,
+                   sent_count:Number = 0,
+                   list_hitbox_width:Number = 400,
+                   list_hitbox_height:Number = 25;
         public static const MSG_PADDING:Number = 10;
-
-        public var font_color:uint = 0xff8b8b8b;
-        public var unread_color:uint = 0xff616161;
-
-        public var messages:Array;
+        private var font_color:uint = 0xff8b8b8b;
+        private var unread_color:uint = 0xff616161;
 
         public function Thread(inbox:GameObject, start_read:Boolean=false,
                                ... messages) {
@@ -97,6 +94,14 @@ package com.starmaid.Cibele.entities {
 
         public function get list_hitbox():FlxRect {
             return this._list_hitbox;
+        }
+
+        public function set pos(l:DHPoint):void {
+            this._pos = l;
+        }
+
+        public function get pos():DHPoint {
+            return this._pos;
         }
 
         public function set inbox_ref(ref:GameObject):void {
