@@ -137,7 +137,7 @@ package com.starmaid.Cibele.states {
             add(debugText);
 
             function _musicCallback():void {
-                if (next_state_class == null) {
+                if (FlxG.state is MenuScreen && next_state_class == null) {
                     SoundManager.getInstance().playSound(MenuBGMLoop, 0, null,
                         true, 1, GameSound.BGM, MenuScreen.BGM, false, false, false, true);
                 }
@@ -207,13 +207,12 @@ package com.starmaid.Cibele.states {
                 if (this.next_state_class == null && mouse_rect.overlaps(quit_rect) && !play_screen){
                     PopUpManager.GAME_ACTIVE = false;
                     if(ScreenManager.getInstance().levelTracker.it()) {
-                        this.next_state_class = IkuTursoDesktop;
+                        FlxG.switchState(new IkuTursoDesktop());
                     } else if(ScreenManager.getInstance().levelTracker.eu()) {
-                        this.next_state_class = EuryaleDesktop;
+                        FlxG.switchState(new EuryaleDesktop());
                     } else if(ScreenManager.getInstance().levelTracker.hi()) {
-                        this.next_state_class = HiisiDesktop;
+                        FlxG.switchState(new HiisiDesktop());
                     }
-                    this.startStateSwitch();
                 }
             }
 
