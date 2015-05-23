@@ -93,7 +93,10 @@ package com.starmaid.Cibele.management {
             for(var i:int = 0; i < this.runningSounds.length; i++) {
                 snd = this.runningSounds[i];
                 snd.update();
-                if (snd.dur != 0 && GlobalTimer.getInstance().hasPassed(snd.name)) {
+                if (snd.running == false ||
+                    (snd.dur != 0 &&
+                     GlobalTimer.getInstance().hasPassed(snd.name)))
+                {
                     this.stopSound(snd);
                 }
             }

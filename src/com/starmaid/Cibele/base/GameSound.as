@@ -100,12 +100,15 @@ package com.starmaid.Cibele.base {
             }
         }
 
-        public function fadeInSound():void {
-            this.soundObject.volume += .005;
+        public function fadeInSound(step:Number=.08):void {
+            this.increaseVolume(step);
         }
 
-        public function fadeOutSound():void {
-            this.soundObject.volume -= .005;
+        public function fadeOutSound(step:Number=.08):void {
+            this.decreaseVolume(step);
+            if (this.soundObject.volume <= 0) {
+                this.stopSound();
+            }
         }
 
         public function defaultEnd():void { }
