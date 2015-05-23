@@ -288,7 +288,7 @@ package com.starmaid.Cibele.entities {
             for (var i:int = 0; i < this.messages.length; i++) {
                 this.messages[i].hide();
             }
-            if(this.messages[this.messages.length-1].read && this.start_read_flag && !this.start_read_lock) {
+            if(this.start_read_flag && !this.start_read_lock) {
                 this.start_read_lock = true;
                 this.read = true;
             }
