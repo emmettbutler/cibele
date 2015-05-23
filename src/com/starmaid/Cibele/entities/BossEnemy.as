@@ -40,6 +40,8 @@ package com.starmaid.Cibele.entities {
             this.visible = false;
 
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.getStateString", "boss.state");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.pos", "boss.pos");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.footPos", "boss.footPos");
         }
 
         override public function addVisibleObjects():void {
