@@ -47,7 +47,7 @@ package com.starmaid.Cibele.entities {
         public var start_read_flag:Boolean = false;
         public var start_read_lock:Boolean = false;
 
-        public var awaiting_reply:Boolean = false;
+        private var _awaiting_reply:Boolean = false;
 
         public function Thread(inbox:GameObject, start_read:Boolean=false,
                                ... messages) {
@@ -73,6 +73,14 @@ package com.starmaid.Cibele.entities {
             GlobalTimer.getInstance().setMark(this.messages[0].display_text,
                                               this.messages[0].send_time);
             this.initVisibleObjects();
+        }
+
+        public function set awaiting_reply(r:Boolean):void {
+            this._awaiting_reply = r;
+        }
+
+        public function get awaiting_reply():Boolean {
+            return this._awaiting_reply;
         }
 
         public function set inbox_ref(ref:GameObject):void {
