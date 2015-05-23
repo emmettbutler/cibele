@@ -18,15 +18,15 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/ui/UI_read_msg.png")] private var ImgReadMsg:Class;
 
 
-        public var display_text:String, sent_by:String;
+        private var display_text:String, sent_by:String;
 
-        public var unread_icon:UIElement, read_icon:UIElement;
+        private var unread_icon:UIElement, read_icon:UIElement;
 
         private var _viewing:Boolean = false, _read:Boolean = false, start_read_flag:Boolean = false, start_read_lock:Boolean = false, _awaiting_reply:Boolean = false;
 
         private var _inbox_ref:GameObject;
-        public var list_hitbox:FlxRect;
-        public var truncated_textbox:FlxText;
+        private var _list_hitbox:FlxRect;
+        private var truncated_textbox:FlxText;
 
         public var pos:DHPoint;
 
@@ -89,6 +89,14 @@ package com.starmaid.Cibele.entities {
 
         public function get read():Boolean {
             return this._read;
+        }
+
+        public function set list_hitbox(l:FlxRect):void {
+            this._list_hitbox = l;
+        }
+
+        public function get list_hitbox():FlxRect {
+            return this._list_hitbox;
         }
 
         public function set inbox_ref(ref:GameObject):void {
