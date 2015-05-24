@@ -10,6 +10,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.Deque;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.UIElement;
     import com.starmaid.Cibele.utils.GlobalTimer;
 
@@ -146,7 +147,7 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function toggleActive():void {
-            if (!this.active) {
+            if (!this.active && !(FlxG.state as GameState).fading) {
                 this.active = true;
             }
         }

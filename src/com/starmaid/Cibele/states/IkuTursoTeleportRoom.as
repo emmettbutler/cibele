@@ -1,5 +1,6 @@
 package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.states.IkuTurso;
+    import com.starmaid.Cibele.base.GameSound;
 
     import org.flixel.*;
 
@@ -18,7 +19,12 @@ package com.starmaid.Cibele.states {
             super.update();
 
             if (player.mapHitbox.overlaps(door)) {
-                FlxG.switchState(new IkuTurso());
+                this.fadeOut(
+                    function():void {
+                        FlxG.switchState(new IkuTurso());
+                    },
+                    .2 * GameSound.MSEC_PER_SEC
+                );
             }
         }
     }

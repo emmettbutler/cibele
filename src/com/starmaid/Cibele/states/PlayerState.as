@@ -49,6 +49,12 @@ package com.starmaid.Cibele.states {
             }
         }
 
+        override public function fadeOut(fn:Function, postFadeWait:Number=1):void {
+            super.fadeOut(fn, postFadeWait);
+            this.player.dir = new DHPoint(0, 0);
+            this.player.active = false;
+        }
+
         override public function clickCallback(screenPos:DHPoint,
                                                worldPos:DHPoint):void {
             if (!GlobalTimer.getInstance().isPaused()) {

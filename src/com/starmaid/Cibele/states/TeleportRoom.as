@@ -2,8 +2,10 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.BackgroundLoader;
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameState;
+    import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameObject;
 
     import org.flixel.*;
@@ -48,7 +50,18 @@ package com.starmaid.Cibele.states {
         override public function update():void{
             super.update();
             if(player.mapHitbox.overlaps(door_fern)) {
-                this.nextState();
+                this.fadeOut(
+                    function():void {
+                        nextState();
+                    },
+                    .1 * GameSound.MSEC_PER_SEC
+                );
+            }
+
+            if (this.fading) {
+                if(SoundManager.getInstance().getSoundByName(Hallway.BGM) != null) {
+                    SoundManager.getInstance().getSoundByName(Hallway.BGM).fadeOutSound(.005);
+                }
             }
         }
     }

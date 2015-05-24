@@ -1,4 +1,6 @@
 package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.base.GameSound;
+
     import org.flixel.*;
 
     public class EuryaleTeleportRoom extends TeleportRoom {
@@ -16,7 +18,12 @@ package com.starmaid.Cibele.states {
             super.update();
 
             if (player.mapHitbox.overlaps(door)) {
-                FlxG.switchState(new Euryale());
+                this.fadeOut(
+                    function():void {
+                        FlxG.switchState(new Euryale());
+                    },
+                    .2 * GameSound.MSEC_PER_SEC
+                );
             }
         }
     }

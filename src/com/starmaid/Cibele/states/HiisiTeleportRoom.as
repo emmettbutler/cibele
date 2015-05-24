@@ -1,4 +1,6 @@
 package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.base.GameSound;
+
     import org.flixel.*;
 
     public class HiisiTeleportRoom extends TeleportRoom {
@@ -16,7 +18,12 @@ package com.starmaid.Cibele.states {
             super.update();
 
             if (player.mapHitbox.overlaps(door)) {
-                FlxG.switchState(new Hiisi());
+                this.fadeOut(
+                    function():void {
+                        FlxG.switchState(new Hiisi());
+                    },
+                    .2 * GameSound.MSEC_PER_SEC
+                );
             }
         }
     }

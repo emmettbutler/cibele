@@ -38,7 +38,7 @@ package com.starmaid.Cibele.states {
         public var login_rect:FlxRect;
         public var quit_rect:FlxRect;
         public var mouse_rect:FlxRect;
-        private var next_state_class:Class;
+        private var has_initiated_switch:Boolean = false;
 
         public var crystal_icon:GameObject;
 
@@ -137,7 +137,7 @@ package com.starmaid.Cibele.states {
             add(debugText);
 
             function _musicCallback():void {
-                if (FlxG.state is MenuScreen && next_state_class == null) {
+                if (FlxG.state is MenuScreen && has_initiated_switch == false) {
                     SoundManager.getInstance().playSound(MenuBGMLoop, 0, null,
                         true, 1, GameSound.BGM, MenuScreen.BGM, false, false, false, true);
                 }
@@ -194,17 +194,11 @@ package com.starmaid.Cibele.states {
                     title_text.visible = false;
                     crystal_icon.visible = false;
                 }
-                if (this.next_state_class == null && mouse_rect.overlaps(play_game_rect) && play_screen){
-                    if(ScreenManager.getInstance().levelTracker.it()) {
-                        this.next_state_class = IkuTursoHallway;
-                    } else if(ScreenManager.getInstance().levelTracker.eu()) {
-                        this.next_state_class = EuryaleHallway;
-                    } else if(ScreenManager.getInstance().levelTracker.hi()) {
-                        this.next_state_class = HiisiHallway;
-                    }
+                if (this.has_initiated_switch == false && mouse_rect.overlaps(play_game_rect) && play_screen){
+                    this.has_initiated_switch = true;
                     this.startStateSwitch();
                 }
-                if (this.next_state_class == null && mouse_rect.overlaps(quit_rect) && !play_screen){
+                if (this.has_initiated_switch == false && mouse_rect.overlaps(quit_rect) && !play_screen){
                     PopUpManager.GAME_ACTIVE = false;
                     if(ScreenManager.getInstance().levelTracker.it()) {
                         FlxG.switchState(new IkuTursoDesktop());
