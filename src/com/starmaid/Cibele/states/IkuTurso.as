@@ -176,24 +176,29 @@ package com.starmaid.Cibele.states {
         }
 
         public function playEndFilm():void {
-            SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
-                    false, 1, GameSound.BGM);
-            FlxG.switchState(
-                new PlayVideoState("/../assets/video/sexy_selfie.flv",
-                    function():void {
-                        PopUpManager.GAME_ACTIVE = false;
-                        FlxG.switchState(new BlankScreen(
-                            4*GameSound.MSEC_PER_SEC,
+            this.fadeOut(
+                function():void {
+                    SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
+                        false, 1, GameSound.BGM);
+                    FlxG.switchState(
+                        new PlayVideoState("/../assets/video/sexy_selfie.flv",
                             function():void {
-                                FlxG.switchState(new TextScreen(5*GameSound.MSEC_PER_SEC,
-                                function():void {
-                                    FlxG.switchState(new EuryaleDesktop());
-                                }, "April 13th, 2009"
+                                PopUpManager.GAME_ACTIVE = false;
+                                FlxG.switchState(new BlankScreen(
+                                    4*GameSound.MSEC_PER_SEC,
+                                    function():void {
+                                        FlxG.switchState(new TextScreen(5*GameSound.MSEC_PER_SEC,
+                                        function():void {
+                                            FlxG.switchState(new EuryaleDesktop());
+                                        }, "April 13th, 2009"
+                                        ));
+                                    }
                                 ));
-                            }
-                        ));
-                    }, SoundManager.getInstance().getSoundByName(BGM)
-                )
+                            }, SoundManager.getInstance().getSoundByName(BGM)
+                        )
+                    );
+                },
+                1 * GameSound.MSEC_PER_SEC
             );
         }
 
