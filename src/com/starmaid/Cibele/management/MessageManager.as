@@ -509,21 +509,23 @@ package com.starmaid.Cibele.management {
                 if(this._state == STATE_VIEW_LIST) {
                     if((FlxG.state as GameState).cursorOverlaps(this.threads[i].list_hitbox, true))
                         {
-                            this.threads[i].highlightTruncatedText();
+                            this.threads[i].highlightTextColor();
+                        } else if(this.threads[i].read){
+                            this.threads[i].defaultTextColor();
                         } else {
-                            this.threads[i].regularTruncatedText();
+                            this.threads[i].unreadTextColor();
                         }
                 } else if (this._state == STATE_VIEW_MESSAGE) {
                     if(cur_viewing != null) {
                         if((FlxG.state as GameState).cursorOverlaps(this.exit_box, true)) {
-                            this.highlightExit();
+                            this.highlightExitColor();
                         } else {
-                            this.regularExit();
+                            this.defaultExitColor();
                         }
                         if((FlxG.state as GameState).cursorOverlaps(this.reply_box, true)) {
-                            this.highlightReply();
+                            this.highlightReplyColor();
                         } else {
-                            this.regularReply();
+                            this.defaultReplyColor();
                         }
                     }
                 }
@@ -573,20 +575,20 @@ package com.starmaid.Cibele.management {
             }
         }
 
-        public function highlightReply():void {
-            this.reply_to_msg.alpha = .5;
+        public function highlightReplyColor():void {
+            this.reply_to_msg.color = Thread.HIGHLIGHT_COLOR;
         }
 
-        public function regularReply():void {
-            this.reply_to_msg.alpha = 1;
+        public function defaultReplyColor():void {
+            this.reply_to_msg.color = Thread.DEFAULT_COLOR;
         }
 
-        public function highlightExit():void {
-            this.exit_msg.alpha = .5;
+        public function highlightExitColor():void {
+            this.exit_msg.color = Thread.HIGHLIGHT_COLOR;
         }
 
-        public function regularExit():void {
-            this.exit_msg.alpha = 1;
+        public function defaultExitColor():void {
+            this.exit_msg.color = Thread.DEFAULT_COLOR;
         }
 
         public function showReplyButton():void {
