@@ -20,7 +20,6 @@ package com.starmaid.Cibele.base {
         [Embed(source="/../assets/audio/effects/sfx_mouseclick.mp3")] private var SfxClick:Class;
         [Embed(source="/../assets/audio/effects/sfx_mouseclick2.mp3")] private var SfxClick2:Class;
 
-        public static var SHORT_DIALOGUE:Boolean = false;
         protected var updateSound:Boolean, updatePopup:Boolean,
                       updateMessages:Boolean, showEmoji:Boolean = true,
                       enable_fade:Boolean = false;
@@ -60,6 +59,10 @@ package com.starmaid.Cibele.base {
             this.ui_color_flag = UICOLOR_DEFAULT;
 
             this.sortedObjects = new Array();
+        }
+
+        public static function get SHORT_DIALOGUE():Boolean {
+            return ScreenManager.getInstance().SHORT_DIALOGUE;
         }
 
         override public function create():void {

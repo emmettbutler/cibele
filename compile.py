@@ -69,6 +69,7 @@ def compile_main(entry_point_class,
                  libpath,
                  debug_level,
                  mute=False,
+                 short_dialogue=False,
                  disable_saves=False,
                  windowed=False,
                  platform="air"):
@@ -100,7 +101,8 @@ def compile_main(entry_point_class,
         "-define=CONFIG::test,{}".format(test_flag),
         "-define=CONFIG::mute,{}".format("true" if mute else "false"),
         "-define=CONFIG::windowed,{}".format("true" if windowed else "false"),
-        "-define=CONFIG::disable_saves,{}".format("true" if disable_saves else "false")
+        "-define=CONFIG::disable_saves,{}".format("true" if disable_saves else "false"),
+        "-define=CONFIG::short_dialogue,{}".format("true" if short_dialogue else "false")
     ]
     print " ".join(command)
     subprocess.check_call(command, shell=platform == "windows")
@@ -177,6 +179,7 @@ def main():
         preloader_class = write_preloader()
         swf_path = compile_main(entry_point_class.split('.')[-1], libpath,
                                 args.debug_level[0], mute=args.mute,
+                                short_dialogue=args.short_dialogue,
                                 disable_saves=args.disable_saves,
                                 windowed=args.windowed,
                                 platform=args.platform)
@@ -213,6 +216,8 @@ if __name__ == "__main__":
                         help="Build an executable")
     parser.add_argument('--mute', '-e', action="store_true",
                         help="Mute all sounds in this build")
+    parser.add_argument('--short_dialogue', '-i', action="store_true",
+                        help="Shorten all spoken dialogue for testing")
     parser.add_argument('--disable_saves', '-s', action="store_true",
                         help="Compile without load-from-save feature")
     parser.add_argument('--windowed', '-w', action="store_true",
