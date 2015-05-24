@@ -17,6 +17,7 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/ui/UI_unread_msg.png")] private var ImgUnreadMsg:Class;
         [Embed(source="/../assets/images/ui/UI_read_msg.png")] private var ImgReadMsg:Class;
 
+        public static const SEND_IMMEDIATELY:Number = 1;
 
         private var display_text:String, sent_by:String;
 
@@ -35,8 +36,9 @@ package com.starmaid.Cibele.entities {
                    list_hitbox_width:Number = 400,
                    list_hitbox_height:Number = 25;
         public static const MSG_PADDING:Number = 10;
-        private var font_color:uint = 0xff8b8b8b;
-        private var unread_color:uint = 0xff616161;
+        public static const DEFAULT_COLOR:uint = 0xff8b8b8b;
+        public static const UNREAD_COLOR:uint = 0xff616161;
+        public static const HIGHLIGHT_COLOR:uint = 0xff4a4a4a;
 
         public function Thread(inbox:GameObject, start_read:Boolean=false,
                                ... messages) {
@@ -134,13 +136,13 @@ package com.starmaid.Cibele.entities {
                 this.sent_by + " >> " +
                 this.display_text.slice(0, this.sent_by.length + 10) +
                 "...");
-            this.truncated_textbox.setFormat("NexaBold-Regular",MessageManager.FONT_SIZE,this.font_color,"left");
+            this.truncated_textbox.setFormat("NexaBold-Regular",MessageManager.FONT_SIZE,Thread.DEFAULT_COLOR,"left");
             this.truncated_textbox.scrollFactor = new FlxPoint(0, 0);
             this.truncated_textbox.visible = false;
             this.truncated_textbox.active = false;
             FlxG.state.add(truncated_textbox);
             if(!this.read) {
-                this.truncated_textbox.color = this.unread_color;
+                this.truncated_textbox.color = Thread.UNREAD_COLOR;
             }
 
             this.unread_icon = new UIElement(pos.x, pos.y);
@@ -173,6 +175,8 @@ package com.starmaid.Cibele.entities {
                     MessageManager.getInstance().showReplyButton();
                     this.awaiting_reply = false;
                 }
+            } else if(cur.send_time == Thread.SEND_IMMEDIATELY && this.start_read_flag) {
+                this.read = true;
             } else {
                 this.read = false;
                 if(this.truncated_textbox.visible) {
@@ -182,9 +186,9 @@ package com.starmaid.Cibele.entities {
             }
 
             if(this.read) {
-                this.truncated_textbox.color = this.font_color;
+                this.truncated_textbox.color = Thread.DEFAULT_COLOR;
             } else {
-                this.truncated_textbox.color = this.unread_color;
+                this.truncated_textbox.color = Thread.UNREAD_COLOR;
             }
 
             if (!first) {
@@ -295,11 +299,11 @@ package com.starmaid.Cibele.entities {
             this.viewing = false;
             this.truncated_textbox.visible = true;
             if(this.read){
-                this.truncated_textbox.color = this.font_color;
+                this.truncated_textbox.color = Thread.DEFAULT_COLOR;
                 this.read_icon.visible = true;
                 this.read_icon.active = true;
             } else {
-                this.truncated_textbox.color = this.unread_color;
+                this.truncated_textbox.color = Thread.UNREAD_COLOR;
                 this.unread_icon.visible = true;
                 this.unread_icon.active = true;
             }
@@ -328,6 +332,18 @@ package com.starmaid.Cibele.entities {
                     }
                 }
             }
+        }
+
+        public function highlightTextColor():void {
+            this.truncated_textbox.color = Thread.HIGHLIGHT_COLOR;
+        }
+
+        public function defaultTextColor():void {
+            this.truncated_textbox.color = Thread.DEFAULT_COLOR;
+        }
+
+        public function unreadTextColor():void {
+            this.truncated_textbox.color = Thread.UNREAD_COLOR;
         }
 
         public function hideFull():void {
