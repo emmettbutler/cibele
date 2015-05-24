@@ -19,10 +19,12 @@ package com.starmaid.Cibele.states {
         public var img_height:Number = 357;
 
         override public function create():void {
+            this.enable_fade = true;
             PopUpManager.GAME_ACTIVE = true;
             var _screen:ScreenManager = ScreenManager.getInstance();
-            super.__create(new DHPoint(
-                _screen.screenWidth * .4, _screen.screenHeight * .6));
+            this.startPos = new DHPoint(
+                _screen.screenWidth * .4, _screen.screenHeight * .6);
+            super.create();
 
             (new BackgroundLoader()).loadSingleTileBG("/../assets/images/worlds/" + this.bg_img_name);
             ScreenManager.getInstance().setupCamera(null, 1);

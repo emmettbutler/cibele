@@ -43,7 +43,8 @@ package com.starmaid.Cibele.states {
 
         override public function create():void {
             this.enable_fade = true;
-            super.__create(this.playerStartPos);
+            this.startPos = this.playerStartPos;
+            super.create();
 
             this.ID = LEVEL_ID;
 

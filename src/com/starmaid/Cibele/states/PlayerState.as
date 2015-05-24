@@ -20,10 +20,8 @@ package com.starmaid.Cibele.states {
             return this.player;
         }
 
-        public function __create(pos:DHPoint):void {
+        override public function create():void {
             super.create();
-            this.startPos = pos;
-
             this.player = new Player(this.startPos.x, this.startPos.y);
             this.add(this.player.mapHitbox)
         }

@@ -66,7 +66,8 @@ package com.starmaid.Cibele.states {
                 bottomY = _screen.screenHeight * 2;
                 startPos.y = _screen.screenHeight * .8;
             }
-            super.__create(startPos);
+            this.startPos = startPos;
+            super.create();
 
             FlxG.state.remove(this.baseLayer);
             this.baseLayer = new GameObject(new DHPoint(0, 0));
