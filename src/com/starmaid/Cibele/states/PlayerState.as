@@ -20,10 +20,8 @@ package com.starmaid.Cibele.states {
             return this.player;
         }
 
-        public function __create(pos:DHPoint):void {
+        override public function create():void {
             super.create();
-            this.startPos = pos;
-
             this.player = new Player(this.startPos.x, this.startPos.y);
             this.add(this.player.mapHitbox)
         }
@@ -47,6 +45,12 @@ package com.starmaid.Cibele.states {
             if(PopUpManager.getInstance()._player != this.player) {
                 PopUpManager.getInstance()._player = this.player;
             }
+        }
+
+        override public function fadeOut(fn:Function, postFadeWait:Number=1):void {
+            super.fadeOut(fn, postFadeWait);
+            this.player.dir = new DHPoint(0, 0);
+            this.player.active = false;
         }
 
         override public function clickCallback(screenPos:DHPoint,

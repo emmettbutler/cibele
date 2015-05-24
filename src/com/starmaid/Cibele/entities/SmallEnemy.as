@@ -14,6 +14,7 @@ package com.starmaid.Cibele.entities {
         override public function setupSprites():void {
             super.setupSprites();
 
+            this.attack_sprite.zSorted = false;
             this.attack_sprite.visible = false;
         }
 

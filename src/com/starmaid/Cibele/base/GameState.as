@@ -36,6 +36,7 @@ package com.starmaid.Cibele.base {
         public var use_loading_screen:Boolean = true;
         public var loading_screen_timer:Number = 3;
         public var fpsCounter:FPSCounter;
+        private var slug:String;
 
         public var ui_color_flag:Number;
         public var fading:Boolean;
@@ -54,6 +55,7 @@ package com.starmaid.Cibele.base {
             this.updatePopup = popup;
             this.updateMessages = messages;
             this.enable_fade = fade;
+            this.slug = "" + (Math.random() * 1000000);
 
             this.ui_color_flag = UICOLOR_DEFAULT;
 
@@ -142,6 +144,9 @@ package com.starmaid.Cibele.base {
         public function loadingScreenEndCallback():void { }
 
         public function fadeOut(fn:Function, postFadeWait:Number=1):void {
+            if (this.fading) {
+                return;
+            }
             this.fading = true;
             this.postFadeWait = postFadeWait;
             this.postFadeFn = fn;
@@ -266,9 +271,11 @@ package com.starmaid.Cibele.base {
                     this.fadeLayer.alpha += .01;
                 } else {
                     this.fading = false;
-                    GlobalTimer.getInstance().setMark("endfade",
-                                                      this.postFadeWait,
-                                                      this.postFadeFn);
+                    GlobalTimer.getInstance().setMark(
+                        "endfade" + this.slug,
+                        this.postFadeWait,
+                        this.postFadeFn
+                    );
                 }
             }
 

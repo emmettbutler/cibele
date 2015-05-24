@@ -245,28 +245,33 @@ package com.starmaid.Cibele.states {
         public function playEndFilm():void {
             //SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
                     //false, 1, GameSound.BGM);
-            FlxG.switchState(
-                new BlankScreen(4*GameSound.MSEC_PER_SEC,
-                    function():void {
-                        FlxG.switchState(new PlayVideoState(
-                            "/../assets/video/Phone Talk_v1.mp4",
+            this.fadeOut(
+                function():void {
+                    FlxG.switchState(
+                        new BlankScreen(4*GameSound.MSEC_PER_SEC,
                             function():void {
-                                PopUpManager.GAME_ACTIVE = false;
-                                FlxG.switchState(new BlankScreen(
-                                    4*GameSound.MSEC_PER_SEC,
+                                FlxG.switchState(new PlayVideoState(
+                                    "/../assets/video/Phone Talk_v1.mp4",
                                     function():void {
-                                        FlxG.switchState(new TextScreen(
-                                            5*GameSound.MSEC_PER_SEC,
+                                        PopUpManager.GAME_ACTIVE = false;
+                                        FlxG.switchState(new BlankScreen(
+                                            4*GameSound.MSEC_PER_SEC,
                                             function():void {
-                                                FlxG.switchState(new HiisiDesktop());
-                                            }, "August 10th, 2009"
+                                                FlxG.switchState(new TextScreen(
+                                                    5*GameSound.MSEC_PER_SEC,
+                                                    function():void {
+                                                        FlxG.switchState(new HiisiDesktop());
+                                                    }, "August 10th, 2009"
+                                                ));
+                                            }
                                         ));
-                                    }
+                                    }, null
                                 ));
-                            }, null
-                        ));
-                    }
-                )
+                            }
+                        )
+                    );
+                },
+                1 * GameSound.MSEC_PER_SEC
             );
         }
     }

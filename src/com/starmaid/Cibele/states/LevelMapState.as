@@ -42,7 +42,9 @@ package com.starmaid.Cibele.states {
         protected var conversationCounter:Number = 0;
 
         override public function create():void {
-            super.__create(this.playerStartPos);
+            this.enable_fade = true;
+            this.startPos = this.playerStartPos;
+            super.create();
 
             this.ID = LEVEL_ID;
 

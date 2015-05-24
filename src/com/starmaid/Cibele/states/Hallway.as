@@ -45,6 +45,7 @@ package com.starmaid.Cibele.states {
         }
 
         override public function create():void {
+            this.enable_fade = true;
             PopUpManager.GAME_ACTIVE = true;
 
             function _musicCallback():void {
@@ -65,7 +66,8 @@ package com.starmaid.Cibele.states {
                 bottomY = _screen.screenHeight * 2;
                 startPos.y = _screen.screenHeight * .8;
             }
-            super.__create(startPos);
+            this.startPos = startPos;
+            super.create();
 
             FlxG.state.remove(this.baseLayer);
             this.baseLayer = new GameObject(new DHPoint(0, 0));
@@ -143,7 +145,13 @@ package com.starmaid.Cibele.states {
 
             for (var i:int = 0; i < loader.doors.length; i++) {
                 if(player.mapHitbox.overlaps(loader.doors[i]["object"])){
-                    this.nextState();
+                    this.player.active = false;
+                    this.fadeOut(
+                        function():void {
+                            nextState();
+                        },
+                        .1 * GameSound.MSEC_PER_SEC
+                    );
                 }
             }
         }

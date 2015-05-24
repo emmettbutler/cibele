@@ -22,10 +22,7 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/music/bgm_menu_loop.mp3")] private var MenuBGMLoop:Class;
         [Embed(source="/../assets/images/ui/Crystal-icon-large.png")] private var ImgXtal:Class;
 
-        public var timeFrame:Number = 0;
-        public var timer:Number = 0;
         public var debugText:FlxText;
-
         public var bg:GameObject;
         public var login:BouncingText;
         public var quit:BouncingText;
@@ -38,7 +35,7 @@ package com.starmaid.Cibele.states {
         public var login_rect:FlxRect;
         public var quit_rect:FlxRect;
         public var mouse_rect:FlxRect;
-        private var next_state_class:Class;
+        private var has_initiated_switch:Boolean = false;
 
         public var crystal_icon:GameObject;
 
@@ -137,7 +134,7 @@ package com.starmaid.Cibele.states {
             add(debugText);
 
             function _musicCallback():void {
-                if (FlxG.state is MenuScreen && next_state_class == null) {
+                if (FlxG.state is MenuScreen && has_initiated_switch == false) {
                     SoundManager.getInstance().playSound(MenuBGMLoop, 0, null,
                         true, 1, GameSound.BGM, MenuScreen.BGM, false, false, false, true);
                 }
@@ -194,17 +191,11 @@ package com.starmaid.Cibele.states {
                     title_text.visible = false;
                     crystal_icon.visible = false;
                 }
-                if (this.next_state_class == null && mouse_rect.overlaps(play_game_rect) && play_screen){
-                    if(ScreenManager.getInstance().levelTracker.it()) {
-                        this.next_state_class = IkuTursoHallway;
-                    } else if(ScreenManager.getInstance().levelTracker.eu()) {
-                        this.next_state_class = EuryaleHallway;
-                    } else if(ScreenManager.getInstance().levelTracker.hi()) {
-                        this.next_state_class = HiisiHallway;
-                    }
+                if (this.has_initiated_switch == false && mouse_rect.overlaps(play_game_rect) && play_screen){
+                    this.has_initiated_switch = true;
                     this.startStateSwitch();
                 }
-                if (this.next_state_class == null && mouse_rect.overlaps(quit_rect) && !play_screen){
+                if (this.has_initiated_switch == false && mouse_rect.overlaps(quit_rect) && !play_screen){
                     PopUpManager.GAME_ACTIVE = false;
                     if(ScreenManager.getInstance().levelTracker.it()) {
                         FlxG.switchState(new IkuTursoDesktop());
@@ -224,22 +215,18 @@ package com.starmaid.Cibele.states {
                     SoundManager.getInstance().getSoundByName(MenuScreen.BGM).fadeOutSound(.1);
                 }
             }
-
-            timeFrame++;
-            debugText.x = FlxG.mouse.x;
-            debugText.y = FlxG.mouse.y;
-
-            //debugText.text = "MenuScreen";
-
-            if(timeFrame%30 == 0){
-                timer++;
-            }
         }
 
         public function startStateSwitch():void {
             this.fadeOut(
                 function():void {
-                    FlxG.switchState(new next_state_class());
+                    if(ScreenManager.getInstance().levelTracker.it()) {
+                        FlxG.switchState(new IkuTursoHallway());
+                    } else if(ScreenManager.getInstance().levelTracker.eu()) {
+                        FlxG.switchState(new EuryaleHallway());
+                    } else if(ScreenManager.getInstance().levelTracker.hi()) {
+                        FlxG.switchState(new HiisiHallway());
+                    }
                 },
                 1 * GameSound.MSEC_PER_SEC
             );
