@@ -515,17 +515,15 @@ package com.starmaid.Cibele.management {
                             this.threads[i].unreadTextColor();
                         }
                 } else if (this._state == STATE_VIEW_MESSAGE) {
-                    if(cur_viewing != null) {
-                        if((FlxG.state as GameState).cursorOverlaps(this.exit_box, true)) {
-                            this.highlightExitColor();
-                        } else {
-                            this.defaultExitColor();
-                        }
-                        if((FlxG.state as GameState).cursorOverlaps(this.reply_box, true)) {
-                            this.highlightReplyColor();
-                        } else {
-                            this.defaultReplyColor();
-                        }
+                    if((FlxG.state as GameState).cursorOverlaps(this.exit_box, true)) {
+                        this.highlightExitColor();
+                    } else {
+                        this.defaultExitColor();
+                    }
+                    if((FlxG.state as GameState).cursorOverlaps(this.reply_box, true)) {
+                        this.highlightReplyColor();
+                    } else {
+                        this.defaultReplyColor();
                     }
                 }
             }
