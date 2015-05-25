@@ -93,6 +93,22 @@ package com.starmaid.Cibele.management {
             FlxG.state.add(dbgText);
         }
 
+        public function destroy():void {
+            for (var i:int = 0; i < this.tiles.length; i++) {
+                for (var k:int = 0; k < this.tiles[i].length; k++) {
+                    this.tiles[i][k].destroy();
+                    this.colliderTiles[i][k].destroy();
+                    this.receivingMachines[i][k].unload();
+                    this.colliderReceivingMachines[i][k].unload();
+                }
+            }
+            this.tiles = null;
+            this.receivingMachines = null;
+            this.colliderTiles = null;
+            this.colliderReceivingMachines = null;
+            this.playerRef = null;
+        }
+
         public function buildLoadCompleteCallback(tile:FlxExtSprite,
                                                   receivingMachine:Loader,
                                                   scaleFactor:Number=1):Function {

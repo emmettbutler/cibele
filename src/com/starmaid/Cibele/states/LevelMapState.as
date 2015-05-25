@@ -68,6 +68,11 @@ package com.starmaid.Cibele.states {
             super.postCreate();
         }
 
+        override public function destroy():void {
+            this.bgLoader.destroy();
+            super.destroy();
+        }
+
         override public function update():void {
             super.update();
             this.bgLoader.update();
