@@ -154,7 +154,7 @@ package com.starmaid.Cibele.entities {
                 }
             }
             this.hitPoints -= this.hitDamage;
-            this.healthBar.scale.x = this.hitPoints;
+            this.healthBar.setPoints(this.hitPoints);
             if (this.damageLockMap[p.slug] == true) {
                 return;
             }
