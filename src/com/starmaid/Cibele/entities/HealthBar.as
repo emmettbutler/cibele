@@ -6,34 +6,49 @@ package com.starmaid.Cibele.entities {
 
     public class HealthBar extends GameObject {
         private var _innerBar:GameObject, _barFrame:GameObject;
-        private var _maxPoints:Number;
+        private var _maxPoints:Number, _outerWidth:Number = 100,
+                    _outerHeight:Number, _curPoints:Number;
 
         public function HealthBar(pos:DHPoint, maxPoints:Number) {
             super(pos);
 
             this._maxPoints = maxPoints;
+            this._curPoints = maxPoints;
+            this._outerWidth = 100;
+            this._outerHeight = 6;
 
             this._barFrame = new GameObject(pos);
-            this._barFrame.makeGraphic(1, 8, 0xffe2678e);
-            this._barFrame.scale.x = maxPoints;
+            this._barFrame.makeGraphic(this._outerWidth, this._outerHeight, 0xffe2678e);
 
             this._innerBar = new GameObject(pos);
-            this._innerBar.makeGraphic(1, 8, 0xffff0000);
+            this._innerBar.makeGraphic(1, this._outerHeight - 1, 0xffff0000);
             this._innerBar.scale.x = maxPoints;
+            this._innerBar.offset.x = -1 * (maxPoints / 2);
         }
 
         public function setPoints(points:Number):void {
+            this._curPoints = points;
             this._innerBar.scale.x = points;
+            this._innerBar.offset.x = -1 * (this._maxPoints / 2 - (this._maxPoints - this._curPoints));
         }
 
         override public function setPos(pos:DHPoint):void {
-            this._innerBar.setPos(pos);
-            this._barFrame.setPos(pos);
+            if (!this.isVisible()) {
+                return;
+            }
+            var innerPos:DHPoint = pos.sub(new DHPoint(this._curPoints / 2, 0));
+            this._innerBar.setPos(innerPos);
+            var outerPos:DHPoint = pos.sub(new DHPoint(this._maxPoints / 2, 0));
+            this._barFrame.setPos(outerPos);
         }
 
         public function setVisible(v:Boolean):void {
             this._barFrame.visible = v;
             this._innerBar.visible = v;
+        }
+
+        public function isVisible():Boolean {
+            return this._barFrame.visible;
         }
 
         public function addVisibleObjects():void {
