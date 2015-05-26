@@ -18,10 +18,10 @@ package com.starmaid.Cibele.entities {
             this._outerHeight = 6;
 
             this._barFrame = new GameObject(pos);
-            this._barFrame.makeGraphic(this._outerWidth, this._outerHeight, 0xffe2678e);
+            this._barFrame.makeGraphic(this._outerWidth, this._outerHeight, 0xff7c6e6a);
 
             this._innerBar = new GameObject(pos);
-            this._innerBar.makeGraphic(1, this._outerHeight - 1, 0xffff0000);
+            this._innerBar.makeGraphic(1, this._outerHeight - 1, 0xffe2678e);
             this._innerBar.scale.x = maxPoints;
             this._innerBar.offset.x = -1 * (maxPoints / 2);
         }
