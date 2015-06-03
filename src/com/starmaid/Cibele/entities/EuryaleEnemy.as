@@ -7,7 +7,6 @@ package com.starmaid.Cibele.entities {
     public class EuryaleEnemy extends SmallEnemy {
         [Embed(source="/../assets/images/characters/dark_enemy.png")] private var ImgEn1:Class;
         [Embed(source="/../assets/images/characters/light_enemy.png")] private var ImgEn2:Class;
-        [Embed(source="/../assets/images/ui/enemy_highlight.png")] private var ImgActive:Class;
 
         public function EuryaleEnemy(pos:DHPoint) {
             super(pos);
@@ -20,12 +19,6 @@ package com.starmaid.Cibele.entities {
                     this.loadGraphic(ImgEn1, false, false, 247, 300);
                     this.addAnimation("run_enemy",
                         [0, 1, 2, 3, 4, 5, 6, 7], 12, true);
-
-                    this.target_sprite = new GameObject(pos);
-                    this.target_sprite.loadGraphic(ImgActive, false, false,
-                                                   147, 24);
-                    this.target_sprite.visible = false;
-                    FlxG.state.add(this.target_sprite);
 
                     this.attack_sprite = new GameObject(pos);
                     this.attack_sprite.loadGraphic(ImgEn1, true, false,
@@ -42,12 +35,6 @@ package com.starmaid.Cibele.entities {
                     this.loadGraphic(ImgEn2, false, false, 247, 300);
                     this.addAnimation("run_enemy",
                         [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 12, true);
-
-                    this.target_sprite = new GameObject(pos);
-                    this.target_sprite.loadGraphic(ImgActive, false, false,
-                                                   147, 24);
-                    this.target_sprite.visible = false;
-                    FlxG.state.add(this.target_sprite);
 
                     this.attack_sprite = new GameObject(pos);
                     this.attack_sprite.loadGraphic(ImgEn2, true, false,
