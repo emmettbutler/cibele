@@ -7,7 +7,10 @@ package com.starmaid.Cibele.entities {
     import org.flixel.*;
 
     public class HealthBar extends GameObject {
-        private var _innerBar:GameObject, _barFrame:GameObject;
+        [Embed(source="/../assets/images/ui/attack_cursor_small.png")] private var ImgIcon:Class;
+
+        private var _innerBar:GameObject, _barFrame:GameObject,
+                    _attackIcon:GameObject;
         private var _changeText:FlxText;
         private var _maxPoints:Number, _outerWidth:Number = 100,
                     _outerHeight:Number, _curPoints:Number;
@@ -24,6 +27,10 @@ package com.starmaid.Cibele.entities {
 
             this._barFrame = new GameObject(pos);
             this._barFrame.makeGraphic(this._outerWidth, this._outerHeight, 0xff7c6e6a);
+
+            this._attackIcon = new GameObject(pos);
+            this._attackIcon.loadGraphic(ImgIcon, false, false, 15, 34);
+            this._attackIcon.visible = false;
 
             this._innerBar = new GameObject(pos);
             this._innerBar.makeGraphic(1, this._outerHeight - 1, 0xffe2678e);
@@ -46,7 +53,7 @@ package com.starmaid.Cibele.entities {
             if (this.isVisible()){
                 this._changeText.text = (diff < 0 ? "" : "-") + diff;
                 GlobalTimer.getInstance().setMark(this.slug + "showChange",
-                                                1 * GameSound.MSEC_PER_SEC,
+                                                .7 * GameSound.MSEC_PER_SEC,
                                                 function():void {
                                                     _changeText.text = "";
                                                 },
@@ -60,6 +67,8 @@ package com.starmaid.Cibele.entities {
             var outerPos:DHPoint = pos.sub(new DHPoint(this._maxPoints / 2, 0));
             this._barFrame.setPos(outerPos);
 
+            this._attackIcon.setPos(outerPos.sub(new DHPoint(25, 18)));
+
             this._changeText.x = outerPos.x - this._barFrame.width;
             this._changeText.y = outerPos.y - 20;
         }
@@ -67,6 +76,7 @@ package com.starmaid.Cibele.entities {
         public function setVisible(v:Boolean):void {
             this._barFrame.visible = v;
             this._innerBar.visible = v;
+            this._attackIcon.visible = v;
             this._changeText.text = "";
         }
 
@@ -78,6 +88,7 @@ package com.starmaid.Cibele.entities {
             FlxG.state.add(this._barFrame);
             FlxG.state.add(this._innerBar);
             FlxG.state.add(this._changeText);
+            FlxG.state.add(this._attackIcon);
         }
     }
 }
