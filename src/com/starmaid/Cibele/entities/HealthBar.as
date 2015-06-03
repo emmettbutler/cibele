@@ -13,7 +13,8 @@ package com.starmaid.Cibele.entities {
                     _attackIcon:GameObject;
         private var _changeText:FlxText;
         private var _maxPoints:Number, _outerWidth:Number = 100,
-                    _outerHeight:Number, _curPoints:Number;
+                    _outerHeight:Number, _curPoints:Number,
+                    _curDiff:Number = 0;
 
         public function HealthBar(pos:DHPoint, maxPoints:Number) {
             super(pos);
@@ -22,6 +23,7 @@ package com.starmaid.Cibele.entities {
 
             this._maxPoints = maxPoints;
             this._curPoints = maxPoints;
+            this._curDiff = 0;
             this._outerWidth = 100;
             this._outerHeight = 6;
 
@@ -45,17 +47,18 @@ package com.starmaid.Cibele.entities {
             if (this._curPoints == points) {
                 return;
             }
-            var diff:Number = this._curPoints - points;
+            this._curDiff = (this._curPoints - points) + this._curDiff;
             this._curPoints = points;
             this._innerBar.scale.x = points;
             this._innerBar.offset.x = -1 * (this._maxPoints / 2 - (this._maxPoints - this._curPoints));
 
             if (this.isVisible()){
-                this._changeText.text = (diff < 0 ? "" : "-") + diff;
+                this._changeText.text = (this._curDiff < 0 ? "" : "-") + this._curDiff;
                 GlobalTimer.getInstance().setMark(this.slug + "showChange",
                                                 .7 * GameSound.MSEC_PER_SEC,
                                                 function():void {
                                                     _changeText.text = "";
+                                                    _curDiff = 0;
                                                 },
                                                 true);
             }
