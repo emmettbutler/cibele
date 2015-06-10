@@ -38,11 +38,11 @@ package com.starmaid.Cibele.entities {
 
             this._innerBar = new GameObject(pos);
             this._innerBar.makeGraphic(1, this._outerHeight - 1, 0xffe2678e);
-            this._innerBar.scale.x = maxPoints * (this._outerWidth / maxPoints);
+            this._innerBar.scale.x = this._outerWidth * (maxPoints / this._maxPoints);
             this._innerBar.offset.x = -1 * (this._innerBar.scale.x / 2);
 
             this._changeText = new FlxText(pos.x, pos.y, 200, "");
-            this._changeText.setFormat("NexaBold-Regular", 18, 0xff7c6e6a, "center");
+            this._changeText.setFormat("NexaBold-Regular", 18, 0xff7c6e6a, "left");
         }
 
         public function setPoints(points:Number):void {
@@ -51,8 +51,8 @@ package com.starmaid.Cibele.entities {
             }
             this._curDiff = (this._curPoints - points) + this._curDiff;
             this._curPoints = points;
-            this._innerBar.scale.x = points * (this._outerWidth / points);
-            this._innerBar.offset.x = -1 * (this._maxPoints / 2 - (this._maxPoints - this._curPoints));
+            this._innerBar.scale.x = this._outerWidth * (points / this._maxPoints);
+            this._innerBar.offset.x = -1 * (this._innerBar.scale.x / 2);
 
             if (this.isVisible()){
                 this._changeText.text = (this._curDiff < 0 ? "" : "-") + this._curDiff;
@@ -67,15 +67,14 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function setPos(pos:DHPoint):void {
-            var innerPos:DHPoint = pos.sub(new DHPoint(this._curPoints / 2, 0));
-            this._innerBar.setPos(innerPos);
-            var outerPos:DHPoint = pos.sub(new DHPoint(this._maxPoints / 2, 0));
+            var outerPos:DHPoint = pos.sub(new DHPoint(this._outerWidth / 2, 0));
+            this._innerBar.setPos(outerPos);
             this._barFrame.setPos(outerPos);
 
             this._attackIcon.setPos(outerPos.sub(new DHPoint(25, 18)));
 
-            this._changeText.x = outerPos.x - this._barFrame.width;
-            this._changeText.y = outerPos.y - 20;
+            this._changeText.x = outerPos.x;
+            this._changeText.y = outerPos.y - this._outerHeight * 3;
         }
 
         public function setVisible(v:Boolean):void {

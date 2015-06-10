@@ -8,7 +8,7 @@ package com.starmaid.Cibele.entities {
         public var attack_sprite:GameObject;
 
         public function SmallEnemy(pos:DHPoint) {
-            super(pos);
+            super(pos, 100);
         }
 
         override public function setupSprites():void {

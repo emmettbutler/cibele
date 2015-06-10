@@ -27,9 +27,8 @@ package com.starmaid.Cibele.entities {
         }
 
         public function BossEnemy(pos:DHPoint) {
-            super(pos);
+            super(pos, 600);
             this._enemyType = Enemy.TYPE_BOSS;
-            this.hitPoints = 600;
             this.sightRange = 750;
             this.hitDamage = 1;
             this.recoilPower = 0;
@@ -54,6 +53,7 @@ package com.starmaid.Cibele.entities {
 
             this._state = STATE_IDLE;
             this.visible = true;
+            this._healthBar.setVisible(true);
             this.warpToPlayer();
         }
 
@@ -154,7 +154,6 @@ package com.starmaid.Cibele.entities {
             }
             this.damageLockMap[p.slug] = true;
             this.hitPoints -= this.hitDamage;
-            trace(this.hitPoints);
             this._healthBar.setPoints(this.hitPoints);
             GlobalTimer.getInstance().setMark(this.takeDamageEventSlug + p.slug,
                                               1 * GameSound.MSEC_PER_SEC,
@@ -171,7 +170,6 @@ package com.starmaid.Cibele.entities {
         override public function setupSprites():void {
             this.visible = true;
             this._healthBar = new BossHealthBar(this.hitPoints);
-            this._healthBar.setVisible(true);
         }
 
         override public function doState__IDLE():void {
@@ -184,6 +182,18 @@ package com.starmaid.Cibele.entities {
 
         override public function die():void {
             this._state = STATE_DEAD;
+        }
+
+        override public function activeTarget():void { }
+
+        override public function inactiveTarget():void { }
+
+        override public function addVisibleObjects():void {
+            FlxG.state.add(this.debugText);
+        }
+
+        public function addHealthBarVisibleObjects():void {
+            this._healthBar.addVisibleObjects();
         }
     }
 }
