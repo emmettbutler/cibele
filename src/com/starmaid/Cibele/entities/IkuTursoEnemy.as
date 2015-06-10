@@ -9,8 +9,6 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/characters/Enemy2_sprite.png")] private var ImgIT2:Class;
         [Embed(source="/../assets/images/characters/squid_attack.png")] private var ImgIT1_Attack:Class;
         [Embed(source="/../assets/images/characters/enemy2_attack.png")] private var ImgIT2_Attack:Class;
-        [Embed(source="/../assets/images/ui/enemy_highlight.png")] private var ImgActive:Class;
-        [Embed(source="/../assets/images/ui/enemy2_highlight.png")] private var ImgActive2:Class;
 
         public function IkuTursoEnemy(pos:DHPoint) {
             super(pos);
@@ -21,12 +19,6 @@ package com.starmaid.Cibele.entities {
             switch(rand) {
                 case 1:
                     this.loadGraphic(ImgIT1, false, false, 152, 104);
-
-                    this.target_sprite = new GameObject(pos);
-                    this.target_sprite.loadGraphic(ImgActive, false, false,
-                                                   147, 24);
-                    this.target_sprite.visible = false;
-                    FlxG.state.add(this.target_sprite);
 
                     this.attack_sprite = new GameObject(pos);
                     this.attack_sprite.loadGraphic(ImgIT1_Attack, true, false,
@@ -39,12 +31,6 @@ package com.starmaid.Cibele.entities {
 
                 default:
                     this.loadGraphic(ImgIT2, false, false, 70, 160);
-
-                    this.target_sprite = new GameObject(pos);
-                    this.target_sprite.loadGraphic(ImgActive2, false, false,
-                                                   67, 15);
-                    this.target_sprite.visible = false;
-                    FlxG.state.add(this.target_sprite);
 
                     this.attack_sprite = new GameObject(pos);
                     this.attack_sprite.loadGraphic(ImgIT2_Attack, true, false,

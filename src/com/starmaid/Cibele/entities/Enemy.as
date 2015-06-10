@@ -17,10 +17,11 @@ package com.starmaid.Cibele.entities {
 
         private static const MARK_RESPAWN:String = "mrespawn";
 
-        protected var hitPoints:Number = 100,
+        protected var hitPoints:Number,
                       hitDamage:Number = 10,
                       recoilPower:Number = 3,
                       sightRange:Number = 308,
+                      maxHitPoints:Number,
                       recoilTrackingThreshold:Number = 120;
         protected var pathFollowerRef:PathFollower;
         protected var playerRef:Player;
@@ -47,10 +48,12 @@ package com.starmaid.Cibele.entities {
             stateMap[STATE_DEAD] = "STATE_DEAD";
         }
 
-        public function Enemy(pos:DHPoint) {
+        public function Enemy(pos:DHPoint, hitPoints:Number=100) {
             super(pos);
 
+            this.hitPoints = hitPoints;
             this.originalPos = pos;
+            this.maxHitPoints = this.hitPoints;
             this._state = STATE_IDLE;
             this.footPos = new DHPoint(0, 0);
             this.disp = new DHPoint(0, 0);
@@ -153,7 +156,7 @@ package com.starmaid.Cibele.entities {
                 return;
             }
             // don't destroy() or state.remove() here. doing so breaks z-sorting
-            this.visible = false;
+            this.visible = true;
             this._healthBar.setVisible(false);
             this._state = STATE_DEAD;
             this.dir = new DHPoint(0,0);
@@ -166,8 +169,9 @@ package com.starmaid.Cibele.entities {
 
         public function respawn():void {
             if(!this.inViewOfPlayer()) {
-                this.hitPoints = 100;
+                this.hitPoints = this.maxHitPoints;
                 this.visible = true;
+                this.alpha = 1;
                 this._state = STATE_IDLE;
                 this.x = originalPos.x;
                 this.y = originalPos.y;
@@ -232,7 +236,7 @@ package com.starmaid.Cibele.entities {
         override public function update():void{
             super.update();
 
-            if (this._state == STATE_DEAD) {
+            if (this._state == STATE_DEAD && this.visible == false) {
                 return;
             }
 
@@ -270,6 +274,14 @@ package com.starmaid.Cibele.entities {
                         && this.closestPartyMemberIsInTrackingRange())
                     {
                         this.startTracking();
+                    }
+                    break;
+
+                case STATE_DEAD:
+                    if(this.alpha > 0) {
+                        this.alpha -= .03;
+                    } else {
+                        this.visible = false;
                     }
                     break;
             }

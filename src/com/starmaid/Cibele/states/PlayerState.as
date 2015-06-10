@@ -29,6 +29,9 @@ package com.starmaid.Cibele.states {
         override public function postCreate():void {
             this.player.initFootsteps();
             this.player.addVisibleObjects();
+            if (this is PathEditorState && (this as PathEditorState).boss != null) {
+                (this as PathEditorState).boss.addHealthBarVisibleObjects();
+            }
             super.postCreate();
             this.game_cursor.setGameMouse();
             FlxG.mouse.x = this.player.pos.x;
