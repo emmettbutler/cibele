@@ -38,6 +38,7 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function addVisibleObjects():void {
+            super.addVisibleObjects();
             for (var i:int = 0; i < this.tentacles.length; i++) {
                 FlxG.state.add(this.tentacles[i]);
                 FlxG.state.add(this.tentacles[i].debugText);

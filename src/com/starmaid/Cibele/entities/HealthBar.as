@@ -9,14 +9,16 @@ package com.starmaid.Cibele.entities {
     public class HealthBar extends GameObject {
         [Embed(source="/../assets/images/ui/attack_cursor_small.png")] private var ImgIcon:Class;
 
-        private var _innerBar:GameObject, _barFrame:GameObject,
-                    _attackIcon:GameObject;
-        private var _changeText:FlxText;
-        private var _maxPoints:Number, _outerWidth:Number = 100,
-                    _outerHeight:Number, _curPoints:Number,
-                    _curDiff:Number = 0;
+        protected var _innerBar:GameObject, _barFrame:GameObject,
+                      _attackIcon:GameObject;
+        protected var _changeText:FlxText;
+        protected var _maxPoints:Number, _outerWidth:Number = 100,
+                      _outerHeight:Number, _curPoints:Number,
+                      _curDiff:Number = 0;
 
-        public function HealthBar(pos:DHPoint, maxPoints:Number) {
+        public function HealthBar(pos:DHPoint, maxPoints:Number,
+                                  outerWidth:Number=100,
+                                  outerHeight:Number=6) {
             super(pos);
 
             this.slug = "healthBar" + (Math.random() * 1000000);
@@ -24,8 +26,8 @@ package com.starmaid.Cibele.entities {
             this._maxPoints = maxPoints;
             this._curPoints = maxPoints;
             this._curDiff = 0;
-            this._outerWidth = 100;
-            this._outerHeight = 6;
+            this._outerWidth = outerWidth;
+            this._outerHeight = outerHeight;
 
             this._barFrame = new GameObject(pos);
             this._barFrame.makeGraphic(this._outerWidth, this._outerHeight, 0xff7c6e6a);
@@ -36,8 +38,8 @@ package com.starmaid.Cibele.entities {
 
             this._innerBar = new GameObject(pos);
             this._innerBar.makeGraphic(1, this._outerHeight - 1, 0xffe2678e);
-            this._innerBar.scale.x = maxPoints;
-            this._innerBar.offset.x = -1 * (maxPoints / 2);
+            this._innerBar.scale.x = maxPoints * (this._outerWidth / maxPoints);
+            this._innerBar.offset.x = -1 * (this._innerBar.scale.x / 2);
 
             this._changeText = new FlxText(pos.x, pos.y, 200, "");
             this._changeText.setFormat("NexaBold-Regular", 18, 0xff7c6e6a, "center");
@@ -49,7 +51,7 @@ package com.starmaid.Cibele.entities {
             }
             this._curDiff = (this._curPoints - points) + this._curDiff;
             this._curPoints = points;
-            this._innerBar.scale.x = points;
+            this._innerBar.scale.x = points * (this._outerWidth / points);
             this._innerBar.offset.x = -1 * (this._maxPoints / 2 - (this._maxPoints - this._curPoints));
 
             if (this.isVisible()){

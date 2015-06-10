@@ -31,7 +31,7 @@ package com.starmaid.Cibele.entities {
             this._enemyType = Enemy.TYPE_BOSS;
             this.hitPoints = 600;
             this.sightRange = 750;
-            this.hitDamage = .5;
+            this.hitDamage = 1;
             this.recoilPower = 0;
 
             this.alpha = 0;
@@ -42,10 +42,6 @@ package com.starmaid.Cibele.entities {
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.getStateString", "boss.state");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.pos", "boss.pos");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.footPos", "boss.footPos");
-        }
-
-        override public function addVisibleObjects():void {
-            super.addVisibleObjects();
         }
 
         public function setPath(path:Path):void {
@@ -153,12 +149,13 @@ package com.starmaid.Cibele.entities {
                     this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
                 }
             }
-            this.hitPoints -= this.hitDamage;
-            this.healthBar.setPoints(this.hitPoints);
             if (this.damageLockMap[p.slug] == true) {
                 return;
             }
             this.damageLockMap[p.slug] = true;
+            this.hitPoints -= this.hitDamage;
+            trace(this.hitPoints);
+            this._healthBar.setPoints(this.hitPoints);
             GlobalTimer.getInstance().setMark(this.takeDamageEventSlug + p.slug,
                                               1 * GameSound.MSEC_PER_SEC,
                                               function():void {
@@ -169,6 +166,12 @@ package com.starmaid.Cibele.entities {
 
         private function isEscaping():Boolean {
             return this._state == STATE_MOVE_TO_PATH_NODE || this._state == STATE_ESCAPE;
+        }
+
+        override public function setupSprites():void {
+            this.visible = true;
+            this._healthBar = new BossHealthBar(this.hitPoints);
+            this._healthBar.setVisible(true);
         }
 
         override public function doState__IDLE():void {
