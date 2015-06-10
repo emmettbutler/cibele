@@ -91,12 +91,6 @@ package com.starmaid.Cibele.entities {
             this.shadow_sprite = new GameObject(this.pos);
             this.shadow_sprite.zSorted = true;
             this.shadow_sprite.loadGraphic(ImgShadow,false,false,70,42);
-            this.shadow_sprite.alpha = .7;
-        }
-
-        public function setBlueShadow():void {
-            this.shadow_sprite.loadGraphic(ImgShadow,false,false,70,42);
-            this.shadow_sprite.alpha = .7;
         }
 
         public function addVisibleObjects():void {

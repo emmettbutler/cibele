@@ -42,11 +42,6 @@ package com.starmaid.Cibele.states {
             this.postCreate();
         }
 
-        override public function postCreate():void {
-            super.postCreate();
-            player.setBlueShadow();
-        }
-
         public function nextState():void { }
 
         override public function update():void{

@@ -164,7 +164,6 @@ package com.starmaid.Cibele.states {
 
         override public function postCreate():void {
             super.postCreate();
-            player.setBlueShadow();
 
             var _screen:ScreenManager = ScreenManager.getInstance();
             call_button = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .3));
