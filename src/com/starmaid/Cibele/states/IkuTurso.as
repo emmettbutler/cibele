@@ -82,8 +82,6 @@ package com.starmaid.Cibele.states {
                     "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC
                 }
             ];
-
-            GlobalTimer.getInstance().setMark(BOSS_MARK, 5*GameSound.MSEC_PER_SEC);
         }
 
         override public function create():void {

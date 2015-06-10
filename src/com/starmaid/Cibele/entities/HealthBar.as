@@ -63,6 +63,8 @@ package com.starmaid.Cibele.entities {
                                                     _curDiff = 0;
                                                 },
                                                 true);
+            } else {
+                this._curDiff = 0;
             }
         }
 
@@ -74,7 +76,7 @@ package com.starmaid.Cibele.entities {
             this._attackIcon.setPos(outerPos.sub(new DHPoint(25, 18)));
 
             this._changeText.x = outerPos.x;
-            this._changeText.y = outerPos.y - this._outerHeight * 3;
+            this._changeText.y = outerPos.y - this._outerHeight * 4;
         }
 
         public function setVisible(v:Boolean):void {

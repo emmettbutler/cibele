@@ -17,6 +17,8 @@ package com.starmaid.Cibele.entities {
             this._changeText.setFormat("NexaBold-Regular", 25, 0xff7c6e6a,
                                        "left");
             this._changeText.scrollFactor = new DHPoint(0, 0);
+
+            this.setVisible(false);
         }
 
         override public function setPos(pos:DHPoint):void {
