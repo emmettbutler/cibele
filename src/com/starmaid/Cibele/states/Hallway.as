@@ -9,6 +9,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.UIElement;
 
     import org.flixel.*;
     import org.flixel.plugin.photonstorm.FlxCollision;
@@ -24,7 +25,7 @@ package com.starmaid.Cibele.states {
         public var wall_left:GameObject;
         public var wall_right:GameObject;
         public var collisionData:Array;
-        public var call_button:GameObject;
+        public var call_button:UIElement;
         public var leftBound:Number, rightBound:Number;
         public var tileLoader:HallwayTileLoader;
 
@@ -166,7 +167,7 @@ package com.starmaid.Cibele.states {
             super.postCreate();
 
             var _screen:ScreenManager = ScreenManager.getInstance();
-            call_button = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .3));
+            call_button = new UIElement(_screen.screenWidth * .35, _screen.screenHeight * .3);
             call_button.loadGraphic(ImgCall,false,false,406,260);
             call_button.scrollFactor = new DHPoint(0, 0);
             FlxG.state.add(call_button);

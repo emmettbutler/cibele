@@ -160,14 +160,23 @@ package com.starmaid.Cibele.management {
                     if(curButton.tag == BUTTON_GAME) {
                         curButton.toggleGame();
                     } else {
-                        curButton.open();
-                        curPopup = curButton.getCurPopup();
-                        this._state = SHOWING_POP_UP;
-                        this.open_popups.push(curPopup);
-                        if(folder_structure[curPopup.tag] != null) {
-                            this.folder_builder.setIconVisibility(this.folder_structure[curPopup.tag], true);
+                        var closedPopup:Boolean = false;
+                        for(var p:Number = 0; p < this.open_popups.length; p++) {
+                            if(this.open_popups[p] == curButton.getCurPopup()) {
+                                this.closePopup(this.open_popups[p], curButton, p);
+                                closedPopup = true;
+                            }
                         }
-                        this.deleteSentPopup(curButton.cur_popup_tag);
+                        if(!closedPopup) {
+                            curButton.open();
+                            curPopup = curButton.getCurPopup();
+                            this._state = SHOWING_POP_UP;
+                            this.open_popups.push(curPopup);
+                            if(folder_structure[curPopup.tag] != null) {
+                                this.folder_builder.setIconVisibility(this.folder_structure[curPopup.tag], true);
+                            }
+                            this.deleteSentPopup(curButton.cur_popup_tag);
+                        }
                     }
                 }
             }
@@ -175,28 +184,33 @@ package com.starmaid.Cibele.management {
             for(i = 0; i < this.open_popups.length; i++) {
                 if(this.open_popups[i] != null) {
                     if(mouseScreenRect.overlaps(this.open_popups[i].x_sprite._getRect())) {
-                        this._state = SHOWING_NOTHING;
-                        if(!this.open_popups[i].was_opened) {
-                            this.open_popups[i].was_opened = true;
-                            FlxG.stage.dispatchEvent(new DataEvent(GameState.EVENT_POPUP_CLOSED, {'tag': this.open_popups[i].tag}));
-                        }
-                        if(folder_structure[this.open_popups[i].tag] != null) {
-                            this.folder_builder.setIconVisibility(this.folder_structure[this.open_popups[i].tag], false);
-                        }
-                        for (var k:Number = 0; k < this.programButtons.length; k++) {
-                            curButton = this.programButtons[k];
-                            if(curButton.getCurPopup() != null) {
-                                if(curButton.getCurPopup() == this.open_popups[i]) {
-                                    curButton.getCurPopup().visible = false;
-                                } else {
-                                    this.open_popups[i].visible = false;
-                                }
-                            }
-                        }
-                        this.open_popups[i] = null;
+                        this.closePopup(this.open_popups[i], curButton, i);
                     }
                 }
             }
+        }
+
+        public function closePopup(cur_popup:PopUp, cur_button:DockButton, popup_index:Number):void {
+            this._state = SHOWING_NOTHING;
+            if(!cur_popup.was_opened) {
+                cur_popup.was_opened = true;
+                FlxG.stage.dispatchEvent(new DataEvent(GameState.EVENT_POPUP_CLOSED, {'tag': cur_popup.tag}));
+            }
+            if(folder_structure[cur_popup.tag] != null) {
+                this.folder_builder.setIconVisibility(this.folder_structure[cur_popup.tag], false);
+            }
+            for (var k:Number = 0; k < this.programButtons.length; k++) {
+                cur_button = this.programButtons[k];
+                if(cur_button.getCurPopup() != null) {
+                    if(cur_button.getCurPopup() == cur_popup) {
+                        cur_button.getCurPopup().visible = false;
+                    } else {
+                        cur_popup.visible = false;
+                    }
+                }
+            }
+            this.open_popups.splice(popup_index, 1);
+            cur_popup = null;
         }
 
         public function deleteSentPopup(tag:String):void {

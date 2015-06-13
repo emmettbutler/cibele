@@ -204,19 +204,19 @@ package com.starmaid.Cibele.states {
 
         override public function playTimedEmotes(convoNum:Number):void {
             if(convoNum == 1) {
-                GlobalTimer.getInstance().setMark("2nd Convo Emote", 11*GameSound.MSEC_PER_SEC, this.ichiMadEmote);
+                GlobalTimer.getInstance().setMark("2nd Convo Emote", 13*GameSound.MSEC_PER_SEC, this.ichiMadEmote);
             }
             if(convoNum == 2) {
-                GlobalTimer.getInstance().setMark("3rd Convo Emote", 7*GameSound.MSEC_PER_SEC, this.ichiSadEmote);
+                GlobalTimer.getInstance().setMark("3rd Convo Emote", 9*GameSound.MSEC_PER_SEC, this.ichiSadEmote);
             }
             if(convoNum == 3) {
-                GlobalTimer.getInstance().setMark("4th Convo Emote", 20*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
+                GlobalTimer.getInstance().setMark("4th Convo Emote", 22*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
             }
             if(convoNum == 4) {
-                GlobalTimer.getInstance().setMark("5th Convo Emote", 5*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
+                GlobalTimer.getInstance().setMark("5th Convo Emote", 7*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
             }
             if(convoNum == 5) {
-                GlobalTimer.getInstance().setMark("6th Convo Emote", 12*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
+                GlobalTimer.getInstance().setMark("6th Convo Emote", 14*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
             }
         }
 

@@ -233,7 +233,7 @@ package com.starmaid.Cibele.states {
 
         override public function playTimedEmotes(convoNum:Number):void {
             if(convoNum == 6) {
-                GlobalTimer.getInstance().setMark("1st Convo Emote", 9*GameSound.MSEC_PER_SEC, this.ichiMadEmote);
+                GlobalTimer.getInstance().setMark("1st Convo Emote", 11*GameSound.MSEC_PER_SEC, this.ichiMadEmote);
             }
         }
 
