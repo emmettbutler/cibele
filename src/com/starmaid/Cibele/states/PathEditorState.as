@@ -17,6 +17,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.entities.EuryaleEnemy;
     import com.starmaid.Cibele.entities.Enemy;
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameState;
 
     import org.flixel.*;
@@ -39,8 +40,9 @@ package com.starmaid.Cibele.states {
                    graphDataFile:File;
         public var shouldAddEnemies:Boolean = true;
         public var readExistingGraph:Boolean = true;
-        protected var teamPower:Number = 0, maxTeamPower:Number = 100;
-        public var teamPowerBar:TeamPowerBar;
+        protected var teamPower:Number = 0, maxTeamPower:Number = 40;
+        public var teamPowerBar:TeamPowerBar, animatingTeamPower:Boolean = false;
+        private var teamPowerAnimationObjects:Array;
 
         public static const MODE_READONLY:Number = 0;
         public static const MODE_EDIT:Number = 1;
@@ -116,10 +118,46 @@ package com.starmaid.Cibele.states {
 
             this.teamPowerBar = new TeamPowerBar(this.maxTeamPower);
             this.teamPowerBar.setPoints(this.teamPower);
+            this.buildTeamPowerAnimationObjects();
 
             super.postCreate();
 
             add(pathWalker.debugText);
+        }
+
+        public function buildTeamPowerAnimationObjects():void {
+            this.teamPowerAnimationObjects = new Array();
+            var cur:GameObject;
+            for (var i:int = 0; i < 2; i++) {
+                cur = new GameObject(new DHPoint(0, 0));
+                cur.makeGraphic(10, 10, 0xffff0000);
+                cur.visible = false;
+                cur.scrollFactor = new DHPoint(0, 0);
+                this.teamPowerAnimationObjects.push(cur);
+                FlxG.state.add(cur);
+            }
+        }
+
+        public function updateTeamPowerAnimation():void {
+            var cur:GameObject, curDisp:DHPoint,
+                curScreenPos:DHPoint = new DHPoint(0, 0),
+                finishedCount:Number = 0;
+            for (var i:int = 0; i < this.teamPowerAnimationObjects.length; i++) {
+                cur = this.teamPowerAnimationObjects[i];
+                cur.getScreenXY(curScreenPos);
+                curDisp = curScreenPos.sub(this.teamPowerBar.getPos());
+                cur.dir = curDisp.normalized().reverse().mulScl(10);
+
+                if (cur.pos.sub(this.teamPowerBar.getPos())._length() < 10) {
+                    cur.visible = false;
+                    finishedCount += 1;
+                }
+            }
+
+            if (finishedCount >= this.teamPowerAnimationObjects.length) {
+                this.animatingTeamPower = false;
+                this.animatingTeamPowerEndCallback();
+            }
         }
 
         override public function update():void {
@@ -129,6 +167,9 @@ package com.starmaid.Cibele.states {
             this._path.update();
 
             this.teamPowerBar.setPos(null);
+            if (this.animatingTeamPower) {
+                this.updateTeamPowerAnimation();
+            }
 
             if (FlxG.mouse.justReleased()) {
                 if (FlxG.keys["A"]) {
@@ -350,6 +391,17 @@ package com.starmaid.Cibele.states {
 
         private function increaseTeamPower(amt:Number):void {
             this.teamPower += amt;
+            this.animatingTeamPower = true;
+            var curScreenPos:DHPoint = new DHPoint(0, 0);
+            this.player.getScreenXY(curScreenPos);
+            this.teamPowerAnimationObjects[0].setPos(curScreenPos);
+            this.teamPowerAnimationObjects[0].visible = true;
+            this.pathWalker.getScreenXY(curScreenPos);
+            this.teamPowerAnimationObjects[1].setPos(curScreenPos);
+            this.teamPowerAnimationObjects[1].visible = true;
+        }
+
+        private function animatingTeamPowerEndCallback():void {
             this.teamPowerBar.setPoints(this.teamPower);
             if (ScreenManager.getInstance().DEBUG) {
                 trace("increased team power to " + this.teamPower);
@@ -374,7 +426,7 @@ package com.starmaid.Cibele.states {
                     (damagedBy == this.pathWalker && partyMembersInRange &&
                      playerTargeting))
                 {
-                    this.increaseTeamPower(2);
+                    this.increaseTeamPower(1);
                 }
             }
         }

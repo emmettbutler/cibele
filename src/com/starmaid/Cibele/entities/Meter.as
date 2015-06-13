@@ -71,6 +71,10 @@ package com.starmaid.Cibele.entities {
             this._changeText.y = outerPos.y - this._outerHeight / 2 - 20;
         }
 
+        public function getPos():DHPoint {
+            return this._barFrame.pos;
+        }
+
         public function setVisible(v:Boolean):void {
             this._barFrame.visible = v;
             this._innerBar.visible = v;
