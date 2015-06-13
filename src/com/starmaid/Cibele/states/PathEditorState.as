@@ -38,6 +38,7 @@ package com.starmaid.Cibele.states {
                    graphDataFile:File;
         public var shouldAddEnemies:Boolean = true;
         public var readExistingGraph:Boolean = true;
+        private var teamPower:Number = 0;
 
         public static const MODE_READONLY:Number = 0;
         public static const MODE_EDIT:Number = 1;
@@ -341,10 +342,26 @@ package com.starmaid.Cibele.states {
             return IkuTursoBoss;
         }
 
+        private function increaseTeamPower(amt:Number):void {
+            this.teamPower += amt;
+        }
+
         private function enemyDied(event:DataEvent):void {
+            var partyMembersInRange:Boolean = this.pathWalker.isOnscreen();
+            var playerTargeting:Boolean = this.player.inAttack();
             var damagedBy:PartyMember = event.userData['damaged_by'];
             if (damagedBy != null) {
-                trace("an enemy was killed by " + event.userData['damaged_by'].slug);
+                trace("an enemy was killed by " +
+                      event.userData['damaged_by'].slug +
+                      " and inRange=" + partyMembersInRange);
+
+                if ((damagedBy == this.player && partyMembersInRange) ||
+                    (damagedBy == this.pathWalker && partyMembersInRange &&
+                     playerTargeting))
+                {
+                    trace("increasing team power " + new Date().valueOf());
+                    this.increaseTeamPower(2);
+                }
             }
         }
     }
