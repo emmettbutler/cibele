@@ -4,6 +4,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.utils.MapNodeContainer;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.entities.PathFollower;
+    import com.starmaid.Cibele.entities.TeamPowerBar;
     import com.starmaid.Cibele.entities.IkuTursoBoss;
     import com.starmaid.Cibele.entities.EuryaleBoss;
     import com.starmaid.Cibele.entities.BossEnemy;
@@ -39,6 +40,7 @@ package com.starmaid.Cibele.states {
         public var shouldAddEnemies:Boolean = true;
         public var readExistingGraph:Boolean = true;
         protected var teamPower:Number = 0, maxTeamPower:Number = 100;
+        public var teamPowerBar:TeamPowerBar;
 
         public static const MODE_READONLY:Number = 0;
         public static const MODE_EDIT:Number = 1;
@@ -112,6 +114,9 @@ package com.starmaid.Cibele.states {
                 this.enemies.get_(i).addVisibleObjects();
             }
 
+            this.teamPowerBar = new TeamPowerBar(this.maxTeamPower);
+            this.teamPowerBar.setPoints(this.teamPower);
+
             super.postCreate();
 
             add(pathWalker.debugText);
@@ -122,6 +127,8 @@ package com.starmaid.Cibele.states {
 
             this._mapnodes.update();
             this._path.update();
+
+            this.teamPowerBar.setPos(null);
 
             if (FlxG.mouse.justReleased()) {
                 if (FlxG.keys["A"]) {
@@ -343,6 +350,7 @@ package com.starmaid.Cibele.states {
 
         private function increaseTeamPower(amt:Number):void {
             this.teamPower += amt;
+            this.teamPowerBar.setPoints(this.teamPower);
             if (ScreenManager.getInstance().DEBUG) {
                 trace("increased team power to " + this.teamPower);
             }

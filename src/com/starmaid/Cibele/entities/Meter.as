@@ -48,7 +48,8 @@ package com.starmaid.Cibele.entities {
             this._innerBar.offset.x = -1 * (this._innerBar.scale.x / 2);
 
             if (this.isVisible()){
-                this._changeText.text = (this._curDiff < 0 ? "" : "-") + this._curDiff;
+                this._changeText.text = (this._curDiff <= 0 ? "+" : "") +
+                    this._curDiff * -1;
                 GlobalTimer.getInstance().setMark(this.slug + "showChange",
                                                 .7 * GameSound.MSEC_PER_SEC,
                                                 function():void {
@@ -67,7 +68,7 @@ package com.starmaid.Cibele.entities {
             this._barFrame.setPos(outerPos);
 
             this._changeText.x = outerPos.x;
-            this._changeText.y = outerPos.y - this._outerHeight * 4;
+            this._changeText.y = outerPos.y - this._outerHeight / 2 - 20;
         }
 
         public function setVisible(v:Boolean):void {
