@@ -10,7 +10,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.PopUpManager;
 
     public class EuryaleDesktop extends Desktop {
-        [Embed(source="/../assets/images/ui/Screenshot.png")] private var ImgScreenshot:Class;
+        [Embed(source="/../assets/images/ui/popups/euryale/photocollage.png")] private var ImgScreenshot:Class;
         [Embed(source="/../assets/images/ui/UI_pink_x.png")] private var ImgInboxXPink:Class;
         //desktop selfi/e folder assets
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/selfies_folder.png")] private var ImgSelfiesFolder:Class;
@@ -120,7 +120,7 @@ package com.starmaid.Cibele.states {
                 {
                     "name": "screenshot",
                     "folder_img": ImgScreenshot,
-                    "folder_dim": new DHPoint(631, 356),
+                    "folder_dim": new DHPoint(528, 426),
                     "hitbox_pos": new DHPoint(_screen.screenWidth * .72, _screen.screenHeight * .07),
                     "hitbox_dim": new DHPoint(150, 100),
                     "contents": []

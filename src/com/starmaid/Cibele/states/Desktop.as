@@ -4,6 +4,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.FolderBuilder;
     import com.starmaid.Cibele.management.BackgroundLoader;
     import com.starmaid.Cibele.management.PopUpManager;
+    import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameState;
@@ -32,7 +33,14 @@ package com.starmaid.Cibele.states {
             this.ui_color_flag = GameState.UICOLOR_PINK;
             this.use_loading_screen = false;
             FlxG.bgColor = 0x00000000;
-            (new BackgroundLoader()).loadSingleTileBG("/../assets/images/ui/UI_Desktop.png");
+            if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_IT) {
+                (new BackgroundLoader()).loadSingleTileBG("/../assets/images/ui/UI_Desktop.png");
+            } else if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_EU) {
+                (new BackgroundLoader()).loadSingleTileBG("/../assets/images/ui/UI_Desktop_Eu.png");
+            } else if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_HI) {
+                (new BackgroundLoader()).loadSingleTileBG("/../assets/images/ui/UI_Desktop_Hi.png");
+            }
+
             ScreenManager.getInstance().setupCamera(null, 1);
             var _screen:ScreenManager = ScreenManager.getInstance();
             this.leafPopups = new Array();
