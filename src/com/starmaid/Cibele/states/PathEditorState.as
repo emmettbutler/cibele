@@ -351,15 +351,16 @@ package com.starmaid.Cibele.states {
             var playerTargeting:Boolean = this.player.inAttack();
             var damagedBy:PartyMember = event.userData['damaged_by'];
             if (damagedBy != null) {
-                trace("an enemy was killed by " +
-                      event.userData['damaged_by'].slug +
-                      " and inRange=" + partyMembersInRange);
+                if (ScreenManager.getInstance().DEBUG) {
+                    trace("an enemy was killed by " +
+                        event.userData['damaged_by'].slug +
+                        " and inRange=" + partyMembersInRange);
+                }
 
                 if ((damagedBy == this.player && partyMembersInRange) ||
                     (damagedBy == this.pathWalker && partyMembersInRange &&
                      playerTargeting))
                 {
-                    trace("increasing team power " + new Date().valueOf());
                     this.increaseTeamPower(2);
                 }
             }
