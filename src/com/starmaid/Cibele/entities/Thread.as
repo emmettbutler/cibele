@@ -257,7 +257,6 @@ package com.starmaid.Cibele.entities {
                         i == 0
                     );
                     this.awaiting_reply = false;
-                    FlxG.stage.dispatchEvent(new Event(GameState.EVENT_CHAT_RECEIVED));
                 }
             }
         }
