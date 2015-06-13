@@ -42,7 +42,7 @@ package com.starmaid.Cibele.states {
         public var readExistingGraph:Boolean = true;
         protected var teamPower:Number = 0, maxTeamPower:Number = 40;
         public var teamPowerBar:TeamPowerBar, animatingTeamPower:Boolean = false;
-        private var teamPowerAnimationObjects:Array;
+        private var teamPowerAnimationObjects:Array, teamPowerDelta:Number = 0;
 
         public static const MODE_READONLY:Number = 0;
         public static const MODE_EDIT:Number = 1;
@@ -389,8 +389,8 @@ package com.starmaid.Cibele.states {
         }
 
         private function increaseTeamPower(amt:Number):void {
-            this.teamPower += amt;
             this.animatingTeamPower = true;
+            this.teamPowerDelta = amt;
             var curScreenPos:DHPoint = new DHPoint(0, 0);
             this.player.getScreenXY(curScreenPos);
             this.teamPowerAnimationObjects[0].setPos(curScreenPos);
@@ -401,7 +401,11 @@ package com.starmaid.Cibele.states {
         }
 
         private function animatingTeamPowerEndCallback():void {
+            this.teamPower += this.teamPowerDelta;
             this.teamPowerBar.setPoints(this.teamPower);
+            this.player.showTeamPowerDelta(this.teamPowerDelta);
+            this.pathWalker.showTeamPowerDelta(this.teamPowerDelta);
+            this.teamPowerDelta = 0;
             if (ScreenManager.getInstance().DEBUG) {
                 trace("increased team power to " + this.teamPower);
             }
