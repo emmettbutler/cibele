@@ -106,11 +106,11 @@ package com.starmaid.Cibele.base {
 
             this.game_cursor = new GameCursor();
 
-            FlxG.stage.addEventListener(MouseEvent.CLICK, clickHandler);
+            FlxG.stage.addEventListener(MouseEvent.MOUSE_UP, clickHandler);
         }
 
         override public function destroy():void {
-            FlxG.stage.removeEventListener(MouseEvent.CLICK, clickHandler);
+            FlxG.stage.removeEventListener(MouseEvent.MOUSE_UP, clickHandler);
             super.destroy();
         }
 

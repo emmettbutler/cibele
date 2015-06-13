@@ -528,7 +528,7 @@ package com.starmaid.Cibele.management {
                 }
             }
 
-            if(FlxG.mouse.justPressed()) {
+            if(FlxG.mouse.justReleased()) {
                 if(this._state == STATE_VIEW_LIST) {
                     for(i = 0; i < this.threads.length; i++) {
                         if((FlxG.state as GameState).cursorOverlaps(this.threads[i].list_hitbox, true))
