@@ -180,7 +180,7 @@ package com.starmaid.Cibele.entities {
             }
         }
 
-        override public function die():void {
+        override public function die(p:PartyMember):void {
             this._state = STATE_DEAD;
         }
 

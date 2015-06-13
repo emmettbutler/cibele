@@ -8,6 +8,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.entities.EuryaleBoss;
     import com.starmaid.Cibele.entities.BossEnemy;
     import com.starmaid.Cibele.entities.MapNode;
+    import com.starmaid.Cibele.entities.PartyMember;
     import com.starmaid.Cibele.management.Path;
     import com.starmaid.Cibele.entities.PathNode;
     import com.starmaid.Cibele.entities.SmallEnemy;
@@ -341,7 +342,10 @@ package com.starmaid.Cibele.states {
         }
 
         private function enemyDied(event:DataEvent):void {
-            trace("an enemy died");
+            var damagedBy:PartyMember = event.userData['damaged_by'];
+            if (damagedBy != null) {
+                trace("an enemy was killed by " + event.userData['damaged_by'].slug);
+            }
         }
     }
 }
