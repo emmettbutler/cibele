@@ -53,8 +53,7 @@ package com.starmaid.Cibele.states {
             this.addEventListener(GameState.EVENT_ENEMY_DIED, this.enemyDied);
         }
 
-        override public function postCreate():void
-        {
+        override public function postCreate():void {
             if (this.filename != null) {
                 this.dataFile = File.applicationDirectory.resolvePath(
                     "assets/" + this.filename);
