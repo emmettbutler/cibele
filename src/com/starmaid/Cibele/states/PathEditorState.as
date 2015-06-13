@@ -2,6 +2,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.utils.EnemyGroup;
     import com.starmaid.Cibele.utils.MapNodeContainer;
+    import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.entities.PathFollower;
     import com.starmaid.Cibele.entities.IkuTursoBoss;
     import com.starmaid.Cibele.entities.EuryaleBoss;
@@ -43,6 +44,8 @@ package com.starmaid.Cibele.states {
 
         override public function create():void {
             super.create();
+
+            this.addEventListener(GameState.EVENT_ENEMY_DIED, this.enemyDied);
         }
 
         override public function postCreate():void
@@ -335,6 +338,10 @@ package com.starmaid.Cibele.states {
                 return HiisiBoss;
             }*/
             return IkuTursoBoss;
+        }
+
+        private function enemyDied(event:DataEvent):void {
+            trace("an enemy died");
         }
     }
 }

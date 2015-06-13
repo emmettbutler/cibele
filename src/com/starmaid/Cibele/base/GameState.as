@@ -46,6 +46,7 @@ package com.starmaid.Cibele.base {
 
         public static const EVENT_POPUP_CLOSED:String = "popup_closed";
         public static const EVENT_SINGLETILE_BG_LOADED:String = "bg_loaded";
+        public static const EVENT_ENEMY_DIED:String = "enemy_died";
 
         public function GameState(snd:Boolean=true, popup:Boolean=true,
                                   messages:Boolean=true, fade:Boolean=false){

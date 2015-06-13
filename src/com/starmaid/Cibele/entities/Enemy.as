@@ -2,7 +2,9 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.utils.GlobalTimer;
+    import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.states.LevelMapState;
 
@@ -161,6 +163,8 @@ package com.starmaid.Cibele.entities {
             this._state = STATE_DEAD;
             this.dir = new DHPoint(0,0);
             this.inactiveTarget();
+            FlxG.stage.dispatchEvent(
+                new DataEvent(GameState.EVENT_ENEMY_DIED, {}));
             GlobalTimer.getInstance().setMark(
                 MARK_RESPAWN + Math.random() * 200,
                 15 * GameSound.MSEC_PER_SEC, this.respawn, true
