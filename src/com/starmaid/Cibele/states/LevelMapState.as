@@ -203,7 +203,9 @@ package com.starmaid.Cibele.states {
             if (audioInfo != null) {
                 var endfn:Function = this.playNextConvoPiece;
                 if (audioInfo["endfn"] != null) {
-                    if(audioInfo["ends_with_popup"] == null || audioInfo["ends_with_popup"] == true) {
+                    if(audioInfo["ends_with_popup"] == null ||
+                       audioInfo["ends_with_popup"] == true)
+                    {
                         endfn = function():void {
                             registerPopupCallback();
                             audioInfo["endfn"]();
@@ -215,10 +217,13 @@ package com.starmaid.Cibele.states {
                         };
                     }
                 }
-                var prevEndFn:Function = endfn;
+                var prevEndFn:Function = function():void {
+                    endfn();
+                };
+                var finalEndFn:Function = prevEndFn;
                 var prevDialogueLock:Boolean = this.bitDialogueLock;
                 if(audioInfo["audio"] == null) {
-                    endfn = function():void {
+                    finalEndFn = function():void {
                         bitDialogueLock = prevDialogueLock;
                         prevEndFn();
                     };
@@ -226,12 +231,13 @@ package com.starmaid.Cibele.states {
                     GlobalTimer.getInstance().setMark(
                         "no audio" + Math.random(),
                         GameState.SHORT_DIALOGUE ? 1 : audioInfo["len"],
-                        endfn
+                        finalEndFn
                     );
                 } else {
                     SoundManager.getInstance().playSound(
-                        audioInfo["audio"], GameState.SHORT_DIALOGUE ? 1 : audioInfo["len"], endfn,
-                        false, 1, GameSound.VOCAL
+                        audioInfo["audio"],
+                        GameState.SHORT_DIALOGUE ? 1 : audioInfo["len"],
+                        finalEndFn, false, 1, GameSound.VOCAL
                     );
                 }
             } else {

@@ -46,7 +46,6 @@ package com.starmaid.Cibele.states {
 
         override public function create():void {
             super.create();
-
             this.addEventListener(GameState.EVENT_ENEMY_DIED, this.enemyDied);
         }
 
