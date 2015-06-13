@@ -38,7 +38,7 @@ package com.starmaid.Cibele.states {
                    graphDataFile:File;
         public var shouldAddEnemies:Boolean = true;
         public var readExistingGraph:Boolean = true;
-        private var teamPower:Number = 0;
+        protected var teamPower:Number = 0, maxTeamPower:Number = 100;
 
         public static const MODE_READONLY:Number = 0;
         public static const MODE_EDIT:Number = 1;
@@ -343,6 +343,12 @@ package com.starmaid.Cibele.states {
 
         private function increaseTeamPower(amt:Number):void {
             this.teamPower += amt;
+            if (ScreenManager.getInstance().DEBUG) {
+                trace("increased team power to " + this.teamPower);
+            }
+            FlxG.stage.dispatchEvent(
+                new DataEvent(GameState.EVENT_TEAM_POWER_INCREASED,
+                              {'team_power': this.teamPower}));
         }
 
         private function enemyDied(event:DataEvent):void {

@@ -47,6 +47,7 @@ package com.starmaid.Cibele.base {
         public static const EVENT_POPUP_CLOSED:String = "popup_closed";
         public static const EVENT_SINGLETILE_BG_LOADED:String = "bg_loaded";
         public static const EVENT_ENEMY_DIED:String = "enemy_died";
+        public static const EVENT_TEAM_POWER_INCREASED:String = "team_power_increased";
 
         public function GameState(snd:Boolean=true, popup:Boolean=true,
                                   messages:Boolean=true, fade:Boolean=false){
@@ -390,6 +391,10 @@ package com.starmaid.Cibele.base {
 
         public function addEventListener(event:String, callback:Function):void {
             FlxG.stage.addEventListener(event, callback);
+        }
+
+        public function removeEventListener(event:String, callback:Function):void {
+            FlxG.stage.removeEventListener(event, callback);
         }
 
         public function dispatchEvent(event:String):void {

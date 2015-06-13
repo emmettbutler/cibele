@@ -217,9 +217,8 @@ package com.starmaid.Cibele.states {
                         };
                     }
                 }
-                var prevEndFn:Function = function():void {
-                    endfn();
-                };
+                var prevEndFn:Function = this.buildIntermediateConvoEndFn(
+                    endfn, audioInfo);
                 var finalEndFn:Function = prevEndFn;
                 var prevDialogueLock:Boolean = this.bitDialogueLock;
                 if(audioInfo["audio"] == null) {
@@ -243,6 +242,55 @@ package com.starmaid.Cibele.states {
             } else {
                 this.finalConvoDone();
             }
+        }
+
+        private function buildIntermediateConvoEndFn(endfn:Function,
+                                                     audioInfo:Object):Function
+        {
+            var that:LevelMapState = this;
+            return function():void {
+                if (audioInfo["min_team_power"] != null) {
+                    if (that.teamPower >= audioInfo["min_team_power"]) {
+                        endfn();
+                    } else {
+                        if (ScreenManager.getInstance().DEBUG) {
+                            trace("Waiting for minimum teamPower: " +
+                                  audioInfo["min_team_power"]);
+                        }
+                        that.addEventListener(
+                            GameState.EVENT_TEAM_POWER_INCREASED,
+                            that.buildTeamPowerIncreasedCallback(
+                                audioInfo["min_team_power"],
+                                endfn, arguments.callee)
+                        );
+                    }
+                } else {
+                    endfn();
+                }
+            };
+        }
+
+        private function buildTeamPowerIncreasedCallback(minTeamPower:Number,
+                                                         endfn:Function,
+                                                         callee:Function):Function
+        {
+            var that:LevelMapState = this;
+            return function(event:DataEvent):void {
+                if (that.teamPower >= minTeamPower) {
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace("Minimum team power (" + minTeamPower +
+                              ") met: " + that.teamPower);
+                    }
+                    endfn();
+                    that.removeEventListener(GameState.EVENT_TEAM_POWER_INCREASED,
+                                             callee)
+                } else {
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace("Minimum team power (" + minTeamPower +
+                              ") not met: " + that.teamPower);
+                    }
+                }
+            };
         }
 
         public function registerPopupCallback():void {
