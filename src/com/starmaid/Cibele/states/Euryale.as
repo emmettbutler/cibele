@@ -63,7 +63,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showSelfiePostEmail
+                    "delay": 0, "endfn": this.showSelfiePostEmail, "min_team_power": 10
                 },
                 {
                     "audio": Convo3, "len": 28*GameSound.MSEC_PER_SEC,
@@ -71,7 +71,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 8*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "delay": 0, "min_team_power": 15
                 },
                 {
                     "audio": Convo3_2, "len": 44*GameSound.MSEC_PER_SEC,
@@ -79,7 +79,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showFriendEmail2
+                    "delay": 0, "endfn": this.showFriendEmail2, "min_team_power": 20
                 },
                 {
                     "audio": Convo4, "len": 11*GameSound.MSEC_PER_SEC,
@@ -87,7 +87,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "delay": 0, "min_team_power": 25
                 },
                 {
                     "audio": Convo4_2, "len": 74*GameSound.MSEC_PER_SEC,
@@ -99,7 +99,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": showDredgeSelfie
+                    "delay": 0, "endfn": showDredgeSelfie, "min_team_power": 35
                 },
                 {
                     "audio": Convo5, "len": 54*GameSound.MSEC_PER_SEC,
@@ -107,7 +107,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "delay": 0, "min_team_power": 45
                 },
                 {
                     "audio": Convo5_1, "len": 42*GameSound.MSEC_PER_SEC,

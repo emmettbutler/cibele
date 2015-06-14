@@ -58,7 +58,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
-                    "delay": 0, endfn: showBlakeSelfie
+                    "delay": 0, endfn: showBlakeSelfie, "min_team_power": 10
                 },
                 {
                     "audio": Convo4, "len": 61*GameSound.MSEC_PER_SEC,
@@ -66,7 +66,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
-                    "delay": 0, endfn: showBeccaEmail
+                    "delay": 0, endfn: showBeccaEmail, "min_team_power": 20
                 },
                 {
                     "audio": Convo5, "len": 21*GameSound.MSEC_PER_SEC,
@@ -74,14 +74,14 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "delay": 0, "min_team_power": 25
                 },
                 {
                     "audio": Convo6, "len": 21*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
+                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
@@ -89,7 +89,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0
                 },
                 {
-                    "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
+                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
@@ -98,7 +98,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": Convo9, "len": 11*GameSound.MSEC_PER_SEC,
-                    "delay": 0, endfn: showProfEmail
+                    "delay": 0, endfn: showProfEmail, "min_team_power": 35
                 },
                 {
                     "audio": Convo10, "len": 59*GameSound.MSEC_PER_SEC,
@@ -109,7 +109,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0
                 },
                 {
-                    "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
+                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
@@ -117,12 +117,8 @@ package com.starmaid.Cibele.states {
                     "delay": 0, "ends_with_popup": false
                 },
                 {
-                    "audio": null, "len": 35*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "ends_with_popup": false
-                },
-                {
                     "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "delay": 0, "min_team_power": 45
                 },
                 {
                     "audio": Convo13, "len": 27*GameSound.MSEC_PER_SEC,
@@ -130,7 +126,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "delay": 0, "min_team_power": 50
                 },
                 {
                     "audio": Convo14, "len": 28*GameSound.MSEC_PER_SEC,
