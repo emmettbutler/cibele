@@ -128,14 +128,16 @@ package com.starmaid.Cibele.states {
 
         public function buildTeamPowerAnimationObjects():void {
             this.teamPowerAnimationObjects = new Array();
-            var cur:Object, trail:TeamPowerParticleTrail, spr:GameObject;
+            var cur:Object, trail:TeamPowerParticleTrail, spr:GameObject,
+                partyMember:PartyMember;
             for (var i:int = 0; i < 2; i++) {
                 spr = new GameObject(new DHPoint(0, 0));
                 spr.makeGraphic(20, 20, 0xffe2678e);
                 spr.visible = false;
                 spr.scrollFactor = new DHPoint(0, 0);
-                trail = new TeamPowerParticleTrail(spr, null);
-                cur = {'spr': spr, 'trail': trail};
+                partyMember = (i == 0 ? this.player : this.pathWalker);
+                trail = new TeamPowerParticleTrail(spr, partyMember);
+                cur = {'spr': spr, 'trail': trail, 'partymember': partyMember};
                 this.teamPowerAnimationObjects.push(cur);
                 FlxG.state.add(spr);
             }
