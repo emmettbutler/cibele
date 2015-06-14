@@ -155,6 +155,7 @@ package com.starmaid.Cibele.states {
                 cur['trail'].update();
                 if (cur['spr'].pos.sub(this.teamPowerBar.getPos())._length() < 10) {
                     cur['spr'].visible = false;
+                    cur['spr'].dir = new DHPoint(0, 0);
                     finishedCount += 1;
                 }
             }
