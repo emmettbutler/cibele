@@ -130,7 +130,7 @@ package com.starmaid.Cibele.states {
             var cur:GameObject;
             for (var i:int = 0; i < 2; i++) {
                 cur = new GameObject(new DHPoint(0, 0));
-                cur.makeGraphic(10, 10, 0xffff0000);
+                cur.makeGraphic(20, 20, 0xffe2678e);
                 cur.visible = false;
                 cur.scrollFactor = new DHPoint(0, 0);
                 this.teamPowerAnimationObjects.push(cur);
