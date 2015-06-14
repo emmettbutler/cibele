@@ -16,7 +16,6 @@ package com.starmaid.Cibele.entities {
 
         public function ExpiringGameObject() {
             super(ZERO_POINT);
-
             this.alpha = 0;
             FlxG.state.add(this);
         }
