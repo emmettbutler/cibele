@@ -281,6 +281,13 @@ package com.starmaid.Cibele.entities {
             return en.getAttackPos().sub(this.footPos)._length() < range;
         }
 
+        public function get teamPowerDamageMul():Number {
+            if (!(FlxG.state is PathEditorState)) {
+                return 1;
+            }
+            return ((FlxG.state as PathEditorState).teamPower * .02) + 1;
+        }
+
         public function showTeamPowerDelta(delta:Number):void {
             this.teamPowerDeltaText.text = (delta >= 0 ? "+" : "") + delta + "";
             GlobalTimer.getInstance().setMark(

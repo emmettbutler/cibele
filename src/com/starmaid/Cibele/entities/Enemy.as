@@ -134,7 +134,7 @@ package com.starmaid.Cibele.entities {
                                               }, true);
             this._state = STATE_RECOIL;
             this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
-            this.hitPoints -= this.hitDamage;
+            this.hitPoints -= Math.floor(this.hitDamage * p.teamPowerDamageMul);
             this._healthBar.setPoints(this.hitPoints);
             p.runParticles(this.getMiddlePos());
             if(this.hitPoints <= 0){
