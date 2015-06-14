@@ -16,14 +16,16 @@ package com.starmaid.Cibele.entities {
 
         public function ExpiringGameObject() {
             super(ZERO_POINT);
-            this.alpha = 0;
+            this.scale.x = 1;
+            this.scale.y = 1;
             FlxG.state.add(this);
         }
 
         override public function update():void {
             super.update();
             this.age++;
-            this.alpha = (this.fadeFrames - this.age) / this.fadeFrames;
+            this.scale.x = Math.max(0, (this.fadeFrames - this.age) / this.fadeFrames);
+            this.scale.y = Math.max(0, (this.fadeFrames - this.age) / this.fadeFrames);
         }
 
         public function place(pos:DHPoint):void {
