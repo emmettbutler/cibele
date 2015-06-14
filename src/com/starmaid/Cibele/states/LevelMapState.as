@@ -251,8 +251,10 @@ package com.starmaid.Cibele.states {
             return function():void {
                 if (audioInfo["min_team_power"] != null) {
                     if (that.teamPower >= audioInfo["min_team_power"]) {
+                        trace("go" + Math.random());
                         endfn();
                     } else {
+                        trace("wait for it" + Math.random());
                         if (ScreenManager.getInstance().DEBUG) {
                             trace("Waiting for minimum teamPower: " +
                                   audioInfo["min_team_power"]);
