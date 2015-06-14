@@ -166,6 +166,7 @@ package com.starmaid.Cibele.states {
             this._path.update();
 
             this.teamPowerBar.setPos(null);
+            this.teamPowerBar.update();
             if (this.animatingTeamPower) {
                 this.updateTeamPowerAnimation();
             }
