@@ -124,8 +124,6 @@ package com.starmaid.Cibele.states {
 
             super.postCreate();
 
-            this.buildTeamPowerAnimationObjects();
-
             add(pathWalker.debugText);
         }
 

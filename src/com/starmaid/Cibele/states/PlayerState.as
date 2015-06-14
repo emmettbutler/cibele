@@ -32,6 +32,7 @@ package com.starmaid.Cibele.states {
             if (this is PathEditorState && (this as PathEditorState).boss != null) {
                 (this as PathEditorState).boss.addHealthBarVisibleObjects();
                 (this as PathEditorState).teamPowerBar.addVisibleObjects();
+                (this as PathEditorState).buildTeamPowerAnimationObjects();
             }
             super.postCreate();
             this.game_cursor.setGameMouse();
