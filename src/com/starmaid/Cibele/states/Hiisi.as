@@ -32,6 +32,7 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_beingwithyou.mp3")] private var Convo12:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_illcome.mp3")] private var Convo13:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_doingthis.mp3")] private var Convo14:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_hiisi_iloveyou.mp3")] private var Convo15:Class;
 
         public static var BGM:String = "hiisi bgm loop";
         public static const CONVO_1_HALL:String = "blahhhahshshd";
@@ -113,11 +114,11 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": Convo12, "len": 42*GameSound.MSEC_PER_SEC,
-                    "delay": 0, endfn: startBoss, "ends_with_popup": false
+                    "delay": 0, "ends_with_popup": false
                 },
                 {
                     "audio": null, "len": 35*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": killBoss, "ends_with_popup": false
+                    "delay": 0, "ends_with_popup": false
                 },
                 {
                     "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
@@ -132,7 +133,15 @@ package com.starmaid.Cibele.states {
                     "delay": 0
                 },
                 {
-                    "audio": Convo14, "len": 43*GameSound.MSEC_PER_SEC,
+                    "audio": Convo14, "len": 28*GameSound.MSEC_PER_SEC,
+                    "delay": 0, endfn: startBoss
+                },
+                {
+                    "audio": null, "len": 30*GameSound.MSEC_PER_SEC,
+                    "delay": 0, endfn: killBoss
+                },
+                {
+                    "audio": Convo15, "len": 15*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 }
             ];
