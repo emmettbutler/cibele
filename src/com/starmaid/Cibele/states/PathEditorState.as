@@ -167,6 +167,7 @@ package com.starmaid.Cibele.states {
 
             this.teamPowerBar.setPos(null);
             this.teamPowerBar.update();
+            this.teamPowerBar.setHighlight(this.teamPowerIsActive());
             if (this.animatingTeamPower) {
                 this.updateTeamPowerAnimation();
             }
@@ -413,6 +414,12 @@ package com.starmaid.Cibele.states {
             FlxG.stage.dispatchEvent(
                 new DataEvent(GameState.EVENT_TEAM_POWER_INCREASED,
                               {'team_power': this.teamPower}));
+        }
+
+        private function teamPowerIsActive():Boolean {
+            var partyMembersInRange:Boolean = this.pathWalker.isOnscreen();
+            var playerTargeting:Boolean = this.player.inAttack();
+            return partyMembersInRange && playerTargeting;
         }
 
         private function enemyDied(event:DataEvent):void {

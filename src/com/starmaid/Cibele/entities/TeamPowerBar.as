@@ -8,9 +8,9 @@ package com.starmaid.Cibele.entities {
     public class TeamPowerBar extends Meter {
         protected var _labelText:FlxText;
         protected var _outlines:Array
-        private var _curMaxOutline:Number = 2;
+        private var _curMaxOutline:Number, _numOutlines:Number = 3;
         private var _lastOutlineUpdate:Number = -1;
-        private var _updatingOutlines:Boolean = true,
+        private var _updatingOutlines:Boolean = false,
                     _outlinesGrowing:Boolean = true;
 
         public function TeamPowerBar(maxPoints:Number) {
@@ -26,20 +26,34 @@ package com.starmaid.Cibele.entities {
                                        "left");
             this._changeText.scrollFactor = new DHPoint(0, 0);
 
+            this._curMaxOutline = this._numOutlines - 1;
             this._outlines = new Array();
             var curOutline:GameObject;
             var outlineColors:Array = [0xff968B88, 0xffBEB6B4, 0xffE5E2E1];
-            for (var i:int = 2; i >= 0; i--) {
+            for (var i:int = this._numOutlines - 1; i >= 0; i--) {
                 curOutline = new GameObject(new DHPoint(0, 0));
                 curOutline.makeGraphic(this._outerWidth + ((i + 1) * 8),
                                        this._outerHeight + ((i + 1) * 8),
                                        outlineColors[i]);
                 curOutline.scrollFactor = new DHPoint(0, 0);
-                curOutline.visible = true;
+                curOutline.visible = false;
                 this._outlines.push(curOutline);
             }
 
             this.setVisible(true);
+        }
+
+        public function setHighlight(v:Boolean):void {
+            if (this._updatingOutlines != v) {
+                this._updatingOutlines = v;
+                if (v) {
+                    this._curMaxOutline = this._numOutlines - 1;
+                } else {
+                    for (var i:int = 0; i < this._outlines.length; i++) {
+                        this._outlines[i].visible = false;
+                    }
+                }
+            }
         }
 
         override public function setPos(pos:DHPoint):void {
