@@ -8,7 +8,7 @@ package com.starmaid.Cibele.entities {
     public class FadingTrail extends GameObject {
         public var sprites:Array;
         public var count:Number;
-        public var interval:Number = -1;
+        public var interval:Number;
         public var target_:GameObject;
 
         public function FadingTrail(tar:GameObject) {
@@ -16,9 +16,7 @@ package com.starmaid.Cibele.entities {
 
             this.sprites = new Array();
             this.count = 17;
-            if (this.interval == -1) {
-                this.interval = 300;
-            }
+            this.interval = 300;
             this.target_ = tar;
             this.slug = "fadingtrail" + Math.random() * 10000000;
             this.setupSprites();

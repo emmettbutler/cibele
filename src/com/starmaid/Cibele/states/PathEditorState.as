@@ -30,6 +30,9 @@ package com.starmaid.Cibele.states {
     import flash.net.FileReference;
 
     public class PathEditorState extends PlayerState {
+        [Embed(source="/../assets/images/misc/ichi_team.png")] private var ImgParticleRed:Class;
+        [Embed(source="/../assets/images/misc/cibele_team.png")] private var ImgParticleBlue:Class;
+
         public var pathWalker:PathFollower;
         public var _path:Path;
         public var _mapnodes:MapNodeContainer;
@@ -131,11 +134,13 @@ package com.starmaid.Cibele.states {
             var cur:Object, trail:TeamPowerParticleTrail, spr:GameObject,
                 partyMember:PartyMember;
             for (var i:int = 0; i < 2; i++) {
+                partyMember = (i == 0 ? this.player : this.pathWalker);
                 spr = new GameObject(new DHPoint(0, 0));
-                spr.makeGraphic(20, 20, 0xffe2678e);
+                spr.loadGraphic(
+                    (partyMember == this.player ? ImgParticleBlue : ImgParticleRed),
+                    false, false, 23, 23);
                 spr.visible = false;
                 spr.scrollFactor = new DHPoint(0, 0);
-                partyMember = (i == 0 ? this.player : this.pathWalker);
                 trail = new TeamPowerParticleTrail(spr, partyMember);
                 cur = {'spr': spr, 'trail': trail, 'partymember': partyMember};
                 this.teamPowerAnimationObjects.push(cur);
