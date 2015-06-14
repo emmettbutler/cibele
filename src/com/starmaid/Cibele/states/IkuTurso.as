@@ -44,7 +44,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showIchiDownloadWindow, "min_team_power": 5
+                    "delay": 0, "endfn": this.showIchiDownloadWindow, "min_team_power": 1
                 },
                 {
                     "audio": Convo2, "len": 77*GameSound.MSEC_PER_SEC,
@@ -52,7 +52,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showSelfiesWindow, "min_team_power": 15
+                    "delay": 0, "endfn": this.showSelfiesWindow, "min_team_power": 1
                 },
                 {
                     "audio": Convo3, "len": 27*GameSound.MSEC_PER_SEC,
@@ -60,7 +60,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showGuilEmail, "min_team_power": 20
+                    "delay": 0, "endfn": this.showGuilEmail, "min_team_power": 1
                 },
                 {
                     "audio": Convo4, "len": 108*GameSound.MSEC_PER_SEC,
@@ -68,7 +68,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 2*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showIchiSelfie1, "min_team_power": 25
+                    "delay": 0, "endfn": this.showIchiSelfie1, "min_team_power": 1
                 },
                 {
                     "audio": Convo5, "len": 16*GameSound.MSEC_PER_SEC,
@@ -76,10 +76,19 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 8*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showCibSelfieFolder, "min_team_power": 30
+                    "delay": 0, "endfn": this.showCibSelfieFolder, "min_team_power": 1
                 },
                 {
-                    "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC
+                    "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC, "delay": 0,
+                    "endfn": this.startBoss, "min_team_power": 1,
+                    "ends_with_popup": false
+                },
+                {
+                    "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "boss_gate": true
+                },
+                {
+                    "audio": null, "len": 10*GameSound.MSEC_PER_SEC, "endfn": playEndDialogue
                 }
             ];
         }
@@ -146,7 +155,6 @@ package com.starmaid.Cibele.states {
 
         public function showGuilEmail():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.GUIL_1);
-            GlobalTimer.getInstance().setMark(BOSS_MARK, 90*GameSound.MSEC_PER_SEC);
         }
 
         public function showIchiDownloadWindow():void {
@@ -161,18 +169,14 @@ package com.starmaid.Cibele.states {
             PopUpManager.getInstance().sendPopup(PopUpManager.CIB_SELFIE_FOLDER);
         }
 
-        override public function finalConvoDone():void {
-            var that:IkuTurso = this;
-            GlobalTimer.getInstance().setMark("Boss Kill", 5*GameSound.MSEC_PER_SEC, function():void {
-                //TODO play no other bit dialogue during this time
-                SoundManager.getInstance().playSound(
-                    IchiBossKill, 3*GameSound.MSEC_PER_SEC, that.playEndFilm,
-                    false, 1, GameSound.VOCAL
-                );
-                if(that.boss != null) {
-                    that.boss.die(null);
-                }
-            });
+        public function startBoss():void {
+            GlobalTimer.getInstance().setMark(BOSS_MARK, 1*GameSound.MSEC_PER_SEC);
+        }
+
+        public function playEndDialogue():void {
+            SoundManager.getInstance().playSound(
+                   IchiBossKill, 3*GameSound.MSEC_PER_SEC, this.playEndFilm,
+                    false, 1, GameSound.VOCAL);
         }
 
         public function playEndFilm():void {

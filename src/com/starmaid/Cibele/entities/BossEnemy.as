@@ -2,9 +2,11 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.management.DebugConsoleManager;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.utils.MapNodeContainer;
+    import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.management.Path;
 
     import org.flixel.*;
@@ -14,6 +16,7 @@ package com.starmaid.Cibele.entities {
         private var _path:Path = null;
         private var targetPathNode:PathNode;
         private var escape_counter:Number = 0;
+        private var damagedByPartyMember:PartyMember;
 
 
         public static const STATE_PRE_APPEAR:Number = 39485723987;
@@ -30,7 +33,7 @@ package com.starmaid.Cibele.entities {
             super(pos, 600);
             this._enemyType = Enemy.TYPE_BOSS;
             this.sightRange = 750;
-            this.hitDamage = 1;
+            this.hitDamage = 100;
             this.recoilPower = 0;
 
             this.alpha = 0;
@@ -70,8 +73,10 @@ package com.starmaid.Cibele.entities {
         override public function update():void{
             super.update();
 
-            if (this.hitPoints < 10) {
-                this.hitPoints = 200;
+            if (this.hitPoints <= 0) {
+                if(this._state != STATE_DEAD) {
+                    this.die(this.damagedByPartyMember);
+                }
             } else if(this._state != STATE_DEAD && this.alpha < 1 && this.hasAppeared()) {
                 this.alpha += .01;
             }
@@ -138,6 +143,7 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function takeDamage(p:PartyMember):void{
+            this.damagedByPartyMember = p;
             if (this.isDead()) {
                 return;
             }
@@ -182,6 +188,8 @@ package com.starmaid.Cibele.entities {
 
         override public function die(p:PartyMember):void {
             this._state = STATE_DEAD;
+            FlxG.stage.dispatchEvent(
+                new DataEvent(GameState.EVENT_BOSS_DIED, {'killed_by': p}));
         }
 
         override public function activeTarget():void { }

@@ -63,7 +63,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showSelfiePostEmail, "min_team_power": 10
+                    "delay": 0, "endfn": this.showSelfiePostEmail, "min_team_power": 1
                 },
                 {
                     "audio": Convo3, "len": 28*GameSound.MSEC_PER_SEC,
@@ -71,7 +71,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 8*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "min_team_power": 15
+                    "delay": 0, "min_team_power": 1
                 },
                 {
                     "audio": Convo3_2, "len": 44*GameSound.MSEC_PER_SEC,
@@ -79,7 +79,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showFriendEmail2, "min_team_power": 20
+                    "delay": 0, "endfn": this.showFriendEmail2, "min_team_power": 1
                 },
                 {
                     "audio": Convo4, "len": 11*GameSound.MSEC_PER_SEC,
@@ -87,7 +87,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "min_team_power": 25
+                    "delay": 0, "min_team_power": 1
                 },
                 {
                     "audio": Convo4_2, "len": 74*GameSound.MSEC_PER_SEC,
@@ -99,7 +99,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": showDredgeSelfie, "min_team_power": 35
+                    "delay": 0, "endfn": showDredgeSelfie, "min_team_power": 1
                 },
                 {
                     "audio": Convo5, "len": 54*GameSound.MSEC_PER_SEC,
@@ -107,15 +107,19 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "min_team_power": 45
+                    "delay": 0, "min_team_power": 1
                 },
                 {
                     "audio": Convo5_1, "len": 42*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": startBoss
+                    "delay": 0, "endfn": this.startBoss, "ends_with_popup": false
                 },
                 {
-                    "audio": null, "len": 30*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": killBoss
+                    "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "boss_gate": true
+                },
+                {
+                    "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "ends_with_popup": false
                 },
                 {
                     "audio": Convo5_2, "len": 5*GameSound.MSEC_PER_SEC,
@@ -123,7 +127,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": Convo5_3, "len": 4*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "delay": 0, "endfn": this.playEndFilm
                 }
             ];
 
@@ -197,12 +201,6 @@ package com.starmaid.Cibele.states {
             this.bitDialogueLock = true;
         }
 
-        public function killBoss():void {
-            if(this.boss != null) {
-                this.boss.die(null);
-            }
-        }
-
         override public function update():void{
             super.update();
         }
@@ -232,10 +230,6 @@ package com.starmaid.Cibele.states {
             if(convoNum == 5) {
                 GlobalTimer.getInstance().setMark("5th Convo Emote", 22*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
             }
-        }
-
-        override public function finalConvoDone():void {
-            GlobalTimer.getInstance().setMark("eu end", 1*GameSound.MSEC_PER_SEC, this.playEndFilm);
         }
 
         public function playEndFilm():void {

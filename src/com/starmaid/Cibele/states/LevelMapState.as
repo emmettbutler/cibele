@@ -228,9 +228,9 @@ package com.starmaid.Cibele.states {
                     };
                     this.bitDialogueLock = true;
                     GlobalTimer.getInstance().setMark(
-                        "no audio" + Math.random(),
+                        "no audio",
                         GameState.SHORT_DIALOGUE ? 1 : audioInfo["len"],
-                        finalEndFn
+                        finalEndFn, true
                     );
                 } else {
                     SoundManager.getInstance().playSound(
@@ -249,12 +249,23 @@ package com.starmaid.Cibele.states {
         {
             var that:LevelMapState = this;
             return function():void {
-                if (audioInfo["min_team_power"] != null) {
-                    if (that.teamPower >= audioInfo["min_team_power"]) {
-                        trace("go" + Math.random());
+                if(audioInfo["boss_gate"] != null){
+                    if(that.boss.isDead()) {
                         endfn();
                     } else {
-                        trace("wait for it" + Math.random());
+                        if (ScreenManager.getInstance().DEBUG) {
+                            trace("Waiting for boss kill");
+                        }
+                        that.addEventListener(
+                            GameState.EVENT_BOSS_DIED,
+                            that.buildBossKillCallback(
+                                endfn, arguments.callee)
+                        );
+                    }
+                } else if (audioInfo["min_team_power"] != null) {
+                    if (that.teamPower >= audioInfo["min_team_power"]) {
+                        endfn();
+                    } else {
                         if (ScreenManager.getInstance().DEBUG) {
                             trace("Waiting for minimum teamPower: " +
                                   audioInfo["min_team_power"]);
@@ -290,6 +301,26 @@ package com.starmaid.Cibele.states {
                     if (ScreenManager.getInstance().DEBUG) {
                         trace("Minimum team power (" + minTeamPower +
                               ") not met: " + that.teamPower);
+                    }
+                }
+            };
+        }
+
+        private function buildBossKillCallback(endfn:Function,
+                                                callee:Function):Function
+        {
+            var that:LevelMapState = this;
+            return function(event:DataEvent):void {
+                if(that.boss.isDead()) {
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace("Boss killed");
+                    }
+                    endfn();
+                    that.removeEventListener(GameState.EVENT_BOSS_DIED,
+                                             callee)
+                } else {
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace("Boss not killed yet");
                     }
                 }
             };
