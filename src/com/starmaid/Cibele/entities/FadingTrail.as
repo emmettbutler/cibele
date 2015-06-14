@@ -8,7 +8,7 @@ package com.starmaid.Cibele.entities {
     public class FadingTrail extends GameObject {
         public var sprites:Array;
         public var count:Number;
-        public var interval:Number;
+        public var interval:Number = -1;
         public var target_:GameObject;
 
         public function FadingTrail(tar:GameObject) {
@@ -16,7 +16,9 @@ package com.starmaid.Cibele.entities {
 
             this.sprites = new Array();
             this.count = 17;
-            this.interval = 300;
+            if (this.interval == -1) {
+                this.interval = 300;
+            }
             this.target_ = tar;
             this.slug = "fadingtrail" + Math.random() * 10000000;
             this.setupSprites();
@@ -57,7 +59,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function placeStep():void {
-            var cur:Footstep, oldest:Footstep;
+            var cur:ExpiringGameObject, oldest:ExpiringGameObject;
             for (var i:int = 0; i < this.sprites.length; i++) {
                 cur = this.sprites[i];
                 if (oldest == null || cur.age > oldest.age) {
@@ -73,7 +75,7 @@ package com.starmaid.Cibele.entities {
             this.angleStep(oldest);
         }
 
-        public function angleStep(spr:Footstep):void {
+        public function angleStep(spr:ExpiringGameObject):void {
             var theta:Number = Math.atan2(this.target_.dir.y, this.target_.dir.x);
             var deg:Number = theta * 180 / Math.PI;
             spr.angle = deg + 90;

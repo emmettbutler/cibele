@@ -10,6 +10,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.entities.BossEnemy;
     import com.starmaid.Cibele.entities.MapNode;
     import com.starmaid.Cibele.entities.PartyMember;
+    import com.starmaid.Cibele.entities.TeamPowerParticleTrail;
     import com.starmaid.Cibele.management.Path;
     import com.starmaid.Cibele.entities.PathNode;
     import com.starmaid.Cibele.entities.SmallEnemy;
@@ -127,29 +128,31 @@ package com.starmaid.Cibele.states {
 
         public function buildTeamPowerAnimationObjects():void {
             this.teamPowerAnimationObjects = new Array();
-            var cur:GameObject;
+            var cur:Object, trail:TeamPowerParticleTrail, spr:GameObject;
             for (var i:int = 0; i < 2; i++) {
-                cur = new GameObject(new DHPoint(0, 0));
-                cur.makeGraphic(20, 20, 0xffe2678e);
-                cur.visible = false;
-                cur.scrollFactor = new DHPoint(0, 0);
+                spr = new GameObject(new DHPoint(0, 0));
+                spr.makeGraphic(20, 20, 0xffe2678e);
+                spr.visible = false;
+                spr.scrollFactor = new DHPoint(0, 0);
+                trail = new TeamPowerParticleTrail(spr, null);
+                cur = {'spr': spr, 'trail': trail};
                 this.teamPowerAnimationObjects.push(cur);
-                FlxG.state.add(cur);
+                FlxG.state.add(spr);
             }
         }
 
         public function updateTeamPowerAnimation():void {
-            var cur:GameObject, curDisp:DHPoint,
+            var cur:Object, curDisp:DHPoint,
                 curScreenPos:DHPoint = new DHPoint(0, 0),
                 finishedCount:Number = 0;
             for (var i:int = 0; i < this.teamPowerAnimationObjects.length; i++) {
                 cur = this.teamPowerAnimationObjects[i];
-                cur.getScreenXY(curScreenPos);
+                cur['spr'].getScreenXY(curScreenPos);
                 curDisp = curScreenPos.sub(this.teamPowerBar.getPos());
-                cur.dir = curDisp.normalized().reverse().mulScl(10);
-
-                if (cur.pos.sub(this.teamPowerBar.getPos())._length() < 10) {
-                    cur.visible = false;
+                cur['spr'].dir = curDisp.normalized().reverse().mulScl(10);
+                cur['trail'].update();
+                if (cur['spr'].pos.sub(this.teamPowerBar.getPos())._length() < 10) {
+                    cur['spr'].visible = false;
                     finishedCount += 1;
                 }
             }
@@ -396,11 +399,11 @@ package com.starmaid.Cibele.states {
             this.teamPowerDelta = amt;
             var curScreenPos:DHPoint = new DHPoint(0, 0);
             this.player.getScreenXY(curScreenPos);
-            this.teamPowerAnimationObjects[0].setPos(curScreenPos);
-            this.teamPowerAnimationObjects[0].visible = true;
+            this.teamPowerAnimationObjects[0]['spr'].setPos(curScreenPos);
+            this.teamPowerAnimationObjects[0]['spr'].visible = true;
             this.pathWalker.getScreenXY(curScreenPos);
-            this.teamPowerAnimationObjects[1].setPos(curScreenPos);
-            this.teamPowerAnimationObjects[1].visible = true;
+            this.teamPowerAnimationObjects[1]['spr'].setPos(curScreenPos);
+            this.teamPowerAnimationObjects[1]['spr'].visible = true;
         }
 
         private function animatingTeamPowerEndCallback():void {
