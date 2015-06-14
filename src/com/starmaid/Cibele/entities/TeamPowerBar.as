@@ -2,6 +2,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.management.ScreenManager;
 
     import org.flixel.*;
 
@@ -14,7 +15,7 @@ package com.starmaid.Cibele.entities {
                     _outlinesGrowing:Boolean = true;
 
         public function TeamPowerBar(maxPoints:Number) {
-            super(new DHPoint(0, 0), maxPoints, 250, 30);
+            super(new DHPoint(0, 0), maxPoints, 300, 20);
 
             this._labelText = new FlxText(0, 0, 200, "TEAM POWER");
             this._labelText.setFormat("NexaBold-Regular", 18, 0xff7c6e6a, "left");
@@ -57,7 +58,10 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function setPos(pos:DHPoint):void {
-            var basePos:DHPoint = new DHPoint(50 + (this._outerWidth / 2), 400);
+            var basePos:DHPoint = new DHPoint(
+                ScreenManager.getInstance().screenWidth - this._outerWidth / 2 - 50,
+                35
+            );
             super.setPos(basePos);
             var outerPos:DHPoint = basePos.sub(new DHPoint(
                 this._outerWidth / 2, 0));
