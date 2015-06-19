@@ -76,7 +76,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0
                 },
                 {
-                    "audio": Convo6, "len": 21*GameSound.MSEC_PER_SEC,
+                    "audio": Convo6, "len": 22*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
@@ -92,7 +92,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0
                 },
                 {
-                    "audio": Convo8, "len": 58*GameSound.MSEC_PER_SEC,
+                    "audio": Convo8, "len": 61*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
@@ -132,7 +132,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0
                 },
                 {
-                    "audio": Convo14, "len": 43*GameSound.MSEC_PER_SEC,
+                    "audio": Convo14, "len": 35*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 }
             ];
