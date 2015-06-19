@@ -258,8 +258,7 @@ package com.starmaid.Cibele.states {
                         }
                         that.addEventListener(
                             GameState.EVENT_BOSS_DIED,
-                            that.buildBossKillCallback(
-                                endfn, arguments.callee)
+                            that.buildBossKillCallback(endfn)
                         );
                     }
                 } else if (audioInfo["min_team_power"] != null) {
@@ -274,7 +273,7 @@ package com.starmaid.Cibele.states {
                             GameState.EVENT_TEAM_POWER_INCREASED,
                             that.buildTeamPowerIncreasedCallback(
                                 audioInfo["min_team_power"],
-                                endfn, arguments.callee)
+                                endfn)
                         );
                     }
                 } else {
@@ -284,8 +283,7 @@ package com.starmaid.Cibele.states {
         }
 
         private function buildTeamPowerIncreasedCallback(minTeamPower:Number,
-                                                         endfn:Function,
-                                                         callee:Function):Function
+                                                         endfn:Function):Function
         {
             var that:LevelMapState = this;
             return function(event:DataEvent):void {
@@ -296,7 +294,7 @@ package com.starmaid.Cibele.states {
                     }
                     endfn();
                     that.removeEventListener(GameState.EVENT_TEAM_POWER_INCREASED,
-                                             callee)
+                                             arguments.callee)
                 } else {
                     if (ScreenManager.getInstance().DEBUG) {
                         trace("Minimum team power (" + minTeamPower +
@@ -306,8 +304,7 @@ package com.starmaid.Cibele.states {
             };
         }
 
-        private function buildBossKillCallback(endfn:Function,
-                                                callee:Function):Function
+        private function buildBossKillCallback(endfn:Function):Function
         {
             var that:LevelMapState = this;
             return function(event:DataEvent):void {
@@ -317,7 +314,7 @@ package com.starmaid.Cibele.states {
                     }
                     endfn();
                     that.removeEventListener(GameState.EVENT_BOSS_DIED,
-                                             callee)
+                                             arguments.callee)
                 } else {
                     if (ScreenManager.getInstance().DEBUG) {
                         trace("Boss not killed yet");
