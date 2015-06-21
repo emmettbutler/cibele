@@ -115,17 +115,19 @@ package com.starmaid.Cibele.states {
         }
 
         public function bulldogHellPopup():void {
-            PopUpManager.getInstance().sendPopup(PopUpManager.BULLDOG_HELL);
-            GlobalTimer.getInstance().setMark("First Emote", 5*GameSound.MSEC_PER_SEC, this.ichiStartEmote);
             var that:IkuTurso = this;
-            this.addEventListener(GameState.EVENT_POPUP_CLOSED,
-                    function(event:DataEvent):void {
-                        if(event.userData['tag'] == PopUpManager.BULLDOG_HELL) {
-                            that.playRUComing();
-                        }
-                        FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
-                                                       arguments.callee);
+            this.doIfMinTeamPower(function():void {
+                PopUpManager.getInstance().sendPopup(PopUpManager.BULLDOG_HELL);
+                GlobalTimer.getInstance().setMark("First Emote", 5*GameSound.MSEC_PER_SEC, that.ichiStartEmote);
+                that.addEventListener(GameState.EVENT_POPUP_CLOSED,
+                        function(event:DataEvent):void {
+                            if(event.userData['tag'] == PopUpManager.BULLDOG_HELL) {
+                                that.playRUComing();
+                            }
+                            FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
+                                                           arguments.callee);
                     });
+            }, 1);
         }
 
         public function ichiStartEmote():void {
