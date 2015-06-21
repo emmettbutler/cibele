@@ -293,7 +293,14 @@ package com.starmaid.Cibele.states {
                         trace("Minimum team power (" + minTeamPower +
                               ") met: " + that.teamPower);
                     }
-                    endfn();
+                    GlobalTimer.getInstance().setMark(
+                        "teampower_delay",
+                        (Math.random() * 3) * GameSound.MSEC_PER_SEC,
+                        function():void {
+                            endfn();
+                        },
+                        true
+                    );
                     that.removeEventListener(GameState.EVENT_TEAM_POWER_INCREASED,
                                              arguments.callee)
                 } else {
