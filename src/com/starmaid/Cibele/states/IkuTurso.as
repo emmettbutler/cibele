@@ -44,7 +44,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showIchiDownloadWindow, "min_team_power": 5
+                    "delay": 0, "endfn": this.showIchiDownloadWindow, "min_team_power": 10
                 },
                 {
                     "audio": Convo2, "len": 77*GameSound.MSEC_PER_SEC,
@@ -52,7 +52,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showSelfiesWindow, "min_team_power": 10
+                    "delay": 0, "endfn": this.showSelfiesWindow, "min_team_power": 20
                 },
                 {
                     "audio": Convo3, "len": 27*GameSound.MSEC_PER_SEC,
@@ -60,7 +60,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showGuilEmail, "min_team_power": 15
+                    "delay": 0, "endfn": this.showGuilEmail
                 },
                 {
                     "audio": Convo4, "len": 108*GameSound.MSEC_PER_SEC,
@@ -68,7 +68,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 2*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showIchiSelfie1, "min_team_power": 20
+                    "delay": 0, "endfn": this.showIchiSelfie1, "min_team_power": 30
                 },
                 {
                     "audio": Convo5, "len": 16*GameSound.MSEC_PER_SEC,
@@ -76,11 +76,11 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 8*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showCibSelfieFolder, "min_team_power": 25
+                    "delay": 0, "endfn": this.showCibSelfieFolder, "min_team_power": 35
                 },
                 {
                     "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC, "delay": 0,
-                    "endfn": this.startBoss, "ends_with_popup": false
+                    "endfn": this.startBoss, "ends_with_popup": false, "min_team_power": 50
                 },
                 {
                     "audio": null, "len": 1*GameSound.MSEC_PER_SEC,

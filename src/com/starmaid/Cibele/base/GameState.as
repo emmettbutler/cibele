@@ -263,6 +263,7 @@ package com.starmaid.Cibele.base {
                 DebugConsoleManager.getInstance().trackAttribute("FlxG.state.length", "sprites onscreen");
                 DebugConsoleManager.getInstance().trackAttribute("FlxG.mouse.x", "mouse x");
                 DebugConsoleManager.getInstance().trackAttribute("FlxG.mouse.y", "mouse y");
+                DebugConsoleManager.getInstance().trackAttribute("FlxG.state.teamPower", "Team Power");
             }
 
             if (!this.containsPauseLayer()) {
