@@ -52,7 +52,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showSelfiesWindow, "min_team_power": 20
+                    "delay": 0, "endfn": this.showSelfiesWindow, "min_team_power": 15
                 },
                 {
                     "audio": Convo3, "len": 27*GameSound.MSEC_PER_SEC,
@@ -80,7 +80,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC, "delay": 0,
-                    "endfn": this.startBoss, "ends_with_popup": false, "min_team_power": 50
+                    "endfn": this.startBoss, "ends_with_popup": false, "min_team_power": 40
                 },
                 {
                     "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
