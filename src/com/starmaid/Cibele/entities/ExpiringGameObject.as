@@ -15,7 +15,7 @@ package com.starmaid.Cibele.entities {
         public static const BLUE:Number = 2;
 
         public function ExpiringGameObject() {
-            super(ZERO_POINT);
+            super(new DHPoint(-1000, -1000));
             this.scale.x = 1;
             this.scale.y = 1;
             FlxG.state.add(this);
