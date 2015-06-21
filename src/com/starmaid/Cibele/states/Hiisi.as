@@ -187,7 +187,9 @@ package com.starmaid.Cibele.states {
         }
 
         public function showFlightEmail():void {
-            PopUpManager.getInstance().sendPopup(PopUpManager.HI_EMAIL_1);
+            this.doIfMinTeamPower(function():void {
+                PopUpManager.getInstance().sendPopup(PopUpManager.HI_EMAIL_1);
+            }, 1);
         }
 
         public function showBlakeSelfie():void {

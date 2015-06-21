@@ -181,7 +181,9 @@ package com.starmaid.Cibele.states {
         }
 
         public function showFriendEmail():void {
-            PopUpManager.getInstance().sendPopup(PopUpManager.EU_EMAIL_1);
+            this.doIfMinTeamPower(function():void {
+                PopUpManager.getInstance().sendPopup(PopUpManager.EU_EMAIL_1);
+            }, 1);
         }
 
         public function showSelfiePostEmail():void {
