@@ -40,7 +40,7 @@ package com.starmaid.Cibele.states {
             this.conversationPieces = [
                 {
                     "audio": Convo1, "len": 59*GameSound.MSEC_PER_SEC,
-                    "delay": 0//, "min_team_power": 1
+                    "delay": 0
                 },
                 {
                     "audio": null, "len": 4*GameSound.MSEC_PER_SEC,

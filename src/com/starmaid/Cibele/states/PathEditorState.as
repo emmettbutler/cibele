@@ -44,7 +44,7 @@ package com.starmaid.Cibele.states {
                    graphDataFile:File;
         public var shouldAddEnemies:Boolean = true;
         public var readExistingGraph:Boolean = true;
-        public var teamPower:Number = 0, maxTeamPower:Number = 40;
+        public var teamPower:Number = 0, maxTeamPower:Number = 60;
         public var teamPowerBar:TeamPowerBar, animatingTeamPower:Boolean = false;
         private var teamPowerAnimationObjects:Array, teamPowerDelta:Number = 0;
 
