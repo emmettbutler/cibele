@@ -262,24 +262,25 @@ package com.starmaid.Cibele.states {
                         );
                     }
                 } else if (audioInfo["min_team_power"] != null) {
-                    if (that.teamPower >= audioInfo["min_team_power"]) {
-                        endfn();
-                    } else {
-                        if (ScreenManager.getInstance().DEBUG) {
-                            trace("Waiting for minimum teamPower: " +
-                                  audioInfo["min_team_power"]);
-                        }
-                        that.addEventListener(
-                            GameState.EVENT_TEAM_POWER_INCREASED,
-                            that.buildTeamPowerIncreasedCallback(
-                                audioInfo["min_team_power"],
-                                endfn)
-                        );
-                    }
+                    that.doIfMinTeamPower(endfn, audioInfo["min_team_power"]);
                 } else {
                     endfn();
                 }
             };
+        }
+
+        protected function doIfMinTeamPower(fn:Function, teamPower:Number):void {
+            if (this.teamPower >= teamPower) {
+                fn();
+            } else {
+                if (ScreenManager.getInstance().DEBUG) {
+                    trace("Waiting for minimum teamPower: " + teamPower);
+                }
+                this.addEventListener(
+                    GameState.EVENT_TEAM_POWER_INCREASED,
+                    this.buildTeamPowerIncreasedCallback(teamPower, fn)
+                );
+            }
         }
 
         private function buildTeamPowerIncreasedCallback(minTeamPower:Number,
