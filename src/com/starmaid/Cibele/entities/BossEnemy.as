@@ -33,7 +33,7 @@ package com.starmaid.Cibele.entities {
             super(pos, 600);
             this._enemyType = Enemy.TYPE_BOSS;
             this.sightRange = 750;
-            this.hitDamage = 100;
+            this.hitDamage = 80;
             this.recoilPower = 0;
 
             this.alpha = 0;
@@ -73,11 +73,7 @@ package com.starmaid.Cibele.entities {
         override public function update():void{
             super.update();
 
-            if (this.hitPoints <= 0) {
-                if(this._state != STATE_DEAD) {
-                    this.die(this.damagedByPartyMember);
-                }
-            } else if(this._state != STATE_DEAD && this.alpha < 1 && this.hasAppeared()) {
+            if(this.hitPoints > 0 && this._state != STATE_DEAD && this.alpha < 1 && this.hasAppeared()) {
                 this.alpha += .01;
             }
 
@@ -145,6 +141,10 @@ package com.starmaid.Cibele.entities {
         override public function takeDamage(p:PartyMember):void{
             this.damagedByPartyMember = p;
             if (this.isDead()) {
+                return;
+            }
+            if (this.hitPoints <= 0) {
+                this.die(this.damagedByPartyMember);
                 return;
             }
             if (!this.isEscaping()) {
