@@ -66,6 +66,8 @@ package com.starmaid.Cibele.states {
                                   bgLoader.rows * bgLoader.estTileHeight);
 
             super.postCreate();
+
+            this.bgLoader.setEnemiesReference(this.enemies.enemies);
         }
 
         override public function destroy():void {
