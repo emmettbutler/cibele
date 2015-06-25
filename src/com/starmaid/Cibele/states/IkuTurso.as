@@ -47,7 +47,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0, "endfn": this.showIchiDownloadWindow
                 },
                 {
-                    "audio": Convo2, "len": 77*GameSound.MSEC_PER_SEC,
+                    "audio": Convo2, "len": 80*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
