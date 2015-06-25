@@ -182,6 +182,7 @@ package com.starmaid.Cibele.entities {
         public function respawn():void {
             if(!this.inViewOfPlayer()) {
                 this.hitPoints = this.maxHitPoints;
+                this._healthBar.setPoints(this.hitPoints);
                 this.visible = true;
                 this.alpha = 1;
                 this._state = STATE_IDLE;
