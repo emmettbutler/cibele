@@ -44,7 +44,7 @@ package com.starmaid.Cibele.entities {
             }
             this._curDiff = (this._curPoints - points) + this._curDiff;
             this._curPoints = points;
-            this._innerBar.scale.x = this._outerWidth * (points / this._maxPoints);
+            this._innerBar.scale.x = Math.min(this._outerWidth * (points / this._maxPoints), this._outerWidth);
             this._innerBar.offset.x = -1 * (this._innerBar.scale.x / 2);
 
             if (this.isVisible()){
