@@ -62,7 +62,9 @@ package com.starmaid.Cibele.states {
 
         override public function clickCallback(screenPos:DHPoint,
                                                worldPos:DHPoint):void {
-            if (this._state == STATE_PRE && !this.accept_call) {
+            if (this._state == STATE_PRE && !this.accept_call &&
+                !this.loadingScreenVisible())
+            {
                 accept_call = true;
                 SoundManager.getInstance().playSound(
                     EuryaleHallway.Convo1, GameState.SHORT_DIALOGUE ? 1 : 8*GameSound.MSEC_PER_SEC, EuryaleHallway.firstConvoPartTwo, false, 1, GameSound.VOCAL,

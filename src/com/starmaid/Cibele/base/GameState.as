@@ -143,6 +143,13 @@ package com.starmaid.Cibele.base {
             this.game_cursor.addCursorSprites();
         }
 
+        public function loadingScreenVisible():Boolean {
+            if (this.loadingScreen == null) {
+                return false;
+            }
+            return this.loadingScreen.showing;
+        }
+
         public function loadingScreenEndCallback():void { }
 
         public function fadeOut(fn:Function, postFadeWait:Number=1):void {
