@@ -154,6 +154,7 @@ package com.starmaid.Cibele.entities {
             }
             this.damageLockMap[p.slug] = true;
             this.hitPoints -= this.hitDamage;
+            this.hitPoints = Math.max(this.hitPoints, 0);
             this._healthBar.setPoints(this.hitPoints);
             GlobalTimer.getInstance().setMark(this.takeDamageEventSlug + p.slug,
                                               1 * GameSound.MSEC_PER_SEC,
