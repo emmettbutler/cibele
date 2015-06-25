@@ -32,8 +32,8 @@ package com.starmaid.Cibele.entities {
             this.attack_sprite.visible = true;
         }
 
-        override public function die():void {
-            super.die();
+        override public function die(p:PartyMember):void {
+            super.die(p);
             this.attack_sprite.visible = false;
         }
 

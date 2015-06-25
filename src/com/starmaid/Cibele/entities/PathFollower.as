@@ -148,6 +148,7 @@ package com.starmaid.Cibele.entities {
             FlxG.state.add(this.attackAnim);
             FlxG.state.add(this.shadow_sprite);
             FlxG.state.add(this.nameText);
+            FlxG.state.add(this.teamPowerDeltaText);
         }
 
         public function walk():void {

@@ -39,12 +39,12 @@ package com.starmaid.Cibele.states {
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo1, "len": 57*GameSound.MSEC_PER_SEC,
+                    "audio": Convo1, "len": 59*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
                     "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showIchiDownloadWindow
+                    "delay": 0, "endfn": this.showIchiDownloadWindow, "min_team_power": 10
                 },
                 {
                     "audio": Convo2, "len": 80*GameSound.MSEC_PER_SEC,
@@ -52,7 +52,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showSelfiesWindow
+                    "delay": 0, "endfn": this.showSelfiesWindow, "min_team_power": 15
                 },
                 {
                     "audio": Convo3, "len": 27*GameSound.MSEC_PER_SEC,
@@ -68,7 +68,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 2*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showIchiSelfie1
+                    "delay": 0, "endfn": this.showIchiSelfie1, "min_team_power": 30
                 },
                 {
                     "audio": Convo5, "len": 16*GameSound.MSEC_PER_SEC,
@@ -76,10 +76,18 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 8*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showCibSelfieFolder
+                    "delay": 0, "endfn": this.showCibSelfieFolder, "min_team_power": 35
                 },
                 {
-                    "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC
+                    "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC, "delay": 0,
+                    "endfn": this.startBoss, "ends_with_popup": false, "min_team_power": 40
+                },
+                {
+                    "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "boss_gate": true
+                },
+                {
+                    "audio": null, "len": 10*GameSound.MSEC_PER_SEC, "endfn": playEndDialogue
                 }
             ];
         }
@@ -93,6 +101,7 @@ package com.starmaid.Cibele.states {
             this.playerStartPos = new DHPoint(4600, 7565);
             this.colliderScaleFactor = 8.65;
             this.enemyDirMultiplier = 1;
+            this.maxTeamPower = 40;
 
             super.create();
             function _bgmCallback():void {
@@ -107,17 +116,19 @@ package com.starmaid.Cibele.states {
         }
 
         public function bulldogHellPopup():void {
-            PopUpManager.getInstance().sendPopup(PopUpManager.BULLDOG_HELL);
-            GlobalTimer.getInstance().setMark("First Emote", 5*GameSound.MSEC_PER_SEC, this.ichiStartEmote);
             var that:IkuTurso = this;
-            this.addEventListener(GameState.EVENT_POPUP_CLOSED,
-                    function(event:DataEvent):void {
-                        if(event.userData['tag'] == PopUpManager.BULLDOG_HELL) {
-                            that.playRUComing();
-                        }
-                        FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
-                                                       arguments.callee);
+            this.doIfMinTeamPower(function():void {
+                PopUpManager.getInstance().sendPopup(PopUpManager.BULLDOG_HELL);
+                GlobalTimer.getInstance().setMark("First Emote", 5*GameSound.MSEC_PER_SEC, that.ichiStartEmote);
+                that.addEventListener(GameState.EVENT_POPUP_CLOSED,
+                        function(event:DataEvent):void {
+                            if(event.userData['tag'] == PopUpManager.BULLDOG_HELL) {
+                                that.playRUComing();
+                            }
+                            FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
+                                                           arguments.callee);
                     });
+            }, 1);
         }
 
         public function ichiStartEmote():void {
@@ -146,7 +157,6 @@ package com.starmaid.Cibele.states {
 
         public function showGuilEmail():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.GUIL_1);
-            GlobalTimer.getInstance().setMark(BOSS_MARK, 90*GameSound.MSEC_PER_SEC);
         }
 
         public function showIchiDownloadWindow():void {
@@ -161,18 +171,14 @@ package com.starmaid.Cibele.states {
             PopUpManager.getInstance().sendPopup(PopUpManager.CIB_SELFIE_FOLDER);
         }
 
-        override public function finalConvoDone():void {
-            var that:IkuTurso = this;
-            GlobalTimer.getInstance().setMark("Boss Kill", 5*GameSound.MSEC_PER_SEC, function():void {
-                //TODO play no other bit dialogue during this time
-                SoundManager.getInstance().playSound(
-                    IchiBossKill, 3*GameSound.MSEC_PER_SEC, that.playEndFilm,
-                    false, 1, GameSound.VOCAL
-                );
-                if(that.boss != null) {
-                    that.boss.die();
-                }
-            });
+        public function startBoss():void {
+            GlobalTimer.getInstance().setMark(BOSS_MARK, 1*GameSound.MSEC_PER_SEC);
+        }
+
+        public function playEndDialogue():void {
+            SoundManager.getInstance().playSound(
+                   IchiBossKill, 3*GameSound.MSEC_PER_SEC, this.playEndFilm,
+                    false, 1, GameSound.VOCAL);
         }
 
         public function playEndFilm():void {

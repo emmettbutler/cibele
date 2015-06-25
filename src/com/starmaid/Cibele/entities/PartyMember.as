@@ -43,6 +43,7 @@ package com.starmaid.Cibele.entities {
         protected var shadow_sprite:GameObject;
         protected var footstepOffsets:LRUDVector;
         protected var attackSounds:Array;
+        protected var teamPowerDeltaText:FlxText;
         protected var _debug_sightRadius:CircleSprite,
                       _debug_attackRadius:CircleSprite;
 
@@ -51,6 +52,8 @@ package com.starmaid.Cibele.entities {
             this._nameTextOffset = new DHPoint(0, 0);
             this.nameText = new FlxText(pos.x, pos.y, 500, "My Name");
             this.nameText.setFormat("NexaBold-Regular",16,0xff616161,"left");
+            this.teamPowerDeltaText = new FlxText(pos.x, pos.y, 500, "");
+            this.teamPowerDeltaText.setFormat("NexaBold-Regular", 16, 0xff616161, "left");
             this.footPos = new DHPoint(0, 0);
             this.bossSightRange = 1200;
             this.attackAnimDuration = 2*GameSound.MSEC_PER_SEC;
@@ -221,6 +224,8 @@ package com.starmaid.Cibele.entities {
 
             this.nameText.x = this.pos.x + this._nameTextOffset.x;
             this.nameText.y = this.pos.y + this._nameTextOffset.y;
+            this.teamPowerDeltaText.x = this.pos.x + this._nameTextOffset.x;
+            this.teamPowerDeltaText.y = (this.pos.y + this._nameTextOffset.y) - 40;
 
             this.setFootPos();
         }
@@ -274,6 +279,24 @@ package com.starmaid.Cibele.entities {
                 range = this.bossSightRange;
             }
             return en.getAttackPos().sub(this.footPos)._length() < range;
+        }
+
+        public function get teamPowerDamageMul():Number {
+            if (!(FlxG.state is PathEditorState)) {
+                return 1;
+            }
+            return ((FlxG.state as PathEditorState).teamPower * .02) + 1;
+        }
+
+        public function showTeamPowerDelta(delta:Number):void {
+            this.teamPowerDeltaText.text = (delta >= 0 ? "+" : "") + delta + "";
+            GlobalTimer.getInstance().setMark(
+                "delta" + this.slug + Math.random() * 100000,
+                1.3 * GameSound.MSEC_PER_SEC,
+                function():void {
+                    teamPowerDeltaText.text = "";
+                }
+            );
         }
 
         public function resolveStatePostAttack():void {}

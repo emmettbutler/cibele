@@ -291,6 +291,7 @@ package com.starmaid.Cibele.entities {
             FlxG.state.add(this);
             FlxG.state.add(this.nameText);
             FlxG.state.add(this.debugText);
+            FlxG.state.add(this.teamPowerDeltaText);
         }
 
         public function doMovementState():void {

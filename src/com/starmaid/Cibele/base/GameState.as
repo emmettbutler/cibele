@@ -46,6 +46,9 @@ package com.starmaid.Cibele.base {
 
         public static const EVENT_POPUP_CLOSED:String = "popup_closed";
         public static const EVENT_SINGLETILE_BG_LOADED:String = "bg_loaded";
+        public static const EVENT_ENEMY_DIED:String = "enemy_died";
+        public static const EVENT_BOSS_DIED:String = "boss_died";
+        public static const EVENT_TEAM_POWER_INCREASED:String = "team_power_increased";
 
         public function GameState(snd:Boolean=true, popup:Boolean=true,
                                   messages:Boolean=true, fade:Boolean=false){
@@ -267,6 +270,7 @@ package com.starmaid.Cibele.base {
                 DebugConsoleManager.getInstance().trackAttribute("FlxG.state.length", "sprites onscreen");
                 DebugConsoleManager.getInstance().trackAttribute("FlxG.mouse.x", "mouse x");
                 DebugConsoleManager.getInstance().trackAttribute("FlxG.mouse.y", "mouse y");
+                DebugConsoleManager.getInstance().trackAttribute("FlxG.state.teamPower", "Team Power");
             }
 
             if (!this.containsPauseLayer()) {
@@ -396,6 +400,10 @@ package com.starmaid.Cibele.base {
 
         public function addEventListener(event:String, callback:Function):void {
             FlxG.stage.addEventListener(event, callback);
+        }
+
+        public function removeEventListener(event:String, callback:Function):void {
+            FlxG.stage.removeEventListener(event, callback);
         }
 
         public function dispatchEvent(event:String):void {

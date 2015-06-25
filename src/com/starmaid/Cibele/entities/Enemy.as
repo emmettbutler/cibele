@@ -2,7 +2,9 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.utils.GlobalTimer;
+    import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.states.LevelMapState;
 
@@ -132,9 +134,12 @@ package com.starmaid.Cibele.entities {
                                               }, true);
             this._state = STATE_RECOIL;
             this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
-            this.hitPoints -= this.hitDamage;
+            this.hitPoints -= Math.floor(this.hitDamage * p.teamPowerDamageMul);
             this._healthBar.setPoints(this.hitPoints);
             p.runParticles(this.getMiddlePos());
+            if(this.hitPoints <= 0){
+                this.die(p);
+            }
         }
 
         public function activeTarget():void {
@@ -151,7 +156,11 @@ package com.starmaid.Cibele.entities {
             this._healthBar.setVisible(false);
         }
 
-        public function die():void {
+        public function die(p:PartyMember):void {
+            /*
+             * :param p: The PartyMember instance that hit this enemy for lethal
+             *      damage
+             */
             if (this._state == STATE_DEAD) {
                 return;
             }
@@ -161,6 +170,9 @@ package com.starmaid.Cibele.entities {
             this._state = STATE_DEAD;
             this.dir = new DHPoint(0,0);
             this.inactiveTarget();
+            FlxG.stage.dispatchEvent(
+                new DataEvent(GameState.EVENT_ENEMY_DIED,
+                              {'damaged_by': p}));
             GlobalTimer.getInstance().setMark(
                 MARK_RESPAWN + Math.random() * 200,
                 15 * GameSound.MSEC_PER_SEC, this.respawn, true
@@ -245,9 +257,6 @@ package com.starmaid.Cibele.entities {
             // TODO - cap hitPoints at some reasonable value
             this.hitPoints = Math.max(0, this.hitPoints);
             this.setAuxPositions();
-            if(this.hitPoints <= 0){
-                this.die();
-            }
 
             switch(this._state) {
                 case STATE_IDLE:

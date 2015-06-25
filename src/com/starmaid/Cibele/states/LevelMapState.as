@@ -205,7 +205,9 @@ package com.starmaid.Cibele.states {
             if (audioInfo != null) {
                 var endfn:Function = this.playNextConvoPiece;
                 if (audioInfo["endfn"] != null) {
-                    if(audioInfo["ends_with_popup"] == null || audioInfo["ends_with_popup"] == true) {
+                    if(audioInfo["ends_with_popup"] == null ||
+                       audioInfo["ends_with_popup"] == true)
+                    {
                         endfn = function():void {
                             registerPopupCallback();
                             audioInfo["endfn"]();
@@ -217,28 +219,118 @@ package com.starmaid.Cibele.states {
                         };
                     }
                 }
-                var prevEndFn:Function = endfn;
+                var prevEndFn:Function = this.buildIntermediateConvoEndFn(
+                    endfn, audioInfo);
+                var finalEndFn:Function = prevEndFn;
                 var prevDialogueLock:Boolean = this.bitDialogueLock;
                 if(audioInfo["audio"] == null) {
-                    endfn = function():void {
+                    finalEndFn = function():void {
                         bitDialogueLock = prevDialogueLock;
                         prevEndFn();
                     };
                     this.bitDialogueLock = true;
                     GlobalTimer.getInstance().setMark(
-                        "no audio" + Math.random(),
+                        "no audio",
                         GameState.SHORT_DIALOGUE ? 1 : audioInfo["len"],
-                        endfn
+                        finalEndFn, true
                     );
                 } else {
                     SoundManager.getInstance().playSound(
-                        audioInfo["audio"], GameState.SHORT_DIALOGUE ? 1 : audioInfo["len"], endfn,
-                        false, 1, GameSound.VOCAL
+                        audioInfo["audio"],
+                        GameState.SHORT_DIALOGUE ? 1 : audioInfo["len"],
+                        finalEndFn, false, 1, GameSound.VOCAL
                     );
                 }
             } else {
                 this.finalConvoDone();
             }
+        }
+
+        private function buildIntermediateConvoEndFn(endfn:Function,
+                                                     audioInfo:Object):Function
+        {
+            var that:LevelMapState = this;
+            return function():void {
+                if(audioInfo["boss_gate"] != null){
+                    if(that.boss.isDead()) {
+                        endfn();
+                    } else {
+                        if (ScreenManager.getInstance().DEBUG) {
+                            trace("Waiting for boss kill");
+                        }
+                        that.addEventListener(
+                            GameState.EVENT_BOSS_DIED,
+                            that.buildBossKillCallback(endfn)
+                        );
+                    }
+                } else if (audioInfo["min_team_power"] != null) {
+                    that.doIfMinTeamPower(endfn, audioInfo["min_team_power"]);
+                } else {
+                    endfn();
+                }
+            };
+        }
+
+        protected function doIfMinTeamPower(fn:Function, teamPower:Number):void {
+            if (this.teamPower >= teamPower) {
+                fn();
+            } else {
+                if (ScreenManager.getInstance().DEBUG) {
+                    trace("Waiting for minimum teamPower: " + teamPower);
+                }
+                this.addEventListener(
+                    GameState.EVENT_TEAM_POWER_INCREASED,
+                    this.buildTeamPowerIncreasedCallback(teamPower, fn)
+                );
+            }
+        }
+
+        private function buildTeamPowerIncreasedCallback(minTeamPower:Number,
+                                                         endfn:Function):Function
+        {
+            var that:LevelMapState = this;
+            return function(event:DataEvent):void {
+                if (that.teamPower >= minTeamPower) {
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace("Minimum team power (" + minTeamPower +
+                              ") met: " + that.teamPower);
+                    }
+                    GlobalTimer.getInstance().setMark(
+                        "teampower_delay",
+                        (Math.random() * 3) * GameSound.MSEC_PER_SEC,
+                        function():void {
+                            endfn();
+                        },
+                        true
+                    );
+                    that.removeEventListener(GameState.EVENT_TEAM_POWER_INCREASED,
+                                             arguments.callee)
+                } else {
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace("Minimum team power (" + minTeamPower +
+                              ") not met: " + that.teamPower);
+                    }
+                }
+            };
+        }
+
+        private function buildBossKillCallback(endfn:Function):Function
+        {
+            var that:LevelMapState = this;
+            return function(event:DataEvent):void {
+                if(that.boss.isDead()) {
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace("Boss killed");
+                    }
+                    endfn();
+                    that.removeEventListener(GameState.EVENT_BOSS_DIED,
+                                             arguments.callee)
+                } else {
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace("Boss not killed yet");
+                    }
+                }
+            };
         }
 
         public function registerPopupCallback():void {
