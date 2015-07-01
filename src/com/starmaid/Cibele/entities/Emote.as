@@ -8,9 +8,9 @@ package com.starmaid.Cibele.entities {
     import org.flixel.*;
 
     public class Emote extends GameObject {
-        [Embed(source="/../assets/images/ui/UI_happy face_blue.png")] private var ImgEmojiHappy:Class;
-        [Embed(source="/../assets/images/ui/UI_Sad Face_blue.png")] private var ImgEmojiSad:Class;
-        [Embed(source="/../assets/images/ui/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;
+        [Embed(source="/../assets/images/ui/UI_happy_face_blue.png")] private var ImgEmojiHappy:Class;
+        [Embed(source="/../assets/images/ui/UI_Sad_Face_blue.png")] private var ImgEmojiSad:Class;
+        [Embed(source="/../assets/images/ui/UI_Angry_face_blue.png")] private var ImgEmojiAngry:Class;
         [Embed(source="/../assets/images/ui/UI_happy_face_pink.png")] private var ImgEmojiHappyPink:Class;
         [Embed(source="/../assets/images/ui/UI_sad_face_pink.png")] private var ImgEmojiSadPink:Class;
         [Embed(source="/../assets/images/ui/UI_Angry_face_pink.png")] private var ImgEmojiAngryPink:Class;

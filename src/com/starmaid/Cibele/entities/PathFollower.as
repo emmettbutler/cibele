@@ -18,7 +18,7 @@ package com.starmaid.Cibele.entities {
 
     public class PathFollower extends PartyMember {
         [Embed(source="/../assets/images/characters/Sprite_Ichi_Walk_Cycle.png")] private var ImgIchi:Class;
-        [Embed(source="/../assets/images/characters/Ichi_attack sprite.png")] private var ImgIchiAttack:Class;
+        [Embed(source="/../assets/images/characters/Ichi_attack_sprite.png")] private var ImgIchiAttack:Class;
         [Embed(source="/../assets/audio/effects/sfx_protoattack1.mp3")] private var SfxAttack1:Class;
         [Embed(source="/../assets/audio/effects/sfx_protoattack2.mp3")] private var SfxAttack2:Class;
         [Embed(source="/../assets/audio/effects/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
