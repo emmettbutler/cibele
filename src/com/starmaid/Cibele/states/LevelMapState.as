@@ -272,11 +272,12 @@ package com.starmaid.Cibele.states {
         }
 
         protected function doIfMinTeamPower(fn:Function, teamPower:Number):void {
-            if (this.teamPower >= teamPower) {
+            var min_:Number = GameState.SHORT_DIALOGUE ? 0 : teamPower;
+            if (this.teamPower >= min_) {
                 fn();
             } else {
                 if (ScreenManager.getInstance().DEBUG) {
-                    trace("Waiting for minimum teamPower: " + teamPower);
+                    trace("Waiting for minimum teamPower: " + min_);
                 }
                 this.addEventListener(
                     GameState.EVENT_TEAM_POWER_INCREASED,
