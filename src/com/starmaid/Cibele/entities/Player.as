@@ -31,8 +31,10 @@ package com.starmaid.Cibele.entities {
                     hitboxDim:DHPoint;
         private var click_anim:GameObject, attack_sprite:GameObject;
         private var click_anim_lock:Boolean = false, clickWait:Boolean,
-                    mouseHeld:Boolean = false, attack_sound_lock:Boolean = false;
+                    mouseHeld:Boolean = false, attack_sound_lock:Boolean = false,
+                    clickStartedOnUI:Boolean = false;
         private var _bgLoaderRef:BackgroundLoader;
+        private var clickObjectsGroup:Array;
 
         public var colliding:Boolean = false;
         public var mapHitbox:GameObject, cameraPos:GameObject;
@@ -152,12 +154,33 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        private function posOverlapsUI(screenPos:DHPoint):Boolean {
+            if (this.clickObjectsGroup != null) {
+                var cur:GameObject, screenRect:FlxRect;
+                var mouseScreenRect:FlxRect = new FlxRect(screenPos.x, screenPos.y,
+                                                          5, 5);
+                for (var i:int = 0; i < this.clickObjectsGroup.length; i++) {
+                    cur = this.clickObjectsGroup[i];
+                    screenRect = cur._getScreenRect();
+                    if (mouseScreenRect.overlaps(screenRect) &&
+                        cur is UIElement && cur.visible)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return false;
+        }
+
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint,
                                       group:Array=null):void
         {
             var ui_clicked:Boolean = false, got_enemy:Boolean = false,
                 prevTargetEnemy:Enemy = null;
 
+            this.clickObjectsGroup = group;
+            ui_clicked = this.posOverlapsUI(screenPos);
             if (group != null) {
                 var cur:GameObject, screenRect:FlxRect, worldRect:FlxRect;
                 var mouseScreenRect:FlxRect = new FlxRect(screenPos.x, screenPos.y,
@@ -168,28 +191,14 @@ package com.starmaid.Cibele.entities {
                     cur = group[i];
                     screenRect = cur._getScreenRect();
                     worldRect = cur._getRect();
-                    if (mouseScreenRect.overlaps(screenRect) &&
-                        cur is UIElement && cur.visible)
-                    {
-                        ui_clicked = true;
-                    } else if (cur is Enemy) {
+                    if (cur is Enemy) {
                         if (mouseWorldRect.overlaps(worldRect) && !(cur as Enemy).isDead()) {
                             if(!got_enemy) {
                                 got_enemy = true;
                                 prevTargetEnemy = this.targetEnemy;
                                 this.targetEnemy = cur as Enemy;
                             }
-                        }
-                    }
-                }
-                // do a second pass here to perform actions dependent on ui_clicked
-                if (!ui_clicked) {
-                    for (i = 0; i < group.length; i++) {
-                        cur = group[i];
-                        worldRect = cur._getRect();
-                        if (cur is Enemy && (!mouseWorldRect.overlaps(worldRect) ||
-                                             (cur as Enemy).isDead()))
-                        {
+                        } else if (!ui_clicked) {
                             (cur as Enemy).inactiveTarget();
                         }
                     }
@@ -348,6 +357,8 @@ package com.starmaid.Cibele.entities {
         override public function update():void{
             if (FlxG.mouse.justPressed()) {
                 this.mouseDownTime = new Date().valueOf();
+                this.clickStartedOnUI = this.posOverlapsUI(
+                    new DHPoint(FlxG.mouse.screenX, FlxG.mouse.screenY));
             }
             if(this.walkTarget != null) {
                 this.cameraPos.x = Utils.interpolate(.1, this.cameraPos.x,
@@ -391,8 +402,13 @@ package com.starmaid.Cibele.entities {
             }
 
             var timeDiff:Number = new Date().valueOf() - this.mouseDownTime;
-            if (FlxG.mouse.pressed() && timeDiff > .5*GameSound.MSEC_PER_SEC && timeDiff < 1.5*GameSound.MSEC_PER_SEC) {
-                this.initWalk(new DHPoint(FlxG.mouse.x, FlxG.mouse.y), false);
+            if (FlxG.mouse.pressed() && timeDiff > .5*GameSound.MSEC_PER_SEC &&
+                timeDiff < 1.5*GameSound.MSEC_PER_SEC)
+            {
+                // don't start walking if the click starts on a uielement
+                if (!this.clickStartedOnUI) {
+                    this.initWalk(new DHPoint(FlxG.mouse.x, FlxG.mouse.y), false);
+                }
                 this.mouseHeld = true;
             }
             if (this.mouseHeld && !FlxG.mouse.pressed()) {
