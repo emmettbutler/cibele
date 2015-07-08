@@ -172,7 +172,6 @@ package com.starmaid.Cibele.entities {
                         cur is UIElement && cur.visible)
                     {
                         ui_clicked = true;
-                        SoundManager.getInstance().playUIGeneralSFX();
                     } else if (cur is Enemy) {
                         if (mouseWorldRect.overlaps(worldRect) && !(cur as Enemy).isDead()) {
                             if(!got_enemy) {
@@ -180,7 +179,17 @@ package com.starmaid.Cibele.entities {
                                 prevTargetEnemy = this.targetEnemy;
                                 this.targetEnemy = cur as Enemy;
                             }
-                        } else {
+                        }
+                    }
+                }
+                // do a second pass here to perform actions dependent on ui_clicked
+                if (!ui_clicked) {
+                    for (i = 0; i < group.length; i++) {
+                        cur = group[i];
+                        worldRect = cur._getRect();
+                        if (cur is Enemy && (!mouseWorldRect.overlaps(worldRect) ||
+                                             (cur as Enemy).isDead()))
+                        {
                             (cur as Enemy).inactiveTarget();
                         }
                     }
@@ -188,6 +197,7 @@ package com.starmaid.Cibele.entities {
             }
 
             if (ui_clicked) {
+                SoundManager.getInstance().playUIGeneralSFX();
                 return;
             }
 
