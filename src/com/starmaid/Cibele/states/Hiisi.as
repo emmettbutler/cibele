@@ -237,9 +237,15 @@ package com.starmaid.Cibele.states {
 
         public function playMeetupV1():void {
             PopUpManager.GAME_ACTIVE = false;
-            FlxG.switchState(new PlayVideoState("/../assets/video/4.1 Meetup_v1.mp4",
-                        playHallways)
-            );
+            FlxG.switchState(new TextScreen(6 * GameSound.MSEC_PER_SEC,
+                function():void {
+                    FlxG.switchState(
+                        new PlayVideoState(
+                            "/../assets/video/4.1 Meetup_v1.mp4",
+                            playHallways
+                        )
+                    );
+                }, "September 23rd, 2009"));
         }
 
         public function playHallways():void {
