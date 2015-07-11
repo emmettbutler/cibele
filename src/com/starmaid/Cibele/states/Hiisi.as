@@ -245,7 +245,7 @@ package com.starmaid.Cibele.states {
                             playHallways
                         )
                     );
-                }, "September 23rd, 2009"));
+                }, "September 18th, 2009"));
         }
 
         public function playHallways():void {
