@@ -180,6 +180,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function respawn():void {
+            if (!(FlxG.state is LevelMapState)) {
+                return;
+            }
             if(!this.inViewOfPlayer()) {
                 this.hitPoints = this.maxHitPoints;
                 this._healthBar.setPoints(this.hitPoints);
