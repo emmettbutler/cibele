@@ -13,6 +13,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.GameObject;
 
     import org.flixel.*;
 
@@ -36,7 +37,9 @@ package com.starmaid.Cibele.states {
         public var estTileDimensions:DHPoint;
         public var playerStartPos:DHPoint;
         public var colliderScaleFactor:Number;
+        public var levelDimensions:DHPoint;
         public var enemyDirMultiplier:Number = 1;
+        private var boundedObjects:Array;
 
         protected var conversationPieces:Array;
         protected var conversationCounter:Number = 0;
@@ -61,11 +64,19 @@ package com.starmaid.Cibele.states {
             );
             this.bgLoader.setPlayerReference(player);
 
+            this.levelDimensions = new DHPoint(
+                bgLoader.cols * bgLoader.estTileWidth,
+                bgLoader.rows * bgLoader.estTileHeight);
             ScreenManager.getInstance().setupCamera(player.cameraPos);
-            FlxG.camera.setBounds(0, 0, bgLoader.cols * bgLoader.estTileWidth,
-                                  bgLoader.rows * bgLoader.estTileHeight);
+            FlxG.camera.setBounds(0, 0, levelDimensions.x, levelDimensions.y);
 
             super.postCreate();
+
+            this.boundedObjects = new Array();
+            this.boundedObjects.push(this.player);
+            for (var i:int = 0; i < this.enemies.length(); i++) {
+                this.boundedObjects.push(this.enemies.get_(i));
+            }
 
             this.bgLoader.setEnemiesReference(this.enemies.enemies);
         }
@@ -79,6 +90,7 @@ package com.starmaid.Cibele.states {
             super.update();
             this.bgLoader.update();
             this.resolveAttacks();
+            this.imposeLevelBoundaries();
 
             this.bitDialogue.update();
             this.bitDialogue.lock = this.bitDialogueLock;
@@ -87,6 +99,27 @@ package com.starmaid.Cibele.states {
                 !this.boss.hasAppeared() && FlxG.state.ID == LevelMapState.LEVEL_ID)
             {
                 this.boss.appear();
+            }
+        }
+
+        public function imposeLevelBoundaries():void {
+            var cur:GameObject;
+            for (var i:int = 0; i < this.boundedObjects.length; i++) {
+                cur = this.boundedObjects[i];
+                if (cur.pos.x < 0) {
+                    cur.dir.x = Math.max(0, cur.dir.x);
+                    cur.setPos(new DHPoint(0, cur.pos.y));
+                } else if (cur.pos.x + cur.width > this.levelDimensions.x) {
+                    cur.dir.x = Math.min(0, cur.dir.x);
+                    cur.setPos(new DHPoint(cur.pos.x - 1, cur.pos.y));
+                }
+                if (cur.pos.y < 0) {
+                    cur.dir.y = Math.max(0, cur.dir.y);
+                    cur.setPos(new DHPoint(cur.pos.x, 0));
+                } else if (cur.pos.y + cur.height > this.levelDimensions.y) {
+                    cur.dir.y = Math.min(0, cur.dir.y);
+                    cur.setPos(new DHPoint(cur.pos.x, cur.pos.y - 1));
+                }
             }
         }
 
