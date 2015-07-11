@@ -75,6 +75,24 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/hi_email/mini_class_email.png")] private static var ImgHiMiniClassEmail:Class;
         [Embed(source="/../assets/images/ui/popups/hi_email/mini_class_email_link.png")] private static var ImgHiMiniClassEmailLink:Class;
 
+        /*
+            Directory tree definition
+
+            folder_img: The container image ("finder window")
+            folder_dim: the dimensions of folder_img in pixels
+            hitbox_pos: For toplevel folders, the position of the hitbox
+                to draw on the screen. The x coordinate is an absolute number,
+                and the y coordinate is a value to multiply _screen.screenHeight
+                by after load
+            name: human-readable name for debugging
+            contents: if this node is a folder, an array of nodes representing
+                its contents (folders and popups). If this node is a popup,
+                the image to show when it is opened
+            icon: the folder or popup icon to display for this node
+            icon_dim: the dimensions in pixels of the icon
+            icon_pos: the position of the icon relative to the folder window sprite
+            dim: the dimensions of the full node image
+        */
         public static function build():Dictionary {
             var struc:Dictionary = new Dictionary();
             struc[PopUpManager.ICHI_DL_2] = { "contents": [
@@ -496,6 +514,15 @@ package com.starmaid.Cibele.management {
                     "contents": ImgHiThermalPoem
                 },
                 {
+                    "name": "hi link to email 2 in 3",
+                    "icon": ImgHiMiniClassEmailLink,
+                    "icon_dim": new DHPoint(323, 22),
+                    "icon_pos": new DHPoint(290, 125),
+                    "dim": new DHPoint(284, 356),
+                    "struc": PopUpManager.HI_EMAIL_3,
+                    "contents": ImgHiMiniClassEmail
+                },
+                {
                     "name": "hi link to email 1 in 3",
                     "icon": ImgHiMiniFlightLink,
                     "icon_dim": new DHPoint(323, 22),
@@ -513,15 +540,6 @@ package com.starmaid.Cibele.management {
                             "struc": PopUpManager.HI_EMAIL_3,
                             "contents": ImgHiFlightExpired
                         }]
-                },
-                {
-                    "name": "hi link to email 2 in 3",
-                    "icon": ImgHiMiniClassEmailLink,
-                    "icon_dim": new DHPoint(323, 22),
-                    "icon_pos": new DHPoint(290, 125),
-                    "dim": new DHPoint(284, 356),
-                    "struc": PopUpManager.HI_EMAIL_3,
-                    "contents": ImgHiMiniClassEmail
                 }
             ]};
             return struc;
