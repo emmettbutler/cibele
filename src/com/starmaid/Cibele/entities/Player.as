@@ -106,6 +106,7 @@ package com.starmaid.Cibele.entities {
             this.mapHitbox = new GameObject(this.pos);
             this.mapHitbox.makeGraphic(this.hitboxDim.x, this.hitboxDim.y,
                                        0xff000000);
+            this.mapHitbox.visible = false;
 
             this.setupFootsteps();
             this.setupParticles();
