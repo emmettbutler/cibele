@@ -18,6 +18,7 @@ package com.starmaid.Cibele.base {
         public static const VOCAL:Number = 0;
         public static const BGM:Number = 1;
         public static const SFX:Number = 2;
+        public static const BIT_DIALOGUE:Number = 3;
         public var _type:Number = VOCAL;
         public var fadeIn:Boolean = false;
         public var fadeOut:Boolean = false;
