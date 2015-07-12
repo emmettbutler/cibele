@@ -22,6 +22,7 @@ package com.starmaid.Cibele.states {
         public var accept_call:Boolean = false;
 
         public var light:FlxExtSprite;
+        public var startTime:Number = -1;
         public var wall_left:GameObject;
         public var wall_right:GameObject;
         public var collisionData:Array;
@@ -156,9 +157,25 @@ package com.starmaid.Cibele.states {
                     );
                 }
             }
+
+            if (FlxG.mouse.justPressed()) {
+                this.startConvo();
+            }
         }
 
         public function nextState():void { }
+
+        public function startConvo():void {
+            if (this._state == STATE_PRE && !this.accept_call &&
+                !this.loadingScreenVisible())
+            {
+                this.startTime = new Date().valueOf();
+                accept_call = true;
+                this.startConvoCallback();
+            }
+        }
+
+        public function startConvoCallback():void { }
 
         public function getCollisionData(wall:GameObject):Array {
             return FlxCollision.pixelPerfectCheck(player.mapHitbox, wall, 255, FlxG.camera, 30, 30, ScreenManager.getInstance().DEBUG);
@@ -177,7 +194,10 @@ package com.starmaid.Cibele.states {
 
         override public function clickCallback(screenPos:DHPoint,
                                                worldPos:DHPoint):void {
-            super.clickCallback(screenPos, worldPos);
+            if ((new Date().valueOf() - this.startTime) > 1 * GameSound.MSEC_PER_SEC)
+            {
+                super.clickCallback(screenPos, worldPos);
+            }
         }
     }
 }
