@@ -19,7 +19,7 @@ package com.starmaid.Cibele.entities {
         public var showing:Boolean = false;
         public var endCallback:Function;
 
-        public function LoadingScreen(len:Number=3) {
+        public function LoadingScreen(len:Number=3, play_dialogue:Boolean=true) {
             var _screen:ScreenManager = ScreenManager.getInstance();
 
             this.bg = new GameObject(new DHPoint(0,0));
@@ -41,7 +41,7 @@ package com.starmaid.Cibele.entities {
             this.loading_text.visible = true;
 
             GlobalTimer.getInstance().setMark("deactivate loading screen", len*GameSound.MSEC_PER_SEC, this.deactivate, true);
-            if(len > 3) {
+            if(play_dialogue && len > 3) {
                 GlobalTimer.getInstance().setMark("say slow", 4*GameSound.MSEC_PER_SEC, this.slowDialogue, true);
             }
 

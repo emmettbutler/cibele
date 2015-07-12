@@ -66,6 +66,7 @@ package com.starmaid.Cibele.states {
             if (this._state == STATE_RETURN) {
                 bottomY = _screen.screenHeight * 2;
                 startPos.y = _screen.screenHeight * .8;
+                this.play_loading_dialogue = false;
             }
             this.startPos = startPos;
             super.create();
