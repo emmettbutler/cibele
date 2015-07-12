@@ -5,6 +5,7 @@ package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameState;
+    import com.starmaid.Cibele.base.GameSound;
 
     import org.flixel.*;
     import org.flixel.plugin.photonstorm.FlxCollision;
@@ -28,9 +29,8 @@ package com.starmaid.Cibele.management {
         public var playerRef:Player;
         public var enemiesRef:Array, curEnemy:SmallEnemy;
         public var estTileWidth:Number, estTileHeight:Number;
-        public var adjacentCoords:Array;
-        public var colliderScaleFactor:Number;
-        public var loadPositionThreshold:DHPoint;
+        public var coordsToLoad:Array;
+        public var colliderScaleFactor:Number, lastTileLoadUpdate:Number = -1;
         public var collisionData:Array;
         public var shouldLoadMap:Boolean, shouldCollidePlayer:Boolean = true;
         public var allTilesHaveLoaded:Boolean = false;
@@ -55,12 +55,7 @@ package com.starmaid.Cibele.management {
                 this.estTileWidth = estTileDimensions.x;
                 this.estTileHeight = estTileDimensions.y;
             }
-            this.loadPositionThreshold = new DHPoint(
-                Math.min((ScreenManager.getInstance().screenWidth) /
-                    this.estTileWidth, .5),
-                Math.min((ScreenManager.getInstance().screenHeight) /
-                    this.estTileHeight, .7));
-            this.adjacentCoords = new Array();
+            this.coordsToLoad = new Array();
             this.receivingMachines = new Array();
             this.colliderReceivingMachines = new Array();
 
@@ -153,6 +148,14 @@ package com.starmaid.Cibele.management {
                 return null;
             }
             return tile;
+        }
+
+        public function tileIsOnscreen(tile:FlxExtSprite):Boolean {
+            var screenPos:DHPoint = new DHPoint(0, 0);
+            tile.getScreenXY(screenPos);
+            return (screenPos.x < ScreenManager.getInstance().screenWidth + tile.width &&
+                screenPos.x > 0 - tile.width && screenPos.y > 0 - tile.height &&
+                screenPos.y < ScreenManager.getInstance().screenHeight + tile.height);
         }
 
         public function loadTile(row:Number, col:Number, arr:Array=null,
@@ -290,45 +293,33 @@ package com.starmaid.Cibele.management {
 
         public function update():void {
             var playerRow:int, playerCol:int, playerRelativePos:DHPoint;
-            playerRelativePos = new DHPoint(this.playerRef.pos.x / this.estTileWidth,
-                                            this.playerRef.pos.y / this.estTileHeight);
+            playerRelativePos = new DHPoint(
+                this.playerRef.pos.x / this.estTileWidth,
+                this.playerRef.pos.y / this.estTileHeight);
             playerRow = Math.floor(playerRelativePos.y);
             playerCol = Math.floor(playerRelativePos.x);
-            playerRelativePos.x -= playerCol;
-            playerRelativePos.y -= playerRow;
 
-            var playerSpriteTileWidthPct:Number = this.playerRef.width / this.estTileWidth;
-
-            adjacentCoords.push([playerRow,   playerCol]);
-            if (playerRelativePos.x > 1 - loadPositionThreshold.x - playerSpriteTileWidthPct) {
-                adjacentCoords.push([playerRow,   playerCol+1]);
-            }
-            if (playerRelativePos.x <= loadPositionThreshold.x) {
-                adjacentCoords.push([playerRow,   playerCol-1]);
-            }
-            if (playerRelativePos.y > 1 - loadPositionThreshold.y) {
-                adjacentCoords.push([playerRow+1, playerCol]);
-                if (playerRelativePos.x > 1 - loadPositionThreshold.x - playerSpriteTileWidthPct) {
-                    adjacentCoords.push([playerRow+1, playerCol+1]);
-                }
-                if (playerRelativePos.x <= loadPositionThreshold.x) {
-                    adjacentCoords.push([playerRow+1, playerCol-1]);
-                }
-            }
-            if (playerRelativePos.y <= loadPositionThreshold.y) {
-                adjacentCoords.push([playerRow-1, playerCol]);
-                if (playerRelativePos.x > 1 - loadPositionThreshold.x - playerSpriteTileWidthPct) {
-                    adjacentCoords.push([playerRow-1, playerCol+1]);
-                }
-                if (playerRelativePos.x <= loadPositionThreshold.x) {
-                    adjacentCoords.push([playerRow-1, playerCol-1]);
+            var row:int, col:int, nextTileIn:FlxExtSprite;
+            if (new Date().valueOf() - this.lastTileLoadUpdate > 1 * GameSound.MSEC_PER_SEC) {
+                this.lastTileLoadUpdate = new Date().valueOf();
+                // for each tile, check whether the one next to it that's closer
+                // to the player is onscreen. if so, load it.
+                for (row = 0; row < rows; row++) {
+                    for (col = 0; col < cols; col++) {
+                        nextTileIn = this.getTileByIndex(
+                            playerRow == row ? playerRow : (row + (playerRow > row ? 1 : -1)),
+                            playerCol == col ? playerCol : (col + (playerCol > col ? 1 : -1)));
+                        if (this.tileIsOnscreen(nextTileIn)) {
+                            coordsToLoad.push([row, col]);
+                        }
+                    }
                 }
             }
 
-            var row:int, col:int, contact:Boolean;
-            for (var i:int = 0; i < adjacentCoords.length; i++) {
-                row = adjacentCoords[i][0];
-                col = adjacentCoords[i][1];
+            var contact:Boolean;
+            for (var i:int = 0; i < coordsToLoad.length; i++) {
+                row = coordsToLoad[i][0];
+                col = coordsToLoad[i][1];
                 // load background tiles
                 if (!this.tileHasLoaded(row, col)) {
                     if (!ScreenManager.getInstance().DEBUG && this.shouldLoadMap) {
@@ -365,8 +356,7 @@ package com.starmaid.Cibele.management {
             }
             this.playerRef.colliding = contact;
 
-            adjacentCoords.length = 0;
-
+            coordsToLoad.length = 0;
 
             if(this.allTilesLoaded()) {
                 this.allTilesHaveLoaded = true;
