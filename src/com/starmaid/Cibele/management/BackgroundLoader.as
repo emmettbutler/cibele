@@ -315,6 +315,7 @@ package com.starmaid.Cibele.management {
                     }
                 }
             }
+            coordsToLoad.push([playerRow, playerCol]);
 
             var contact:Boolean;
             for (var i:int = 0; i < coordsToLoad.length; i++) {
