@@ -42,8 +42,8 @@ package com.starmaid.Cibele.entities {
             this.attack_sprite.setPos(this.pos);
             this.attack_sprite.basePos.y = this.y + this.basePosOffset.y;
 
-            this.mapHitbox.x = this.pos.x + (this.width / 2 - this.mapHitbox.width / 2);
-            this.mapHitbox.y = this.pos.y + (this.height / 2 - this.mapHitbox.height / 2);
+            this.mapHitbox.x = this.footPos.x - this.mapHitbox.width / 2;
+            this.mapHitbox.y = this.footPos.y - this.mapHitbox.height;
         }
 
         override public function update():void {
