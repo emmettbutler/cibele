@@ -171,10 +171,6 @@ package com.starmaid.Cibele.states {
             PopUpManager.getInstance().sendPopup(PopUpManager.CIB_SELFIE_FOLDER);
         }
 
-        public function startBoss():void {
-            GlobalTimer.getInstance().setMark(BOSS_MARK, 1*GameSound.MSEC_PER_SEC);
-        }
-
         public function playEndDialogue():void {
             SoundManager.getInstance().playSound(
                    IchiBossKill, 3*GameSound.MSEC_PER_SEC, this.playEndFilm,

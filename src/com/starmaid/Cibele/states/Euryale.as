@@ -199,8 +199,8 @@ package com.starmaid.Cibele.states {
             PopUpManager.getInstance().sendPopup(PopUpManager.EU_DREDGE);
         }
 
-        public function startBoss():void {
-            GlobalTimer.getInstance().setMark(BOSS_MARK, 1*GameSound.MSEC_PER_SEC);
+        override public function startBoss():void {
+            super.startBoss();
             this.bitDialogueLock = true;
         }
 

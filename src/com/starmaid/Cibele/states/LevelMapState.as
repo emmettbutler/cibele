@@ -100,6 +100,16 @@ package com.starmaid.Cibele.states {
             {
                 this.boss.appear();
             }
+
+            if (ScreenManager.getInstance().RELEASE == false) {
+                if (FlxG.keys.justPressed("B") && !this.boss.hasAppeared()) {
+                    this.startBoss();
+                }
+            }
+        }
+
+        public function startBoss():void {
+            GlobalTimer.getInstance().setMark(BOSS_MARK, 1*GameSound.MSEC_PER_SEC);
         }
 
         public function imposeLevelBoundaries():void {

@@ -219,10 +219,6 @@ package com.starmaid.Cibele.states {
             PopUpManager.getInstance().sendPopup(PopUpManager.HI_EMAIL_3);
         }
 
-        public function startBoss():void {
-            GlobalTimer.getInstance().setMark(BOSS_MARK, 1*GameSound.MSEC_PER_SEC);
-        }
-
         override public function update():void{
             super.update();
         }
