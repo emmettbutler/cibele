@@ -249,6 +249,28 @@ package com.starmaid.Cibele.entities {
             this.visible = true;
         }
 
+        private function loopCallSound():void {
+            if (!(FlxG.state is LevelMapState)) {
+                return;
+            }
+            if (this._state == STATE_TRACKING) {
+                this.playCallSound();
+            }
+            GlobalTimer.getInstance().setMark(
+                "enemy_call_" + this.slug,
+                (4 + (Math.random() * 5)) * GameSound.MSEC_PER_SEC,
+                function():void {
+                    if (!(FlxG.state is LevelMapState)) {
+                        return;
+                    }
+                    loopCallSound();
+                },
+                true
+            );
+        }
+
+        protected function playCallSound():void { }
+
         override public function update():void{
             super.update();
 
