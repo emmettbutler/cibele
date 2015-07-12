@@ -63,6 +63,7 @@ package com.starmaid.Cibele.entities {
             this.nameText.text = "Cibele";
             this.particleType = _particleType;
             this.slug = _slug;
+            this.facing = UP;
 
             this.zSorted = true;
 
