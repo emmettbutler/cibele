@@ -62,7 +62,8 @@ package com.starmaid.Cibele.states {
             {
                 accept_call = true;
                 SoundManager.getInstance().playSound(
-                    HiisiHallway.Convo1, GameState.SHORT_DIALOGUE ? 1 : 20*GameSound.MSEC_PER_SEC,
+                    HiisiHallway.Convo1,
+                    GameState.SHORT_DIALOGUE ? 1 : 20*GameSound.MSEC_PER_SEC,
                     HiisiHallway.firstConvoPartTwo, false, 1,
                     GameSound.VOCAL,
                     Hiisi.CONVO_1_HALL

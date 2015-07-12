@@ -166,25 +166,35 @@ package com.starmaid.Cibele.states {
 
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
                 SoundManager.getInstance().playSound(
-                        Convo1, GameState.SHORT_DIALOGUE ? 1 : 20*GameSound.MSEC_PER_SEC, delayFirstConvoPartTwo, false, 1, GameSound.VOCAL,
-                        CONVO_1_HALL
-                    );
+                    Convo1,
+                    GameState.SHORT_DIALOGUE ? 1 : 20*GameSound.MSEC_PER_SEC,
+                    delayFirstConvoPartTwo, false, 1, GameSound.VOCAL,
+                    CONVO_1_HALL
+                );
             }
         }
 
         public function delayFirstConvoPartTwo():void {
-            GlobalTimer.getInstance().setMark("delay convo 1 pt 2", GameState.SHORT_DIALOGUE ? 1 : 5*GameSound.MSEC_PER_SEC, this.firstConvoPartTwo);
+            GlobalTimer.getInstance().setMark(
+                "delay convo 1 pt 2",
+                GameState.SHORT_DIALOGUE ? 1 : 5*GameSound.MSEC_PER_SEC,
+                this.firstConvoPartTwo);
         }
 
         public function firstConvoPartTwo():void {
             SoundManager.getInstance().playSound(
-                    Convo2, GameState.SHORT_DIALOGUE ? 1 : 25*GameSound.MSEC_PER_SEC, this.delayFlightEmail, false, 1, GameSound.VOCAL,
-                    CONVO_2_HALL
-                );
+                Convo2,
+                GameState.SHORT_DIALOGUE ? 1 : 25*GameSound.MSEC_PER_SEC,
+                this.delayFlightEmail, false, 1, GameSound.VOCAL,
+                CONVO_2_HALL
+            );
         }
 
         public function delayFlightEmail():void {
-            GlobalTimer.getInstance().setMark(SHOW_FIRST_POPUP, GameState.SHORT_DIALOGUE ? 1 : 5*GameSound.MSEC_PER_SEC, this.showFlightEmail);
+            GlobalTimer.getInstance().setMark(
+                SHOW_FIRST_POPUP,
+                GameState.SHORT_DIALOGUE ? 1 : 5*GameSound.MSEC_PER_SEC,
+                this.showFlightEmail);
         }
 
         public function showFlightEmail():void {
