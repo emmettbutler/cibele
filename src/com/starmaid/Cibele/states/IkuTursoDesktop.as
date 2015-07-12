@@ -44,6 +44,24 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/mom.png")] private var ImgMom:Class;
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/mom_icon.png")] private var ImgMomIcon:Class;
 
+        //old website stuff
+        [Embed(source="/../assets/images/ui/popups/it_files/blog1_icon.png")] private var ImgBlog1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/blog1.png")] private var ImgBlog1:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/blog5_icon.png")] private var ImgBlog2Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/blog5.png")] private var ImgBlog2:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/blog4_icon.png")] private var ImgBlog3Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/blog4.png")] private var ImgBlog3:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/blog2_icon.png")] private var ImgBlog4Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/blog2.png")] private var ImgBlog4:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/blog3_icon.png")] private var ImgBlog5Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/blog3.png")] private var ImgBlog5:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/profile_icon.png")] private var ImgProfileIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/profile.png")] private var ImgProfile:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/weblayout_icon.png")] private var ImgLayoutIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/weblayout.png")] private var ImgLayout:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/oldsitefolder_icon.png")] private var ImgOldSiteFolder:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/posts_icon.png")] private var ImgPostsIcon:Class;
+
         public function IkuTursoDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_IT;
         }
@@ -187,7 +205,93 @@ package com.starmaid.Cibele.states {
                             "contents": ImgUntitledFolderPartyPoem1
                         },
                     ]
+                },
+                {
+                    "folder_img": ImgPicturesFolder,
+                    "folder_dim": new DHPoint(631, 356),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .7, _screen.screenHeight * .33),
+                    "hitbox_dim": new DHPoint(150, 100),
+                    "name": "old site folder stuff",
+                    "contents": [
+                        {
+                            "name": "old site icon",
+                            "icon": ImgOldSiteFolder,
+                            "icon_dim": new DHPoint(90, 85),
+                            "icon_pos": new DHPoint(144, 32),
+                            "folder_img": ImgPicturesFolder,
+                            "folder_dim": new DHPoint(631, 356),
+                            "contents": [
+                                {
+                                    "name": "old web layout",
+                                    "icon": ImgLayoutIcon,
+                                    "icon_dim": new DHPoint(76, 90),
+                                    "icon_pos": new DHPoint(27, 36),
+                                    "dim": new DHPoint(700, 400),
+                                    "contents": ImgLayout
+                                },
+                                {
+                                    "name": "old web profile",
+                                    "icon": ImgProfileIcon,
+                                    "icon_dim": new DHPoint(106, 89),
+                                    "icon_pos": new DHPoint(129, 36),
+                                    "dim": new DHPoint(694, 357),
+                                    "contents": ImgProfile
+                                },
+                                {
+                                    "name": "old posts",
+                                    "icon": ImgPostsIcon,
+                                    "icon_dim": new DHPoint(88, 91),
+                                    "icon_pos": new DHPoint(250, 36),
+                                    "folder_img": ImgPicturesFolder,
+                                    "folder_dim": new DHPoint(631, 356),
+                                    "contents": [
+                                        {
+                                            "name": "old post 1",
+                                            "icon": ImgBlog1Icon,
+                                            "icon_dim": new DHPoint(109, 95),
+                                            "icon_pos": new DHPoint(27, 36),
+                                            "dim": new DHPoint(631, 356),
+                                            "contents": ImgBlog1
+                                        },
+                                        {
+                                            "name": "old post 2",
+                                            "icon": ImgBlog2Icon,
+                                            "icon_dim": new DHPoint(108, 87),
+                                            "icon_pos": new DHPoint(147, 42),
+                                            "dim": new DHPoint(694, 431),
+                                            "contents": ImgBlog2
+                                        },
+                                        {
+                                            "name": "old post 3",
+                                            "icon": ImgBlog3Icon,
+                                            "icon_dim": new DHPoint(107, 88),
+                                            "icon_pos": new DHPoint(267, 42),
+                                            "dim": new DHPoint(694, 392),
+                                            "contents": ImgBlog3
+                                        },
+                                        {
+                                            "name": "old post 4",
+                                            "icon": ImgBlog4Icon,
+                                            "icon_dim": new DHPoint(110, 90),
+                                            "icon_pos": new DHPoint(27, 200),
+                                            "dim": new DHPoint(694, 392),
+                                            "contents": ImgBlog4
+                                        },
+                                        {
+                                            "name": "old post 5",
+                                            "icon": ImgBlog5Icon,
+                                            "icon_dim": new DHPoint(111, 93),
+                                            "icon_pos": new DHPoint(147, 195),
+                                            "dim": new DHPoint(631, 356),
+                                            "contents": ImgBlog5
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
+
             ]};
 
             this.folder_builder = new FolderBuilder();
