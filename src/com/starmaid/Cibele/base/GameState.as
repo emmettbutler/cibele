@@ -211,10 +211,12 @@ package com.starmaid.Cibele.base {
                 if (!GlobalTimer.getInstance().isPaused()) {
                     this.playClick();
                 }
-                this.clickCallback(
-                    new DHPoint(FlxG.mouse.screenX, FlxG.mouse.screenY),
-                    new DHPoint(FlxG.mouse.x, FlxG.mouse.y)
-                );
+                if (!this.loadingScreenVisible()) {
+                    this.clickCallback(
+                        new DHPoint(FlxG.mouse.screenX, FlxG.mouse.screenY),
+                        new DHPoint(FlxG.mouse.x, FlxG.mouse.y)
+                    );
+                }
             }
         }
 
