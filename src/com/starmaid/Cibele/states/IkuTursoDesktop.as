@@ -61,6 +61,8 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/it_files/weblayout.png")] private var ImgLayout:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/oldsitefolder_icon.png")] private var ImgOldSiteFolder:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/posts_icon.png")] private var ImgPostsIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/cur_blog_bio.png")] private var ImgHiatus:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/cur_blog_bio_icon.png")] private var ImgHiatusIcon:Class;
 
         public function IkuTursoDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_IT;
@@ -213,6 +215,14 @@ package com.starmaid.Cibele.states {
                     "hitbox_dim": new DHPoint(150, 100),
                     "name": "old site folder stuff",
                     "contents": [
+                        {
+                            "name": "hiatus",
+                            "icon": ImgHiatusIcon,
+                            "icon_dim": new DHPoint(108, 87),
+                            "icon_pos": new DHPoint(30, 32),
+                            "dim": new DHPoint(631, 356),
+                            "contents": ImgHiatus
+                        },
                         {
                             "name": "old site icon",
                             "icon": ImgOldSiteFolder,
