@@ -262,11 +262,14 @@ package com.starmaid.Cibele.states {
                                 FlxG.switchState(new BlankScreen(
                                     4*GameSound.MSEC_PER_SEC,
                                     function():void {
+                                        ScreenManager.getInstance().resetGame();
+                                        /*
                                         FlxG.switchState(new TextScreen(5*GameSound.MSEC_PER_SEC,
                                         function():void {
                                             FlxG.switchState(new EuryaleDesktop());
                                         }, "April 13th, 2009"
                                         ));
+                                        */
                                     }
                                 ));
                             }, SoundManager.getInstance().getSoundByName(BGM)
