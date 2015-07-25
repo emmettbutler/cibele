@@ -44,7 +44,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showIchiDownloadWindow, "min_team_power": 10
+                    "delay": 0, "endfn": this.showIchiDownloadWindow, "min_team_power": 5
                 },
                 {
                     "audio": Convo2, "len": 80*GameSound.MSEC_PER_SEC,
@@ -52,7 +52,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showSelfiesWindow, "min_team_power": 15
+                    "delay": 0, "endfn": this.showSelfiesWindow, "min_team_power": 10
                 },
                 {
                     "audio": Convo3, "len": 27*GameSound.MSEC_PER_SEC,
@@ -76,11 +76,11 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 8*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showCibSelfieFolder, "min_team_power": 35
+                    "delay": 0, "endfn": this.showCibSelfieFolder, "min_team_power": 15
                 },
                 {
                     "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC, "delay": 0,
-                    "endfn": this.startBoss, "ends_with_popup": false, "min_team_power": 40
+                    "endfn": this.startBoss, "ends_with_popup": false, "min_team_power": 20
                 },
                 {
                     "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
@@ -101,7 +101,7 @@ package com.starmaid.Cibele.states {
             this.playerStartPos = new DHPoint(4600, 7565);
             this.colliderScaleFactor = 8.65;
             this.enemyDirMultiplier = 1;
-            this.maxTeamPower = 40;
+            this.maxTeamPower = 20;
 
             super.create();
             function _bgmCallback():void {

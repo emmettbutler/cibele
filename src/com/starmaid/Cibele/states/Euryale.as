@@ -64,7 +64,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showSelfiePostEmail, "min_team_power": 10
+                    "delay": 0, "endfn": this.showSelfiePostEmail, "min_team_power": 5
                 },
                 {
                     "audio": Convo3, "len": 28*GameSound.MSEC_PER_SEC,
@@ -72,7 +72,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 8*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "min_team_power": 13
+                    "delay": 0, "min_team_power": 10
                 },
                 {
                     "audio": Convo3_2, "len": 44*GameSound.MSEC_PER_SEC,
@@ -80,7 +80,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showFriendEmail2, "min_team_power": 20
+                    "delay": 0, "endfn": this.showFriendEmail2, "min_team_power": 15
                 },
                 {
                     "audio": Convo4, "len": 11*GameSound.MSEC_PER_SEC,
@@ -88,7 +88,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "min_team_power": 25
+                    "delay": 0, "min_team_power": 20
                 },
                 {
                     "audio": Convo4_2, "len": 74*GameSound.MSEC_PER_SEC,
@@ -100,7 +100,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": showDredgeSelfie, "min_team_power": 40
+                    "delay": 0, "endfn": showDredgeSelfie, "min_team_power": 25
                 },
                 {
                     "audio": Convo5, "len": 54*GameSound.MSEC_PER_SEC,
@@ -108,7 +108,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "min_team_power": 45
+                    "delay": 0, "min_team_power": 30
                 },
                 {
                     "audio": Convo5_1, "len": 42*GameSound.MSEC_PER_SEC,
@@ -140,7 +140,7 @@ package com.starmaid.Cibele.states {
             this.playerStartPos = new DHPoint(3427, 7657);
             this.colliderScaleFactor = 22.66;
             this.enemyDirMultiplier = 2;
-            this.maxTeamPower = 45;
+            this.maxTeamPower = 30;
         }
 
         override public function create():void {
