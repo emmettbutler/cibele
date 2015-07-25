@@ -441,6 +441,7 @@ package com.starmaid.Cibele.entities {
                 this.setFacing(true);
             } else if (this._state == STATE_IDLE) {
                 this.setIdleAnim();
+                this.dir = ZERO_POINT;
             }
 
             if(this._state != STATE_IN_ATTACK) {
@@ -533,6 +534,7 @@ package com.starmaid.Cibele.entities {
                     }
                 }
                 this._state = STATE_IDLE;
+                this.dir = ZERO_POINT;
             }
         }
 
