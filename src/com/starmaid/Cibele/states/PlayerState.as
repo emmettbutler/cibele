@@ -52,8 +52,10 @@ package com.starmaid.Cibele.states {
             }
         }
 
-        override public function fadeOut(fn:Function, postFadeWait:Number=1):void {
-            super.fadeOut(fn, postFadeWait);
+        override public function fadeOut(fn:Function, postFadeWait:Number=1,
+                                         fadeSoundName:String=null):void
+        {
+            super.fadeOut(fn, postFadeWait, fadeSoundName);
             this.player.dir = new DHPoint(0, 0);
             this.player.active = false;
         }

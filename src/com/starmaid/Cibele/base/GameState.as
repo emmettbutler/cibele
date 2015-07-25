@@ -37,6 +37,7 @@ package com.starmaid.Cibele.base {
         public var play_loading_dialogue:Boolean = true;
         public var fpsCounter:FPSCounter;
         private var slug:String;
+        private var fadeSoundName:String;
 
         public var ui_color_flag:Number;
         public var fading:Boolean;
@@ -157,11 +158,14 @@ package com.starmaid.Cibele.base {
 
         public function loadingScreenEndCallback():void { }
 
-        public function fadeOut(fn:Function, postFadeWait:Number=1):void {
+        public function fadeOut(fn:Function, postFadeWait:Number=1,
+                                soundName:String=null):void
+        {
             if (this.fading) {
                 return;
             }
             this.fading = true;
+            this.fadeSoundName = soundName;
             this.postFadeWait = postFadeWait;
             this.postFadeFn = fn;
         }
@@ -293,6 +297,10 @@ package com.starmaid.Cibele.base {
                         this.postFadeWait,
                         this.postFadeFn
                     );
+                }
+                var snd:GameSound = SoundManager.getInstance().getSoundByName(this.fadeSoundName);
+                if(snd != null) {
+                    snd.fadeOutSound();
                 }
             }
 

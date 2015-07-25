@@ -31,6 +31,7 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/voiceover/voc_euryale_iwish.mp3")] private var Convo5_1:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_canicallyou.mp3")] private var Convo5_2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_cibyeah.mp3")] private var Convo5_3:Class;
+        [Embed(source="/../assets/audio/music/vid_phonecall.mp3")] private var VidBGMLoop:Class;
 
         public static var BGM:String = "euryale bgm loop";
         public static const CONVO_1_HALL:String = "trigigioji";
@@ -159,10 +160,12 @@ package com.starmaid.Cibele.states {
 
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
                 SoundManager.getInstance().playSound(
-                        Convo1, GameState.SHORT_DIALOGUE ? 1 : 12*GameSound.MSEC_PER_SEC, firstConvoPartTwo, false, 1, GameSound.VOCAL,
-                        CONVO_1_HALL
-                    );
-                }
+                    Convo1,
+                    GameState.SHORT_DIALOGUE ? 1 : 12*GameSound.MSEC_PER_SEC,
+                    firstConvoPartTwo, false, 1, GameSound.VOCAL,
+                    CONVO_1_HALL
+                );
+            }
         }
 
         override public function loadingScreenEndCallback():void {
@@ -236,19 +239,19 @@ package com.starmaid.Cibele.states {
         }
 
         public function playEndFilm():void {
-            //SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
-                    //false, 1, GameSound.BGM);
             this.fadeOut(
                 function():void {
                     FlxG.switchState(
                         new BlankScreen(4*GameSound.MSEC_PER_SEC,
                             function():void {
+                                SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
+                                    false, 1, GameSound.BGM);
                                 FlxG.switchState(new PlayVideoState(
                                     "/../assets/video/Phone Talk_v1.mp4",
                                     function():void {
                                         PopUpManager.GAME_ACTIVE = false;
                                         FlxG.switchState(new BlankScreen(
-                                            4*GameSound.MSEC_PER_SEC,
+                                            11*GameSound.MSEC_PER_SEC,
                                             function():void {
                                                 FlxG.switchState(new TextScreen(
                                                     5*GameSound.MSEC_PER_SEC,
@@ -264,7 +267,8 @@ package com.starmaid.Cibele.states {
                         )
                     );
                 },
-                1 * GameSound.MSEC_PER_SEC
+                1 * GameSound.MSEC_PER_SEC,
+                Euryale.BGM
             );
         }
     }
