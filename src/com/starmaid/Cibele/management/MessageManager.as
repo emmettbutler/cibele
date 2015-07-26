@@ -293,13 +293,12 @@ package com.starmaid.Cibele.management {
 
             imgClass = ImgInboxX;
             var imgHoverClass:Class = ImgInboxXHover;
-            imgSize = new DHPoint(13, 12);
+            imgSize = new DHPoint(32, 29);
             var imgPos:DHPoint = new DHPoint(this.img_inbox.x + (this.img_inbox.width - 20), this.img_inbox.y + 5);
             if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
             {
                 imgClass = ImgInboxXPink;
                 imgHoverClass = ImgInboxXPinkHover;
-                imgSize = new DHPoint(23, 18);
                 imgPos = new DHPoint(imgPos.x-5, imgPos.y-7);
             }
             this.exit_ui = new UIElement(imgPos.x, imgPos.y);
@@ -452,18 +451,10 @@ package com.starmaid.Cibele.management {
 
             this.img_inbox.setPos(inbox_pos);
 
-            if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
-            {
-                this.exit_ui.x = this.img_inbox.x + (this.img_inbox.width - 23);
-                this.exit_ui.y = this.img_inbox.y + 1;
-                this.exit_hover_ui.x = this.img_inbox.x + (this.img_inbox.width - 23);
-                this.exit_hover_ui.y = this.img_inbox.y + 1;
-            } else {
-                this.exit_ui.x = this.img_inbox.x + (this.img_inbox.width - 18);
-                this.exit_ui.y = this.img_inbox.y + 2;
-                this.exit_hover_ui.x = this.img_inbox.x + (this.img_inbox.width - 18);
-                this.exit_hover_ui.y = this.img_inbox.y + 2;
-            }
+            this.exit_ui.x = this.img_inbox.x + (this.img_inbox.width - 26);
+            this.exit_ui.y = this.img_inbox.y - 5;
+            this.exit_hover_ui.x = this.img_inbox.x + (this.img_inbox.width - 26);
+            this.exit_hover_ui.y = this.img_inbox.y - 5;
 
             this.exit_msg.x = this.img_inbox.x + 20;
             this.exit_msg.y = this.img_inbox.y + (this.img_inbox.height-40);

@@ -36,14 +36,14 @@ package com.starmaid.Cibele.management {
                 }
                 if (cur["contents"] is Array) {
                     cur["folder_sprite"].updatePos();
-                    cur["x_sprite"].setPos(new DHPoint(cur["folder_sprite"].x + cur["folder_sprite"].width - 23 - 2, cur["folder_sprite"].y + 2));
-                    cur["x_hover_sprite"].setPos(new DHPoint(cur["folder_sprite"].x + cur["folder_sprite"].width - 23 - 2, cur["folder_sprite"].y + 2));
+                    cur["x_sprite"].setPos(new DHPoint(cur["folder_sprite"].x + cur["folder_sprite"].width - 26, cur["folder_sprite"].y - 5));
+                    cur["x_hover_sprite"].setPos(new DHPoint(cur["folder_sprite"].x + cur["folder_sprite"].width - 26, cur["folder_sprite"].y - 5));
 
                     this.updateFolderPositions(cur);
                 } else {
                     cur["full_sprite"].updatePos();
-                    cur["x_sprite"].setPos(new DHPoint(cur['full_sprite'].x + cur["full_sprite"].width - 23 - 2, cur["full_sprite"].y + 2));
-                    cur["x_hover_sprite"].setPos(new DHPoint(cur['full_sprite'].x + cur["full_sprite"].width - 23 - 2, cur["full_sprite"].y + 2));
+                    cur["x_sprite"].setPos(new DHPoint(cur['full_sprite'].x + cur["full_sprite"].width - 26, cur["full_sprite"].y - 5));
+                    cur["x_hover_sprite"].setPos(new DHPoint(cur['full_sprite'].x + cur["full_sprite"].width - 26, cur["full_sprite"].y - 5));
                 }
             }
         }
@@ -92,14 +92,14 @@ package com.starmaid.Cibele.management {
                     spr.scrollFactor = new DHPoint(0,0);
                     FlxG.state.add(spr);
                     cur["folder_sprite"] = spr;
-                    curX = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 23 - 2, spr.y + 2));
-                    curX.loadGraphic(ImgInboxXPink, false, false, 23, 18);
+                    curX = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 26, spr.y - 5));
+                    curX.loadGraphic(ImgInboxXPink, false, false, 32, 29);
                     curX.visible = false;
                     curX.scrollFactor = new DHPoint(0,0);
                     FlxG.state.add(curX);
 
-                    curXHover = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 23 - 2, spr.y + 2));
-                    curXHover.loadGraphic(ImgInboxXPinkHover, false, false, 23, 18);
+                    curXHover = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 26, spr.y - 5));
+                    curXHover.loadGraphic(ImgInboxXPinkHover, false, false, 32, 29);
                     curXHover.visible = false;
                     curXHover.scrollFactor = new DHPoint(0,0);
                     FlxG.state.add(curXHover);
@@ -121,11 +121,11 @@ package com.starmaid.Cibele.management {
                     spr = UIElement.fromPoint(new DHPoint((_screen.screenWidth - cur["dim"].x) * Math.random(), (_screen.screenHeight - cur["dim"].y) * Math.random()));
                     spr.loadGraphic(cur["contents"], false, false, cur["dim"].x, cur["dim"].y);
                     spr.visible = false;
-                    curX = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 23 - 2, spr.y + 2));
-                    curX.loadGraphic(ImgInboxXPink, false, false, 23, 18);
+                    curX = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 26, spr.y - 5));
+                    curX.loadGraphic(ImgInboxXPink, false, false, 32, 29);
                     curX.visible = false;
-                    curXHover = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 23 - 2, spr.y + 2));
-                    curXHover.loadGraphic(ImgInboxXPinkHover, false, false, 23, 18);
+                    curXHover = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 26, spr.y - 5));
+                    curXHover.loadGraphic(ImgInboxXPinkHover, false, false, 32, 29);
                     curXHover.visible = false;
                     this.leafPopups.push({"sprite": spr, "x": curX, "x_hover": curXHover});
                     allClickableElements.push(spr);

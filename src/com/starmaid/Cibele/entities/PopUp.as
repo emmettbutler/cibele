@@ -37,7 +37,7 @@ package com.starmaid.Cibele.entities {
 
             var imgClass:Class = ImgXPink;
             var imgHoverClass:Class = ImgXPinkHover;
-            imgXSize = new DHPoint(23, 18);
+            imgXSize = new DHPoint(32, 29);
 
             this.x_sprite = XSprite.fromPoint(new DHPoint((this.x+w)-imgXSize.x, this.y+1));
             this.x_sprite.loadGraphic(imgClass, false, false, imgXSize.x, imgXSize.y);
@@ -70,8 +70,10 @@ package com.starmaid.Cibele.entities {
 
         override public function updatePos():void {
             super.updatePos();
-            this.x_sprite.x = (this.x + this.width) - imgXSize.x;
-            this.x_sprite.y = this.y + 1;
+            this.x_sprite.x = (this.x + this.width) - 26;
+            this.x_sprite.y = this.y - 5;
+            this.x_sprite_hover.x = (this.x + this.width) - 26;
+            this.x_sprite_hover.y = this.y - 5;
         }
 
         public function open():void {
