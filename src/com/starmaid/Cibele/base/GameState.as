@@ -25,7 +25,7 @@ package com.starmaid.Cibele.base {
                       enable_fade:Boolean = false;
         protected var game_cursor:GameCursor, baseLayer:GameObject;
         protected var pausable:Boolean = true;
-        private var fadeLayer:GameObject;
+        protected var fadeLayer:GameObject;
         private var pauseScreen:PauseScreen;
         private var sortedObjects:Array;
         private var postFadeFn:Function;

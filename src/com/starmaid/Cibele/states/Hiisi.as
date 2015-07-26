@@ -292,7 +292,7 @@ package com.starmaid.Cibele.states {
 
         public function playEnd():void {
             FlxG.switchState(new PlayVideoState("/../assets/video/4.5 Turn off_v1.mp4",
-                playBlankScreen4)
+                playBlankScreen4, null, true)
             );
         }
 
