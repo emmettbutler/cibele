@@ -56,12 +56,14 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function update():void {
-            if(this.visible && !this.hover_active) {
-                this.x_sprite.visible = true;
-                this.x_sprite_hover.visible = false;
-            } else if(this.visible && this.hover_active){
-                this.x_sprite.visible = false;
-                this.x_sprite_hover.visible = true;
+            if (this.visible) {
+                if (this.hover_active) {
+                    this.x_sprite.visible = false;
+                    this.x_sprite_hover.visible = true;
+                } else {
+                    this.x_sprite.visible = true;
+                    this.x_sprite_hover.visible = false;
+                }
             } else {
                 this.x_sprite_hover.visible = false;
                 this.x_sprite.visible = false;
