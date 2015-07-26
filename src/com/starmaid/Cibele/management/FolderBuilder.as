@@ -12,6 +12,7 @@ package com.starmaid.Cibele.management {
 
     public class FolderBuilder {
         [Embed(source="/../assets/images/ui/UI_pink_x.png")] private var ImgInboxXPink:Class;
+        [Embed(source="/../assets/images/ui/UI_pink_x_hover.png")] private var ImgInboxXPinkHover:Class;
 
         public var leafPopups:Array, allClickableElements:Array;
 
@@ -35,19 +36,21 @@ package com.starmaid.Cibele.management {
                 }
                 if (cur["contents"] is Array) {
                     cur["folder_sprite"].updatePos();
-                    cur["x_sprite"].setPos(new DHPoint(cur["folder_sprite"].x + cur["folder_sprite"].width - 23 - 2, cur["folder_sprite"].y + 2));
+                    cur["x_sprite"].setPos(new DHPoint(cur["folder_sprite"].x + cur["folder_sprite"].width - 26, cur["folder_sprite"].y - 5));
+                    cur["x_hover_sprite"].setPos(new DHPoint(cur["folder_sprite"].x + cur["folder_sprite"].width - 26, cur["folder_sprite"].y - 5));
 
                     this.updateFolderPositions(cur);
                 } else {
                     cur["full_sprite"].updatePos();
-                    cur["x_sprite"].setPos(new DHPoint(cur['full_sprite'].x + cur["full_sprite"].width - 23 - 2, cur["full_sprite"].y + 2));
+                    cur["x_sprite"].setPos(new DHPoint(cur['full_sprite'].x + cur["full_sprite"].width - 26, cur["full_sprite"].y - 5));
+                    cur["x_hover_sprite"].setPos(new DHPoint(cur['full_sprite'].x + cur["full_sprite"].width - 26, cur["full_sprite"].y - 5));
                 }
             }
         }
 
         public function populateFolders(root:Object, elements:Array=null, root_folder:UIElement=null):void {
             var _screen:ScreenManager = ScreenManager.getInstance();
-            var cur:Object, curX:UIElement, spr:GameObject, icon_pos:DHPoint;
+            var cur:Object, curX:UIElement, curXHover:UIElement, spr:GameObject, icon_pos:DHPoint;
             if (root_folder != null) {
                 root["folder_sprite"] = root_folder;
             }
@@ -89,35 +92,51 @@ package com.starmaid.Cibele.management {
                     spr.scrollFactor = new DHPoint(0,0);
                     FlxG.state.add(spr);
                     cur["folder_sprite"] = spr;
-                    curX = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 23 - 2, spr.y + 2));
-                    curX.loadGraphic(ImgInboxXPink, false, false, 23, 18);
+                    curX = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 26, spr.y - 5));
+                    curX.loadGraphic(ImgInboxXPink, false, false, 32, 29);
                     curX.visible = false;
                     curX.scrollFactor = new DHPoint(0,0);
                     FlxG.state.add(curX);
+
+                    curXHover = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 26, spr.y - 5));
+                    curXHover.loadGraphic(ImgInboxXPinkHover, false, false, 32, 29);
+                    curXHover.visible = false;
+                    curXHover.scrollFactor = new DHPoint(0,0);
+                    FlxG.state.add(curXHover);
+
                     curX.ID = 00000000000001;
                     allClickableElements.push(spr);
                     allClickableElements.push(curX);
+                    allClickableElements.push(curXHover);
                     if(elements != null) {
                         elements.push(spr);
                         elements.push(curX);
+                        elements.push(curXHover);
                     }
                     cur["x_sprite"] = curX;
+                    cur["x_hover_sprite"] = curXHover;
 
                     this.populateFolders(cur, elements);
                 } else {
                     spr = UIElement.fromPoint(new DHPoint((_screen.screenWidth - cur["dim"].x) * Math.random(), (_screen.screenHeight - cur["dim"].y) * Math.random()));
                     spr.loadGraphic(cur["contents"], false, false, cur["dim"].x, cur["dim"].y);
                     spr.visible = false;
-                    curX = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 23 - 2, spr.y + 2));
-                    curX.loadGraphic(ImgInboxXPink, false, false, 23, 18);
+                    curX = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 26, spr.y - 5));
+                    curX.loadGraphic(ImgInboxXPink, false, false, 32, 29);
                     curX.visible = false;
-                    this.leafPopups.push({"sprite": spr, "x": curX});
+                    curXHover = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 26, spr.y - 5));
+                    curXHover.loadGraphic(ImgInboxXPinkHover, false, false, 32, 29);
+                    curXHover.visible = false;
+                    this.leafPopups.push({"sprite": spr, "x": curX, "x_hover": curXHover});
                     allClickableElements.push(spr);
                     allClickableElements.push(curX);
+                    allClickableElements.push(curXHover);
                     spr.scrollFactor = new DHPoint(0,0);
                     curX.scrollFactor = new DHPoint(0,0);
+                    curXHover.scrollFactor = new DHPoint(0,0);
                     cur["full_sprite"] = spr;
                     cur["x_sprite"] = curX;
+                    cur["x_hover_sprite"] = curXHover;
                 }
             }
         }
@@ -155,10 +174,11 @@ package com.starmaid.Cibele.management {
                 if (cur["contents"] is Array) {
                     if (cur["folder_sprite"].visible) {
                         if(mouse_rect.overlaps(cur["x_sprite"]._getRect())) {
-                            if(cur["x_sprite"] == clicked) {
+                            if(cur["x_sprite"] == clicked || cur["x_hover_sprite"] == clicked) {
                                 propagateClick = false;
                                 cur["folder_sprite"].visible = false;
                                 cur["x_sprite"].visible = false;
+                                cur["x_hover_sprite"].visible = false;
                                 this.setIconVisibility(cur, false);
                             }
                         }
@@ -168,6 +188,7 @@ package com.starmaid.Cibele.management {
                                 if(cur[this.getHitboxKey(cur)] == clicked) {
                                     cur["folder_sprite"].visible = true;
                                     cur["x_sprite"].visible = true;
+                                    cur["x_hover_sprite"].visible = true;
                                     this.setIconVisibility(cur, true);
                                     propagateClick = false;
                                 }
@@ -178,15 +199,17 @@ package com.starmaid.Cibele.management {
                         this.resolveClick(cur, mouse_rect, clicked);
                     }
                 } else {
-                    if (cur["x_sprite"].visible && mouse_rect.overlaps(cur["x_sprite"]._getRect())) {
-                        if (cur["x_sprite"] == clicked) {
+                    if (cur["full_sprite"].visible && mouse_rect.overlaps(cur["x_sprite"]._getRect())) {
+                        if (cur["x_sprite"] == clicked || cur["x_hover_sprite"] == clicked) {
                             cur["full_sprite"].visible = false;
                             cur["x_sprite"].visible = false;
+                            cur["x_hover_sprite"].visible = false;
                         }
                     } else if (mouse_rect.overlaps(cur["icon_sprite"]._getRect()) && cur["icon_sprite"].visible) {
                         if (cur["icon_sprite"] == clicked) {
                             cur["full_sprite"].visible = true;
                             cur["x_sprite"].visible = true;
+                            cur["x_hover_sprite"].visible = true;
                         }
                     }
                 }
@@ -262,9 +285,40 @@ package com.starmaid.Cibele.management {
                 cur = this.leafPopups[k];
                 FlxG.state.add(cur["sprite"]);
                 FlxG.state.add(cur["x"]);
+                FlxG.state.add(cur["x_hover"]);
                 if(elements != null) {
                     elements.push(cur["sprite"]);
                     elements.push(cur["x"]);
+                    elements.push(cur["x_hover"]);
+                }
+            }
+        }
+
+        public function overlapXSprite(root:Object):void {
+            var cur:Object;
+            for (var i:int = 0; i < root["contents"].length; i++) {
+                cur = root["contents"][i];
+                if (cur["contents"] is Array) {
+                    if (cur["folder_sprite"].visible) {
+                        if((FlxG.state as GameState).cursorOverlaps(cur["x_sprite"]._getRect(), true)) {
+                            cur["x_sprite"].visible = false;
+                            cur["x_hover_sprite"].visible = true;
+                        } else {
+                            cur["x_sprite"].visible = true;
+                            cur["x_hover_sprite"].visible = false;
+                        }
+                    }
+                    this.overlapXSprite(cur);
+                } else {
+                    if(cur["full_sprite"].visible) {
+                        if ((FlxG.state as GameState).cursorOverlaps(cur["x_sprite"]._getRect(), true)) {
+                            cur["x_sprite"].visible = false;
+                            cur["x_hover_sprite"].visible = true;
+                        } else {
+                            cur["x_sprite"].visible = true;
+                            cur["x_hover_sprite"].visible = false;
+                        }
+                    }
                 }
             }
         }

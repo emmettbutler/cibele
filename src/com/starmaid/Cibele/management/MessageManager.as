@@ -13,8 +13,10 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/UI_letter_pink.png")] private var ImgMsgPink:Class;
         [Embed(source="/../assets/images/ui/UI_text_box.png")] private var ImgInbox:Class;
         [Embed(source="/../assets/images/ui/UI_text_box_x_blue.png")] private var ImgInboxX:Class;
+        [Embed(source="/../assets/images/ui/UI_text_box_x_blue_hover.png")] private var ImgInboxXHover:Class;
         [Embed(source="/../assets/images/ui/UI_pink_msg_box.png")] private var ImgInboxPink:Class;
         [Embed(source="/../assets/images/ui/UI_pink_x.png")] private var ImgInboxXPink:Class;
+        [Embed(source="/../assets/images/ui/UI_pink_x_hover.png")] private var ImgInboxXPinkHover:Class;
         [Embed(source="/../assets/images/ui/ellipse_anim.png")] private var ImgEllipse:Class;
         [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
@@ -25,6 +27,7 @@ package com.starmaid.Cibele.management {
 
         public var img_inbox:UIElement;
         public var exit_ui:UIElement;
+        public var exit_hover_ui:UIElement;
         public var img_msg:UIElement;
         public var ellipse_anim:UIElement;
 
@@ -289,21 +292,28 @@ package com.starmaid.Cibele.management {
             this.elements.push(this.img_inbox);
 
             imgClass = ImgInboxX;
-            imgSize = new DHPoint(13, 12);
+            var imgHoverClass:Class = ImgInboxXHover;
+            imgSize = new DHPoint(32, 29);
             var imgPos:DHPoint = new DHPoint(this.img_inbox.x + (this.img_inbox.width - 20), this.img_inbox.y + 5);
             if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
             {
                 imgClass = ImgInboxXPink;
-                imgSize = new DHPoint(23, 18);
-                imgPos = new DHPoint(imgPos.x-2, imgPos.y-5);
+                imgHoverClass = ImgInboxXPinkHover;
+                imgPos = new DHPoint(imgPos.x-5, imgPos.y-7);
             }
             this.exit_ui = new UIElement(imgPos.x, imgPos.y);
+            this.exit_hover_ui = new UIElement(imgPos.x, imgPos.y);
             this.exit_ui.loadGraphic(imgClass, false, false, imgSize.x, imgSize.y);
+            this.exit_hover_ui.loadGraphic(imgHoverClass, false, false, imgSize.x, imgSize.y);
             this.elements.push(this.exit_ui);
+            this.elements.push(this.exit_hover_ui);
             this.exit_ui.scrollFactor = new FlxPoint(0, 0);
+            this.exit_hover_ui.scrollFactor = new FlxPoint(0, 0);
             this.exit_ui.visible = false;
+            this.exit_hover_ui.visible = false;
             if (addToState){
                 FlxG.state.add(this.exit_ui);
+                FlxG.state.add(this.exit_hover_ui);
             }
 
             this.exit_msg = new FlxText(this.img_inbox.x + 20,
@@ -441,8 +451,10 @@ package com.starmaid.Cibele.management {
 
             this.img_inbox.setPos(inbox_pos);
 
-            this.exit_ui.x = this.img_inbox.x + (this.img_inbox.width - 20);
-            this.exit_ui.y = this.img_inbox.y + 5;
+            this.exit_ui.x = this.img_inbox.x + (this.img_inbox.width - 26);
+            this.exit_ui.y = this.img_inbox.y - 5;
+            this.exit_hover_ui.x = this.img_inbox.x + (this.img_inbox.width - 26);
+            this.exit_hover_ui.y = this.img_inbox.y - 5;
 
             this.exit_msg.x = this.img_inbox.x + 20;
             this.exit_msg.y = this.img_inbox.y + (this.img_inbox.height-40);
@@ -505,6 +517,17 @@ package com.starmaid.Cibele.management {
                 if (!cur_thread.read) {
                     this.unread_count++;
                 }
+
+                if(this._state == STATE_VIEW_LIST || this._state == STATE_VIEW_MESSAGE) {
+                    if((FlxG.state as GameState).cursorOverlaps(new FlxRect(this.exit_ui.x, this.exit_ui.y, this.exit_ui.width, this.exit_ui.height), true)) {
+                        this.exit_ui.visible = false;
+                        this.exit_hover_ui.visible = true;
+                    } else {
+                        this.exit_ui.visible = true;
+                        this.exit_hover_ui.visible = false;
+                    }
+                }
+
                 if(this._state == STATE_VIEW_LIST) {
                     if((FlxG.state as GameState).cursorOverlaps(this.threads[i].list_hitbox, true))
                         {
@@ -595,6 +618,7 @@ package com.starmaid.Cibele.management {
 
         public function exitInbox(minimize:Boolean=false):void {
             this._state = STATE_HIDE_INBOX;
+            this.exit_hover_ui.visible = false;
             if(!minimize) {
                 this.img_inbox.visible = false;
                 this.exit_ui.visible = false;

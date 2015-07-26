@@ -265,6 +265,21 @@ package com.starmaid.Cibele.management {
                     this.folder_builder.updateFolderPositions(this.folder_structure[key]);
                 }
             }
+
+            for(var _key:Object in this.folder_structure) {
+                var _val:Object = this.folder_structure[_key];
+                this.folder_builder.overlapXSprite(_val);
+            }
+
+            for(var i:Number = 0; i < this.open_popups.length; i++) {
+                if(this.open_popups[i] != null) {
+                    if((FlxG.state as GameState).cursorOverlaps(this.open_popups[i].x_sprite._getRect(), true)) {
+                        this.open_popups[i].showXHover();
+                    } else {
+                        this.open_popups[i].hideXHover();
+                    }
+                }
+            }
         }
 
         public function sendPopup(key:String):void {
@@ -452,8 +467,10 @@ package com.starmaid.Cibele.management {
             for (var key:Object in this.popups) {
                 this.elements.push(this.popups[key]);
                 this.elements.push(this.popups[key].x_sprite);
+                this.elements.push(this.popups[key].x_sprite_hover);
                 FlxG.state.add(this.popups[key]);
                 FlxG.state.add(this.popups[key].x_sprite);
+                FlxG.state.add(this.popups[key].x_sprite_hover);
                 if(this.folder_structure[key] != null) {
                     this.folder_builder.populateFolders(this.folder_structure[key], this.elements, this.popups[key]);
                 }
