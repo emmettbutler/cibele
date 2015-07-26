@@ -76,6 +76,8 @@ package com.starmaid.Cibele.states {
                 this.folder_builder.resolveClick(this.folder_structure,
                                                  mouseScreenRect, clicked);
             }
+
+            this.folder_builder.overlapXSprite(this.folder_structure);
         }
     }
 }
