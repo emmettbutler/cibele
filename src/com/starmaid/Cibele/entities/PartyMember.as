@@ -220,19 +220,18 @@ package com.starmaid.Cibele.entities {
             } else if(this.facing == RIGHT) {
                 this._nameTextOffset.x = 20;
             }
-            this._nameTextOffset.y = -30;
 
             this.nameText.x = this.pos.x + this._nameTextOffset.x;
-            this.nameText.y = this.pos.y + this._nameTextOffset.y;
+            this.nameText.y = this.footPos.y - this.frameHeight * this.scale.y - 30;
             this.teamPowerDeltaText.x = this.pos.x + this._nameTextOffset.x;
-            this.teamPowerDeltaText.y = (this.pos.y + this._nameTextOffset.y) - 40;
+            this.teamPowerDeltaText.y = (this.pos.y + this._nameTextOffset.y * this.scale.y) - 40;
 
             this.setFootPos();
         }
 
         protected function setFootPos():void {
-            this.footPos.x = this.x + this.width/2;
-            this.footPos.y = this.y + this.height;
+            this.footPos.x = this.x + (this.frameWidth/2);
+            this.footPos.y = this.y + this.frameHeight;
         }
 
         public function isAttacking():Boolean{

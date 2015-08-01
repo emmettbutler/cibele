@@ -64,9 +64,7 @@ package com.starmaid.Cibele.entities {
             this.particleType = _particleType;
             this.slug = _slug;
             this.facing = UP;
-
             this.zSorted = true;
-
             this.buildShadowSprite();
 
             loadGraphic(ImgCibWalk, true, false, 143, 150);
@@ -148,6 +146,19 @@ package com.starmaid.Cibele.entities {
 
         public function getFinalTarget():DHPoint {
             return this.finalTarget;
+        }
+
+        public function setScaleFactor(scaleFactor:Number=1):void {
+            this.origin.x = this.frameWidth / 2;
+            this.origin.y = this.frameHeight;
+            this.scale = new DHPoint(scaleFactor, scaleFactor);
+
+            // we don't need to adjust attack_sprite here, since scaling is
+            // never used on screens with enemies. this means that scaling will
+            // not work on screens with enemies
+
+            this.shadow_sprite.scale = new DHPoint(scaleFactor, scaleFactor);
+            this.mapHitbox.scale = new DHPoint(scaleFactor, scaleFactor);
         }
 
         override public function toggleActive():void {
