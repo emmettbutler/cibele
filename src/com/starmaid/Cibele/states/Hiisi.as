@@ -16,8 +16,8 @@ package com.starmaid.Cibele.states {
     import flash.events.*;
 
     public class Hiisi extends LevelMapState {
-        [Embed(source="/../assets/audio/music/bgm_euryale_intro.mp3")] private var EUBGMIntro:Class;
-        [Embed(source="/../assets/audio/music/bgm_euryale_loop.mp3")] private var EUBGMLoop:Class;
+        [Embed(source="/../assets/audio/music/bgm_hiisi_intro.mp3")] private var BGMIntro:Class;
+        [Embed(source="/../assets/audio/music/bgm_hiisi_loop.mp3")] private var BGMLoop:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_morning.mp3")] private var Convo1:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_westcoast.mp3")] private var Convo2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_whatifwemet.mp3")] private var Convo3:Class;
@@ -155,12 +155,12 @@ package com.starmaid.Cibele.states {
 
             function _bgmCallback():void {
                 SoundManager.getInstance().playSound(
-                    EUBGMLoop, 0, null, true, .07, GameSound.BGM, Hiisi.BGM,
+                    BGMLoop, 0, null, true, .07, GameSound.BGM, Hiisi.BGM,
                     false, false
                 );
             }
             SoundManager.getInstance().playSound(
-                EUBGMIntro, 2.6*GameSound.MSEC_PER_SEC, _bgmCallback, false,
+                BGMIntro, 5.647 * GameSound.MSEC_PER_SEC, _bgmCallback, false,
                 .07, Math.random()*928+298, Hiisi.BGM, false, false, true
             );
 
