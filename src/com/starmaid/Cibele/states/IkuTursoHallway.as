@@ -42,7 +42,7 @@ package com.starmaid.Cibele.states {
 
         override public function startConvoCallback():void {
             SoundManager.getInstance().playSound(
-                Convo1, GameState.SHORT_DIALOGUE ? 1 : 24*GameSound.MSEC_PER_SEC, firstConvo, false, 1, GameSound.VOCAL,
+                Convo1, GameState.SHORT_DIALOGUE ? 1 : 26*GameSound.MSEC_PER_SEC, firstConvo, false, 1, GameSound.VOCAL,
                 "convo_1_hall"
             );
         }
