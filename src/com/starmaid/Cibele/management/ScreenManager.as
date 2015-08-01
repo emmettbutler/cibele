@@ -156,7 +156,11 @@ package com.starmaid.Cibele.management {
             }
         }
 
-        public function calcFullscreenScale(dim:DHPoint):Number {
+        public function calcFullscreenScale(dim:DHPoint=null):Number {
+            if (dim == null) {
+                // if no value is given, default to the size of a 15" macbook pro
+                dim = new DHPoint(1440, 878);
+            }
             var factor:Number;
             if (dim.x > dim.y) {
                 factor = screenWidth / dim.x;

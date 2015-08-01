@@ -93,6 +93,9 @@ package com.starmaid.Cibele.states {
             fernBase = (new BackgroundLoader()).loadSingleTileBG("/../assets/images/worlds/Fern-part-2.png");
             fernBase.scrollFactor = new DHPoint(1, 1);
 
+            this.setScaleFactor(
+                ScreenManager.getInstance().calcFullscreenScale());
+
             leftBound = ScreenManager.getInstance().screenWidth * .39;
             rightBound = ScreenManager.getInstance().screenWidth * .52;
 
@@ -101,10 +104,7 @@ package com.starmaid.Cibele.states {
                 new DHPoint(leftBound + 40, 0),
                 this.player, 0
             );
-
             this.postCreate();
-
-
             this.player.nameText.color = 0xffffffff;
         }
 

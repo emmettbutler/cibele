@@ -59,9 +59,7 @@ package com.starmaid.Cibele.management {
                         arguments.callee
                     );
                 });
-
             return bg;
-
         }
 
         public function addDoors(bg:FlxExtSprite, scaleFactor:Number=1):void {
