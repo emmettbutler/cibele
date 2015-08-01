@@ -6,7 +6,6 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.BackgroundLoader;
     import com.starmaid.Cibele.utils.DHPoint;
-    import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.GameSound;
