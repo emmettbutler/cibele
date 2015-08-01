@@ -46,7 +46,7 @@ package com.starmaid.Cibele.states {
         }
 
         public function setScaleFactor(scaleFactor:Number=1):void {
-            this.player.setScaleFactor(scaleFactor*2);
+            this.player.setScaleFactor(scaleFactor);
         }
 
         override public function update():void {
