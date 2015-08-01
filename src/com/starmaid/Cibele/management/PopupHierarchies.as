@@ -30,6 +30,8 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/files/home1_icon.png")] private static var ImgHome1Icon:Class;
         [Embed(source="/../assets/images/ui/popups/files/pretty.png")] private static var ImgPretty:Class;
         [Embed(source="/../assets/images/ui/popups/files/pretty_icon.png")] private static var ImgPrettyIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/ichi.png")] private static var ImgIchi:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/ichi_icon.png")] private static var ImgIchiIcon:Class;
 
         //euryale
         [Embed(source="/../assets/images/ui/popups/eu_email/email2_link1.png")] private static var ImgEuEmail2Link1:Class;
@@ -149,6 +151,15 @@ package com.starmaid.Cibele.management {
                     "dim": new DHPoint(512, 356),
                     "struc": PopUpManager.ICHI_DL_2,
                     "contents": ImgPretty
+                },
+                {
+                    "name": "ichi",
+                    "icon": ImgIchiIcon,
+                    "icon_dim": new DHPoint(78, 96),
+                    "icon_pos": new DHPoint(112, 133),
+                    "dim": new DHPoint(452, 356),
+                    "struc": PopUpManager.ICHI_DL_2,
+                    "contents": ImgIchi
                 }
             ]};
             struc[PopUpManager.ICHI_SELFIE1] = { "contents": [
@@ -294,6 +305,15 @@ package com.starmaid.Cibele.management {
                             "dim": new DHPoint(512, 356),
                             "struc": PopUpManager.CIB_SELFIE_FOLDER,
                             "contents": ImgPretty
+                        },
+                        {
+                            "name": "ichi",
+                            "icon": ImgIchiIcon,
+                            "icon_dim": new DHPoint(78, 96),
+                            "icon_pos": new DHPoint(112, 133),
+                            "dim": new DHPoint(452, 356),
+                            "struc": PopUpManager.ICHI_DL_2,
+                            "contents": ImgIchi
                         }
                     ]
                 }

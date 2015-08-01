@@ -43,6 +43,12 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/winterlooks_icon.png")] private var ImgWinterLooksIcon:Class;
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/mom.png")] private var ImgMom:Class;
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/mom_icon.png")] private var ImgMomIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/selfiedesktop/shots.png")] private var ImgShots:Class;
+        [Embed(source="/../assets/images/ui/popups/selfiedesktop/shots_icon.png")] private var ImgShotsIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/selfiedesktop/oldroom.png")] private var ImgOldRoom:Class;
+        [Embed(source="/../assets/images/ui/popups/selfiedesktop/oldroom_icon.png")] private var ImgOldRoomIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/selfiedesktop/home.png")] private var ImgHome:Class;
+        [Embed(source="/../assets/images/ui/popups/selfiedesktop/home_icon.png")] private var ImgHomeIcon:Class;
 
         //old website stuff
         [Embed(source="/../assets/images/ui/popups/it_files/blog1_icon.png")] private var ImgBlog1Icon:Class;
@@ -170,6 +176,30 @@ package com.starmaid.Cibele.states {
                                     "icon_pos": new DHPoint(306, 33),
                                     "dim": new DHPoint(530, 356),
                                     "contents": ImgOllld
+                                },
+                                {
+                                    "name": "shots",
+                                    "icon": ImgShotsIcon,
+                                    "icon_dim": new DHPoint(83, 89),
+                                    "icon_pos": new DHPoint(28, 130),
+                                    "dim": new DHPoint(522, 392),
+                                    "contents": ImgShots
+                                },
+                                {
+                                    "name": "oldroom",
+                                    "icon": ImgOldRoomIcon,
+                                    "icon_dim": new DHPoint(79, 92),
+                                    "icon_pos": new DHPoint(128, 130),
+                                    "dim": new DHPoint(522, 392),
+                                    "contents": ImgOldRoom
+                                },
+                                {
+                                    "name": "home",
+                                    "icon": ImgHomeIcon,
+                                    "icon_dim": new DHPoint(80, 90),
+                                    "icon_pos": new DHPoint(228, 130),
+                                    "dim": new DHPoint(646, 430),
+                                    "contents": ImgHome
                                 }
                             ]
                         }

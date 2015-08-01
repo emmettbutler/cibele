@@ -45,6 +45,32 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/hi_desktop/nina5.png")] private var ImgNina5:Class;
         [Embed(source="/../assets/images/ui/popups/hi_desktop/nina5_icon.png")] private var ImgNina5Icon:Class;
 
+        [Embed(source="/../assets/images/ui/popups/eu_files/hsfolder.png")] private var ImgHSFolderIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/highschool.png")] private var ImgHSFolder:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/bed_icon.png")] private var ImgBedIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/bed.png")] private var ImgBed:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/cutewow.png")] private var ImgCuteWow:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/cutewow_icon.png")] private var ImgCuteWowIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/old_icon.png")] private var ImgOldIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/old.png")] private var ImgOld:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/ollld_icon.png")] private var ImgOllldIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/ollld.png")] private var ImgOllld:Class;
+        [Embed(source="/../assets/images/ui/popups/selfiedesktop/shots.png")] private var ImgShots:Class;
+        [Embed(source="/../assets/images/ui/popups/selfiedesktop/shots_icon.png")] private var ImgShotsIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/selfiedesktop/oldroom.png")] private var ImgOldRoom:Class;
+        [Embed(source="/../assets/images/ui/popups/selfiedesktop/oldroom_icon.png")] private var ImgOldRoomIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/selfiedesktop/home.png")] private var ImgHome:Class;
+        [Embed(source="/../assets/images/ui/popups/selfiedesktop/home_icon.png")] private var ImgHomeIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/sexy1.png")] private var ImgSexy1:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/sexy1_icon.png")] private var ImgSexy1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/oldflashdrive_icon.png")] private var ImgOldFlashdriveIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/sexy2.png")] private var ImgSexy2:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/sexy2_icon.png")] private var ImgSexy2Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/selfie2.png")] private var ImgSelfie2:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/selfie2_icon.png")] private var ImgSelfie2Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/poem1.png")] private var ImgPoem1:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/poem1_icon.png")] private var ImgPoem1Icon:Class;
+
         public function HiisiDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_HI;
         }
@@ -169,6 +195,114 @@ package com.starmaid.Cibele.states {
                                     "icon_pos": new DHPoint(30, 132),
                                     "dim": new DHPoint(512, 356),
                                     "contents": ImgPuppy
+                                }
+                            ]
+                        },
+                        {
+                            "name": "hs_subfolder",
+                            "icon": ImgHSFolderIcon,
+                            "icon_dim": new DHPoint(87, 79),
+                            "icon_pos": new DHPoint(131, 135),
+                            "folder_img": ImgHSFolder,
+                            "folder_dim": new DHPoint(631, 356),
+                            "contents": [
+                                {
+                                    "name": "cutewow",
+                                    "icon": ImgCuteWowIcon,
+                                    "icon_dim": new DHPoint(81, 93),
+                                    "icon_pos": new DHPoint(120, 33),
+                                    "dim": new DHPoint(530, 356),
+                                    "contents": ImgCuteWow
+                                },
+                                {
+                                    "name": "bed",
+                                    "icon": ImgBedIcon,
+                                    "icon_dim": new DHPoint(77, 94),
+                                    "icon_pos": new DHPoint(30, 33),
+                                    "dim": new DHPoint(530, 356),
+                                    "contents": ImgBed
+                                },
+                                {
+                                    "name": "old",
+                                    "icon": ImgOldIcon,
+                                    "icon_dim": new DHPoint(80, 93),
+                                    "icon_pos": new DHPoint(213, 33),
+                                    "dim": new DHPoint(530, 356),
+                                    "contents": ImgOld
+                                },
+                                {
+                                    "name": "ollld",
+                                    "icon": ImgOllldIcon,
+                                    "icon_dim": new DHPoint(84, 95),
+                                    "icon_pos": new DHPoint(306, 33),
+                                    "dim": new DHPoint(530, 356),
+                                    "contents": ImgOllld
+                                },
+                                {
+                                    "name": "shots",
+                                    "icon": ImgShotsIcon,
+                                    "icon_dim": new DHPoint(83, 89),
+                                    "icon_pos": new DHPoint(28, 130),
+                                    "dim": new DHPoint(522, 392),
+                                    "contents": ImgShots
+                                },
+                                {
+                                    "name": "oldroom",
+                                    "icon": ImgOldRoomIcon,
+                                    "icon_dim": new DHPoint(79, 92),
+                                    "icon_pos": new DHPoint(128, 130),
+                                    "dim": new DHPoint(522, 392),
+                                    "contents": ImgOldRoom
+                                },
+                                {
+                                    "name": "home",
+                                    "icon": ImgHomeIcon,
+                                    "icon_dim": new DHPoint(80, 90),
+                                    "icon_pos": new DHPoint(228, 130),
+                                    "dim": new DHPoint(646, 430),
+                                    "contents": ImgHome
+                                },
+                                {
+                                    "name": "oldflashdrive",
+                                    "icon": ImgOldFlashdriveIcon,
+                                    "icon_dim": new DHPoint(102, 92),
+                                    "icon_pos": new DHPoint(30, 230),
+                                    "folder_img": ImgPicturesFolder,
+                                    "folder_dim": new DHPoint(631, 356),
+                                    "contents": [
+                                        {
+                                            "name": "sexy1",
+                                            "icon": ImgSexy1Icon,
+                                            "icon_dim": new DHPoint(79, 92),
+                                            "icon_pos": new DHPoint(30, 50),
+                                            "dim": new DHPoint(518, 350),
+                                            "contents": ImgSexy1
+                                        },
+                                        {
+                                            "name": "sexy2",
+                                            "icon": ImgSexy2Icon,
+                                            "icon_dim": new DHPoint(73, 89),
+                                            "icon_pos": new DHPoint(150, 50),
+                                            "dim": new DHPoint(336, 483),
+                                            "contents": ImgSexy2
+                                        },
+                                        {
+                                            "name": "selfie2",
+                                            "icon": ImgSelfie2Icon,
+                                            "icon_dim": new DHPoint(82, 94),
+                                            "icon_pos": new DHPoint(260, 50),
+                                            "dim": new DHPoint(345, 495),
+                                            "contents": ImgSelfie2
+                                        },
+                                        {
+                                            "name": "poem1",
+                                            "icon": ImgPoem1Icon,
+                                            "icon_dim": new DHPoint(70, 92),
+                                            "icon_pos": new DHPoint(30, 150),
+                                            "dim": new DHPoint(631, 356),
+                                            "contents": ImgPoem1
+                                        }
+                                    ]
                                 }
                             ]
                         }
