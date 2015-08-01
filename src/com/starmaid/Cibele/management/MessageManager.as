@@ -60,7 +60,6 @@ package com.starmaid.Cibele.management {
         public var minimizeFlag:Boolean = false;
         public var maximizeExitFlag:Boolean = false;
         public var maximizeInboxFlag:Boolean = false;
-        public var bouncing_icon:Boolean = false;
 
         public var i:Number = 0;
 
@@ -402,16 +401,10 @@ package com.starmaid.Cibele.management {
         public function updateUnreadNotification():void {
             this.notifications_text.text = this.unread_count.toString();
             if(this.unread_count > 0) {
-                if(!this.bouncing_icon) {
-                    this.bouncing_icon = true;
-                    this.img_msg.alertOn();
-                }
+                this.img_msg.alertOn();
                 this.img_msg.play("new");
             } else {
-                if(this.bouncing_icon) {
-                    this.bouncing_icon = false;
-                    this.img_msg.alertOff();
-                }
+                this.img_msg.alertOff();
                 this.img_msg.play("closed");
             }
         }

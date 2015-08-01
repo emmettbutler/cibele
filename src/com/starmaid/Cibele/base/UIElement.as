@@ -26,11 +26,15 @@ package com.starmaid.Cibele.base {
         }
 
         public function alertOn():void {
-            this.alerting = true;
+            if (this.alerting == false) {
+                this.alerting = true;
+            }
         }
 
         public function alertOff():void {
-            this.alerting = false;
+            if (this.alerting == true) {
+                this.alerting = false;
+            }
         }
 
         public function set anchor(pt:DHPoint):void {
