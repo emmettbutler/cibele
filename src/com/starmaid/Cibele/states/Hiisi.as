@@ -18,6 +18,9 @@ package com.starmaid.Cibele.states {
     public class Hiisi extends LevelMapState {
         [Embed(source="/../assets/audio/music/bgm_hiisi_intro.mp3")] private var BGMIntro:Class;
         [Embed(source="/../assets/audio/music/bgm_hiisi_loop.mp3")] private var BGMLoop:Class;
+        [Embed(source="/../assets/audio/music/vid_turnoff.mp3")] private var BGMTurnoff:Class;
+        [Embed(source="/../assets/audio/music/vid_goodbye.mp3")] private var BGMGoodbye:Class;
+        [Embed(source="/../assets/audio/music/vid_sex.mp3")] private var BGMSex:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_morning.mp3")] private var Convo1:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_westcoast.mp3")] private var Convo2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_whatifwemet.mp3")] private var Convo3:Class;
@@ -155,13 +158,13 @@ package com.starmaid.Cibele.states {
 
             function _bgmCallback():void {
                 SoundManager.getInstance().playSound(
-                    BGMLoop, 0, null, true, .07, GameSound.BGM, Hiisi.BGM,
+                    BGMLoop, 0, null, true, .2, GameSound.BGM, Hiisi.BGM,
                     false, false
                 );
             }
             SoundManager.getInstance().playSound(
                 BGMIntro, 5.647 * GameSound.MSEC_PER_SEC, _bgmCallback, false,
-                .07, Math.random()*928+298, Hiisi.BGM, false, false, true
+                .2, Math.random()*928+298, Hiisi.BGM, false, false, true
             );
 
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
@@ -267,6 +270,11 @@ package com.starmaid.Cibele.states {
         }
 
         public function playSexFilm():void {
+            SoundManager.getInstance().playSound(
+                BGMSex,
+                69 * GameSound.MSEC_PER_SEC,
+                null, false, 1, GameSound.BGM
+            );
             FlxG.switchState(new PlayVideoState("/../assets/video/4.3 Sex_v1.mp4",
                 playBlankScreen2)
             );
@@ -279,18 +287,28 @@ package com.starmaid.Cibele.states {
         }
 
         public function playGoodbye():void {
+            SoundManager.getInstance().playSound(
+                BGMGoodbye,
+                46 * GameSound.MSEC_PER_SEC,
+                null, false, 1, GameSound.BGM
+            );
             FlxG.switchState(new PlayVideoState("/../assets/video/4.4 Goodbye_v1.mp4",
                 playBlankScreen3)
             );
         }
 
         public function playBlankScreen3():void {
-            FlxG.switchState(new BlankScreen(10*GameSound.MSEC_PER_SEC,
+            FlxG.switchState(new BlankScreen(19 * GameSound.MSEC_PER_SEC,
                 playEnd)
             );
         }
 
         public function playEnd():void {
+            SoundManager.getInstance().playSound(
+                BGMTurnoff,
+                14 * GameSound.MSEC_PER_SEC,
+                null, false, 1, GameSound.BGM
+            );
             FlxG.switchState(new PlayVideoState("/../assets/video/4.5 Turn off_v1.mp4",
                 playBlankScreen4, null, true)
             );
@@ -307,15 +325,14 @@ package com.starmaid.Cibele.states {
         }
 
         public function playEndFilm():void {
-            //SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
-                    //false, 1, GameSound.BGM);
             this.fadeOut(
                 function():void {
                     FlxG.switchState(new BlankScreen(7*GameSound.MSEC_PER_SEC,
                         playMeetupV1
                     ));
                 },
-                1 * GameSound.MSEC_PER_SEC
+                1 * GameSound.MSEC_PER_SEC,
+                Hiisi.BGM
             );
         }
     }
