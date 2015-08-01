@@ -175,37 +175,6 @@ package com.starmaid.Cibele.states {
 
             mouse_rect.x = FlxG.mouse.x;
             mouse_rect.y = FlxG.mouse.y;
-            if(FlxG.mouse.justPressed()){
-                if(mouse_rect.overlaps(play_game_rect) && !play_screen){
-                    ScreenManager.getInstance().setupCamera(null, 1);
-                    play_game.kill();
-                    quit.kill();
-                    play_game_rect.x = login.x;
-                    play_game_rect.y = login.y;
-                    play_game_rect.width = 300;
-                    play_game_rect.height = 200;
-                    char_select.visible = true;
-                    char_info.visible = true;
-                    play_screen = true;
-                    login.visible = true;
-                    title_text.visible = false;
-                    crystal_icon.visible = false;
-                }
-                if (this.has_initiated_switch == false && mouse_rect.overlaps(play_game_rect) && play_screen){
-                    this.has_initiated_switch = true;
-                    this.startStateSwitch();
-                }
-                if (this.has_initiated_switch == false && mouse_rect.overlaps(quit_rect) && !play_screen){
-                    PopUpManager.GAME_ACTIVE = false;
-                    if(ScreenManager.getInstance().levelTracker.it()) {
-                        FlxG.switchState(new IkuTursoDesktop());
-                    } else if(ScreenManager.getInstance().levelTracker.eu()) {
-                        FlxG.switchState(new EuryaleDesktop());
-                    } else if(ScreenManager.getInstance().levelTracker.hi()) {
-                        FlxG.switchState(new HiisiDesktop());
-                    }
-                }
-            }
 
             if (this.fading) {
                 if(SoundManager.getInstance().getSoundByName(MenuScreen.BGM) != null) {
@@ -213,6 +182,40 @@ package com.starmaid.Cibele.states {
                     // it's possible that it will be abruptly stopped by other
                     // logic before it's fully faded
                     SoundManager.getInstance().getSoundByName(MenuScreen.BGM).fadeOutSound(.1);
+                }
+            }
+        }
+
+        override public function clickCallback(screenPos:DHPoint,
+                                               worldPos:DHPoint):void {
+            super.clickCallback(screenPos, worldPos);
+            if(mouse_rect.overlaps(play_game_rect) && !play_screen){
+                ScreenManager.getInstance().setupCamera(null, 1);
+                play_game.kill();
+                quit.kill();
+                play_game_rect.x = login.x;
+                play_game_rect.y = login.y;
+                play_game_rect.width = 300;
+                play_game_rect.height = 200;
+                char_select.visible = true;
+                char_info.visible = true;
+                play_screen = true;
+                login.visible = true;
+                title_text.visible = false;
+                crystal_icon.visible = false;
+            }
+            if (this.has_initiated_switch == false && mouse_rect.overlaps(play_game_rect) && play_screen){
+                this.has_initiated_switch = true;
+                this.startStateSwitch();
+            }
+            if (this.has_initiated_switch == false && mouse_rect.overlaps(quit_rect) && !play_screen){
+                PopUpManager.GAME_ACTIVE = false;
+                if(ScreenManager.getInstance().levelTracker.it()) {
+                    FlxG.switchState(new IkuTursoDesktop());
+                } else if(ScreenManager.getInstance().levelTracker.eu()) {
+                    FlxG.switchState(new EuryaleDesktop());
+                } else if(ScreenManager.getInstance().levelTracker.hi()) {
+                    FlxG.switchState(new HiisiDesktop());
                 }
             }
         }
