@@ -50,10 +50,13 @@ package com.starmaid.Cibele.management {
 
         public function populateFolders(root:Object, elements:Array=null, root_folder:UIElement=null):void {
             var _screen:ScreenManager = ScreenManager.getInstance();
-            var cur:Object, curX:UIElement, curXHover:UIElement, spr:GameObject, icon_pos:DHPoint;
+            var cur:Object, curX:UIElement, curXHover:UIElement, spr:GameObject,
+                icon_pos:DHPoint, recurseSet:Array, toAddBeforeRecurse:Array;
             if (root_folder != null) {
                 root["folder_sprite"] = root_folder;
             }
+            recurseSet = new Array();
+            toAddBeforeRecurse = new Array();
             for (var i:int = 0; i < root["contents"].length; i++) {
                 cur = root["contents"][i];
                 if ("icon" in cur && cur["icon"] != null) {
@@ -90,19 +93,19 @@ package com.starmaid.Cibele.management {
                     spr.loadGraphic(cur["folder_img"], false, false, cur["folder_dim"].x, cur["folder_dim"].y);
                     spr.visible = false;
                     spr.scrollFactor = new DHPoint(0,0);
-                    FlxG.state.add(spr);
+                    toAddBeforeRecurse.push(spr);
                     cur["folder_sprite"] = spr;
                     curX = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 26, spr.y - 5));
                     curX.loadGraphic(ImgInboxXPink, false, false, 32, 29);
                     curX.visible = false;
                     curX.scrollFactor = new DHPoint(0,0);
-                    FlxG.state.add(curX);
+                    toAddBeforeRecurse.push(curX);
 
                     curXHover = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 26, spr.y - 5));
                     curXHover.loadGraphic(ImgInboxXPinkHover, false, false, 32, 29);
                     curXHover.visible = false;
                     curXHover.scrollFactor = new DHPoint(0,0);
-                    FlxG.state.add(curXHover);
+                    toAddBeforeRecurse.push(curXHover);
 
                     curX.ID = 00000000000001;
                     allClickableElements.push(spr);
@@ -116,7 +119,7 @@ package com.starmaid.Cibele.management {
                     cur["x_sprite"] = curX;
                     cur["x_hover_sprite"] = curXHover;
 
-                    this.populateFolders(cur, elements);
+                    recurseSet.push([cur, elements])
                 } else {
                     spr = UIElement.fromPoint(new DHPoint((_screen.screenWidth - cur["dim"].x) * Math.random(), (_screen.screenHeight - cur["dim"].y) * Math.random()));
                     spr.loadGraphic(cur["contents"], false, false, cur["dim"].x, cur["dim"].y);
@@ -138,6 +141,13 @@ package com.starmaid.Cibele.management {
                     cur["x_sprite"] = curX;
                     cur["x_hover_sprite"] = curXHover;
                 }
+            }
+            // add all folder sprites at the same time, before recursion
+            for (var k:int = 0; k < toAddBeforeRecurse.length; k++) {
+                FlxG.state.add(toAddBeforeRecurse[k]);
+            }
+            for (k = 0; k < recurseSet.length; k++) {
+                this.populateFolders(recurseSet[k][0], recurseSet[k][1]);
             }
         }
 
