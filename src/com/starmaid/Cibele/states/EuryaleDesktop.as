@@ -94,6 +94,9 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/eu_files/selfie2_icon.png")] private var ImgSelfie2Icon:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/poem1.png")] private var ImgPoem1:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/poem1_icon.png")] private var ImgPoem1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/sendtomom_icon.png")] private var ImgMomFolderIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/bday1.png")] private var ImgBday1:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/bday1_icon.png")] private var ImgBday1Icon:Class;
 
         public function EuryaleDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
@@ -322,6 +325,24 @@ package com.starmaid.Cibele.states {
                             "icon_pos": new DHPoint(250, 36),
                             "dim": new DHPoint(631, 356),
                             "contents": ImgBlog7Draft
+                        },
+                        {
+                            "name": "sendtomom_subfolder",
+                            "icon": ImgMomFolderIcon,
+                            "icon_dim": new DHPoint(97, 91),
+                            "icon_pos": new DHPoint(28, 135),
+                            "folder_img": ImgPicturesFolder,
+                            "folder_dim": new DHPoint(631, 356),
+                            "contents": [
+                                {
+                                    "name": "bday1",
+                                    "icon": ImgBday1Icon,
+                                    "icon_dim": new DHPoint(79, 100),
+                                    "icon_pos": new DHPoint(30, 30),
+                                    "dim": new DHPoint(682, 511),
+                                    "contents": ImgBday1
+                                }
+                            ]
                         }
                     ]
                 },

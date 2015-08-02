@@ -76,6 +76,12 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/it_files/russelorchard.png")] private var ImgRussellOrch:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/cotillion_icon.png")] private var ImgCotillionIcon:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/cotillion.png")] private var ImgCotillion:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/hs_1_icon.png")] private var ImgHS1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/hs_1.png")] private var ImgHS1:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/mycar_icon.png")] private var ImgOldCarIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/mycar.png")] private var ImgOldCar:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/nyc1_icon.png")] private var ImgNYC1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/nyc1.png")] private var ImgNYC1:Class;
 
         public function IkuTursoDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_IT;
@@ -199,6 +205,14 @@ package com.starmaid.Cibele.states {
                                     "icon_pos": new DHPoint(128, 130),
                                     "dim": new DHPoint(522, 392),
                                     "contents": ImgOldRoom
+                                },
+                                {
+                                    "name": "hs 1",
+                                    "icon": ImgHS1Icon,
+                                    "icon_dim": new DHPoint(78, 93),
+                                    "icon_pos": new DHPoint(228, 132),
+                                    "dim": new DHPoint(563, 422),
+                                    "contents": ImgHS1
                                 }
                             ]
                         }
@@ -252,6 +266,14 @@ package com.starmaid.Cibele.states {
                             "contents": ImgCotillion
                         },
                         {
+                            "name": "nyc 1",
+                            "icon": ImgNYC1Icon,
+                            "icon_dim": new DHPoint(81, 90),
+                            "icon_pos": new DHPoint(235, 140),
+                            "dim": new DHPoint(583, 389),
+                            "contents": ImgNYC1
+                        },
+                        {
                             "name": "home folder",
                             "icon": ImgHomeFolderIcon,
                             "icon_dim": new DHPoint(95, 87),
@@ -271,9 +293,17 @@ package com.starmaid.Cibele.states {
                                     "name": "russell",
                                     "icon": ImgRussellOrchIcon,
                                     "icon_dim": new DHPoint(107, 91),
-                                    "icon_pos": new DHPoint(150, 30),
+                                    "icon_pos": new DHPoint(135, 30),
                                     "dim": new DHPoint(397, 530),
                                     "contents": ImgRussellOrch
+                                },
+                                {
+                                    "name": "car",
+                                    "icon": ImgOldCarIcon,
+                                    "icon_dim": new DHPoint(74, 88),
+                                    "icon_pos": new DHPoint(240, 36),
+                                    "dim": new DHPoint(560, 420),
+                                    "contents": ImgOldCar
                                 }
                             ]
                         }
