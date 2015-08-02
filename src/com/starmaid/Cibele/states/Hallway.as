@@ -100,7 +100,7 @@ package com.starmaid.Cibele.states {
             rightBound = ScreenManager.getInstance().screenWidth * .52;
 
             this.tileLoader = new HallwayTileLoader(
-                new DHPoint(77 * 3, bottomY),
+                new DHPoint((rightBound - leftBound) + 77, bottomY),
                 new DHPoint(leftBound + 40, 0),
                 this.player, 0
             );
@@ -122,7 +122,7 @@ package com.starmaid.Cibele.states {
 
             if (this.fernBase.y != this.fernTop.y + this.fernTop.height) {
                 this.fernBase.y = this.fernTop.y + this.fernTop.height;
-                this.tileLoader.stopY = this.fernBase.y + this.fernBase.height / 2;
+                this.tileLoader.stopY = this.fernBase.y;
             }
 
             if (this.player.y > this.fernTop.y + this.fernTop.height) {

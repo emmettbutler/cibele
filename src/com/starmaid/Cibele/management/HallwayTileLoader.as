@@ -30,8 +30,9 @@ package com.starmaid.Cibele.management {
             this.tiles = new Array();
             this.rowLoads = new Array();
             var cur:HallwayTile;
-            var rows:int = this.dimensions.y/this.tileDimensions.y;
-            var cols:int = this.dimensions.x/this.tileDimensions.x;
+            var rows:int = this.dimensions.y / this.tileDimensions.y;
+            var cols:int = this.dimensions.x / this.tileDimensions.x;
+
             for (var i:int = 0; i < rows; i++) {
                 var row:Array = new Array();
                 for (var j:int = 0; j < cols; j++) {
