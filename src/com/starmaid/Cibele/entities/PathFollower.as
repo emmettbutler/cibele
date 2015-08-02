@@ -469,7 +469,7 @@ package com.starmaid.Cibele.entities {
             var dir:DHPoint = new DHPoint(this.playerRef.dir.x, this.playerRef.dir.y);
             var targetPoint:DHPoint = this.playerRef.pos.add(dir.normalized()
                 .mulScl(ScreenManager.getInstance().screenWidth));
-            var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint, null, false);
+            var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint, false);
             if (warpNode != null) {
                 this.setPos(warpNode.pos.sub(this.footPos.sub(this.pos)));
             }

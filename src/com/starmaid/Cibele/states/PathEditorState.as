@@ -172,7 +172,6 @@ package com.starmaid.Cibele.states {
         override public function update():void {
             super.update();
 
-            this._mapnodes.update();
             this._path.update();
 
             this.teamPowerBar.setPos(null);
