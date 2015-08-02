@@ -107,33 +107,44 @@ package com.starmaid.Cibele.utils {
             return 0;
         }
 
-        public function getClosestNode(pos:DHPoint, on_screen:Boolean=true):MapNode {
+        public function getClosestNode(pos:DHPoint, onscreen_allowed:Boolean=true):MapNode {
             this.closestPathNode = this.path.getClosestNode(pos);
             currentClosestNode = this.nodes[0];
             var curNode:MapNode;
             for(var i:Number = 0; i < this.nodes.length; i++){
                 curNode = this.nodes[i];
-                if(!on_screen) {
-                    var screenPos:DHPoint = new DHPoint(0, 0);
-                    curNode.getScreenXY(screenPos);
-                    if((screenPos.x < ScreenManager.getInstance().screenWidth &&
-                       screenPos.x > 0 && screenPos.y > 0 &&
-                       screenPos.y < ScreenManager.getInstance().screenHeight) == false)
+                var screenPos:DHPoint = new DHPoint(0, 0);
+                curNode.getScreenXY(screenPos);
+                if(this.shouldCheckNodePos(screenPos, onscreen_allowed)) {
+                    if(pos.sub(curNode.pos)._length() <
+                        pos.sub(currentClosestNode.pos)._length())
                     {
-                        if(pos.sub(curNode.pos)._length() <
-                           pos.sub(currentClosestNode.pos)._length())
-                        {
-                            this.currentClosestNode = curNode;
-                        }
+                        this.currentClosestNode = curNode;
                     }
                 }
             }
-            if(this.closestPathNode != null && pos.sub(this.closestPathNode.pos)._length() <
-                pos.sub(this.currentClosestNode.pos)._length() && on_screen){
+            if(this.closestPathNode != null &&
+                pos.sub(this.closestPathNode.pos)._length() <
+                pos.sub(this.currentClosestNode.pos)._length())
+            {
                 return this.closestPathNode;
             } else {
                 return this.currentClosestNode;
             }
+        }
+
+        private function shouldCheckNodePos(screenPos:DHPoint,
+                                            onscreen_allowed:Boolean):Boolean
+        {
+            var _screen:ScreenManager = ScreenManager.getInstance();
+            if (!onscreen_allowed) {
+                return (
+                    screenPos.x > _screen.screenWidth ||
+                    screenPos.x < 0 || screenPos.y < 0 ||
+                    screenPos.y > _screen.screenHeight
+                );
+            }
+            return true;
         }
     }
 }
