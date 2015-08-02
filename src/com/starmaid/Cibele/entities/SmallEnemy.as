@@ -1,6 +1,7 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.management.ScreenManager;
 
     import org.flixel.*;
 
@@ -35,6 +36,19 @@ package com.starmaid.Cibele.entities {
         override public function die(p:PartyMember):void {
             super.die(p);
             this.attack_sprite.visible = false;
+        }
+
+        override public function isOnscreen():Boolean {
+            var screenPos:DHPoint = new DHPoint(0, 0);
+            var _screen:ScreenManager = ScreenManager.getInstance();
+            this.getScreenXY(screenPos);
+            var width:Number = Math.max(this.width, this.attack_sprite.width);
+            var height:Number = Math.max(this.height, this.attack_sprite.height);
+            return (
+                screenPos.x < _screen.screenWidth + width &&
+                screenPos.x > 0 - width && screenPos.y > 0 - height &&
+                screenPos.y < _screen.screenHeight + height
+            );
         }
 
         override public function setAuxPositions():void {

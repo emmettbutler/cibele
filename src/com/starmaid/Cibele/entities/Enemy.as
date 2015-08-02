@@ -258,7 +258,6 @@ package com.starmaid.Cibele.entities {
 
             this.closestPartyMember = this.getClosestPartyMember();
             this.closestPartyMemberDisp = this.closestPartyMember.footPos.sub(this.getAttackPos());
-            // TODO - cap hitPoints at some reasonable value
             this.hitPoints = Math.max(0, this.hitPoints);
             this.setAuxPositions();
 
