@@ -71,6 +71,11 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/it_files/posts_icon.png")] private var ImgPostsIcon:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/cur_blog_bio.png")] private var ImgHiatus:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/cur_blog_bio_icon.png")] private var ImgHiatusIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/home_folder.png")] private var ImgHomeFolderIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/russelorchard_icon.png")] private var ImgRussellOrchIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/russelorchard.png")] private var ImgRussellOrch:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/cotillion_icon.png")] private var ImgCotillionIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/cotillion.png")] private var ImgCotillion:Class;
 
         public function IkuTursoDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_IT;
@@ -194,14 +199,6 @@ package com.starmaid.Cibele.states {
                                     "icon_pos": new DHPoint(128, 130),
                                     "dim": new DHPoint(522, 392),
                                     "contents": ImgOldRoom
-                                },
-                                {
-                                    "name": "home",
-                                    "icon": ImgHomeIcon,
-                                    "icon_dim": new DHPoint(80, 90),
-                                    "icon_pos": new DHPoint(228, 130),
-                                    "dim": new DHPoint(646, 430),
-                                    "contents": ImgHome
                                 }
                             ]
                         }
@@ -245,6 +242,40 @@ package com.starmaid.Cibele.states {
                             "icon_pos": new DHPoint(239, 36),
                             "dim": new DHPoint(576, 432),
                             "contents": ImgProm
+                        },
+                        {
+                            "name": "cotillion",
+                            "icon": ImgCotillionIcon,
+                            "icon_dim": new DHPoint(80, 95),
+                            "icon_pos": new DHPoint(135, 140),
+                            "dim": new DHPoint(591, 444),
+                            "contents": ImgCotillion
+                        },
+                        {
+                            "name": "home folder",
+                            "icon": ImgHomeFolderIcon,
+                            "icon_dim": new DHPoint(95, 87),
+                            "icon_pos": new DHPoint(25, 140),
+                            "folder_dim": new DHPoint(631, 356),
+                            "folder_img": ImgPicturesFolder,
+                            "contents": [
+                                {
+                                    "name": "home",
+                                    "icon": ImgHomeIcon,
+                                    "icon_dim": new DHPoint(80, 90),
+                                    "icon_pos": new DHPoint(30, 30),
+                                    "dim": new DHPoint(646, 430),
+                                    "contents": ImgHome
+                                },
+                                {
+                                    "name": "russell",
+                                    "icon": ImgRussellOrchIcon,
+                                    "icon_dim": new DHPoint(107, 91),
+                                    "icon_pos": new DHPoint(150, 30),
+                                    "dim": new DHPoint(397, 530),
+                                    "contents": ImgRussellOrch
+                                }
+                            ]
                         }
                     ]
                 },
