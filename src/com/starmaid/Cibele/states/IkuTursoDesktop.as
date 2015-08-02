@@ -49,6 +49,8 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/oldroom_icon.png")] private var ImgOldRoomIcon:Class;
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/home.png")] private var ImgHome:Class;
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/home_icon.png")] private var ImgHomeIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/prom.png")] private var ImgProm:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/prom_icon.png")] private var ImgPromIcon:Class;
 
         //old website stuff
         [Embed(source="/../assets/images/ui/popups/it_files/blog1_icon.png")] private var ImgBlog1Icon:Class;
@@ -236,6 +238,14 @@ package com.starmaid.Cibele.states {
                             "dim": new DHPoint(631, 356),
                             "contents": ImgUntitledFolderPartyPoem1
                         },
+                        {
+                            "name": "prom",
+                            "icon": ImgPromIcon,
+                            "icon_dim": new DHPoint(78, 93),
+                            "icon_pos": new DHPoint(239, 36),
+                            "dim": new DHPoint(576, 432),
+                            "contents": ImgProm
+                        }
                     ]
                 },
                 {

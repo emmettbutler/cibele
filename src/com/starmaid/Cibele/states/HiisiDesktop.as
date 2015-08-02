@@ -107,6 +107,14 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/eu_files/oldwebsite/profile_icon.png")] private var ImgEuProfileIcon:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/oldwebsite/profile.png")] private var ImgEuProfile:Class;
 
+        [Embed(source="/../assets/images/ui/popups/hi_files/selfie_4.png")] private var ImgSelfie3:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/selfie_4_icon.png")] private var ImgSelfie3Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/home.png")] private var ImgHome1:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/home_icon.png")] private var ImgHome1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/sexy2.png")] private var ImgSexyAug:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/sexy2_icon.png")] private var ImgSexyAugIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/aug_icon.png")] private var ImgAugFolderIcon:Class;
+
         public function HiisiDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_HI;
         }
@@ -231,6 +239,24 @@ package com.starmaid.Cibele.states {
                                     "icon_pos": new DHPoint(30, 132),
                                     "dim": new DHPoint(512, 356),
                                     "contents": ImgPuppy
+                                },
+                                {
+                                    "name": "aug_subfolder",
+                                    "icon": ImgAugFolderIcon,
+                                    "icon_dim": new DHPoint(94, 91),
+                                    "icon_pos": new DHPoint(31, 235),
+                                    "folder_img": ImgPicturesFolder,
+                                    "folder_dim": new DHPoint(631, 356),
+                                    "contents": [
+                                        {
+                                            "name": "sexy aug",
+                                            "icon": ImgSexyAugIcon,
+                                            "icon_dim": new DHPoint(76, 91),
+                                            "icon_pos": new DHPoint(30, 30),
+                                            "dim": new DHPoint(640, 426),
+                                            "contents": ImgSexyAug
+                                        }
+                                    ]
                                 }
                             ]
                         },
@@ -549,6 +575,22 @@ package com.starmaid.Cibele.states {
                                     "icon_pos": new DHPoint(30, 30),
                                     "dim": new DHPoint(320, 440),
                                     "contents": ImgHISexy1
+                                },
+                                {
+                                    "name": "selfie2008 1",
+                                    "icon": ImgSelfie3Icon,
+                                    "icon_dim": new DHPoint(75, 88),
+                                    "icon_pos": new DHPoint(140, 33),
+                                    "dim": new DHPoint(298, 415),
+                                    "contents": ImgSelfie3
+                                },
+                                {
+                                    "name": "home 1",
+                                    "icon": ImgHome1Icon,
+                                    "icon_dim": new DHPoint(84, 92),
+                                    "icon_pos": new DHPoint(250, 33),
+                                    "dim": new DHPoint(563, 422),
+                                    "contents": ImgHome1
                                 }
                             ]
                         }
