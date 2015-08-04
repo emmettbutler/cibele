@@ -82,6 +82,13 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/it_files/mycar.png")] private var ImgOldCar:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/nyc1_icon.png")] private var ImgNYC1Icon:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/nyc1.png")] private var ImgNYC1:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/1stday_icon.png")] private var Img1stDayIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/1stday.png")] private var Img1stDay:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/nyc_folder_icon.png")] private var ImgNYCFolderIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/liberty_icon.png")] private var ImgLibertyIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/liberty.png")] private var ImgLiberty:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/newhair_icon.png")] private var ImgNewHairIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/newhair.png")] private var ImgNewHair:Class;
 
         public function IkuTursoDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_IT;
@@ -149,6 +156,14 @@ package com.starmaid.Cibele.states {
                             "icon_pos": new DHPoint(410, 32),
                             "dim": new DHPoint(456, 356),
                             "contents": ImgMom
+                        },
+                        {
+                            "name": "new hair",
+                            "icon": ImgNewHairIcon,
+                            "icon_dim": new DHPoint(77, 93),
+                            "icon_pos": new DHPoint(31, 145),
+                            "dim": new DHPoint(568, 426),
+                            "contents": ImgNewHair
                         },
                         {
                             "name": "hs_subfolder",
@@ -266,12 +281,38 @@ package com.starmaid.Cibele.states {
                             "contents": ImgCotillion
                         },
                         {
-                            "name": "nyc 1",
-                            "icon": ImgNYC1Icon,
-                            "icon_dim": new DHPoint(81, 90),
-                            "icon_pos": new DHPoint(235, 140),
-                            "dim": new DHPoint(583, 389),
-                            "contents": ImgNYC1
+                            "name": "nyc folder",
+                            "icon": ImgNYCFolderIcon,
+                            "icon_dim": new DHPoint(97, 96),
+                            "icon_pos": new DHPoint(240, 140),
+                            "folder_dim": new DHPoint(631, 356),
+                            "folder_img": ImgPicturesFolder,
+                            "contents": [
+                                {
+                                    "name": "nyc 1",
+                                    "icon": ImgNYC1Icon,
+                                    "icon_dim": new DHPoint(81, 90),
+                                    "icon_pos": new DHPoint(30, 30),
+                                    "dim": new DHPoint(583, 389),
+                                    "contents": ImgNYC1
+                                },
+                                {
+                                    "name": "1st day",
+                                    "icon": Img1stDayIcon,
+                                    "icon_dim": new DHPoint(77, 89),
+                                    "icon_pos": new DHPoint(140, 30),
+                                    "dim": new DHPoint(387, 518),
+                                    "contents": Img1stDay
+                                },
+                                {
+                                    "name": "liberty",
+                                    "icon": ImgLibertyIcon,
+                                    "icon_dim": new DHPoint(76, 96),
+                                    "icon_pos": new DHPoint(240, 28),
+                                    "dim": new DHPoint(568, 426),
+                                    "contents": ImgLiberty
+                                }
+                            ]
                         },
                         {
                             "name": "home folder",

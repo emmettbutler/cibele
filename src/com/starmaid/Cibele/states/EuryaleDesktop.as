@@ -97,6 +97,12 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/eu_files/sendtomom_icon.png")] private var ImgMomFolderIcon:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/bday1.png")] private var ImgBday1:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/bday1_icon.png")] private var ImgBday1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/bday2.png")] private var ImgBday2:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/bday2_icon.png")] private var ImgBday2Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/bday3.png")] private var ImgBday3:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/bday3_icon.png")] private var ImgBday3Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/bday4.png")] private var ImgBday4:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/bday4_icon.png")] private var ImgBday4Icon:Class;
 
         public function EuryaleDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
@@ -341,6 +347,30 @@ package com.starmaid.Cibele.states {
                                     "icon_pos": new DHPoint(30, 30),
                                     "dim": new DHPoint(682, 511),
                                     "contents": ImgBday1
+                                },
+                                {
+                                    "name": "bday2",
+                                    "icon": ImgBday2Icon,
+                                    "icon_dim": new DHPoint(84, 97),
+                                    "icon_pos": new DHPoint(140, 32),
+                                    "dim": new DHPoint(568, 426),
+                                    "contents": ImgBday2
+                                },
+                                {
+                                    "name": "bday3",
+                                    "icon": ImgBday3Icon,
+                                    "icon_dim": new DHPoint(86, 99),
+                                    "icon_pos": new DHPoint(250, 30),
+                                    "dim": new DHPoint(568, 426),
+                                    "contents": ImgBday3
+                                },
+                                {
+                                    "name": "bday4",
+                                    "icon": ImgBday4Icon,
+                                    "icon_dim": new DHPoint(80, 90),
+                                    "icon_pos": new DHPoint(30, 140),
+                                    "dim": new DHPoint(568, 426),
+                                    "contents": ImgBday4
                                 }
                             ]
                         }
