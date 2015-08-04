@@ -143,9 +143,9 @@ package com.starmaid.Cibele.states {
                 }
             ];
 
-            this.filename = "data/ikuturso_path.txt";
-            this.graph_filename = "data/ikuturso_graph.txt";
-            this.mapTilePrefix = "ikuturso";
+            this.filename = "data/hiisi_path.txt";
+            this.graph_filename = "data/hiisi_graph.txt";
+            this.mapTilePrefix = "hiisi";
             this.tileGridDimensions = new DHPoint(10, 5);
             this.estTileDimensions = new DHPoint(1359, 818);
             this.playerStartPos = new DHPoint(4600, 7565);
