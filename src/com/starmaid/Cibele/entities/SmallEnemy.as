@@ -60,6 +60,13 @@ package com.starmaid.Cibele.entities {
             this.mapHitbox.y = this.footPos.y - this.mapHitbox.height;
         }
 
+        override public function takeDamage(p:PartyMember):void{
+            super.takeDamage(p);
+            if (this.colliding) {
+                this.dir = ZERO_POINT;
+            }
+        }
+
         override public function update():void {
             super.update();
             if (this.colliding) {
