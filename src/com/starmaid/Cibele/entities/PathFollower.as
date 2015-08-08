@@ -471,6 +471,9 @@ package com.starmaid.Cibele.entities {
                 .mulScl(ScreenManager.getInstance().screenWidth));
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint, false);
             if (warpNode != null) {
+                if (ScreenManager.getInstance().DEBUG) {
+                    trace("Warp node onscreen: " + warpNode.isOnscreen());
+                }
                 this.setPos(warpNode.pos.sub(this.footPos.sub(this.pos)));
             }
             this.initWalk(this.playerRef.footPos);

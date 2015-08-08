@@ -108,14 +108,14 @@ package com.starmaid.Cibele.utils {
         }
 
         public function getClosestNode(pos:DHPoint, onscreen_allowed:Boolean=true):MapNode {
-            this.closestPathNode = this.path.getClosestNode(pos);
+            this.closestPathNode = this.path.getClosestNode(pos, onscreen_allowed);
             currentClosestNode = this.nodes[0];
             var curNode:MapNode;
             for(var i:Number = 0; i < this.nodes.length; i++){
                 curNode = this.nodes[i];
                 var screenPos:DHPoint = new DHPoint(0, 0);
                 curNode.getScreenXY(screenPos);
-                if(this.shouldCheckNodePos(screenPos, onscreen_allowed)) {
+                if(this.path.shouldCheckNodePos(screenPos, onscreen_allowed)) {
                     if(pos.sub(curNode.pos)._length() <
                         pos.sub(currentClosestNode.pos)._length())
                     {
@@ -131,20 +131,6 @@ package com.starmaid.Cibele.utils {
             } else {
                 return this.currentClosestNode;
             }
-        }
-
-        private function shouldCheckNodePos(screenPos:DHPoint,
-                                            onscreen_allowed:Boolean):Boolean
-        {
-            var _screen:ScreenManager = ScreenManager.getInstance();
-            if (!onscreen_allowed) {
-                return (
-                    screenPos.x > _screen.screenWidth ||
-                    screenPos.x < 0 || screenPos.y < 0 ||
-                    screenPos.y > _screen.screenHeight
-                );
-            }
-            return true;
         }
     }
 }
