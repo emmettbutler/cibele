@@ -54,9 +54,6 @@ package com.starmaid.Cibele.utils {
             this.nodes.length = 0;
         }
 
-        public function update():void {
-        }
-
         public function getClosestGenericNode(pos:DHPoint):MapNode {
             var closestPathNode:MapNode = this.path.getClosestNode(pos);
             var currentClosestNode:MapNode = this.nodes[0];
@@ -110,36 +107,26 @@ package com.starmaid.Cibele.utils {
             return 0;
         }
 
-        public function getClosestNode(pos:DHPoint, exclude:MapNode=null, on_screen:Boolean = true):MapNode {
-            this.closestPathNode = this.path.getClosestNode(pos);
+        public function getClosestNode(pos:DHPoint, onscreen_allowed:Boolean=true):MapNode {
+            this.closestPathNode = this.path.getClosestNode(pos, onscreen_allowed);
             currentClosestNode = this.nodes[0];
             var curNode:MapNode;
             for(var i:Number = 0; i < this.nodes.length; i++){
                 curNode = this.nodes[i];
-                if(on_screen) {
-                    if(exclude != null && curNode != exclude &&
-                       pos.sub(curNode.pos)._length() <
-                       pos.sub(currentClosestNode.pos)._length())
+                var screenPos:DHPoint = new DHPoint(0, 0);
+                curNode.getScreenXY(screenPos);
+                if(this.path.shouldCheckNodePos(screenPos, onscreen_allowed)) {
+                    if(pos.sub(curNode.pos)._length() <
+                        pos.sub(currentClosestNode.pos)._length())
                     {
                         this.currentClosestNode = curNode;
                     }
-                } else {
-                    var screenPos:DHPoint = new DHPoint(0, 0);
-                    curNode.getScreenXY(screenPos);
-                    if((screenPos.x < ScreenManager.getInstance().screenWidth &&
-                       screenPos.x > 0 && screenPos.y > 0 &&
-                       screenPos.y < ScreenManager.getInstance().screenHeight) == false)
-                    {
-                        if(pos.sub(curNode.pos)._length() <
-                           pos.sub(currentClosestNode.pos)._length())
-                        {
-                            this.currentClosestNode = curNode;
-                        }
-                    }
                 }
             }
-            if(this.closestPathNode != null && pos.sub(this.closestPathNode.pos)._length() <
-                pos.sub(this.currentClosestNode.pos)._length() && on_screen){
+            if(this.closestPathNode != null &&
+                pos.sub(this.closestPathNode.pos)._length() <
+                pos.sub(this.currentClosestNode.pos)._length())
+            {
                 return this.closestPathNode;
             } else {
                 return this.currentClosestNode;

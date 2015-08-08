@@ -100,14 +100,36 @@ package com.starmaid.Cibele.management {
         public function update():void {
         }
 
-        public function getClosestNode(pos:DHPoint):PathNode{
+        public function getClosestNode(pos:DHPoint, onscreen_allowed:Boolean=true):PathNode{
+            var curNode:PathNode;
             var currentClosestNode:PathNode = this.nodes[0];
             for(var i:Number = 0; i < this.nodes.length; i++){
-                if(pos.sub(this.nodes[i].pos)._length() < pos.sub(currentClosestNode.pos)._length()){
-                    currentClosestNode = this.nodes[i];
+                curNode = this.nodes[i];
+                var screenPos:DHPoint = new DHPoint(0, 0);
+                curNode.getScreenXY(screenPos);
+                if(this.shouldCheckNodePos(screenPos, onscreen_allowed)) {
+                    if(pos.sub(curNode.pos)._length() <
+                        pos.sub(currentClosestNode.pos)._length())
+                    {
+                        currentClosestNode = curNode;
+                    }
                 }
             }
             return currentClosestNode;
+        }
+
+        public function shouldCheckNodePos(screenPos:DHPoint,
+                                            onscreen_allowed:Boolean):Boolean
+        {
+            var _screen:ScreenManager = ScreenManager.getInstance();
+            if (!onscreen_allowed) {
+                return (
+                    screenPos.x > _screen.screenWidth ||
+                    screenPos.x < 0 || screenPos.y < 0 ||
+                    screenPos.y > _screen.screenHeight
+                );
+            }
+            return true;
         }
 
         public function toString():String {
