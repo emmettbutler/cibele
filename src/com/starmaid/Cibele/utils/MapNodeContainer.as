@@ -54,30 +54,6 @@ package com.starmaid.Cibele.utils {
             this.nodes.length = 0;
         }
 
-        public function getClosestGenericNode(pos:DHPoint):MapNode {
-            var closestPathNode:MapNode = this.path.getClosestNode(pos);
-            var currentClosestNode:MapNode = this.nodes[0];
-            var curNode:MapNode, curDisp:Number, curClosestDisp:Number;
-            if (currentClosestNode == null) {
-                return null;
-            }
-            curClosestDisp = pos.sub(currentClosestNode.pos)._length();
-            for(var i:Number = 0; i < this.nodes.length; i++){
-                curNode = this.nodes[i];
-                curDisp = pos.sub(curNode.pos)._length();
-                if(curDisp < curClosestDisp)
-                {
-                    currentClosestNode = curNode;
-                    curClosestDisp = pos.sub(currentClosestNode.pos)._length();
-                }
-            }
-            if(this.closestPathNode != null && pos.sub(closestPathNode.pos)._length() < curClosestDisp){
-                return closestPathNode;
-            } else {
-                return currentClosestNode;
-            }
-        }
-
         public function getNClosestGenericNodes(n:Number, pos:DHPoint):Array {
             var checkedGroup:Array = new Array();
             var curNode:MapNode, disp:Number;
