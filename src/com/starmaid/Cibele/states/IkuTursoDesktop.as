@@ -89,6 +89,8 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/it_files/liberty.png")] private var ImgLiberty:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/newhair_icon.png")] private var ImgNewHairIcon:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/newhair.png")] private var ImgNewHair:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/selfie_5_icon.png")] private var ImgSelfie5Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/selfie_5.png")] private var ImgSelfie5:Class;
 
         public function IkuTursoDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_IT;
@@ -311,6 +313,14 @@ package com.starmaid.Cibele.states {
                                     "icon_pos": new DHPoint(240, 28),
                                     "dim": new DHPoint(568, 426),
                                     "contents": ImgLiberty
+                                },
+                                {
+                                    "name": "selfie 5",
+                                    "icon": ImgSelfie5Icon,
+                                    "icon_dim": new DHPoint(74, 90),
+                                    "icon_pos": new DHPoint(30, 128),
+                                    "dim": new DHPoint(377, 396),
+                                    "contents": ImgSelfie5
                                 }
                             ]
                         },

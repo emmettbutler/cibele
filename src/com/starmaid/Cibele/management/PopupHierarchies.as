@@ -54,6 +54,12 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/eu_files/forcibby_icon.png")] private static var ImgForCibbyIcon:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/selfie1.png")] private static var ImgEUSelfie1:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/selfie1_icon.png")] private static var ImgEUSelfie1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/house.png")] private static var ImgHouse:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/house_icon.png")] private static var ImgHouseIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/home_folder.png")] private static var ImgHomeFolder:Class;
+        [Embed(source="/../assets/images/ui/popups/selfiedesktop/pictures_folder.png")] private static var ImgPicturesFolder:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/loldad_icon.png")] private static var ImgLolDadIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/loldad.png")] private static var ImgLolDad:Class;
 
         //hiisi
         [Embed(source="/../assets/images/ui/popups/hi_email/flight_link.png")] private static var ImgHiFlightLink:Class;
@@ -433,6 +439,35 @@ package com.starmaid.Cibele.management {
                     "dim": new DHPoint(512, 356),
                     "struc": PopUpManager.EU_DOWNLOADS,
                     "contents": ImgEUSelfie1
+                },
+                {
+                    "name": "home folder",
+                    "icon": ImgHomeFolder,
+                    "icon_dim": new DHPoint(101, 92),
+                    "icon_pos": new DHPoint(240, 30),
+                    "folder_dim": new DHPoint(631, 356),
+                    "struc": PopUpManager.EU_DOWNLOADS,
+                    "folder_img": ImgPicturesFolder,
+                    "contents": [
+                        {
+                            "name": "house",
+                            "icon": ImgHouseIcon,
+                            "icon_dim": new DHPoint(80, 91),
+                            "icon_pos": new DHPoint(30, 30),
+                            "dim": new DHPoint(648, 484),
+                            "struc": PopUpManager.EU_DOWNLOADS,
+                            "contents": ImgHouse
+                        },
+                        {
+                            "name": "loldad",
+                            "icon": ImgLolDadIcon,
+                            "icon_dim": new DHPoint(79, 91),
+                            "icon_pos": new DHPoint(130, 30),
+                            "dim": new DHPoint(648, 484),
+                            "struc": PopUpManager.EU_DOWNLOADS,
+                            "contents": ImgLolDad
+                        }
+                    ]
                 }
             ]};
             struc[PopUpManager.HI_EMAIL_1] = { "contents": [

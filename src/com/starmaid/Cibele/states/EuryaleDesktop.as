@@ -103,6 +103,14 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/eu_files/bday3_icon.png")] private var ImgBday3Icon:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/bday4.png")] private var ImgBday4:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/bday4_icon.png")] private var ImgBday4Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/selfie3.png")] private var ImgSelfie3:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/selfie3_icon.png")] private var ImgSelfie3Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/285aug_icon.png")] private var Img285AugIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/285aug.png")] private var Img285Aug:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/myrtle_icon.png")] private var ImgMyrtleIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/myrtle.png")] private var ImgMyrtle:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/river_icon.png")] private var ImgRiverIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/river.png")] private var ImgRiver:Class;
 
         public function EuryaleDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
@@ -148,6 +156,14 @@ package com.starmaid.Cibele.states {
                             "icon_pos": new DHPoint(149, 31),
                             "dim": new DHPoint(530, 356),
                             "contents": ImgSelfiesFolderMe1
+                        },
+                        {
+                            "name": "selfie 3",
+                            "icon": ImgSelfie3Icon,
+                            "icon_dim": new DHPoint(76, 92),
+                            "icon_pos": new DHPoint(249, 29),
+                            "dim": new DHPoint(480, 480),
+                            "contents": ImgSelfie3
                         },
                         {
                             "name": "hs_subfolder",
@@ -288,6 +304,14 @@ package com.starmaid.Cibele.states {
                                     "icon_pos": new DHPoint(225, 32),
                                     "dim": new DHPoint(488, 356),
                                     "contents": ImgPicturesFolderFriends
+                                },
+                                {
+                                    "name": "river",
+                                    "icon": ImgRiverIcon,
+                                    "icon_dim": new DHPoint(78, 91),
+                                    "icon_pos": new DHPoint(30, 132),
+                                    "dim": new DHPoint(568, 426),
+                                    "contents": ImgRiver
                                 }
                             ]
                         }
@@ -331,6 +355,22 @@ package com.starmaid.Cibele.states {
                             "icon_pos": new DHPoint(250, 36),
                             "dim": new DHPoint(631, 356),
                             "contents": ImgBlog7Draft
+                        },
+                        {
+                            "name": "285aug",
+                            "icon": Img285AugIcon,
+                            "icon_dim": new DHPoint(78, 94),
+                            "icon_pos": new DHPoint(143, 135),
+                            "dim": new DHPoint(381, 386),
+                            "contents": Img285Aug
+                        },
+                        {
+                            "name": "myrtle",
+                            "icon": ImgMyrtleIcon,
+                            "icon_dim": new DHPoint(84, 92),
+                            "icon_pos": new DHPoint(243, 135),
+                            "dim": new DHPoint(480, 480),
+                            "contents": ImgMyrtle
                         },
                         {
                             "name": "sendtomom_subfolder",
