@@ -472,7 +472,9 @@ package com.starmaid.Cibele.management {
                 FlxG.state.add(this.popups[key].x_sprite);
                 FlxG.state.add(this.popups[key].x_sprite_hover);
                 if(this.folder_structure[key] != null) {
-                    this.folder_builder.populateFolders(this.folder_structure[key], this.elements, this.popups[key]);
+                    this.folder_builder.populateFolders(this.folder_structure[key],
+                                                        this.elements,
+                                                        this.popups[key]);
                 }
             }
 

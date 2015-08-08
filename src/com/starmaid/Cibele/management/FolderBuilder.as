@@ -86,7 +86,8 @@ package com.starmaid.Cibele.management {
                     spr = UIElement.fromPoint(
                         new DHPoint(
                             (_screen.screenWidth - cur["folder_dim"].x) * Math.random(),
-                            (_screen.screenHeight - cur["folder_dim"].y) * Math.random()
+                            // extra 80 px to avoid overlapping dock
+                            (_screen.screenHeight - cur["folder_dim"].y - 80) * Math.random()
                         )
                     );
                     spr.loadGraphic(cur["folder_img"], false, false, cur["folder_dim"].x, cur["folder_dim"].y);
@@ -121,7 +122,13 @@ package com.starmaid.Cibele.management {
 
                     recurseSet.push([cur, elements, grp])
                 } else {
-                    spr = UIElement.fromPoint(new DHPoint((_screen.screenWidth - cur["dim"].x) * Math.random(), (_screen.screenHeight - cur["dim"].y) * Math.random()));
+                    spr = UIElement.fromPoint(
+                        new DHPoint(
+                            (_screen.screenWidth - cur["dim"].x) * Math.random(),
+                            // extra 80 px to avoid overlapping dock
+                            (_screen.screenHeight - cur["dim"].y - 80) * Math.random()
+                        )
+                    );
                     spr.loadGraphic(cur["contents"], false, false, cur["dim"].x, cur["dim"].y);
                     spr.visible = false;
                     curX = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 26, spr.y - 5));
