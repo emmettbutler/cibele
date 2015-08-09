@@ -15,7 +15,6 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/files/camera1disconnecticon.png")] private static var ImgCibCamDisconnectIcon:Class;
         [Embed(source="/../assets/images/ui/popups/files/camera1selfie.png")] private static var ImgCibCam1:Class;
         [Embed(source="/../assets/images/ui/popups/files/camera1selfieicon.png")] private static var ImgCibCam1Icon:Class;
-        [Embed(source="/../assets/images/ui/popups/ichidownloads.png")] private static var ImgCibSelfieFolder:Class;
         [Embed(source="/../assets/images/ui/popups/it_email/guil1_sub1link.png")] private static var ImgGuilLink1:Class;
         [Embed(source="/../assets/images/ui/popups/it_email/guil1_sub1.png")] private static var ImgGuilSub:Class;
         [Embed(source="/../assets/images/ui/popups/it_email/ichiselfieemail_sub1.png")] private static var ImgIchiSelfieSub1:Class;
@@ -247,7 +246,7 @@ package com.starmaid.Cibele.management {
                     "icon_pos": new DHPoint(43, 124),
                     "folder_dim": new DHPoint(631, 356),
                     "struc": PopUpManager.CIB_SELFIE_FOLDER,
-                    "folder_img": ImgCibSelfieFolder,
+                    "folder_img": ImgPicturesFolder,
                     "contents": [
                         {
                             "name": "cam selfies",

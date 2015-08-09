@@ -13,10 +13,8 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/hi_desktop/photocollage.png")] private var ImgScreenshot:Class;
         [Embed(source="/../assets/images/ui/UI_pink_x.png")] private var ImgInboxXPink:Class;
         //desktop selfi/e folder assets
-        [Embed(source="/../assets/images/ui/popups/selfiedesktop/selfies_folder.png")] private var ImgSelfiesFolder:Class;
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/pics_icon.png")] private var ImgSelfiesFolderPicsIcon:Class;
         [Embed(source="/../assets/images/ui/popups/selfiedesktop/pictures_folder.png")] private var ImgPicturesFolder:Class;
-        [Embed(source="/../assets/images/ui/popups/selfiedesktop/untitled.png")] private var ImgUntitledFolder:Class;
 
         [Embed(source="/../assets/images/ui/popups/hi_desktop/blake_beach.png")] private var ImgBlakeBeach:Class;
         [Embed(source="/../assets/images/ui/popups/hi_desktop/blake_beach_icon.png")] private var ImgBlakeBeachIcon:Class;
@@ -46,7 +44,6 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/hi_desktop/nina5_icon.png")] private var ImgNina5Icon:Class;
 
         [Embed(source="/../assets/images/ui/popups/eu_files/hsfolder.png")] private var ImgHSFolderIcon:Class;
-        [Embed(source="/../assets/images/ui/popups/eu_files/highschool.png")] private var ImgHSFolder:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/bed_icon.png")] private var ImgBedIcon:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/bed.png")] private var ImgBed:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/cutewow.png")] private var ImgCuteWow:Class;
@@ -146,7 +143,7 @@ package com.starmaid.Cibele.states {
              */
             folder_structure = {"contents": [
                 {
-                    "folder_img": ImgSelfiesFolder,
+                    "folder_img": ImgPicturesFolder,
                     "folder_dim": new DHPoint(631, 356),
                     "hitbox_pos": new DHPoint(_screen.screenWidth * .87, _screen.screenHeight * .12),
                     "hitbox_dim": new DHPoint(150, 100),
@@ -408,7 +405,7 @@ package com.starmaid.Cibele.states {
                             "icon": ImgHSFolderIcon,
                             "icon_dim": new DHPoint(87, 79),
                             "icon_pos": new DHPoint(131, 135),
-                            "folder_img": ImgHSFolder,
+                            "folder_img": ImgPicturesFolder,
                             "folder_dim": new DHPoint(631, 356),
                             "contents": [
                                 {
@@ -531,7 +528,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "name": "untitled",
-                    "folder_img": ImgUntitledFolder,
+                    "folder_img": ImgPicturesFolder,
                     "folder_dim": new DHPoint(631, 356),
                     "hitbox_pos": new DHPoint(_screen.screenWidth * .84, _screen.screenHeight * .33),
                     "hitbox_dim": new DHPoint(150, 100),

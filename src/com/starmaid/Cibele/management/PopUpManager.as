@@ -36,7 +36,6 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/UI_happy_face_pink.png")] private var ImgEmojiHappyPink:Class;
         [Embed(source="/../assets/images/ui/UI_sad_face_pink.png")] private var ImgEmojiSadPink:Class;
         [Embed(source="/../assets/images/ui/UI_Angry_face_pink.png")] private var ImgEmojiAngryPink:Class;
-        [Embed(source="/../assets/images/ui/popups/ichidownloads.png")] private var ImgIchiDL2:Class;
         [Embed(source="/../assets/images/ui/popups/it_email/none.png")] private var ImgEmptyInbox:Class;
         [Embed(source="/../assets/images/ui/popups/picly/ninaopen.png")] private var ImgForIchi:Class;
         [Embed(source="/../assets/images/ui/popups/it_email/bulldoghell_email.png")] private static var ImgBHEmail:Class;
@@ -47,7 +46,6 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/eu_email/emailselfie.png")] private static var ImgEuEmailSelfie:Class;
         [Embed(source="/../assets/images/ui/popups/eu_email/email2.png")] private static var ImgEuEmail2:Class;
         [Embed(source="/../assets/images/ui/popups/eu_picly/dredgeirl.png")] private static var ImgEuDredge:Class;
-        [Embed(source="/../assets/images/ui/popups/eu_files/highschool.png")] private static var ImgEuHighSchool:Class;
         [Embed(source="/../assets/images/ui/popups/picly/ninabday.png")] private static var ImgNinaBday:Class;
 
         //Hiisi Popups
@@ -56,7 +54,7 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/hi_email/class_email.png")] private static var ImgHiClassEmail:Class;
         [Embed(source="/../assets/images/ui/popups/hi_email/prof_email.png")] private static var ImgHiProfEmail:Class;
         [Embed(source="/../assets/images/ui/popups/picly/hiisi.png")] private static var ImgHiPiclyDef:Class;
-        [Embed(source="/../assets/images/ui/popups/ichidownloads.png")] private static var ImgDownloadsFolder:Class;
+        [Embed(source="/../assets/images/ui/popups/selfiedesktop/pictures_folder.png")] private static var ImgPicturesFolder:Class;
 
         public static var _instance:PopUpManager = null;
 
@@ -433,7 +431,7 @@ package com.starmaid.Cibele.management {
             this.popups[EMPTY_INBOX].was_opened = true;
             this.popups[FOR_ICHI] = new PopUp(ImgForIchi, 356, 463, 0, FOR_ICHI);
             this.popups[FOR_ICHI].was_opened = true;
-            this.popups[ICHI_DL_2] = new PopUp(ImgIchiDL2, 631, 356, 0, ICHI_DL_2);
+            this.popups[ICHI_DL_2] = new PopUp(ImgPicturesFolder, 631, 356, 0, ICHI_DL_2);
             this.popups[ICHI_DL_2].was_opened = true;
             this.popups[ICHI_PICLY_1] = new PopUp(ImgIchiPicly1, 356, 463, 0, ICHI_PICLY_1);
             this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 356, 463, PopUp.CLICK_THROUGH, SELFIES_1);
@@ -447,15 +445,15 @@ package com.starmaid.Cibele.management {
             this.popups[EU_EMAIL_SELFIE] = new PopUp(ImgEuEmailSelfie, 631, 356, 0, EU_EMAIL_SELFIE);
             this.popups[EU_EMAIL_2] = new PopUp(ImgEuEmail2, 631, 356, 0, EU_EMAIL_2);
             this.popups[EU_DREDGE] = new PopUp(ImgEuDredge, 356, 463, 0, EU_DREDGE);
-            this.popups[EU_HIGHSCHOOL] = new PopUp(ImgEuHighSchool, 631, 356, 0, EU_HIGHSCHOOL);
-            this.popups[EU_DOWNLOADS] = new PopUp(ImgIchiDL2, 631, 356, 0, EU_DOWNLOADS);
+            this.popups[EU_HIGHSCHOOL] = new PopUp(ImgPicturesFolder, 631, 356, 0, EU_HIGHSCHOOL);
+            this.popups[EU_DOWNLOADS] = new PopUp(ImgPicturesFolder, 631, 356, 0, EU_DOWNLOADS);
             this.popups[EU_PICLY_1] = new PopUp(ImgNinaBday, 356, 463, 0, EU_PICLY_1);
 
             //hiisi
             this.popups[HI_EMAIL_1] = new PopUp(ImgHiFlightEmail, 631, 356, 0, HI_EMAIL_1);
             this.popups[HI_PICLY_1] = new PopUp(ImgHiPicly1, 356, 463, 0, HI_PICLY_1);
             this.popups[HI_EMAIL_2] = new PopUp(ImgHiClassEmail, 631, 356, 0, HI_EMAIL_2);
-            this.popups[HI_SELFIE_DC] = new PopUp(ImgDownloadsFolder, 631, 356, 0, HI_SELFIE_DC);
+            this.popups[HI_SELFIE_DC] = new PopUp(ImgPicturesFolder, 631, 356, 0, HI_SELFIE_DC);
             this.popups[HI_EMAIL_3] = new PopUp(ImgHiProfEmail, 631, 356, 0, HI_EMAIL_3);
             this.popups[HI_PICLY_DEF] = new PopUp(ImgHiPiclyDef, 356, 463, 0, HI_PICLY_DEF);
 
