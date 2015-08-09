@@ -51,7 +51,8 @@ package com.starmaid.Cibele.entities {
             this.setVisible(true);
         }
 
-        public function playEnergySfx():void {
+        override public function setPoints(points:Number):void {
+            super.setPoints(points);
             SoundManager.getInstance().playSound(
                 SfxEnergy, 1*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.SFX,
                 "" + Math.random()

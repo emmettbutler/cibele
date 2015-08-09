@@ -1,11 +1,15 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.SoundManager;
 
     import org.flixel.*;
 
     public class SmallEnemy extends Enemy {
+        [Embed(source="/../assets/audio/effects/sfx_die_small.mp3")] private var SfxSmallEnemyDeath:Class;
+
         public var attack_sprite:GameObject;
         public var colliding:Boolean = false;
         public var collisionDirection:Array;
@@ -36,6 +40,12 @@ package com.starmaid.Cibele.entities {
         override public function die(p:PartyMember):void {
             super.die(p);
             this.attack_sprite.visible = false;
+            if(this.inViewOfPlayer()) {
+                SoundManager.getInstance().playSound(
+                    SfxSmallEnemyDeath, 2 * GameSound.MSEC_PER_SEC, null,
+                    false, 1, GameSound.SFX, "" + Math.random()
+                );
+            }
         }
 
         override public function isOnscreen():Boolean {

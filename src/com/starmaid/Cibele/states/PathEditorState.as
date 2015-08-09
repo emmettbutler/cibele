@@ -423,7 +423,6 @@ package com.starmaid.Cibele.states {
             FlxG.stage.dispatchEvent(
                 new DataEvent(GameState.EVENT_TEAM_POWER_INCREASED,
                               {'team_power': this.teamPower}));
-            this.teamPowerBar.playEnergySfx();
         }
 
         private function teamPowerIsActive():Boolean {

@@ -1,6 +1,5 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.ScreenManager;
-    import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameState;
@@ -14,9 +13,6 @@ package com.starmaid.Cibele.entities {
     import flash.utils.Dictionary;
 
     public class Enemy extends GameObject {
-        [Embed(source="/../assets/audio/effects/sfx_die_small.mp3")] private var SfxSmallEnemyDeath:Class;
-        [Embed(source="/../assets/audio/effects/sfx_die_big.mp3")] private var SfxBossDeath:Class;
-
         protected static const TYPE_SMALL:String = "enemy";
         protected static const TYPE_BOSS:String = "boss";
         protected var _enemyType:String = TYPE_SMALL;
@@ -180,16 +176,6 @@ package com.starmaid.Cibele.entities {
             GlobalTimer.getInstance().setMark(
                 MARK_RESPAWN + Math.random() * 200,
                 15 * GameSound.MSEC_PER_SEC, this.respawn, true
-            );
-            if(this._enemyType != TYPE_BOSS && this.inViewOfPlayer()) {
-                this.playSmallEnemyDeathSfx();
-            }
-        }
-
-        public function playSmallEnemyDeathSfx():void {
-            SoundManager.getInstance().playSound(
-                SfxSmallEnemyDeath, 2*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.SFX,
-                "" + Math.random()
             );
         }
 

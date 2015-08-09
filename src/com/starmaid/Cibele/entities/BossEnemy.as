@@ -193,10 +193,6 @@ package com.starmaid.Cibele.entities {
             this._state = STATE_DEAD;
             FlxG.stage.dispatchEvent(
                 new DataEvent(GameState.EVENT_BOSS_DIED, {'killed_by': p}));
-            this.playBossDeathSfx();
-        }
-
-        public function playBossDeathSfx():void {
             SoundManager.getInstance().playSound(
                 SfxBossDeath, 5*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.SFX,
                 "" + Math.random()

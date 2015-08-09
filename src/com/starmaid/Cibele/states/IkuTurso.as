@@ -112,6 +112,7 @@ package com.starmaid.Cibele.states {
                 GlobalTimer.getInstance().setMark("First Convo", GameState.SHORT_DIALOGUE ? 1 : 7*GameSound.MSEC_PER_SEC, this.bulldogHellPopup);
             }
             this.convo1Sound = null;
+            this.startBoss();
         }
 
         public function bulldogHellPopup():void {
