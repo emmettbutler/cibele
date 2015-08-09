@@ -16,7 +16,7 @@ package com.starmaid.Cibele.entities {
             this._dimensions = dim;
             this._clickFn = clickFn;
 
-            this.makeGraphic(dim.x, dim.y, 0xff9966ff);
+            this.makeGraphic(dim.x, dim.y, 0xff6cb7ce);
             this.scrollFactor = new DHPoint(0, 0);
 
             this._text = new FlxText(pos.x, pos.y, dim.x, txt);
