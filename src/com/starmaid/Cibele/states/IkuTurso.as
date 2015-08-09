@@ -172,8 +172,8 @@ package com.starmaid.Cibele.states {
 
         public function playEndDialogue():void {
             SoundManager.getInstance().playSound(
-                   IchiBossKill, 3*GameSound.MSEC_PER_SEC, this.playEndFilm,
-                    false, 1, GameSound.VOCAL);
+                IchiBossKill, 3*GameSound.MSEC_PER_SEC, this.playEndFilm,
+                false, 1, GameSound.VOCAL);
         }
 
         public function playEndFilm():void {
