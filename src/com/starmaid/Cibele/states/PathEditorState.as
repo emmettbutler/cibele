@@ -403,6 +403,7 @@ package com.starmaid.Cibele.states {
             this.animatingTeamPower = true;
             this.teamPowerDelta = amt;
             var curScreenPos:DHPoint = new DHPoint(0, 0);
+            this.teamPowerBar.playEnergySfx();
             this.player.getScreenXY(curScreenPos);
             this.teamPowerAnimationObjects[0]['spr'].setPos(curScreenPos);
             this.teamPowerAnimationObjects[0]['spr'].visible = true;

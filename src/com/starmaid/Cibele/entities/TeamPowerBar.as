@@ -3,10 +3,13 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.SoundManager;
 
     import org.flixel.*;
 
     public class TeamPowerBar extends Meter {
+        [Embed(source="/../assets/audio/effects/sfx_energy.mp3")] private var SfxEnergy:Class;
+
         protected var _labelText:FlxText, _bossText:FlxText;
         protected var _outlines:Array
         private var _curMaxOutline:Number, _numOutlines:Number = 3;
@@ -46,6 +49,13 @@ package com.starmaid.Cibele.entities {
             }
 
             this.setVisible(true);
+        }
+
+        public function playEnergySfx():void {
+            SoundManager.getInstance().playSound(
+                SfxEnergy, 1*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.SFX,
+                "" + Math.random()
+            );
         }
 
         public function setHighlight(v:Boolean):void {
