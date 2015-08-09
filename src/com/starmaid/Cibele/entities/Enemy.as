@@ -76,6 +76,7 @@ package com.starmaid.Cibele.entities {
             if (this.basePosOffset == null) {
                 this.basePosOffset = new DHPoint(0, this.height);
             }
+            this.loopCallSound();
         }
 
         public function isDead():Boolean {
@@ -88,7 +89,9 @@ package com.starmaid.Cibele.entities {
 
         public function addVisibleObjects():void {
             this._healthBar.addVisibleObjects();
-            FlxG.state.add(this.debugText);
+            if (ScreenManager.getInstance().DEBUG) {
+                FlxG.state.add(this.debugText);
+            }
         }
 
         public function setupSprites():void {
@@ -253,12 +256,14 @@ package com.starmaid.Cibele.entities {
             if (!(FlxG.state is LevelMapState)) {
                 return;
             }
-            if (this._state == STATE_TRACKING) {
-                this.playCallSound();
+            if (this.isOnscreen()) {
+                if (this._state == STATE_TRACKING) {
+                    this.playCallSound();
+                }
             }
             GlobalTimer.getInstance().setMark(
                 "enemy_call_" + this.slug,
-                (4 + (Math.random() * 5)) * GameSound.MSEC_PER_SEC,
+                (2 + (Math.random() * 1)) * GameSound.MSEC_PER_SEC,
                 function():void {
                     if (!(FlxG.state is LevelMapState)) {
                         return;
@@ -269,10 +274,14 @@ package com.starmaid.Cibele.entities {
             );
         }
 
-        protected function playCallSound():void { }
+        protected function playCallSound():void {
+            trace('playing it');
+        }
 
         override public function update():void{
             super.update();
+
+            this.debugText.text = this.getStateString();
 
             if (this._state == STATE_DEAD && this.visible == false) {
                 return;

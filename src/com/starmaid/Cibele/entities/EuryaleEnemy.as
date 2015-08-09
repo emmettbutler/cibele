@@ -68,7 +68,8 @@ package com.starmaid.Cibele.entities {
         }
 
         override protected function playCallSound():void {
-            trace('playing it');
+            super.playCallSound();
+            trace('playing it subclass');
             var callSnd:Class;
             if (this._type == EuryaleEnemy.TYPE1) {
                 callSnd = SndCall1;
