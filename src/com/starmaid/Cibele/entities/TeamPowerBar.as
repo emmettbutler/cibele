@@ -53,10 +53,11 @@ package com.starmaid.Cibele.entities {
 
         override public function setPoints(points:Number):void {
             super.setPoints(points);
-            SoundManager.getInstance().playSound(
-                SfxEnergy, 1*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.SFX,
-                "" + Math.random()
-            );
+            if (points != 0) {
+                SoundManager.getInstance().playSound(
+                    SfxEnergy, 1*GameSound.MSEC_PER_SEC, null, false, 1
+                );
+            }
         }
 
         public function setHighlight(v:Boolean):void {

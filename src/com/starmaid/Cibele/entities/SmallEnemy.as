@@ -43,7 +43,7 @@ package com.starmaid.Cibele.entities {
             if(this.inViewOfPlayer()) {
                 SoundManager.getInstance().playSound(
                     SfxSmallEnemyDeath, 2 * GameSound.MSEC_PER_SEC, null,
-                    false, 1, GameSound.SFX, "" + Math.random()
+                    false, .8
                 );
             }
         }

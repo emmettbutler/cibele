@@ -79,7 +79,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0, "endfn": this.showCibSelfieFolder, "min_team_power": 15
                 },
                 {
-                    "audio": Convo6, "len": 30*GameSound.MSEC_PER_SEC, "delay": 0,
+                    "audio": Convo6, "len": 32 * GameSound.MSEC_PER_SEC, "delay": 0,
                     "endfn": this.startBoss, "ends_with_popup": false, "min_team_power": 20
                 },
                 {

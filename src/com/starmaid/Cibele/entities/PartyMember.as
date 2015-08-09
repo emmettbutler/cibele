@@ -109,8 +109,7 @@ package com.starmaid.Cibele.entities {
                 Math.floor(Math.random() * this.attackSounds.length)
             ];
             SoundManager.getInstance().playSound(
-                snd, 2*GameSound.MSEC_PER_SEC, null, false, .2, GameSound.SFX,
-                "" + Math.random()
+                snd, 2*GameSound.MSEC_PER_SEC, null, false, .2
             );
         }
 

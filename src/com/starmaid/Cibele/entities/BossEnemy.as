@@ -194,8 +194,7 @@ package com.starmaid.Cibele.entities {
             FlxG.stage.dispatchEvent(
                 new DataEvent(GameState.EVENT_BOSS_DIED, {'killed_by': p}));
             SoundManager.getInstance().playSound(
-                SfxBossDeath, 5*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.SFX,
-                "" + Math.random()
+                SfxBossDeath, 5*GameSound.MSEC_PER_SEC, null, false, 1
             );
         }
 

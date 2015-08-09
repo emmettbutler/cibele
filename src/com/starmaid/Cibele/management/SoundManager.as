@@ -27,7 +27,7 @@ package com.starmaid.Cibele.management {
                                   endCallback:Function=null,
                                   _loop:Boolean=false,
                                   _vol:Number=1,
-                                  _kind:Number=0,
+                                  _kind:Number=-1,
                                   name:String=null,
                                   fadeIn:Boolean=false,
                                   fadeOut:Boolean=false,
@@ -121,8 +121,10 @@ package com.starmaid.Cibele.management {
         }
 
         public function clearSoundsByType(_kind:Number):void {
+            var snd:GameSound;
             for(var i:int = this.runningSounds.length - 1; i >= 0; i--) {
-                if(this.runningSounds[i]._type == _kind) {
+                snd = this.runningSounds[i];
+                if(snd._type == _kind && snd._type != -1) {
                     this.stopSound(runningSounds[i]);
                 }
             }
