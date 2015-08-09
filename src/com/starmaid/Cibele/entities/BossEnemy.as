@@ -5,6 +5,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.management.DebugConsoleManager;
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.utils.MapNodeContainer;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.management.Path;
@@ -12,6 +13,7 @@ package com.starmaid.Cibele.entities {
     import org.flixel.*;
 
     public class BossEnemy extends Enemy {
+        [Embed(source="/../assets/audio/effects/sfx_die_big.mp3")] private var SfxBossDeath:Class;
         public var _mapnodes:MapNodeContainer;
         private var _path:Path = null;
         private var targetPathNode:PathNode;
@@ -191,6 +193,14 @@ package com.starmaid.Cibele.entities {
             this._state = STATE_DEAD;
             FlxG.stage.dispatchEvent(
                 new DataEvent(GameState.EVENT_BOSS_DIED, {'killed_by': p}));
+            this.playBossDeathSfx();
+        }
+
+        public function playBossDeathSfx():void {
+            SoundManager.getInstance().playSound(
+                SfxBossDeath, 5*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.SFX,
+                "" + Math.random()
+            );
         }
 
         override public function activeTarget():void { }

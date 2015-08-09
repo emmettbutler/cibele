@@ -170,7 +170,7 @@ package com.starmaid.Cibele.entities {
 
         public function playEnemySelectSfx():void {
             SoundManager.getInstance().playSound(
-                SfxEnemySelect, 1*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.SFX,
+                SfxEnemySelect, 1.5*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.SFX,
                 "" + Math.random()
             );
         }
