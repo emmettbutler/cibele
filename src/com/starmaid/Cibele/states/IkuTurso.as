@@ -87,7 +87,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0, "boss_gate": true
                 },
                 {
-                    "audio": null, "len": 10*GameSound.MSEC_PER_SEC, "endfn": playEndDialogue
+                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC, "endfn": playEndDialogue
                 }
             ];
         }

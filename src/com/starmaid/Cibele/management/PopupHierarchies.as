@@ -253,7 +253,7 @@ package com.starmaid.Cibele.management {
                             "name": "cam selfies",
                             "icon": ImgCibCam1Icon,
                             "icon_dim": new DHPoint(103, 81),
-                            "icon_pos": new DHPoint(118, 135),
+                            "icon_pos": new DHPoint(213, 135),
                             "dim": new DHPoint(530, 356),
                             "struc": PopUpManager.CIB_SELFIE_FOLDER,
                             "contents": ImgCibCam1
