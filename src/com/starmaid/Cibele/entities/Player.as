@@ -25,6 +25,7 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/characters/cib_shadow_blue.png")] private var ImgShadowBlue:Class;
         [Embed(source="/../assets/audio/effects/sfx_cibattack.mp3")] private var SfxAttack1:Class;
         [Embed(source="/../assets/audio/effects/sfx_cibattack2.mp3")] private var SfxAttack2:Class;
+        [Embed(source="/../assets/audio/effects/sfx_enemy_select.mp3")] private var SfxEnemySelect:Class;
 
         private var walkSpeed:Number = 7, mouseDownTime:Number;
         private var hitboxOffset:DHPoint,
@@ -167,6 +168,13 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        public function playEnemySelectSfx():void {
+            SoundManager.getInstance().playSound(
+                SfxEnemySelect, 1.5*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.SFX,
+                "" + Math.random()
+            );
+        }
+
         private function posOverlapsUI(screenPos:DHPoint):Boolean {
             if (this.clickObjectsGroup != null) {
                 var cur:GameObject, screenRect:FlxRect;
@@ -232,6 +240,9 @@ package com.starmaid.Cibele.entities {
             if (got_enemy && this.targetEnemy != null && !this.targetEnemy.isDead()) {
                 this._state = STATE_MOVE_TO_ENEMY;
                 this.targetEnemy.activeTarget();
+                if(this.targetEnemy != prevTargetEnemy) {
+                    this.playEnemySelectSfx();
+                }
             } else if (!got_enemy) {
                 this.targetEnemy = null;
             }
