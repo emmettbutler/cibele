@@ -56,7 +56,7 @@ package com.starmaid.Cibele.states {
             add(startText2);
             startText2.setFormat("NexaBold-Regular",16,0xffea98a9,"left");
 
-            startText3 = new FlxText(ScreenManager.getInstance().screenWidth * .22, ScreenManager.getInstance().screenHeight * .86,1000,"This build contains the full game. Please note that it is, however, still in development.\nPlease do not share this build with anyone.");
+            startText3 = new FlxText(ScreenManager.getInstance().screenWidth * .22, ScreenManager.getInstance().screenHeight * .86,1000,"This build contains the first of three acts. Please note that it is still in development.\nPlease do not share this build with anyone.");
             add(startText3);
             startText3.setFormat("NexaBold-Regular",16,0xff8d8d8d,"left");
 
