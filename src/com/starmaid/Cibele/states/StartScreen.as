@@ -48,7 +48,7 @@ package com.starmaid.Cibele.states {
             this.crystalIcon.loadGraphic(ImgXtal, false, false, 314, 500);
             add(this.crystalIcon);
 
-            startText = new FlxText(ScreenManager.getInstance().screenWidth * .22, ScreenManager.getInstance().screenHeight * .78,1000,"CLICK to move and interact with objects.\nMake sure your sound is on.\n\nCOMMAND+Q or Alt+F4 to Quit.\n\nESC to pause.\n\nThis build contains the first of three acts. Please note that it is, however, still in development.\nPlease do not share this build with anyone.");
+            startText = new FlxText(ScreenManager.getInstance().screenWidth * .22, ScreenManager.getInstance().screenHeight * .78,1000,"CLICK to move and interact with objects.\nMake sure your sound is on.");
             add(startText);
             startText.setFormat("NexaBold-Regular",16,0xffea98a9,"left");
 
