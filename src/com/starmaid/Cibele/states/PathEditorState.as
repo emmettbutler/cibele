@@ -7,6 +7,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.entities.TeamPowerBar;
     import com.starmaid.Cibele.entities.IkuTursoBoss;
     import com.starmaid.Cibele.entities.EuryaleBoss;
+    import com.starmaid.Cibele.entities.HiisiBoss;
     import com.starmaid.Cibele.entities.BossEnemy;
     import com.starmaid.Cibele.entities.MapNode;
     import com.starmaid.Cibele.entities.PartyMember;
@@ -394,9 +395,9 @@ package com.starmaid.Cibele.states {
                 return IkuTursoBoss;
             } else if (this is Euryale) {
                 return EuryaleBoss;
-            } /*else if (this is Hiisi) {
+            } else if (this is Hiisi) {
                 return HiisiBoss;
-            }*/
+            }
             return IkuTursoBoss;
         }
 
