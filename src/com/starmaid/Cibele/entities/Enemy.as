@@ -257,10 +257,8 @@ package com.starmaid.Cibele.entities {
             if (!(FlxG.state is LevelMapState)) {
                 return;
             }
-            if (this.isOnscreen()) {
-                if (this._state == STATE_TRACKING) {
-                    this.playCallSound();
-                }
+            if (this.canPlayCall()) {
+                this.playCallSound();
             }
             var that:Enemy = this;
             GlobalTimer.getInstance().setMark(
@@ -276,13 +274,19 @@ package com.starmaid.Cibele.entities {
             );
         }
 
+        protected function canPlayCall():Boolean {
+            return this.isOnscreen() && this._state == STATE_TRACKING;
+        }
+
         protected function playCallSound():void {
         }
 
         override public function update():void{
             super.update();
 
-            this.debugText.text = this.getStateString();
+            if (ScreenManager.getInstance().DEBUG) {
+                this.debugText.text = this.getStateString();
+            }
 
             if (this._state == STATE_DEAD && this.visible == false) {
                 return;

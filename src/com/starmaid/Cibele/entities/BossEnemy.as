@@ -189,6 +189,10 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        override protected function canPlayCall():Boolean {
+            return this.isOnscreen() && !this.isDead();
+        }
+
         override public function die(p:PartyMember):void {
             this._state = STATE_DEAD;
             FlxG.stage.dispatchEvent(

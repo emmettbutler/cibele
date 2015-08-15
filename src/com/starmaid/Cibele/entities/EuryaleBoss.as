@@ -3,11 +3,13 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.management.DebugConsoleManager;
+    import com.starmaid.Cibele.management.SoundManager;
 
     import org.flixel.*;
 
     public class EuryaleBoss extends BossEnemy {
         [Embed(source="/../assets/images/characters/boss2.png")] private var ImgBoss:Class;
+        [Embed(source="/../assets/audio/effects/mask_boss.mp3")] private var SndCall:Class;
 
         public function EuryaleBoss(pos:DHPoint) {
             super(pos);
@@ -18,6 +20,13 @@ package com.starmaid.Cibele.entities {
                  2, 1, 0], 12, true);
             play("run_boss");
 
+        }
+
+        override protected function playCallSound():void {
+            super.playCallSound();
+            SoundManager.getInstance().playSound(
+                SndCall, 3 * GameSound.MSEC_PER_SEC, null, false, .6
+            );
         }
     }
 }
