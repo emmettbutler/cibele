@@ -1,6 +1,8 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.management.SoundManager;
 
     import org.flixel.*;
 
@@ -9,6 +11,11 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/characters/Enemy2_sprite.png")] private var ImgIT2:Class;
         [Embed(source="/../assets/images/characters/squid_attack.png")] private var ImgIT1_Attack:Class;
         [Embed(source="/../assets/images/characters/enemy2_attack.png")] private var ImgIT2_Attack:Class;
+        [Embed(source="/../assets/audio/effects/shell_enemy.mp3")] private var SndCall2:Class;
+
+        public static const TYPE1:Number = 1;
+        public static const TYPE2:Number = 2;
+        public var _type:Number;
 
         public function IkuTursoEnemy(pos:DHPoint) {
             super(pos);
@@ -18,6 +25,7 @@ package com.starmaid.Cibele.entities {
             var rand:Number = Math.floor(Math.random() * 2);
             switch(rand) {
                 case 1:
+                    this._type = IkuTursoEnemy.TYPE1;
                     this.loadGraphic(ImgIT1, false, false, 152, 104);
 
                     this.attack_sprite = new GameObject(pos);
@@ -30,6 +38,7 @@ package com.starmaid.Cibele.entities {
                     break;
 
                 default:
+                    this._type = IkuTursoEnemy.TYPE2;
                     this.loadGraphic(ImgIT2, false, false, 70, 160);
 
                     this.attack_sprite = new GameObject(pos);
@@ -53,6 +62,19 @@ package com.starmaid.Cibele.entities {
             this.play("run_enemy");
 
             super.setupSprites();
+        }
+
+        override protected function playCallSound():void {
+            super.playCallSound();
+            var callSnd:Class;
+            if (this._type == IkuTursoEnemy.TYPE1) {
+                callSnd = SndCall2;
+            } else if (this._type == IkuTursoEnemy.TYPE2) {
+                callSnd = SndCall2;
+            }
+            SoundManager.getInstance().playSound(
+                callSnd, 2 * GameSound.MSEC_PER_SEC
+            );
         }
     }
 }
