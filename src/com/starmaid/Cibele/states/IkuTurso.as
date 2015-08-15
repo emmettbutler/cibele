@@ -8,6 +8,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameState;
 
@@ -26,11 +27,14 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/voiceover/voc_extra_ichilasthit.mp3")] private var IchiBossKill:Class;
         [Embed(source="/../assets/audio/voiceover/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
         [Embed(source="/../assets/audio/voiceover/voc_extra_areyoucoming.mp3")] private var SndRUComing:Class;
+        [Embed(source="/../assets/images/worlds/bubbles_1.png")] private var ImgBubbles:Class;
 
         private var convo1Sound:GameSound;
         private var convo1Ready:Boolean;
+        private var bubbles:Array;
 
         public static var BGM:String = "ikuturso bgm loop";
+        public static const BUBBLES_COUNT:Number = 35;
 
         public function IkuTurso() {
             PopUpManager.GAME_ACTIVE = true;
@@ -112,6 +116,31 @@ package com.starmaid.Cibele.states {
                 GlobalTimer.getInstance().setMark("First Convo", GameState.SHORT_DIALOGUE ? 1 : 7*GameSound.MSEC_PER_SEC, this.bulldogHellPopup);
             }
             this.convo1Sound = null;
+        }
+
+        override public function addEnvironmentDetails():void {
+            this.setupBubbles();
+        }
+
+        private function setupBubbles():void {
+            this.bubbles = new Array();
+            var bubble:GameObject;
+            var bubblesDimensions:DHPoint = new DHPoint(130, 300);
+            for (var i:int = 0; i < BUBBLES_COUNT; i++) {
+                bubble = new GameObject(new DHPoint(
+                    Math.random() * (this.levelDimensions.x - bubblesDimensions.x),
+                    Math.random() * (this.levelDimensions.y - bubblesDimensions.y)
+                ));
+                bubble.loadGraphic(ImgBubbles, false, false,
+                                   bubblesDimensions.x, bubblesDimensions.y);
+                bubble.addAnimation("run",
+                    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], 13, true);
+                bubble.zSorted = true;
+                bubble.basePos = new DHPoint(bubble.x, bubble.y + bubble.height);
+                FlxG.state.add(bubble);
+                bubble.play("run");
+                this.bubbles.push(bubble);
+            }
         }
 
         public function bulldogHellPopup():void {

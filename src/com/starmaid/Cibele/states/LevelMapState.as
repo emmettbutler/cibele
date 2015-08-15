@@ -70,6 +70,8 @@ package com.starmaid.Cibele.states {
             ScreenManager.getInstance().setupCamera(player.cameraPos);
             FlxG.camera.setBounds(0, 0, levelDimensions.x, levelDimensions.y);
 
+            this.addEnvironmentDetails();
+
             super.postCreate();
 
             this.boundedObjects = new Array();
@@ -79,6 +81,9 @@ package com.starmaid.Cibele.states {
             }
 
             this.bgLoader.setEnemiesReference(this.enemies.enemies);
+        }
+
+        public function addEnvironmentDetails():void {
         }
 
         override public function destroy():void {
