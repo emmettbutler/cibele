@@ -73,7 +73,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 2*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showIchiSelfie1, "min_team_power": 13
+                    "delay": 0, "endfn": this.showIchiSelfie1, "min_team_power": 20
                 },
                 {
                     "audio": Convo5, "len": 16*GameSound.MSEC_PER_SEC,
@@ -81,11 +81,11 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 8*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showCibSelfieFolder, "min_team_power": 17
+                    "delay": 0, "endfn": this.showCibSelfieFolder, "min_team_power": 22
                 },
                 {
                     "audio": Convo6, "len": 32 * GameSound.MSEC_PER_SEC, "delay": 0,
-                    "endfn": this.startBoss, "ends_with_popup": false, "min_team_power": 20
+                    "endfn": this.startBoss, "ends_with_popup": false, "min_team_power": 25
                 },
                 {
                     "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
@@ -106,7 +106,7 @@ package com.starmaid.Cibele.states {
             this.playerStartPos = new DHPoint(4600, 7565);
             this.colliderScaleFactor = 8.65;
             this.enemyDirMultiplier = 1;
-            this.maxTeamPower = 20;
+            this.maxTeamPower = 25;
 
             super.create();
             function _bgmCallback():void {

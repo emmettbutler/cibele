@@ -65,7 +65,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showSelfiePostEmail, "min_team_power": 5
+                    "delay": 0, "endfn": this.showSelfiePostEmail, "min_team_power": 10
                 },
                 {
                     "audio": Convo3, "len": 28*GameSound.MSEC_PER_SEC,
@@ -73,7 +73,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 8*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "min_team_power": 10
+                    "delay": 0, "min_team_power": 12
                 },
                 {
                     "audio": Convo3_2, "len": 44*GameSound.MSEC_PER_SEC,
@@ -89,7 +89,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "min_team_power": 20
+                    "delay": 0, "min_team_power": 17
                 },
                 {
                     "audio": Convo4_2, "len": 74*GameSound.MSEC_PER_SEC,
