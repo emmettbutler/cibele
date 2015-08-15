@@ -16,6 +16,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.entities.SmallEnemy;
     import com.starmaid.Cibele.entities.IkuTursoEnemy;
     import com.starmaid.Cibele.entities.EuryaleEnemy;
+    import com.starmaid.Cibele.entities.HiisiEnemy;
     import com.starmaid.Cibele.entities.Enemy;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
@@ -382,9 +383,9 @@ package com.starmaid.Cibele.states {
                 return IkuTursoEnemy;
             } else if (this is Euryale) {
                 return EuryaleEnemy;
-            } /*else if (this is Hiisi) {
+            } else if (this is Hiisi) {
                 return HiisiEnemy;
-            }*/
+            }
             return IkuTursoEnemy;
         }
 
