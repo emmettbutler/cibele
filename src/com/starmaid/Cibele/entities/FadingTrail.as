@@ -48,26 +48,17 @@ package com.starmaid.Cibele.entities {
             return this.target_.pos;
         }
 
-        override public function update():void {
-            super.update();
-
-            for (var i:int = 0; i < this.sprites.length; i++) {
-                this.sprites[i].update();
-            }
-        }
-
         public function placeStep():void {
             var cur:ExpiringGameObject, oldest:ExpiringGameObject;
             for (var i:int = 0; i < this.sprites.length; i++) {
                 cur = this.sprites[i];
-                if (oldest == null || cur.age > oldest.age) {
+                if (oldest == null || cur.age >= oldest.age) {
                     oldest = cur;
                 }
             }
             if (oldest.scale == null) {
                 return;
             }
-            oldest.scale.x = -1;
             cur.scale.x = 1;
             oldest.place(this.getNextPos());
             this.angleStep(oldest);
