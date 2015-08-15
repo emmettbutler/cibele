@@ -53,6 +53,7 @@ package com.starmaid.Cibele.entities {
         public function Enemy(pos:DHPoint, hitPoints:Number=100) {
             super(pos);
 
+            this.slug = "enemy_" + Math.random() * 100000;
             this.hitPoints = hitPoints;
             this.originalPos = pos;
             this.maxHitPoints = this.hitPoints;
@@ -261,21 +262,21 @@ package com.starmaid.Cibele.entities {
                     this.playCallSound();
                 }
             }
+            var that:Enemy = this;
             GlobalTimer.getInstance().setMark(
                 "enemy_call_" + this.slug,
-                (2 + (Math.random() * 1)) * GameSound.MSEC_PER_SEC,
+                (5 + (Math.random() * 2)) * GameSound.MSEC_PER_SEC,
                 function():void {
                     if (!(FlxG.state is LevelMapState)) {
                         return;
                     }
-                    loopCallSound();
+                    that.loopCallSound();
                 },
                 true
             );
         }
 
         protected function playCallSound():void {
-            trace('playing it');
         }
 
         override public function update():void{
@@ -302,7 +303,7 @@ package com.starmaid.Cibele.entities {
                         this.lastTrackingDirUpdateTime = this.timeAlive;
                         var mul:Number = (FlxG.state as LevelMapState).enemyDirMultiplier;
                         if (mul != 1) {
-                            this.dir = this.closestPartyMemberDisp.normalized().mulScl((FlxG.state as LevelMapState).enemyDirMultiplier);
+                            this.dir = this.closestPartyMemberDisp.normalized().mulScl(mul);
                         } else {
                             this.dir = this.closestPartyMemberDisp.normalized();
                         }
