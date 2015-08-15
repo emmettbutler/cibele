@@ -53,6 +53,7 @@ package com.starmaid.Cibele.entities {
         public function Enemy(pos:DHPoint, hitPoints:Number=100) {
             super(pos);
 
+            this.slug = "enemy_" + Math.random() * 100000;
             this.hitPoints = hitPoints;
             this.originalPos = pos;
             this.maxHitPoints = this.hitPoints;
@@ -76,6 +77,7 @@ package com.starmaid.Cibele.entities {
             if (this.basePosOffset == null) {
                 this.basePosOffset = new DHPoint(0, this.height);
             }
+            this.loopCallSound();
         }
 
         public function isDead():Boolean {
@@ -88,7 +90,9 @@ package com.starmaid.Cibele.entities {
 
         public function addVisibleObjects():void {
             this._healthBar.addVisibleObjects();
-            FlxG.state.add(this.debugText);
+            if (ScreenManager.getInstance().DEBUG) {
+                FlxG.state.add(this.debugText);
+            }
         }
 
         public function setupSprites():void {
@@ -249,8 +253,36 @@ package com.starmaid.Cibele.entities {
             this.visible = true;
         }
 
+        private function loopCallSound():void {
+            if (!(FlxG.state is LevelMapState)) {
+                return;
+            }
+            if (this.isOnscreen()) {
+                if (this._state == STATE_TRACKING) {
+                    this.playCallSound();
+                }
+            }
+            var that:Enemy = this;
+            GlobalTimer.getInstance().setMark(
+                "enemy_call_" + this.slug,
+                (5 + (Math.random() * 2)) * GameSound.MSEC_PER_SEC,
+                function():void {
+                    if (!(FlxG.state is LevelMapState)) {
+                        return;
+                    }
+                    that.loopCallSound();
+                },
+                true
+            );
+        }
+
+        protected function playCallSound():void {
+        }
+
         override public function update():void{
             super.update();
+
+            this.debugText.text = this.getStateString();
 
             if (this._state == STATE_DEAD && this.visible == false) {
                 return;
@@ -271,7 +303,7 @@ package com.starmaid.Cibele.entities {
                         this.lastTrackingDirUpdateTime = this.timeAlive;
                         var mul:Number = (FlxG.state as LevelMapState).enemyDirMultiplier;
                         if (mul != 1) {
-                            this.dir = this.closestPartyMemberDisp.normalized().mulScl((FlxG.state as LevelMapState).enemyDirMultiplier);
+                            this.dir = this.closestPartyMemberDisp.normalized().mulScl(mul);
                         } else {
                             this.dir = this.closestPartyMemberDisp.normalized();
                         }
