@@ -47,6 +47,8 @@ package com.starmaid.Cibele.states {
 
             //currently no bit dialogue is playing in this act. may want to change later.
             this.bitDialogueLock = true;
+            this.load_screen_text = "Hiisi";
+            this.ui_color_flag = GameState.UICOLOR_PINK;
             PopUpManager.GAME_ACTIVE = true;
 
             GlobalTimer.getInstance().deleteMark(BOSS_MARK);

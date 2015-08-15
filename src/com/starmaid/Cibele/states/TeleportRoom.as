@@ -20,6 +20,7 @@ package com.starmaid.Cibele.states {
 
         override public function create():void {
             this.enable_fade = true;
+            this.load_screen_text = "Fern";
             PopUpManager.GAME_ACTIVE = true;
             var _screen:ScreenManager = ScreenManager.getInstance();
             this.startPos = new DHPoint(

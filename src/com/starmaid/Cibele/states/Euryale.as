@@ -42,6 +42,7 @@ package com.starmaid.Cibele.states {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
 
             this.bitDialogueLock = true;
+            this.load_screen_text = "Euryale";
             PopUpManager.GAME_ACTIVE = true;
 
             GlobalTimer.getInstance().deleteMark(BOSS_MARK);

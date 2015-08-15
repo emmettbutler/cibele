@@ -39,6 +39,7 @@ package com.starmaid.Cibele.base {
         public var fpsCounter:FPSCounter;
         private var slug:String;
         private var fadeSoundName:String;
+        public var load_screen_text:String;
 
         public var ui_color_flag:Number;
         public var fading:Boolean;
@@ -134,7 +135,8 @@ package com.starmaid.Cibele.base {
 
             if(this.use_loading_screen) {
                 this.loadingScreen = new LoadingScreen(this.loading_screen_timer,
-                                                       this.play_loading_dialogue);
+                                                       this.play_loading_dialogue,
+                                                       this.load_screen_text);
                 this.loadingScreen.endCallback = this.loadingScreenEndCallback;
             }
 

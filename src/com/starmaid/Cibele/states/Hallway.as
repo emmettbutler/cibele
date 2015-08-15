@@ -48,6 +48,7 @@ package com.starmaid.Cibele.states {
 
         override public function create():void {
             this.enable_fade = true;
+            this.load_screen_text = "Fern";
             PopUpManager.GAME_ACTIVE = true;
 
             function _musicCallback():void {
