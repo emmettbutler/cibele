@@ -10,7 +10,7 @@ package com.starmaid.Cibele.entities {
     public class TeamPowerBar extends Meter {
         [Embed(source="/../assets/audio/effects/sfx_energy.mp3")] private var SfxEnergy:Class;
 
-        protected var _labelText:FlxText, _bossText:FlxText;
+        protected var _labelText:FlxText;
         protected var _outlines:Array
         private var _curMaxOutline:Number, _numOutlines:Number = 3;
         private var _lastOutlineUpdate:Number = -1;
@@ -20,13 +20,9 @@ package com.starmaid.Cibele.entities {
         public function TeamPowerBar(maxPoints:Number) {
             super(new DHPoint(0, 0), maxPoints, 300, 20);
 
-            this._labelText = new FlxText(0, 0, 200, "TEAM POWER");
+            this._labelText = new FlxText(0, 0, 200, "PACT");
             this._labelText.setFormat("NexaBold-Regular", 18, 0xff7c6e6a, "left");
             this._labelText.scrollFactor = new DHPoint(0, 0);
-
-            this._bossText = new FlxText(0, 0, 200, "BOSS");
-            this._bossText.setFormat("NexaBold-Regular", 13, 0xff7c6e6a, "left");
-            this._bossText.scrollFactor = new DHPoint(0, 0);
 
             this._barFrame.scrollFactor = new DHPoint(0, 0);
             this._innerBar.scrollFactor = new DHPoint(0, 0);
@@ -82,10 +78,7 @@ package com.starmaid.Cibele.entities {
             var outerPos:DHPoint = basePos.sub(new DHPoint(
                 this._outerWidth / 2, 0));
             this._labelText.x = outerPos.x;
-            this._labelText.y = outerPos.y + this._outerHeight / 2 + 30;
-
-            this._bossText.x = outerPos.x + this._outerWidth;
-            this._bossText.y = outerPos.y;
+            this._labelText.y = outerPos.y + this._outerHeight / 2 + 20;
 
             for (var i:int = 0; i < this._outlines.length; i++) {
                 this._outlines[i].setPos(outerPos.add(new DHPoint(
@@ -101,13 +94,11 @@ package com.starmaid.Cibele.entities {
             }
             super.addVisibleObjects();
             FlxG.state.add(this._labelText);
-            FlxG.state.add(this._bossText);
         }
 
         override public function setVisible(v:Boolean):void {
             super.setVisible(v);
             this._labelText.visible = true;
-            this._bossText.visible = true;
         }
 
         override public function update():void {
