@@ -108,6 +108,13 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/eu_files/myrtle.png")] private var ImgMyrtle:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/river_icon.png")] private var ImgRiverIcon:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/river.png")] private var ImgRiver:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/selfie4.png")] private var ImgSelfie4:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/selfie4_icon.png")] private var ImgSelfie4Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/sexy3.png")] private var ImgSexy3:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/sexy3_icon.png")] private var ImgSexy3Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/old_folder.png")] private var ImgOldFolder:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/desk_icon.png")] private var ImgDeskIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/desk.png")] private var ImgDesk:Class;
 
         public function EuryaleDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
@@ -309,6 +316,40 @@ package com.starmaid.Cibele.states {
                                     "icon_pos": new DHPoint(30, 132),
                                     "dim": new DHPoint(568, 426),
                                     "contents": ImgRiver
+                                },
+                                {
+                                    "name": "old subfolder",
+                                    "icon": ImgOldFolder,
+                                    "icon_dim": new DHPoint(92, 85),
+                                    "icon_pos": new DHPoint(132, 132),
+                                    "folder_img": ImgPicturesFolder,
+                                    "folder_dim": new DHPoint(631, 356),
+                                    "contents": [
+                                        {
+                                            "name": "selfie4",
+                                            "icon": ImgSelfie4Icon,
+                                            "icon_dim": new DHPoint(79, 90),
+                                            "icon_pos": new DHPoint(30, 30),
+                                            "dim": new DHPoint(480, 590),
+                                            "contents": ImgSelfie4
+                                        },
+                                        {
+                                            "name": "sexy 3",
+                                            "icon": ImgSexy3Icon,
+                                            "icon_dim": new DHPoint(78, 92),
+                                            "icon_pos": new DHPoint(130, 30),
+                                            "dim": new DHPoint(436, 590),
+                                            "contents": ImgSexy3
+                                        },
+                                        {
+                                            "name": "desk",
+                                            "icon": ImgDeskIcon,
+                                            "icon_dim": new DHPoint(82, 93),
+                                            "icon_pos": new DHPoint(230, 30),
+                                            "dim": new DHPoint(622, 415),
+                                            "contents": ImgDesk
+                                        }
+                                    ]
                                 }
                             ]
                         }

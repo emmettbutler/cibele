@@ -111,6 +111,19 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/hi_files/sexy2.png")] private var ImgSexyAug:Class;
         [Embed(source="/../assets/images/ui/popups/hi_files/sexy2_icon.png")] private var ImgSexyAugIcon:Class;
         [Embed(source="/../assets/images/ui/popups/hi_files/aug_icon.png")] private var ImgAugFolderIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/coney_1_icon.png")] private var ImgConey1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/coney_1.png")] private var ImgConey1:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/coney_2_icon.png")] private var ImgConey2Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/coney_2.png")] private var ImgConey2:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_folder.png")] private var ImgChatlogFolder:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_1.png")] private var ImgChatlog1:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_1_icon.png")] private var ImgChatlog1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_2.png")] private var ImgChatlog2:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_2_icon.png")] private var ImgChatlog2Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_3.png")] private var ImgChatlog3:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_3_icon.png")] private var ImgChatlog3Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_4.png")] private var ImgChatlog4:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_4_icon.png")] private var ImgChatlog4Icon:Class;
 
         public function HiisiDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_HI;
@@ -252,6 +265,22 @@ package com.starmaid.Cibele.states {
                                             "icon_pos": new DHPoint(30, 30),
                                             "dim": new DHPoint(640, 426),
                                             "contents": ImgSexyAug
+                                        },
+                                        {
+                                            "name": "coney",
+                                            "icon": ImgConey1Icon,
+                                            "icon_dim": new DHPoint(78, 95),
+                                            "icon_pos": new DHPoint(130, 30),
+                                            "dim": new DHPoint(622, 415),
+                                            "contents": ImgConey1
+                                        },
+                                        {
+                                            "name": "coney 2",
+                                            "icon": ImgConey2Icon,
+                                            "icon_dim": new DHPoint(76, 94),
+                                            "icon_pos": new DHPoint(230, 30),
+                                            "dim": new DHPoint(622, 415),
+                                            "contents": ImgConey2
                                         }
                                     ]
                                 }
@@ -556,6 +585,48 @@ package com.starmaid.Cibele.states {
                             "icon_pos": new DHPoint(220, 36),
                             "dim": new DHPoint(384, 310),
                             "contents": ImgBow
+                        },
+                        {
+                            "name": "chatlogs",
+                            "icon": ImgChatlogFolder,
+                            "icon_dim": new DHPoint(99, 88),
+                            "icon_pos": new DHPoint(27, 130),
+                            "folder_img": ImgPicturesFolder,
+                            "folder_dim": new DHPoint(631, 356),
+                            "contents": [
+                                {
+                                    "name": "chatlog1",
+                                    "icon": ImgChatlog1Icon,
+                                    "icon_dim": new DHPoint(64, 93),
+                                    "icon_pos": new DHPoint(30, 30),
+                                    "dim": new DHPoint(631, 356),
+                                    "contents": ImgChatlog1
+                                },
+                                {
+                                    "name": "chatlog2",
+                                    "icon": ImgChatlog2Icon,
+                                    "icon_dim": new DHPoint(78, 92),
+                                    "icon_pos": new DHPoint(130, 30),
+                                    "dim": new DHPoint(631, 356),
+                                    "contents": ImgChatlog2
+                                },
+                                {
+                                    "name": "chatlog3",
+                                    "icon": ImgChatlog3Icon,
+                                    "icon_dim": new DHPoint(78, 92),
+                                    "icon_pos": new DHPoint(230, 30),
+                                    "dim": new DHPoint(631, 516),
+                                    "contents": ImgChatlog3
+                                },
+                                {
+                                    "name": "chatlog4",
+                                    "icon": ImgChatlog4Icon,
+                                    "icon_dim": new DHPoint(58, 91),
+                                    "icon_pos": new DHPoint(330, 30),
+                                    "dim": new DHPoint(631, 568),
+                                    "contents": ImgChatlog4
+                                }
+                            ]
                         },
                         {
                             "name": "2008",
