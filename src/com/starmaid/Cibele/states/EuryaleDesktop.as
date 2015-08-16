@@ -115,6 +115,15 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/eu_files/old_folder.png")] private var ImgOldFolder:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/desk_icon.png")] private var ImgDeskIcon:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/desk.png")] private var ImgDesk:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_folder.png")] private var ImgChatlogFolder:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/chatlog_1_icon.png")] private var ImgChatlog1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/chatlog_1.png")] private var ImgChatlog1:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/chatlog_2_icon.png")] private var ImgChatlog2Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/chatlog_2.png")] private var ImgChatlog2:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/chatlog_3_icon.png")] private var ImgChatlog3Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/chatlog_3.png")] private var ImgChatlog3:Class;
+
+
 
         public function EuryaleDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
@@ -409,6 +418,40 @@ package com.starmaid.Cibele.states {
                             "icon_pos": new DHPoint(243, 135),
                             "dim": new DHPoint(480, 480),
                             "contents": ImgMyrtle
+                        },
+                        {
+                            "name": "chatlogs",
+                            "icon": ImgChatlogFolder,
+                            "icon_dim": new DHPoint(99, 88),
+                            "icon_pos": new DHPoint(232, 132),
+                            "folder_img": ImgPicturesFolder,
+                            "folder_dim": new DHPoint(631, 356),
+                            "contents": [
+                                {
+                                    "name": "chatlog1",
+                                    "icon": ImgChatlog1Icon,
+                                    "icon_dim": new DHPoint(62, 91),
+                                    "icon_pos": new DHPoint(30, 30),
+                                    "dim": new DHPoint(631, 568),
+                                    "contents": ImgChatlog1
+                                },
+                                {
+                                    "name": "chatlog2",
+                                    "icon": ImgChatlog2Icon,
+                                    "icon_dim": new DHPoint(59, 91),
+                                    "icon_pos": new DHPoint(130, 30),
+                                    "dim": new DHPoint(631, 568),
+                                    "contents": ImgChatlog2
+                                },
+                                {
+                                    "name": "chatlog3",
+                                    "icon": ImgChatlog3Icon,
+                                    "icon_dim": new DHPoint(75, 94),
+                                    "icon_pos": new DHPoint(230, 30),
+                                    "dim": new DHPoint(631, 605),
+                                    "contents": ImgChatlog3
+                                }
+                            ]
                         },
                         {
                             "name": "sendtomom_subfolder",
