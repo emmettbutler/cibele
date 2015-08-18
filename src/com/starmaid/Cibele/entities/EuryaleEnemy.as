@@ -25,6 +25,7 @@ package com.starmaid.Cibele.entities {
             switch(rand) {
                 case 1:
                     this._type = EuryaleEnemy.TYPE1;
+                    this.flipFacing = true;
                     this.loadGraphic(ImgEn1, false, false, 247, 300);
                     this.addAnimation("run_enemy",
                         [0, 1, 2, 3, 4, 5, 6, 7], 12, true);

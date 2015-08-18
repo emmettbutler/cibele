@@ -26,8 +26,9 @@ package com.starmaid.Cibele.entities {
             switch(rand) {
                 case 1:
                     this._type = HiisiEnemy.TYPE1;
+                    this.flipFacing = true;
                     this.loadGraphic(ImgIT1, false, false, 355, 210);
-                    this.addAnimation("run_enemy", [0, 1], 5, true);
+                    this.addAnimation("run_enemy", [0], 1, true);
 
                     this.attack_sprite = new GameObject(pos);
                     this.attack_sprite.loadGraphic(ImgIT1_Attack, true, false,
@@ -40,7 +41,7 @@ package com.starmaid.Cibele.entities {
                 default:
                     this._type = HiisiEnemy.TYPE2;
                     this.loadGraphic(ImgIT2, false, false, 237, 270);
-                    this.addAnimation("run_enemy", [0, 1], 5, true);
+                    this.addAnimation("run_enemy", [0], 1, true);
 
                     this.attack_sprite = new GameObject(pos);
                     this.attack_sprite.loadGraphic(ImgIT2_Attack, true, false,

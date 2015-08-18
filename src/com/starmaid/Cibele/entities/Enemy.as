@@ -36,6 +36,7 @@ package com.starmaid.Cibele.entities {
         protected var damageLockMap:Dictionary;
         public var footPos:DHPoint, footPosOffset:DHPoint, basePosOffset:DHPoint;
         private var lastTrackingDirUpdateTime:Number = -1;
+        protected var flipFacing:Boolean = false;
 
         public static const STATE_IDLE:Number = 1;
         public static const STATE_TRACKING:Number = 3;
@@ -296,6 +297,8 @@ package com.starmaid.Cibele.entities {
             this.closestPartyMemberDisp = this.closestPartyMember.footPos.sub(this.getAttackPos());
             this.hitPoints = Math.max(0, this.hitPoints);
             this.setAuxPositions();
+
+            this.scale.x = (this.dir.x >= 0 ? 1 : -1) * (this.flipFacing ? -1 : 1);
 
             switch(this._state) {
                 case STATE_IDLE:

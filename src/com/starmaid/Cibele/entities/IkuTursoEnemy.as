@@ -26,6 +26,7 @@ package com.starmaid.Cibele.entities {
             switch(rand) {
                 case 1:
                     this._type = IkuTursoEnemy.TYPE1;
+                    this.flipFacing = true;
                     this.loadGraphic(ImgIT1, false, false, 152, 104);
 
                     this.attack_sprite = new GameObject(pos);

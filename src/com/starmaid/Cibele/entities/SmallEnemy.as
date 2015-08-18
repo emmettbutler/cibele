@@ -79,6 +79,7 @@ package com.starmaid.Cibele.entities {
 
         override public function update():void {
             super.update();
+            this.attack_sprite.scale.x = (this.dir.x >= 0 ? 1 : -1) * (this.flipFacing ? -1 : 1);
             if (this.colliding) {
                 if (this.collisionDirection != null) {
                     if (this.collisionDirection[0] == 1 &&
