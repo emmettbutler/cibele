@@ -60,6 +60,7 @@ package com.starmaid.Cibele.entities {
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
             this.cameraPos = new GameObject(new DHPoint(x, y));
+            this.playerNameOffset = true;
 
             this.nameText.text = "Cibele";
             this.particleType = _particleType;
@@ -378,6 +379,14 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function update():void{
+            if(this.facing == UP || this.facing == DOWN){
+                this.nameTextOffsetX = 45;
+            } else if(this.facing == LEFT) {
+                this.nameTextOffsetX = 70;
+            } else if(this.facing == RIGHT) {
+                this.nameTextOffsetX = 15;
+            }
+
             if (FlxG.mouse.justPressed()) {
                 this.mouseDownTime = new Date().valueOf();
                 this.clickStartedOnUI = this.posOverlapsUI(

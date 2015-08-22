@@ -36,6 +36,7 @@ package com.starmaid.Cibele.entities {
         public var targetEnemy:Enemy;
         public var attackAnimDuration:Number;
         public var walkTarget:DHPoint, finalTarget:DHPoint;
+        public var playerNameOffset:Boolean = false;
         public var particleType:Number;
         private var particles:ParticleExplosion;
         private var _nameTextOffset:DHPoint;
@@ -94,6 +95,10 @@ package com.starmaid.Cibele.entities {
 
         public function get nameTextOffset():DHPoint {
             return this._nameTextOffset;
+        }
+
+        public function set nameTextOffsetX(offset:Number):void {
+            this._nameTextOffset.x = offset;
         }
 
         public function buildShadowSprite():void {
@@ -218,12 +223,16 @@ package com.starmaid.Cibele.entities {
                 this.particles.update();
             }
 
-            if(this.facing == UP || this.facing == DOWN){
-                this._nameTextOffset.x = 50;
-            } else if(this.facing == LEFT) {
-                this._nameTextOffset.x = 75;
-            } else if(this.facing == RIGHT) {
-                this._nameTextOffset.x = 20;
+            if(!this.playerNameOffset) {
+                if(this.isAttacking()) {
+                    this._nameTextOffset.x = 55;
+                } else if(this.facing == UP || this.facing == DOWN){
+                    this._nameTextOffset.x = 60;
+                } else if(this.facing == LEFT) {
+                    this._nameTextOffset.x = 50;
+                } else if(this.facing == RIGHT) {
+                    this._nameTextOffset.x = 60;
+                }
             }
 
             this.nameText.x = this.pos.x + this._nameTextOffset.x;
