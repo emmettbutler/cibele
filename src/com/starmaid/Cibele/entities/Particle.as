@@ -21,7 +21,7 @@ package com.starmaid.Cibele.entities {
         public function Particle(t:Number,
                                  lifespan:Number,
                                  shrinkFactor:Number=.6,
-                                 shrinkRateFrames=20,
+                                 shrinkRateFrames=15,
                                  baseScale=.7)
         {
             super(new DHPoint(0, 0));
@@ -31,6 +31,7 @@ package com.starmaid.Cibele.entities {
             this.shrinkFactor = shrinkFactor;
             this.shrinkRateFrames = shrinkRateFrames;
             this.baseScale = baseScale;
+            this.zSorted = true;
             var randParticle:Number = Math.floor(Math.random() * 2),
                 partImage:Class, partDim:DHPoint = new DHPoint(10, 10);
             switch (t) {
@@ -81,6 +82,7 @@ package com.starmaid.Cibele.entities {
         override public function update():void {
             super.update();
             this.framesAlive++;
+            this.basePos = this.pos;
             if (this.framesAlive % this.shrinkRateFrames == 0) {
                 this.scale.x *= this.shrinkFactor;
                 this.scale.y *= this.shrinkFactor;

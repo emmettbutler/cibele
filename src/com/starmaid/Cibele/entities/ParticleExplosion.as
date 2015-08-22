@@ -19,7 +19,7 @@ package com.starmaid.Cibele.entities {
             particleType:Number=2,
             lifespanSec:Number=2,
             particleShrinkFactor:Number=.6,
-            particleShrinkRateFrames:Number=20,
+            particleShrinkRateFrames:Number=15,
             particleSpeed:Number=13,
             particleBaseScale:Number=.7)
         {

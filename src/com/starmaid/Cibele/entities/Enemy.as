@@ -106,7 +106,8 @@ package com.starmaid.Cibele.entities {
         }
 
         protected function setupSmoke():void {
-            this.smoke = new ParticleExplosion(10, Enemy.PARTICLE_SMOKE, 3, .8, 7, 5, .3);
+            this.smoke = new ParticleExplosion(10, Enemy.PARTICLE_SMOKE, 3, .8,
+                                               7, 5, .3);
             this.smoke.addVisibleObjects();
         }
 
