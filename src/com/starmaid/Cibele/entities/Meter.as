@@ -3,6 +3,8 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.management.LevelTracker;
+    import com.starmaid.Cibele.management.ScreenManager;
 
     import org.flixel.*;
 
@@ -36,6 +38,10 @@ package com.starmaid.Cibele.entities {
 
             this._changeText = new FlxText(pos.x, pos.y, 200, "");
             this._changeText.setFormat("NexaBold-Regular", 18, 0xff7c6e6a, "left");
+
+            if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_HI) {
+                this._changeText.color = 0xffffffff;
+            }
         }
 
         public function setPoints(points:Number):void {

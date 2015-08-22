@@ -1,6 +1,7 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.utils.MapNodeContainer;
     import com.starmaid.Cibele.states.PathEditorState;
@@ -60,6 +61,11 @@ package com.starmaid.Cibele.entities {
             this.walkTarget = new DHPoint(0, 0);
             this.footstepOffsets = new LRUDVector();
             this.setupDebugSprites();
+
+            if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_HI) {
+                this.nameText.color = 0xffffffff;
+                this.teamPowerDeltaText.color = 0xffffffff;
+            }
         }
 
         public function setupSprites():void { }
