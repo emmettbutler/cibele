@@ -155,9 +155,9 @@ package com.starmaid.Cibele.management {
         public function tileIsOnscreen(tile:FlxExtSprite):Boolean {
             var screenPos:DHPoint = new DHPoint(0, 0);
             tile.getScreenXY(screenPos);
-            return (screenPos.x < ScreenManager.getInstance().screenWidth + tile.width &&
+            return (screenPos.x < ScreenManager.getInstance().screenWidth &&
                 screenPos.x > 0 - tile.width && screenPos.y > 0 - tile.height &&
-                screenPos.y < ScreenManager.getInstance().screenHeight + tile.height);
+                screenPos.y < ScreenManager.getInstance().screenHeight);
         }
 
         public function loadTile(row:Number, col:Number, arr:Array=null,
@@ -306,7 +306,8 @@ package com.starmaid.Cibele.management {
                     for (col = 0; col < cols; col++) {
                         nextTileIn = this.getTileByIndex(
                             playerRow == row ? playerRow : (row + (playerRow > row ? 1 : -1)),
-                            playerCol == col ? playerCol : (col + (playerCol > col ? 1 : -1)));
+                            playerCol == col ? playerCol : (col + (playerCol > col ? 1 : -1)),
+                            this.colliderTiles);
                         if (this.tileIsOnscreen(nextTileIn)) {
                             coordsToLoad.push([row, col]);
                         }
