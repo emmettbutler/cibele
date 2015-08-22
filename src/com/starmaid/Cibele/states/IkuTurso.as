@@ -37,8 +37,8 @@ package com.starmaid.Cibele.states {
         private var bubbles:Array, seaweeds:Array;
 
         public static var BGM:String = "ikuturso bgm loop";
-        public static const BUBBLES_COUNT:Number = 35;
-        public static const SEAWEEDS_COUNT:Number = 20;
+        public static const BUBBLES_COUNT:Number = 45;
+        public static const SEAWEEDS_COUNT:Number = 33;
 
         public function IkuTurso() {
             PopUpManager.GAME_ACTIVE = true;
