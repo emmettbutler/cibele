@@ -102,6 +102,7 @@ package com.starmaid.Cibele.states {
             if (this.readExistingGraph) {
                 this.readGraphIn();
             }
+            this.postPathRead();
 
             if (this._path.hasNodes()) {
                 this.pathWalker.moveToNextPathNode();
@@ -128,6 +129,8 @@ package com.starmaid.Cibele.states {
 
             add(pathWalker.debugText);
         }
+
+        public function postPathRead():void { }
 
         public function buildTeamPowerAnimationObjects():void {
             this.teamPowerAnimationObjects = new Array();

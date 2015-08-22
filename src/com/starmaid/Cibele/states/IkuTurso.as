@@ -4,6 +4,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.Emote;
     import com.starmaid.Cibele.entities.IkuTursoBoss;
+    import com.starmaid.Cibele.entities.MapNode;
     import com.starmaid.Cibele.states.BlankScreen;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.DataEvent;
@@ -28,13 +29,16 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/voiceover/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
         [Embed(source="/../assets/audio/voiceover/voc_extra_areyoucoming.mp3")] private var SndRUComing:Class;
         [Embed(source="/../assets/images/worlds/bubbles_1.png")] private var ImgBubbles:Class;
+        [Embed(source="/../assets/images/worlds/seaweed1.png")] private var ImgSeaweed1:Class;
+        [Embed(source="/../assets/images/worlds/seaweed2.png")] private var ImgSeaweed2:Class;
 
         private var convo1Sound:GameSound;
         private var convo1Ready:Boolean;
-        private var bubbles:Array;
+        private var bubbles:Array, seaweeds:Array;
 
         public static var BGM:String = "ikuturso bgm loop";
         public static const BUBBLES_COUNT:Number = 35;
+        public static const SEAWEEDS_COUNT:Number = 20;
 
         public function IkuTurso() {
             PopUpManager.GAME_ACTIVE = true;
@@ -121,6 +125,46 @@ package com.starmaid.Cibele.states {
 
         override public function addEnvironmentDetails():void {
             this.setupBubbles();
+            this.setupSeaweed();
+        }
+
+        override public function postPathRead():void {
+            var randNode:MapNode;
+            var seaweed:GameObject;
+            for (var i:int = 0; i < this.seaweeds.length; i++) {
+                randNode = this._mapnodes.getRandomNode();
+                seaweed = this.seaweeds[i];
+                seaweed.setPos(randNode.pos.sub(new DHPoint(
+                                                seaweed.width / 2,
+                                                seaweed.height)));
+                seaweed.basePos = new DHPoint(seaweed.x, seaweed.y + seaweed.height);
+            }
+        }
+
+        private function setupSeaweed():void {
+            this.seaweeds = new Array();
+            var rand:Number;
+            var seaweed:GameObject;
+            for (var i:int = 0; i < SEAWEEDS_COUNT; i++) {
+                rand = Math.floor(Math.random() * 2);
+                seaweed = new GameObject(new DHPoint(0, 0));
+                switch (rand) {
+                    case 0:
+                        seaweed.loadGraphic(ImgSeaweed1, false, false, 100, 200);
+                        seaweed.addAnimation("run",
+                            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24], 13, true);
+                        break;
+                    default:
+                        seaweed.loadGraphic(ImgSeaweed2, false, false, 132, 150);
+                        seaweed.addAnimation("run",
+                            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], 13, true);
+                        break;
+                }
+                seaweed.zSorted = true;
+                FlxG.state.add(seaweed);
+                seaweed.play("run");
+                this.seaweeds.push(seaweed);
+            }
         }
 
         private function setupBubbles():void {

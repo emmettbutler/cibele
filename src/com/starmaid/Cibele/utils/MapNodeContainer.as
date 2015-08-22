@@ -46,6 +46,10 @@ package com.starmaid.Cibele.utils {
             return this.nodes.length != 0;
         }
 
+        public function getRandomNode():MapNode {
+            return this.nodes[Math.floor(Math.random() * (this.nodes.length))];
+        }
+
         public function clearNodes():void {
             for (var i:int = 0; i < this.nodes.length; i++) {
                 FlxG.state.remove(this.nodes[i]);

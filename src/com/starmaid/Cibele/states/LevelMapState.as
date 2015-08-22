@@ -83,8 +83,7 @@ package com.starmaid.Cibele.states {
             this.bgLoader.setEnemiesReference(this.enemies.enemies);
         }
 
-        public function addEnvironmentDetails():void {
-        }
+        public function addEnvironmentDetails():void { }
 
         override public function destroy():void {
             this.bgLoader.destroy();
