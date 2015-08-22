@@ -216,6 +216,16 @@ package com.starmaid.Cibele.entities {
             this.basePos.y = this.y + (this.height - 10);
             this.attackAnim.basePos.x = this.attackAnim.x;
             this.attackAnim.basePos.y = this.attackAnim.y + (this.attackAnim.height - 10);
+
+            if(this.isAttacking()) {
+                this._nameTextOffset.x = 55;
+            } else if(this.facing == UP || this.facing == DOWN){
+                this._nameTextOffset.x = 60;
+            } else if(this.facing == LEFT) {
+                this._nameTextOffset.x = 50;
+            } else if(this.facing == RIGHT) {
+                this._nameTextOffset.x = 60;
+            }
         }
 
         public function setTargetEnemy():void {
