@@ -18,6 +18,7 @@ package com.starmaid.Cibele.entities {
         protected var _enemyType:String = TYPE_SMALL;
 
         private static const MARK_RESPAWN:String = "mrespawn";
+        public static const PARTICLE_SMOKE:Number = 2458720394857;
 
         protected var hitPoints:Number,
                       hitDamage:Number = 10,
@@ -98,9 +99,35 @@ package com.starmaid.Cibele.entities {
 
         public function setupSprites():void {
             this.visible = true;
-
             this._healthBar = new HealthBar(new DHPoint(pos.x, pos.y),
                                             this.hitPoints);
+        }
+
+        /*
+        protected function setupSmoke():void {
+            this.smokeSprites = new Array();
+            var curSmoke:ExpiringGameObject;
+            for (var i:int = 0; i < this.smokeCount; i++) {
+                curSmoke = new ExpiringGameObject();
+                curSmoke.loadGraphic(ImgSmoke1, true, true, 246, 238);
+                curSmoke.zSorted = true;
+                curSmoke.fadeFrames = 80;
+                this.smokeSprites.push(curSmoke);
+            }
+        }
+
+        */
+
+        protected function activateSmoke():void {
+            /*
+            var curSmoke:ExpiringGameObject;
+            for (var i:int = 0; i < this.smokeSprites.length; i++) {
+                curSmoke = this.smokeSprites[i];
+                curSmoke.place(this.pos);
+                curSmoke.basePos = new DHPoint(curSmoke.pos.x,
+                                               curSmoke.pos.y + curSmoke.height);
+            }
+            */
         }
 
         public function get enemyType():String {
@@ -175,6 +202,7 @@ package com.starmaid.Cibele.entities {
             this._state = STATE_DEAD;
             this.dir = new DHPoint(0,0);
             this.inactiveTarget();
+            this.activateSmoke();
             FlxG.stage.dispatchEvent(
                 new DataEvent(GameState.EVENT_ENEMY_DIED,
                               {'damaged_by': p}));

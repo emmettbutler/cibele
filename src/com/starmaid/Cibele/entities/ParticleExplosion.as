@@ -9,6 +9,7 @@ package com.starmaid.Cibele.entities {
         private var particleCount:Number, particleSpeed:Number;
         private var particles:Array;
         private var lifespan:Number;
+        private var particleGravity:DHPoint;
 
         public function ParticleExplosion(
             particleCount:Number=25,
@@ -18,12 +19,18 @@ package com.starmaid.Cibele.entities {
             this.particleSpeed = 13;
             this.particles = new Array();
             this.lifespan = 2 * GameSound.MSEC_PER_SEC;
+            this.particleGravity = new DHPoint(0, 0);
 
             var curPart:Particle, speedMul:Number;
             for (var i:int = 0; i < this.particleCount; i++) {
                 curPart = new Particle(particleType, this.lifespan);
                 this.particles.push(curPart);
             }
+        }
+
+        public function set gravity(g:DHPoint):void {
+            this.particleGravity.x = g.x;
+            this.particleGravity.y = g.y;
         }
 
         public function addVisibleObjects():void {
@@ -51,7 +58,7 @@ package com.starmaid.Cibele.entities {
             for(var i:int = 0; i < this.particles.length; i++) {
                 if (this.particles[i].active) {
                     this.particles[i].dir = this.particles[i].dir.add(
-                        new DHPoint(0, .25)
+                        this.particleGravity
                     );
                 }
             }

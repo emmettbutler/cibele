@@ -82,6 +82,7 @@ package com.starmaid.Cibele.entities {
 
         public function setupParticles():void {
             this.particles = new ParticleExplosion(20, this.particleType);
+            this.particles.gravity = new DHPoint(0, .25);
         }
 
         public function initFootsteps():void {

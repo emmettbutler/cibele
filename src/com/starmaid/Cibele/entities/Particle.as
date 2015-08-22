@@ -12,6 +12,8 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/misc/cibele_particle_2.png")] private var ImgCibParticle2:Class;
         [Embed(source="/../assets/images/misc/ichi_particle_1.png")] private var ImgIchiParticle1:Class;
         [Embed(source="/../assets/images/misc/ichi_particle_2.png")] private var ImgIchiParticle2:Class;
+        [Embed(source="/../assets/images/misc/Enemy_Smoke_01.png")] private var ImgSmoke1:Class;
+        [Embed(source="/../assets/images/misc/Enemy_Smoke_02.png")] private var ImgSmoke2:Class;
 
         private var lifespan:Number;
 
@@ -20,7 +22,7 @@ package com.starmaid.Cibele.entities {
             this.slug = "particle" + (Math.random() * 1000000);
             this.lifespan = lifespan;
             var randParticle:Number = Math.floor(Math.random() * 2),
-                partImage:Class;
+                partImage:Class, partDim:DHPoint = new DHPoint(10, 10);
             switch (t) {
                 case PartyMember.PARTICLE_ICHI:
                     if (randParticle == 0) {
@@ -36,8 +38,17 @@ package com.starmaid.Cibele.entities {
                         partImage = ImgCibParticle2;
                     }
                     break;
+                case Enemy.PARTICLE_SMOKE:
+                    if (randParticle == 0) {
+                        partImage = ImgSmoke1;
+                        partDim = new DHPoint(246, 238);
+                    } else {
+                        partImage = ImgSmoke1;
+                        partDim = new DHPoint(246, 238);
+                    }
+                    break;
             }
-            this.loadGraphic(partImage, false, false, 10, 10);
+            this.loadGraphic(partImage, false, false, partDim.x, partDim.y);
             this.zSorted = false;
             this.visible = false;
             this.active = false;
