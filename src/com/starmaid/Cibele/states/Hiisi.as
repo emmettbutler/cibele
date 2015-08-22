@@ -177,7 +177,6 @@ package com.starmaid.Cibele.states {
                     CONVO_1_HALL
                 );
             }
-            this.startBoss();
         }
 
         public function delayFirstConvoPartTwo():void {
