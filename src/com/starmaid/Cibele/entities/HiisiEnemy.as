@@ -11,7 +11,8 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/characters/golem.png")] private var ImgIT2:Class;
         [Embed(source="/../assets/images/characters/rock_head.png")] private var ImgIT1_Attack:Class;
         [Embed(source="/../assets/images/characters/golem.png")] private var ImgIT2_Attack:Class;
-        [Embed(source="/../assets/audio/effects/shell_enemy.mp3")] private var SndCall2:Class;
+        [Embed(source="/../assets/audio/effects/rockhead1.mp3")] private var SndCall1A:Class;
+        [Embed(source="/../assets/audio/effects/rockhead2.mp3")] private var SndCall1B:Class;
 
         public static const TYPE1:Number = 1;
         public static const TYPE2:Number = 2;
@@ -65,9 +66,17 @@ package com.starmaid.Cibele.entities {
             super.playCallSound();
             var callSnd:Class;
             if (this._type == HiisiEnemy.TYPE1) {
-                callSnd = SndCall2;
+                var rand:Number = Math.floor(Math.random() * 2);
+                switch (rand) {
+                    case 0:
+                        callSnd = SndCall1A;
+                        break;
+                    default:
+                        callSnd = SndCall1B;
+                        break;
+                }
             } else if (this._type == HiisiEnemy.TYPE2) {
-                callSnd = SndCall2;
+                callSnd = SndCall1A;
             }
             SoundManager.getInstance().playSound(
                 callSnd, 2 * GameSound.MSEC_PER_SEC, null, false, .5
