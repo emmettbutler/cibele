@@ -57,6 +57,7 @@ package com.starmaid.Cibele.utils {
         public function getNClosestGenericNodes(n:Number, pos:DHPoint):Array {
             var checkedGroup:Array = new Array();
             var curNode:MapNode, disp:Number;
+            trace("node num: " + this.nodes.length);
             for (var i:Number = 0; i < this.nodes.length; i++) {
                 curNode = this.nodes[i];
                 disp = curNode.pos.sub(pos)._length();
@@ -66,7 +67,9 @@ package com.starmaid.Cibele.utils {
             }
 
             checkedGroup.sort(sortByDisp);
+            trace("checkedGroupLenBefore: " + checkedGroup.length);
             checkedGroup.length = n;
+            trace("checkedGroupLenAfter: " + checkedGroup.length);
             return checkedGroup;
         }
 
