@@ -10,7 +10,7 @@ package com.starmaid.Cibele.entities {
 
     public class HiisiBoss extends BossEnemy {
         [Embed(source="/../assets/images/characters/boss3.png")] private var ImgBoss:Class;
-        [Embed(source="/../assets/audio/effects/medusa_boss.mp3")] private var SndCall:Class;
+        [Embed(source="/../assets/audio/effects/bounceboss.mp3")] private var SndCall:Class;
 
         private var tentacles:Array;
 
@@ -30,7 +30,7 @@ package com.starmaid.Cibele.entities {
         override protected function playCallSound():void {
             super.playCallSound();
             SoundManager.getInstance().playSound(
-                SndCall, 3 * GameSound.MSEC_PER_SEC, null, false, .6
+                SndCall, 4 * GameSound.MSEC_PER_SEC, null, false, .6
             );
         }
     }
