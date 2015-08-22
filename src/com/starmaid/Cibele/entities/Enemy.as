@@ -78,6 +78,7 @@ package com.starmaid.Cibele.entities {
             if (this.basePosOffset == null) {
                 this.basePosOffset = new DHPoint(0, this.height);
             }
+            this.setPos(this.pos.sub(this.footPosOffset));
             this.loopCallSound();
         }
 
@@ -286,7 +287,8 @@ package com.starmaid.Cibele.entities {
             super.update();
 
             if (ScreenManager.getInstance().DEBUG) {
-                this.debugText.text = this.getStateString();
+                this.debugText.text = this.getStateString() + "\n" +
+                    Math.round(this.footPos.x) + "x" + Math.round(this.footPos.y);
             }
 
             if (this._state == STATE_DEAD && this.visible == false) {
