@@ -15,12 +15,22 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/misc/Enemy_Smoke_01.png")] private var ImgSmoke1:Class;
         [Embed(source="/../assets/images/misc/Enemy_Smoke_02.png")] private var ImgSmoke2:Class;
 
-        private var lifespan:Number;
+        private var lifespan:Number, shrinkFactor:Number, shrinkRateFrames:Number;
+        private var framesAlive:Number, baseScale:Number;
 
-        public function Particle(t:Number, lifespan:Number) {
+        public function Particle(t:Number,
+                                 lifespan:Number,
+                                 shrinkFactor:Number=.6,
+                                 shrinkRateFrames=20,
+                                 baseScale=.7)
+        {
             super(new DHPoint(0, 0));
+            this.framesAlive = 0;
             this.slug = "particle" + (Math.random() * 1000000);
             this.lifespan = lifespan;
+            this.shrinkFactor = shrinkFactor;
+            this.shrinkRateFrames = shrinkRateFrames;
+            this.baseScale = baseScale;
             var randParticle:Number = Math.floor(Math.random() * 2),
                 partImage:Class, partDim:DHPoint = new DHPoint(10, 10);
             switch (t) {
@@ -57,9 +67,10 @@ package com.starmaid.Cibele.entities {
         public function makeAlive():void {
             this.visible = true;
             this.active = true;
-            var rand:Number = Math.random();
-            this.scale.x = .2 + rand;
-            this.scale.y = .2 + rand;
+            this.framesAlive = 0;
+            var rand:Number = Math.random() * .3;
+            this.scale.x = this.baseScale + rand;
+            this.scale.y = this.baseScale + rand;
             GlobalTimer.getInstance().setMark(this.slug, this.lifespan,
                                               function():void {
                                                 visible = false;
@@ -69,10 +80,10 @@ package com.starmaid.Cibele.entities {
 
         override public function update():void {
             super.update();
-
-            if (Math.floor(this.timeAlive) % 20 == 0) {
-                this.scale.x *= .3;
-                this.scale.y *= .3;
+            this.framesAlive++;
+            if (this.framesAlive % this.shrinkRateFrames == 0) {
+                this.scale.x *= this.shrinkFactor;
+                this.scale.y *= this.shrinkFactor;
             }
         }
     }

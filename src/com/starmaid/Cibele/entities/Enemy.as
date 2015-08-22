@@ -35,6 +35,7 @@ package com.starmaid.Cibele.entities {
         private var closestPartyMember:PartyMember;
         private var originalPos:DHPoint;
         protected var damageLockMap:Dictionary;
+        private var smoke:ParticleExplosion;
         public var footPos:DHPoint, footPosOffset:DHPoint, basePosOffset:DHPoint;
         private var lastTrackingDirUpdateTime:Number = -1;
         protected var flipFacing:Boolean = false;
@@ -68,6 +69,7 @@ package com.starmaid.Cibele.entities {
             this.damageLockMap = new Dictionary();
 
             this.setupSprites();
+            this.setupSmoke();
             this.inactiveTarget();
 
             // this stuff should be before setupSprites, but it relies on width
@@ -103,31 +105,9 @@ package com.starmaid.Cibele.entities {
                                             this.hitPoints);
         }
 
-        /*
         protected function setupSmoke():void {
-            this.smokeSprites = new Array();
-            var curSmoke:ExpiringGameObject;
-            for (var i:int = 0; i < this.smokeCount; i++) {
-                curSmoke = new ExpiringGameObject();
-                curSmoke.loadGraphic(ImgSmoke1, true, true, 246, 238);
-                curSmoke.zSorted = true;
-                curSmoke.fadeFrames = 80;
-                this.smokeSprites.push(curSmoke);
-            }
-        }
-
-        */
-
-        protected function activateSmoke():void {
-            /*
-            var curSmoke:ExpiringGameObject;
-            for (var i:int = 0; i < this.smokeSprites.length; i++) {
-                curSmoke = this.smokeSprites[i];
-                curSmoke.place(this.pos);
-                curSmoke.basePos = new DHPoint(curSmoke.pos.x,
-                                               curSmoke.pos.y + curSmoke.height);
-            }
-            */
+            this.smoke = new ParticleExplosion(10, Enemy.PARTICLE_SMOKE, 3, .8, 7, 5, .3);
+            this.smoke.addVisibleObjects();
         }
 
         public function get enemyType():String {
@@ -202,7 +182,7 @@ package com.starmaid.Cibele.entities {
             this._state = STATE_DEAD;
             this.dir = new DHPoint(0,0);
             this.inactiveTarget();
-            this.activateSmoke();
+            this.smoke.run(this.pos);
             FlxG.stage.dispatchEvent(
                 new DataEvent(GameState.EVENT_ENEMY_DIED,
                               {'damaged_by': p}));
@@ -325,6 +305,10 @@ package com.starmaid.Cibele.entities {
             this.closestPartyMemberDisp = this.closestPartyMember.footPos.sub(this.getAttackPos());
             this.hitPoints = Math.max(0, this.hitPoints);
             this.setAuxPositions();
+
+            if (this.smoke != null) {
+                this.smoke.update();
+            }
 
             this.scale.x = (this.dir.x >= 0 ? 1 : -1) * (this.flipFacing ? -1 : 1);
 

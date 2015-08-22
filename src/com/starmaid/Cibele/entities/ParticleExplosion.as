@@ -10,20 +10,35 @@ package com.starmaid.Cibele.entities {
         private var particles:Array;
         private var lifespan:Number;
         private var particleGravity:DHPoint;
+        private var particleBaseScale:Number;
+        private var particleShrinkFactor:Number;
+        private var particleShrinkRateFrames:Number;
 
         public function ParticleExplosion(
             particleCount:Number=25,
-            particleType:Number=2)
+            particleType:Number=2,
+            lifespanSec:Number=2,
+            particleShrinkFactor:Number=.6,
+            particleShrinkRateFrames:Number=20,
+            particleSpeed:Number=13,
+            particleBaseScale:Number=.7)
         {
             this.particleCount = particleCount;
-            this.particleSpeed = 13;
+            this.particleSpeed = particleSpeed;
             this.particles = new Array();
-            this.lifespan = 2 * GameSound.MSEC_PER_SEC;
+            this.lifespan = lifespanSec * GameSound.MSEC_PER_SEC;
             this.particleGravity = new DHPoint(0, 0);
+            this.particleShrinkFactor = particleShrinkFactor;
+            this.particleShrinkRateFrames = particleShrinkRateFrames;
+            this.particleBaseScale = particleBaseScale;
 
             var curPart:Particle, speedMul:Number;
             for (var i:int = 0; i < this.particleCount; i++) {
-                curPart = new Particle(particleType, this.lifespan);
+                curPart = new Particle(particleType,
+                                       this.lifespan,
+                                       this.particleShrinkFactor,
+                                       this.particleShrinkRateFrames,
+                                       this.particleBaseScale);
                 this.particles.push(curPart);
             }
         }
@@ -41,7 +56,7 @@ package com.starmaid.Cibele.entities {
 
         public function run(pos:DHPoint):void {
             this.pos = pos;
-            var speedMul:Number, angle:Number = 0;
+            var speedMul:Number, angle:Number = 2;
             for(var i:int = 0; i < this.particles.length; i++) {
                 this.particles[i].makeAlive();
                 this.particles[i].setPos(this.pos);
@@ -60,6 +75,7 @@ package com.starmaid.Cibele.entities {
                     this.particles[i].dir = this.particles[i].dir.add(
                         this.particleGravity
                     );
+                    this.particles[i].angle += 4;
                 }
             }
         }
