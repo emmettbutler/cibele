@@ -236,6 +236,9 @@ package com.starmaid.Cibele.entities {
             }
 
             this.initWalk(worldPos);
+            if (prevTargetEnemy != null) {
+                prevTargetEnemy.inactiveTarget();
+            }
             if (got_enemy && this.targetEnemy != null && !this.targetEnemy.isDead()) {
                 this._state = STATE_MOVE_TO_ENEMY;
                 this.targetEnemy.activeTarget();
@@ -244,9 +247,6 @@ package com.starmaid.Cibele.entities {
                 }
             } else if (!got_enemy) {
                 this.targetEnemy = null;
-            }
-            if (prevTargetEnemy != null) {
-                prevTargetEnemy.inactiveTarget();
             }
 
             this.clickWait = true;
