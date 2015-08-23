@@ -18,6 +18,7 @@ package com.starmaid.Cibele.entities {
         protected var _enemyType:String = TYPE_SMALL;
 
         private static const MARK_RESPAWN:String = "mrespawn";
+        public static const PARTICLE_SMOKE:Number = 2458720394857;
 
         protected var hitPoints:Number,
                       hitDamage:Number = 10,
@@ -34,6 +35,7 @@ package com.starmaid.Cibele.entities {
         private var closestPartyMember:PartyMember;
         private var originalPos:DHPoint;
         protected var damageLockMap:Dictionary;
+        protected var smoke:ParticleExplosion;
         public var footPos:DHPoint, footPosOffset:DHPoint, basePosOffset:DHPoint;
         private var lastTrackingDirUpdateTime:Number = -1;
         protected var flipFacing:Boolean = false;
@@ -67,6 +69,7 @@ package com.starmaid.Cibele.entities {
             this.damageLockMap = new Dictionary();
 
             this.setupSprites();
+            this.setupSmoke();
             this.inactiveTarget();
 
             // this stuff should be before setupSprites, but it relies on width
@@ -98,9 +101,14 @@ package com.starmaid.Cibele.entities {
 
         public function setupSprites():void {
             this.visible = true;
-
             this._healthBar = new HealthBar(new DHPoint(pos.x, pos.y),
                                             this.hitPoints);
+        }
+
+        protected function setupSmoke():void {
+            this.smoke = new ParticleExplosion(10, Enemy.PARTICLE_SMOKE, 3, .8,
+                                               7, 5, .3, this);
+            this.smoke.addVisibleObjects();
         }
 
         public function get enemyType():String {
@@ -175,6 +183,7 @@ package com.starmaid.Cibele.entities {
             this._state = STATE_DEAD;
             this.dir = new DHPoint(0,0);
             this.inactiveTarget();
+            this.smoke.run(this.getMiddlePos());
             FlxG.stage.dispatchEvent(
                 new DataEvent(GameState.EVENT_ENEMY_DIED,
                               {'damaged_by': p}));
@@ -297,6 +306,10 @@ package com.starmaid.Cibele.entities {
             this.closestPartyMemberDisp = this.closestPartyMember.footPos.sub(this.getAttackPos());
             this.hitPoints = Math.max(0, this.hitPoints);
             this.setAuxPositions();
+
+            if (this.smoke != null) {
+                this.smoke.update();
+            }
 
             this.scale.x = (this.dir.x >= 0 ? 1 : -1) * (this.flipFacing ? -1 : 1);
 

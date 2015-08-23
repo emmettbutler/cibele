@@ -181,6 +181,12 @@ package com.starmaid.Cibele.entities {
             this._healthBar = new BossHealthBar(this.hitPoints);
         }
 
+        override protected function setupSmoke():void {
+            this.smoke = new ParticleExplosion(30, Enemy.PARTICLE_SMOKE, 3, .8,
+                                               7, 8, .3, this);
+            this.smoke.addVisibleObjects();
+        }
+
         override public function doState__IDLE():void {
             this.dir = ZERO_POINT;
             this.bossFollowPlayer();
@@ -195,6 +201,7 @@ package com.starmaid.Cibele.entities {
 
         override public function die(p:PartyMember):void {
             this._state = STATE_DEAD;
+            this.smoke.run(this.getMiddlePos());
             FlxG.stage.dispatchEvent(
                 new DataEvent(GameState.EVENT_BOSS_DIED, {'killed_by': p}));
             SoundManager.getInstance().playSound(
