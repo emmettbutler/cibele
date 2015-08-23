@@ -42,6 +42,8 @@ package com.starmaid.Cibele.management {
         public var cur_viewing:Thread;
 
         public var unread_count:Number = 0;
+        public var unread_count_pos:DHPoint;
+        public var unread_count_altpos:DHPoint;
 
         public var _screen:ScreenManager = ScreenManager.getInstance();
 
@@ -359,7 +361,9 @@ package com.starmaid.Cibele.management {
                 FlxG.state.add(this.debugText);
             }
 
-            this.notifications_text = new FlxText(img_msg.x-28, img_msg.y-18, img_msg.width, this.unread_count.toString());
+            this.unread_count_pos = new DHPoint(img_msg.x-28, img_msg.y-18);
+            this.unread_count_altpos = new DHPoint(img_msg.x-23, img_msg.y-18);
+            this.notifications_text = new FlxText(unread_count_pos.x, unread_count_pos.y, img_msg.width, this.unread_count.toString());
             this.notifications_text.setFormat("NexaBold-Regular",24,0xff616161,"left");
             this.notifications_text.scrollFactor = new FlxPoint(0, 0);
             this.notifications_text.active = false;
@@ -406,6 +410,13 @@ package com.starmaid.Cibele.management {
             } else {
                 this.img_msg.alertOff();
                 this.img_msg.play("closed");
+            }
+            if(this.unread_count == 1) {
+                this.notifications_text.x = unread_count_altpos.x;
+                this.notifications_text.y = unread_count_altpos.y;
+            } else {
+                this.notifications_text.x = unread_count_pos.x;
+                this.notifications_text.y = unread_count_pos.y;
             }
         }
 
