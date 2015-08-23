@@ -15,6 +15,7 @@ package com.starmaid.Cibele.entities {
         private var particleShrinkFactor:Number;
         private var particleShrinkRateFrames:Number;
         private var particleParent:GameObject;
+        private var particleRotationSpeed:Number;
 
         public function ParticleExplosion(
             particleCount:Number=25,
@@ -24,7 +25,8 @@ package com.starmaid.Cibele.entities {
             particleShrinkRateFrames:Number=12,
             particleSpeed:Number=13,
             particleBaseScale:Number=.7,
-            particleParent:GameObject=null)
+            particleParent:GameObject=null,
+            particleRotationSpeed=0)
         {
             this.particleCount = particleCount;
             this.particleSpeed = particleSpeed;
@@ -35,6 +37,7 @@ package com.starmaid.Cibele.entities {
             this.particleShrinkRateFrames = particleShrinkRateFrames;
             this.particleBaseScale = particleBaseScale;
             this.particleParent = particleParent;
+            this.particleRotationSpeed = particleRotationSpeed;
 
             var curPart:Particle, speedMul:Number;
             for (var i:int = 0; i < this.particleCount; i++) {
@@ -82,7 +85,7 @@ package com.starmaid.Cibele.entities {
                     this.particles[i].dir = this.particles[i].dir.add(
                         this.particleGravity
                     );
-                    this.particles[i].angle += 4;
+                    this.particles[i].angle += this.particleRotationSpeed;
                 }
             }
         }
