@@ -141,7 +141,9 @@ package com.starmaid.Cibele.states {
                 spr = new GameObject(new DHPoint(0, 0));
                 spr.loadGraphic(
                     (partyMember == this.player ? ImgParticleBlue : ImgParticleRed),
-                    false, false, 23, 23);
+                    true, false, 30, 50);
+                spr.addAnimation("play", [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14], 12, true);
+                spr.play("play");
                 spr.visible = false;
                 spr.scrollFactor = new DHPoint(0, 0);
                 trail = new TeamPowerParticleTrail(spr, partyMember);
