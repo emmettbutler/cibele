@@ -35,7 +35,7 @@ package com.starmaid.Cibele.entities {
         private var closestPartyMember:PartyMember;
         private var originalPos:DHPoint;
         protected var damageLockMap:Dictionary;
-        private var smoke:ParticleExplosion;
+        protected var smoke:ParticleExplosion;
         public var footPos:DHPoint, footPosOffset:DHPoint, basePosOffset:DHPoint;
         private var lastTrackingDirUpdateTime:Number = -1;
         protected var flipFacing:Boolean = false;
