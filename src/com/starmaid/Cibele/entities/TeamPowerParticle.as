@@ -15,10 +15,12 @@ package com.starmaid.Cibele.entities {
             super();
             this.fadeFrames = 100;
             if(type == RED) {
-                this.loadGraphic(ImgParticleRed, false, false, 23, 23);
+                this.loadGraphic(ImgParticleRed, true, false, 30, 50);
             } else if(type == BLUE) {
-                this.loadGraphic(ImgParticleBlue, false, false, 23, 23);
+                this.loadGraphic(ImgParticleBlue, true, false, 30, 50);
             }
+            this.addAnimation("play", [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14], 12, true);
+            this.play("play");
             this.scrollFactor = new DHPoint(0, 0);
         }
     }
