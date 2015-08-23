@@ -407,12 +407,9 @@ package com.starmaid.Cibele.states {
         private function increaseTeamPower(amt:Number):void {
             this.animatingTeamPower = true;
             this.teamPowerDelta = amt;
-            var curScreenPos:DHPoint = new DHPoint(0, 0);
-            this.player.getScreenXY(curScreenPos);
-            this.teamPowerAnimationObjects[0]['spr'].setPos(curScreenPos);
+            this.teamPowerAnimationObjects[0]['spr'].setPos(this.player.getScreenXY());
             this.teamPowerAnimationObjects[0]['spr'].visible = true;
-            this.pathWalker.getScreenXY(curScreenPos);
-            this.teamPowerAnimationObjects[1]['spr'].setPos(curScreenPos);
+            this.teamPowerAnimationObjects[1]['spr'].setPos(this.pathWalker.getScreenXY());
             this.teamPowerAnimationObjects[1]['spr'].visible = true;
         }
 
