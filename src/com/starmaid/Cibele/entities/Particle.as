@@ -9,9 +9,7 @@ package com.starmaid.Cibele.entities {
 
     public class Particle extends GameObject {
         [Embed(source="/../assets/images/misc/cibele_particle_1.png")] private var ImgCibParticle1:Class;
-        [Embed(source="/../assets/images/misc/cibele_particle_2.png")] private var ImgCibParticle2:Class;
         [Embed(source="/../assets/images/misc/ichi_particle_1.png")] private var ImgIchiParticle1:Class;
-        [Embed(source="/../assets/images/misc/ichi_particle_2.png")] private var ImgIchiParticle2:Class;
         [Embed(source="/../assets/images/misc/Enemy_Smoke_01.png")] private var ImgSmoke1:Class;
         [Embed(source="/../assets/images/misc/Enemy_Smoke_02.png")] private var ImgSmoke2:Class;
 
@@ -34,21 +32,13 @@ package com.starmaid.Cibele.entities {
             this.baseScale = baseScale;
             this.zSorted = true;
             var randParticle:Number = Math.floor(Math.random() * 2),
-                partImage:Class, partDim:DHPoint = new DHPoint(10, 10);
+                partImage:Class, partDim:DHPoint = new DHPoint(20, 40);
             switch (t) {
                 case PartyMember.PARTICLE_ICHI:
-                    if (randParticle == 0) {
-                        partImage = ImgIchiParticle1;
-                    } else {
-                        partImage = ImgIchiParticle2;
-                    }
+                    partImage = ImgIchiParticle1;
                     break;
                 case PartyMember.PARTICLE_CIBELE:
-                    if (randParticle == 0) {
-                        partImage = ImgCibParticle1;
-                    } else {
-                        partImage = ImgCibParticle2;
-                    }
+                    partImage = ImgCibParticle1;
                     break;
                 case Enemy.PARTICLE_SMOKE:
                     if (randParticle == 0) {
@@ -61,6 +51,10 @@ package com.starmaid.Cibele.entities {
                     break;
             }
             this.loadGraphic(partImage, false, false, partDim.x, partDim.y);
+            if(t == PartyMember.PARTICLE_ICHI || t == PartyMember.PARTICLE_CIBELE) {
+                this.addAnimation("play", [0,1,2,3,4,5,6,7], 12, true);
+                this.play("play");
+            }
             this.zSorted = false;
             this.visible = false;
             this.active = false;
