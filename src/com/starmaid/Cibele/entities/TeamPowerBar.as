@@ -70,9 +70,5 @@ package com.starmaid.Cibele.entities {
             super.setVisible(v);
             this._topFrame.visible = v;
         }
-
-        override public function update():void {
-            super.update();
-        }
     }
 }
