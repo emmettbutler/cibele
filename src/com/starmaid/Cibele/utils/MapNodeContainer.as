@@ -20,6 +20,7 @@ package com.starmaid.Cibele.utils {
 
         public function MapNodeContainer(p:Path, player:Player) {
             this.nodes = new Array();
+            this.sortedNodes = new Array();
             this.nodesHash = {};
             this.path = p;
             this.player = player;
@@ -69,16 +70,19 @@ package com.starmaid.Cibele.utils {
         public function getNClosestGenericNodes(n:Number, pos:DHPoint):Array {
             var checkedGroup:Array = new Array();
             var curNode:MapNode, disp:Number;
+            this.sortedNodes.length = 0;
             for (var i:Number = 0; i < this.nodes.length; i++) {
                 curNode = this.nodes[i];
                 disp = curNode.pos.sub(pos)._length();
-                if (disp < 700) {
-                    checkedGroup.push({"node": curNode, "disp": disp});
+                this.sortedNodes.push({"node": curNode, "disp": disp});
+            }
+            this.sortedNodes.sort(sortByDisp);
+            for (i = 0; i < this.sortedNodes.length; i++) {
+                if (checkedGroup.length < n) {
+                    checkedGroup.push(this.sortedNodes[i]);
                 }
             }
-
             checkedGroup.sort(sortByDisp);
-            checkedGroup.length = n;
             return checkedGroup;
         }
 
