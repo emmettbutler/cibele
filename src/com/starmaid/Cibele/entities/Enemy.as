@@ -107,7 +107,7 @@ package com.starmaid.Cibele.entities {
 
         protected function setupSmoke():void {
             this.smoke = new ParticleExplosion(10, Enemy.PARTICLE_SMOKE, 3, .8,
-                                               7, 5, .3);
+                                               7, 5, .3, this);
             this.smoke.addVisibleObjects();
         }
 
@@ -183,7 +183,7 @@ package com.starmaid.Cibele.entities {
             this._state = STATE_DEAD;
             this.dir = new DHPoint(0,0);
             this.inactiveTarget();
-            this.smoke.run(this.pos);
+            this.smoke.run(this.getMiddlePos());
             FlxG.stage.dispatchEvent(
                 new DataEvent(GameState.EVENT_ENEMY_DIED,
                               {'damaged_by': p}));

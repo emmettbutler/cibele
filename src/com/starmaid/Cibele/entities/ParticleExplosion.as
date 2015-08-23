@@ -1,6 +1,7 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.GameObject;
 
     import org.flixel.*;
 
@@ -13,15 +14,17 @@ package com.starmaid.Cibele.entities {
         private var particleBaseScale:Number;
         private var particleShrinkFactor:Number;
         private var particleShrinkRateFrames:Number;
+        private var particleParent:GameObject;
 
         public function ParticleExplosion(
             particleCount:Number=25,
             particleType:Number=2,
             lifespanSec:Number=2,
             particleShrinkFactor:Number=.6,
-            particleShrinkRateFrames:Number=15,
+            particleShrinkRateFrames:Number=12,
             particleSpeed:Number=13,
-            particleBaseScale:Number=.7)
+            particleBaseScale:Number=.7,
+            particleParent:GameObject=null)
         {
             this.particleCount = particleCount;
             this.particleSpeed = particleSpeed;
@@ -31,6 +34,7 @@ package com.starmaid.Cibele.entities {
             this.particleShrinkFactor = particleShrinkFactor;
             this.particleShrinkRateFrames = particleShrinkRateFrames;
             this.particleBaseScale = particleBaseScale;
+            this.particleParent = particleParent;
 
             var curPart:Particle, speedMul:Number;
             for (var i:int = 0; i < this.particleCount; i++) {
@@ -39,6 +43,7 @@ package com.starmaid.Cibele.entities {
                                        this.particleShrinkFactor,
                                        this.particleShrinkRateFrames,
                                        this.particleBaseScale);
+                curPart.parent = this.particleParent;
                 this.particles.push(curPart);
             }
         }
@@ -56,12 +61,14 @@ package com.starmaid.Cibele.entities {
 
         public function run(pos:DHPoint):void {
             this.pos = pos;
-            var speedMul:Number, angle:Number = 2;
+            var speedMul:Number, angle:Number = 2, p:Particle;
             for(var i:int = 0; i < this.particles.length; i++) {
-                this.particles[i].makeAlive();
-                this.particles[i].setPos(this.pos);
+                p = this.particles[i];
+                p.makeAlive();
+                p.setPos(this.pos.sub(
+                    new DHPoint(p.frameWidth / 2, p.frameHeight / 2)));
                 speedMul = Math.random() * .5;
-                this.particles[i].dir = new DHPoint(
+                p.dir = new DHPoint(
                     Math.cos(angle) * (this.particleSpeed * speedMul),
                     Math.sin(angle) * (this.particleSpeed * speedMul)
                 );

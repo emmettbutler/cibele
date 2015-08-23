@@ -17,11 +17,12 @@ package com.starmaid.Cibele.entities {
 
         private var lifespan:Number, shrinkFactor:Number, shrinkRateFrames:Number;
         private var framesAlive:Number, baseScale:Number;
+        public var parent:GameObject;
 
         public function Particle(t:Number,
                                  lifespan:Number,
                                  shrinkFactor:Number=.6,
-                                 shrinkRateFrames=15,
+                                 shrinkRateFrames=12,
                                  baseScale=.7)
         {
             super(new DHPoint(0, 0));
@@ -54,7 +55,7 @@ package com.starmaid.Cibele.entities {
                         partImage = ImgSmoke1;
                         partDim = new DHPoint(246, 238);
                     } else {
-                        partImage = ImgSmoke1;
+                        partImage = ImgSmoke2;
                         partDim = new DHPoint(246, 238);
                     }
                     break;
@@ -82,7 +83,10 @@ package com.starmaid.Cibele.entities {
         override public function update():void {
             super.update();
             this.framesAlive++;
-            this.basePos = this.pos;
+            if (this.parent != null) {
+                this.basePos = this.parent.basePos;
+                this.basePos.y += 1;
+            }
             if (this.framesAlive % this.shrinkRateFrames == 0) {
                 this.scale.x *= this.shrinkFactor;
                 this.scale.y *= this.shrinkFactor;
