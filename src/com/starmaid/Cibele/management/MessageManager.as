@@ -359,7 +359,7 @@ package com.starmaid.Cibele.management {
                 FlxG.state.add(this.debugText);
             }
 
-            this.notifications_text = new FlxText(img_msg.x-28, img_msg.y-20, img_msg.width, this.unread_count.toString());
+            this.notifications_text = new FlxText(img_msg.x-28, img_msg.y-18, img_msg.width, this.unread_count.toString());
             this.notifications_text.setFormat("NexaBold-Regular",24,0xff616161,"left");
             this.notifications_text.scrollFactor = new FlxPoint(0, 0);
             this.notifications_text.active = false;
