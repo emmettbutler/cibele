@@ -88,6 +88,12 @@ package com.starmaid.Cibele.base {
             );
         }
 
+        public function getScreenPos():DHPoint {
+            var pos:DHPoint = new DHPoint(0, 0);
+            this.getScreenXY(pos);
+            return pos;
+        }
+
         public function isOnscreen():Boolean {
             var screenPos:DHPoint = new DHPoint(0, 0);
             var _screen:ScreenManager = ScreenManager.getInstance();
