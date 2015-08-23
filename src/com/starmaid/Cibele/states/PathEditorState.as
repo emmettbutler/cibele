@@ -255,8 +255,8 @@ package com.starmaid.Cibele.states {
                            "\n";
             }
 
-            for (i = 0; i < this._mapnodes.nodes.length; i++) {
-                curMapNode = this._mapnodes.nodes[i];
+            for (i = 0; i < this._mapnodes._length(); i++) {
+                curMapNode = this._mapnodes.getNode(i);
                 fString += "mapnode " + curMapNode.pos.x + "x" +
                            curMapNode.pos.y + "\n";
             }
@@ -277,8 +277,8 @@ package com.starmaid.Cibele.states {
             for (var k:int = 0; k < this._mapnodes.path.nodes.length; k++) {
                 allNodes.push(this._mapnodes.path.nodes[k]);
             }
-            for (var h:int = 0; h < this._mapnodes.nodes.length; h++) {
-                allNodes.push(this._mapnodes.nodes[h]);
+            for (var h:int = 0; h < this._mapnodes._length(); h++) {
+                allNodes.push(this._mapnodes.getNode(h));
             }
             return allNodes;
         }

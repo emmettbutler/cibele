@@ -10,7 +10,7 @@ package com.starmaid.Cibele.utils {
 
     public class MapNodeContainer
     {
-        public var nodes:Array;
+        private var nodes:Array, sortedNodes:Array;
         public var nodesHash:Object;
         public var path:Path;
         public var player:Player;
@@ -40,6 +40,14 @@ package com.starmaid.Cibele.utils {
                 //FlxG.state.add(lbl);
             }
             return node;
+        }
+
+        public function getNode(i:int):MapNode {
+            return this.nodes[i];
+        }
+
+        public function _length():Number {
+            return this.nodes.length;
         }
 
         public function hasNodes():Boolean {
