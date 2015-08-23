@@ -418,5 +418,13 @@ package com.starmaid.Cibele.management {
             receivingMachine.load(new URLRequest(path));
             return bg;
         }
+
+        public function collideTile(tile:FlxExtSprite):void {
+            collisionData = this.getPlayerCollisionData(tile);
+            this.playerRef.colliding = collisionData[0];
+            if (collisionData[0]) {
+                this.playerRef.collisionDirection = collisionData[1];
+            }
+        }
     }
 }

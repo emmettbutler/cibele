@@ -493,13 +493,15 @@ package com.starmaid.Cibele.entities {
                         this.collisionDirection[3] == 1)
                     {
                         // stuck!
-                        this._state = STATE_WALK_HARD;
-                        var closest:MapNode = this._mapnodes.getClosestNode(this.pos);
-                        if (this._mapnodes != null && closest != null) {
-                            this.walkTarget = closest.pos;
-                        } else {
-                            var _screen:ScreenManager = ScreenManager.getInstance();
-                            this.walkTarget = new DHPoint(_screen.screenWidth/2, this.y);
+                        if (this._mapnodes != null) {
+                            this._state = STATE_WALK_HARD;
+                            var closest:MapNode = this._mapnodes.getClosestNode(this.pos);
+                            if (this._mapnodes != null && closest != null) {
+                                this.walkTarget = closest.pos;
+                            } else {
+                                var _screen:ScreenManager = ScreenManager.getInstance();
+                                this.walkTarget = new DHPoint(_screen.screenWidth/2, this.y);
+                            }
                         }
                     } else if (this._state != STATE_WALK_HARD){
                         if (this.dir.x > 0 && this.collisionDirection[1] == 1) {
