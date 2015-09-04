@@ -19,6 +19,7 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/music/bgm_hiisi_intro.mp3")] private var BGMIntro:Class;
         [Embed(source="/../assets/audio/music/bgm_hiisi_loop.mp3")] private var BGMLoop:Class;
         [Embed(source="/../assets/audio/music/vid_turnoff.mp3")] private var BGMTurnoff:Class;
+        [Embed(source="/../assets/audio/music/vid_meetup.mp3")] private var BGMMeetup:Class;
         [Embed(source="/../assets/audio/music/vid_goodbye.mp3")] private var BGMGoodbye:Class;
         [Embed(source="/../assets/audio/music/vid_sex.mp3")] private var BGMSex:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_morning.mp3")] private var Convo1:Class;
@@ -250,6 +251,11 @@ package com.starmaid.Cibele.states {
             PopUpManager.GAME_ACTIVE = false;
             FlxG.switchState(new TextScreen(6 * GameSound.MSEC_PER_SEC,
                 function():void {
+                    SoundManager.getInstance().playSound(
+                        BGMMeetup,
+                        7 * GameSound.MSEC_PER_SEC,
+                        null, false, 1, GameSound.BGM
+                    );
                     FlxG.switchState(
                         new PlayVideoState(
                             "/../assets/video/4.1 Meetup_v1.mp4",
