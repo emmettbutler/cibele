@@ -17,6 +17,7 @@ package com.starmaid.Cibele.states {
         public function HiisiHallway(state:Number=0){
             _state = state;
             loading_screen_timer = 9;
+            this.play_loading_dialogue = false;
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_HI;
         }
 
