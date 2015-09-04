@@ -195,7 +195,7 @@ package com.starmaid.Cibele.entities {
                               {'damaged_by': p}));
             GlobalTimer.getInstance().setMark(
                 MARK_RESPAWN + Math.random() * 200,
-                15 * GameSound.MSEC_PER_SEC, this.respawn, true
+                20 * GameSound.MSEC_PER_SEC, this.respawn, true
             );
         }
 
