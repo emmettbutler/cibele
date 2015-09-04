@@ -32,6 +32,8 @@ package com.starmaid.Cibele.entities {
         protected var _healthBar:HealthBar;
         protected var closestPartyMemberDisp:DHPoint;
         protected var takeDamageEventSlug:String;
+        protected var partyMemberTrackingOffset:DHPoint;
+        protected var partyMemberTrackingRadius:Number = 300;
         private var closestPartyMember:PartyMember;
         private var originalPos:DHPoint;
         protected var damageLockMap:Dictionary;
@@ -67,6 +69,9 @@ package com.starmaid.Cibele.entities {
             this.basePos = new DHPoint(this.x, this.y + this.height);
             this.takeDamageEventSlug = "damaged" + (Math.random() * 100000000);
             this.damageLockMap = new Dictionary();
+            this.partyMemberTrackingOffset = new DHPoint(
+                this.partyMemberTrackingRadius / 2 - Math.random() * this.partyMemberTrackingRadius,
+                this.partyMemberTrackingRadius / 2 - Math.random() * this.partyMemberTrackingRadius);
 
             this.setupSprites();
             this.setupSmoke();
@@ -303,7 +308,8 @@ package com.starmaid.Cibele.entities {
             }
 
             this.closestPartyMember = this.getClosestPartyMember();
-            this.closestPartyMemberDisp = this.closestPartyMember.footPos.sub(this.getAttackPos());
+            this.closestPartyMemberDisp = this.closestPartyMember.footPos
+                .add(this.partyMemberTrackingOffset).sub(this.getAttackPos());
             this.hitPoints = Math.max(0, this.hitPoints);
             this.setAuxPositions();
 
