@@ -35,7 +35,7 @@ package com.starmaid.Cibele.entities {
             super(pos, 600);
             this._enemyType = Enemy.TYPE_BOSS;
             this.sightRange = 750;
-            this.hitDamage = 80;
+            this.hitDamage = 20;
             this.recoilPower = 0;
 
             this.alpha = 0;
