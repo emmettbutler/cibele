@@ -134,7 +134,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0, endfn: this.startBoss, "ends_with_popup": false
                 },
                 {
-                    "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
+                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC,
                     "delay": 0, "boss_gate": true
                 },
                 {
