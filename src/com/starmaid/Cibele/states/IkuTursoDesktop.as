@@ -120,7 +120,7 @@ package com.starmaid.Cibele.states {
                 {
                     "folder_img": ImgPicturesFolder,
                     "folder_dim": new DHPoint(631, 356),
-                    "hitbox_pos": new DHPoint(_screen.screenWidth * .87, _screen.screenHeight * .12),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .87, _screen.screenHeight * .08),
                     "hitbox_dim": new DHPoint(150, 100),
                     "name": "selfies folder stuff",
                     "contents": [
@@ -244,8 +244,8 @@ package com.starmaid.Cibele.states {
                     "name": "untitled",
                     "folder_img": ImgPicturesFolder,
                     "folder_dim": new DHPoint(631, 356),
-                    "hitbox_pos": new DHPoint(_screen.screenWidth * .84, _screen.screenHeight * .33),
-                    "hitbox_dim": new DHPoint(150, 100),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .84, _screen.screenHeight * .3),
+                    "hitbox_dim": new DHPoint(150, 115),
                     "contents": [
                         {
                             "name": "kawaii",
@@ -360,7 +360,7 @@ package com.starmaid.Cibele.states {
                 {
                     "folder_img": ImgPicturesFolder,
                     "folder_dim": new DHPoint(631, 356),
-                    "hitbox_pos": new DHPoint(_screen.screenWidth * .7, _screen.screenHeight * .33),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .7, _screen.screenHeight * .32),
                     "hitbox_dim": new DHPoint(150, 100),
                     "name": "old site folder stuff",
                     "contents": [
