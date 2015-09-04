@@ -77,7 +77,7 @@ package com.starmaid.Cibele.entities {
                 callSnd = SndCall2;
             }
             SoundManager.getInstance().playSound(
-                callSnd, 3 * GameSound.MSEC_PER_SEC
+                callSnd, 3 * GameSound.MSEC_PER_SEC, null, false, .8
             );
         }
     }
