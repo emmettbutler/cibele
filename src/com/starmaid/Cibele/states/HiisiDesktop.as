@@ -129,6 +129,8 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/hi_files/blake.png")] private var ImgBlakeIcon:Class;
         [Embed(source="/../assets/images/ui/popups/hi_files/forU_icon.png")] private var ImgForUIcon:Class;
         [Embed(source="/../assets/images/ui/popups/hi_files/forU.png")] private var ImgForU:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/hi_icon.png")] private var ImgHiIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/hi.png")] private var ImgHi:Class;
 
         public function HiisiDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_HI;
@@ -230,6 +232,14 @@ package com.starmaid.Cibele.states {
                                     "icon_pos": new DHPoint(130, 30),
                                     "dim": new DHPoint(336, 448),
                                     "contents": ImgForU
+                                },
+                                {
+                                    "name": "hi pic",
+                                    "icon": ImgHiIcon,
+                                    "icon_dim": new DHPoint(77, 91),
+                                    "icon_pos": new DHPoint(230, 30),
+                                    "dim": new DHPoint(640, 426),
+                                    "contents": ImgHi
                                 }
                             ]
                         },
