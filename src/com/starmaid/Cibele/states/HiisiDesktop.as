@@ -124,6 +124,11 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_3_icon.png")] private var ImgChatlog3Icon:Class;
         [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_4.png")] private var ImgChatlog4:Class;
         [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_4_icon.png")] private var ImgChatlog4Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/loveyou.png")] private var ImgLoveYou:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/loveyou_icon.png")] private var ImgLoveYouIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/blake.png")] private var ImgBlakeIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/forU_icon.png")] private var ImgForUIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/forU.png")] private var ImgForU:Class;
 
         public function HiisiDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_HI;
@@ -201,6 +206,32 @@ package com.starmaid.Cibele.states {
                             "icon_pos": new DHPoint(31, 130),
                             "dim": new DHPoint(384, 310),
                             "contents": ImgNina5
+                        },
+                        {
+                            "name": "blake_subfolder",
+                            "icon": ImgBlakeIcon,
+                            "icon_dim": new DHPoint(95, 91),
+                            "icon_pos": new DHPoint(300, 150),
+                            "folder_img": ImgPicturesFolder,
+                            "folder_dim": new DHPoint(631, 356),
+                            "contents": [
+                                {
+                                    "name": "love you",
+                                    "icon": ImgLoveYouIcon,
+                                    "icon_dim": new DHPoint(77, 94),
+                                    "icon_pos": new DHPoint(30, 30),
+                                    "dim": new DHPoint(640, 388),
+                                    "contents": ImgLoveYou
+                                },
+                                {
+                                    "name": "forU",
+                                    "icon": ImgForUIcon,
+                                    "icon_dim": new DHPoint(77, 89),
+                                    "icon_pos": new DHPoint(130, 30),
+                                    "dim": new DHPoint(336, 448),
+                                    "contents": ImgForU
+                                }
+                            ]
                         },
                         {
                             "name": "pics_subfolder",
