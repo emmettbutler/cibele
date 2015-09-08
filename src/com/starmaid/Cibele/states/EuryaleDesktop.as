@@ -122,8 +122,15 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/eu_files/chatlog_2.png")] private var ImgChatlog2:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/chatlog_3_icon.png")] private var ImgChatlog3Icon:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/chatlog_3.png")] private var ImgChatlog3:Class;
-
-
+        [Embed(source="/../assets/images/ui/popups/eu_files/swimsuit.png")] private var ImgSwimsuit:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/swimsuit_icon.png")] private var ImgSwimsuitIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/forichi.png")] private var ImgForIchiIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/better_icon.png")] private var ImgSwimsuitBetterIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/better.png")] private var ImgSwimsuitBetter:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/forichipic_icon.png")] private var ImgForIchiPicIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/forichipic.png")] private var ImgForIchiPic:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/test_icon.png")] private var ImgBWTestIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/test.png")] private var ImgBWTest:Class;
 
         public function EuryaleDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
@@ -359,6 +366,48 @@ package com.starmaid.Cibele.states {
                                             "contents": ImgDesk
                                         }
                                     ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "forichi",
+                            "icon": ImgForIchiIcon,
+                            "icon_dim": new DHPoint(96, 91),
+                            "icon_pos": new DHPoint(200, 130),
+                            "folder_img": ImgPicturesFolder,
+                            "folder_dim": new DHPoint(631, 356),
+                            "contents": [
+                                {
+                                    "name": "swimsuit",
+                                    "icon": ImgSwimsuitIcon,
+                                    "icon_dim": new DHPoint(91, 98),
+                                    "icon_pos": new DHPoint(30, 30),
+                                    "dim": new DHPoint(480, 536),
+                                    "contents": ImgSwimsuit
+                                },
+                                {
+                                    "name": "swimsuit better",
+                                    "icon": ImgSwimsuitBetterIcon,
+                                    "icon_dim": new DHPoint(80, 93),
+                                    "icon_pos": new DHPoint(130, 30),
+                                    "dim": new DHPoint(480, 536),
+                                    "contents": ImgSwimsuitBetter
+                                },
+                                {
+                                    "name": "for ichi pic",
+                                    "icon": ImgForIchiPicIcon,
+                                    "icon_dim": new DHPoint(78, 93),
+                                    "icon_pos": new DHPoint(220, 30),
+                                    "dim": new DHPoint(300, 653),
+                                    "contents": ImgForIchiPic
+                                },
+                                {
+                                    "name": "bw test",
+                                    "icon": ImgBWTestIcon,
+                                    "icon_dim": new DHPoint(81, 96),
+                                    "icon_pos": new DHPoint(310, 30),
+                                    "dim": new DHPoint(376, 653),
+                                    "contents": ImgBWTest
                                 }
                             ]
                         }
