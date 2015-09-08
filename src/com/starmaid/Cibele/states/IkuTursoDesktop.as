@@ -88,6 +88,13 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/it_files/newhair.png")] private var ImgNewHair:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/selfie_5_icon.png")] private var ImgSelfie5Icon:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/selfie_5.png")] private var ImgSelfie5:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/chatlog_feb.png")] private var ImgChatlogFolder:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/chatlog1_icon.png")] private var ImgChatlog1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/chatlog1.png")] private var ImgChatlog1:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/chatlog2_icon.png")] private var ImgChatlog2Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/chatlog2.png")] private var ImgChatlog2:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/chatlog3_icon.png")] private var ImgChatlog3Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/chatlog3.png")] private var ImgChatlog3:Class;
 
         public function IkuTursoDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_IT;
@@ -278,6 +285,40 @@ package com.starmaid.Cibele.states {
                             "icon_pos": new DHPoint(135, 140),
                             "dim": new DHPoint(591, 444),
                             "contents": ImgCotillion
+                        },
+                        {
+                            "name": "chatlogs",
+                            "icon": ImgChatlogFolder,
+                            "icon_dim": new DHPoint(95, 91),
+                            "icon_pos": new DHPoint(30, 232),
+                            "folder_img": ImgPicturesFolder,
+                            "folder_dim": new DHPoint(631, 356),
+                            "contents": [
+                                {
+                                    "name": "chatlog1",
+                                    "icon": ImgChatlog1Icon,
+                                    "icon_dim": new DHPoint(120, 95),
+                                    "icon_pos": new DHPoint(30, 30),
+                                    "dim": new DHPoint(631, 409),
+                                    "contents": ImgChatlog1
+                                },
+                                {
+                                    "name": "chatlog2",
+                                    "icon": ImgChatlog2Icon,
+                                    "icon_dim": new DHPoint(137, 93),
+                                    "icon_pos": new DHPoint(150, 30),
+                                    "dim": new DHPoint(631, 409),
+                                    "contents": ImgChatlog2
+                                },
+                                {
+                                    "name": "chatlog3",
+                                    "icon": ImgChatlog3Icon,
+                                    "icon_dim": new DHPoint(119, 91),
+                                    "icon_pos": new DHPoint(290, 30),
+                                    "dim": new DHPoint(631, 409),
+                                    "contents": ImgChatlog3
+                                }
+                            ]
                         },
                         {
                             "name": "nyc folder",

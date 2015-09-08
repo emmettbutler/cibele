@@ -115,11 +115,9 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/hi_files/coney_1.png")] private var ImgConey1:Class;
         [Embed(source="/../assets/images/ui/popups/hi_files/coney_2_icon.png")] private var ImgConey2Icon:Class;
         [Embed(source="/../assets/images/ui/popups/hi_files/coney_2.png")] private var ImgConey2:Class;
-        [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_folder.png")] private var ImgChatlogFolder:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_aug.png")] private var ImgChatlogFolder:Class;
         [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_1.png")] private var ImgChatlog1:Class;
         [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_1_icon.png")] private var ImgChatlog1Icon:Class;
-        [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_2.png")] private var ImgChatlog2:Class;
-        [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_2_icon.png")] private var ImgChatlog2Icon:Class;
         [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_3.png")] private var ImgChatlog3:Class;
         [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_3_icon.png")] private var ImgChatlog3Icon:Class;
         [Embed(source="/../assets/images/ui/popups/hi_files/chatlog_4.png")] private var ImgChatlog4:Class;
@@ -630,7 +628,7 @@ package com.starmaid.Cibele.states {
                         {
                             "name": "chatlogs",
                             "icon": ImgChatlogFolder,
-                            "icon_dim": new DHPoint(99, 88),
+                            "icon_dim": new DHPoint(97, 87),
                             "icon_pos": new DHPoint(27, 130),
                             "folder_img": ImgPicturesFolder,
                             "folder_dim": new DHPoint(631, 356),
@@ -638,34 +636,26 @@ package com.starmaid.Cibele.states {
                                 {
                                     "name": "chatlog1",
                                     "icon": ImgChatlog1Icon,
-                                    "icon_dim": new DHPoint(64, 93),
+                                    "icon_dim": new DHPoint(126, 91),
                                     "icon_pos": new DHPoint(30, 30),
-                                    "dim": new DHPoint(631, 356),
+                                    "dim": new DHPoint(631, 409),
                                     "contents": ImgChatlog1
-                                },
-                                {
-                                    "name": "chatlog2",
-                                    "icon": ImgChatlog2Icon,
-                                    "icon_dim": new DHPoint(78, 92),
-                                    "icon_pos": new DHPoint(130, 30),
-                                    "dim": new DHPoint(631, 356),
-                                    "contents": ImgChatlog2
-                                },
-                                {
-                                    "name": "chatlog3",
-                                    "icon": ImgChatlog3Icon,
-                                    "icon_dim": new DHPoint(78, 92),
-                                    "icon_pos": new DHPoint(230, 30),
-                                    "dim": new DHPoint(631, 516),
-                                    "contents": ImgChatlog3
                                 },
                                 {
                                     "name": "chatlog4",
                                     "icon": ImgChatlog4Icon,
-                                    "icon_dim": new DHPoint(58, 91),
-                                    "icon_pos": new DHPoint(330, 30),
+                                    "icon_dim": new DHPoint(131, 93),
+                                    "icon_pos": new DHPoint(150, 30),
                                     "dim": new DHPoint(631, 568),
                                     "contents": ImgChatlog4
+                                },
+                                {
+                                    "name": "chatlog3",
+                                    "icon": ImgChatlog3Icon,
+                                    "icon_dim": new DHPoint(115, 97),
+                                    "icon_pos": new DHPoint(280, 27),
+                                    "dim": new DHPoint(631, 409),
+                                    "contents": ImgChatlog3
                                 }
                             ]
                         },
