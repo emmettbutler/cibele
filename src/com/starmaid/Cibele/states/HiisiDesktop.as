@@ -538,7 +538,7 @@ package com.starmaid.Cibele.states {
                                     "name": "oldflashdrive",
                                     "icon": ImgOldFlashdriveIcon,
                                     "icon_dim": new DHPoint(102, 92),
-                                    "icon_pos": new DHPoint(30, 230),
+                                    "icon_pos": new DHPoint(330, 230),
                                     "folder_img": ImgPicturesFolder,
                                     "folder_dim": new DHPoint(631, 356),
                                     "contents": [
