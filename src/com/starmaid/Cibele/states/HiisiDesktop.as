@@ -246,14 +246,6 @@ package com.starmaid.Cibele.states {
                                     "contents": ImgHi
                                 },
                                 {
-                                    "name": "blake pic 1",
-                                    "icon": ImgEuEmailIchiIcon,
-                                    "icon_dim": new DHPoint(78, 90),
-                                    "icon_pos": new DHPoint(30, 130),
-                                    "dim": new DHPoint(653, 490),
-                                    "contents": ImgEuEmailIchiPic
-                                },
-                                {
                                     "name": "blake pic 2",
                                     "icon": ImgSexyBlakeIcon,
                                     "icon_dim": new DHPoint(76, 93),
@@ -651,7 +643,7 @@ package com.starmaid.Cibele.states {
                             "name": "bow",
                             "icon": ImgBowIcon,
                             "icon_dim": new DHPoint(70, 81),
-                            "icon_pos": new DHPoint(220, 36),
+                            "icon_pos": new DHPoint(120, 36),
                             "dim": new DHPoint(384, 310),
                             "contents": ImgBow
                         },
@@ -693,7 +685,7 @@ package com.starmaid.Cibele.states {
                             "name": "2008",
                             "icon": Img2008Icon,
                             "icon_dim": new DHPoint(94, 90),
-                            "icon_pos": new DHPoint(320, 36),
+                            "icon_pos": new DHPoint(220, 36),
                             "folder_img": ImgPicturesFolder,
                             "folder_dim": new DHPoint(631, 356),
                             "contents": [
