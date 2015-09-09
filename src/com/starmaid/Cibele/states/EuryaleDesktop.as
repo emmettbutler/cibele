@@ -135,6 +135,7 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/eu_files/forichipic.png")] private var ImgForIchiPic:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/test_icon.png")] private var ImgBWTestIcon:Class;
         [Embed(source="/../assets/images/ui/popups/eu_files/test.png")] private var ImgBWTest:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/lingerie.png")] private var ImgLingerie:Class;
 
         public function EuryaleDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
@@ -145,7 +146,7 @@ package com.starmaid.Cibele.states {
             ScreenManager.getInstance().setupCamera(null, 1);
             var _screen:ScreenManager = ScreenManager.getInstance();
 
-            PopUpManager.getInstance().setOpeningPopups(PopUpManager.EU_EMAIL_ICHI, PopUpManager.EU_DOWNLOADS, PopUpManager.EU_PICLY_1);
+            PopUpManager.getInstance().setOpeningPopups(PopUpManager.EU_EMAIL_LINGERIE, PopUpManager.EU_DOWNLOADS, PopUpManager.EU_PICLY_1);
 
             /*
               Directory tree definition
@@ -422,6 +423,14 @@ package com.starmaid.Cibele.states {
                     "folder_img": ImgScreenshot,
                     "folder_dim": new DHPoint(528, 426),
                     "hitbox_pos": new DHPoint(_screen.screenWidth * .72, _screen.screenHeight * .03),
+                    "hitbox_dim": new DHPoint(150, 105),
+                    "contents": []
+                },
+                {
+                    "name": "lingerie",
+                    "folder_img": ImgLingerie,
+                    "folder_dim": new DHPoint(631, 409),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .52, _screen.screenHeight * .28),
                     "hitbox_dim": new DHPoint(150, 105),
                     "contents": []
                 },

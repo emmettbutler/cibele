@@ -145,7 +145,7 @@ package com.starmaid.Cibele.states {
             ScreenManager.getInstance().setupCamera(null, 1);
             var _screen:ScreenManager = ScreenManager.getInstance();
 
-            PopUpManager.getInstance().setOpeningPopups(PopUpManager.EMPTY_INBOX, PopUpManager.HI_SELFIE_DC, PopUpManager.HI_PICLY_DEF);
+            PopUpManager.getInstance().setOpeningPopups(PopUpManager.HI_EMAIL_ICHI, PopUpManager.HI_SELFIE_DC, PopUpManager.HI_PICLY_DEF);
 
             /*
               Directory tree definition

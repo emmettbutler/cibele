@@ -48,6 +48,7 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/eu_picly/dredgeirl.png")] private static var ImgEuDredge:Class;
         [Embed(source="/../assets/images/ui/popups/picly/ninabday.png")] private static var ImgNinaBday:Class;
         [Embed(source="/../assets/images/ui/popups/eu_email/email_ichi.png")] private static var ImgEuEmailIchi:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_email/lingerie_email.png")] private static var ImgEuEmailLingerie:Class;
 
         //Hiisi Popups
         [Embed(source="/../assets/images/ui/popups/hi_email/flight_email.png")] private static var ImgHiFlightEmail:Class;
@@ -118,9 +119,10 @@ package com.starmaid.Cibele.management {
         public static const EU_HIGHSCHOOL:String = "euhighschool";
         public static const EU_DOWNLOADS:String = "eudls";
         public static const EU_PICLY_1:String = "eudpicly1";
-        public static const EU_EMAIL_ICHI:String = "euemailichi";
+        public static const EU_EMAIL_LINGERIE:String = "euemailichi";
 
         //hiisi
+        public static const HI_EMAIL_ICHI:String = "hi email ichi";
         public static const HI_EMAIL_1:String = "hi_flight_email";
         public static const HI_EMAIL_2:String = "hi_class_email";
         public static const HI_PICLY_1:String = "hi_picly_1";
@@ -397,7 +399,7 @@ package com.starmaid.Cibele.management {
 
             this.internet_button = new DockButton(
                 this.game_button.x + this.game_button.width + 30,
-                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_ICHI, EU_EMAIL_1, EU_EMAIL_SELFIE, EU_EMAIL_2, HI_EMAIL_1, HI_EMAIL_2, HI_EMAIL_3], BUTTON_INTERNET);
+                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_LINGERIE, EU_EMAIL_1, EU_EMAIL_SELFIE, EU_EMAIL_2, HI_EMAIL_ICHI, HI_EMAIL_1, HI_EMAIL_2, HI_EMAIL_3], BUTTON_INTERNET);
             this.internet_button.loadGraphic(ImgInternetButton, false, false,
                                              88, 75);
             this.internet_button.visible = true;
@@ -443,7 +445,7 @@ package com.starmaid.Cibele.management {
             this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibCamDisconnect, 286, 184, 0, CIB_SELFIE_FOLDER);
 
             //euryale
-            this.popups[EU_EMAIL_ICHI] = new PopUp(ImgEuEmailIchi, 631, 356, 0, EU_EMAIL_ICHI);
+            this.popups[EU_EMAIL_LINGERIE] = new PopUp(ImgEuEmailLingerie, 631, 356, 0, EU_EMAIL_LINGERIE);
             this.popups[EU_EMAIL_1] = new PopUp(ImgEuEmail1, 631, 356, 0, EU_EMAIL_1);
             this.popups[EU_EMAIL_SELFIE] = new PopUp(ImgEuEmailSelfie, 631, 356, 0, EU_EMAIL_SELFIE);
             this.popups[EU_EMAIL_2] = new PopUp(ImgEuEmail2, 631, 356, 0, EU_EMAIL_2);
@@ -453,6 +455,7 @@ package com.starmaid.Cibele.management {
             this.popups[EU_PICLY_1] = new PopUp(ImgNinaBday, 356, 463, 0, EU_PICLY_1);
 
             //hiisi
+            this.popups[HI_EMAIL_ICHI] = new PopUp(ImgEuEmailIchi, 631, 356, 0, HI_EMAIL_ICHI);
             this.popups[HI_EMAIL_1] = new PopUp(ImgHiFlightEmail, 631, 356, 0, HI_EMAIL_1);
             this.popups[HI_PICLY_1] = new PopUp(ImgHiPicly1, 356, 463, 0, HI_PICLY_1);
             this.popups[HI_EMAIL_2] = new PopUp(ImgHiClassEmail, 631, 356, 0, HI_EMAIL_2);
