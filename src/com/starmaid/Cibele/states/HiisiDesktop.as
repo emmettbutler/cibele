@@ -129,6 +129,12 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/hi_files/forU.png")] private var ImgForU:Class;
         [Embed(source="/../assets/images/ui/popups/hi_files/hi_icon.png")] private var ImgHiIcon:Class;
         [Embed(source="/../assets/images/ui/popups/hi_files/hi.png")] private var ImgHi:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_email/email_ichi_pic.png")] private static var ImgEuEmailIchiPic:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/blake_icon.png")] private static var ImgEuEmailIchiIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/sexy_blake_icon.png")] private static var ImgSexyBlakeIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/sexy_blake.png")] private static var ImgSexyBlake:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/blog_draft.png")] private static var ImgBlogDraftWP:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/blog_draft_icon.png")] private static var ImgBlogDraftWPIcon:Class;
 
         public function HiisiDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_HI;
@@ -238,6 +244,22 @@ package com.starmaid.Cibele.states {
                                     "icon_pos": new DHPoint(230, 30),
                                     "dim": new DHPoint(640, 426),
                                     "contents": ImgHi
+                                },
+                                {
+                                    "name": "blake pic 1",
+                                    "icon": ImgEuEmailIchiIcon,
+                                    "icon_dim": new DHPoint(78, 90),
+                                    "icon_pos": new DHPoint(30, 130),
+                                    "dim": new DHPoint(653, 490),
+                                    "contents": ImgEuEmailIchiPic
+                                },
+                                {
+                                    "name": "blake pic 2",
+                                    "icon": ImgSexyBlakeIcon,
+                                    "icon_dim": new DHPoint(76, 93),
+                                    "icon_pos": new DHPoint(130, 130),
+                                    "dim": new DHPoint(490, 653),
+                                    "contents": ImgSexyBlake
                                 }
                             ]
                         },
@@ -333,10 +355,26 @@ package com.starmaid.Cibele.states {
                             "name": "old site folder stuff",
                             "contents": [
                                 {
+                                    "name": "blog draft 21",
+                                    "icon": ImgBlogDraft21Icon,
+                                    "icon_dim": new DHPoint(100, 93),
+                                    "icon_pos": new DHPoint(30, 133),
+                                    "dim": new DHPoint(631, 356),
+                                    "contents": ImgBlogDraft21
+                                },
+                                {
+                                    "name": "blog draft wp",
+                                    "icon": ImgBlogDraftWPIcon,
+                                    "icon_dim": new DHPoint(90, 91),
+                                    "icon_pos": new DHPoint(135, 130),
+                                    "dim": new DHPoint(631, 409),
+                                    "contents": ImgBlogDraftWP
+                                },
+                                {
                                     "name": "old site 2 icon",
                                     "icon": ImgWebsiteFolderIcon,
                                     "icon_dim": new DHPoint(115, 85),
-                                    "icon_pos": new DHPoint(250, 32),
+                                    "icon_pos": new DHPoint(140, 30),
                                     "folder_img": ImgPicturesFolder,
                                     "folder_dim": new DHPoint(631, 356),
                                     "contents": [
@@ -394,7 +432,7 @@ package com.starmaid.Cibele.states {
                                     "name": "old site icon",
                                     "icon": ImgOldSiteFolder,
                                     "icon_dim": new DHPoint(90, 85),
-                                    "icon_pos": new DHPoint(100, 32),
+                                    "icon_pos": new DHPoint(30, 30),
                                     "folder_img": ImgPicturesFolder,
                                     "folder_dim": new DHPoint(631, 356),
                                     "contents": [
@@ -608,14 +646,6 @@ package com.starmaid.Cibele.states {
                             "icon_pos": new DHPoint(27, 36),
                             "dim": new DHPoint(594, 453),
                             "contents": ImgHW1
-                        },
-                        {
-                            "name": "blog draft 21",
-                            "icon": ImgBlogDraft21Icon,
-                            "icon_dim": new DHPoint(100, 93),
-                            "icon_pos": new DHPoint(115, 36),
-                            "dim": new DHPoint(631, 356),
-                            "contents": ImgBlogDraft21
                         },
                         {
                             "name": "bow",
