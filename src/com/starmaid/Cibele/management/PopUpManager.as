@@ -40,6 +40,7 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/picly/ninaopen.png")] private var ImgForIchi:Class;
         [Embed(source="/../assets/images/ui/popups/it_email/bulldoghell_email.png")] private static var ImgBHEmail:Class;
         [Embed(source="/../assets/images/ui/popups/picly/emmy1.png")] private static var ImgIchiPicly1:Class;
+        [Embed(source="/../assets/images/ui/popups/it_email/lastnight.png")] private static var ImgLastNight:Class;
 
         //euryale popups
         [Embed(source="/../assets/images/ui/popups/eu_email/email1.png")] private static var ImgEuEmail1:Class;
@@ -101,6 +102,7 @@ package com.starmaid.Cibele.management {
         public var reminder_ding:Boolean = false;
 
         //ikuturso
+        public static const LAST_NIGHT:String = "lastnight";
         public static const BULLDOG_HELL:String = "bulldoghell";
         public static const SELFIES_1:String = "selfies1";
         public static const GUIL_1:String = "forum1";
@@ -137,7 +139,7 @@ package com.starmaid.Cibele.management {
             this.programButtons = new Array();
 
             this.popupTags = {};
-            this.popupTags[BUTTON_INTERNET] = EMPTY_INBOX;
+            this.popupTags[BUTTON_INTERNET] = LAST_NIGHT;
             this.popupTags[BUTTON_FILES] = ICHI_DL_2;
             this.popupTags[BUTTON_PHOTO] = FOR_ICHI;
         }
@@ -399,7 +401,7 @@ package com.starmaid.Cibele.management {
 
             this.internet_button = new DockButton(
                 this.game_button.x + this.game_button.width + 30,
-                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_LINGERIE, EU_EMAIL_1, EU_EMAIL_SELFIE, EU_EMAIL_2, HI_EMAIL_ICHI, HI_EMAIL_1, HI_EMAIL_2, HI_EMAIL_3], BUTTON_INTERNET);
+                dock.y - 50, [LAST_NIGHT, BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_LINGERIE, EU_EMAIL_1, EU_EMAIL_SELFIE, EU_EMAIL_2, HI_EMAIL_ICHI, HI_EMAIL_1, HI_EMAIL_2, HI_EMAIL_3], BUTTON_INTERNET);
             this.internet_button.loadGraphic(ImgInternetButton, false, false,
                                              88, 75);
             this.internet_button.visible = true;
@@ -431,8 +433,8 @@ package com.starmaid.Cibele.management {
 
             this.popups = new Dictionary();
             //ikuturso
-            this.popups[EMPTY_INBOX] = new PopUp(ImgEmptyInbox, 631, 356, 0, EMPTY_INBOX);
-            this.popups[EMPTY_INBOX].was_opened = true;
+            this.popups[LAST_NIGHT] = new PopUp(ImgLastNight, 631, 356, 0, LAST_NIGHT);
+            this.popups[LAST_NIGHT].was_opened = true;
             this.popups[FOR_ICHI] = new PopUp(ImgForIchi, 356, 463, 0, FOR_ICHI);
             this.popups[FOR_ICHI].was_opened = true;
             this.popups[ICHI_DL_2] = new PopUp(ImgPicturesFolder, 631, 356, 0, ICHI_DL_2);

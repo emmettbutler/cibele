@@ -9,6 +9,8 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/files/bday_icon.png")] private static var ImgBdayIcon:Class;
         [Embed(source="/../assets/images/ui/popups/files/it_bday.png")] private static var ImgBday:Class;
         [Embed(source="/../assets/images/ui/popups/it_email/bulldoghell_icon.png")] private static var ImgBHIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_email/lastnight_icon.png")] private static var ImgLastNightIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_email/lastnight_small.png")] private static var ImgLastNightSmall:Class;
         [Embed(source="/../assets/images/ui/popups/it_email/bulldoghell.png")] private static var ImgBH:Class;
         [Embed(source="/../assets/images/ui/popups/it_email/ichiselfie1.png")] private static var ImgIchiSelfie1:Class;
         [Embed(source="/../assets/images/ui/popups/it_email/ichiselfieicon1.png")] private static var ImgIchiSelfie1Icon:Class;
@@ -184,10 +186,19 @@ package com.starmaid.Cibele.management {
                     "contents": ImgIchiSelfie1
                 },
                 {
+                    "name": "last night small",
+                    "icon": ImgLastNightIcon,
+                    "icon_dim": new DHPoint(322, 22),
+                    "icon_pos": new DHPoint(293, 102),
+                    "dim": new DHPoint(284, 356),
+                    "struc": PopUpManager.ICHI_SELFIE1,
+                    "contents": ImgLastNightSmall
+                },
+                {
                     "name": "ichi selfie email sub 1",
                     "icon": ImgIchiSelfieSubLink1,
                     "icon_dim": new DHPoint(325, 22),
-                    "icon_pos": new DHPoint(290, 100),
+                    "icon_pos": new DHPoint(290, 125),
                     "dim": new DHPoint(280, 356),
                     "struc": PopUpManager.ICHI_SELFIE1,
                     "contents": ImgIchiSelfieSub1
@@ -196,7 +207,7 @@ package com.starmaid.Cibele.management {
                     "name": "ichi selfie email link",
                     "icon": ImgGuilLink1,
                     "icon_dim": new DHPoint(327, 20),
-                    "icon_pos": new DHPoint(290, 126),
+                    "icon_pos": new DHPoint(290, 149),
                     "folder_dim": new DHPoint(280, 356),
                     "struc": PopUpManager.ICHI_SELFIE1,
                     "folder_img": ImgGuilSub,
@@ -221,14 +232,32 @@ package com.starmaid.Cibele.management {
                     "dim": new DHPoint(1030, 437),
                     "struc": PopUpManager.BULLDOG_HELL,
                     "contents": ImgBH
+                },
+                {
+                    "name": "last night small",
+                    "icon": ImgLastNightIcon,
+                    "icon_dim": new DHPoint(322, 22),
+                    "icon_pos": new DHPoint(293, 100),
+                    "dim": new DHPoint(284, 356),
+                    "struc": PopUpManager.BULLDOG_HELL,
+                    "contents": ImgLastNightSmall
                 }
             ]};
             struc[PopUpManager.GUIL_1] = { "contents": [
                 {
+                    "name": "last night small",
+                    "icon": ImgLastNightIcon,
+                    "icon_dim": new DHPoint(322, 22),
+                    "icon_pos": new DHPoint(292, 100),
+                    "dim": new DHPoint(284, 356),
+                    "struc": PopUpManager.GUIL_1,
+                    "contents": ImgLastNightSmall
+                },
+                {
                     "name": "guil email link",
                     "icon": ImgGuilLink1,
                     "icon_dim": new DHPoint(327, 20),
-                    "icon_pos": new DHPoint(290, 98),
+                    "icon_pos": new DHPoint(290, 125),
                     "folder_dim": new DHPoint(280, 356),
                     "struc": PopUpManager.GUIL_1,
                     "folder_img": ImgGuilSub,
