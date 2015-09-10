@@ -20,7 +20,7 @@ package com.starmaid.Cibele.entities {
         private var escape_counter:Number = 0;
         private var damagedByPartyMember:PartyMember;
         private var damageThreshold:Array;
-        private var spawnCounter:Number = 0;
+        private var _spawnCounter:Number = 0;
         private var _started:Boolean = false;
         private var canDie:Boolean = false;
 
@@ -69,6 +69,10 @@ package com.starmaid.Cibele.entities {
             return _started;
         }
 
+        public function get spawnCounter():Number {
+            return this.spawnCounter;
+        }
+
         public function set started(v:Boolean):void {
             this._started = v;
         }
@@ -85,11 +89,11 @@ package com.starmaid.Cibele.entities {
         }
 
         public function setActive():void {
-            if(this.spawnCounter >= this.damageThreshold.length - 1) {
+            if(this._spawnCounter >= this.damageThreshold.length - 1) {
                 this.canDie = true;
             }
-            if (this.spawnCounter < this.damageThreshold.length) {
-                this.spawnCounter += 1;
+            if (this._spawnCounter < this.damageThreshold.length) {
+                this._spawnCounter += 1;
             }
             this.visible = true;
             this._healthBar.setVisible(true);
@@ -236,7 +240,7 @@ package com.starmaid.Cibele.entities {
                                                 damageLockMap[p.slug] = false;
                                               }, true);
             p.runParticles(this.footPos.add(new DHPoint(0, -20)));
-            if(this.hitPoints <= this.damageThreshold[this.spawnCounter] &&
+            if(this.hitPoints <= this.damageThreshold[this._spawnCounter] &&
                !this.canDie)
             {
                 this.startDespawn();

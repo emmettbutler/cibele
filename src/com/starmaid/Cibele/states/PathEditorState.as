@@ -49,6 +49,7 @@ package com.starmaid.Cibele.states {
         public var teamPower:Number = 0, maxTeamPower:Number = 60;
         public var teamPowerBar:TeamPowerBar, animatingTeamPower:Boolean = false;
         private var teamPowerAnimationObjects:Array, teamPowerDelta:Number = 0;
+        protected var teamPowerBossThresholds:Array;
 
         public static const MODE_READONLY:Number = 0;
         public static const MODE_EDIT:Number = 1;
@@ -452,6 +453,17 @@ package com.starmaid.Cibele.states {
                 {
                     this.increaseTeamPower(1);
                 }
+                if (this.teamPower >= this.teamPowerBossThresholds[this.boss.spawnCounter]) {
+                    this.startBoss();
+                }
+            }
+        }
+
+        public function startBoss():void {
+            if(!this.boss.started) {
+                this.boss.appear();
+            } else {
+                this.boss.setActive();
             }
         }
     }
