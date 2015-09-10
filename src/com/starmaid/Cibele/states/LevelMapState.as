@@ -112,14 +112,6 @@ package com.starmaid.Cibele.states {
             }
         }
 
-        public function startBoss():void {
-            if(!this.boss.started) {
-                this.boss.appear();
-            } else {
-                this.boss.setActive();
-            }
-        }
-
         public function imposeLevelBoundaries():void {
             var cur:GameObject;
             for (var i:int = 0; i < this.boundedObjects.length; i++) {
