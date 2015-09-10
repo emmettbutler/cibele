@@ -44,7 +44,7 @@ package com.starmaid.Cibele.entities {
             this.damageThreshold = [500, 300, 200];
             this._enemyType = Enemy.TYPE_BOSS;
             this.sightRange = 750;
-            this.hitDamage = 20;
+            this.hitDamage = 10;
             this.recoilPower = 0;
 
             this.alpha = 0;
@@ -70,7 +70,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function get spawnCounter():Number {
-            return this.spawnCounter;
+            return this._spawnCounter;
         }
 
         public function set started(v:Boolean):void {

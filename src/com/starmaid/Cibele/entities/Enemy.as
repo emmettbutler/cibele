@@ -121,6 +121,26 @@ package com.starmaid.Cibele.entities {
             return this._enemyType;
         }
 
+        public function isBoss():Boolean {
+            if(this.enemyType == TYPE_BOSS) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function isSmall():Boolean {
+            if(this.enemyType == TYPE_SMALL) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function get smallType():String {
+            return Enemy.TYPE_SMALL;
+        }
+
         public function getStateString():String {
             return Enemy.stateMap[this._state] == null ? "unknown" : Enemy.stateMap[this._state];
         }

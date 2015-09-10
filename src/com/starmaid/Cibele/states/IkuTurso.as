@@ -44,13 +44,13 @@ package com.starmaid.Cibele.states {
             PopUpManager.GAME_ACTIVE = true;
             this.load_screen_text = "Iku Turso";
             this.ui_color_flag = GameState.UICOLOR_PINK;
-            this.teamPowerBossThresholds = [10, 20, 25];
+            this.teamPowerBossThresholds = [1, 5, 10];
 
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
                     "audio": Convo1, "len": 59*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "ends_with_popup": false, endfn: this.startBoss
+                    "delay": 0, "ends_with_popup": false
                 },
                 {
                     "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
@@ -73,12 +73,8 @@ package com.starmaid.Cibele.states {
                     "delay": 0, "endfn": this.showGuilEmail
                 },
                 {
-                    "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "ends_with_popup": false, endfn: this.startBoss
-                },
-                {
                     "audio": Convo4, "len": 108*GameSound.MSEC_PER_SEC,
-                    "delay": 0, endfn: this.startBoss, "ends_with_popup": false
+                    "delay": 0
                 },
                 {
                     "audio": null, "len": 2*GameSound.MSEC_PER_SEC,
@@ -94,10 +90,6 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": Convo6, "len": 32 * GameSound.MSEC_PER_SEC, "delay": 0, "min_team_power": 25
-                },
-                {
-                    "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "ends_with_popup": false, endfn: this.startBoss
                 },
                 {
                     "audio": null, "len": 1*GameSound.MSEC_PER_SEC,

@@ -50,7 +50,7 @@ package com.starmaid.Cibele.states {
             this.bitDialogueLock = true;
             this.load_screen_text = "Hiisi";
             this.ui_color_flag = GameState.UICOLOR_PINK;
-            this.teamPowerBossThresholds = [10, 20, 25];
+            this.teamPowerBossThresholds = [1, 5, 10];
             PopUpManager.GAME_ACTIVE = true;
 
             GlobalTimer.getInstance().deleteMark(BOSS_MARK);
