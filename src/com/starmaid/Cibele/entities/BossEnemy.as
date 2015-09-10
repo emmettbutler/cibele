@@ -22,6 +22,7 @@ package com.starmaid.Cibele.entities {
         private var damageThreshold:Array = [500, 300, 200];
         private var spawnCounter:Number = 0;
         private var _started:Boolean = false;
+        private var canDie:Boolean = false;
 
 
         public static const STATE_PRE_APPEAR:Number = 39485723987;
@@ -44,7 +45,7 @@ package com.starmaid.Cibele.entities {
             super(pos, 600);
             this._enemyType = Enemy.TYPE_BOSS;
             this.sightRange = 750;
-            this.hitDamage = 10;
+            this.hitDamage = 20;
             this.recoilPower = 0;
 
             this.alpha = 0;
@@ -63,7 +64,6 @@ package com.starmaid.Cibele.entities {
 
         public function startDespawn():void {
             this._state = STATE_DESPAWN;
-            this.spawnCounter += 1;
         }
 
         public function get started():Boolean {
@@ -164,7 +164,7 @@ package com.starmaid.Cibele.entities {
                 case STATE_ACTIVATE:
                     this.visible = true;
                     this._healthBar.setVisible(true);
-                    this._state = STATE_MOVE_TO_PATH_NODE;
+                    this.warpToPlayer();
                     trace("active" + Math.random().toString);
                     break;
 
@@ -177,6 +177,10 @@ package com.starmaid.Cibele.entities {
 
         public function setActive():void {
             this._state = STATE_ACTIVATE;
+            if(this.spawnCounter + 1 >= this.damageThreshold._length) {
+                this.canDie = true;
+            }
+            this.spawnCounter += 1;
         }
 
         override public function startTracking():void {
@@ -205,10 +209,11 @@ package com.starmaid.Cibele.entities {
 
         override public function takeDamage(p:PartyMember):void{
             this.damagedByPartyMember = p;
-            if(this._state == STATE_DESPAWN) {
+            trace(this.damageThreshold[this.spawnCounter]);
+            if(this._state == STATE_DESPAWN && !this.canDie) {
                 return;
             }
-            if(this.hitPoints <= this.damageThreshold[this.spawnCounter]) {
+            if(this.hitPoints <= this.damageThreshold[this.spawnCounter] && !this.canDie) {
                 this.startDespawn();
                 return;
             }

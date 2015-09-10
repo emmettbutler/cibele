@@ -77,7 +77,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": Convo4, "len": 108*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "delay": 0, endfn: this.startBoss, "ends_with_popup": false
                 },
                 {
                     "audio": null, "len": 2*GameSound.MSEC_PER_SEC,
