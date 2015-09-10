@@ -40,6 +40,7 @@ package com.starmaid.Cibele.states {
         public var _mapnodes:MapNodeContainer;
         public var enemies:EnemyGroup;
         public var boss:BossEnemy;
+        public var boss_gate:Boolean = false;
         public var showNodes:Boolean;
         public var filename:String, graph_filename:String;
         public var dataFile:File, backupFile:File, writeFile:File,
@@ -453,8 +454,14 @@ package com.starmaid.Cibele.states {
                 {
                     this.increaseTeamPower(1);
                 }
-                if (this.teamPower >= this.teamPowerBossThresholds[this.boss.spawnCounter]) {
-                    this.startBoss();
+                if(this.boss.spawnCounter == this.teamPowerBossThresholds.length - 1) {
+                    if(this.boss_gate) {
+                        this.startBoss();
+                    }
+                } else {
+                    if (this.teamPower >= this.teamPowerBossThresholds[this.boss.spawnCounter]) {
+                        this.startBoss();
+                    }
                 }
             }
         }
