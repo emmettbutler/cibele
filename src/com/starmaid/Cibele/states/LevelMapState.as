@@ -295,6 +295,7 @@ package com.starmaid.Cibele.states {
             var that:LevelMapState = this;
             return function():void {
                 if(audioInfo["boss_gate"] != null){
+                    that.boss_gate = true;
                     if(that.boss.isDead()) {
                         endfn();
                     } else {

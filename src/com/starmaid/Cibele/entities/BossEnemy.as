@@ -23,6 +23,7 @@ package com.starmaid.Cibele.entities {
         private var _spawnCounter:Number = 0;
         private var _started:Boolean = false;
         private var canDie:Boolean = false;
+        private var _notificationText:FlxText;
 
 
         public static const STATE_PRE_APPEAR:Number = 39485723987;
@@ -51,6 +52,10 @@ package com.starmaid.Cibele.entities {
 
             this._state = STATE_PRE_APPEAR;
             this.visible = false;
+
+            this._notificationText = new FlxText(ScreenManager.getInstance().screenWidth * .15, ScreenManager.getInstance().screenHeight * .6, ScreenManager.getInstance().screenWidth, "");
+            this._notificationText.setFormat("NexaBold-Regular", 24, 0xffe2678e, "left");
+            this._notificationText.scrollFactor = new DHPoint(0,0);
 
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.getStateString", "boss.state");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.pos", "boss.pos");
@@ -86,6 +91,10 @@ package com.starmaid.Cibele.entities {
             this.visible = true;
             this._healthBar.setVisible(true);
             this.warpToPlayer();
+
+            this._notificationText.text = "Boss has appeared!";
+            this._notificationText.visible = true;
+            GlobalTimer.getInstance().setMark("boss escape" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.hideNotificationText);
         }
 
         public function setActive():void {
@@ -98,6 +107,10 @@ package com.starmaid.Cibele.entities {
             this.visible = true;
             this._healthBar.setVisible(true);
             this.warpToPlayer();
+
+            this._notificationText.text = "Boss has appeared!";
+            this.showNotificationText();
+            GlobalTimer.getInstance().setMark("boss escape" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.hideNotificationText);
         }
 
         public function hasAppeared():Boolean {
@@ -181,6 +194,17 @@ package com.starmaid.Cibele.entities {
             this._state = STATE_INACTIVE;
             this.visible = false;
             this._healthBar.setVisible(false);
+            this._notificationText.text = "Boss has escaped!";
+            this.showNotificationText();
+            GlobalTimer.getInstance().setMark("boss escape" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.hideNotificationText);
+        }
+
+        public function hideNotificationText():void {
+            this._notificationText.visible = false;
+        }
+
+        public function showNotificationText():void {
+            this._notificationText.visible = true;
         }
 
         override public function startTracking():void {
@@ -291,6 +315,7 @@ package com.starmaid.Cibele.entities {
 
         override public function addVisibleObjects():void {
             FlxG.state.add(this.debugText);
+            FlxG.state.add(this._notificationText);
         }
 
         public function addHealthBarVisibleObjects():void {
