@@ -19,7 +19,7 @@ package com.starmaid.Cibele.entities {
         private var targetPathNode:PathNode;
         private var escape_counter:Number = 0;
         private var damagedByPartyMember:PartyMember;
-        private var damageThreshold:Array = [500, 300, 200];
+        private var damageThreshold:Array;
         private var spawnCounter:Number = 0;
         private var _started:Boolean = false;
         private var canDie:Boolean = false;
@@ -30,7 +30,6 @@ package com.starmaid.Cibele.entities {
         public static const STATE_MOVE_TO_PATH_NODE:Number = 693857487;
         public static const STATE_DESPAWN:Number = 01298308;
         public static const STATE_INACTIVE:Number = 109281029840348;
-        public static const STATE_ACTIVATE:Number = 0349203000;
 
         {
             stateMap[STATE_PRE_APPEAR] = "STATE_PRE_APPEAR";
@@ -38,11 +37,11 @@ package com.starmaid.Cibele.entities {
             stateMap[STATE_MOVE_TO_PATH_NODE] = "STATE_MOVE_TO_PATH_NODE";
             stateMap[STATE_DESPAWN] = "STATE_DESPAWN";
             stateMap[STATE_INACTIVE] = "STATE_INACTIVE";
-            stateMap[STATE_ACTIVATE] = "STATE_ACTIVATE";
         }
 
         public function BossEnemy(pos:DHPoint) {
             super(pos, 600);
+            this.damageThreshold = [500, 300, 200];
             this._enemyType = Enemy.TYPE_BOSS;
             this.sightRange = 750;
             this.hitDamage = 20;
@@ -75,10 +74,23 @@ package com.starmaid.Cibele.entities {
         }
 
         public function appear():void {
+            this._started = true;
             this.footPosOffset = new DHPoint(this.width / 2, this.height);
             this.basePosOffset = new DHPoint(0, this.height);
 
             this._state = STATE_IDLE;
+            this.visible = true;
+            this._healthBar.setVisible(true);
+            this.warpToPlayer();
+        }
+
+        public function setActive():void {
+            if(this.spawnCounter >= this.damageThreshold.length - 1) {
+                this.canDie = true;
+            }
+            if (this.spawnCounter < this.damageThreshold.length) {
+                this.spawnCounter += 1;
+            }
             this.visible = true;
             this._healthBar.setVisible(true);
             this.warpToPlayer();
@@ -97,7 +109,11 @@ package com.starmaid.Cibele.entities {
         override public function update():void{
             super.update();
 
-            if(this.hitPoints > 0 && this._state != STATE_DEAD && this.alpha < 1 && this.hasAppeared() && this._state != STATE_INACTIVE && this._state != STATE_DESPAWN) {
+            if(this.hitPoints > 0 && this._state != STATE_DEAD &&
+               this.alpha < 1 && this.hasAppeared() &&
+               this._state != STATE_INACTIVE &&
+               this._state != STATE_DESPAWN)
+            {
                 this.alpha += .01;
             }
 
@@ -154,33 +170,13 @@ package com.starmaid.Cibele.entities {
                         this.setInactive();
                     }
                     break;
-
-                case STATE_INACTIVE:
-                    this.visible = false;
-                    this._healthBar.setVisible(false);
-                    trace("inactive" + Math.random().toString);
-                    break;
-
-                case STATE_ACTIVATE:
-                    this.visible = true;
-                    this._healthBar.setVisible(true);
-                    this.warpToPlayer();
-                    trace("active" + Math.random().toString);
-                    break;
-
             }
         }
 
         public function setInactive():void {
             this._state = STATE_INACTIVE;
-        }
-
-        public function setActive():void {
-            this._state = STATE_ACTIVATE;
-            if(this.spawnCounter + 1 >= this.damageThreshold._length) {
-                this.canDie = true;
-            }
-            this.spawnCounter += 1;
+            this.visible = false;
+            this._healthBar.setVisible(false);
         }
 
         override public function startTracking():void {
@@ -209,12 +205,7 @@ package com.starmaid.Cibele.entities {
 
         override public function takeDamage(p:PartyMember):void{
             this.damagedByPartyMember = p;
-            trace(this.damageThreshold[this.spawnCounter]);
             if(this._state == STATE_DESPAWN && !this.canDie) {
-                return;
-            }
-            if(this.hitPoints <= this.damageThreshold[this.spawnCounter] && !this.canDie) {
-                this.startDespawn();
                 return;
             }
             if (this.isDead()) {
@@ -245,6 +236,12 @@ package com.starmaid.Cibele.entities {
                                                 damageLockMap[p.slug] = false;
                                               }, true);
             p.runParticles(this.footPos.add(new DHPoint(0, -20)));
+            if(this.hitPoints <= this.damageThreshold[this.spawnCounter] &&
+               !this.canDie)
+            {
+                this.startDespawn();
+                return;
+            }
         }
 
         private function isEscaping():Boolean {
