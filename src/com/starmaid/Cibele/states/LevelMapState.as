@@ -115,7 +115,6 @@ package com.starmaid.Cibele.states {
         public function startBoss():void {
             if(!this.boss.started) {
                 this.boss.appear();
-                this.boss.started = true;
             } else {
                 this.boss.setActive();
             }
