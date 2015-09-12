@@ -95,7 +95,6 @@ package com.starmaid.Cibele.entities {
             this.warpToPlayer();
             this._notificationText.text = "Boss has appeared!";
             this.showNotificationText();
-            GlobalTimer.getInstance().setMark("boss app" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.hideNotificationText);
             GlobalTimer.getInstance().setMark("boss app hb" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.showHealthBar);
         }
 
@@ -197,7 +196,6 @@ package com.starmaid.Cibele.entities {
             this._notificationText.text = "Boss has escaped!";
             this._healthBar.setVisible(false);
             this.showNotificationText();
-            GlobalTimer.getInstance().setMark("boss escape" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.hideNotificationText);
         }
 
         public function hideNotificationText():void {
@@ -208,6 +206,7 @@ package com.starmaid.Cibele.entities {
         public function showNotificationText():void {
             this._notificationText.visible = true;
             this.scaleText = true;
+            GlobalTimer.getInstance().setMark("boss escape" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.hideNotificationText);
         }
 
         override public function startTracking():void {
