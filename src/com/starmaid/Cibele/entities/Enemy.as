@@ -175,7 +175,7 @@ package com.starmaid.Cibele.entities {
             this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
             this.hitPoints -= Math.floor(this.hitDamage * p.teamPowerDamageMul);
             this._healthBar.setPoints(this.hitPoints);
-            p.runParticles(this.getMiddlePos());
+            p.runParticles(this.getMiddlePos().sub(new DHPoint(0, this.height/3)));
             if(this.hitPoints <= 0){
                 this.die(p);
             }
