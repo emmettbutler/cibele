@@ -454,24 +454,15 @@ package com.starmaid.Cibele.states {
                 {
                     this.increaseTeamPower(1);
                 }
-                if(this.boss.spawnCounter == this.teamPowerBossThresholds.length - 1) {
-                    if(this.boss_gate) {
-                        this.startBoss();
-                    }
-                } else {
-                    if (this.teamPower >= this.teamPowerBossThresholds[this.boss.spawnCounter]) {
-                        this.startBoss();
-                    }
+                if(this.boss_gate ||
+                   this.teamPower >= this.teamPowerBossThresholds[this.boss.spawnCounter]) {
+                    this.startBoss();
                 }
             }
         }
 
         public function startBoss():void {
-            if(!this.boss.started) {
-                this.boss.appear();
-            } else {
-                this.boss.setActive();
-            }
+            this.boss.setActive();
         }
     }
 }
