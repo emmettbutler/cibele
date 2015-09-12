@@ -223,14 +223,13 @@ package com.starmaid.Cibele.entities {
             if (!(FlxG.state is LevelMapState)) {
                 return;
             }
+            this.setPos(originalPos);
             if(!this.inViewOfPlayer()) {
                 this.hitPoints = this.maxHitPoints;
                 this._healthBar.setPoints(this.hitPoints);
                 this.visible = true;
                 this.alpha = 1;
                 this._state = STATE_IDLE;
-                this.x = originalPos.x;
-                this.y = originalPos.y;
             } else {
                 GlobalTimer.getInstance().setMark(
                     MARK_RESPAWN + Math.random() * 200,
