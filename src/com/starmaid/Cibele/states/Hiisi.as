@@ -50,6 +50,7 @@ package com.starmaid.Cibele.states {
             this.bitDialogueLock = true;
             this.load_screen_text = "Hiisi";
             this.ui_color_flag = GameState.UICOLOR_PINK;
+            this.teamPowerBossThresholds = [6, 15];
             PopUpManager.GAME_ACTIVE = true;
 
             GlobalTimer.getInstance().deleteMark(BOSS_MARK);
@@ -132,7 +133,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": Convo14, "len": 28*GameSound.MSEC_PER_SEC,
-                    "delay": 0, endfn: this.startBoss, "ends_with_popup": false
+                    "delay": 0
                 },
                 {
                     "audio": null, "len": 3*GameSound.MSEC_PER_SEC,

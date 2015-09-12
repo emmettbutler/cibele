@@ -229,7 +229,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function setTargetEnemy():void {
-            if (this._bossRef != null && this._bossRef.hasAppeared() && !this._bossRef.isDead()) {
+            if (this._bossRef != null && this._bossRef.hasAppeared() && !this._bossRef.isDead() && this._bossRef.visible) {
                 this.targetEnemy = this._bossRef;
             } else if(this.playerIsAttacking() && !this.playerRef.targetEnemy.isDead()) {
                 this.targetEnemy = this.playerRef.targetEnemy;

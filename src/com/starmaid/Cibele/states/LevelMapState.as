@@ -99,21 +99,17 @@ package com.starmaid.Cibele.states {
             this.bitDialogue.update();
             this.bitDialogue.lock = this.bitDialogueLock;
 
-            if (GlobalTimer.getInstance().hasPassed(BOSS_MARK) &&
-                !this.boss.hasAppeared() && FlxG.state.ID == LevelMapState.LEVEL_ID)
-            {
-                this.boss.appear();
-            }
-
             if (ScreenManager.getInstance().RELEASE == false) {
                 if (FlxG.keys.justPressed("B") && !this.boss.hasAppeared()) {
                     this.startBoss();
                 }
+                if (FlxG.keys.justPressed("Z")) {
+                    this.boss.startDespawn();
+                }
+                if(FlxG.keys.justPressed("A")) {
+                    this.boss.setActive();
+                }
             }
-        }
-
-        public function startBoss():void {
-            GlobalTimer.getInstance().setMark(BOSS_MARK, 1*GameSound.MSEC_PER_SEC);
         }
 
         public function imposeLevelBoundaries():void {
@@ -299,6 +295,7 @@ package com.starmaid.Cibele.states {
             var that:LevelMapState = this;
             return function():void {
                 if(audioInfo["boss_gate"] != null){
+                    that.boss_gate = true;
                     if(that.boss.isDead()) {
                         endfn();
                     } else {

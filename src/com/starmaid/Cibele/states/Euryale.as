@@ -43,6 +43,7 @@ package com.starmaid.Cibele.states {
 
             this.bitDialogueLock = true;
             this.load_screen_text = "Euryale";
+            this.teamPowerBossThresholds = [6, 15];
             PopUpManager.GAME_ACTIVE = true;
 
             GlobalTimer.getInstance().deleteMark(BOSS_MARK);
@@ -113,7 +114,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": Convo5_1, "len": 42*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.startBoss, "ends_with_popup": false
+                    "delay": 0
                 },
                 {
                     "audio": null, "len": 1*GameSound.MSEC_PER_SEC,

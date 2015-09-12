@@ -40,6 +40,7 @@ package com.starmaid.Cibele.states {
         public var _mapnodes:MapNodeContainer;
         public var enemies:EnemyGroup;
         public var boss:BossEnemy;
+        public var boss_gate:Boolean = false;
         public var showNodes:Boolean;
         public var filename:String, graph_filename:String;
         public var dataFile:File, backupFile:File, writeFile:File,
@@ -49,6 +50,7 @@ package com.starmaid.Cibele.states {
         public var teamPower:Number = 0, maxTeamPower:Number = 60;
         public var teamPowerBar:TeamPowerBar, animatingTeamPower:Boolean = false;
         private var teamPowerAnimationObjects:Array, teamPowerDelta:Number = 0;
+        protected var teamPowerBossThresholds:Array;
 
         public static const MODE_READONLY:Number = 0;
         public static const MODE_EDIT:Number = 1;
@@ -452,7 +454,15 @@ package com.starmaid.Cibele.states {
                 {
                     this.increaseTeamPower(1);
                 }
+                if(this.boss_gate ||
+                   this.teamPower >= this.teamPowerBossThresholds[this.boss.spawnCounter]) {
+                    this.startBoss();
+                }
             }
+        }
+
+        public function startBoss():void {
+            this.boss.setActive();
         }
     }
 }
