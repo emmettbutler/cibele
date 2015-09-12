@@ -330,8 +330,6 @@ package com.starmaid.Cibele.states {
             }
         }
 
-        //there should be separate min team power reqs for boss, so that boss can spawn immediately when the appropriate team power is met
-
         private function buildTeamPowerIncreasedCallback(minTeamPower:Number,
                                                          endfn:Function):Function
         {
