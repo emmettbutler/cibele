@@ -151,7 +151,7 @@ package com.starmaid.Cibele.entities {
                             this._path.advance();
                             this.targetPathNode = this._path.currentNode;
                         } else {
-                            this.dir = disp.normalized().mulScl(10);
+                            this.dir = disp.normalized().mulScl(15);
                         }
                         if (!this.inViewOfPlayer()) {
                             this.setInactive();

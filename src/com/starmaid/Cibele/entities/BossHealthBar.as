@@ -57,6 +57,8 @@ package com.starmaid.Cibele.entities {
             this.name_text.x = this._attackIcon.x + 25;
             this.name_text.y = this._attackIcon.y - 15;
             super.setPos(screenPos);
+            this._changeText.x = this.name_text.x + 100;
+            this._changeText.y = this.name_text.y;
         }
     }
 }
