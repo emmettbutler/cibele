@@ -156,6 +156,7 @@ package com.starmaid.Cibele.states {
                 PopUpManager.getInstance().elements,
                 MessageManager.getInstance().elements
             ];
+            this.teamPowerBar.clickCallback(screenPos, worldPos);
             super.clickCallback(screenPos, worldPos);
         }
 
