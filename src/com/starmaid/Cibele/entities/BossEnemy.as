@@ -24,10 +24,10 @@ package com.starmaid.Cibele.entities {
         private var _spawnCounter:Number = 0;
         private var _started:Boolean = false;
         private var canDie:Boolean = false;
-        private var _notificationText:FlxText;
+        protected var _notificationText:FlxText;
+        public var notificationTextColor:uint;
         private var scaleText:Boolean = false;
-        private var _name:String;
-
+        protected var _name:String;
 
         public static const STATE_PRE_APPEAR:Number = 39485723987;
         public static const STATE_ESCAPE:Number = 5948573;
@@ -59,15 +59,7 @@ package com.starmaid.Cibele.entities {
             this._notificationText.scrollFactor = new DHPoint(0,0);
             this._notificationText.size = 0;
             this._notificationText.alignment = "center";
-
-            if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_IT) {
-                this._name = "AKKA";
-            } else if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_EU) {
-                this._name = "SAMPSA";
-            } else if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_HI) {
-                this._name = "KUU";
-                this._notificationText.color = 0xffffffff;
-            }
+            this._notificationText.color = this.notificationTextColor;
 
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.getStateString", "boss.state");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.pos", "boss.pos");
@@ -80,6 +72,10 @@ package com.starmaid.Cibele.entities {
 
         public function startDespawn():void {
             this._state = STATE_DESPAWN;
+        }
+
+        public function get name():String {
+            return this._name;
         }
 
         public function get started():Boolean {
@@ -291,7 +287,7 @@ package com.starmaid.Cibele.entities {
 
         override public function setupSprites():void {
             this.visible = true;
-            this._healthBar = new BossHealthBar(this.hitPoints);
+            this._healthBar = new BossHealthBar(this, this.hitPoints);
         }
 
         override protected function setupSmoke():void {

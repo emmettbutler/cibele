@@ -12,6 +12,8 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/audio/effects/mask_boss.mp3")] private var SndCall:Class;
 
         public function EuryaleBoss(pos:DHPoint) {
+            this.notificationTextColor = 0xff7c6e6a;
+            this._name = "SAMPSA";
             super(pos);
             loadGraphic(ImgBoss, false, false, 632, 800);
 

@@ -8,17 +8,12 @@ package com.starmaid.Cibele.entities {
     public class BossHealthBar extends HealthBar {
         private var name_text:FlxText;
         private var cur_name:String;
+        private var boss:BossEnemy;
 
-        public function BossHealthBar(maxPoints:Number) {
-            var text_color:Number = 0xff7c6e6a;
-            if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_IT) {
-                this.cur_name = "AKKA";
-            } else if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_EU) {
-                this.cur_name = "SAMPSA";
-            } else if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_HI) {
-                this.cur_name = "KUU";
-                text_color = 0xffffffff;
-            }
+        public function BossHealthBar(boss:BossEnemy, maxPoints:Number) {
+            this.boss = boss;
+            var text_color:Number = boss.notificationTextColor;
+            this.cur_name = boss.name;
 
             super(new DHPoint(0, 0),
                   maxPoints,
@@ -31,10 +26,10 @@ package com.starmaid.Cibele.entities {
             this._changeText.setFormat("NexaBold-Regular", 25, text_color,
                                        "left");
             this._changeText.scrollFactor = new DHPoint(0, 0);
-            this.name_text = new FlxText(0,0,500,this.cur_name);
+            this.name_text = new FlxText(0, 0, 500, this.cur_name);
             this.name_text.scrollFactor = new DHPoint(0,0);
             this.name_text.setFormat("NexaBold-Regular", 18, text_color,
-                                       "left");
+                                     "left");
 
             this.setVisible(false);
         }
