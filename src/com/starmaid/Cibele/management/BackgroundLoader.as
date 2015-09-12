@@ -35,6 +35,7 @@ package com.starmaid.Cibele.management {
         public var shouldLoadMap:Boolean, shouldCollidePlayer:Boolean = true;
         public var allTilesHaveLoaded:Boolean = false;
         private var enemyContacts:Array;
+        private var screenPos:DHPoint;
 
         public var dbgText:FlxText;
 
@@ -44,6 +45,7 @@ package com.starmaid.Cibele.management {
                                          colliderScaleFactor:Number=1,
                                          showColliders:Boolean=false)
         {
+            this.screenPos = new DHPoint(0, 0);
             this.shouldLoadMap = true;
             this.colliderName = macroImageName + "_collider"
             this.macroImageName = macroImageName + "_map";
@@ -153,11 +155,11 @@ package com.starmaid.Cibele.management {
         }
 
         public function tileIsOnscreen(tile:FlxExtSprite):Boolean {
-            var screenPos:DHPoint = new DHPoint(0, 0);
-            tile.getScreenXY(screenPos);
-            return (screenPos.x < ScreenManager.getInstance().screenWidth &&
-                screenPos.x > 0 - tile.width && screenPos.y > 0 - tile.height &&
-                screenPos.y < ScreenManager.getInstance().screenHeight);
+            tile.getScreenXY(this.screenPos);
+            return (this.screenPos.x < ScreenManager.getInstance().screenWidth &&
+                this.screenPos.x > 0 - tile.frameWidth &&
+                this.screenPos.y > 0 - tile.frameHeight &&
+                this.screenPos.y < ScreenManager.getInstance().screenHeight);
         }
 
         public function loadTile(row:Number, col:Number, arr:Array=null,
