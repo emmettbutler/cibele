@@ -340,24 +340,28 @@ package com.starmaid.Cibele.management {
                                   this.colliderReceivingMachines,
                                   this.colliderName, true);
                 }
-                colliderTile = this.getTileByIndex(row, col, this.colliderTiles);
-                if (this.tileIsOnscreen(colliderTile)) {
-                    if (this.shouldCollidePlayer) {
-                        collisionData = this.getPlayerCollisionData(colliderTile)
-                        if (collisionData[0]) {
-                            playerContact = true;
-                            this.playerRef.collisionDirection = collisionData[1];
+            }
+            for (row = 0; row < rows; row++) {
+                for (col = 0; col < cols; col++) {
+                    colliderTile = this.getTileByIndex(row, col, this.colliderTiles);
+                    if (this.tileIsOnscreen(colliderTile)) {
+                        if (this.shouldCollidePlayer) {
+                            collisionData = this.getPlayerCollisionData(colliderTile)
+                            if (collisionData[0]) {
+                                playerContact = true;
+                                this.playerRef.collisionDirection = collisionData[1];
+                            }
                         }
-                    }
-                    for (k = 0; k < this.enemiesRef.length; k++) {
-                        if (this.enemiesRef[k] is SmallEnemy) {
-                            curEnemy = this.enemiesRef[k];
-                            if (curEnemy.isOnscreen() && !curEnemy.isDead()) {
-                                collisionData = this.getEnemyCollisionData(
-                                    colliderTile, this.enemiesRef[k]);
-                                if (collisionData[0]) {
-                                    this.enemyContacts[k] = true;
-                                    this.enemiesRef[k].collisionDirection = collisionData[1];
+                        for (k = 0; k < this.enemiesRef.length; k++) {
+                            if (this.enemiesRef[k] is SmallEnemy) {
+                                curEnemy = this.enemiesRef[k];
+                                if (curEnemy.isOnscreen() && !curEnemy.isDead()) {
+                                    collisionData = this.getEnemyCollisionData(
+                                        colliderTile, this.enemiesRef[k]);
+                                    if (collisionData[0]) {
+                                        this.enemyContacts[k] = true;
+                                        this.enemiesRef[k].collisionDirection = collisionData[1];
+                                    }
                                 }
                             }
                         }
