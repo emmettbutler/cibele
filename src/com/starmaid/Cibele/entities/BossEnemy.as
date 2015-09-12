@@ -28,21 +28,19 @@ package com.starmaid.Cibele.entities {
 
         public static const STATE_PRE_APPEAR:Number = 39485723987;
         public static const STATE_ESCAPE:Number = 5948573;
-        public static const STATE_MOVE_TO_PATH_NODE:Number = 693857487;
         public static const STATE_DESPAWN:Number = 01298308;
         public static const STATE_INACTIVE:Number = 109281029840348;
 
         {
             stateMap[STATE_PRE_APPEAR] = "STATE_PRE_APPEAR";
             stateMap[STATE_ESCAPE] = "STATE_ESCAPE";
-            stateMap[STATE_MOVE_TO_PATH_NODE] = "STATE_MOVE_TO_PATH_NODE";
             stateMap[STATE_DESPAWN] = "STATE_DESPAWN";
             stateMap[STATE_INACTIVE] = "STATE_INACTIVE";
         }
 
         public function BossEnemy(pos:DHPoint) {
             super(pos, 600);
-            this.damageThreshold = [500, 300, 200];
+            this.damageThreshold = [500, 300];
             this._enemyType = Enemy.TYPE_BOSS;
             this.sightRange = 750;
             this.hitDamage = 10;
@@ -82,32 +80,17 @@ package com.starmaid.Cibele.entities {
             this._started = v;
         }
 
-        public function appear():void {
+        public function setActive():void {
             this._started = true;
             this.footPosOffset = new DHPoint(this.width / 2, this.height);
             this.basePosOffset = new DHPoint(0, this.height);
-
-            this._state = STATE_IDLE;
-            this.visible = true;
-            this._healthBar.setVisible(true);
-            this.warpToPlayer();
-
-            this._notificationText.text = "Boss has appeared!";
-            this._notificationText.visible = true;
-            GlobalTimer.getInstance().setMark("boss escape" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.hideNotificationText);
-        }
-
-        public function setActive():void {
-            if(this._spawnCounter >= this.damageThreshold.length - 1) {
+            if(this._spawnCounter >= this.damageThreshold.length) {
                 this.canDie = true;
             }
-            if (this._spawnCounter < this.damageThreshold.length) {
-                this._spawnCounter += 1;
-            }
+            this._spawnCounter += 1;
             this.visible = true;
             this._healthBar.setVisible(true);
             this.warpToPlayer();
-
             this._notificationText.text = "Boss has appeared!";
             this.showNotificationText();
             GlobalTimer.getInstance().setMark("boss escape" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.hideNotificationText);
@@ -138,29 +121,43 @@ package com.starmaid.Cibele.entities {
                 case STATE_ESCAPE:
                     if(this.targetPathNode == null) {
                         this._path.setCurrentNode(_path.getClosestNode(this.footPos));
-                        this._state = STATE_MOVE_TO_PATH_NODE;
+                        this.escape_counter += 1;
+                        this.targetPathNode = this._path.currentNode;
                     } else {
                         disp = this.targetPathNode.pos.sub(this.footPos);
                         if (disp._length() < 10) {
-                            this._state = STATE_MOVE_TO_PATH_NODE;
+                            if(this.escape_counter > 10) {
+                                this.startTracking();
+                                this.escape_counter = 0;
+                            } else {
+                                this._path.advance();
+                                this.targetPathNode = this._path.currentNode;
+                                this.escape_counter += 1;
+                            }
                         } else {
                             this.dir = disp.normalized().mulScl(1.5);
                         }
                     }
-                    trace("esc" + Math.random().toString);
                     break;
 
-                case STATE_MOVE_TO_PATH_NODE:
-                    this.escape_counter += 1;
-                    this._path.advance();
-                    this.targetPathNode = this._path.currentNode;
-                    if(this.escape_counter <= 10) {
-                        this._state = STATE_ESCAPE;
+                case STATE_DESPAWN:
+                    if(this.targetPathNode == null) {
+                        this._path.setCurrentNode(_path.getClosestNode(this.footPos));
+                        this.targetPathNode = this._path.currentNode;
                     } else {
-                        this.startTracking();
-                        this.escape_counter = 0;
+                        this.targetPathNode = this._path.currentNode;
+                        disp = this.targetPathNode.pos.sub(this.footPos);
+                        if (disp._length() < 10) {
+                            this._path.advance();
+                            this.targetPathNode = this._path.currentNode;
+                        } else {
+                            this.dir = disp.normalized().mulScl(10);
+                        }
+                        if (!this.inViewOfPlayer()) {
+                            this.setInactive();
+                        }
                     }
-                    trace("move" + Math.random().toString);
+
                     break;
 
                 case STATE_DEAD:
@@ -168,23 +165,6 @@ package com.starmaid.Cibele.entities {
                         this.alpha -= .01;
                     } else {
                         this.alpha = 0;
-                    }
-                    trace("dead" + Math.random().toString);
-                    break;
-
-                case STATE_DESPAWN:
-                    if(this.targetPathNode == null) {
-                        this._path.setCurrentNode(_path.getClosestNode(this.footPos));
-                        this.targetPathNode = this._path.currentNode;
-                    }
-                    this.targetPathNode = this._path.currentNode;
-                    disp = this.targetPathNode.pos.sub(this.footPos);
-                    this._path.advance();
-                    this.dir = disp.normalized().mulScl(10);
-                    trace("despawn" + Math.random().toString());
-
-                    if (!this.inViewOfPlayer()) {
-                        this.setInactive();
                     }
                     break;
             }
@@ -264,8 +244,8 @@ package com.starmaid.Cibele.entities {
                                                 damageLockMap[p.slug] = false;
                                               }, true);
             p.runParticles(this.footPos.add(new DHPoint(0, -20)));
-            if(this.hitPoints <= this.damageThreshold[this._spawnCounter] &&
-               !this.canDie)
+            if(!this.canDie &&
+               this.hitPoints <= this.damageThreshold[this._spawnCounter - 1])
             {
                 this.startDespawn();
                 return;
@@ -273,7 +253,7 @@ package com.starmaid.Cibele.entities {
         }
 
         private function isEscaping():Boolean {
-            return this._state == STATE_MOVE_TO_PATH_NODE || this._state == STATE_ESCAPE;
+            return this._state == STATE_ESCAPE;
         }
 
         override public function setupSprites():void {
