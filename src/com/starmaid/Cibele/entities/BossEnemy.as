@@ -6,6 +6,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.DebugConsoleManager;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.utils.MapNodeContainer;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.management.Path;
@@ -25,6 +26,7 @@ package com.starmaid.Cibele.entities {
         private var canDie:Boolean = false;
         private var _notificationText:FlxText;
         private var scaleText:Boolean = false;
+        private var _name:String;
 
 
         public static const STATE_PRE_APPEAR:Number = 39485723987;
@@ -41,7 +43,7 @@ package com.starmaid.Cibele.entities {
 
         public function BossEnemy(pos:DHPoint) {
             super(pos, 600);
-            this.damageThreshold = [500, 300];
+            this.damageThreshold = [400, 200];
             this._enemyType = Enemy.TYPE_BOSS;
             this.sightRange = 750;
             this.hitDamage = 10;
@@ -57,6 +59,15 @@ package com.starmaid.Cibele.entities {
             this._notificationText.scrollFactor = new DHPoint(0,0);
             this._notificationText.size = 0;
             this._notificationText.alignment = "center";
+
+            if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_IT) {
+                this._name = "AKKA";
+            } else if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_EU) {
+                this._name = "SAMPSA";
+            } else if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_HI) {
+                this._name = "KUU";
+                this._notificationText.color = 0xffffffff;
+            }
 
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.getStateString", "boss.state");
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.pos", "boss.pos");
@@ -93,7 +104,7 @@ package com.starmaid.Cibele.entities {
             this._spawnCounter += 1;
             this.visible = true;
             this.warpToPlayer();
-            this._notificationText.text = "Boss has appeared!";
+            this._notificationText.text = this._name + " has appeared!";
             this.showNotificationText();
             GlobalTimer.getInstance().setMark("boss app hb" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.showHealthBar);
         }
@@ -193,7 +204,7 @@ package com.starmaid.Cibele.entities {
         public function setInactive():void {
             this._state = STATE_INACTIVE;
             this.visible = false;
-            this._notificationText.text = "Boss has escaped!";
+            this._notificationText.text = this._name + " has escaped!";
             this._healthBar.setVisible(false);
             this.showNotificationText();
         }

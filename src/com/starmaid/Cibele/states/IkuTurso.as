@@ -44,7 +44,7 @@ package com.starmaid.Cibele.states {
             PopUpManager.GAME_ACTIVE = true;
             this.load_screen_text = "Iku Turso";
             this.ui_color_flag = GameState.UICOLOR_PINK;
-            this.teamPowerBossThresholds = [10, 20];
+            this.teamPowerBossThresholds = [6, 15];
 
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [

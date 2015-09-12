@@ -43,7 +43,7 @@ package com.starmaid.Cibele.states {
 
             this.bitDialogueLock = true;
             this.load_screen_text = "Euryale";
-            this.teamPowerBossThresholds = [10, 20];
+            this.teamPowerBossThresholds = [6, 15];
             PopUpManager.GAME_ACTIVE = true;
 
             GlobalTimer.getInstance().deleteMark(BOSS_MARK);
