@@ -24,6 +24,7 @@ package com.starmaid.Cibele.entities {
         private var _spawnCounter:Number = 0;
         private var _started:Boolean = false;
         private var canDie:Boolean = false;
+        private var playerDisp:DHPoint;
         protected var _notificationText:FlxText;
         public var notificationTextColor:uint;
         private var scaleText:Boolean = false;
@@ -140,6 +141,14 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        override public function doState__TRACKING():void {
+            this.playerDisp = this.playerRef.pos.sub(this.getAttackPos());
+            if (this.timeAlive - this.lastTrackingDirUpdateTime > 1300) {
+                this.lastTrackingDirUpdateTime = this.timeAlive;
+                this.dir = this.playerDisp.normalized().mulScl(7);
+            }
+        }
+
         override public function update():void{
             super.update();
 
@@ -170,7 +179,7 @@ package com.starmaid.Cibele.entities {
                     } else {
                         disp = this.targetPathNode.pos.sub(this.footPos);
                         if (disp._length() < 10) {
-                            if(this.escape_counter > 10) {
+                            if(this.escape_counter > 0) {
                                 this.startTracking();
                                 this.escape_counter = 0;
                             } else {
