@@ -131,6 +131,9 @@ package com.starmaid.Cibele.management {
                     );
                     spr.loadGraphic(cur["contents"], false, false, cur["dim"].x, cur["dim"].y);
                     spr.visible = false;
+                    if(spr.y - 5 < 0) {
+                        spr.y = 0;
+                    }
                     curX = XSprite.fromPoint(new DHPoint(spr.x + spr.width - 26, spr.y - 5));
                     curX.loadGraphic(ImgInboxXPink, false, false, 32, 29);
                     curX.visible = false;
