@@ -96,7 +96,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0, "boss_gate": true
                 },
                 {
-                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC, "endfn": playEndDialogue
+                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC, "endfn": playEndDialogue
                 }
             ];
         }
@@ -245,6 +245,7 @@ package com.starmaid.Cibele.states {
         }
 
         public function playEndDialogue():void {
+            this.bitDialogueLock = true;
             SoundManager.getInstance().playSound(
                 IchiBossKill, 3*GameSound.MSEC_PER_SEC, this.playEndFilm,
                 false, 1, GameSound.VOCAL);

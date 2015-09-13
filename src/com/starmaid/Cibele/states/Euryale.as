@@ -41,7 +41,7 @@ package com.starmaid.Cibele.states {
         public function Euryale() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
 
-            this.bitDialogueLock = true;
+            this.bitDialogueLock = false;
             this.load_screen_text = "Euryale";
             this.teamPowerBossThresholds = [6, 15];
             PopUpManager.GAME_ACTIVE = true;
@@ -172,7 +172,6 @@ package com.starmaid.Cibele.states {
 
         override public function loadingScreenEndCallback():void {
             super.loadingScreenEndCallback();
-            this.bitDialogueLock = false;
         }
 
         public function firstConvoPartTwo():void {
@@ -198,6 +197,7 @@ package com.starmaid.Cibele.states {
 
         public function showFriendEmail2():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.EU_EMAIL_2);
+            this.bitDialogueLock = true;
         }
 
         public function showDredgeSelfie():void {
@@ -206,7 +206,6 @@ package com.starmaid.Cibele.states {
 
         override public function startBoss():void {
             super.startBoss();
-            this.bitDialogueLock = true;
         }
 
         override public function update():void{
