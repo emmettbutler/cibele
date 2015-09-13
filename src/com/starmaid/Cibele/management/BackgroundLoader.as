@@ -35,6 +35,7 @@ package com.starmaid.Cibele.management {
         public var shouldLoadMap:Boolean, shouldCollidePlayer:Boolean = true;
         public var allTilesHaveLoaded:Boolean = false;
         private var enemyContacts:Array;
+        private var screenPos:DHPoint;
 
         public var dbgText:FlxText;
 
@@ -44,6 +45,7 @@ package com.starmaid.Cibele.management {
                                          colliderScaleFactor:Number=1,
                                          showColliders:Boolean=false)
         {
+            this.screenPos = new DHPoint(0, 0);
             this.shouldLoadMap = true;
             this.colliderName = macroImageName + "_collider"
             this.macroImageName = macroImageName + "_map";
@@ -153,11 +155,11 @@ package com.starmaid.Cibele.management {
         }
 
         public function tileIsOnscreen(tile:FlxExtSprite):Boolean {
-            var screenPos:DHPoint = new DHPoint(0, 0);
-            tile.getScreenXY(screenPos);
-            return (screenPos.x < ScreenManager.getInstance().screenWidth &&
-                screenPos.x > 0 - tile.width && screenPos.y > 0 - tile.height &&
-                screenPos.y < ScreenManager.getInstance().screenHeight);
+            tile.getScreenXY(this.screenPos);
+            return (this.screenPos.x < ScreenManager.getInstance().screenWidth &&
+                this.screenPos.x > 0 - tile.frameWidth &&
+                this.screenPos.y > 0 - tile.frameHeight &&
+                this.screenPos.y < ScreenManager.getInstance().screenHeight);
         }
 
         public function loadTile(row:Number, col:Number, arr:Array=null,
@@ -338,24 +340,28 @@ package com.starmaid.Cibele.management {
                                   this.colliderReceivingMachines,
                                   this.colliderName, true);
                 }
-                colliderTile = this.getTileByIndex(row, col, this.colliderTiles);
-                if (this.tileIsOnscreen(colliderTile)) {
-                    if (this.shouldCollidePlayer) {
-                        collisionData = this.getPlayerCollisionData(colliderTile)
-                        if (collisionData[0]) {
-                            playerContact = true;
-                            this.playerRef.collisionDirection = collisionData[1];
+            }
+            for (row = 0; row < rows; row++) {
+                for (col = 0; col < cols; col++) {
+                    colliderTile = this.getTileByIndex(row, col, this.colliderTiles);
+                    if (this.tileIsOnscreen(colliderTile)) {
+                        if (this.shouldCollidePlayer) {
+                            collisionData = this.getPlayerCollisionData(colliderTile)
+                            if (collisionData[0]) {
+                                playerContact = true;
+                                this.playerRef.collisionDirection = collisionData[1];
+                            }
                         }
-                    }
-                    for (k = 0; k < this.enemiesRef.length; k++) {
-                        if (this.enemiesRef[k] is SmallEnemy) {
-                            curEnemy = this.enemiesRef[k];
-                            if (curEnemy.isOnscreen() && !curEnemy.isDead()) {
-                                collisionData = this.getEnemyCollisionData(
-                                    colliderTile, this.enemiesRef[k]);
-                                if (collisionData[0]) {
-                                    this.enemyContacts[k] = true;
-                                    this.enemiesRef[k].collisionDirection = collisionData[1];
+                        for (k = 0; k < this.enemiesRef.length; k++) {
+                            if (this.enemiesRef[k] is SmallEnemy) {
+                                curEnemy = this.enemiesRef[k];
+                                if (curEnemy.isOnscreen() && !curEnemy.isDead()) {
+                                    collisionData = this.getEnemyCollisionData(
+                                        colliderTile, this.enemiesRef[k]);
+                                    if (collisionData[0]) {
+                                        this.enemyContacts[k] = true;
+                                        this.enemiesRef[k].collisionDirection = collisionData[1];
+                                    }
                                 }
                             }
                         }

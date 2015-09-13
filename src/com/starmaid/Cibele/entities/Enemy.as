@@ -121,6 +121,26 @@ package com.starmaid.Cibele.entities {
             return this._enemyType;
         }
 
+        public function isBoss():Boolean {
+            if(this.enemyType == TYPE_BOSS) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function isSmall():Boolean {
+            if(this.enemyType == TYPE_SMALL) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function get smallType():String {
+            return Enemy.TYPE_SMALL;
+        }
+
         public function getStateString():String {
             return Enemy.stateMap[this._state] == null ? "unknown" : Enemy.stateMap[this._state];
         }
@@ -155,7 +175,7 @@ package com.starmaid.Cibele.entities {
             this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
             this.hitPoints -= Math.floor(this.hitDamage * p.teamPowerDamageMul);
             this._healthBar.setPoints(this.hitPoints);
-            p.runParticles(this.getMiddlePos());
+            p.runParticles(this.getMiddlePos().sub(new DHPoint(0, this.height/3)));
             if(this.hitPoints <= 0){
                 this.die(p);
             }
@@ -203,14 +223,13 @@ package com.starmaid.Cibele.entities {
             if (!(FlxG.state is LevelMapState)) {
                 return;
             }
+            this.setPos(originalPos);
             if(!this.inViewOfPlayer()) {
                 this.hitPoints = this.maxHitPoints;
                 this._healthBar.setPoints(this.hitPoints);
                 this.visible = true;
                 this.alpha = 1;
                 this._state = STATE_IDLE;
-                this.x = originalPos.x;
-                this.y = originalPos.y;
             } else {
                 GlobalTimer.getInstance().setMark(
                     MARK_RESPAWN + Math.random() * 200,

@@ -5,10 +5,13 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.Emote;
+    import com.starmaid.Cibele.entities.FallingObject;
+    import com.starmaid.Cibele.entities.Mist;
     import com.starmaid.Cibele.states.BlankScreen;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameState;
 
     import org.flixel.*;
@@ -32,17 +35,29 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/voiceover/voc_euryale_canicallyou.mp3")] private var Convo5_2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_cibyeah.mp3")] private var Convo5_3:Class;
         [Embed(source="/../assets/audio/music/vid_phonecall.mp3")] private var VidBGMLoop:Class;
+        [Embed(source="/../assets/images/worlds/sparkles_1.png")] private var ImgSparkle1:Class;
+        [Embed(source="/../assets/images/worlds/sparkles_2.png")] private var ImgSparkle2:Class;
+        [Embed(source="/../assets/images/worlds/sparkles_3.png")] private var ImgSparkle3:Class;
+        [Embed(source="/../assets/images/worlds/droplet.png")] private var ImgDroplet1:Class;
+        [Embed(source="/../assets/images/worlds/droplet_sparkle.png")] private var ImgDroplet2:Class;
 
         public static var BGM:String = "euryale bgm loop";
         public static const CONVO_1_HALL:String = "trigigioji";
         public static const CONVO_1_2_HALL:String = "spiddlydiddlydee";
         public static const SHOW_FIRST_POPUP:String = "pennisuyuyi";
 
+        public static const SPARKLES_COUNT:Number = 45;
+        public static const DROPLETS_COUNT:Number = 3;
+        public static const MIST_COUNT:Number = 30;
+
+        private var sparkles:Array, droplets:Array, mists:Array;
+
         public function Euryale() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
 
-            this.bitDialogueLock = true;
+            this.bitDialogueLock = false;
             this.load_screen_text = "Euryale";
+            this.teamPowerBossThresholds = [6, 15];
             PopUpManager.GAME_ACTIVE = true;
 
             GlobalTimer.getInstance().deleteMark(BOSS_MARK);
@@ -113,7 +128,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": Convo5_1, "len": 42*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.startBoss, "ends_with_popup": false
+                    "delay": 0
                 },
                 {
                     "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
@@ -169,9 +184,83 @@ package com.starmaid.Cibele.states {
             }
         }
 
+        override public function addEnvironmentDetails():void {
+            this.setupSparkles();
+        }
+
+        override public function addScreenspaceDetails():void {
+            this.setupDroplets();
+            this.setupMist();
+        }
+
+        private function setupMist():void {
+            this.mists = new Array();
+            for (var i:int = 0; i < MIST_COUNT; i++) {
+                this.mists.push(new Mist());
+            }
+        }
+
+        private function setupDroplets():void {
+            this.droplets = new Array();
+            var droplet:GameObject;
+            var dropletDimensions:DHPoint = new DHPoint(90, 216);
+            var imgs:Array = [ImgDroplet1, ImgDroplet2];
+            var img:Class;
+            for (var i:int = 0; i < DROPLETS_COUNT; i++) {
+                droplet = new FallingObject(new DHPoint(
+                    Math.random() * (ScreenManager.getInstance().screenWidth - dropletDimensions.x),
+                    -1 * dropletDimensions.y
+                ));
+                img = imgs[Math.floor(Math.random() * imgs.length)];
+                droplet.loadGraphic(img, false, false,
+                                    dropletDimensions.x, dropletDimensions.y);
+                droplet.addAnimation("run",
+                    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], 13, true);
+                droplet.scale.x = droplet.scale.y = .5 + Math.random() * .2;
+                FlxG.state.add(droplet);
+                droplet.play("run");
+                this.droplets.push(droplet);
+            }
+        }
+
+        private function setupSparkles():void {
+            this.sparkles = new Array();
+            var sparkle:GameObject;
+            var sparkleDimensions:DHPoint;
+            var sparkleImages:Array = [[ImgSparkle1, 10, new DHPoint(100, 100)],
+                                       [ImgSparkle2, 9, new DHPoint(150, 150)],
+                                       [ImgSparkle3, 13, new DHPoint(150, 150)]];
+            var sparkleConfig:Array;
+            var frames:Array, idx:Number;
+            for (var i:int = 0; i < SPARKLES_COUNT; i++) {
+                frames = new Array();
+                idx = Math.floor(Math.random() * sparkleImages.length);
+                sparkleConfig = sparkleImages[idx];
+                sparkleDimensions = sparkleConfig[2];
+                for (var k:int = 0; k < sparkleConfig[1]; k++) {
+                    frames.push(k);
+                }
+                for (k = 0; k < 10; k++) {
+                    frames.push(sparkleConfig[1]);
+                }
+                sparkle = new GameObject(new DHPoint(
+                    Math.random() * (this.levelDimensions.x - sparkleDimensions.x),
+                    Math.random() * (this.levelDimensions.y - sparkleDimensions.y)
+                ));
+                sparkle.loadGraphic(sparkleConfig[0],
+                                    false, false,
+                                    sparkleDimensions.x, sparkleDimensions.y);
+                sparkle.addAnimation("run", frames, 13, true);
+                sparkle.zSorted = true;
+                sparkle.basePos = new DHPoint(sparkle.x, sparkle.y + sparkle.height);
+                FlxG.state.add(sparkle);
+                sparkle.play("run");
+                this.sparkles.push(sparkle);
+            }
+        }
+
         override public function loadingScreenEndCallback():void {
             super.loadingScreenEndCallback();
-            this.bitDialogueLock = false;
         }
 
         public function firstConvoPartTwo():void {
@@ -197,6 +286,7 @@ package com.starmaid.Cibele.states {
 
         public function showFriendEmail2():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.EU_EMAIL_2);
+            this.bitDialogueLock = true;
         }
 
         public function showDredgeSelfie():void {
@@ -205,7 +295,6 @@ package com.starmaid.Cibele.states {
 
         override public function startBoss():void {
             super.startBoss();
-            this.bitDialogueLock = true;
         }
 
         override public function update():void{

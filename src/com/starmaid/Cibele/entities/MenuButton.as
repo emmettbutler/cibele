@@ -9,6 +9,7 @@ package com.starmaid.Cibele.entities {
         private var _text:FlxText;
         private var _dimensions:DHPoint;
         private var _clickFn:Function;
+        private var fillLock:Boolean = false;
 
         public function MenuButton(pos:DHPoint, dim:DHPoint, txt:String, clickFn:Function) {
             super(pos);
@@ -41,6 +42,18 @@ package com.starmaid.Cibele.entities {
 
         public function clickCallback():void {
             this._clickFn();
+        }
+
+        override public function update():void {
+            if((FlxG.state as GameState).cursorOverlaps(this._getRect(), true)) {
+                this.fill(0xff94def4);
+                this.fillLock = false;
+            } else {
+                if(!this.fillLock) {
+                    this.fillLock = true;
+                    this.fill(0xff6cb7ce);
+                }
+            }
         }
     }
 }

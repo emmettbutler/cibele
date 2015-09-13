@@ -13,6 +13,7 @@ package com.starmaid.Cibele.entities {
 
         private var _animatingBar:Boolean = false;
         private var _topFrame:GameObject;
+        private var _helpText:FlxText;
 
         public function TeamPowerBar(maxPoints:Number) {
             super(new DHPoint(0, 0), maxPoints, 205, 20);
@@ -30,6 +31,10 @@ package com.starmaid.Cibele.entities {
             this._topFrame.addAnimation("stop", [0], 12, false);
             this._topFrame.scrollFactor = new DHPoint(0, 0);
             this.setVisible(true);
+
+            this._helpText = new FlxText(0, 0, 250, "Attack enemies as a team to lure the boss out!");
+            this._helpText.setFormat("NexaBold-Regular", 18, 0xffffffff);
+            this._helpText.scrollFactor = new DHPoint(0,0);
         }
 
         override public function setPoints(points:Number):void {
@@ -59,16 +64,38 @@ package com.starmaid.Cibele.entities {
             );
             super.setPos(basePos);
             this._topFrame.setPos(basePos.sub(new DHPoint(this._outerWidth / 2 + 47, 18)));
+            this._helpText.x = basePos.x - 130;
+            this._helpText.y = basePos.y + 70;
         }
 
         override public function addVisibleObjects():void {
             super.addVisibleObjects();
             FlxG.state.add(this._topFrame);
+            FlxG.state.add(this._helpText);
+            this.hideHelpText();
         }
 
         override public function setVisible(v:Boolean):void {
             super.setVisible(v);
             this._topFrame.visible = v;
+        }
+
+        public function showHelpText():void {
+            this._helpText.visible = true;
+        }
+
+        public function hideHelpText():void {
+            this._helpText.visible = false;
+        }
+
+        public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
+            var mouseScreenRect:FlxRect = new FlxRect(screenPos.x, screenPos.y,
+                                                      5, 5);
+            if(mouseScreenRect.overlaps(this._topFrame._getRect())) {
+                this.showHelpText();
+            } else {
+                this.hideHelpText();
+            }
         }
     }
 }

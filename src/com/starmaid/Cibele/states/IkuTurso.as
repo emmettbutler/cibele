@@ -44,12 +44,13 @@ package com.starmaid.Cibele.states {
             PopUpManager.GAME_ACTIVE = true;
             this.load_screen_text = "Iku Turso";
             this.ui_color_flag = GameState.UICOLOR_PINK;
+            this.teamPowerBossThresholds = [6, 15];
 
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
                     "audio": Convo1, "len": 59*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "delay": 0, "ends_with_popup": false
                 },
                 {
                     "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
@@ -88,15 +89,14 @@ package com.starmaid.Cibele.states {
                     "delay": 0, "endfn": this.showCibSelfieFolder, "min_team_power": 22
                 },
                 {
-                    "audio": Convo6, "len": 32 * GameSound.MSEC_PER_SEC, "delay": 0,
-                    "endfn": this.startBoss, "ends_with_popup": false, "min_team_power": 25
+                    "audio": Convo6, "len": 32 * GameSound.MSEC_PER_SEC, "delay": 0, "min_team_power": 25
                 },
                 {
                     "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
                     "delay": 0, "boss_gate": true
                 },
                 {
-                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC, "endfn": playEndDialogue
+                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC, "endfn": playEndDialogue
                 }
             ];
         }
@@ -245,6 +245,7 @@ package com.starmaid.Cibele.states {
         }
 
         public function playEndDialogue():void {
+            this.bitDialogueLock = true;
             SoundManager.getInstance().playSound(
                 IchiBossKill, 3*GameSound.MSEC_PER_SEC, this.playEndFilm,
                 false, 1, GameSound.VOCAL);

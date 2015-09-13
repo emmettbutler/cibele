@@ -235,6 +235,11 @@ package com.starmaid.Cibele.entities {
                 return;
             }
 
+            // noop when re-clicking the selected enemy
+            if (got_enemy && this.targetEnemy == prevTargetEnemy) {
+                return;
+            }
+
             this.initWalk(worldPos);
             if (got_enemy && this.targetEnemy != null && !this.targetEnemy.isDead()) {
                 this._state = STATE_MOVE_TO_ENEMY;
@@ -456,10 +461,14 @@ package com.starmaid.Cibele.entities {
                 this.doMovementState();
             } else if (this._state == STATE_MOVE_TO_ENEMY) {
                 if(this.targetEnemy != null) {
-                    this.finalTarget = this.targetEnemy.getAttackPos();
-                    this.doMovementState();
-                    if (this.enemyIsInAttackRange(this.targetEnemy)) {
-                        this._state = STATE_AT_ENEMY;
+                    if(this.targetEnemy.isSmall() || (this.targetEnemy.isBoss() && this.targetEnemy.visible)) {
+                        this.finalTarget = this.targetEnemy.getAttackPos();
+                        this.doMovementState();
+                        if (this.enemyIsInAttackRange(this.targetEnemy)) {
+                            this._state = STATE_AT_ENEMY;
+                        }
+                    } else {
+                        this._state = STATE_IDLE;
                     }
                 }
                 this.walk();
