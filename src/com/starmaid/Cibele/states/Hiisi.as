@@ -11,6 +11,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.entities.FallingObject;
 
     import org.flixel.*;
 
@@ -39,6 +40,7 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_doingthis.mp3")] private var Convo14:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_iloveyou.mp3")] private var Convo15:Class;
         [Embed(source="/../assets/images/worlds/steam.png")] private var ImgSteam:Class;
+        [Embed(source="/../assets/images/worlds/rock.png")] private var ImgRock:Class;
 
         public static var BGM:String = "hiisi bgm loop";
         public static const CONVO_1_HALL:String = "blahhhahshshd";
@@ -46,8 +48,9 @@ package com.starmaid.Cibele.states {
         public static const SHOW_FIRST_POPUP:String = "yeaahhhahahjsdkah";
 
         public static const STEAMS_COUNT:Number = 45;
+        public static const ROCKS_COUNT:Number = 3;
 
-        private var steams:Array;
+        private var steams:Array, rocks:Array;
 
         public function Hiisi() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_HI;
@@ -189,6 +192,29 @@ package com.starmaid.Cibele.states {
 
         override public function addEnvironmentDetails():void {
             this.setupSteam();
+        }
+
+        override public function addFallingObjects():void {
+            this.setupRocks();
+        }
+
+        private function setupRocks():void {
+            this.rocks = new Array();
+            var rock:GameObject;
+            var rockDimensions:DHPoint = new DHPoint(90, 148);
+            for (var i:int = 0; i < ROCKS_COUNT; i++) {
+                rock = new FallingObject(new DHPoint(
+                    Math.random() * (ScreenManager.getInstance().screenWidth - rockDimensions.x),
+                    -1 * rockDimensions.y
+                ));
+                rock.loadGraphic(ImgRock, false, false,
+                                 rockDimensions.x, rockDimensions.y);
+                rock.addAnimation("run",
+                    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 13, true);
+                FlxG.state.add(rock);
+                rock.play("run");
+                this.rocks.push(rock);
+            }
         }
 
         private function setupSteam():void {

@@ -127,12 +127,15 @@ package com.starmaid.Cibele.states {
             this.teamPowerBar = new TeamPowerBar(this.maxTeamPower);
             this.teamPowerBar.setPoints(this.teamPower);
 
+            this.addFallingObjects();
+
             super.postCreate();
 
             add(pathWalker.debugText);
         }
 
         public function postPathRead():void { }
+        public function addFallingObjects():void { }
 
         public function buildTeamPowerAnimationObjects():void {
             this.teamPowerAnimationObjects = new Array();

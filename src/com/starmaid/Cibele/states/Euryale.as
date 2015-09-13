@@ -5,6 +5,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.Emote;
+    import com.starmaid.Cibele.entities.FallingObject;
     import com.starmaid.Cibele.states.BlankScreen;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.GlobalTimer;
@@ -36,6 +37,8 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/worlds/sparkles_1.png")] private var ImgSparkle1:Class;
         [Embed(source="/../assets/images/worlds/sparkles_2.png")] private var ImgSparkle2:Class;
         [Embed(source="/../assets/images/worlds/sparkles_3.png")] private var ImgSparkle3:Class;
+        [Embed(source="/../assets/images/worlds/droplet.png")] private var ImgDroplet1:Class;
+        [Embed(source="/../assets/images/worlds/droplet_sparkle.png")] private var ImgDroplet2:Class;
 
         public static var BGM:String = "euryale bgm loop";
         public static const CONVO_1_HALL:String = "trigigioji";
@@ -43,8 +46,9 @@ package com.starmaid.Cibele.states {
         public static const SHOW_FIRST_POPUP:String = "pennisuyuyi";
 
         public static const SPARKLES_COUNT:Number = 45;
+        public static const DROPLETS_COUNT:Number = 3;
 
-        private var sparkles:Array;
+        private var sparkles:Array, droplets:Array;
 
         public function Euryale() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
@@ -180,6 +184,33 @@ package com.starmaid.Cibele.states {
 
         override public function addEnvironmentDetails():void {
             this.setupSparkles();
+        }
+
+        override public function addFallingObjects():void {
+            this.setupDroplets();
+        }
+
+        private function setupDroplets():void {
+            this.droplets = new Array();
+            var droplet:GameObject;
+            var dropletDimensions:DHPoint = new DHPoint(90, 216);
+            var imgs:Array = [ImgDroplet1, ImgDroplet2];
+            var img:Class;
+            for (var i:int = 0; i < DROPLETS_COUNT; i++) {
+                droplet = new FallingObject(new DHPoint(
+                    Math.random() * (ScreenManager.getInstance().screenWidth - dropletDimensions.x),
+                    -1 * dropletDimensions.y
+                ));
+                img = imgs[Math.floor(Math.random() * imgs.length)];
+                droplet.loadGraphic(img, false, false,
+                                    dropletDimensions.x, dropletDimensions.y);
+                droplet.addAnimation("run",
+                    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], 13, true);
+                droplet.scale.x = droplet.scale.y = .5 + Math.random() * .2;
+                FlxG.state.add(droplet);
+                droplet.play("run");
+                this.droplets.push(droplet);
+            }
         }
 
         private function setupSparkles():void {
