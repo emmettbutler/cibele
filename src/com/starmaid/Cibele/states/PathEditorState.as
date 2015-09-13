@@ -127,7 +127,7 @@ package com.starmaid.Cibele.states {
             this.teamPowerBar = new TeamPowerBar(this.maxTeamPower);
             this.teamPowerBar.setPoints(this.teamPower);
 
-            this.addFallingObjects();
+            this.addScreenspaceDetails();
 
             super.postCreate();
 
@@ -135,7 +135,7 @@ package com.starmaid.Cibele.states {
         }
 
         public function postPathRead():void { }
-        public function addFallingObjects():void { }
+        public function addScreenspaceDetails():void { }
 
         public function buildTeamPowerAnimationObjects():void {
             this.teamPowerAnimationObjects = new Array();

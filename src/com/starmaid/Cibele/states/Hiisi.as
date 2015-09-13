@@ -194,7 +194,7 @@ package com.starmaid.Cibele.states {
             this.setupSteam();
         }
 
-        override public function addFallingObjects():void {
+        override public function addScreenspaceDetails():void {
             this.setupRocks();
         }
 

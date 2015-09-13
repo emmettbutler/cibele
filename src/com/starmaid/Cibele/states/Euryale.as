@@ -6,6 +6,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.Emote;
     import com.starmaid.Cibele.entities.FallingObject;
+    import com.starmaid.Cibele.entities.Mist;
     import com.starmaid.Cibele.states.BlankScreen;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.GlobalTimer;
@@ -47,8 +48,9 @@ package com.starmaid.Cibele.states {
 
         public static const SPARKLES_COUNT:Number = 45;
         public static const DROPLETS_COUNT:Number = 3;
+        public static const MIST_COUNT:Number = 30;
 
-        private var sparkles:Array, droplets:Array;
+        private var sparkles:Array, droplets:Array, mists:Array;
 
         public function Euryale() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
@@ -186,8 +188,16 @@ package com.starmaid.Cibele.states {
             this.setupSparkles();
         }
 
-        override public function addFallingObjects():void {
+        override public function addScreenspaceDetails():void {
             this.setupDroplets();
+            this.setupMist();
+        }
+
+        private function setupMist():void {
+            this.mists = new Array();
+            for (var i:int = 0; i < MIST_COUNT; i++) {
+                this.mists.push(new Mist());
+            }
         }
 
         private function setupDroplets():void {
