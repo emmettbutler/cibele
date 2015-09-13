@@ -10,6 +10,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameState;
+    import com.starmaid.Cibele.base.GameObject;
 
     import org.flixel.*;
 
@@ -37,11 +38,16 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_illcome.mp3")] private var Convo13:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_doingthis.mp3")] private var Convo14:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_iloveyou.mp3")] private var Convo15:Class;
+        [Embed(source="/../assets/images/worlds/steam.png")] private var ImgSteam:Class;
 
         public static var BGM:String = "hiisi bgm loop";
         public static const CONVO_1_HALL:String = "blahhhahshshd";
         public static const CONVO_2_HALL:String = "blajfhkjsdhfksjh";
         public static const SHOW_FIRST_POPUP:String = "yeaahhhahahjsdkah";
+
+        public static const STEAMS_COUNT:Number = 45;
+
+        private var steams:Array;
 
         public function Hiisi() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_HI;
@@ -178,6 +184,31 @@ package com.starmaid.Cibele.states {
                     delayFirstConvoPartTwo, false, 1, GameSound.VOCAL,
                     CONVO_1_HALL
                 );
+            }
+        }
+
+        override public function addEnvironmentDetails():void {
+            this.setupSteam();
+        }
+
+        private function setupSteam():void {
+            this.steams = new Array();
+            var steam:GameObject;
+            var steamDimensions:DHPoint = new DHPoint(200, 347);
+            for (var i:int = 0; i < STEAMS_COUNT; i++) {
+                steam = new GameObject(new DHPoint(
+                    Math.random() * (this.levelDimensions.x - steamDimensions.x),
+                    Math.random() * (this.levelDimensions.y - steamDimensions.y)
+                ));
+                steam.loadGraphic(ImgSteam, false, false,
+                                   steamDimensions.x, steamDimensions.y);
+                steam.addAnimation("run",
+                    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], 18, true);
+                steam.zSorted = true;
+                steam.basePos = new DHPoint(steam.x, steam.y + steam.height);
+                FlxG.state.add(steam);
+                steam.play("run");
+                this.steams.push(steam);
             }
         }
 
