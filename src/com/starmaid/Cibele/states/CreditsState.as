@@ -47,7 +47,10 @@ package com.starmaid.Cibele.states {
                     'text': 'Short films produced by Samantha Corey'
                 },
                 {
-                    'text': 'Special thanks to:\n\n\nBennett Foddy\n\nSteve Gaynor\n\nAnd our many helpful playtesters.'
+                    'text': 'Special thanks to:\n\n\nNöel Hanson\n\nand Sean Hogan\n\nfor asset support.'
+                },
+                {
+                    'text': 'Special thanks to:\n\n\nBennett Foddy,\n\nSteve Gaynor\n\nAnd our many helpful playtesters.'
                 }
             );
 
