@@ -148,10 +148,10 @@ def run_main(conf_file, runtime):
 
 
 def package_application(entry_point_class, swf_path, platform="air", outfile_name="CibeleBeta"):
-    """
-    To generate cibelecert.pfx:
-        adt -certificate -cn SelfSign -ou QE -o "Star Maid Games" -c US 2048-RSA cibelecert.pfx AmanoJyakku!
-    """
+    command = 'adt -certificate -cn SelfSign -ou QE -o "Star_Maid_Games" -c US 2048-RSA cibelecert.pfx AmanoJyakku!'
+    print command
+    subprocess.call(command.split())
+
     outfile = "{}.air".format(outfile_name)
     target = ""
     if platform == "mac":
