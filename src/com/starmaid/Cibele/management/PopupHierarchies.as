@@ -65,6 +65,10 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/eu_email/email_ichi_small_icon.png")] private static var ImgEuEmailIchiSmallIcon:Class;
         [Embed(source="/../assets/images/ui/popups/eu_email/lingerie_email_small.png")] private static var ImgEuEmailLingSmall:Class;
         [Embed(source="/../assets/images/ui/popups/eu_email/lingerie_email_link.png")] private static var ImgEuEmailLingIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_email/poemedits_email_link.png")] private static var ImgEuPoemEditLinkIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_email/poemedits_email.png")] private static var ImgEuPoemEditEmail:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_email/poemedits_icon.png")] private static var ImgEuPoemEditIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_email/poemedits.png")] private static var ImgEuPoemEdit:Class;
 
         //hiisi
         [Embed(source="/../assets/images/ui/popups/hi_email/flight_link.png")] private static var ImgHiFlightLink:Class;
@@ -358,16 +362,56 @@ package com.starmaid.Cibele.management {
                     ]
                 }
             ]};
+            struc[PopUpManager.EU_EMAIL_LINGERIE] = { "contents": [
+                    {
+                        "name": "eu ling 1",
+                        "icon": ImgEuPoemEditLinkIcon,
+                        "icon_dim": new DHPoint(322, 24),
+                        "icon_pos": new DHPoint(291, 102),
+                        "folder_dim": new DHPoint(283, 356),
+                        "struc": PopUpManager.EU_EMAIL_LINGERIE,
+                        "folder_img": ImgEuPoemEditEmail,
+                        "contents": [
+                            {
+                                "name": "eu ling 1 popup",
+                                "icon": ImgEuPoemEditIcon,
+                                "icon_dim": new DHPoint(76, 89),
+                                "icon_pos": new DHPoint(20, 245),
+                                "dim": new DHPoint(528, 426),
+                                "struc": PopUpManager.EU_EMAIL_LINGERIE,
+                                "contents": ImgEuPoemEdit
+                            }]
+                    }
+            ]};
             struc[PopUpManager.EU_EMAIL_1] = { "contents": [
                 {
                     "name": "eu email ling",
                     "icon": ImgEuEmailLingIcon,
                     "icon_dim": new DHPoint(326, 23),
-                    "icon_pos": new DHPoint(291, 102),
+                    "icon_pos": new DHPoint(290, 98),
                     "dim": new DHPoint(284, 356),
-                    "struc": PopUpManager.EU_EMAIL_LINGERIE,
+                    "struc": PopUpManager.EU_EMAIL_1,
                     "contents": ImgEuEmailLingSmall
-                }
+                },
+                {
+                        "name": "eu ling 1",
+                        "icon": ImgEuPoemEditLinkIcon,
+                        "icon_dim": new DHPoint(322, 24),
+                        "icon_pos": new DHPoint(291, 118),
+                        "folder_dim": new DHPoint(283, 356),
+                        "struc": PopUpManager.EU_EMAIL_1,
+                        "folder_img": ImgEuPoemEditEmail,
+                        "contents": [
+                            {
+                                "name": "eu ling 1 popup",
+                                "icon": ImgEuPoemEditIcon,
+                                "icon_dim": new DHPoint(76, 89),
+                                "icon_pos": new DHPoint(20, 245),
+                                "dim": new DHPoint(528, 426),
+                                "struc": PopUpManager.EU_EMAIL_1,
+                                "contents": ImgEuPoemEdit
+                            }]
+                    }
             ]};
             struc[PopUpManager.EU_EMAIL_SELFIE] = { "contents": [
                 {
@@ -383,16 +427,35 @@ package com.starmaid.Cibele.management {
                     "name": "eu email ling",
                     "icon": ImgEuEmailLingIcon,
                     "icon_dim": new DHPoint(326, 23),
-                    "icon_pos": new DHPoint(291, 100),
+                    "icon_pos": new DHPoint(290, 98),
                     "dim": new DHPoint(284, 356),
-                    "struc": PopUpManager.EU_EMAIL_LINGERIE,
+                    "struc": PopUpManager.EU_EMAIL_SELFIE,
                     "contents": ImgEuEmailLingSmall
+                },
+                {
+                        "name": "eu ling 1",
+                        "icon": ImgEuPoemEditLinkIcon,
+                        "icon_dim": new DHPoint(322, 24),
+                        "icon_pos": new DHPoint(291, 118),
+                        "folder_dim": new DHPoint(283, 356),
+                        "struc": PopUpManager.EU_EMAIL_SELFIE,
+                        "folder_img": ImgEuPoemEditEmail,
+                        "contents": [
+                            {
+                                "name": "eu ling 1 popup",
+                                "icon": ImgEuPoemEditIcon,
+                                "icon_dim": new DHPoint(76, 89),
+                                "icon_pos": new DHPoint(20, 245),
+                                "dim": new DHPoint(528, 426),
+                                "struc": PopUpManager.EU_EMAIL_SELFIE,
+                                "contents": ImgEuPoemEdit
+                            }]
                 },
                 {
                     "name": "eu email selfie link 2",
                     "icon": ImgEuEmail2Link1,
-                    "icon_dim": new DHPoint(325, 21),
-                    "icon_pos": new DHPoint(293, 122),
+                    "icon_dim": new DHPoint(322, 24),
+                    "icon_pos": new DHPoint(291, 140),
                     "dim": new DHPoint(284, 356),
                     "struc": PopUpManager.EU_EMAIL_SELFIE,
                     "contents": ImgEuEmailSmallEmail1
@@ -412,16 +475,35 @@ package com.starmaid.Cibele.management {
                     "name": "eu email ling",
                     "icon": ImgEuEmailLingIcon,
                     "icon_dim": new DHPoint(326, 23),
-                    "icon_pos": new DHPoint(291, 100),
+                    "icon_pos": new DHPoint(290, 98),
                     "dim": new DHPoint(284, 356),
-                    "struc": PopUpManager.EU_EMAIL_LINGERIE,
+                    "struc": PopUpManager.EU_EMAIL_2,
                     "contents": ImgEuEmailLingSmall
+                },
+                {
+                        "name": "eu ling 1",
+                        "icon": ImgEuPoemEditLinkIcon,
+                        "icon_dim": new DHPoint(322, 24),
+                        "icon_pos": new DHPoint(292, 118),
+                        "folder_dim": new DHPoint(283, 356),
+                        "struc": PopUpManager.EU_EMAIL_2,
+                        "folder_img": ImgEuPoemEditEmail,
+                        "contents": [
+                            {
+                                "name": "eu ling 1 popup",
+                                "icon": ImgEuPoemEditIcon,
+                                "icon_dim": new DHPoint(76, 89),
+                                "icon_pos": new DHPoint(20, 245),
+                                "dim": new DHPoint(528, 426),
+                                "struc": PopUpManager.EU_EMAIL_2,
+                                "contents": ImgEuPoemEdit
+                            }]
                 },
                 {
                     "name": "eu email 2 link 1daf",
                     "icon": ImgEuEmail2Link1,
-                    "icon_dim": new DHPoint(325, 21),
-                    "icon_pos": new DHPoint(293, 122),
+                    "icon_dim": new DHPoint(322, 24),
+                    "icon_pos": new DHPoint(292, 140),
                     "dim": new DHPoint(284, 356),
                     "struc": PopUpManager.EU_EMAIL_2,
                     "contents": ImgEuEmailSmallEmail1
@@ -429,8 +511,8 @@ package com.starmaid.Cibele.management {
                 {
                     "name": "eu email 2 link 3",
                     "icon": ImgEuEmailSelfieMiniLink,
-                    "icon_dim": new DHPoint(319, 22),
-                    "icon_pos": new DHPoint(294, 144),
+                    "icon_dim": new DHPoint(322, 24),
+                    "icon_pos": new DHPoint(292, 160),
                     "folder_dim": new DHPoint(284, 356),
                     "struc": PopUpManager.EU_EMAIL_2,
                     "folder_img": ImgEuMiniSelfieEmail,
