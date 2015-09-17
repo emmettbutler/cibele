@@ -59,8 +59,10 @@ package com.starmaid.Cibele.entities {
                 GlobalTimer.getInstance().setMark(this.slug + "showChange",
                                                 .7 * GameSound.MSEC_PER_SEC,
                                                 function():void {
-                                                    _changeText.text = "";
-                                                    _curDiff = 0;
+                                                    if(_changeText != null && _curDiff != null) {
+                                                        _changeText.text = "";
+                                                        _curDiff = 0;
+                                                    }
                                                 },
                                                 true);
             } else {
