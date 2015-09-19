@@ -320,7 +320,12 @@ package com.starmaid.Cibele.management {
 
             this.back_reply_button = new UIElement(this.img_inbox.x + 10,
                 this.img_inbox.y + (this.img_inbox.height-50));
-            this.back_reply_button.makeGraphic(150, 30, 0xffdf7b95);
+            if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
+            {
+                this.back_reply_button.makeGraphic(150, 30, 0xffdf7b95);
+            } else {
+                this.back_reply_button.makeGraphic(150, 30, 0xff60a0ab);
+            }
             this.back_reply_button.visible = false;
             this.back_reply_button.scrollFactor = new FlxPoint(0,0);
             if (addToState) {
