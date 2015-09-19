@@ -403,12 +403,7 @@ package com.starmaid.Cibele.management {
             for(var i:int = 1; i < this.threads.length; i++){
                 this.threads[i].setListPos(this.threads[i - 1].pos);
             }
-            if (this._state == STATE_HIDE_INBOX) {
-                this.exitInbox();
-            } else {
-                this.openInbox();
-                this.openThread(this.cur_viewing);
-            }
+            this.exitInbox();
             this.ui_loaded = true;
         }
 
