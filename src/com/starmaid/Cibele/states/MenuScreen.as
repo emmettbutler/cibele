@@ -55,7 +55,7 @@ package com.starmaid.Cibele.states {
             PopUpManager.GAME_ACTIVE = true;
             super.create();
 
-            this.use_loading_screen = false;
+            this.use_loading_screen = true;
             FlxG.bgColor = 0x00000000;
             var _screen:ScreenManager = ScreenManager.getInstance();
 
@@ -133,17 +133,20 @@ package com.starmaid.Cibele.states {
             debugText = new FlxText(0,0,100,"");
             add(debugText);
 
-            function _musicCallback():void {
-                if (FlxG.state is MenuScreen && has_initiated_switch == false) {
-                    SoundManager.getInstance().playSound(MenuBGMLoop, 0, null,
-                        true, 1, GameSound.BGM, MenuScreen.BGM, false, false, false, true);
-                }
-            }
-            SoundManager.getInstance().playSound(MenuBGMIntro,
-                7.9*GameSound.MSEC_PER_SEC, _musicCallback, false, 1,
-                GameSound.SFX, MenuScreen.BGM, false, false, false, true);
-
             super.postCreate();
+        }
+
+        override public function loadingScreenEndCallback():void {
+            SoundManager.getInstance().playSound(MenuBGMIntro,
+                    7.9*GameSound.MSEC_PER_SEC, musicCallback, false, 1,
+                    GameSound.SFX, MenuScreen.BGM, false, false, false, true);
+        }
+
+        public function musicCallback():void {
+            if (FlxG.state is MenuScreen && has_initiated_switch == false) {
+                SoundManager.getInstance().playSound(MenuBGMLoop, 0, null,
+                    true, 1, GameSound.BGM, MenuScreen.BGM, false, false, false, true);
+            }
         }
 
         override public function update():void{
