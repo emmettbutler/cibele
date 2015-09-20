@@ -19,7 +19,6 @@ package com.starmaid.Cibele.entities {
         private var _path:Path = null;
         private var targetPathNode:PathNode;
         private var escape_counter:Number = 0;
-        private var damagedByPartyMember:PartyMember;
         private var damageThreshold:Array;
         private var _spawnCounter:Number = 0;
         private var _started:Boolean = false;
@@ -272,7 +271,7 @@ package com.starmaid.Cibele.entities {
                                               function():void {
                                                 damageLockMap[p.slug] = false;
                                               }, true);
-            p.runParticles(this.footPos.add(new DHPoint(0, -20)));
+
             if(!this.canDie &&
                this.hitPoints <= this.damageThreshold[this._spawnCounter - 1])
             {

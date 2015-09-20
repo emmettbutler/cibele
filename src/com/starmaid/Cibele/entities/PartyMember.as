@@ -251,6 +251,18 @@ package com.starmaid.Cibele.entities {
             this.particles.run(pos);
         }
 
+        public function runAttackParticles():void {
+            if(this.targetEnemy != null) {
+                if(this.targetEnemy.isSmall()) {
+                    this.runParticles(this.targetEnemy.getMiddlePos().sub(new DHPoint(0, this.targetEnemy.height/3)));
+                } else {
+                   this.runParticles(this.getMiddlePos().sub(new DHPoint(this.width/2, this.height - 20)));
+                }
+            } else {
+                this.runParticles(this.getMiddlePos().sub(new DHPoint(this.width/2, this.height - 20)));
+            }
+        }
+
         public function hasCurPath():Boolean {
             return this._cur_path != null;
         }
