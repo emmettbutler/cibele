@@ -226,6 +226,10 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        public function getPlayer():Player {
+            return this.playerRef;
+        }
+
         public function warpToPlayer():void {
             var dir:DHPoint = new DHPoint(this.playerRef.dir.x,
                                           this.playerRef.dir.y);
@@ -318,9 +322,13 @@ package com.starmaid.Cibele.entities {
             );
         }
 
-        override public function activeTarget():void { }
+        override public function activeTarget():void {
+            (this._healthBar as BossHealthBar)._bossActiveText.text = "Active Target";
+        }
 
-        override public function inactiveTarget():void { }
+        override public function inactiveTarget():void {
+            //(this._healthBar as BossHealthBar)._bossActiveText.text = "";
+        }
 
         override public function addVisibleObjects():void {
             FlxG.state.add(this.debugText);
