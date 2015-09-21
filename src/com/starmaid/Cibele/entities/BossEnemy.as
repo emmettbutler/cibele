@@ -317,9 +317,13 @@ package com.starmaid.Cibele.entities {
             );
         }
 
-        override public function activeTarget():void { }
+        override public function activeTarget():void {
+            this._healthBar._activeText.visible = true;
+        }
 
-        override public function inactiveTarget():void { }
+        override public function inactiveTarget():void {
+            this._healthBar._activeText.visible = false;
+        }
 
         override public function addVisibleObjects():void {
             FlxG.state.add(this.debugText);
