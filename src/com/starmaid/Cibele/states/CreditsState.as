@@ -32,6 +32,9 @@ package com.starmaid.Cibele.states {
 
             this.creditsStructure = new Array(
                 {
+                    'text': 'First love is a very confusing thing, and sometimes it really hurts, but I\'m glad I had mine with you.\n\n-Nina'
+                },
+                {
                     'text': 'Written and designed by Nina Freeman'
                 },
                 {
@@ -51,6 +54,9 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     'text': 'Special thanks to:\n\n\nBennett Foddy,\n\nSteve Gaynor\n\nAnd our many helpful playtesters.'
+                },
+                {
+                    'text': 'Finally, special thanks to all of the people that Nina met (and grew up with) on the Sylph server in Final Fantasy Online. This game would not exist without all of you.'
                 }
             );
 
