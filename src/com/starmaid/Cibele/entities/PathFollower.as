@@ -498,6 +498,7 @@ package com.starmaid.Cibele.entities {
                 return;
             }
             this.attackAnim.play("reverse_attack");
+            this.runAttackParticles();
             GlobalTimer.getInstance().setMark(
                 "attack anim stuff reverse", 1*GameSound.MSEC_PER_SEC,
                 this.resolveStatePostAttack, true
