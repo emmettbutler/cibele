@@ -14,6 +14,7 @@ package com.starmaid.Cibele.base {
 
     import org.flixel.*;
     import flash.events.Event;
+    import flash.events.UncaughtErrorEvent;
     import flash.events.MouseEvent;
 
     public class GameState extends FlxState {

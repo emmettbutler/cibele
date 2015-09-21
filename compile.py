@@ -84,7 +84,6 @@ def compile_main(entry_point_class,
     elif debug_level == "release":
         debug_flag = "false"
         omit_trace = "true"
-        stacktraces = "false"
         debug = "false"
         test_flag = "false"
     swfpath = "src/{entry_point_class}{ts}.swf".format(
@@ -96,7 +95,7 @@ def compile_main(entry_point_class,
         "-compiler.include-libraries", libpath,
         "-use-network=false", "-verbose-stacktraces={}".format(stacktraces),
         "-debug={}".format(debug),
-        "{}".format("-advanced-telemetry" if debug else ""),
+        "-advanced-telemetry",
         "-omit-trace-statements={}".format(omit_trace),
         "-define=CONFIG::debug,{}".format(debug_flag),
         "-define=CONFIG::test,{}".format(test_flag),
