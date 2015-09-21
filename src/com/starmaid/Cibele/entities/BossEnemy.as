@@ -225,10 +225,6 @@ package com.starmaid.Cibele.entities {
             }
         }
 
-        public function getPlayer():Player {
-            return this.playerRef;
-        }
-
         public function warpToPlayer():void {
             var dir:DHPoint = new DHPoint(this.playerRef.dir.x,
                                           this.playerRef.dir.y);
@@ -322,11 +318,11 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function activeTarget():void {
-            (this._healthBar as BossHealthBar)._bossActiveText.text = "Active Target";
+            this._healthBar._activeText.visible = true;
         }
 
         override public function inactiveTarget():void {
-            //(this._healthBar as BossHealthBar)._bossActiveText.text = "";
+            this._healthBar._activeText.visible = false;
         }
 
         override public function addVisibleObjects():void {

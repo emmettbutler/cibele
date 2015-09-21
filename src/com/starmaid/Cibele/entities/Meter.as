@@ -10,7 +10,7 @@ package com.starmaid.Cibele.entities {
 
     public class Meter extends GameObject {
         protected var _innerBar:GameObject, _barFrame:GameObject;
-        protected var _changeText:FlxText, _activeText:FlxText;
+        protected var _changeText:FlxText;
         protected var _maxPoints:Number, _outerWidth:Number = 100,
                       _outerHeight:Number, _curPoints:Number,
                       _curDiff:Number = 0;
@@ -39,12 +39,8 @@ package com.starmaid.Cibele.entities {
             this._changeText = new FlxText(pos.x, pos.y, 200, "");
             this._changeText.setFormat("NexaBold-Regular", 18, 0xff7c6e6a, "left");
 
-            this._activeText = new FlxText(pos.x, pos.y, 200, "Active Target");
-            this._activeText.setFormat("NexaBold-Regular", 12, 0xff7c6e6a, "left");
-
             if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_HI) {
                 this._changeText.color = 0xffffffff;
-                this._activeText.color = 0xff7c6e6a;
             }
         }
 
@@ -81,9 +77,6 @@ package com.starmaid.Cibele.entities {
 
             this._changeText.x = outerPos.x;
             this._changeText.y = outerPos.y - this._outerHeight / 2 - 20;
-
-            this._activeText.x = outerPos.x;
-            this._activeText.y = outerPos.y + 5;
         }
 
         public function getPos():DHPoint {
@@ -94,11 +87,6 @@ package com.starmaid.Cibele.entities {
             this._barFrame.visible = v;
             this._innerBar.visible = v;
             this._changeText.text = "";
-            if(v) {
-                this._activeText.text = "Active Target";
-            } else {
-                this._activeText.text = "";
-            }
         }
 
         public function isVisible():Boolean {
@@ -109,7 +97,6 @@ package com.starmaid.Cibele.entities {
             FlxG.state.add(this._barFrame);
             FlxG.state.add(this._innerBar);
             FlxG.state.add(this._changeText);
-            FlxG.state.add(this._activeText);
         }
     }
 }

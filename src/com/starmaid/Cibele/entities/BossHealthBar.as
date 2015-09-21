@@ -9,7 +9,6 @@ package com.starmaid.Cibele.entities {
         private var name_text:FlxText;
         private var cur_name:String;
         private var boss:BossEnemy;
-        public var _bossActiveText:FlxText;
 
         public function BossHealthBar(boss:BossEnemy, maxPoints:Number) {
             this.boss = boss;
@@ -27,13 +26,13 @@ package com.starmaid.Cibele.entities {
             this._changeText.setFormat("NexaBold-Regular", 25, text_color,
                                        "left");
             this._changeText.scrollFactor = new DHPoint(0, 0);
-            this.name_text = new FlxText(0, 0, 500, this.cur_name);
+            this.name_text = new FlxText(0, 0, 200, this.cur_name);
             this.name_text.scrollFactor = new DHPoint(0,0);
             this.name_text.setFormat("NexaBold-Regular", 18, text_color,
                                      "left");
 
-            this._bossActiveText = new FlxText(pos.x, pos.y, 200, "Active Target");
-            this._bossActiveText.setFormat("NexaBold-Regular", 12, 0xff7c6e6a, "left");
+            this._activeText.scrollFactor = new DHPoint(0, 0);
+            this._activeText.size = 20;
 
             this.setVisible(false);
         }
@@ -41,12 +40,12 @@ package com.starmaid.Cibele.entities {
         override public function setVisible(v:Boolean):void {
             super.setVisible(v);
             this.name_text.visible = v;
+            this._activeText.visible = false;
         }
 
         override public function addVisibleObjects():void {
             super.addVisibleObjects();
             FlxG.state.add(this.name_text);
-            FlxG.state.add(this._bossActiveText);
         }
 
         override public function setPos(pos:DHPoint):void {
@@ -59,8 +58,8 @@ package com.starmaid.Cibele.entities {
             super.setPos(screenPos);
             this._changeText.x = this.name_text.x + 100;
             this._changeText.y = this.name_text.y;
-            this._bossActiveText.x = this.name_text.x;
-            this._bossActiveText.y = this.name_text.y;
+            this._activeText.x = this.name_text.x + 200;
+            this._activeText.y = this.name_text.y;
         }
     }
 }
