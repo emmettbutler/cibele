@@ -360,7 +360,7 @@ package com.starmaid.Cibele.management {
             for (i = 0; i < coordsToUnload.length; i++) {
                 row = coordsToUnload[i][0];
                 col = coordsToUnload[i][1];
-                // load background tiles
+                // unload background tiles that are far offscreen
                 if (this.tileHasLoaded(row, col)) {
                     this.unloadTile(row, col);
                 }
