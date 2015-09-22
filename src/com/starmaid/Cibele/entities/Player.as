@@ -266,6 +266,9 @@ package com.starmaid.Cibele.entities {
                 }
             } else if (!got_enemy) {
                 this.targetEnemy = null;
+                this.visible = true;
+                this.shadow_sprite.visible = true;
+                this.attack_sprite.visible = false;
             }
             if (prevTargetEnemy != null && prevTargetEnemy != this.targetEnemy) {
                 prevTargetEnemy.inactiveTarget();
