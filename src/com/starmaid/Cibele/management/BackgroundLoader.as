@@ -29,7 +29,7 @@ package com.starmaid.Cibele.management {
         public var playerRef:Player;
         public var enemiesRef:Array, curEnemy:SmallEnemy;
         public var estTileWidth:Number, estTileHeight:Number;
-        public var coordsToLoad:Array;
+        public var coordsToLoad:Array, coordsToUnload:Array;
         public var colliderScaleFactor:Number, lastTileLoadUpdate:Number = -1;
         public var collisionData:Array;
         public var shouldLoadMap:Boolean, shouldCollidePlayer:Boolean = true;
@@ -59,6 +59,7 @@ package com.starmaid.Cibele.management {
                 this.estTileHeight = estTileDimensions.y;
             }
             this.coordsToLoad = new Array();
+            this.coordsToUnload = new Array();
             this.receivingMachines = new Array();
             this.colliderReceivingMachines = new Array();
 
@@ -194,6 +195,14 @@ package com.starmaid.Cibele.management {
             }
         }
 
+        public function unloadTile(row:int, col:int):void {
+            var tile:FlxExtSprite = this.getTileByIndex(row, col);
+            if (tile == null) {
+                return;
+            }
+            tile.unload();
+        }
+
         public function getTileIndex(row:int, col:int):String {
             var idx:int = cols * (row % rows) + col % cols;
             idx += 1;
@@ -317,6 +326,8 @@ package com.starmaid.Cibele.management {
                             this.colliderTiles);
                         if (this.tileIsOnscreen(nextTileIn)) {
                             coordsToLoad.push([row, col]);
+                        } else {
+                            coordsToUnload.push([row, col]);
                         }
                     }
                 }
@@ -344,6 +355,14 @@ package com.starmaid.Cibele.management {
                     this.loadTile(row, col, this.colliderTiles,
                                   this.colliderReceivingMachines,
                                   this.colliderName, true);
+                }
+            }
+            for (i = 0; i < coordsToUnload.length; i++) {
+                row = coordsToUnload[i][0];
+                col = coordsToUnload[i][1];
+                // load background tiles
+                if (this.tileHasLoaded(row, col)) {
+                    this.unloadTile(row, col);
                 }
             }
             for (row = 0; row < rows; row++) {
@@ -382,6 +401,7 @@ package com.starmaid.Cibele.management {
             }
 
             coordsToLoad.length = 0;
+            coordsToUnload.length = 0;
 
             if(this.allTilesLoaded()) {
                 this.allTilesHaveLoaded = true;

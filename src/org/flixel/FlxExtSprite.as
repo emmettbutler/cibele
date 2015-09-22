@@ -61,5 +61,12 @@ package org.flixel
             resetHelpers();
             return this;
         }
+
+        public function unload():void {
+            if (_pixels != null) {
+                _pixels.dispose();
+                _pixels = null;
+            }
+        }
     }
 }
