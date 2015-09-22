@@ -34,7 +34,8 @@ package com.starmaid.Cibele.base {
         protected var menuButtons:Array;
         public var loadingScreen:LoadingScreen;
         public var use_loading_screen:Boolean = true;
-        public var enable_cursor:Boolean = true;
+        public var enable_cursor:Boolean = true,
+                   hide_cursor_on_unpause:Boolean = false;
         public var loading_screen_timer:Number = 3;
         public var play_loading_dialogue:Boolean = true;
         public var fpsCounter:FPSCounter;
@@ -380,12 +381,16 @@ package com.starmaid.Cibele.base {
             GlobalTimer.getInstance().pause();
             SoundManager.getInstance().pause();
             this.pauseScreen.visible = GlobalTimer.getInstance().isPaused();
+            this.game_cursor.show();
         }
 
         public function resume():void {
             GlobalTimer.getInstance().resume();
             SoundManager.getInstance().resume();
             this.pauseScreen.visible = GlobalTimer.getInstance().isPaused();
+            if (this.hide_cursor_on_unpause) {
+                this.game_cursor.hide();
+            }
         }
 
         public function addMenuButton(button:MenuButton):void {

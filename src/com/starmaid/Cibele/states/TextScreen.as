@@ -22,6 +22,7 @@ package com.starmaid.Cibele.states {
             this.endCallback = end_callback;
             this.endTime = end_timer;
             this.textString = txt;
+            this.hide_cursor_on_unpause = true;
 
             GlobalTimer.getInstance().setMark(
                 "deactivate blank screen " + (Math.random() * 1000000),
@@ -49,6 +50,14 @@ package com.starmaid.Cibele.states {
             this.textSpr.scrollFactor = new DHPoint(0, 0);
             this.textSpr.setFormat("NexaBold-Regular", 44, 0xffffffff, "center");
             this.add(this.textSpr);
+
+            this.updatePopup = false;
+            this.updateMessages = false;
+            this.use_loading_screen = false;
+
+            super.postCreate();
+
+            this.game_cursor.hide();
         }
 
         override public function update():void {

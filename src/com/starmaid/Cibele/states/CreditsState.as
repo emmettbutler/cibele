@@ -28,7 +28,6 @@ package com.starmaid.Cibele.states {
             super(true, false, false);
             this.enable_fade = true;
             this.use_loading_screen = false;
-            this.enable_cursor = false;
 
             this.creditsStructure = new Array(
                 {
@@ -68,6 +67,8 @@ package com.starmaid.Cibele.states {
 
             var _screen:ScreenManager = ScreenManager.getInstance();
 
+            this.hide_cursor_on_unpause = true;
+
             this.bg = new GameObject(new DHPoint(0,0));
             this.bg.makeGraphic(_screen.screenWidth, _screen.screenHeight, 0xff000000);
             this.bg.scrollFactor = new FlxPoint(0, 0);
@@ -102,7 +103,13 @@ package com.starmaid.Cibele.states {
                 .4, GameSound.BGM, CreditsState.BGM, false, false, false
             );
 
+            this.updatePopup = false;
+            this.updateMessages = false;
+            this.use_loading_screen = false;
+
             this.postCreate();
+
+            this.game_cursor.hide();
         }
 
         override public function update():void {
