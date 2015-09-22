@@ -17,6 +17,7 @@ package com.starmaid.Cibele.entities {
     import org.flixel.*;
 
     import flash.utils.Dictionary;
+    import flash.events.MouseEvent;
 
     public class Player extends PartyMember {
         [Embed(source="/../assets/images/ui/click_anim.png")] private var ImgWalkTo:Class;
@@ -60,6 +61,9 @@ package com.starmaid.Cibele.entities {
         public function Player(x:Number, y:Number):void{
             super(new DHPoint(x, y));
             this.cameraPos = new GameObject(new DHPoint(x, y));
+
+            FlxG.stage.addEventListener(MouseEvent.MOUSE_DOWN,
+                                        this.handleMouseDown);
 
             this.nameText.text = "Cibele";
             this.particleType = _particleType;
@@ -147,6 +151,20 @@ package com.starmaid.Cibele.entities {
 
         public function getFinalTarget():DHPoint {
             return this.finalTarget;
+        }
+
+        override public function destroy():void {
+            FlxG.stage.removeEventListener(MouseEvent.MOUSE_DOWN,
+                                           this.handleMouseDown);
+            super.destroy();
+        }
+
+        public function handleMouseDown(event:MouseEvent):void {
+            if (this != null) {
+                this.mouseDownTime = new Date().valueOf();
+                this.clickStartedOnUI = this.posOverlapsUI(
+                    new DHPoint(FlxG.mouse.screenX, FlxG.mouse.screenY));
+            }
         }
 
         public function setScaleFactor(scaleFactor:Number=1):void {
@@ -391,11 +409,6 @@ package com.starmaid.Cibele.entities {
                 this.nameTextOffset.x = 15;
             }
 
-            if (FlxG.mouse.justPressed()) {
-                this.mouseDownTime = new Date().valueOf();
-                this.clickStartedOnUI = this.posOverlapsUI(
-                    new DHPoint(FlxG.mouse.screenX, FlxG.mouse.screenY));
-            }
             if(this.walkTarget != null) {
                 this.cameraPos.x = Utils.interpolate(.1, this.cameraPos.x,
                                                this.pos.center(this).x);
