@@ -23,7 +23,6 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/ui/click_anim.png")] private var ImgWalkTo:Class;
         [Embed(source="/../assets/images/characters/c_walk.png")] private var ImgCibWalk:Class;
         [Embed(source="/../assets/images/characters/cib_attack.png")] private var ImgAttack:Class;
-        [Embed(source="/../assets/images/characters/cib_shadow_blue.png")] private var ImgShadowBlue:Class;
         [Embed(source="/../assets/audio/effects/sfx_cibattack.mp3")] private var SfxAttack1:Class;
         [Embed(source="/../assets/audio/effects/sfx_cibattack2.mp3")] private var SfxAttack2:Class;
         [Embed(source="/../assets/audio/effects/sfx_enemy_select.mp3")] private var SfxEnemySelect:Class;
@@ -495,12 +494,6 @@ package com.starmaid.Cibele.entities {
                 this.dir = ZERO_POINT;
             }
 
-            if(this._state != STATE_IN_ATTACK) {
-                this.visible = true;
-                this.shadow_sprite.visible = true;
-                this.attack_sprite.visible = false;
-            }
-
             if (this._bgLoaderRef != null) {
                 this._bgLoaderRef.shouldCollidePlayer = this._cur_path == null &&
                     (this._state == STATE_MOVE_TO_ENEMY ||
@@ -588,6 +581,12 @@ package com.starmaid.Cibele.entities {
                 }
                 this._state = STATE_IDLE;
                 this.dir = ZERO_POINT;
+            }
+
+            if(this._state != STATE_IN_ATTACK) {
+                this.visible = true;
+                this.shadow_sprite.visible = true;
+                this.attack_sprite.visible = false;
             }
         }
 
