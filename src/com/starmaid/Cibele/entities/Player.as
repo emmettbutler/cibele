@@ -194,7 +194,8 @@ package com.starmaid.Cibele.entities {
         private function posOverlapsUI(screenPos:DHPoint):Boolean {
             if (this.clickObjectsGroup != null) {
                 var cur:GameObject, screenRect:FlxRect;
-                var mouseScreenRect:FlxRect = new FlxRect(screenPos.x, screenPos.y,
+                var mouseScreenRect:FlxRect = new FlxRect(screenPos.x,
+                                                          screenPos.y,
                                                           5, 5);
                 for (var i:int = 0; i < this.clickObjectsGroup.length; i++) {
                     cur = this.clickObjectsGroup[i];

@@ -43,6 +43,10 @@ package com.starmaid.Cibele.states {
                 PopUpManager.getInstance().elements,
                 MessageManager.getInstance().elements
             ];
+            if (this is PathEditorState) {
+                this.clickObjectGroups.push(
+                    (this as PathEditorState).teamPowerBar.elements);
+            }
         }
 
         public function setScaleFactor(scaleFactor:Number=1):void {

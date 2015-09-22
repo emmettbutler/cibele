@@ -154,7 +154,8 @@ package com.starmaid.Cibele.states {
             this.clickObjectGroups = [
                 this.enemies.enemies,
                 PopUpManager.getInstance().elements,
-                MessageManager.getInstance().elements
+                MessageManager.getInstance().elements,
+                this.teamPowerBar.elements
             ];
             this.teamPowerBar.clickCallback(screenPos, worldPos);
             super.clickCallback(screenPos, worldPos);
