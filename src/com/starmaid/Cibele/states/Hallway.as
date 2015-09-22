@@ -4,11 +4,13 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.HallwayTileLoader;
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.management.BackgroundLoader;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.UIElement;
 
     import org.flixel.*;
     import org.flixel.plugin.photonstorm.FlxCollision;
@@ -21,10 +23,11 @@ package com.starmaid.Cibele.states {
         public var accept_call:Boolean = false;
 
         public var light:FlxExtSprite;
+        public var startTime:Number = -1;
         public var wall_left:GameObject;
         public var wall_right:GameObject;
         public var collisionData:Array;
-        public var call_button:GameObject;
+        public var call_button:UIElement;
         public var leftBound:Number, rightBound:Number;
         public var tileLoader:HallwayTileLoader;
 
@@ -45,6 +48,8 @@ package com.starmaid.Cibele.states {
         }
 
         override public function create():void {
+            this.enable_fade = true;
+            this.load_screen_text = "Fern";
             PopUpManager.GAME_ACTIVE = true;
 
             function _musicCallback():void {
@@ -64,8 +69,10 @@ package com.starmaid.Cibele.states {
             if (this._state == STATE_RETURN) {
                 bottomY = _screen.screenHeight * 2;
                 startPos.y = _screen.screenHeight * .8;
+                this.play_loading_dialogue = false;
             }
-            super.__create(startPos);
+            this.startPos = startPos;
+            super.create();
 
             FlxG.state.remove(this.baseLayer);
             this.baseLayer = new GameObject(new DHPoint(0, 0));
@@ -88,18 +95,18 @@ package com.starmaid.Cibele.states {
             fernBase = (new BackgroundLoader()).loadSingleTileBG("/../assets/images/worlds/Fern-part-2.png");
             fernBase.scrollFactor = new DHPoint(1, 1);
 
+            this.setScaleFactor(
+                ScreenManager.getInstance().calcFullscreenScale());
+
             leftBound = ScreenManager.getInstance().screenWidth * .39;
             rightBound = ScreenManager.getInstance().screenWidth * .52;
 
             this.tileLoader = new HallwayTileLoader(
-                new DHPoint(77 * 3, bottomY),
+                new DHPoint((rightBound - leftBound) + 77, bottomY),
                 new DHPoint(leftBound + 40, 0),
                 this.player, 0
             );
-
             this.postCreate();
-
-
             this.player.nameText.color = 0xffffffff;
         }
 
@@ -117,11 +124,7 @@ package com.starmaid.Cibele.states {
 
             if (this.fernBase.y != this.fernTop.y + this.fernTop.height) {
                 this.fernBase.y = this.fernTop.y + this.fernTop.height;
-                this.tileLoader.stopY = this.fernBase.y + this.fernBase.height / 2;
-            }
-
-            if(SoundManager.getInstance().getSoundByName(MenuScreen.BGM) != null) {
-                SoundManager.getInstance().getSoundByName(MenuScreen.BGM).fadeOutSound();
+                this.tileLoader.stopY = this.fernBase.y;
             }
 
             if (this.player.y > this.fernTop.y + this.fernTop.height) {
@@ -147,12 +150,34 @@ package com.starmaid.Cibele.states {
 
             for (var i:int = 0; i < loader.doors.length; i++) {
                 if(player.mapHitbox.overlaps(loader.doors[i]["object"])){
-                    this.nextState();
+                    this.player.active = false;
+                    this.fadeOut(
+                        function():void {
+                            nextState();
+                        },
+                        .1 * GameSound.MSEC_PER_SEC
+                    );
                 }
+            }
+
+            if (FlxG.mouse.justPressed()) {
+                this.startConvo();
             }
         }
 
         public function nextState():void { }
+
+        public function startConvo():void {
+            if (this._state == STATE_PRE && !this.accept_call &&
+                !this.loadingScreenVisible())
+            {
+                this.startTime = new Date().valueOf();
+                accept_call = true;
+                this.startConvoCallback();
+            }
+        }
+
+        public function startConvoCallback():void { }
 
         public function getCollisionData(wall:GameObject):Array {
             return FlxCollision.pixelPerfectCheck(player.mapHitbox, wall, 255, FlxG.camera, 30, 30, ScreenManager.getInstance().DEBUG);
@@ -160,10 +185,9 @@ package com.starmaid.Cibele.states {
 
         override public function postCreate():void {
             super.postCreate();
-            player.setBlueShadow();
 
             var _screen:ScreenManager = ScreenManager.getInstance();
-            call_button = new GameObject(new DHPoint(_screen.screenWidth * .35, _screen.screenHeight * .3));
+            call_button = new UIElement(_screen.screenWidth * .35, _screen.screenHeight * .3);
             call_button.loadGraphic(ImgCall,false,false,406,260);
             call_button.scrollFactor = new DHPoint(0, 0);
             FlxG.state.add(call_button);
@@ -172,7 +196,10 @@ package com.starmaid.Cibele.states {
 
         override public function clickCallback(screenPos:DHPoint,
                                                worldPos:DHPoint):void {
-            super.clickCallback(screenPos, worldPos);
+            if ((new Date().valueOf() - this.startTime) > 1 * GameSound.MSEC_PER_SEC)
+            {
+                super.clickCallback(screenPos, worldPos);
+            }
         }
     }
 }

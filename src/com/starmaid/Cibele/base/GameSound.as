@@ -18,6 +18,7 @@ package com.starmaid.Cibele.base {
         public static const VOCAL:Number = 0;
         public static const BGM:Number = 1;
         public static const SFX:Number = 2;
+        public static const BIT_DIALOGUE:Number = 3;
         public var _type:Number = VOCAL;
         public var fadeIn:Boolean = false;
         public var fadeOut:Boolean = false;
@@ -100,12 +101,15 @@ package com.starmaid.Cibele.base {
             }
         }
 
-        public function fadeInSound():void {
-            this.soundObject.volume += .005;
+        public function fadeInSound(step:Number=.08):void {
+            this.increaseVolume(step);
         }
 
-        public function fadeOutSound():void {
-            this.soundObject.volume -= .005;
+        public function fadeOutSound(step:Number=.08):void {
+            this.decreaseVolume(step);
+            if (this.soundObject.volume <= 0) {
+                this.stopSound();
+            }
         }
 
         public function defaultEnd():void { }

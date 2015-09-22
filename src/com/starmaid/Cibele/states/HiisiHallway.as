@@ -5,6 +5,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.utils.GlobalTimer;
+    import com.starmaid.Cibele.base.GameState;
 
     import org.flixel.*;
     import org.flixel.plugin.photonstorm.FlxCollision;
@@ -16,6 +17,7 @@ package com.starmaid.Cibele.states {
         public function HiisiHallway(state:Number=0){
             _state = state;
             loading_screen_timer = 9;
+            this.play_loading_dialogue = false;
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_HI;
         }
 
@@ -34,38 +36,35 @@ package com.starmaid.Cibele.states {
         public static function startHiisiConvo():void {
             if(!(FlxG.state is Hiisi)) {
             } else {
-                GlobalTimer.getInstance().setMark(Hiisi.SHOW_FIRST_POPUP,
-                    5*GameSound.MSEC_PER_SEC,
-                    (FlxG.state as Hiisi).showFlightEmail);
+                (FlxG.state as Hiisi).delayFlightEmail();
             }
         }
 
         public static function firstConvoPartTwo():void {
             GlobalTimer.getInstance().setMark("play 1st convo pt 2",
-                5*GameSound.MSEC_PER_SEC, HiisiHallway.playFirstConvoPartTwo);
+                GameState.SHORT_DIALOGUE ? 1 : 5*GameSound.MSEC_PER_SEC,
+                HiisiHallway.playFirstConvoPartTwo);
         }
 
         public static function playFirstConvoPartTwo():void {
-            SoundManager.getInstance().playSound(HiisiHallway.Convo2,
-                25*GameSound.MSEC_PER_SEC,
-                HiisiHallway.startHiisiConvo, false, 1, GameSound.VOCAL,
-                Hiisi.CONVO_2_HALL
+            if (FlxG.state is HiisiHallway || FlxG.state is HiisiTeleportRoom) {
+                SoundManager.getInstance().playSound(HiisiHallway.Convo2,
+                    GameState.SHORT_DIALOGUE ? 1 : 25*GameSound.MSEC_PER_SEC,
+                    HiisiHallway.startHiisiConvo, false, 1, GameSound.VOCAL,
+                    Hiisi.CONVO_2_HALL
+                );
+            }
+        }
+
+        override public function startConvoCallback():void {
+            SoundManager.getInstance().playSound(
+                HiisiHallway.Convo1,
+                GameState.SHORT_DIALOGUE ? 1 : 20*GameSound.MSEC_PER_SEC,
+                HiisiHallway.firstConvoPartTwo, false, 1,
+                GameSound.VOCAL,
+                Hiisi.CONVO_1_HALL
             );
         }
 
-        override public function clickCallback(screenPos:DHPoint,
-                                               worldPos:DHPoint):void {
-            if (this._state == STATE_PRE && !this.accept_call) {
-                accept_call = true;
-                SoundManager.getInstance().playSound(
-                    HiisiHallway.Convo1, 20*GameSound.MSEC_PER_SEC,
-                    HiisiHallway.firstConvoPartTwo, false, 1,
-                    GameSound.VOCAL,
-                    Hiisi.CONVO_1_HALL
-                );
-            } else {
-                super.clickCallback(screenPos, worldPos);
-            }
-        }
     }
 }

@@ -4,6 +4,7 @@ package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.UIElement;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.GameState;
 
     import org.flixel.*;
 
@@ -12,8 +13,11 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/UI_letter_pink.png")] private var ImgMsgPink:Class;
         [Embed(source="/../assets/images/ui/UI_text_box.png")] private var ImgInbox:Class;
         [Embed(source="/../assets/images/ui/UI_text_box_x_blue.png")] private var ImgInboxX:Class;
+        [Embed(source="/../assets/images/ui/UI_text_box_x_blue_hover.png")] private var ImgInboxXHover:Class;
         [Embed(source="/../assets/images/ui/UI_pink_msg_box.png")] private var ImgInboxPink:Class;
         [Embed(source="/../assets/images/ui/UI_pink_x.png")] private var ImgInboxXPink:Class;
+        [Embed(source="/../assets/images/ui/UI_pink_x_hover.png")] private var ImgInboxXPinkHover:Class;
+        [Embed(source="/../assets/images/ui/ellipse_anim.png")] private var ImgEllipse:Class;
         [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
         public static var _instance:MessageManager = null;
@@ -23,9 +27,13 @@ package com.starmaid.Cibele.management {
 
         public var img_inbox:UIElement;
         public var exit_ui:UIElement;
+        public var exit_hover_ui:UIElement;
         public var img_msg:UIElement;
+        public var ellipse_anim:UIElement;
+        public var back_reply_button:UIElement;
 
         public var notifications_box:FlxRect,
+                    notification_num_box:FlxRect,
                    exit_box:FlxRect, reply_box:FlxRect;
 
         private var inbox_pos:DHPoint;
@@ -35,6 +43,8 @@ package com.starmaid.Cibele.management {
         public var cur_viewing:Thread;
 
         public var unread_count:Number = 0;
+        public var unread_count_pos:DHPoint;
+        public var unread_count_altpos:DHPoint;
 
         public var _screen:ScreenManager = ScreenManager.getInstance();
 
@@ -67,144 +77,143 @@ package com.starmaid.Cibele.management {
 
             this.threads_map = {};
             this.threads_map['it'] = new Array(
-                new Thread(this.img_inbox,
-                    ["Rusher", "did you get that link i sent you on aim last night? its an anime you might like :D", 1],
-                    [MessageManager.SENT_BY_CIBELE, "yeah! i think that one of the VAs was in sailor moon??", 1],
-                    ["Rusher", "the little pink haired one looks just like you :3", 1],
+                new Thread(this.img_inbox, false,
+                    ["Rusher", "did you get that link i sent you on aim last night? its an anime you might like :D", Thread.SEND_IMMEDIATELY],
+                    [MessageManager.SENT_BY_CIBELE, "yeah! i think that one of the VAs was in sailor moon??", Thread.SEND_IMMEDIATELY],
+                    ["Rusher", "the little pink haired one looks just like you :3", Thread.SEND_IMMEDIATELY],
                     [MessageManager.SENT_BY_CIBELE, "i always do my best to look anime ^_^", -1],
-                    ["Rusher", "did you see that picture i put up on the forums?", 10*GameSound.MSEC_PER_SEC],
+                    ["Rusher", "did you see that picture i put up on the forums?", (GameState.SHORT_DIALOGUE ? 5 : 30) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "yeah! it's nice!", -1],
-                    ["Rusher", "thanks :3", 10*GameSound.MSEC_PER_SEC],
+                    ["Rusher", "thanks :3", (GameState.SHORT_DIALOGUE ? 1 : 30) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "i really like knowing what everyone looks like irl~", -1]
                 ),
-                new Thread(this.img_inbox,
-                    ["GuyverGuy", "hey giiiiiirl how are things? you never chat with me anymore </3", 1],
-                    [MessageManager.SENT_BY_CIBELE, ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", 1],
-                    ["GuyverGuy", "everyone bowing to ichis whip as usual i see", 1],
-                    [MessageManager.SENT_BY_CIBELE, "omg guyver stop lol", 1],
-                    ["GuyverGuy", "are u seriously defending him lol he is an A S S", 1],
+                new Thread(this.img_inbox, true,
+                    ["GuyverGuy", "hey giiiiiirl how are things? you never chat with me anymore </3", Thread.SEND_IMMEDIATELY],
+                    [MessageManager.SENT_BY_CIBELE, ";_; sorry, ive been pretty busy, ampule has been doing a lot lately", Thread.SEND_IMMEDIATELY],
+                    ["GuyverGuy", "everyone bowing to ichis whip as usual i see", Thread.SEND_IMMEDIATELY],
+                    [MessageManager.SENT_BY_CIBELE, "omg guyver stop lol", Thread.SEND_IMMEDIATELY],
+                    ["GuyverGuy", "are u seriously defending him lol he is an A S S", Thread.SEND_IMMEDIATELY],
                     [MessageManager.SENT_BY_CIBELE, "he's nice to me", -1],
-                    ["GuyverGuy", "lol of course he is, ur a girl", 10*GameSound.MSEC_PER_SEC],
+                    ["GuyverGuy", "lol of course he is, ur a girl", (GameState.SHORT_DIALOGUE ? 5 : 300) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "whatever guyver lol that's not true", -1],
-                    ["GuyverGuy", "i bet he thinks ur hot", 10*GameSound.MSEC_PER_SEC],
+                    ["GuyverGuy", "i bet he thinks ur hot", (GameState.SHORT_DIALOGUE ? 1 : 300) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "i doubt that", -1]
                 ),
-                new Thread(this.img_inbox,
-                    ["Airia", "Cib! Wanna do a euryale run w/ me on friday?", 1],
-                    [MessageManager.SENT_BY_CIBELE, "ok! <3 see you then girl~", 1],
-                    ["Airia", "ichi usually comes but lets go just us, girls night out", 1],
+                new Thread(this.img_inbox, true,
+                    ["Airia", "Cib! Wanna do a euryale run w/ me on friday?", Thread.SEND_IMMEDIATELY],
+                    [MessageManager.SENT_BY_CIBELE, "ok! <3 see you then girl~", Thread.SEND_IMMEDIATELY],
+                    ["Airia", "ichi usually comes but lets go just us, girls night out", Thread.SEND_IMMEDIATELY],
                     [MessageManager.SENT_BY_CIBELE, "yes! i have so much i wanna talk about with youuu", -1],
-                    ["Airia", "ooooh? ;) something happen??", 10*GameSound.MSEC_PER_SEC],
+                    ["Airia", "ooooh? ;) something happen??", (GameState.SHORT_DIALOGUE ? 5 : 15) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "i just need your opinion on someone ahhhhh you know", -1],
-                    ["Airia", "OMG who is it??? guil? ICHI?", 10*GameSound.MSEC_PER_SEC],
+                    ["Airia", "OMG who is it??? guil? ICHI?", (GameState.SHORT_DIALOGUE ? 1 : 30) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "lol shhhh we will talk on friday", -1]
                 ),
-                new Thread(this.img_inbox,
-                    ["Guillen", "where u at", 1],
-                    [MessageManager.SENT_BY_CIBELE, "hey sorry duoing with ichi now", 1],
-                    ["Guillen", "omg ur always with ichi come oooonnnn", 1],
-                    [MessageManager.SENT_BY_CIBELE, "sorry! lets hang tomorrow maybe?", 1],
-                    ["Guillen", "i wanna hang now cibby! can i meet u after in hiisi or something", 1],
+                new Thread(this.img_inbox, false,
+                    ["Guillen", "where u at", Thread.SEND_IMMEDIATELY],
+                    [MessageManager.SENT_BY_CIBELE, "hey sorry duoing with ichi now", Thread.SEND_IMMEDIATELY],
+                    ["Guillen", "omg ur always with ichi come oooonnnn", Thread.SEND_IMMEDIATELY],
+                    [MessageManager.SENT_BY_CIBELE, "sorry! lets hang tomorrow maybe?", Thread.SEND_IMMEDIATELY],
+                    ["Guillen", "i wanna hang now cibby! can i meet u after in hiisi or something", Thread.SEND_IMMEDIATELY],
                     [MessageManager.SENT_BY_CIBELE, "maybe, i will let you know what ichi and i end up doing", -1],
-                    ["Guillen", "when did u start liking ichi more than me lol", 10*GameSound.MSEC_PER_SEC],
+                    ["Guillen", "when did u start liking ichi more than me lol", (GameState.SHORT_DIALOGUE ? 5 : 400) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "whaaat are you talking about lol stop", -1]
                 )
             );
 
             this.threads_map['eu'] = new Array(
-                new Thread(this.img_inbox,
-                    ["Rusher", "cibby! we should talk on the phone sometime", 1],
-                    [MessageManager.SENT_BY_CIBELE, "yeah we could do that :D", 1],
-                    ["Rusher", "we can text too and be ~real~ friends", 1],
+                new Thread(this.img_inbox, true,
+                    ["Rusher", "cibby! we should talk on the phone sometime", Thread.SEND_IMMEDIATELY],
+                    [MessageManager.SENT_BY_CIBELE, "yeah we could do that :D", Thread.SEND_IMMEDIATELY],
+                    ["Rusher", "we can text too and be ~real~ friends", Thread.SEND_IMMEDIATELY],
                     [MessageManager.SENT_BY_CIBELE, "haha im kinda surprised, i asked for yours awhile ago didnt i?", -1],
-                    ["Rusher", "yeah i was all awkward back then i guess", 10*GameSound.MSEC_PER_SEC],
+                    ["Rusher", "yeah i was all awkward back then i guess", (GameState.SHORT_DIALOGUE ? 5 : 200) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, ";_; it made me sad", -1],
-                    ["Rusher", ":( sorry", 10*GameSound.MSEC_PER_SEC],
+                    ["Rusher", ":( sorry", (GameState.SHORT_DIALOGUE ? 1 : 5) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "i am kinda busy right now actually. i will msg you later", -1]
                 ),
-                new Thread(this.img_inbox,
-                    ["GuyverGuy", "<3 <3 <3", 1],
-                    [MessageManager.SENT_BY_CIBELE, "lol hi guyver whats up", 1],
-                    ["GuyverGuy", "ur cute", 1],
-                    [MessageManager.SENT_BY_CIBELE, "uhhh haha thanks", 1],
-                    ["GuyverGuy", "firesss showed me a pic of u", 1],
+                new Thread(this.img_inbox, true,
+                    ["GuyverGuy", "<3 <3 <3", Thread.SEND_IMMEDIATELY],
+                    [MessageManager.SENT_BY_CIBELE, "lol hi guyver whats up", Thread.SEND_IMMEDIATELY],
+                    ["GuyverGuy", "ur cute", Thread.SEND_IMMEDIATELY],
+                    [MessageManager.SENT_BY_CIBELE, "uhhh haha thanks", Thread.SEND_IMMEDIATELY],
+                    ["GuyverGuy", "firesss showed me a pic of u", Thread.SEND_IMMEDIATELY],
                     [MessageManager.SENT_BY_CIBELE, "the one i put on our forums?", -1],
-                    ["GuyverGuy", "no, he said its a special one from a while ago ;)", 10*GameSound.MSEC_PER_SEC],
+                    ["GuyverGuy", "no, he said its a special one from a while ago ;)", (GameState.SHORT_DIALOGUE ? 5 : 300) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "uhhh what lol what are you talking about", -1],
-                    ["GuyverGuy", "its a sexy pic u sent him", 10*GameSound.MSEC_PER_SEC],
+                    ["GuyverGuy", "its a sexy pic u sent him", (GameState.SHORT_DIALOGUE ? 1 : 100) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "wow what the fuck why did he show you", -1],
-                    ["GuyverGuy", "lol hes jealous of u hangin with ichi", 10*GameSound.MSEC_PER_SEC],
+                    ["GuyverGuy", "lol hes jealous of u hangin with ichi", (GameState.SHORT_DIALOGUE ? 1 : 100) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "fire and i had a thing but its over and he knows that wtf", -1]
                 ),
-                new Thread(this.img_inbox,
-                    ["Airia", "ciiiiib ichi never shuts up about u lol", 1],
-                    [MessageManager.SENT_BY_CIBELE, ":3 he was talking about me to you? what did he say", 1],
-                    ["Airia", "he was just gushing about how chill you are compared to other girls", 1],
+                new Thread(this.img_inbox, false,
+                    ["Airia", "ciiiiib ichi never shuts up about u lol", Thread.SEND_IMMEDIATELY],
+                    [MessageManager.SENT_BY_CIBELE, ":3 he was talking about me to you? what did he say", Thread.SEND_IMMEDIATELY],
+                    ["Airia", "he was just gushing about how chill you are compared to other girls", Thread.SEND_IMMEDIATELY],
                     [MessageManager.SENT_BY_CIBELE, "chill?", -1],
-                    ["Airia", "like ur down to log on for runs whenever. he said u get shit done", 10*GameSound.MSEC_PER_SEC],
+                    ["Airia", "like ur down to log on for runs whenever. he said u get shit done", (GameState.SHORT_DIALOGUE ? 5 : 200) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "haha yeah i have been getting online for every run lately", -1],
-                    ["Airia", "sounds like u two have been on the phone a lot too~", 10*GameSound.MSEC_PER_SEC],
+                    ["Airia", "sounds like u two have been on the phone a lot too~", (GameState.SHORT_DIALOGUE ? 1 : 50) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "we have been talking on the phone a lot... its nice :3", -1]
                 ),
-                new Thread(this.img_inbox,
-                    ["Guillen", "we really need to meet up next time im in nyc!!!", 1],
-                    [MessageManager.SENT_BY_CIBELE, "i knowww im sorry i keep cancelling", 1],
-                    ["Guillen", "stop being so busy ;_; ill be in town next weekend if ur free", 1],
+                new Thread(this.img_inbox, false,
+                    ["Guillen", "we really need to meet up next time im in nyc!!!", Thread.SEND_IMMEDIATELY],
+                    [MessageManager.SENT_BY_CIBELE, "i knowww im sorry i keep cancelling", Thread.SEND_IMMEDIATELY],
+                    ["Guillen", "stop being so busy ;_; ill be in town next weekend if ur free", Thread.SEND_IMMEDIATELY],
                     [MessageManager.SENT_BY_CIBELE, "depends on what ichi has the ampule doing", -1],
-                    ["Guillen", "aw come on you can take a break for one day", 10*GameSound.MSEC_PER_SEC],
+                    ["Guillen", "aw come on you can take a break for one day", (GameState.SHORT_DIALOGUE ? 5 : 500) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "ill let you know~", -1]
                 )
             );
 
-            //TODO write these
             this.threads_map['hi'] = new Array(
-                new Thread(this.img_inbox,
-                    ["Rusher", "ninaaaaaa", 1],
-                    [MessageManager.SENT_BY_CIBELE, "hey what's up!", 1],
-                    ["Rusher", "rex is pissed at you lol", 1],
+                new Thread(this.img_inbox, false,
+                    ["Rusher", "ninaaaaaa", Thread.SEND_IMMEDIATELY],
+                    [MessageManager.SENT_BY_CIBELE, "hey what's up!", Thread.SEND_IMMEDIATELY],
+                    ["Rusher", "rex is pissed at you lol", Thread.SEND_IMMEDIATELY],
                     [MessageManager.SENT_BY_CIBELE, "haha what why", -1],
-                    ["Rusher", "she's jealous that you never talk to her anymore. you're always with ichi~", 10*GameSound.MSEC_PER_SEC],
+                    ["Rusher", "she's jealous that you never talk to her anymore. you're always with ichi~", (GameState.SHORT_DIALOGUE ? 5 : 5) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, ";_;", -1],
-                    ["Rusher", ":(", 10*GameSound.MSEC_PER_SEC],
+                    ["Rusher", ":(", (GameState.SHORT_DIALOGUE ? 1 : 5) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "idk that feels kinda unfair. her and i still chat all the time.", -1],
-                    ["Rusher", "o rly? we barely chat anymore", 10*GameSound.MSEC_PER_SEC],
-                    ["Rusher", "i miss you cibby", 10*GameSound.MSEC_PER_SEC],
+                    ["Rusher", "o rly? we barely chat anymore", (GameState.SHORT_DIALOGUE ? 1 : 500) * GameSound.MSEC_PER_SEC],
+                    ["Rusher", "i miss you cibby", (GameState.SHORT_DIALOGUE ? 1 : 200) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "; ;", -1]
                 ),
-                new Thread(this.img_inbox,
-                    ["GuyverGuy", "CIB stop ignoring me", 1],
-                    [MessageManager.SENT_BY_CIBELE, "what's up? i wasn't ignoring you lol", 1],
-                    ["GuyverGuy", "i was lookin at ur facebook", 1],
+                new Thread(this.img_inbox, true,
+                    ["GuyverGuy", "CIB stop ignoring me", Thread.SEND_IMMEDIATELY],
+                    [MessageManager.SENT_BY_CIBELE, "what's up? i wasn't ignoring you lol", Thread.SEND_IMMEDIATELY],
+                    ["GuyverGuy", "i was lookin at ur facebook", Thread.SEND_IMMEDIATELY],
                     [MessageManager.SENT_BY_CIBELE, "haha why", -1],
-                    ["GuyverGuy", "ur friend kate is really hot", 10*GameSound.MSEC_PER_SEC],
+                    ["GuyverGuy", "ur friend kate is really hot", (GameState.SHORT_DIALOGUE ? 5 : 200) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "yeah she's pretty lol", -1],
-                    ["GuyverGuy", "does she play valtameri ;)", 10*GameSound.MSEC_PER_SEC],
+                    ["GuyverGuy", "does she play valtameri ;)", (GameState.SHORT_DIALOGUE ? 1 : 500) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "nah, she's not into online games", -1],
-                    ["GuyverGuy", "u should hook us up", 10*GameSound.MSEC_PER_SEC],
+                    ["GuyverGuy", "u should hook us up", (GameState.SHORT_DIALOGUE ? 1 : 20) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "uh no lol", -1]
                 ),
-                new Thread(this.img_inbox,
-                    ["Airia", "cib! stop making rusher sad", 1],
-                    [MessageManager.SENT_BY_CIBELE, "whaaaat lol", 1],
-                    ["Airia", "i know you used to like him <3 what happened", 1],
+                new Thread(this.img_inbox, false,
+                    ["Airia", "cib! stop making rusher sad", Thread.SEND_IMMEDIATELY],
+                    [MessageManager.SENT_BY_CIBELE, "whaaaat lol", Thread.SEND_IMMEDIATELY],
+                    ["Airia", "i know you used to like him <3 what happened", Thread.SEND_IMMEDIATELY],
                     [MessageManager.SENT_BY_CIBELE, "yeah i did a while ago", -1],
-                    ["Airia", "so??? what happened?", 10*GameSound.MSEC_PER_SEC],
+                    ["Airia", "so??? what happened?", (GameState.SHORT_DIALOGUE ? 5 : 100) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "he totally rejected me", -1],
-                    ["Airia", "really? then why is he trying to get with you now...", 10*GameSound.MSEC_PER_SEC],
+                    ["Airia", "really? then why is he trying to get with you now...", (GameState.SHORT_DIALOGUE ? 1 : 200) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "idk, we have always gone back and forth like this, but he always rejects me", -1],
-                    ["Airia", "do you still like him?", 10*GameSound.MSEC_PER_SEC],
+                    ["Airia", "do you still like him?", (GameState.SHORT_DIALOGUE ? 1 : 30) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "i'll always like him in a way, but he rejected me and it really hurt my feelings...", -1],
-                    ["Airia", "wow that sucks", 10*GameSound.MSEC_PER_SEC],
+                    ["Airia", "wow that sucks", (GameState.SHORT_DIALOGUE ? 1 : 30) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "yeah i can't really get past that", -1]
                 ),
-                new Thread(this.img_inbox,
-                    ["Guillen", "yo i know what's going on with you and ichi", 1],
-                    [MessageManager.SENT_BY_CIBELE, "what are you talking about lol", 1],
-                    ["Guillen", "everyone knows lol stop trying to hide it", 1],
+                new Thread(this.img_inbox, false,
+                    ["Guillen", "yo i know what's going on with you and ichi", Thread.SEND_IMMEDIATELY],
+                    [MessageManager.SENT_BY_CIBELE, "what are you talking about lol", Thread.SEND_IMMEDIATELY],
+                    ["Guillen", "everyone knows lol stop trying to hide it", Thread.SEND_IMMEDIATELY],
                     [MessageManager.SENT_BY_CIBELE, "knows what? lol whatttt are you going off about", -1],
-                    ["Guillen", "you two totally fcked", 10*GameSound.MSEC_PER_SEC],
+                    ["Guillen", "you two totally fcked", (GameState.SHORT_DIALOGUE ? 5 : 100) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "uhhh no lol", -1],
-                    ["Guillen", "come oooooon i bet he was good ;) is he bossy in bed like he is irl", 10*GameSound.MSEC_PER_SEC],
+                    ["Guillen", "come oooooon i bet he was good ;) is he bossy in bed like he is irl", (GameState.SHORT_DIALOGUE ? 1 : 400) * GameSound.MSEC_PER_SEC],
                     [MessageManager.SENT_BY_CIBELE, "i wouldn't know -_-", -1]
                 )
             );
@@ -252,6 +261,7 @@ package com.starmaid.Cibele.management {
             img_msg.loadGraphic(imgClass, false, false, imgSize.x, imgSize.y);
             img_msg.scrollFactor = new FlxPoint(0, 0);
             img_msg.active = true;
+            img_msg.setSmallBounce();
             img_msg.addAnimation("new", [0], 1, false);
             img_msg.addAnimation("open", [1], 1, false);
             img_msg.addAnimation("closed", [2], 1, false);
@@ -284,27 +294,48 @@ package com.starmaid.Cibele.management {
             this.elements.push(this.img_inbox);
 
             imgClass = ImgInboxX;
-            imgSize = new DHPoint(13, 12);
+            var imgHoverClass:Class = ImgInboxXHover;
+            imgSize = new DHPoint(32, 29);
             var imgPos:DHPoint = new DHPoint(this.img_inbox.x + (this.img_inbox.width - 20), this.img_inbox.y + 5);
             if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
             {
                 imgClass = ImgInboxXPink;
-                imgSize = new DHPoint(23, 18);
-                imgPos = new DHPoint(imgPos.x-2, imgPos.y-5);
+                imgHoverClass = ImgInboxXPinkHover;
+                imgPos = new DHPoint(imgPos.x-5, imgPos.y-7);
             }
             this.exit_ui = new UIElement(imgPos.x, imgPos.y);
+            this.exit_hover_ui = new UIElement(imgPos.x, imgPos.y);
             this.exit_ui.loadGraphic(imgClass, false, false, imgSize.x, imgSize.y);
+            this.exit_hover_ui.loadGraphic(imgHoverClass, false, false, imgSize.x, imgSize.y);
             this.elements.push(this.exit_ui);
+            this.elements.push(this.exit_hover_ui);
             this.exit_ui.scrollFactor = new FlxPoint(0, 0);
+            this.exit_hover_ui.scrollFactor = new FlxPoint(0, 0);
             this.exit_ui.visible = false;
+            this.exit_hover_ui.visible = false;
             if (addToState){
                 FlxG.state.add(this.exit_ui);
+                FlxG.state.add(this.exit_hover_ui);
+            }
+
+            this.back_reply_button = new UIElement(this.img_inbox.x + 10,
+                this.img_inbox.y + (this.img_inbox.height-50));
+            if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
+            {
+                this.back_reply_button.makeGraphic(150, 30, 0xffdf7b95);
+            } else {
+                this.back_reply_button.makeGraphic(150, 30, 0xff60a0ab);
+            }
+            this.back_reply_button.visible = false;
+            this.back_reply_button.scrollFactor = new FlxPoint(0,0);
+            if (addToState) {
+                FlxG.state.add(this.back_reply_button);
             }
 
             this.exit_msg = new FlxText(this.img_inbox.x + 20,
                 this.img_inbox.y + (this.img_inbox.height-40),
-                this.img_inbox.width, "Back");
-            this.exit_msg.setFormat("NexaBold-Regular",FONT_SIZE,0xff616161,"left");
+                this.img_inbox.width, "Back /");
+            this.exit_msg.setFormat("NexaBold-Regular",FONT_SIZE,0xffffffff,"left");
             this.exit_msg.scrollFactor = new FlxPoint(0, 0);
             this.exit_msg.visible = false;
             this.exit_msg.active = false;
@@ -314,10 +345,10 @@ package com.starmaid.Cibele.management {
 
             this.exit_box = new FlxRect(this.exit_msg.x, this.exit_msg.y, 57, this.exit_msg.height);
 
-            this.reply_to_msg = new FlxText(this.img_inbox.x + 70,
-                this.img_inbox.y + (this.img_inbox.height - 40),
-                this.img_inbox.width, "| Reply");
-            this.reply_to_msg.setFormat("NexaBold-Regular",FONT_SIZE,0xff616161,"left");
+            this.reply_to_msg = new FlxText(this.img_inbox.x + 85,
+                this.img_inbox.y + (this.img_inbox.height - 35),
+                this.img_inbox.width, "/ Reply");
+            this.reply_to_msg.setFormat("NexaBold-Regular",FONT_SIZE,0xffffffff,"left");
             this.reply_to_msg.scrollFactor = new FlxPoint(0, 0);
             this.reply_to_msg.visible = false;
             this.reply_to_msg.active = false;
@@ -326,6 +357,15 @@ package com.starmaid.Cibele.management {
             }
 
             this.reply_box = new FlxRect(this.reply_to_msg.x, this.reply_to_msg.y, 64, this.reply_to_msg.height);
+
+
+            this.ellipse_anim = new UIElement(reply_to_msg.x, reply_to_msg.y + 10);
+            this.ellipse_anim.loadGraphic(ImgEllipse, false, false, 23, 4);
+            this.ellipse_anim.addAnimation("ellipse", [0,1,2,3], 5, true);
+            this.ellipse_anim.play("ellipse");
+            this.ellipse_anim.scrollFactor = new DHPoint(0,0);
+            FlxG.state.add(this.ellipse_anim);
+            this.ellipse_anim.visible = false;
 
             this.debugText = new FlxText(_screen.screenWidth * .01,
                                          _screen.screenHeight * .01, 500, "");
@@ -336,13 +376,17 @@ package com.starmaid.Cibele.management {
                 FlxG.state.add(this.debugText);
             }
 
-            this.notifications_text = new FlxText(img_msg.x-28, img_msg.y-20, img_msg.width, this.unread_count.toString());
+            this.unread_count_pos = new DHPoint(img_msg.x-28, img_msg.y-18);
+            this.unread_count_altpos = new DHPoint(img_msg.x-23, img_msg.y-18);
+            this.notifications_text = new FlxText(unread_count_pos.x, unread_count_pos.y, img_msg.width, this.unread_count.toString());
             this.notifications_text.setFormat("NexaBold-Regular",24,0xff616161,"left");
             this.notifications_text.scrollFactor = new FlxPoint(0, 0);
             this.notifications_text.active = false;
             if (addToState) {
                 FlxG.state.add(this.notifications_text);
             }
+
+            this.notification_num_box = new FlxRect(this.notifications_text.x-15, this.notifications_text.y-10, 50, 53);
 
             this.ui_loaded = true;
         }
@@ -364,21 +408,25 @@ package com.starmaid.Cibele.management {
             for(var i:int = 1; i < this.threads.length; i++){
                 this.threads[i].setListPos(this.threads[i - 1].pos);
             }
-            if (this._state == STATE_HIDE_INBOX) {
-                this.exitInbox();
-            } else {
-                this.openInbox();
-                this.openThread(this.cur_viewing);
-            }
+            this.exitInbox();
             this.ui_loaded = true;
         }
 
         public function updateUnreadNotification():void {
             this.notifications_text.text = this.unread_count.toString();
             if(this.unread_count > 0) {
+                this.img_msg.alertOn();
                 this.img_msg.play("new");
             } else {
+                this.img_msg.alertOff();
                 this.img_msg.play("closed");
+            }
+            if(this.unread_count == 1) {
+                this.notifications_text.x = unread_count_altpos.x;
+                this.notifications_text.y = unread_count_altpos.y;
+            } else {
+                this.notifications_text.x = unread_count_pos.x;
+                this.notifications_text.y = unread_count_pos.y;
             }
         }
 
@@ -387,7 +435,9 @@ package com.starmaid.Cibele.management {
                 this.threads[i].showPreview();
             }
             this.reply_to_msg.visible = false;
+            this.ellipse_anim.visible = false;
             this.exit_msg.visible = false;
+            this.back_reply_button.visible = false;
         }
 
         public function openThread(thread:Thread):void {
@@ -395,8 +445,13 @@ package com.starmaid.Cibele.management {
                 this.cur_viewing = thread;
                 this.cur_viewing.markAsRead();
                 this.cur_viewing.show();
-                this.reply_to_msg.visible = true;
+                if(thread.awaiting_reply) {
+                    this.ellipse_anim.visible = true;
+                } else {
+                    this.reply_to_msg.visible = true;
+                }
                 this.exit_msg.visible = true;
+                this.back_reply_button.visible = true;
                 this._state = STATE_VIEW_MESSAGE;
                 thread.rotate();
                 for(var i:int = 0; i < this.threads.length; i++) {
@@ -412,19 +467,27 @@ package com.starmaid.Cibele.management {
 
             this.img_inbox.setPos(inbox_pos);
 
-            this.exit_ui.x = this.img_inbox.x + (this.img_inbox.width - 20);
-            this.exit_ui.y = this.img_inbox.y + 5;
+            this.exit_ui.x = this.img_inbox.x + (this.img_inbox.width - 26);
+            this.exit_ui.y = this.img_inbox.y - 5;
+            this.exit_hover_ui.x = this.img_inbox.x + (this.img_inbox.width - 26);
+            this.exit_hover_ui.y = this.img_inbox.y - 5;
 
             this.exit_msg.x = this.img_inbox.x + 20;
             this.exit_msg.y = this.img_inbox.y + (this.img_inbox.height-40);
             this.exit_box = new FlxRect(this.exit_msg.x, this.exit_msg.y, 57,
                                         this.exit_msg.height);
 
-            this.reply_to_msg.x = this.img_inbox.x + 70;
+            this.reply_to_msg.x = this.img_inbox.x + 83;
             this.reply_to_msg.y = this.img_inbox.y + (this.img_inbox.height - 40);
             this.reply_box = new FlxRect(this.reply_to_msg.x,
                                          this.reply_to_msg.y, 64,
                                          this.reply_to_msg.height);
+
+            this.back_reply_button.x = this.exit_msg.x - 7;
+            this.back_reply_button.y = this.exit_msg.y - 2;
+
+            this.ellipse_anim.x = this.reply_to_msg.x + 2;
+            this.ellipse_anim.y = this.reply_to_msg.y + 13;
 
             for(var i:int = 0; i < this.threads.length; i++) {
                 this.threads[i].inbox_ref = this.img_inbox;
@@ -470,12 +533,44 @@ package com.starmaid.Cibele.management {
             for(i = 0; i < this.threads.length; i++) {
                 cur_thread = this.threads[i];
                 cur_thread.update();
-                if (cur_thread.unread) {
+                if (!cur_thread.read) {
                     this.unread_count++;
+                }
+
+                if(this._state == STATE_VIEW_LIST || this._state == STATE_VIEW_MESSAGE) {
+                    if((FlxG.state as GameState).cursorOverlaps(new FlxRect(this.exit_ui.x, this.exit_ui.y, this.exit_ui.width, this.exit_ui.height), true)) {
+                        this.exit_ui.visible = false;
+                        this.exit_hover_ui.visible = true;
+                    } else {
+                        this.exit_ui.visible = true;
+                        this.exit_hover_ui.visible = false;
+                    }
+                }
+
+                if(this._state == STATE_VIEW_LIST) {
+                    if((FlxG.state as GameState).cursorOverlaps(this.threads[i].list_hitbox, true))
+                        {
+                            this.threads[i].highlightTextColor();
+                        } else if(this.threads[i].read){
+                            this.threads[i].defaultTextColor();
+                        } else {
+                            this.threads[i].unreadTextColor();
+                        }
+                } else if (this._state == STATE_VIEW_MESSAGE) {
+                    if((FlxG.state as GameState).cursorOverlaps(this.exit_box, true)) {
+                        this.highlightExitColor();
+                    } else {
+                        this.defaultExitColor();
+                    }
+                    if((FlxG.state as GameState).cursorOverlaps(this.reply_box, true)) {
+                        this.highlightReplyColor();
+                    } else {
+                        this.defaultReplyColor();
+                    }
                 }
             }
 
-            if(FlxG.mouse.justPressed()) {
+            if(FlxG.mouse.justReleased()) {
                 if(this._state == STATE_VIEW_LIST) {
                     for(i = 0; i < this.threads.length; i++) {
                         if((FlxG.state as GameState).cursorOverlaps(this.threads[i].list_hitbox, true))
@@ -486,7 +581,7 @@ package com.starmaid.Cibele.management {
                 }
 
                 if(this._state == STATE_HIDE_INBOX) {
-                    if ((FlxG.state as GameState).cursorOverlaps(this.notifications_box, true)) {
+                    if ((FlxG.state as GameState).cursorOverlaps(this.notifications_box, true) || (FlxG.state as GameState).cursorOverlaps(this.notification_num_box, true)) {
                         this._state = STATE_VIEW_LIST;
                         this.openInbox();
                     }
@@ -500,6 +595,8 @@ package com.starmaid.Cibele.management {
                                 this._state = STATE_VIEW_LIST;
                             } else if((FlxG.state as GameState).cursorOverlaps(this.reply_box, true)) {
                                 cur_viewing.reply();
+                                this.ellipse_anim.visible = true;
+                                this.reply_to_msg.visible = false;
                             }
                         }
                     }
@@ -517,8 +614,30 @@ package com.starmaid.Cibele.management {
             }
         }
 
+        public function highlightReplyColor():void {
+            this.reply_to_msg.color = 0xfffadde7;
+        }
+
+        public function defaultReplyColor():void {
+            this.reply_to_msg.color = 0xffffffff;
+        }
+
+        public function highlightExitColor():void {
+            this.exit_msg.color = 0xfffadde7;
+        }
+
+        public function defaultExitColor():void {
+            this.exit_msg.color = 0xffffffff;
+        }
+
+        public function showReplyButton():void {
+            this.ellipse_anim.visible = false;
+            this.reply_to_msg.visible = true;
+        }
+
         public function exitInbox(minimize:Boolean=false):void {
             this._state = STATE_HIDE_INBOX;
+            this.exit_hover_ui.visible = false;
             if(!minimize) {
                 this.img_inbox.visible = false;
                 this.exit_ui.visible = false;
@@ -527,6 +646,8 @@ package com.starmaid.Cibele.management {
             }
             this.exit_msg.visible = false;
             this.reply_to_msg.visible = false;
+            this.back_reply_button.visible = false;
+            this.ellipse_anim.visible = false;
             for(var i:int = 0; i < this.threads.length; i++) {
                 this.threads[i].hide();
             }

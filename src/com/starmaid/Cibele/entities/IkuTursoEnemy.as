@@ -1,6 +1,8 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.management.SoundManager;
 
     import org.flixel.*;
 
@@ -9,8 +11,11 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/characters/Enemy2_sprite.png")] private var ImgIT2:Class;
         [Embed(source="/../assets/images/characters/squid_attack.png")] private var ImgIT1_Attack:Class;
         [Embed(source="/../assets/images/characters/enemy2_attack.png")] private var ImgIT2_Attack:Class;
-        [Embed(source="/../assets/images/ui/enemy_highlight.png")] private var ImgActive:Class;
-        [Embed(source="/../assets/images/ui/enemy2_highlight.png")] private var ImgActive2:Class;
+        [Embed(source="/../assets/audio/effects/shell_enemy.mp3")] private var SndCall2:Class;
+
+        public static const TYPE1:Number = 1;
+        public static const TYPE2:Number = 2;
+        public var _type:Number;
 
         public function IkuTursoEnemy(pos:DHPoint) {
             super(pos);
@@ -20,13 +25,9 @@ package com.starmaid.Cibele.entities {
             var rand:Number = Math.floor(Math.random() * 2);
             switch(rand) {
                 case 1:
+                    this._type = IkuTursoEnemy.TYPE1;
+                    this.flipFacing = true;
                     this.loadGraphic(ImgIT1, false, false, 152, 104);
-
-                    this.target_sprite = new GameObject(pos);
-                    this.target_sprite.loadGraphic(ImgActive, false, false,
-                                                   147, 24);
-                    this.target_sprite.visible = false;
-                    FlxG.state.add(this.target_sprite);
 
                     this.attack_sprite = new GameObject(pos);
                     this.attack_sprite.loadGraphic(ImgIT1_Attack, true, false,
@@ -38,13 +39,8 @@ package com.starmaid.Cibele.entities {
                     break;
 
                 default:
+                    this._type = IkuTursoEnemy.TYPE2;
                     this.loadGraphic(ImgIT2, false, false, 70, 160);
-
-                    this.target_sprite = new GameObject(pos);
-                    this.target_sprite.loadGraphic(ImgActive2, false, false,
-                                                   67, 15);
-                    this.target_sprite.visible = false;
-                    FlxG.state.add(this.target_sprite);
 
                     this.attack_sprite = new GameObject(pos);
                     this.attack_sprite.loadGraphic(ImgIT2_Attack, true, false,
@@ -67,6 +63,19 @@ package com.starmaid.Cibele.entities {
             this.play("run_enemy");
 
             super.setupSprites();
+        }
+
+        override protected function playCallSound():void {
+            super.playCallSound();
+            var callSnd:Class;
+            if (this._type == IkuTursoEnemy.TYPE1) {
+                callSnd = SndCall2;
+            } else if (this._type == IkuTursoEnemy.TYPE2) {
+                callSnd = SndCall2;
+            }
+            SoundManager.getInstance().playSound(
+                callSnd, 2 * GameSound.MSEC_PER_SEC, null, false, .5
+            );
         }
     }
 }

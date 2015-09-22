@@ -1,9 +1,11 @@
 package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.entities.Player;
+    import com.starmaid.Cibele.entities.SmallEnemy;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameState;
+    import com.starmaid.Cibele.base.GameSound;
 
     import org.flixel.*;
     import org.flixel.plugin.photonstorm.FlxCollision;
@@ -25,13 +27,15 @@ package com.starmaid.Cibele.management {
         public var tiles:Array, colliderTiles:Array;
         public var rows:Number, cols:Number;
         public var playerRef:Player;
+        public var enemiesRef:Array, curEnemy:SmallEnemy;
         public var estTileWidth:Number, estTileHeight:Number;
-        public var adjacentCoords:Array;
-        public var colliderScaleFactor:Number;
-        public var loadPositionThreshold:DHPoint;
+        public var coordsToLoad:Array;
+        public var colliderScaleFactor:Number, lastTileLoadUpdate:Number = -1;
         public var collisionData:Array;
-        public var shouldLoadMap:Boolean, shouldCollide:Boolean = true;
+        public var shouldLoadMap:Boolean, shouldCollidePlayer:Boolean = true;
         public var allTilesHaveLoaded:Boolean = false;
+        private var enemyContacts:Array;
+        private var screenPos:DHPoint;
 
         public var dbgText:FlxText;
 
@@ -41,6 +45,7 @@ package com.starmaid.Cibele.management {
                                          colliderScaleFactor:Number=1,
                                          showColliders:Boolean=false)
         {
+            this.screenPos = new DHPoint(0, 0);
             this.shouldLoadMap = true;
             this.colliderName = macroImageName + "_collider"
             this.macroImageName = macroImageName + "_map";
@@ -53,12 +58,7 @@ package com.starmaid.Cibele.management {
                 this.estTileWidth = estTileDimensions.x;
                 this.estTileHeight = estTileDimensions.y;
             }
-            this.loadPositionThreshold = new DHPoint(
-                Math.min((ScreenManager.getInstance().screenWidth) /
-                    this.estTileWidth, .5),
-                Math.min((ScreenManager.getInstance().screenHeight) /
-                    this.estTileHeight, .7));
-            this.adjacentCoords = new Array();
+            this.coordsToLoad = new Array();
             this.receivingMachines = new Array();
             this.colliderReceivingMachines = new Array();
 
@@ -91,6 +91,24 @@ package com.starmaid.Cibele.management {
             this.dbgText.color = 0xff0000ff;
             this.dbgText.scrollFactor = new FlxPoint(0, 0);
             FlxG.state.add(dbgText);
+        }
+
+        public function destroy():void {
+            for (var i:int = 0; i < this.tiles.length; i++) {
+                for (var k:int = 0; k < this.tiles[i].length; k++) {
+                    this.tiles[i][k].destroy();
+                    this.colliderTiles[i][k].destroy();
+                    this.receivingMachines[i][k].unload();
+                    this.colliderReceivingMachines[i][k].unload();
+                }
+            }
+            this.tiles = null;
+            this.receivingMachines = null;
+            this.colliderTiles = null;
+            this.colliderReceivingMachines = null;
+            this.playerRef = null;
+            this.enemiesRef = null;
+            this.enemyContacts = null;
         }
 
         public function buildLoadCompleteCallback(tile:FlxExtSprite,
@@ -134,6 +152,14 @@ package com.starmaid.Cibele.management {
                 return null;
             }
             return tile;
+        }
+
+        public function tileIsOnscreen(tile:FlxExtSprite):Boolean {
+            tile.getScreenXY(this.screenPos);
+            return (this.screenPos.x < ScreenManager.getInstance().screenWidth &&
+                this.screenPos.x > 0 - tile.frameWidth &&
+                this.screenPos.y > 0 - tile.frameHeight &&
+                this.screenPos.y < ScreenManager.getInstance().screenHeight);
         }
 
         public function loadTile(row:Number, col:Number, arr:Array=null,
@@ -192,13 +218,22 @@ package com.starmaid.Cibele.management {
             return false
         }
 
-        public function getCollisionData(row:int, col:int):Array {
-            var colliderTile:FlxExtSprite = this.getTileByIndex(row, col,
-                                                                this.colliderTiles);
+        public function getPlayerCollisionData(colliderTile:FlxExtSprite):Array {
             if (colliderTile == null) {
                 return [false, null];
             }
             return FlxCollision.pixelPerfectCheck(playerRef.mapHitbox,
+                                                  colliderTile, 255, null, 6, 4,
+                                                  ScreenManager.getInstance().DEBUG);
+        }
+
+        public function getEnemyCollisionData(colliderTile:FlxExtSprite,
+                                              enemy:SmallEnemy):Array
+        {
+            if (colliderTile == null) {
+                return [false, null];
+            }
+            return FlxCollision.pixelPerfectCheck(enemy.mapHitbox,
                                                   colliderTile, 255, null, 6, 4,
                                                   ScreenManager.getInstance().DEBUG);
         }
@@ -263,45 +298,41 @@ package com.starmaid.Cibele.management {
 
         public function update():void {
             var playerRow:int, playerCol:int, playerRelativePos:DHPoint;
-            playerRelativePos = new DHPoint(this.playerRef.pos.x / this.estTileWidth,
-                                            this.playerRef.pos.y / this.estTileHeight);
+            playerRelativePos = new DHPoint(
+                this.playerRef.pos.x / this.estTileWidth,
+                this.playerRef.pos.y / this.estTileHeight);
             playerRow = Math.floor(playerRelativePos.y);
             playerCol = Math.floor(playerRelativePos.x);
-            playerRelativePos.x -= playerCol;
-            playerRelativePos.y -= playerRow;
 
-            var playerSpriteTileWidthPct:Number = this.playerRef.width / this.estTileWidth;
+            var row:int, col:int, nextTileIn:FlxExtSprite;
+            if (new Date().valueOf() - this.lastTileLoadUpdate > 1 * GameSound.MSEC_PER_SEC) {
+                this.lastTileLoadUpdate = new Date().valueOf();
+                // for each tile, check whether the one next to it that's closer
+                // to the player is onscreen. if so, load it.
+                for (row = 0; row < rows; row++) {
+                    for (col = 0; col < cols; col++) {
+                        nextTileIn = this.getTileByIndex(
+                            playerRow == row ? playerRow : (row + (playerRow > row ? 1 : -1)),
+                            playerCol == col ? playerCol : (col + (playerCol > col ? 1 : -1)),
+                            this.colliderTiles);
+                        if (this.tileIsOnscreen(nextTileIn)) {
+                            coordsToLoad.push([row, col]);
+                        }
+                    }
+                }
+            }
+            coordsToLoad.push([playerRow, playerCol]);
 
-            adjacentCoords.push([playerRow,   playerCol]);
-            if (playerRelativePos.x > 1 - loadPositionThreshold.x - playerSpriteTileWidthPct) {
-                adjacentCoords.push([playerRow,   playerCol+1]);
+            var playerContact:Boolean;
+            var colliderTile:FlxExtSprite;
+            var k:int = 0;
+            // clear out contacts array for next run
+            for (k = 0; k < this.enemiesRef.length; k++) {
+                this.enemyContacts[k] = false;
             }
-            if (playerRelativePos.x <= loadPositionThreshold.x) {
-                adjacentCoords.push([playerRow,   playerCol-1]);
-            }
-            if (playerRelativePos.y > 1 - loadPositionThreshold.y) {
-                adjacentCoords.push([playerRow+1, playerCol]);
-                if (playerRelativePos.x > 1 - loadPositionThreshold.x - playerSpriteTileWidthPct) {
-                    adjacentCoords.push([playerRow+1, playerCol+1]);
-                }
-                if (playerRelativePos.x <= loadPositionThreshold.x) {
-                    adjacentCoords.push([playerRow+1, playerCol-1]);
-                }
-            }
-            if (playerRelativePos.y <= loadPositionThreshold.y) {
-                adjacentCoords.push([playerRow-1, playerCol]);
-                if (playerRelativePos.x > 1 - loadPositionThreshold.x - playerSpriteTileWidthPct) {
-                    adjacentCoords.push([playerRow-1, playerCol+1]);
-                }
-                if (playerRelativePos.x <= loadPositionThreshold.x) {
-                    adjacentCoords.push([playerRow-1, playerCol-1]);
-                }
-            }
-
-            var row:int, col:int, contact:Boolean;
-            for (var i:int = 0; i < adjacentCoords.length; i++) {
-                row = adjacentCoords[i][0];
-                col = adjacentCoords[i][1];
+            for (var i:int = 0; i < coordsToLoad.length; i++) {
+                row = coordsToLoad[i][0];
+                col = coordsToLoad[i][1];
                 // load background tiles
                 if (!this.tileHasLoaded(row, col)) {
                     if (!ScreenManager.getInstance().DEBUG && this.shouldLoadMap) {
@@ -313,20 +344,44 @@ package com.starmaid.Cibele.management {
                     this.loadTile(row, col, this.colliderTiles,
                                   this.colliderReceivingMachines,
                                   this.colliderName, true);
-                } else {
-                    if (this.shouldCollide) {
-                        collisionData = this.getCollisionData(row, col)
-                        if (collisionData[0]) {
-                            contact = true;
-                            this.playerRef.collisionDirection = collisionData[1];
+                }
+            }
+            for (row = 0; row < rows; row++) {
+                for (col = 0; col < cols; col++) {
+                    colliderTile = this.getTileByIndex(row, col, this.colliderTiles);
+                    if (this.tileIsOnscreen(colliderTile)) {
+                        if (this.shouldCollidePlayer) {
+                            collisionData = this.getPlayerCollisionData(colliderTile)
+                            if (collisionData[0]) {
+                                playerContact = true;
+                                this.playerRef.collisionDirection = collisionData[1];
+                            }
+                        }
+                        for (k = 0; k < this.enemiesRef.length; k++) {
+                            if (this.enemiesRef[k] is SmallEnemy) {
+                                curEnemy = this.enemiesRef[k];
+                                if (curEnemy.isOnscreen() && !curEnemy.isDead()) {
+                                    collisionData = this.getEnemyCollisionData(
+                                        colliderTile, this.enemiesRef[k]);
+                                    if (collisionData[0]) {
+                                        this.enemyContacts[k] = true;
+                                        this.enemiesRef[k].collisionDirection = collisionData[1];
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
-            this.playerRef.colliding = contact;
+            this.playerRef.colliding = playerContact;
+            for (k = 0; k < this.enemiesRef.length; k++) {
+                if (this.enemiesRef[k] is SmallEnemy) {
+                    curEnemy = this.enemiesRef[k];
+                    curEnemy.colliding = this.enemyContacts[k];
+                }
+            }
 
-            adjacentCoords.length = 0;
-
+            coordsToLoad.length = 0;
 
             if(this.allTilesLoaded()) {
                 this.allTilesHaveLoaded = true;
@@ -336,6 +391,11 @@ package com.starmaid.Cibele.management {
         public function setPlayerReference(pl:Player):void {
             this.playerRef = pl;
             this.playerRef.bgLoaderRef = this;
+        }
+
+        public function setEnemiesReference(en:Array):void {
+            this.enemiesRef = en;
+            this.enemyContacts = new Array(this.enemiesRef.length);
         }
 
         public function loadSingleTileBG(path:String):FlxExtSprite {
@@ -368,6 +428,14 @@ package com.starmaid.Cibele.management {
             );
             receivingMachine.load(new URLRequest(path));
             return bg;
+        }
+
+        public function collideTile(tile:FlxExtSprite):void {
+            collisionData = this.getPlayerCollisionData(tile);
+            this.playerRef.colliding = collisionData[0];
+            if (collisionData[0]) {
+                this.playerRef.collisionDirection = collisionData[1];
+            }
         }
     }
 }

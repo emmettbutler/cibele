@@ -18,12 +18,17 @@ package com.starmaid.Cibele.states {
         public var video:Video;
         public var endCallback:Function;
         public var fadeThis:GameSound;
+        public var holdLastFrame:Boolean;
 
-        public function PlayVideoState(filename:String, endCallback:Function, fadingSound:GameSound=null) {
+        public function PlayVideoState(filename:String, endCallback:Function, fadingSound:GameSound=null, endPause:Boolean=false) {
             super(true, false, false);
             this.loadVideo(filename);
             this.endCallback = endCallback;
             this.fadeThis = fadingSound;
+            this.holdLastFrame = endPause;
+            if(this.holdLastFrame) {
+                this.enable_fade = true;
+            }
         }
 
         public function loadVideo(filename:String):void {
@@ -82,8 +87,14 @@ package com.starmaid.Cibele.states {
 
         private function netStatusHandler(evt:NetStatusEvent):void {
             if (evt.info.code == "NetStream.Play.Stop") {
-                FlxG.stage.removeChild(video);  // kill video
-                this.endCallback();
+                if(!this.holdLastFrame) {
+                    FlxG.stage.removeChild(video);  // kill video
+                    this.endCallback();
+                } else {
+                    this.videoStream.pause();
+                    GlobalTimer.getInstance().setMark("hold final frame", 4*GameSound.MSEC_PER_SEC,
+                        this.endCallback);
+                }
             }
         }
     }

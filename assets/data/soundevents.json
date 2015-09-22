@@ -66,5 +66,22 @@
 				"bpm": 95
 			}
 		]
-	}
+	},
+        "bgm_hiisi": {
+                "behavior": "sequence",
+                "subevents": [
+                        {
+                                "file": "bgm_hiisi_intro.mp3",
+                                "startTime": 0,
+                                "loop": false,
+                                "bpm": 85
+                        },
+                        {
+                                "file": "bgm_euryale_intro.mp3",
+                                "startTime": 5.647,
+                                "loop": true,
+                                "bpm": 85
+                        }
+                ]
+        }
 }

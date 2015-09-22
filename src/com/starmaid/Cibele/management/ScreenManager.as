@@ -27,6 +27,7 @@ package com.starmaid.Cibele.management {
         public var DEBUG:Boolean = false;
         public var MUTE:Boolean = false;
         public var SAVES:Boolean = true;
+        public var SHORT_DIALOGUE:Boolean = false;
         public var WINDOWED:Boolean = false;
         public var RELEASE:Boolean = true;
 
@@ -54,6 +55,9 @@ package com.starmaid.Cibele.management {
             }
             CONFIG::test {
                 this.RELEASE = false;
+            }
+            CONFIG::short_dialogue {
+                this.SHORT_DIALOGUE = true;
             }
 
             FlxG.stage.frameRate = 60;
@@ -152,7 +156,11 @@ package com.starmaid.Cibele.management {
             }
         }
 
-        public function calcFullscreenScale(dim:DHPoint):Number {
+        public function calcFullscreenScale(dim:DHPoint=null):Number {
+            if (dim == null) {
+                // if no value is given, default to the size of a 15" macbook pro
+                dim = new DHPoint(1440, 878);
+            }
             var factor:Number;
             if (dim.x > dim.y) {
                 factor = screenWidth / dim.x;

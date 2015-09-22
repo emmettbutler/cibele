@@ -14,6 +14,7 @@ package com.starmaid.Cibele.base {
 
     import org.flixel.*;
     import flash.events.Event;
+    import flash.events.UncaughtErrorEvent;
     import flash.events.MouseEvent;
 
     public class GameState extends FlxState {
@@ -25,7 +26,7 @@ package com.starmaid.Cibele.base {
                       enable_fade:Boolean = false;
         protected var game_cursor:GameCursor, baseLayer:GameObject;
         protected var pausable:Boolean = true;
-        private var fadeLayer:GameObject;
+        protected var fadeLayer:GameObject;
         private var pauseScreen:PauseScreen;
         private var sortedObjects:Array;
         private var postFadeFn:Function;
@@ -33,8 +34,13 @@ package com.starmaid.Cibele.base {
         protected var menuButtons:Array;
         public var loadingScreen:LoadingScreen;
         public var use_loading_screen:Boolean = true;
+        public var enable_cursor:Boolean = true;
         public var loading_screen_timer:Number = 3;
+        public var play_loading_dialogue:Boolean = true;
         public var fpsCounter:FPSCounter;
+        private var slug:String;
+        private var fadeSoundName:String;
+        public var load_screen_text:String;
 
         public var ui_color_flag:Number;
         public var fading:Boolean;
@@ -44,8 +50,10 @@ package com.starmaid.Cibele.base {
         public var cursorResetFlag:Boolean = false;
 
         public static const EVENT_POPUP_CLOSED:String = "popup_closed";
-        public static const EVENT_CHAT_RECEIVED:String = "chat_received";
         public static const EVENT_SINGLETILE_BG_LOADED:String = "bg_loaded";
+        public static const EVENT_ENEMY_DIED:String = "enemy_died";
+        public static const EVENT_BOSS_DIED:String = "boss_died";
+        public static const EVENT_TEAM_POWER_INCREASED:String = "team_power_increased";
 
         public function GameState(snd:Boolean=true, popup:Boolean=true,
                                   messages:Boolean=true, fade:Boolean=false){
@@ -53,10 +61,15 @@ package com.starmaid.Cibele.base {
             this.updatePopup = popup;
             this.updateMessages = messages;
             this.enable_fade = fade;
+            this.slug = "" + (Math.random() * 1000000);
 
             this.ui_color_flag = UICOLOR_DEFAULT;
 
             this.sortedObjects = new Array();
+        }
+
+        public static function get SHORT_DIALOGUE():Boolean {
+            return ScreenManager.getInstance().SHORT_DIALOGUE;
         }
 
         override public function create():void {
@@ -101,11 +114,11 @@ package com.starmaid.Cibele.base {
 
             this.game_cursor = new GameCursor();
 
-            FlxG.stage.addEventListener(MouseEvent.CLICK, clickHandler);
+            FlxG.stage.addEventListener(MouseEvent.MOUSE_UP, clickHandler);
         }
 
         override public function destroy():void {
-            FlxG.stage.removeEventListener(MouseEvent.CLICK, clickHandler);
+            FlxG.stage.removeEventListener(MouseEvent.MOUSE_UP, clickHandler);
             super.destroy();
         }
 
@@ -122,7 +135,9 @@ package com.starmaid.Cibele.base {
             }
 
             if(this.use_loading_screen) {
-                this.loadingScreen = new LoadingScreen(loading_screen_timer);
+                this.loadingScreen = new LoadingScreen(this.loading_screen_timer,
+                                                       this.play_loading_dialogue,
+                                                       this.load_screen_text);
                 this.loadingScreen.endCallback = this.loadingScreenEndCallback;
             }
 
@@ -135,13 +150,28 @@ package com.starmaid.Cibele.base {
                 DebugConsoleManager.getInstance().addVisibleObjects();
             }
 
-            this.game_cursor.addCursorSprites();
+            if (this.enable_cursor) {
+                this.game_cursor.addCursorSprites();
+            }
+        }
+
+        public function loadingScreenVisible():Boolean {
+            if (this.loadingScreen == null) {
+                return false;
+            }
+            return this.loadingScreen.showing;
         }
 
         public function loadingScreenEndCallback():void { }
 
-        public function fadeOut(fn:Function, postFadeWait:Number=1):void {
+        public function fadeOut(fn:Function, postFadeWait:Number=1,
+                                soundName:String=null):void
+        {
+            if (this.fading) {
+                return;
+            }
             this.fading = true;
+            this.fadeSoundName = soundName;
             this.postFadeWait = postFadeWait;
             this.postFadeFn = fn;
         }
@@ -191,10 +221,12 @@ package com.starmaid.Cibele.base {
                 if (!GlobalTimer.getInstance().isPaused()) {
                     this.playClick();
                 }
-                this.clickCallback(
-                    new DHPoint(FlxG.mouse.screenX, FlxG.mouse.screenY),
-                    new DHPoint(FlxG.mouse.x, FlxG.mouse.y)
-                );
+                if (!this.loadingScreenVisible()) {
+                    this.clickCallback(
+                        new DHPoint(FlxG.mouse.screenX, FlxG.mouse.screenY),
+                        new DHPoint(FlxG.mouse.x, FlxG.mouse.y)
+                    );
+                }
             }
         }
 
@@ -252,6 +284,7 @@ package com.starmaid.Cibele.base {
                 DebugConsoleManager.getInstance().trackAttribute("FlxG.state.length", "sprites onscreen");
                 DebugConsoleManager.getInstance().trackAttribute("FlxG.mouse.x", "mouse x");
                 DebugConsoleManager.getInstance().trackAttribute("FlxG.mouse.y", "mouse y");
+                DebugConsoleManager.getInstance().trackAttribute("FlxG.state.teamPower", "Team Power");
             }
 
             if (!this.containsPauseLayer()) {
@@ -265,9 +298,15 @@ package com.starmaid.Cibele.base {
                     this.fadeLayer.alpha += .01;
                 } else {
                     this.fading = false;
-                    GlobalTimer.getInstance().setMark("endfade",
-                                                      this.postFadeWait,
-                                                      this.postFadeFn);
+                    GlobalTimer.getInstance().setMark(
+                        "endfade" + this.slug,
+                        this.postFadeWait,
+                        this.postFadeFn
+                    );
+                }
+                var snd:GameSound = SoundManager.getInstance().getSoundByName(this.fadeSoundName);
+                if(snd != null) {
+                    snd.fadeOutSound();
                 }
             }
 
@@ -379,6 +418,10 @@ package com.starmaid.Cibele.base {
 
         public function addEventListener(event:String, callback:Function):void {
             FlxG.stage.addEventListener(event, callback);
+        }
+
+        public function removeEventListener(event:String, callback:Function):void {
+            FlxG.stage.removeEventListener(event, callback);
         }
 
         public function dispatchEvent(event:String):void {

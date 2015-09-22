@@ -88,12 +88,21 @@ package com.starmaid.Cibele.base {
             );
         }
 
+        public function getScreenPos():DHPoint {
+            var pos:DHPoint = new DHPoint(0, 0);
+            this.getScreenXY(pos);
+            return pos;
+        }
+
         public function isOnscreen():Boolean {
             var screenPos:DHPoint = new DHPoint(0, 0);
+            var _screen:ScreenManager = ScreenManager.getInstance();
             this.getScreenXY(screenPos);
-            return (screenPos.x < ScreenManager.getInstance().screenWidth + this.width &&
+            return (
+                screenPos.x < _screen.screenWidth + this.width &&
                 screenPos.x > 0 - this.width && screenPos.y > 0 - this.height &&
-                screenPos.y < ScreenManager.getInstance().screenHeight + this.height);
+                screenPos.y < _screen.screenHeight + this.height
+            );
         }
     }
 }

@@ -26,29 +26,30 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/UI_dock.png")] private var ImgDock:Class;
         [Embed(source="/../assets/images/ui/popups/picly/nina1.png")] private var ImgCibSelfie1:Class;
         [Embed(source="/../assets/images/ui/popups/it_email/guil1.png")] private var ImgGuilEmail1:Class;
-        [Embed(source="/../assets/images/ui/UI_happy face_blue.png")] private var ImgEmojiHappy:Class;
-        [Embed(source="/../assets/images/ui/UI_Sad Face_blue.png")] private var ImgEmojiSad:Class;
-        [Embed(source="/../assets/images/ui/UI_Angry face_blue.png")] private var ImgEmojiAngry:Class;
-        [Embed(source="/../assets/images/ui/UI_Outer Ring.png")] private var ImgRing:Class;
+        [Embed(source="/../assets/images/ui/UI_happy_face_blue.png")] private var ImgEmojiHappy:Class;
+        [Embed(source="/../assets/images/ui/UI_Sad_Face_blue.png")] private var ImgEmojiSad:Class;
+        [Embed(source="/../assets/images/ui/UI_Angry_face_blue.png")] private var ImgEmojiAngry:Class;
+        [Embed(source="/../assets/images/ui/UI_Outer_Ring.png")] private var ImgRing:Class;
         [Embed(source="/../assets/images/ui/UI_Outer_Ring_pink.png")] private var ImgRingPink:Class;
         [Embed(source="/../assets/images/ui/popups/it_email/ichiselfieemail1.png")] private var ImgIchiSelfie1:Class;
         [Embed(source="/../assets/images/ui/popups/files/camera1disconnect.png")] private var ImgCibCamDisconnect:Class;
         [Embed(source="/../assets/images/ui/UI_happy_face_pink.png")] private var ImgEmojiHappyPink:Class;
         [Embed(source="/../assets/images/ui/UI_sad_face_pink.png")] private var ImgEmojiSadPink:Class;
         [Embed(source="/../assets/images/ui/UI_Angry_face_pink.png")] private var ImgEmojiAngryPink:Class;
-        [Embed(source="/../assets/images/ui/popups/ichidownloads.png")] private var ImgIchiDL2:Class;
         [Embed(source="/../assets/images/ui/popups/it_email/none.png")] private var ImgEmptyInbox:Class;
         [Embed(source="/../assets/images/ui/popups/picly/ninaopen.png")] private var ImgForIchi:Class;
         [Embed(source="/../assets/images/ui/popups/it_email/bulldoghell_email.png")] private static var ImgBHEmail:Class;
         [Embed(source="/../assets/images/ui/popups/picly/emmy1.png")] private static var ImgIchiPicly1:Class;
+        [Embed(source="/../assets/images/ui/popups/it_email/lastnight.png")] private static var ImgLastNight:Class;
 
         //euryale popups
         [Embed(source="/../assets/images/ui/popups/eu_email/email1.png")] private static var ImgEuEmail1:Class;
         [Embed(source="/../assets/images/ui/popups/eu_email/emailselfie.png")] private static var ImgEuEmailSelfie:Class;
         [Embed(source="/../assets/images/ui/popups/eu_email/email2.png")] private static var ImgEuEmail2:Class;
         [Embed(source="/../assets/images/ui/popups/eu_picly/dredgeirl.png")] private static var ImgEuDredge:Class;
-        [Embed(source="/../assets/images/ui/popups/eu_files/highschool.png")] private static var ImgEuHighSchool:Class;
         [Embed(source="/../assets/images/ui/popups/picly/ninabday.png")] private static var ImgNinaBday:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_email/email_ichi.png")] private static var ImgEuEmailIchi:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_email/lingerie_email.png")] private static var ImgEuEmailLingerie:Class;
 
         //Hiisi Popups
         [Embed(source="/../assets/images/ui/popups/hi_email/flight_email.png")] private static var ImgHiFlightEmail:Class;
@@ -56,7 +57,7 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/hi_email/class_email.png")] private static var ImgHiClassEmail:Class;
         [Embed(source="/../assets/images/ui/popups/hi_email/prof_email.png")] private static var ImgHiProfEmail:Class;
         [Embed(source="/../assets/images/ui/popups/picly/hiisi.png")] private static var ImgHiPiclyDef:Class;
-        [Embed(source="/../assets/images/ui/popups/ichidownloads.png")] private static var ImgDownloadsFolder:Class;
+        [Embed(source="/../assets/images/ui/popups/selfiedesktop/pictures_folder.png")] private static var ImgPicturesFolder:Class;
 
         public static var _instance:PopUpManager = null;
 
@@ -101,6 +102,7 @@ package com.starmaid.Cibele.management {
         public var reminder_ding:Boolean = false;
 
         //ikuturso
+        public static const LAST_NIGHT:String = "lastnight";
         public static const BULLDOG_HELL:String = "bulldoghell";
         public static const SELFIES_1:String = "selfies1";
         public static const GUIL_1:String = "forum1";
@@ -119,8 +121,10 @@ package com.starmaid.Cibele.management {
         public static const EU_HIGHSCHOOL:String = "euhighschool";
         public static const EU_DOWNLOADS:String = "eudls";
         public static const EU_PICLY_1:String = "eudpicly1";
+        public static const EU_EMAIL_LINGERIE:String = "euemailichi";
 
         //hiisi
+        public static const HI_EMAIL_ICHI:String = "hi email ichi";
         public static const HI_EMAIL_1:String = "hi_flight_email";
         public static const HI_EMAIL_2:String = "hi_class_email";
         public static const HI_PICLY_1:String = "hi_picly_1";
@@ -135,7 +139,7 @@ package com.starmaid.Cibele.management {
             this.programButtons = new Array();
 
             this.popupTags = {};
-            this.popupTags[BUTTON_INTERNET] = EMPTY_INBOX;
+            this.popupTags[BUTTON_INTERNET] = LAST_NIGHT;
             this.popupTags[BUTTON_FILES] = ICHI_DL_2;
             this.popupTags[BUTTON_PHOTO] = FOR_ICHI;
         }
@@ -160,14 +164,23 @@ package com.starmaid.Cibele.management {
                     if(curButton.tag == BUTTON_GAME) {
                         curButton.toggleGame();
                     } else {
-                        curButton.open();
-                        curPopup = curButton.getCurPopup();
-                        this._state = SHOWING_POP_UP;
-                        this.open_popups.push(curPopup);
-                        if(folder_structure[curPopup.tag] != null) {
-                            this.folder_builder.setIconVisibility(this.folder_structure[curPopup.tag], true);
+                        var closedPopup:Boolean = false;
+                        for(var p:Number = 0; p < this.open_popups.length; p++) {
+                            if(this.open_popups[p] == curButton.getCurPopup()) {
+                                this.closePopup(this.open_popups[p], curButton, p);
+                                closedPopup = true;
+                            }
                         }
-                        this.deleteSentPopup(curButton.cur_popup_tag);
+                        if(!closedPopup) {
+                            curButton.open();
+                            curPopup = curButton.getCurPopup();
+                            this._state = SHOWING_POP_UP;
+                            this.open_popups.push(curPopup);
+                            if(folder_structure[curPopup.tag] != null) {
+                                this.folder_builder.setIconVisibility(this.folder_structure[curPopup.tag], true);
+                            }
+                            this.deleteSentPopup(curButton.cur_popup_tag);
+                        }
                     }
                 }
             }
@@ -175,28 +188,33 @@ package com.starmaid.Cibele.management {
             for(i = 0; i < this.open_popups.length; i++) {
                 if(this.open_popups[i] != null) {
                     if(mouseScreenRect.overlaps(this.open_popups[i].x_sprite._getRect())) {
-                        this._state = SHOWING_NOTHING;
-                        if(!this.open_popups[i].was_opened) {
-                            this.open_popups[i].was_opened = true;
-                            FlxG.stage.dispatchEvent(new DataEvent(GameState.EVENT_POPUP_CLOSED, {'tag': this.open_popups[i].tag}));
-                        }
-                        if(folder_structure[this.open_popups[i].tag] != null) {
-                            this.folder_builder.setIconVisibility(this.folder_structure[this.open_popups[i].tag], false);
-                        }
-                        for (var k:Number = 0; k < this.programButtons.length; k++) {
-                            curButton = this.programButtons[k];
-                            if(curButton.getCurPopup() != null) {
-                                if(curButton.getCurPopup() == this.open_popups[i]) {
-                                    curButton.getCurPopup().visible = false;
-                                } else {
-                                    this.open_popups[i].visible = false;
-                                }
-                            }
-                        }
-                        this.open_popups[i] = null;
+                        this.closePopup(this.open_popups[i], curButton, i);
                     }
                 }
             }
+        }
+
+        public function closePopup(cur_popup:PopUp, cur_button:DockButton, popup_index:Number):void {
+            this._state = SHOWING_NOTHING;
+            if(!cur_popup.was_opened) {
+                cur_popup.was_opened = true;
+                FlxG.stage.dispatchEvent(new DataEvent(GameState.EVENT_POPUP_CLOSED, {'tag': cur_popup.tag}));
+            }
+            if(folder_structure[cur_popup.tag] != null) {
+                this.folder_builder.setIconVisibility(this.folder_structure[cur_popup.tag], false);
+            }
+            for (var k:Number = 0; k < this.programButtons.length; k++) {
+                cur_button = this.programButtons[k];
+                if(cur_button.getCurPopup() != null) {
+                    if(cur_button.getCurPopup() == cur_popup) {
+                        cur_button.getCurPopup().visible = false;
+                    } else {
+                        cur_popup.visible = false;
+                    }
+                }
+            }
+            this.open_popups.splice(popup_index, 1);
+            cur_popup = null;
         }
 
         public function deleteSentPopup(tag:String):void {
@@ -251,6 +269,21 @@ package com.starmaid.Cibele.management {
                     this.folder_builder.updateFolderPositions(this.folder_structure[key]);
                 }
             }
+
+            for(var _key:Object in this.folder_structure) {
+                var _val:Object = this.folder_structure[_key];
+                this.folder_builder.overlapXSprite(_val);
+            }
+
+            for(var i:Number = 0; i < this.open_popups.length; i++) {
+                if(this.open_popups[i] != null) {
+                    if((FlxG.state as GameState).cursorOverlaps(this.open_popups[i].x_sprite._getRect(), true)) {
+                        this.open_popups[i].showXHover();
+                    } else {
+                        this.open_popups[i].hideXHover();
+                    }
+                }
+            }
         }
 
         public function sendPopup(key:String):void {
@@ -260,12 +293,12 @@ package com.starmaid.Cibele.management {
                     this.sentPopups[key] = 1;
                     this.reminder_ding = true;
                     GlobalTimer.getInstance().setMark("new popup" + Math.random(), 10*GameSound.MSEC_PER_SEC, this.reminderDing);
+                    break;
                 }
             }
         }
 
         public function reminderDing():void {
-            FlxG.log(this.reminder_ding);
             if(this.reminder_ding) {
                 playNotificationSound();
                 GlobalTimer.getInstance().setMark("new popup" + Math.random(), 10*GameSound.MSEC_PER_SEC, this.reminderDing);
@@ -274,8 +307,8 @@ package com.starmaid.Cibele.management {
 
         public function playNotificationSound():void {
             SoundManager.getInstance().playSound(
-                    SfxNotification, 2*GameSound.MSEC_PER_SEC, null, false, 1, Math.random()
-                );
+                SfxNotification, 2*GameSound.MSEC_PER_SEC, null, false, 1, Math.random()
+            );
         }
 
         public function loadEmoji():void {
@@ -368,7 +401,7 @@ package com.starmaid.Cibele.management {
 
             this.internet_button = new DockButton(
                 this.game_button.x + this.game_button.width + 30,
-                dock.y - 50, [BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_1, EU_EMAIL_SELFIE, EU_EMAIL_2, HI_EMAIL_1, HI_EMAIL_2, HI_EMAIL_3], BUTTON_INTERNET);
+                dock.y - 50, [LAST_NIGHT, BULLDOG_HELL, GUIL_1, ICHI_SELFIE1, EU_EMAIL_LINGERIE, EU_EMAIL_1, EU_EMAIL_SELFIE, EU_EMAIL_2, HI_EMAIL_ICHI, HI_EMAIL_1, HI_EMAIL_2, HI_EMAIL_3], BUTTON_INTERNET);
             this.internet_button.loadGraphic(ImgInternetButton, false, false,
                                              88, 75);
             this.internet_button.visible = true;
@@ -400,11 +433,11 @@ package com.starmaid.Cibele.management {
 
             this.popups = new Dictionary();
             //ikuturso
-            this.popups[EMPTY_INBOX] = new PopUp(ImgEmptyInbox, 631, 356, 0, EMPTY_INBOX);
-            this.popups[EMPTY_INBOX].was_opened = true;
+            this.popups[LAST_NIGHT] = new PopUp(ImgLastNight, 631, 356, 0, LAST_NIGHT);
+            this.popups[LAST_NIGHT].was_opened = true;
             this.popups[FOR_ICHI] = new PopUp(ImgForIchi, 356, 463, 0, FOR_ICHI);
             this.popups[FOR_ICHI].was_opened = true;
-            this.popups[ICHI_DL_2] = new PopUp(ImgIchiDL2, 631, 356, 0, ICHI_DL_2);
+            this.popups[ICHI_DL_2] = new PopUp(ImgPicturesFolder, 631, 356, 0, ICHI_DL_2);
             this.popups[ICHI_DL_2].was_opened = true;
             this.popups[ICHI_PICLY_1] = new PopUp(ImgIchiPicly1, 356, 463, 0, ICHI_PICLY_1);
             this.popups[SELFIES_1] = new PopUp(ImgCibSelfie1, 356, 463, PopUp.CLICK_THROUGH, SELFIES_1);
@@ -414,19 +447,21 @@ package com.starmaid.Cibele.management {
             this.popups[CIB_SELFIE_FOLDER] = new PopUp(ImgCibCamDisconnect, 286, 184, 0, CIB_SELFIE_FOLDER);
 
             //euryale
+            this.popups[EU_EMAIL_LINGERIE] = new PopUp(ImgEuEmailLingerie, 631, 356, 0, EU_EMAIL_LINGERIE);
             this.popups[EU_EMAIL_1] = new PopUp(ImgEuEmail1, 631, 356, 0, EU_EMAIL_1);
             this.popups[EU_EMAIL_SELFIE] = new PopUp(ImgEuEmailSelfie, 631, 356, 0, EU_EMAIL_SELFIE);
             this.popups[EU_EMAIL_2] = new PopUp(ImgEuEmail2, 631, 356, 0, EU_EMAIL_2);
             this.popups[EU_DREDGE] = new PopUp(ImgEuDredge, 356, 463, 0, EU_DREDGE);
-            this.popups[EU_HIGHSCHOOL] = new PopUp(ImgEuHighSchool, 631, 356, 0, EU_HIGHSCHOOL);
-            this.popups[EU_DOWNLOADS] = new PopUp(ImgIchiDL2, 631, 356, 0, EU_DOWNLOADS);
+            this.popups[EU_HIGHSCHOOL] = new PopUp(ImgPicturesFolder, 631, 356, 0, EU_HIGHSCHOOL);
+            this.popups[EU_DOWNLOADS] = new PopUp(ImgPicturesFolder, 631, 356, 0, EU_DOWNLOADS);
             this.popups[EU_PICLY_1] = new PopUp(ImgNinaBday, 356, 463, 0, EU_PICLY_1);
 
             //hiisi
+            this.popups[HI_EMAIL_ICHI] = new PopUp(ImgEuEmailIchi, 631, 356, 0, HI_EMAIL_ICHI);
             this.popups[HI_EMAIL_1] = new PopUp(ImgHiFlightEmail, 631, 356, 0, HI_EMAIL_1);
             this.popups[HI_PICLY_1] = new PopUp(ImgHiPicly1, 356, 463, 0, HI_PICLY_1);
             this.popups[HI_EMAIL_2] = new PopUp(ImgHiClassEmail, 631, 356, 0, HI_EMAIL_2);
-            this.popups[HI_SELFIE_DC] = new PopUp(ImgDownloadsFolder, 631, 356, 0, HI_SELFIE_DC);
+            this.popups[HI_SELFIE_DC] = new PopUp(ImgPicturesFolder, 631, 356, 0, HI_SELFIE_DC);
             this.popups[HI_EMAIL_3] = new PopUp(ImgHiProfEmail, 631, 356, 0, HI_EMAIL_3);
             this.popups[HI_PICLY_DEF] = new PopUp(ImgHiPiclyDef, 356, 463, 0, HI_PICLY_DEF);
 
@@ -438,10 +473,14 @@ package com.starmaid.Cibele.management {
             for (var key:Object in this.popups) {
                 this.elements.push(this.popups[key]);
                 this.elements.push(this.popups[key].x_sprite);
+                this.elements.push(this.popups[key].x_sprite_hover);
                 FlxG.state.add(this.popups[key]);
                 FlxG.state.add(this.popups[key].x_sprite);
+                FlxG.state.add(this.popups[key].x_sprite_hover);
                 if(this.folder_structure[key] != null) {
-                    this.folder_builder.populateFolders(this.folder_structure[key], this.elements, this.popups[key]);
+                    this.folder_builder.populateFolders(this.folder_structure[key],
+                                                        this.elements,
+                                                        this.popups[key]);
                 }
             }
 

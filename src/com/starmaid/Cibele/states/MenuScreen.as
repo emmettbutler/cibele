@@ -9,6 +9,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.states.EuryaleDesktop;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.DataEvent;
+    import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameSound;
@@ -21,10 +22,7 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/music/bgm_menu_loop.mp3")] private var MenuBGMLoop:Class;
         [Embed(source="/../assets/images/ui/Crystal-icon-large.png")] private var ImgXtal:Class;
 
-        public var timeFrame:Number = 0;
-        public var timer:Number = 0;
         public var debugText:FlxText;
-
         public var bg:GameObject;
         public var login:BouncingText;
         public var quit:BouncingText;
@@ -37,6 +35,7 @@ package com.starmaid.Cibele.states {
         public var login_rect:FlxRect;
         public var quit_rect:FlxRect;
         public var mouse_rect:FlxRect;
+        private var has_initiated_switch:Boolean = false;
 
         public var crystal_icon:GameObject;
 
@@ -49,13 +48,14 @@ package com.starmaid.Cibele.states {
         public function MenuScreen() {
             super(true, true, false);
             this.showEmoji = false;
+            this.enable_fade = true;
         }
 
         override public function create():void {
             PopUpManager.GAME_ACTIVE = true;
             super.create();
 
-            this.use_loading_screen = false;
+            this.use_loading_screen = true;
             FlxG.bgColor = 0x00000000;
             var _screen:ScreenManager = ScreenManager.getInstance();
 
@@ -109,11 +109,15 @@ package com.starmaid.Cibele.states {
             char_select.loadGraphic(ImgChar,false,false,400,494);
             char_select.x -= char_select.width/2;
             char_select.y -= char_select.height/2;
+            char_select.visible = false;
+            add(char_select);
 
             login = new BouncingText(char_select.x + 110,
                                      char_select.y + char_select.height + 50,
                                      170, "> login <");
             login.setFormat("NexaBold-Regular", 46, 0xff709daa);
+            add(login);
+            login.visible = false;
             login_rect = new FlxRect(login.x, login.y, 100, 30)
 
             char_info = new FlxText(char_select.x,
@@ -121,24 +125,28 @@ package com.starmaid.Cibele.states {
                                     _screen.screenWidth,
                                     "Name: Cibele | Server: Medusa");
             char_info.setFormat("NexaBold-Regular", 26, 0xffce8494);
+            add(char_info);
+            char_info.visible = false;
 
             mouse_rect = new FlxRect(FlxG.mouse.x,FlxG.mouse.y,1,1);
 
             debugText = new FlxText(0,0,100,"");
             add(debugText);
 
-            //todo this should probs not trigger every time if there's other music playing
-            function _musicCallback():void {
-                if(FlxG.state is MenuScreen) {
-                    SoundManager.getInstance().playSound(MenuBGMLoop, 0, null,
-                        true, 1, GameSound.BGM, MenuScreen.BGM, false, false, false, true);
-                }
-            }
-            SoundManager.getInstance().playSound(MenuBGMIntro,
-                7.9*GameSound.MSEC_PER_SEC, _musicCallback, false, 1,
-                GameSound.SFX, MenuScreen.BGM, false, false, false, true);
-
             super.postCreate();
+        }
+
+        override public function loadingScreenEndCallback():void {
+            SoundManager.getInstance().playSound(MenuBGMIntro,
+                    7.9*GameSound.MSEC_PER_SEC, musicCallback, false, 1,
+                    GameSound.SFX, MenuScreen.BGM, false, false, false, true);
+        }
+
+        public function musicCallback():void {
+            if (FlxG.state is MenuScreen && has_initiated_switch == false) {
+                SoundManager.getInstance().playSound(MenuBGMLoop, 0, null,
+                    true, 1, GameSound.BGM, MenuScreen.BGM, false, false, false, true);
+            }
         }
 
         override public function update():void{
@@ -170,24 +178,54 @@ package com.starmaid.Cibele.states {
 
             mouse_rect.x = FlxG.mouse.x;
             mouse_rect.y = FlxG.mouse.y;
-            if(FlxG.mouse.justPressed()){
-                if(mouse_rect.overlaps(play_game_rect) && !play_screen){
-                    ScreenManager.getInstance().setupCamera(null, 1);
-                    play_game.kill();
-                    quit.kill();
-                    play_game_rect.x = login.x;
-                    play_game_rect.y = login.y;
-                    play_game_rect.width = 300;
-                    play_game_rect.height = 200;
-                    add(char_select);
-                    add(login);
-                    add(char_info);
-                    play_screen = true;
-                    login.visible = true;
-                    title_text.visible = false;
-                    crystal_icon.visible = false;
+
+            if (this.fading) {
+                if(SoundManager.getInstance().getSoundByName(MenuScreen.BGM) != null) {
+                    // this fade needs to be quite fast. if it's too slow,
+                    // it's possible that it will be abruptly stopped by other
+                    // logic before it's fully faded
+                    SoundManager.getInstance().getSoundByName(MenuScreen.BGM).fadeOutSound(.1);
                 }
-                if (mouse_rect.overlaps(play_game_rect) && play_screen){
+            }
+        }
+
+        override public function clickCallback(screenPos:DHPoint,
+                                               worldPos:DHPoint):void {
+            super.clickCallback(screenPos, worldPos);
+            if(mouse_rect.overlaps(play_game_rect) && !play_screen){
+                ScreenManager.getInstance().setupCamera(null, 1);
+                play_game.kill();
+                quit.kill();
+                play_game_rect.x = login.x;
+                play_game_rect.y = login.y;
+                play_game_rect.width = 300;
+                play_game_rect.height = 200;
+                char_select.visible = true;
+                char_info.visible = true;
+                play_screen = true;
+                login.visible = true;
+                title_text.visible = false;
+                crystal_icon.visible = false;
+            }
+            if (this.has_initiated_switch == false && mouse_rect.overlaps(play_game_rect) && play_screen){
+                this.has_initiated_switch = true;
+                this.startStateSwitch();
+            }
+            if (this.has_initiated_switch == false && mouse_rect.overlaps(quit_rect) && !play_screen){
+                PopUpManager.GAME_ACTIVE = false;
+                if(ScreenManager.getInstance().levelTracker.it()) {
+                    FlxG.switchState(new IkuTursoDesktop());
+                } else if(ScreenManager.getInstance().levelTracker.eu()) {
+                    FlxG.switchState(new EuryaleDesktop());
+                } else if(ScreenManager.getInstance().levelTracker.hi()) {
+                    FlxG.switchState(new HiisiDesktop());
+                }
+            }
+        }
+
+        public function startStateSwitch():void {
+            this.fadeOut(
+                function():void {
                     if(ScreenManager.getInstance().levelTracker.it()) {
                         FlxG.switchState(new IkuTursoHallway());
                     } else if(ScreenManager.getInstance().levelTracker.eu()) {
@@ -195,28 +233,9 @@ package com.starmaid.Cibele.states {
                     } else if(ScreenManager.getInstance().levelTracker.hi()) {
                         FlxG.switchState(new HiisiHallway());
                     }
-                }
-                if (mouse_rect.overlaps(quit_rect) && !play_screen){
-                    PopUpManager.GAME_ACTIVE = false;
-                    if(ScreenManager.getInstance().levelTracker.it()) {
-                        FlxG.switchState(new IkuTursoDesktop());
-                    } else if(ScreenManager.getInstance().levelTracker.eu()) {
-                        FlxG.switchState(new EuryaleDesktop());
-                    } else if(ScreenManager.getInstance().levelTracker.hi()) {
-                        FlxG.switchState(new HiisiDesktop());
-                    }
-                }
-            }
-
-            timeFrame++;
-            debugText.x = FlxG.mouse.x;
-            debugText.y = FlxG.mouse.y;
-
-            //debugText.text = "MenuScreen";
-
-            if(timeFrame%30 == 0){
-                timer++;
-            }
+                },
+                1 * GameSound.MSEC_PER_SEC
+            );
         }
     }
 }

@@ -5,10 +5,13 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.Emote;
+    import com.starmaid.Cibele.entities.FallingObject;
+    import com.starmaid.Cibele.entities.Mist;
     import com.starmaid.Cibele.states.BlankScreen;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameState;
 
     import org.flixel.*;
@@ -31,16 +34,30 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/voiceover/voc_euryale_iwish.mp3")] private var Convo5_1:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_canicallyou.mp3")] private var Convo5_2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_cibyeah.mp3")] private var Convo5_3:Class;
+        [Embed(source="/../assets/audio/music/vid_phonecall.mp3")] private var VidBGMLoop:Class;
+        [Embed(source="/../assets/images/worlds/sparkles_1.png")] private var ImgSparkle1:Class;
+        [Embed(source="/../assets/images/worlds/sparkles_2.png")] private var ImgSparkle2:Class;
+        [Embed(source="/../assets/images/worlds/sparkles_3.png")] private var ImgSparkle3:Class;
+        [Embed(source="/../assets/images/worlds/droplet.png")] private var ImgDroplet1:Class;
+        [Embed(source="/../assets/images/worlds/droplet_sparkle.png")] private var ImgDroplet2:Class;
 
         public static var BGM:String = "euryale bgm loop";
         public static const CONVO_1_HALL:String = "trigigioji";
         public static const CONVO_1_2_HALL:String = "spiddlydiddlydee";
         public static const SHOW_FIRST_POPUP:String = "pennisuyuyi";
 
+        public static const SPARKLES_COUNT:Number = 45;
+        public static const DROPLETS_COUNT:Number = 3;
+        public static const MIST_COUNT:Number = 30;
+
+        private var sparkles:Array, droplets:Array, mists:Array;
+
         public function Euryale() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_EU;
 
-            this.bitDialogueLock = true;
+            this.bitDialogueLock = false;
+            this.load_screen_text = "Euryale";
+            this.teamPowerBossThresholds = [6, 15];
             PopUpManager.GAME_ACTIVE = true;
 
             GlobalTimer.getInstance().deleteMark(BOSS_MARK);
@@ -63,7 +80,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showSelfiePostEmail
+                    "delay": 0, "endfn": this.showSelfiePostEmail, "min_team_power": 10
                 },
                 {
                     "audio": Convo3, "len": 28*GameSound.MSEC_PER_SEC,
@@ -71,7 +88,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 8*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "delay": 0, "min_team_power": 12
                 },
                 {
                     "audio": Convo3_2, "len": 44*GameSound.MSEC_PER_SEC,
@@ -79,7 +96,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.showFriendEmail2
+                    "delay": 0, "endfn": this.showFriendEmail2, "min_team_power": 15
                 },
                 {
                     "audio": Convo4, "len": 11*GameSound.MSEC_PER_SEC,
@@ -87,7 +104,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "delay": 0, "min_team_power": 17
                 },
                 {
                     "audio": Convo4_2, "len": 74*GameSound.MSEC_PER_SEC,
@@ -99,27 +116,27 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": showDredgeSelfie
+                    "delay": 0, "endfn": showDredgeSelfie, "min_team_power": 25
                 },
                 {
                     "audio": Convo5, "len": 54*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": null, "len": 6*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": startBoss, "ends_with_popup": false
-                },
-                {
-                    "audio": null, "len": 45*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": killBoss, "ends_with_popup": false
-                },
-                {
-                    "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "min_team_power": 30
                 },
                 {
                     "audio": Convo5_1, "len": 42*GameSound.MSEC_PER_SEC,
                     "delay": 0
+                },
+                {
+                    "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "boss_gate": true
+                },
+                {
+                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "ends_with_popup": false
                 },
                 {
                     "audio": Convo5_2, "len": 5*GameSound.MSEC_PER_SEC,
@@ -127,7 +144,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": Convo5_3, "len": 4*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "delay": 0, "endfn": this.playEndFilm
                 }
             ];
 
@@ -139,6 +156,7 @@ package com.starmaid.Cibele.states {
             this.playerStartPos = new DHPoint(3427, 7657);
             this.colliderScaleFactor = 8;
             this.enemyDirMultiplier = 2;
+            this.maxTeamPower = 30;
         }
 
         override public function create():void {
@@ -158,30 +176,108 @@ package com.starmaid.Cibele.states {
 
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
                 SoundManager.getInstance().playSound(
-                        Convo1, 12*GameSound.MSEC_PER_SEC, firstConvoPartTwo, false, 1, GameSound.VOCAL,
-                        CONVO_1_HALL
-                    );
+                    Convo1,
+                    GameState.SHORT_DIALOGUE ? 1 : 12*GameSound.MSEC_PER_SEC,
+                    firstConvoPartTwo, false, 1, GameSound.VOCAL,
+                    CONVO_1_HALL
+                );
+            }
+        }
+
+        override public function addEnvironmentDetails():void {
+            this.setupSparkles();
+        }
+
+        override public function addScreenspaceDetails():void {
+            this.setupDroplets();
+            this.setupMist();
+        }
+
+        private function setupMist():void {
+            this.mists = new Array();
+            for (var i:int = 0; i < MIST_COUNT; i++) {
+                this.mists.push(new Mist());
+            }
+        }
+
+        private function setupDroplets():void {
+            this.droplets = new Array();
+            var droplet:GameObject;
+            var dropletDimensions:DHPoint = new DHPoint(90, 216);
+            var imgs:Array = [ImgDroplet1, ImgDroplet2];
+            var img:Class;
+            for (var i:int = 0; i < DROPLETS_COUNT; i++) {
+                droplet = new FallingObject(new DHPoint(
+                    Math.random() * (ScreenManager.getInstance().screenWidth - dropletDimensions.x),
+                    -1 * dropletDimensions.y
+                ));
+                img = imgs[Math.floor(Math.random() * imgs.length)];
+                droplet.loadGraphic(img, false, false,
+                                    dropletDimensions.x, dropletDimensions.y);
+                droplet.addAnimation("run",
+                    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], 13, true);
+                droplet.scale.x = droplet.scale.y = .5 + Math.random() * .2;
+                FlxG.state.add(droplet);
+                droplet.play("run");
+                this.droplets.push(droplet);
+            }
+        }
+
+        private function setupSparkles():void {
+            this.sparkles = new Array();
+            var sparkle:GameObject;
+            var sparkleDimensions:DHPoint;
+            var sparkleImages:Array = [[ImgSparkle1, 10, new DHPoint(100, 100)],
+                                       [ImgSparkle2, 9, new DHPoint(150, 150)],
+                                       [ImgSparkle3, 13, new DHPoint(150, 150)]];
+            var sparkleConfig:Array;
+            var frames:Array, idx:Number;
+            for (var i:int = 0; i < SPARKLES_COUNT; i++) {
+                frames = new Array();
+                idx = Math.floor(Math.random() * sparkleImages.length);
+                sparkleConfig = sparkleImages[idx];
+                sparkleDimensions = sparkleConfig[2];
+                for (var k:int = 0; k < sparkleConfig[1]; k++) {
+                    frames.push(k);
                 }
+                for (k = 0; k < 10; k++) {
+                    frames.push(sparkleConfig[1]);
+                }
+                sparkle = new GameObject(new DHPoint(
+                    Math.random() * (this.levelDimensions.x - sparkleDimensions.x),
+                    Math.random() * (this.levelDimensions.y - sparkleDimensions.y)
+                ));
+                sparkle.loadGraphic(sparkleConfig[0],
+                                    false, false,
+                                    sparkleDimensions.x, sparkleDimensions.y);
+                sparkle.addAnimation("run", frames, 13, true);
+                sparkle.zSorted = true;
+                sparkle.basePos = new DHPoint(sparkle.x, sparkle.y + sparkle.height);
+                FlxG.state.add(sparkle);
+                sparkle.play("run");
+                this.sparkles.push(sparkle);
+            }
         }
 
         override public function loadingScreenEndCallback():void {
             super.loadingScreenEndCallback();
-            this.bitDialogueLock = false;
         }
 
         public function firstConvoPartTwo():void {
             SoundManager.getInstance().playSound(
-                    Convo1_2, 33*GameSound.MSEC_PER_SEC, this.delayShowFriendEmail, false, 1, GameSound.VOCAL,
+                    Convo1_2, GameState.SHORT_DIALOGUE ? 1 : 33*GameSound.MSEC_PER_SEC, this.delayShowFriendEmail, false, 1, GameSound.VOCAL,
                     CONVO_1_2_HALL
                 );
         }
 
         public function delayShowFriendEmail():void {
-            GlobalTimer.getInstance().setMark(SHOW_FIRST_POPUP, 10*GameSound.MSEC_PER_SEC, this.showFriendEmail);
+            GlobalTimer.getInstance().setMark(SHOW_FIRST_POPUP, GameState.SHORT_DIALOGUE ? 1 : 10*GameSound.MSEC_PER_SEC, this.showFriendEmail);
         }
 
         public function showFriendEmail():void {
-            PopUpManager.getInstance().sendPopup(PopUpManager.EU_EMAIL_1);
+            this.doIfMinTeamPower(function():void {
+                PopUpManager.getInstance().sendPopup(PopUpManager.EU_EMAIL_1);
+            }, 1);
         }
 
         public function showSelfiePostEmail():void {
@@ -190,21 +286,15 @@ package com.starmaid.Cibele.states {
 
         public function showFriendEmail2():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.EU_EMAIL_2);
+            this.bitDialogueLock = true;
         }
 
         public function showDredgeSelfie():void {
             PopUpManager.getInstance().sendPopup(PopUpManager.EU_DREDGE);
         }
 
-        public function startBoss():void {
-            GlobalTimer.getInstance().setMark(BOSS_MARK, 1*GameSound.MSEC_PER_SEC);
-            this.bitDialogueLock = true;
-        }
-
-        public function killBoss():void {
-            if(this.boss != null) {
-                this.boss.die();
-            }
+        override public function startBoss():void {
+            super.startBoss();
         }
 
         override public function update():void{
@@ -225,48 +315,50 @@ package com.starmaid.Cibele.states {
 
         override public function playTimedEmotes(convoNum:Number):void {
             if(convoNum == 0) {
-                GlobalTimer.getInstance().setMark("2nd Convo Emote", 29*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
+                GlobalTimer.getInstance().setMark("2nd Convo Emote", 31*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
             }
             if(convoNum == 1) {
-                GlobalTimer.getInstance().setMark("3rd Convo Emote", 15*GameSound.MSEC_PER_SEC, this.ichiSadEmote);
+                GlobalTimer.getInstance().setMark("3rd Convo Emote", 17*GameSound.MSEC_PER_SEC, this.ichiSadEmote);
             }
             if(convoNum == 2) {
-                GlobalTimer.getInstance().setMark("4th Convo Emote", 9*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
+                GlobalTimer.getInstance().setMark("4th Convo Emote", 11*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
             }
             if(convoNum == 5) {
-                GlobalTimer.getInstance().setMark("5th Convo Emote", 20*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
+                GlobalTimer.getInstance().setMark("5th Convo Emote", 22*GameSound.MSEC_PER_SEC, this.ichiHappyEmote);
             }
-        }
-
-        override public function finalConvoDone():void {
-            GlobalTimer.getInstance().setMark("eu end", 1*GameSound.MSEC_PER_SEC, this.playEndFilm);
         }
 
         public function playEndFilm():void {
-            //SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
-                    //false, 1, GameSound.BGM);
-            FlxG.switchState(
-                new BlankScreen(4*GameSound.MSEC_PER_SEC,
-                    function():void {
-                        FlxG.switchState(new PlayVideoState(
-                            "/../assets/video/Phone Talk_v1.mp4",
+            this.fadeOut(
+                function():void {
+                    FlxG.switchState(
+                        new BlankScreen(4*GameSound.MSEC_PER_SEC,
                             function():void {
-                                PopUpManager.GAME_ACTIVE = false;
-                                FlxG.switchState(new BlankScreen(
-                                    4*GameSound.MSEC_PER_SEC,
+                                SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
+                                    false, 1, GameSound.BGM);
+                                FlxG.switchState(new PlayVideoState(
+                                    "/../assets/video/Phone Talk_v1.mp4",
                                     function():void {
-                                        FlxG.switchState(new TextScreen(
-                                            5*GameSound.MSEC_PER_SEC,
+                                        PopUpManager.GAME_ACTIVE = false;
+                                        FlxG.switchState(new BlankScreen(
+                                            11*GameSound.MSEC_PER_SEC,
                                             function():void {
-                                                FlxG.switchState(new HiisiDesktop());
-                                            }, "August 10th, 2009"
+                                                FlxG.switchState(new TextScreen(
+                                                    5*GameSound.MSEC_PER_SEC,
+                                                    function():void {
+                                                        FlxG.switchState(new HiisiDesktop());
+                                                    }, "August 10th, 2009"
+                                                ));
+                                            }
                                         ));
-                                    }
+                                    }, null
                                 ));
-                            }, null
-                        ));
-                    }
-                )
+                            }
+                        )
+                    );
+                },
+                1 * GameSound.MSEC_PER_SEC,
+                Euryale.BGM
             );
         }
     }

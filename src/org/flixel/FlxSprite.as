@@ -223,6 +223,10 @@ package org.flixel
 			_flashRect = null;
 			_flashRect2 = null;
 			_flashPointZero = null;
+            if (_pixels != null) {
+                _pixels.dispose();
+            }
+            _pixels = null;
 			offset = null;
 			origin = null;
 			scale = null;

@@ -10,7 +10,7 @@ package com.starmaid.Cibele.utils {
 
     public class MapNodeContainer
     {
-        public var nodes:Array;
+        private var nodes:Array, sortedNodes:Array;
         public var nodesHash:Object;
         public var path:Path;
         public var player:Player;
@@ -20,6 +20,7 @@ package com.starmaid.Cibele.utils {
 
         public function MapNodeContainer(p:Path, player:Player) {
             this.nodes = new Array();
+            this.sortedNodes = new Array();
             this.nodesHash = {};
             this.path = p;
             this.player = player;
@@ -42,8 +43,20 @@ package com.starmaid.Cibele.utils {
             return node;
         }
 
+        public function getNode(i:int):MapNode {
+            return this.nodes[i];
+        }
+
+        public function _length():Number {
+            return this.nodes.length;
+        }
+
         public function hasNodes():Boolean {
             return this.nodes.length != 0;
+        }
+
+        public function getRandomNode():MapNode {
+            return this.nodes[Math.floor(Math.random() * (this.nodes.length))];
         }
 
         public function clearNodes():void {
@@ -54,46 +67,22 @@ package com.starmaid.Cibele.utils {
             this.nodes.length = 0;
         }
 
-        public function update():void {
-        }
-
-        public function getClosestGenericNode(pos:DHPoint):MapNode {
-            var closestPathNode:MapNode = this.path.getClosestNode(pos);
-            var currentClosestNode:MapNode = this.nodes[0];
-            var curNode:MapNode, curDisp:Number, curClosestDisp:Number;
-            if (currentClosestNode == null) {
-                return null;
-            }
-            curClosestDisp = pos.sub(currentClosestNode.pos)._length();
-            for(var i:Number = 0; i < this.nodes.length; i++){
-                curNode = this.nodes[i];
-                curDisp = pos.sub(curNode.pos)._length();
-                if(curDisp < curClosestDisp)
-                {
-                    currentClosestNode = curNode;
-                    curClosestDisp = pos.sub(currentClosestNode.pos)._length();
-                }
-            }
-            if(this.closestPathNode != null && pos.sub(closestPathNode.pos)._length() < curClosestDisp){
-                return closestPathNode;
-            } else {
-                return currentClosestNode;
-            }
-        }
-
         public function getNClosestGenericNodes(n:Number, pos:DHPoint):Array {
             var checkedGroup:Array = new Array();
             var curNode:MapNode, disp:Number;
+            this.sortedNodes.length = 0;
             for (var i:Number = 0; i < this.nodes.length; i++) {
                 curNode = this.nodes[i];
                 disp = curNode.pos.sub(pos)._length();
-                if (disp < 700) {
-                    checkedGroup.push({"node": curNode, "disp": disp});
+                this.sortedNodes.push({"node": curNode, "disp": disp});
+            }
+            this.sortedNodes.sort(sortByDisp);
+            for (i = 0; i < this.sortedNodes.length; i++) {
+                if (checkedGroup.length < n) {
+                    checkedGroup.push(this.sortedNodes[i]);
                 }
             }
-
             checkedGroup.sort(sortByDisp);
-            checkedGroup.length = n;
             return checkedGroup;
         }
 
@@ -110,36 +99,26 @@ package com.starmaid.Cibele.utils {
             return 0;
         }
 
-        public function getClosestNode(pos:DHPoint, exclude:MapNode=null, on_screen:Boolean = true):MapNode {
-            this.closestPathNode = this.path.getClosestNode(pos);
+        public function getClosestNode(pos:DHPoint, onscreen_allowed:Boolean=true):MapNode {
+            this.closestPathNode = this.path.getClosestNode(pos, onscreen_allowed);
             currentClosestNode = this.nodes[0];
             var curNode:MapNode;
             for(var i:Number = 0; i < this.nodes.length; i++){
                 curNode = this.nodes[i];
-                if(on_screen) {
-                    if(exclude != null && curNode != exclude &&
-                       pos.sub(curNode.pos)._length() <
-                       pos.sub(currentClosestNode.pos)._length())
+                var screenPos:DHPoint = new DHPoint(0, 0);
+                curNode.getScreenXY(screenPos);
+                if(this.path.shouldCheckNodePos(screenPos, onscreen_allowed)) {
+                    if(pos.sub(curNode.pos)._length() <
+                        pos.sub(currentClosestNode.pos)._length())
                     {
                         this.currentClosestNode = curNode;
                     }
-                } else {
-                    var screenPos:DHPoint = new DHPoint(0, 0);
-                    curNode.getScreenXY(screenPos);
-                    if((screenPos.x < ScreenManager.getInstance().screenWidth &&
-                       screenPos.x > 0 && screenPos.y > 0 &&
-                       screenPos.y < ScreenManager.getInstance().screenHeight) == false)
-                    {
-                        if(pos.sub(curNode.pos)._length() <
-                           pos.sub(currentClosestNode.pos)._length())
-                        {
-                            this.currentClosestNode = curNode;
-                        }
-                    }
                 }
             }
-            if(this.closestPathNode != null && pos.sub(this.closestPathNode.pos)._length() <
-                pos.sub(this.currentClosestNode.pos)._length() && on_screen){
+            if(this.closestPathNode != null &&
+                pos.sub(this.closestPathNode.pos)._length() <
+                pos.sub(this.currentClosestNode.pos)._length())
+            {
                 return this.closestPathNode;
             } else {
                 return this.currentClosestNode;

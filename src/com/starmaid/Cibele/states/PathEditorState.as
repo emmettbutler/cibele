@@ -2,18 +2,25 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.utils.EnemyGroup;
     import com.starmaid.Cibele.utils.MapNodeContainer;
+    import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.entities.PathFollower;
+    import com.starmaid.Cibele.entities.TeamPowerBar;
     import com.starmaid.Cibele.entities.IkuTursoBoss;
     import com.starmaid.Cibele.entities.EuryaleBoss;
+    import com.starmaid.Cibele.entities.HiisiBoss;
     import com.starmaid.Cibele.entities.BossEnemy;
     import com.starmaid.Cibele.entities.MapNode;
+    import com.starmaid.Cibele.entities.PartyMember;
+    import com.starmaid.Cibele.entities.TeamPowerParticleTrail;
     import com.starmaid.Cibele.management.Path;
     import com.starmaid.Cibele.entities.PathNode;
     import com.starmaid.Cibele.entities.SmallEnemy;
     import com.starmaid.Cibele.entities.IkuTursoEnemy;
     import com.starmaid.Cibele.entities.EuryaleEnemy;
+    import com.starmaid.Cibele.entities.HiisiEnemy;
     import com.starmaid.Cibele.entities.Enemy;
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameState;
 
     import org.flixel.*;
@@ -25,17 +32,25 @@ package com.starmaid.Cibele.states {
     import flash.net.FileReference;
 
     public class PathEditorState extends PlayerState {
+        [Embed(source="/../assets/images/misc/ichi_team.png")] private var ImgParticleRed:Class;
+        [Embed(source="/../assets/images/misc/cibele_team.png")] private var ImgParticleBlue:Class;
+
         public var pathWalker:PathFollower;
         public var _path:Path;
         public var _mapnodes:MapNodeContainer;
         public var enemies:EnemyGroup;
         public var boss:BossEnemy;
+        public var boss_gate:Boolean = false;
         public var showNodes:Boolean;
         public var filename:String, graph_filename:String;
         public var dataFile:File, backupFile:File, writeFile:File,
                    graphDataFile:File;
         public var shouldAddEnemies:Boolean = true;
         public var readExistingGraph:Boolean = true;
+        public var teamPower:Number = 0, maxTeamPower:Number = 60;
+        public var teamPowerBar:TeamPowerBar, animatingTeamPower:Boolean = false;
+        private var teamPowerAnimationObjects:Array, teamPowerDelta:Number = 0;
+        protected var teamPowerBossThresholds:Array;
 
         public static const MODE_READONLY:Number = 0;
         public static const MODE_EDIT:Number = 1;
@@ -43,10 +58,10 @@ package com.starmaid.Cibele.states {
 
         override public function create():void {
             super.create();
+            this.addEventListener(GameState.EVENT_ENEMY_DIED, this.enemyDied);
         }
 
-        override public function postCreate():void
-        {
+        override public function postCreate():void {
             if (this.filename != null) {
                 this.dataFile = File.applicationDirectory.resolvePath(
                     "assets/" + this.filename);
@@ -89,6 +104,7 @@ package com.starmaid.Cibele.states {
             if (this.readExistingGraph) {
                 this.readGraphIn();
             }
+            this.postPathRead();
 
             if (this._path.hasNodes()) {
                 this.pathWalker.moveToNextPathNode();
@@ -108,16 +124,74 @@ package com.starmaid.Cibele.states {
                 this.enemies.get_(i).addVisibleObjects();
             }
 
+            this.teamPowerBar = new TeamPowerBar(this.maxTeamPower);
+            this.teamPowerBar.setPoints(this.teamPower);
+
+            this.addScreenspaceDetails();
+
             super.postCreate();
 
             add(pathWalker.debugText);
         }
 
+        public function postPathRead():void { }
+        public function addScreenspaceDetails():void { }
+
+        public function buildTeamPowerAnimationObjects():void {
+            this.teamPowerAnimationObjects = new Array();
+            var cur:Object, trail:TeamPowerParticleTrail, spr:GameObject,
+                partyMember:PartyMember;
+            for (var i:int = 0; i < 2; i++) {
+                partyMember = (i == 0 ? this.player : this.pathWalker);
+                spr = new GameObject(new DHPoint(0, 0));
+                spr.loadGraphic(
+                    (partyMember == this.player ? ImgParticleBlue : ImgParticleRed),
+                    true, false, 30, 50);
+                spr.addAnimation("play", [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14], 12, true);
+                spr.play("play");
+                spr.visible = false;
+                spr.scrollFactor = new DHPoint(0, 0);
+                trail = new TeamPowerParticleTrail(spr, partyMember);
+                cur = {'spr': spr, 'trail': trail, 'partymember': partyMember};
+                this.teamPowerAnimationObjects.push(cur);
+                FlxG.state.add(spr);
+            }
+        }
+
+        public function updateTeamPowerAnimation():void {
+            var cur:Object, curDisp:DHPoint,
+                curScreenPos:DHPoint = new DHPoint(0, 0),
+                finishedCount:Number = 0;
+            for (var i:int = 0; i < this.teamPowerAnimationObjects.length; i++) {
+                cur = this.teamPowerAnimationObjects[i];
+                cur['spr'].getScreenXY(curScreenPos);
+                curDisp = curScreenPos.sub(this.teamPowerBar.getPos());
+                cur['spr'].dir = curDisp.normalized().reverse().mulScl(10);
+                cur['trail'].update();
+                if (cur['spr'].pos.sub(this.teamPowerBar.getPos())._length() < 10) {
+                    cur['spr'].visible = false;
+                    cur['spr'].dir = new DHPoint(0, 0);
+                    finishedCount += 1;
+                }
+            }
+
+            if (finishedCount >= this.teamPowerAnimationObjects.length) {
+                this.animatingTeamPower = false;
+                this.animatingTeamPowerEndCallback();
+            }
+        }
+
         override public function update():void {
             super.update();
 
-            this._mapnodes.update();
             this._path.update();
+
+            this.teamPowerBar.setPos(null);
+            this.teamPowerBar.update();
+            this.teamPowerBar.setHighlight(this.teamPowerIsActive());
+            if (this.animatingTeamPower) {
+                this.updateTeamPowerAnimation();
+            }
 
             if (FlxG.mouse.justReleased()) {
                 if (FlxG.keys["A"]) {
@@ -134,9 +208,11 @@ package com.starmaid.Cibele.states {
                     add(en);
                     this.enemies.addEnemy(en);
                 } else if (FlxG.keys["Q"]) {
+                    /*
                     var boss:BossEnemy = new (this.getBossClass())(new DHPoint(FlxG.mouse.x,FlxG.mouse.y));
                     add(boss);
                     this.enemies.addEnemy(boss);
+                    */
                 }
             }
 
@@ -186,8 +262,8 @@ package com.starmaid.Cibele.states {
                            "\n";
             }
 
-            for (i = 0; i < this._mapnodes.nodes.length; i++) {
-                curMapNode = this._mapnodes.nodes[i];
+            for (i = 0; i < this._mapnodes._length(); i++) {
+                curMapNode = this._mapnodes.getNode(i);
                 fString += "mapnode " + curMapNode.pos.x + "x" +
                            curMapNode.pos.y + "\n";
             }
@@ -208,8 +284,8 @@ package com.starmaid.Cibele.states {
             for (var k:int = 0; k < this._mapnodes.path.nodes.length; k++) {
                 allNodes.push(this._mapnodes.path.nodes[k]);
             }
-            for (var h:int = 0; h < this._mapnodes.nodes.length; h++) {
-                allNodes.push(this._mapnodes.nodes[h]);
+            for (var h:int = 0; h < this._mapnodes._length(); h++) {
+                allNodes.push(this._mapnodes.getNode(h));
             }
             return allNodes;
         }
@@ -302,11 +378,13 @@ package com.starmaid.Cibele.states {
                     add(en);
                     this.enemies.addEnemy(en);
                 } else if (prefix_.indexOf("boss") == 0 && this.shouldAddEnemies) {
+                    /*
                     coords = line[1].split("x");
                     var bo:BossEnemy = new (this.getBossClass())(
                         new DHPoint(Number(coords[0]), Number(coords[1])));
                     add(bo);
                     this.enemies.addEnemy(bo);
+                    */
                 }
             }
         }
@@ -316,9 +394,9 @@ package com.starmaid.Cibele.states {
                 return IkuTursoEnemy;
             } else if (this is Euryale) {
                 return EuryaleEnemy;
-            } /*else if (this is Hiisi) {
+            } else if (this is Hiisi) {
                 return HiisiEnemy;
-            }*/
+            }
             return IkuTursoEnemy;
         }
 
@@ -327,10 +405,67 @@ package com.starmaid.Cibele.states {
                 return IkuTursoBoss;
             } else if (this is Euryale) {
                 return EuryaleBoss;
-            } /*else if (this is Hiisi) {
+            } else if (this is Hiisi) {
                 return HiisiBoss;
-            }*/
+            }
             return IkuTursoBoss;
+        }
+
+        private function increaseTeamPower(amt:Number):void {
+            this.animatingTeamPower = true;
+            this.teamPowerDelta = amt;
+            this.teamPowerAnimationObjects[0]['spr'].setPos(this.player.getScreenPos());
+            this.teamPowerAnimationObjects[0]['spr'].visible = true;
+            this.teamPowerAnimationObjects[1]['spr'].setPos(this.pathWalker.getScreenPos());
+            this.teamPowerAnimationObjects[1]['spr'].visible = true;
+        }
+
+        private function animatingTeamPowerEndCallback():void {
+            this.teamPower += this.teamPowerDelta;
+            this.teamPowerBar.setPoints(this.teamPower);
+            this.player.showTeamPowerDelta(this.teamPowerDelta);
+            this.pathWalker.showTeamPowerDelta(this.teamPowerDelta);
+            this.teamPowerDelta = 0;
+            if (ScreenManager.getInstance().DEBUG) {
+                trace("increased team power to " + this.teamPower);
+            }
+            FlxG.stage.dispatchEvent(
+                new DataEvent(GameState.EVENT_TEAM_POWER_INCREASED,
+                              {'team_power': this.teamPower}));
+        }
+
+        private function teamPowerIsActive():Boolean {
+            var partyMembersInRange:Boolean = this.pathWalker.isOnscreen();
+            var playerTargeting:Boolean = this.player.inAttack();
+            return partyMembersInRange && playerTargeting;
+        }
+
+        private function enemyDied(event:DataEvent):void {
+            var partyMembersInRange:Boolean = this.pathWalker.isOnscreen();
+            var playerTargeting:Boolean = this.player.inAttack();
+            var damagedBy:PartyMember = event.userData['damaged_by'];
+            if (damagedBy != null) {
+                if (ScreenManager.getInstance().DEBUG) {
+                    trace("an enemy was killed by " +
+                        event.userData['damaged_by'].slug +
+                        " and inRange=" + partyMembersInRange);
+                }
+
+                if ((damagedBy == this.player && partyMembersInRange) ||
+                    (damagedBy == this.pathWalker && partyMembersInRange &&
+                     playerTargeting))
+                {
+                    this.increaseTeamPower(1);
+                }
+                if(this.boss_gate ||
+                   this.teamPower >= this.teamPowerBossThresholds[this.boss.spawnCounter]) {
+                    this.startBoss();
+                }
+            }
+        }
+
+        public function startBoss():void {
+            this.boss.setActive();
         }
     }
 }

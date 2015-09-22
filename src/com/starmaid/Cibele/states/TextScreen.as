@@ -39,9 +39,10 @@ package com.starmaid.Cibele.states {
             this.add(this.bg);
 
             var textWidth:Number = _screen.screenWidth * .7;
+            var _textHeight:Number = 34;
             this.textSpr = new FlxText(
                 _screen.screenWidth / 2 - textWidth / 2,
-                _screen.screenHeight / 2,
+                _screen.screenHeight / 2 - _textHeight,
                 textWidth, this.textString
             );
             this.textSpr.visible = true;

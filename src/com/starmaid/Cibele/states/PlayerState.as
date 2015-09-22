@@ -20,10 +20,8 @@ package com.starmaid.Cibele.states {
             return this.player;
         }
 
-        public function __create(pos:DHPoint):void {
+        override public function create():void {
             super.create();
-            this.startPos = pos;
-
             this.player = new Player(this.startPos.x, this.startPos.y);
             this.add(this.player.mapHitbox)
         }
@@ -31,6 +29,11 @@ package com.starmaid.Cibele.states {
         override public function postCreate():void {
             this.player.initFootsteps();
             this.player.addVisibleObjects();
+            if (this is PathEditorState && (this as PathEditorState).boss != null) {
+                (this as PathEditorState).boss.addHealthBarVisibleObjects();
+                (this as PathEditorState).teamPowerBar.addVisibleObjects();
+                (this as PathEditorState).buildTeamPowerAnimationObjects();
+            }
             super.postCreate();
             this.game_cursor.setGameMouse();
             FlxG.mouse.x = this.player.pos.x;
@@ -42,11 +45,23 @@ package com.starmaid.Cibele.states {
             ];
         }
 
+        public function setScaleFactor(scaleFactor:Number=1):void {
+            this.player.setScaleFactor(scaleFactor);
+        }
+
         override public function update():void {
             super.update();
             if(PopUpManager.getInstance()._player != this.player) {
                 PopUpManager.getInstance()._player = this.player;
             }
+        }
+
+        override public function fadeOut(fn:Function, postFadeWait:Number=1,
+                                         fadeSoundName:String=null):void
+        {
+            super.fadeOut(fn, postFadeWait, fadeSoundName);
+            this.player.dir = new DHPoint(0, 0);
+            this.player.active = false;
         }
 
         override public function clickCallback(screenPos:DHPoint,

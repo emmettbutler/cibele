@@ -5,10 +5,13 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.SoundManager;
 
     import org.flixel.*;
 
     public class CreditsState extends GameState {
+        [Embed(source="/../assets/audio/music/bgm_euryale_intro.mp3")] private var BGMIntro:Class;
+        [Embed(source="/../assets/audio/music/bgm_euryale_loop.mp3")] private var BGMLoop:Class;
         private var creditsStructure:Array;
         private var creditsText:FlxText;
         private var curCredit:Number;
@@ -19,10 +22,18 @@ package com.starmaid.Cibele.states {
         private static const STATE_FADE_IN:Number= 2;
         private var _state:Number = STATE_STEADY;
 
+        public static var BGM:String = "credits bgm";
+
         public function CreditsState() {
-            super(false, false, false);
+            super(true, false, false);
+            this.enable_fade = true;
+            this.use_loading_screen = false;
+            this.enable_cursor = false;
 
             this.creditsStructure = new Array(
+                {
+                    'text': 'First love is a very confusing thing, and sometimes it really hurts, but I\'m glad I had mine with you.\n\n-Nina'
+                },
                 {
                     'text': 'Written and designed by Nina Freeman'
                 },
@@ -39,7 +50,13 @@ package com.starmaid.Cibele.states {
                     'text': 'Short films produced by Samantha Corey'
                 },
                 {
-                    'text': 'Special thanks to:\n\n\nBennett Foddy\n\nSteve Gaynor\n\nAnd our many helpful playtesters.'
+                    'text': 'Special thanks to:\n\n\nNöel Hanson\n\nand Sean Hogan\n\nfor asset support.'
+                },
+                {
+                    'text': 'Special thanks to:\n\n\nBennett Foddy,\n\nSteve Gaynor\n\nAnd our many helpful playtesters.'
+                },
+                {
+                    'text': 'Finally, special thanks to all of the people that Nina met (and grew up with) on the Sylph server in Final Fantasy Online. This game would not exist without all of you.'
                 }
             );
 
@@ -73,6 +90,19 @@ package com.starmaid.Cibele.states {
                 "credits-start", 2 * GameSound.MSEC_PER_SEC,
                 this.showNextCredit
             );
+
+            function _bgmCallback():void {
+                SoundManager.getInstance().playSound(
+                    BGMLoop, 0, null, true, .4, GameSound.BGM, CreditsState.BGM,
+                    false, false
+                );
+            }
+            SoundManager.getInstance().playSound(
+                BGMIntro, 2.6 * GameSound.MSEC_PER_SEC, _bgmCallback, false,
+                .4, GameSound.BGM, CreditsState.BGM, false, false, false
+            );
+
+            this.postCreate();
         }
 
         override public function update():void {
@@ -116,7 +146,14 @@ package com.starmaid.Cibele.states {
                 this.creditsText.text = this.creditsStructure[this.curCredit].text;
                 this.curCredit += 1;
             } else {
-                ScreenManager.getInstance().resetGame();
+                this.creditsText.text = "";
+                this.fadeOut(
+                    function():void {
+                        ScreenManager.getInstance().resetGame();
+                    },
+                    1 * GameSound.MSEC_PER_SEC,
+                    CreditsState.BGM
+                );
             }
         }
     }

@@ -2,7 +2,9 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.utils.GlobalTimer;
+    import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.states.LevelMapState;
 
@@ -16,23 +18,30 @@ package com.starmaid.Cibele.entities {
         protected var _enemyType:String = TYPE_SMALL;
 
         private static const MARK_RESPAWN:String = "mrespawn";
+        public static const PARTICLE_SMOKE:Number = 2458720394857;
 
-        protected var hitPoints:Number = 100,
+        protected var hitPoints:Number,
                       hitDamage:Number = 10,
                       recoilPower:Number = 3,
                       sightRange:Number = 308,
+                      maxHitPoints:Number,
                       recoilTrackingThreshold:Number = 120;
         protected var pathFollowerRef:PathFollower;
         protected var playerRef:Player;
         protected var disp:DHPoint;
-        protected var _healthBar:GameObject;
+        protected var _healthBar:HealthBar;
         protected var closestPartyMemberDisp:DHPoint;
         protected var takeDamageEventSlug:String;
+        protected var partyMemberTrackingOffset:DHPoint;
+        protected var partyMemberTrackingRadius:Number = 200;
         private var closestPartyMember:PartyMember;
         private var originalPos:DHPoint;
         protected var damageLockMap:Dictionary;
+        protected var smoke:ParticleExplosion;
         public var footPos:DHPoint, footPosOffset:DHPoint, basePosOffset:DHPoint;
         private var lastTrackingDirUpdateTime:Number = -1;
+        protected var flipFacing:Boolean = false;
+        public var damagedByPartyMember:PartyMember;
 
         public static const STATE_IDLE:Number = 1;
         public static const STATE_TRACKING:Number = 3;
@@ -47,10 +56,13 @@ package com.starmaid.Cibele.entities {
             stateMap[STATE_DEAD] = "STATE_DEAD";
         }
 
-        public function Enemy(pos:DHPoint) {
+        public function Enemy(pos:DHPoint, hitPoints:Number=100) {
             super(pos);
 
+            this.slug = "enemy_" + Math.random() * 100000;
+            this.hitPoints = hitPoints;
             this.originalPos = pos;
+            this.maxHitPoints = this.hitPoints;
             this._state = STATE_IDLE;
             this.footPos = new DHPoint(0, 0);
             this.disp = new DHPoint(0, 0);
@@ -58,8 +70,13 @@ package com.starmaid.Cibele.entities {
             this.basePos = new DHPoint(this.x, this.y + this.height);
             this.takeDamageEventSlug = "damaged" + (Math.random() * 100000000);
             this.damageLockMap = new Dictionary();
+            var angle:Number = Math.random() * (Math.PI * 2);
+            this.partyMemberTrackingOffset = new DHPoint(
+                this.partyMemberTrackingRadius * Math.cos(angle),
+                this.partyMemberTrackingRadius * Math.sin(angle));
 
             this.setupSprites();
+            this.setupSmoke();
             this.inactiveTarget();
 
             // this stuff should be before setupSprites, but it relies on width
@@ -71,31 +88,58 @@ package com.starmaid.Cibele.entities {
             if (this.basePosOffset == null) {
                 this.basePosOffset = new DHPoint(0, this.height);
             }
+            this.loopCallSound();
         }
 
         public function isDead():Boolean {
             return this._state == STATE_DEAD;
         }
 
-        public function get healthBar():GameObject {
+        public function get healthBar():HealthBar {
             return this._healthBar;
         }
 
         public function addVisibleObjects():void {
-            FlxG.state.add(this._healthBar);
-            FlxG.state.add(this.debugText);
+            this._healthBar.addVisibleObjects();
+            if (ScreenManager.getInstance().DEBUG) {
+                FlxG.state.add(this.debugText);
+            }
         }
 
         public function setupSprites():void {
             this.visible = true;
+            this._healthBar = new HealthBar(new DHPoint(pos.x, pos.y),
+                                            this.hitPoints);
+        }
 
-            this._healthBar = new GameObject(new DHPoint(pos.x,pos.y));
-            this._healthBar.makeGraphic(1,8,0xffe2678e);
-            this._healthBar.scale.x = this.hitPoints;
+        protected function setupSmoke():void {
+            this.smoke = new ParticleExplosion(10, Enemy.PARTICLE_SMOKE, 3, .8,
+                                               7, 5, .3, this, 4);
+            this.smoke.addVisibleObjects();
         }
 
         public function get enemyType():String {
             return this._enemyType;
+        }
+
+        public function isBoss():Boolean {
+            if(this.enemyType == TYPE_BOSS) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function isSmall():Boolean {
+            if(this.enemyType == TYPE_SMALL) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function get smallType():String {
+            return Enemy.TYPE_SMALL;
         }
 
         public function getStateString():String {
@@ -116,6 +160,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function takeDamage(p:PartyMember):void{
+            this.damagedByPartyMember = p;
             if (this.isDead()) {
                 return;
             }
@@ -130,48 +175,63 @@ package com.starmaid.Cibele.entities {
                                               }, true);
             this._state = STATE_RECOIL;
             this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
-            this.hitPoints -= this.hitDamage;
-            this._healthBar.scale.x = this.hitPoints;
-            p.runParticles(this.getMiddlePos());
+            this.hitPoints -= Math.floor(this.hitDamage * p.teamPowerDamageMul);
+            this._healthBar.setPoints(this.hitPoints);
+
+            if(this.hitPoints <= 0){
+                this.die(p);
+            }
         }
 
         public function activeTarget():void {
             if (this._healthBar == null || this.isDead()) {
                 return;
             }
-            this._healthBar.visible = true;
+            this._healthBar.setVisible(true);
         }
 
         public function inactiveTarget():void {
             if (this._healthBar == null) {
                 return;
             }
-            this._healthBar.visible = false;
+            this._healthBar.setVisible(false);
         }
 
-        public function die():void {
+        public function die(p:PartyMember):void {
+            /*
+             * :param p: The PartyMember instance that hit this enemy for lethal
+             *      damage
+             */
             if (this._state == STATE_DEAD) {
                 return;
             }
             // don't destroy() or state.remove() here. doing so breaks z-sorting
-            this.visible = false;
-            this._healthBar.visible = false;
+            this.visible = true;
+            this._healthBar.setVisible(false);
             this._state = STATE_DEAD;
             this.dir = new DHPoint(0,0);
             this.inactiveTarget();
+            this.smoke.run(this.getMiddlePos());
+            FlxG.stage.dispatchEvent(
+                new DataEvent(GameState.EVENT_ENEMY_DIED,
+                              {'damaged_by': p}));
             GlobalTimer.getInstance().setMark(
                 MARK_RESPAWN + Math.random() * 200,
-                15 * GameSound.MSEC_PER_SEC, this.respawn, true
+                20 * GameSound.MSEC_PER_SEC, this.respawn, true
             );
         }
 
         public function respawn():void {
+            if (!(FlxG.state is LevelMapState)) {
+                return;
+            }
+            this.setPos(originalPos);
             if(!this.inViewOfPlayer()) {
-                this.hitPoints = 100;
+                this.hitPoints = this.maxHitPoints;
+                this._healthBar.setPoints(this.hitPoints);
                 this.visible = true;
+                this.alpha = 1;
                 this._state = STATE_IDLE;
-                this.x = originalPos.x;
-                this.y = originalPos.y;
             } else {
                 GlobalTimer.getInstance().setMark(
                     MARK_RESPAWN + Math.random() * 200,
@@ -202,8 +262,8 @@ package com.starmaid.Cibele.entities {
             this.footPos.y = this.y + this.footPosOffset.y;
             this.basePos.y = this.y + this.basePosOffset.y;
 
-            this._healthBar.x = this.x + (this.width * .5);
-            this._healthBar.y = this.pos.y-30;
+            this._healthBar.setPos(new DHPoint(this.x + (this.width * .5),
+                                               this.pos.y - 30));
         }
 
         public function closestPartyMemberIsInTrackingRange():Boolean {
@@ -230,21 +290,56 @@ package com.starmaid.Cibele.entities {
             this.visible = true;
         }
 
+        private function loopCallSound():void {
+            if (!(FlxG.state is LevelMapState)) {
+                return;
+            }
+            if (this.canPlayCall()) {
+                this.playCallSound();
+            }
+            var that:Enemy = this;
+            GlobalTimer.getInstance().setMark(
+                "enemy_call_" + this.slug,
+                (5 + (Math.random() * 2)) * GameSound.MSEC_PER_SEC,
+                function():void {
+                    if (!(FlxG.state is LevelMapState)) {
+                        return;
+                    }
+                    that.loopCallSound();
+                },
+                true
+            );
+        }
+
+        protected function canPlayCall():Boolean {
+            return this.isOnscreen() && this._state == STATE_TRACKING;
+        }
+
+        protected function playCallSound():void {
+        }
+
         override public function update():void{
             super.update();
 
-            if (this._state == STATE_DEAD) {
+            if (ScreenManager.getInstance().DEBUG) {
+                this.debugText.text = this.getStateString();
+            }
+
+            if (this._state == STATE_DEAD && this.visible == false) {
                 return;
             }
 
             this.closestPartyMember = this.getClosestPartyMember();
-            this.closestPartyMemberDisp = this.closestPartyMember.footPos.sub(this.getAttackPos());
-            // TODO - cap hitPoints at some reasonable value
+            this.closestPartyMemberDisp = this.closestPartyMember.footPos
+                .add(this.partyMemberTrackingOffset).sub(this.getAttackPos());
             this.hitPoints = Math.max(0, this.hitPoints);
             this.setAuxPositions();
-            if(this.hitPoints <= 0){
-                this.die();
+
+            if (this.smoke != null) {
+                this.smoke.update();
             }
+
+            this.scale.x = (this.dir.x >= 0 ? 1 : -1) * (this.flipFacing ? -1 : 1);
 
             switch(this._state) {
                 case STATE_IDLE:
@@ -256,7 +351,7 @@ package com.starmaid.Cibele.entities {
                         this.lastTrackingDirUpdateTime = this.timeAlive;
                         var mul:Number = (FlxG.state as LevelMapState).enemyDirMultiplier;
                         if (mul != 1) {
-                            this.dir = this.closestPartyMemberDisp.normalized().mulScl((FlxG.state as LevelMapState).enemyDirMultiplier);
+                            this.dir = this.closestPartyMemberDisp.normalized().mulScl(mul);
                         } else {
                             this.dir = this.closestPartyMemberDisp.normalized();
                         }
@@ -271,6 +366,14 @@ package com.starmaid.Cibele.entities {
                         && this.closestPartyMemberIsInTrackingRange())
                     {
                         this.startTracking();
+                    }
+                    break;
+
+                case STATE_DEAD:
+                    if(this.alpha > 0) {
+                        this.alpha -= .03;
+                    } else {
+                        this.visible = false;
                     }
                     break;
             }

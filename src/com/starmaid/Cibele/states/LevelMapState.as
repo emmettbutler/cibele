@@ -13,6 +13,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.GameObject;
 
     import org.flixel.*;
 
@@ -36,13 +37,17 @@ package com.starmaid.Cibele.states {
         public var estTileDimensions:DHPoint;
         public var playerStartPos:DHPoint;
         public var colliderScaleFactor:Number;
+        public var levelDimensions:DHPoint;
         public var enemyDirMultiplier:Number = 1;
+        private var boundedObjects:Array;
 
         protected var conversationPieces:Array;
         protected var conversationCounter:Number = 0;
 
         override public function create():void {
-            super.__create(this.playerStartPos);
+            this.enable_fade = true;
+            this.startPos = this.playerStartPos;
+            super.create();
 
             this.ID = LEVEL_ID;
 
@@ -59,25 +64,72 @@ package com.starmaid.Cibele.states {
             );
             this.bgLoader.setPlayerReference(player);
 
+            this.levelDimensions = new DHPoint(
+                bgLoader.cols * bgLoader.estTileWidth,
+                bgLoader.rows * bgLoader.estTileHeight);
             ScreenManager.getInstance().setupCamera(player.cameraPos);
-            FlxG.camera.setBounds(0, 0, bgLoader.cols * bgLoader.estTileWidth,
-                                  bgLoader.rows * bgLoader.estTileHeight);
+            FlxG.camera.setBounds(0, 0, levelDimensions.x, levelDimensions.y);
+
+            this.addEnvironmentDetails();
 
             super.postCreate();
+
+            this.boundedObjects = new Array();
+            this.boundedObjects.push(this.player);
+            for (var i:int = 0; i < this.enemies.length(); i++) {
+                this.boundedObjects.push(this.enemies.get_(i));
+            }
+
+            this.bgLoader.setEnemiesReference(this.enemies.enemies);
+        }
+
+        public function addEnvironmentDetails():void { }
+
+        override public function destroy():void {
+            this.bgLoader.destroy();
+            super.destroy();
         }
 
         override public function update():void {
             super.update();
             this.bgLoader.update();
             this.resolveAttacks();
+            this.imposeLevelBoundaries();
 
             this.bitDialogue.update();
             this.bitDialogue.lock = this.bitDialogueLock;
 
-            if (GlobalTimer.getInstance().hasPassed(BOSS_MARK) &&
-                !this.boss.hasAppeared() && FlxG.state.ID == LevelMapState.LEVEL_ID)
-            {
-                this.boss.appear();
+            if (ScreenManager.getInstance().RELEASE == false) {
+                if (FlxG.keys.justPressed("B") && !this.boss.hasAppeared()) {
+                    this.startBoss();
+                }
+                if (FlxG.keys.justPressed("Z")) {
+                    this.boss.startDespawn();
+                }
+                if(FlxG.keys.justPressed("A")) {
+                    this.boss.setActive();
+                }
+            }
+        }
+
+        public function imposeLevelBoundaries():void {
+            var cur:GameObject;
+            for (var i:int = 0; i < this.boundedObjects.length; i++) {
+                cur = this.boundedObjects[i];
+                if (cur.pos.x < 0) {
+                    cur.dir.x = Math.max(0, cur.dir.x);
+                    cur.setPos(new DHPoint(0, cur.pos.y));
+                } else if (cur.pos.x + cur.width > this.levelDimensions.x) {
+                    cur.dir.x = Math.min(0, cur.dir.x);
+                    cur.setPos(new DHPoint(cur.pos.x - 1, cur.pos.y));
+                }
+                if (cur.pos.y < 0) {
+                    cur.dir.y = Math.max(0, cur.dir.y);
+                    cur.setPos(new DHPoint(cur.pos.x, 0));
+                } else if (cur.pos.y + cur.height > this.levelDimensions.y) {
+                    cur.dir.y = Math.min(0, cur.dir.y);
+                    cur.setPos(new DHPoint(cur.pos.x, cur.pos.y - 1));
+                }
             }
         }
 
@@ -104,6 +156,7 @@ package com.starmaid.Cibele.states {
                 PopUpManager.getInstance().elements,
                 MessageManager.getInstance().elements
             ];
+            this.teamPowerBar.clickCallback(screenPos, worldPos);
             super.clickCallback(screenPos, worldPos);
         }
 
@@ -196,7 +249,9 @@ package com.starmaid.Cibele.states {
             if (audioInfo != null) {
                 var endfn:Function = this.playNextConvoPiece;
                 if (audioInfo["endfn"] != null) {
-                    if(audioInfo["ends_with_popup"] == null || audioInfo["ends_with_popup"] == true) {
+                    if(audioInfo["ends_with_popup"] == null ||
+                       audioInfo["ends_with_popup"] == true)
+                    {
                         endfn = function():void {
                             registerPopupCallback();
                             audioInfo["endfn"]();
@@ -208,27 +263,120 @@ package com.starmaid.Cibele.states {
                         };
                     }
                 }
-                var prevEndFn:Function = endfn;
+                var prevEndFn:Function = this.buildIntermediateConvoEndFn(
+                    endfn, audioInfo);
+                var finalEndFn:Function = prevEndFn;
                 var prevDialogueLock:Boolean = this.bitDialogueLock;
                 if(audioInfo["audio"] == null) {
-                    endfn = function():void {
+                    finalEndFn = function():void {
                         bitDialogueLock = prevDialogueLock;
                         prevEndFn();
                     };
                     this.bitDialogueLock = true;
                     GlobalTimer.getInstance().setMark(
-                        "no audio" + Math.random(), audioInfo["len"],
-                        endfn
+                        "no audio",
+                        GameState.SHORT_DIALOGUE ? 1 : audioInfo["len"],
+                        finalEndFn, true
                     );
                 } else {
                     SoundManager.getInstance().playSound(
-                        audioInfo["audio"], audioInfo["len"], endfn,
-                        false, 1, GameSound.VOCAL
+                        audioInfo["audio"],
+                        GameState.SHORT_DIALOGUE ? 1 : audioInfo["len"],
+                        finalEndFn, false, 1, GameSound.VOCAL
                     );
                 }
             } else {
                 this.finalConvoDone();
             }
+        }
+
+        private function buildIntermediateConvoEndFn(endfn:Function,
+                                                     audioInfo:Object):Function
+        {
+            var that:LevelMapState = this;
+            return function():void {
+                if(audioInfo["boss_gate"] != null){
+                    that.boss_gate = true;
+                    if(that.boss.isDead()) {
+                        endfn();
+                    } else {
+                        if (ScreenManager.getInstance().DEBUG) {
+                            trace("Waiting for boss kill");
+                        }
+                        that.addEventListener(
+                            GameState.EVENT_BOSS_DIED,
+                            that.buildBossKillCallback(endfn)
+                        );
+                    }
+                } else if (audioInfo["min_team_power"] != null) {
+                    that.doIfMinTeamPower(endfn, audioInfo["min_team_power"]);
+                } else {
+                    endfn();
+                }
+            };
+        }
+
+        protected function doIfMinTeamPower(fn:Function, teamPower:Number):void {
+            var min_:Number = GameState.SHORT_DIALOGUE ? 0 : teamPower;
+            if (this.teamPower >= min_) {
+                fn();
+            } else {
+                if (ScreenManager.getInstance().DEBUG) {
+                    trace("Waiting for minimum teamPower: " + min_);
+                }
+                this.addEventListener(
+                    GameState.EVENT_TEAM_POWER_INCREASED,
+                    this.buildTeamPowerIncreasedCallback(teamPower, fn)
+                );
+            }
+        }
+
+        private function buildTeamPowerIncreasedCallback(minTeamPower:Number,
+                                                         endfn:Function):Function
+        {
+            var that:LevelMapState = this;
+            return function(event:DataEvent):void {
+                if (that.teamPower >= minTeamPower) {
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace("Minimum team power (" + minTeamPower +
+                              ") met: " + that.teamPower);
+                    }
+                    GlobalTimer.getInstance().setMark(
+                        "teampower_delay",
+                        (Math.random() * 3) * GameSound.MSEC_PER_SEC,
+                        function():void {
+                            endfn();
+                        },
+                        true
+                    );
+                    that.removeEventListener(GameState.EVENT_TEAM_POWER_INCREASED,
+                                             arguments.callee)
+                } else {
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace("Minimum team power (" + minTeamPower +
+                              ") not met: " + that.teamPower);
+                    }
+                }
+            };
+        }
+
+        private function buildBossKillCallback(endfn:Function):Function
+        {
+            var that:LevelMapState = this;
+            return function(event:DataEvent):void {
+                if(that.boss.isDead()) {
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace("Boss killed");
+                    }
+                    endfn();
+                    that.removeEventListener(GameState.EVENT_BOSS_DIED,
+                                             arguments.callee)
+                } else {
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace("Boss not killed yet");
+                    }
+                }
+            };
         }
 
         public function registerPopupCallback():void {

@@ -69,6 +69,7 @@ def compile_main(entry_point_class,
                  libpath,
                  debug_level,
                  mute=False,
+                 short_dialogue=False,
                  disable_saves=False,
                  windowed=False,
                  platform="air"):
@@ -83,7 +84,6 @@ def compile_main(entry_point_class,
     elif debug_level == "release":
         debug_flag = "false"
         omit_trace = "true"
-        stacktraces = "false"
         debug = "false"
         test_flag = "false"
     swfpath = "src/{entry_point_class}{ts}.swf".format(
@@ -95,12 +95,14 @@ def compile_main(entry_point_class,
         "-compiler.include-libraries", libpath,
         "-use-network=false", "-verbose-stacktraces={}".format(stacktraces),
         "-debug={}".format(debug),
+        "-advanced-telemetry",
         "-omit-trace-statements={}".format(omit_trace),
         "-define=CONFIG::debug,{}".format(debug_flag),
         "-define=CONFIG::test,{}".format(test_flag),
         "-define=CONFIG::mute,{}".format("true" if mute else "false"),
         "-define=CONFIG::windowed,{}".format("true" if windowed else "false"),
-        "-define=CONFIG::disable_saves,{}".format("true" if disable_saves else "false")
+        "-define=CONFIG::disable_saves,{}".format("true" if disable_saves else "false"),
+        "-define=CONFIG::short_dialogue,{}".format("true" if short_dialogue else "false")
     ]
     print " ".join(command)
     subprocess.check_call(command, shell=platform == "windows")
@@ -145,10 +147,10 @@ def run_main(conf_file, runtime):
 
 
 def package_application(entry_point_class, swf_path, platform="air", outfile_name="CibeleBeta"):
-    """
-    To generate cibelecert.pfx:
-        adt -certificate -cn SelfSign -ou QE -o "Star Maid Games" -c US 2048-RSA cibelecert.pfx AmanoJyakku!
-    """
+    command = 'adt -certificate -cn SelfSign -ou QE -o "Star_Maid_Games" -c US 2048-RSA cibelecert.pfx AmanoJyakku!'
+    print command
+    subprocess.call(command.split())
+
     outfile = "{}.air".format(outfile_name)
     target = ""
     if platform == "mac":
@@ -157,7 +159,7 @@ def package_application(entry_point_class, swf_path, platform="air", outfile_nam
     elif platform == "windows":
         target = "-target bundle"
         outfile = outfile_name
-    command = "adt -package -storetype pkcs12 -keystore cibelecert.pfx {target} {outfile} {entry_point_class}.xml {swf_path} assets".format(
+    command = "adt -package -storetype pkcs12 -tsa none -keystore cibelecert.pfx {target} {outfile} {entry_point_class}.xml {swf_path} assets".format(
         entry_point_class=entry_point_class, swf_path=swf_path, target=target, outfile=outfile)
     print command
     subprocess.call(command.split(), shell=platform == "windows")
@@ -177,6 +179,7 @@ def main():
         preloader_class = write_preloader()
         swf_path = compile_main(entry_point_class.split('.')[-1], libpath,
                                 args.debug_level[0], mute=args.mute,
+                                short_dialogue=args.short_dialogue,
                                 disable_saves=args.disable_saves,
                                 windowed=args.windowed,
                                 platform=args.platform)
@@ -213,6 +216,8 @@ if __name__ == "__main__":
                         help="Build an executable")
     parser.add_argument('--mute', '-e', action="store_true",
                         help="Mute all sounds in this build")
+    parser.add_argument('--short_dialogue', '-i', action="store_true",
+                        help="Shorten all spoken dialogue for testing")
     parser.add_argument('--disable_saves', '-s', action="store_true",
                         help="Compile without load-from-save feature")
     parser.add_argument('--windowed', '-w', action="store_true",

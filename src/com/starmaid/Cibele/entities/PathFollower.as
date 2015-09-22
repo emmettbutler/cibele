@@ -18,7 +18,7 @@ package com.starmaid.Cibele.entities {
 
     public class PathFollower extends PartyMember {
         [Embed(source="/../assets/images/characters/Sprite_Ichi_Walk_Cycle.png")] private var ImgIchi:Class;
-        [Embed(source="/../assets/images/characters/Ichi_attack sprite.png")] private var ImgIchiAttack:Class;
+        [Embed(source="/../assets/images/characters/Ichi_attack_sprite.png")] private var ImgIchiAttack:Class;
         [Embed(source="/../assets/audio/effects/sfx_protoattack1.mp3")] private var SfxAttack1:Class;
         [Embed(source="/../assets/audio/effects/sfx_protoattack2.mp3")] private var SfxAttack2:Class;
         [Embed(source="/../assets/audio/effects/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
@@ -148,6 +148,7 @@ package com.starmaid.Cibele.entities {
             FlxG.state.add(this.attackAnim);
             FlxG.state.add(this.shadow_sprite);
             FlxG.state.add(this.nameText);
+            FlxG.state.add(this.teamPowerDeltaText);
         }
 
         public function walk():void {
@@ -215,10 +216,20 @@ package com.starmaid.Cibele.entities {
             this.basePos.y = this.y + (this.height - 10);
             this.attackAnim.basePos.x = this.attackAnim.x;
             this.attackAnim.basePos.y = this.attackAnim.y + (this.attackAnim.height - 10);
+
+            if(this.isAttacking()) {
+                this._nameTextOffset.x = 55;
+            } else if(this.facing == UP || this.facing == DOWN){
+                this._nameTextOffset.x = 60;
+            } else if(this.facing == LEFT) {
+                this._nameTextOffset.x = 50;
+            } else if(this.facing == RIGHT) {
+                this._nameTextOffset.x = 60;
+            }
         }
 
         public function setTargetEnemy():void {
-            if (this._bossRef != null && this._bossRef.hasAppeared() && !this._bossRef.isDead()) {
+            if (this._bossRef != null && this._bossRef.hasAppeared() && !this._bossRef.isDead() && this._bossRef.visible) {
                 this.targetEnemy = this._bossRef;
             } else if(this.playerIsAttacking() && !this.playerRef.targetEnemy.isDead()) {
                 this.targetEnemy = this.playerRef.targetEnemy;
@@ -468,8 +479,11 @@ package com.starmaid.Cibele.entities {
             var dir:DHPoint = new DHPoint(this.playerRef.dir.x, this.playerRef.dir.y);
             var targetPoint:DHPoint = this.playerRef.pos.add(dir.normalized()
                 .mulScl(ScreenManager.getInstance().screenWidth));
-            var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint, null, false);
+            var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint, false);
             if (warpNode != null) {
+                if (ScreenManager.getInstance().DEBUG) {
+                    trace("Warp node onscreen: " + warpNode.isOnscreen());
+                }
                 this.setPos(warpNode.pos.sub(this.footPos.sub(this.pos)));
             }
             this.initWalk(this.playerRef.footPos);
@@ -484,6 +498,7 @@ package com.starmaid.Cibele.entities {
                 return;
             }
             this.attackAnim.play("reverse_attack");
+            this.runAttackParticles();
             GlobalTimer.getInstance().setMark(
                 "attack anim stuff reverse", 1*GameSound.MSEC_PER_SEC,
                 this.resolveStatePostAttack, true
