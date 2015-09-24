@@ -5,6 +5,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.states.LevelMapState;
 
     import org.flixel.*;
 

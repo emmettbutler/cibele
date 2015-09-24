@@ -7,6 +7,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.management.LevelTracker;
+    import com.starmaid.Cibele.states.LevelMapState;
     import com.starmaid.Cibele.utils.MapNodeContainer;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.management.Path;
