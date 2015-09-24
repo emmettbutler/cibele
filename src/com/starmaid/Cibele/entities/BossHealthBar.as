@@ -32,7 +32,7 @@ package com.starmaid.Cibele.entities {
                                      "left");
 
             this._activeText.scrollFactor = new DHPoint(0, 0);
-            this._activeText.size = 20;
+            this._activeText.size = 15;
 
             this.setVisible(false);
         }
@@ -58,8 +58,8 @@ package com.starmaid.Cibele.entities {
             super.setPos(screenPos);
             this._changeText.x = this.name_text.x + 100;
             this._changeText.y = this.name_text.y;
-            this._activeText.x = this.name_text.x + 200;
-            this._activeText.y = this.name_text.y;
+            this._activeText.x = this.name_text.x;
+            this._activeText.y = this.name_text.y + 45;
         }
     }
 }
