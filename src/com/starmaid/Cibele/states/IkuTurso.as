@@ -108,7 +108,7 @@ package com.starmaid.Cibele.states {
             this.tileGridDimensions = new DHPoint(10, 5);
             this.estTileDimensions = new DHPoint(1359, 818);  // 1360, 816
             this.playerStartPos = new DHPoint(4600, 7565);
-            this.colliderScaleFactor = 8;
+            this.colliderScaleFactor = 8.65;
             this.enemyDirMultiplier = 1;
             this.maxTeamPower = 25;
 
