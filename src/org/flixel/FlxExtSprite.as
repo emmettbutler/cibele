@@ -36,7 +36,9 @@ package org.flixel
                 _pixels.draw(Graphic, mtx);
                 _flipped = _pixels.width >> 1;
             } else {
-                _pixels = FlxG.createBitmap(Graphic.width, Graphic.height, 0x00FFFFFF, Unique);
+                _pixels = FlxG.createBitmap(Math.max(Graphic.width, 1),
+                                            Math.max(Graphic.height, 1),
+                                            0x00FFFFFF, Unique);
                 _pixels.draw(Graphic);
                 _flipped = 0;
             }
@@ -59,14 +61,19 @@ package org.flixel
             }
             height = frameHeight = Height;
             resetHelpers();
+            _pixels.dispose();
+            _pixels = null;
+            this.hasLoaded = true;
             return this;
         }
 
         public function unload():void {
-            if (_pixels != null) {
-                _pixels.dispose();
-                _pixels = null;
+            if (framePixels != null) {
+                framePixels.dispose();
+                framePixels = null;
             }
+            this.hasLoaded = false;
+            this.hasStartedLoad = false;
         }
     }
 }

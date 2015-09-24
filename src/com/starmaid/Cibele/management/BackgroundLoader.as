@@ -133,7 +133,6 @@ package com.starmaid.Cibele.management {
                     // it says "clear the pixel cache before loading this image"
                     // weird things happen with collider tiles when it's false
                     tile.loadExtGraphic(bmp, false, false, bmp.width, bmp.height, true);
-                    tile.hasLoaded = true;
                 }
                 receivingMachine.contentLoaderInfo.removeEventListener(
                     Event.COMPLETE, arguments.callee);

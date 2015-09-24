@@ -426,6 +426,9 @@ package org.flixel
 		 */
 		override public function draw():void
 		{
+            if (framePixels == null) {
+                return;
+            }
 			if(_flickerTimer != 0)
 			{
 				_flicker = !_flicker;
