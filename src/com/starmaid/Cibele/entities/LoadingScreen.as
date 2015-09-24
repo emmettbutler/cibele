@@ -30,13 +30,13 @@ package com.starmaid.Cibele.entities {
             FlxG.state.add(this.bg);
             this.bg.visible = true;
 
-            this.loading_icon = new GameObject(new DHPoint(40, _screen.screenHeight * .8));
+            this.loading_icon = new GameObject(new DHPoint(40, _screen.screenHeight * .86));
             this.loading_icon.loadGraphic(ImgLoadingIcon, false, false, 76, 120);
             this.loading_icon.scrollFactor = new FlxPoint(0,0);
             FlxG.state.add(this.loading_icon);
             this.loading_icon.visible = true;
 
-            this.loading_text = new GameObject(new DHPoint(130, _screen.screenHeight * .86));
+            this.loading_text = new GameObject(new DHPoint(130, _screen.screenHeight * .87));
             this.loading_text.loadGraphic(ImgLoadingText, false, false, 160, 27);
             this.loading_text.scrollFactor = new FlxPoint(0,0);
             FlxG.state.add(this.loading_text);
