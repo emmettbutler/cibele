@@ -312,7 +312,7 @@ package com.starmaid.Cibele.management {
             playerRow = Math.floor(playerRelativePos.y);
             playerCol = Math.floor(playerRelativePos.x);
 
-            var row:int, col:int, nextTileIn:FlxExtSprite;
+            var row:int, col:int, nextTileIn:FlxExtSprite, thisTile:FlxExtSprite;
             if (new Date().valueOf() - this.lastTileLoadUpdate > 1 * GameSound.MSEC_PER_SEC) {
                 this.lastTileLoadUpdate = new Date().valueOf();
                 // for each tile, check whether the one next to it that's closer
@@ -323,7 +323,10 @@ package com.starmaid.Cibele.management {
                             playerRow == row ? playerRow : (row + (playerRow > row ? 1 : -1)),
                             playerCol == col ? playerCol : (col + (playerCol > col ? 1 : -1)),
                             this.colliderTiles);
-                        if (this.tileIsOnscreen(nextTileIn)) {
+                        thisTile = this.getTileByIndex(row, col);
+                        if (this.tileIsOnscreen(nextTileIn) ||
+                            this.tileIsOnscreen(thisTile))
+                        {
                             coordsToLoad.push([row, col]);
                         } else {
                             coordsToUnload.push([row, col]);
