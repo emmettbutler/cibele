@@ -171,6 +171,9 @@ package com.starmaid.Cibele.entities {
             GlobalTimer.getInstance().setMark(this.takeDamageEventSlug + p.slug,
                                               1 * GameSound.MSEC_PER_SEC,
                                               function():void {
+                                                if(!(FlxG.state is LevelMapState)) {
+                                                    return;
+                                                }
                                                 damageLockMap[p.slug] = false;
                                               }, true);
             this._state = STATE_RECOIL;
