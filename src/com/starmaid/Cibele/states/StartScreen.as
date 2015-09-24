@@ -44,8 +44,8 @@ package com.starmaid.Cibele.states {
 
             ScreenManager.getInstance();
 
-            this.crystalIcon = new GameObject(new DHPoint((ScreenManager.getInstance().screenWidth * .5) - 314/2, 
-                (ScreenManager.getInstance().screenHeight * .5) - 500/2 - 30));
+            this.crystalIcon = new GameObject(new DHPoint((ScreenManager.getInstance().screenWidth * .5) - 314/2,
+                (ScreenManager.getInstance().screenHeight * .5) - 500/2 - 70));
             this.crystalIcon.loadGraphic(ImgXtal, false, false, 314, 500);
             add(this.crystalIcon);
 
