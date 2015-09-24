@@ -22,11 +22,10 @@ package com.starmaid.Cibele.entities {
         public static const SAD:Number = 112;
         public static const ANGRY:Number = 113;
 
-        public function Emote(pos:DHPoint,
-                              mood:Number,
+        public function Emote(mood:Number,
                               col:Number=0)
         {
-            super(pos);
+            super(new DHPoint(-500, -500));
             if(col == GameState.UICOLOR_DEFAULT) {
                 if(mood == HAPPY) {
                     this.loadGraphic(ImgEmojiHappy, false, false, 96, 98, true);
@@ -48,11 +47,20 @@ package com.starmaid.Cibele.entities {
             this.scale.y = .5;
             this.width *= .5;
             this.height *= .5;
-            this.x = this.pos.x - this.width / 2;
-            this.alpha = 0;
+            this.scale.x = 0;
+            this.scale.y = 0;
             this.slug = "emote" + Math.random() * 10000000;
-            FlxG.state.add(this);
+        }
 
+        public function addVisibleObjects():void {
+            FlxG.state.add(this);
+        }
+
+        public function run(pos:DHPoint):void {
+            this.x = pos.x - this.width / 2;
+            this.y = pos.y;
+            this.scale.x = .5;
+            this.scale.y = .5;
             var that:Emote = this;
             this._state = STATE_RISE;
             GlobalTimer.getInstance().setMark(
@@ -65,17 +73,9 @@ package com.starmaid.Cibele.entities {
                         .6 * GameSound.MSEC_PER_SEC,
                         function():void {
                             that._state = STATE_FADE;
-                            GlobalTimer.getInstance().setMark(
-                                that.slug + "remove",
-                                .6 * GameSound.MSEC_PER_SEC,
-                                function():void {
-                                    FlxG.state.remove(that);
-                                    that.destroy();
-                                }, false
-                            );
-                        }, false
+                        }, true
                     );
-                }, false
+                }, true
             );
         }
 
@@ -84,9 +84,11 @@ package com.starmaid.Cibele.entities {
 
             if (this._state == STATE_RISE) {
                 this.y -= 5;
-                this.alpha += .2;
+                this.scale.x *= 1.05;
+                this.scale.y *= 1.05;
             } else if (this._state ==  STATE_FADE) {
-                this.alpha -= .05;
+                this.scale.x *= .9;
+                this.scale.y *= .9;
             }
         }
     }

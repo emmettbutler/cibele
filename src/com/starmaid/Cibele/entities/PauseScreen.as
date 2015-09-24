@@ -95,12 +95,12 @@ package com.starmaid.Cibele.entities {
             this.confirmLayer.active = false;
             this.confirmLayer.scrollFactor = new DHPoint(0, 0);
             this.confirmLayer.makeGraphic(
-                confirmLayerDim.x, confirmLayerDim.y, 0xffaaaaaa
+                confirmLayerDim.x, confirmLayerDim.y, 0xaaffffff
             );
             this.confirmLayer.visible = false;
             this.confirmLayer.observeGlobalPause = false;
 
-            this.confirmText = new FlxText(this.confirmLayer.x, this.confirmLayer.y,
+            this.confirmText = new FlxText(this.confirmLayer.x, this.confirmLayer.y + 20,
                                            this.confirmLayer.width, "");
             this.confirmText.scrollFactor = new DHPoint(0, 0);
             this.confirmText.setFormat("NexaBold-Regular",

@@ -131,13 +131,18 @@ package com.starmaid.Cibele.states {
         override public function postPathRead():void {
             var randNode:MapNode;
             var seaweed:GameObject;
+            var usedNodes:Array = new Array();
             for (var i:int = 0; i < this.seaweeds.length; i++) {
                 randNode = this._mapnodes.getRandomNode();
+                while (usedNodes.indexOf(randNode) != -1) {
+                    randNode = this._mapnodes.getRandomNode();
+                }
                 seaweed = this.seaweeds[i];
                 seaweed.setPos(randNode.pos.sub(new DHPoint(
                                                 seaweed.width / 2,
                                                 seaweed.height)));
                 seaweed.basePos = new DHPoint(seaweed.x, seaweed.y + seaweed.height);
+                usedNodes.push(randNode);
             }
         }
 

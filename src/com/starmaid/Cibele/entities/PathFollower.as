@@ -410,6 +410,7 @@ package com.starmaid.Cibele.entities {
             }
             this.attackAnim.visible = false;
             this.visible = true;
+            this.shadow_sprite.visible = true;
         }
 
         public function setClosestEnemy():Enemy {
@@ -517,6 +518,7 @@ package com.starmaid.Cibele.entities {
                 this.attackAnim.visible = true;
                 this.attackAnim.play("attack");
                 this.visible = false;
+                this.shadow_sprite.visible = false;
 
                 if(this.inViewOfPlayer()) {
                     this.playAttackSound();

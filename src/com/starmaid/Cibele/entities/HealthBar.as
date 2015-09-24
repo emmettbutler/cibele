@@ -1,6 +1,8 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.management.LevelTracker;
+    import com.starmaid.Cibele.management.ScreenManager;
 
     import org.flixel.*;
 
@@ -23,6 +25,10 @@ package com.starmaid.Cibele.entities {
 
             this._activeText = new FlxText(pos.x, pos.y, 200, "Active Target");
             this._activeText.setFormat("NexaBold-Regular", 12, 0xff7c6e6a, "left");
+
+            if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_HI) {
+                this._activeText.color = 0xffffffff;
+            }
         }
 
         override public function setPos(pos:DHPoint):void {
@@ -35,9 +41,11 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function setVisible(v:Boolean):void {
-            super.setVisible(v);
-            this._attackIcon.visible = v;
-            this._activeText.visible = v;
+            if(this._attackIcon != null && this._activeText != null) {
+                super.setVisible(v);
+                this._attackIcon.visible = v;
+                this._activeText.visible = v;
+            }
         }
 
         override public function addVisibleObjects():void {

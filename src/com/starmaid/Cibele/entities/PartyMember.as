@@ -7,6 +7,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.states.PathEditorState;
     import com.starmaid.Cibele.states.LevelMapState;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.utils.LRUDVector;
     import com.starmaid.Cibele.utils.DHPoint;
@@ -45,6 +46,7 @@ package com.starmaid.Cibele.entities {
         protected var footstepOffsets:LRUDVector;
         protected var attackSounds:Array;
         protected var teamPowerDeltaText:FlxText;
+        protected var emoji:Object;
         protected var _debug_sightRadius:CircleSprite,
                       _debug_attackRadius:CircleSprite;
 
@@ -61,6 +63,14 @@ package com.starmaid.Cibele.entities {
             this.walkTarget = new DHPoint(0, 0);
             this.footstepOffsets = new LRUDVector();
             this.setupDebugSprites();
+
+            this.emoji = {};
+            this.emoji[Emote.HAPPY] = new Emote(
+                Emote.HAPPY, (FlxG.state as GameState).ui_color_flag);
+            this.emoji[Emote.SAD] = new Emote(
+                Emote.SAD, (FlxG.state as GameState).ui_color_flag);
+            this.emoji[Emote.ANGRY] = new Emote(
+                Emote.ANGRY, (FlxG.state as GameState).ui_color_flag);
 
             if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_HI) {
                 this.nameText.color = 0xffffffff;
@@ -108,7 +118,16 @@ package com.starmaid.Cibele.entities {
                 FlxG.state.add(this._debug_sightRadius);
                 FlxG.state.add(this._debug_attackRadius);
             }
+            for (var k:Object in this.emoji) {
+                this.emoji[k].addVisibleObjects();
+            }
             this.particles.addVisibleObjects();
+        }
+
+        public function emote(mood:Number):void {
+            this.emoji[mood].run(
+                new DHPoint(this.pos.x + this.nameTextOffset.x,
+                            this.pos.y + this.nameTextOffset.y));
         }
 
         public function playAttackSound():void {

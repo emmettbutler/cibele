@@ -505,11 +505,7 @@ package com.starmaid.Cibele.management {
                               em:Number=111):void
         {
             if(procedural) {
-                new Emote(new DHPoint(char.pos.x + char.nameTextOffset.x,
-                                      char.pos.y + char.nameTextOffset.y),
-                          em,
-                          (FlxG.state as GameState).ui_color_flag
-                );
+                char.emote(em);
             } else {
                 var overlap:Boolean, element:UIElement, mood:Number;
                 for (var k:Object in this.emojiButtons) {
@@ -520,10 +516,7 @@ package com.starmaid.Cibele.management {
                                     element.height)
                     );
                     if (overlap) {
-                        new Emote(new DHPoint(char.pos.x + char.nameTextOffset.x,
-                                              char.pos.y + char.nameTextOffset.y),
-                                  mood,
-                                  (FlxG.state as GameState).ui_color_flag);
+                        char.emote(mood);
                     }
                 }
             }
