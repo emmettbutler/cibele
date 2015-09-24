@@ -60,6 +60,9 @@ package org.flixel.plugin.photonstorm
                                                  showCollider:Boolean=false,
                                                  rotationOrigin:DHPoint=null):Array
         {
+            if (target.framePixels == null) {
+                return [false, null];
+            }
             var pointA:Point = new Point;
             var pointB:Point = new Point;
 

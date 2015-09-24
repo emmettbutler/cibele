@@ -24,7 +24,7 @@ package com.starmaid.Cibele.management {
         private var colliderReceivingMachines:Array;
 
         public var macroImageName:String, colliderName:String;
-        public var tiles:Array, colliderTiles:Array, scaledBMDs:Array;
+        public var tiles:Array, colliderTiles:Array;
         public var rows:Number, cols:Number;
         public var playerRef:Player;
         public var enemiesRef:Array, curEnemy:SmallEnemy;
@@ -60,7 +60,6 @@ package com.starmaid.Cibele.management {
             }
             this.coordsToLoad = new Array();
             this.coordsToUnload = new Array();
-            this.scaledBMDs = new Array();
             this.receivingMachines = new Array();
             this.colliderReceivingMachines = new Array();
 
@@ -106,9 +105,6 @@ package com.starmaid.Cibele.management {
                     this.colliderReceivingMachines[i][k].unload();
                 }
             }
-            for (i = 0; i < this.scaledBMDs.length; i++) {
-                this.scaledBMDs[i].dispose();
-            }
             this.tiles = null;
             this.receivingMachines = null;
             this.colliderTiles = null;
@@ -121,26 +117,26 @@ package com.starmaid.Cibele.management {
         public function buildLoadCompleteCallback(tile:FlxExtSprite,
                                                   receivingMachine:Loader,
                                                   scaleFactor:Number=1):Function {
-            var that:BackgroundLoader = this;
             return function (event_load:Event):void {
                 tile.makeGraphic(10, 10, 0x00000000);
                 if (!tile.hasLoaded) {
+                    var scaledBMD:BitmapData;
                     var bmp:Bitmap = new Bitmap(event_load.target.content.bitmapData);
                     // scale bitmap up for collider tiles
                     if (scaleFactor != 1) {
                         var matrix:Matrix = new Matrix();
                         matrix.scale(scaleFactor, scaleFactor);
-                        var scaledBMD:BitmapData = new BitmapData(bmp.width * scaleFactor,
+                        scaledBMD = new BitmapData(bmp.width * scaleFactor,
                                                                   bmp.height * scaleFactor,
                                                                   true, 0x00000000);
                         scaledBMD.draw(bmp, matrix, null, null, null, true);
                         bmp = new Bitmap(scaledBMD, PixelSnapping.NEVER, true);
-                        that.scaledBMDs.push(scaledBMD);
                     }
                     // the last parameter is really important for transparent images
                     // it says "clear the pixel cache before loading this image"
                     // weird things happen with collider tiles when it's false
                     tile.loadExtGraphic(bmp, false, false, bmp.width, bmp.height, true);
+                    tile.scaledBMD = scaledBMD;
                 }
                 receivingMachine.contentLoaderInfo.removeEventListener(
                     Event.COMPLETE, arguments.callee);
@@ -202,8 +198,12 @@ package com.starmaid.Cibele.management {
             }
         }
 
-        public function unloadTile(row:int, col:int):void {
-            var tile:FlxExtSprite = this.getTileByIndex(row, col);
+        public function unloadTile(row:int, col:int, arr:Array=null):void {
+            if (arr == null) {
+                arr = this.tiles;
+            }
+
+            var tile:FlxExtSprite = this.getTileByIndex(row, col, arr);
             if (tile == null) {
                 return;
             }
@@ -377,6 +377,7 @@ package com.starmaid.Cibele.management {
                 row = coordsToUnload[i][0];
                 col = coordsToUnload[i][1];
                 this.unloadTile(row, col);
+                this.unloadTile(row, col, this.colliderTiles);
             }
             for (row = 0; row < rows; row++) {
                 for (col = 0; col < cols; col++) {

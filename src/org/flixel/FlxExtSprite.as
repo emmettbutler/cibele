@@ -11,6 +11,7 @@ package org.flixel
     {
         public var hasLoaded:Boolean = false;
         public var loading:Boolean = false;
+        public var scaledBMD:BitmapData;
 
         public function FlxExtSprite(X:Number, Y:Number, SimpleGraphic:Class=null):void
         {
@@ -78,6 +79,10 @@ package org.flixel
         public function unload():void {
             if (!this.hasLoaded) {
                 return;
+            }
+            if (this.scaledBMD != null) {
+                this.scaledBMD.dispose();
+                this.scaledBMD = null;
             }
             if (framePixels != null) {
                 framePixels.dispose();
