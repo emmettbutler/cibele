@@ -95,7 +95,7 @@ package com.starmaid.Cibele.entities {
             this.confirmLayer.active = false;
             this.confirmLayer.scrollFactor = new DHPoint(0, 0);
             this.confirmLayer.makeGraphic(
-                confirmLayerDim.x, confirmLayerDim.y, 0xffffffff
+                confirmLayerDim.x, confirmLayerDim.y, 0xaaffffff
             );
             this.confirmLayer.visible = false;
             this.confirmLayer.observeGlobalPause = false;
