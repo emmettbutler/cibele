@@ -187,7 +187,7 @@ package com.starmaid.Cibele.states {
             super.postCreate();
 
             var _screen:ScreenManager = ScreenManager.getInstance();
-            call_button = new UIElement(_screen.screenWidth * .35, _screen.screenHeight * .3);
+            call_button = new UIElement(_screen.screenWidth * .5 - 406/2, _screen.screenHeight * .5 - 260/2);
             call_button.loadGraphic(ImgCall,false,false,406,260);
             call_button.scrollFactor = new DHPoint(0, 0);
             FlxG.state.add(call_button);
