@@ -61,8 +61,10 @@ package org.flixel
             }
             height = frameHeight = Height;
             resetHelpers();
-            _pixels.dispose();
-            _pixels = null;
+            if (!Animated) {
+                _pixels.dispose();
+                _pixels = null;
+            }
             this.hasLoaded = true;
             return this;
         }
@@ -71,6 +73,10 @@ package org.flixel
             if (framePixels != null) {
                 framePixels.dispose();
                 framePixels = null;
+            }
+            if (_pixels != null) {
+                _pixels.dispose();
+                _pixels = null;
             }
             this.hasLoaded = false;
             this.hasStartedLoad = false;
