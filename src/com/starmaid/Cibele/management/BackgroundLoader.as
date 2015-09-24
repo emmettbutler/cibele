@@ -323,7 +323,8 @@ package com.starmaid.Cibele.management {
                             playerRow == row ? playerRow : (row + (playerRow > row ? 1 : -1)),
                             playerCol == col ? playerCol : (col + (playerCol > col ? 1 : -1)),
                             this.colliderTiles);
-                        thisTile = this.getTileByIndex(row, col);
+                        thisTile = this.getTileByIndex(row, col,
+                                                       this.colliderTiles);
                         if (this.tileIsOnscreen(nextTileIn) ||
                             this.tileIsOnscreen(thisTile))
                         {

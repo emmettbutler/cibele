@@ -97,5 +97,10 @@ package com.starmaid.Cibele.management {
             };
         }
 
+        public function unload():void {
+            for (var i:int = 0; i < doors.length; i++) {
+                doors[i]['object'].unload();
+            }
+        }
     }
 }
