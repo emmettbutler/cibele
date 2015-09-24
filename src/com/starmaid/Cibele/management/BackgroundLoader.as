@@ -24,7 +24,7 @@ package com.starmaid.Cibele.management {
         private var colliderReceivingMachines:Array;
 
         public var macroImageName:String, colliderName:String;
-        public var tiles:Array, colliderTiles:Array;
+        public var tiles:Array, colliderTiles:Array, scaledBMDs:Array;
         public var rows:Number, cols:Number;
         public var playerRef:Player;
         public var enemiesRef:Array, curEnemy:SmallEnemy;
@@ -60,6 +60,7 @@ package com.starmaid.Cibele.management {
             }
             this.coordsToLoad = new Array();
             this.coordsToUnload = new Array();
+            this.scaledBMDs = new Array();
             this.receivingMachines = new Array();
             this.colliderReceivingMachines = new Array();
 
@@ -105,6 +106,9 @@ package com.starmaid.Cibele.management {
                     this.colliderReceivingMachines[i][k].unload();
                 }
             }
+            for (i = 0; i < this.scaledBMDs.length; i++) {
+                this.scaledBMDs[i].dispose();
+            }
             this.tiles = null;
             this.receivingMachines = null;
             this.colliderTiles = null;
@@ -117,6 +121,7 @@ package com.starmaid.Cibele.management {
         public function buildLoadCompleteCallback(tile:FlxExtSprite,
                                                   receivingMachine:Loader,
                                                   scaleFactor:Number=1):Function {
+            var that:BackgroundLoader = this;
             return function (event_load:Event):void {
                 tile.makeGraphic(10, 10, 0x00000000);
                 if (!tile.hasLoaded) {
@@ -130,6 +135,7 @@ package com.starmaid.Cibele.management {
                                                                   true, 0x00000000);
                         scaledBMD.draw(bmp, matrix, null, null, null, true);
                         bmp = new Bitmap(scaledBMD, PixelSnapping.NEVER, true);
+                        that.scaledBMDs.push(scaledBMD);
                     }
                     // the last parameter is really important for transparent images
                     // it says "clear the pixel cache before loading this image"
