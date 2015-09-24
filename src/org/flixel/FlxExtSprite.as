@@ -10,7 +10,7 @@ package org.flixel
     public class FlxExtSprite extends FlxSprite
     {
         public var hasLoaded:Boolean = false;
-        public var hasStartedLoad:Boolean = false;
+        public var loading:Boolean = false;
 
         public function FlxExtSprite(X:Number, Y:Number, SimpleGraphic:Class=null):void
         {
@@ -24,6 +24,11 @@ package org.flixel
 
         public function loadExtGraphic(Graphic:Bitmap,Animated:Boolean=false,Reverse:Boolean=false,Width:uint=0,Height:uint=0,Unique:Boolean=false):FlxSprite
         {
+            if (this.hasLoaded) {
+                return this;
+            }
+            this.hasLoaded = false;
+            this.loading = true;
             _bakedRotation = 0;
 
             if (Reverse)
@@ -66,10 +71,14 @@ package org.flixel
                 _pixels = null;
             }
             this.hasLoaded = true;
+            this.loading = false;
             return this;
         }
 
         public function unload():void {
+            if (!this.hasLoaded) {
+                return;
+            }
             if (framePixels != null) {
                 framePixels.dispose();
                 framePixels = null;
@@ -79,7 +88,7 @@ package org.flixel
                 _pixels = null;
             }
             this.hasLoaded = false;
-            this.hasStartedLoad = false;
+            this.loading = false;
         }
     }
 }

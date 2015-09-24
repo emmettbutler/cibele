@@ -182,8 +182,8 @@ package com.starmaid.Cibele.management {
 
             var receivingMachine:Loader = machines[row][col];
             var numberString:String = this.getTileIndex(row, col);
-            if (!tile.hasStartedLoad) {
-                tile.hasStartedLoad = true;
+            if (!tile.hasLoaded && !tile.loading) {
+                tile.loading = true;
 
                 receivingMachine.contentLoaderInfo.addEventListener(Event.COMPLETE,
                     this.buildLoadCompleteCallback(tile, receivingMachine,
@@ -284,11 +284,9 @@ package com.starmaid.Cibele.management {
         public function loadAllTiles():void {
             for (var row:int = 0; row < rows; row++) {
                 for (var col:int = 0; col < cols; col++) {
-                    if (!this.tileHasLoaded(row, col, this.colliderTiles)) {
-                        this.loadTile(row, col, this.colliderTiles,
-                                      this.colliderReceivingMachines,
-                                      this.colliderName, true);
-                    }
+                    this.loadTile(row, col, this.colliderTiles,
+                                  this.colliderReceivingMachines,
+                                  this.colliderName, true);
                 }
             }
         }
@@ -348,25 +346,19 @@ package com.starmaid.Cibele.management {
                 row = coordsToLoad[i][0];
                 col = coordsToLoad[i][1];
                 // load background tiles
-                if (!this.tileHasLoaded(row, col)) {
-                    if (!ScreenManager.getInstance().DEBUG && this.shouldLoadMap) {
-                        this.loadTile(row, col, null, null, this.macroImageName);
-                    }
+                if (!ScreenManager.getInstance().DEBUG && this.shouldLoadMap) {
+                    this.loadTile(row, col, null, null, this.macroImageName);
                 }
                 // load tile colliders
-                if (!this.tileHasLoaded(row, col, this.colliderTiles)) {
-                    this.loadTile(row, col, this.colliderTiles,
-                                  this.colliderReceivingMachines,
-                                  this.colliderName, true);
-                }
+                this.loadTile(row, col, this.colliderTiles,
+                              this.colliderReceivingMachines,
+                              this.colliderName, true);
             }
+            // unload background tiles that are far offscreen
             for (i = 0; i < coordsToUnload.length; i++) {
                 row = coordsToUnload[i][0];
                 col = coordsToUnload[i][1];
-                // unload background tiles that are far offscreen
-                if (this.tileHasLoaded(row, col)) {
-                    this.unloadTile(row, col);
-                }
+                this.unloadTile(row, col);
             }
             for (row = 0; row < rows; row++) {
                 for (col = 0; col < cols; col++) {
