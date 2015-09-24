@@ -41,9 +41,11 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function setVisible(v:Boolean):void {
-            super.setVisible(v);
-            this._attackIcon.visible = v;
-            this._activeText.visible = v;
+            if(this._attackIcon != null && this._activeText != null) {
+                super.setVisible(v);
+                this._attackIcon.visible = v;
+                this._activeText.visible = v;
+            }
         }
 
         override public function addVisibleObjects():void {

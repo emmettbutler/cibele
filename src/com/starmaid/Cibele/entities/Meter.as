@@ -84,9 +84,11 @@ package com.starmaid.Cibele.entities {
         }
 
         public function setVisible(v:Boolean):void {
-            this._barFrame.visible = v;
-            this._innerBar.visible = v;
-            this._changeText.text = "";
+            if(this._barFrame != null && this._innerBar != null && this._changeText != null) {
+                this._barFrame.visible = v;
+                this._innerBar.visible = v;
+                this._changeText.text = "";
+            }
         }
 
         public function isVisible():Boolean {
