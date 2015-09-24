@@ -149,7 +149,7 @@ def run_main(conf_file, runtime):
 def package_application(entry_point_class, swf_path, platform="air", outfile_name="CibeleBeta"):
     command = 'adt -certificate -cn SelfSign -ou QE -o "Star_Maid_Games" -c US 2048-RSA cibelecert.pfx AmanoJyakku!'
     print command
-    subprocess.call(command.split())
+    subprocess.call(command.split(), shell=platform == "windows")
 
     outfile = "{}.air".format(outfile_name)
     target = ""
