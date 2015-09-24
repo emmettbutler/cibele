@@ -78,8 +78,8 @@ package org.flixel.plugin.photonstorm
                 var degrees:Number = contact.angle;
                 var angle_in_radians:Number = degrees * Math.PI / 180;
                 var matrixImage:BitmapData = new BitmapData(
-                    Math.max(contact.width, contact.height) * 2,
-                    Math.max(contact.width, contact.height) * 2, true,
+                    Math.max(contact.width, contact.height, 1) * 2,
+                    Math.max(contact.width, contact.height, 1) * 2, true,
                     0x00cccccc);
                 var rotationMatrix:Matrix = new Matrix();
                 rotationMatrix.rotate(angle_in_radians);
