@@ -97,7 +97,9 @@ package com.starmaid.Cibele.management {
         public function destroy():void {
             for (var i:int = 0; i < this.tiles.length; i++) {
                 for (var k:int = 0; k < this.tiles[i].length; k++) {
+                    this.tiles[i][k].unload();
                     this.tiles[i][k].destroy();
+                    this.colliderTiles[i][k].unload();
                     this.colliderTiles[i][k].destroy();
                     this.receivingMachines[i][k].unload();
                     this.colliderReceivingMachines[i][k].unload();
@@ -282,6 +284,16 @@ package com.starmaid.Cibele.management {
         }
 
         public function loadAllTiles():void {
+            for (var row:int = 0; row < rows; row++) {
+                for (var col:int = 0; col < cols; col++) {
+                    this.loadTile(row, col, this.colliderTiles,
+                                  this.colliderReceivingMachines,
+                                  this.colliderName, true);
+                }
+            }
+        }
+
+        public function unloadAllTiles():void {
             for (var row:int = 0; row < rows; row++) {
                 for (var col:int = 0; col < cols; col++) {
                     this.loadTile(row, col, this.colliderTiles,
