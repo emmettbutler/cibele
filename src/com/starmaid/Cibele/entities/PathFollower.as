@@ -405,6 +405,9 @@ package com.starmaid.Cibele.entities {
 
         override public function resolveStatePostAttack():void {
             super.resolveStatePostAttack();
+            if (!(FlxG.state is LevelMapState)) {
+                return;
+            }
             if (!this.evaluateEnemyDistance()) {
                 this.enterIdleState();
             }

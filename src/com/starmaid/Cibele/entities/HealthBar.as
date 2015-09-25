@@ -48,6 +48,12 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        override public function destroy():void {
+            this._attackIcon = null;
+            this._activeText = null;
+            super.destroy();
+        }
+
         override public function addVisibleObjects():void {
             super.addVisibleObjects();
             FlxG.state.add(this._attackIcon);
