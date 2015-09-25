@@ -401,6 +401,7 @@ package com.starmaid.Cibele.states {
         }
 
         public function playCredits():void {
+            ScreenManager.getInstance().resetSingletons();
             FlxG.switchState(new CreditsState());
         }
 
