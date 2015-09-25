@@ -192,6 +192,13 @@ package com.starmaid.Cibele.states {
             }
         }
 
+        override public function destroy():void {
+            this.sparkles = null;
+            this.droplets = null;
+            this.mists = null;
+            super.destroy();
+        }
+
         override public function addEnvironmentDetails():void {
             this.setupSparkles();
         }

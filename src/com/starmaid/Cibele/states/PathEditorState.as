@@ -63,6 +63,14 @@ package com.starmaid.Cibele.states {
 
         override public function destroy():void {
             this.removeEventListener(GameState.EVENT_ENEMY_DIED, this.enemyDied);
+            this.enemies.destroy();
+            this.enemies = null;
+            this.pathWalker = null;
+            this._mapnodes.clearNodes();
+            this._mapnodes = null;
+            this._path.destroy();
+            this._path = null;
+            this.teamPowerBar = null;
             super.destroy();
         }
 

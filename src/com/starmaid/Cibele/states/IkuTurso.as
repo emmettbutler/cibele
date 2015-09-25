@@ -131,6 +131,12 @@ package com.starmaid.Cibele.states {
             }
         }
 
+        override public function destroy():void {
+            this.bubbles = null;
+            this.seaweeds = null;
+            super.destroy();
+        }
+
         override public function addEnvironmentDetails():void {
             this.setupBubbles();
             this.setupSeaweed();

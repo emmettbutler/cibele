@@ -238,5 +238,10 @@ package com.starmaid.Cibele.management {
             }
             return ret;
         }
+
+        public function destroy():void {
+            this.nodes = null;
+            this.nodesHash = null;
+        }
     }
 }

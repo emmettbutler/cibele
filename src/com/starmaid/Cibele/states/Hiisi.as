@@ -198,6 +198,12 @@ package com.starmaid.Cibele.states {
             }
         }
 
+        override public function destroy():void {
+            this.steams = null;
+            this.rocks = null;
+            super.destroy();
+        }
+
         override public function addEnvironmentDetails():void {
             this.setupSteam();
         }
