@@ -401,6 +401,12 @@ package com.starmaid.Cibele.management {
             }
         }
 
+        public function disposeSprites():void {
+            for(var i:int = 1; i < this.threads.length; i++){
+                this.threads[i].unloadSprites();
+            }
+        }
+
         public function reloadPersistentObjects():void {
             this.ui_loaded = false;
             this.initNotifications(true);

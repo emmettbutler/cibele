@@ -241,6 +241,10 @@ package com.starmaid.Cibele.management {
             return false;
         }
 
+        public function disposeSprites():void {
+            this.folder_structure = null;
+        }
+
         public function update():void {
             var _screen:ScreenManager = ScreenManager.getInstance();
 
