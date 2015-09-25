@@ -204,6 +204,7 @@ package com.starmaid.Cibele.states {
 
         override public function destroy():void {
             this.loader.unload();
+            this.fernBase.unload();
             super.destroy();
         }
     }

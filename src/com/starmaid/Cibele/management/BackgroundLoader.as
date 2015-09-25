@@ -126,7 +126,6 @@ package com.starmaid.Cibele.management {
                                                   receivingMachine:Loader,
                                                   scaleFactor:Number=1):Function {
             return function (event_load:Event):void {
-                tile.makeGraphic(10, 10, 0x00000000);
                 if (!tile.hasLoaded) {
                     var scaledBMD:BitmapData;
                     var bmp:Bitmap = new Bitmap(event_load.target.content.bitmapData);
@@ -459,6 +458,7 @@ package com.starmaid.Cibele.management {
                                                             bmp.height * bgScale,
                                                             true, 0x000000);
                     scaledBMD.draw(bmp, matrix, null, null, null, true);
+                    bg.scaledBMD = scaledBMD;
                     bmp = new Bitmap(scaledBMD, PixelSnapping.NEVER, true);
                     bg.loadExtGraphic(bmp, false, false, bmp.width, bmp.height, true);
                     bg.x = origin.x;

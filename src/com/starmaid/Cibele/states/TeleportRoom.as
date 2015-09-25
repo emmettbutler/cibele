@@ -84,5 +84,11 @@ package com.starmaid.Cibele.states {
                 this.bgLoader.collideTile(this.bgCollider);
             }
         }
+
+        override public function destroy():void {
+            this.bgCollider.unload();
+            this.bgImage.unload();
+            super.destroy();
+        }
     }
 }
