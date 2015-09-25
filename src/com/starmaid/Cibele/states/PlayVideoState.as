@@ -65,6 +65,7 @@ package com.starmaid.Cibele.states {
             videoStream.removeEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
             videoStream.dispose();
             videoStream = null;
+            FlxG.stage.removeChild(video);
             super.destroy();
         }
 
