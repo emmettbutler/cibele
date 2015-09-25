@@ -70,6 +70,7 @@ def compile_main(entry_point_class,
                  debug_level,
                  mute=False,
                  short_dialogue=False,
+                 quick_levels=False,
                  disable_saves=False,
                  windowed=False,
                  platform="air"):
@@ -102,7 +103,8 @@ def compile_main(entry_point_class,
         "-define=CONFIG::mute,{}".format("true" if mute else "false"),
         "-define=CONFIG::windowed,{}".format("true" if windowed else "false"),
         "-define=CONFIG::disable_saves,{}".format("true" if disable_saves else "false"),
-        "-define=CONFIG::short_dialogue,{}".format("true" if short_dialogue else "false")
+        "-define=CONFIG::short_dialogue,{}".format("true" if short_dialogue else "false"),
+        "-define=CONFIG::quick_levels,{}".format("true" if quick_levels else "false")
     ]
     print " ".join(command)
     subprocess.check_call(command, shell=platform == "windows")
@@ -180,6 +182,7 @@ def main():
         swf_path = compile_main(entry_point_class.split('.')[-1], libpath,
                                 args.debug_level[0], mute=args.mute,
                                 short_dialogue=args.short_dialogue,
+                                quick_levels=args.quick_levels,
                                 disable_saves=args.disable_saves,
                                 windowed=args.windowed,
                                 platform=args.platform)
@@ -218,6 +221,8 @@ if __name__ == "__main__":
                         help="Mute all sounds in this build")
     parser.add_argument('--short_dialogue', '-i', action="store_true",
                         help="Shorten all spoken dialogue for testing")
+    parser.add_argument('--quick_levels', '-q', action="store_true",
+                        help="Auto-complete levels after a few seconds")
     parser.add_argument('--disable_saves', '-s', action="store_true",
                         help="Compile without load-from-save feature")
     parser.add_argument('--windowed', '-w', action="store_true",

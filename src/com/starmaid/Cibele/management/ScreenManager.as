@@ -28,6 +28,7 @@ package com.starmaid.Cibele.management {
         public var MUTE:Boolean = false;
         public var SAVES:Boolean = true;
         public var SHORT_DIALOGUE:Boolean = false;
+        public var QUICK_LEVELS:Boolean = false;
         public var WINDOWED:Boolean = false;
         public var RELEASE:Boolean = true;
 
@@ -58,6 +59,9 @@ package com.starmaid.Cibele.management {
             }
             CONFIG::short_dialogue {
                 this.SHORT_DIALOGUE = true;
+            }
+            CONFIG::quick_levels {
+                this.QUICK_LEVELS = true;
             }
 
             FlxG.stage.frameRate = 60;

@@ -182,6 +182,14 @@ package com.starmaid.Cibele.states {
                     CONVO_1_HALL
                 );
             }
+
+            if (ScreenManager.getInstance().QUICK_LEVELS) {
+                GlobalTimer.getInstance().setMark(
+                    "end_level_eu",
+                    10 * GameSound.MSEC_PER_SEC,
+                    this.playEndFilm
+                )
+            }
         }
 
         override public function addEnvironmentDetails():void {
