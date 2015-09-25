@@ -113,7 +113,7 @@ package com.starmaid.Cibele.entities {
         }
 
         protected function setupSmoke():void {
-            this.smoke = new ParticleExplosion(10, Enemy.PARTICLE_SMOKE, 3, .8,
+            this.smoke = new ParticleExplosion(7, Enemy.PARTICLE_SMOKE, 3, .8,
                                                7, 5, .3, this, 4);
             this.smoke.addVisibleObjects();
         }
@@ -198,6 +198,12 @@ package com.starmaid.Cibele.entities {
                 return;
             }
             this._healthBar.setVisible(false);
+        }
+
+        override public function destroy():void {
+            this.smoke.destroy();
+            this._healthBar.destroy();
+            super.destroy();
         }
 
         public function die(p:PartyMember):void {

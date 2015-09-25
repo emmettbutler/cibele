@@ -15,7 +15,7 @@ package com.starmaid.Cibele.entities {
             super(ZERO_POINT);
 
             this.sprites = new Array();
-            this.count = 17;
+            this.count = 4;
             this.interval = 300;
             this.target_ = tar;
             this.slug = "fadingtrail" + Math.random() * 10000000;

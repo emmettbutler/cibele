@@ -22,6 +22,11 @@ package com.starmaid.Cibele.entities {
                                        0xff000000);
         }
 
+        override public function destroy():void {
+            this.attack_sprite = null;
+            super.destroy();
+        }
+
         override public function setupSprites():void {
             super.setupSprites();
             this.attack_sprite.visible = false;

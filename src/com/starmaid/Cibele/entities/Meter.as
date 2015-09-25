@@ -45,6 +45,13 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        override public function destroy():void {
+            this._barFrame = null;
+            this._innerBar = null;
+            this._changeText = null;
+            super.destroy();
+        }
+
         public function setPoints(points:Number):void {
             if (this._curPoints == points) {
                 return;
