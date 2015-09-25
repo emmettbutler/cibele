@@ -89,6 +89,7 @@ package com.starmaid.Cibele.states {
             this.bgLoader.destroy();
             PopUpManager.getInstance().disposeSprites();
             MessageManager.getInstance().disposeSprites();
+            ScreenManager.getInstance().resetSingletons();
             super.destroy();
         }
 

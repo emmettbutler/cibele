@@ -195,12 +195,16 @@ package com.starmaid.Cibele.management {
             (FlxG.state as GameState).pause();
         }
 
-        public function resetGame():void {
-            PopUpManager.GAME_ACTIVE = false;
+        public function resetSingletons():void {
             SoundManager.getInstance().resetAll();
             GlobalTimer.resetInstance();
             MessageManager.resetInstance();
             PopUpManager.resetInstance();
+        }
+
+        public function resetGame():void {
+            PopUpManager.GAME_ACTIVE = false;
+            this.resetSingletons();
             (FlxG.state as GameState).resume();
             FlxG.switchState(new StartScreen());
         }
