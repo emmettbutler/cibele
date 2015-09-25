@@ -99,11 +99,19 @@ package com.starmaid.Cibele.management {
                 for (var k:int = 0; k < this.tiles[i].length; k++) {
                     this.tiles[i][k].unload();
                     this.tiles[i][k].destroy();
+                    this.tiles[i][k] = null;
                     this.colliderTiles[i][k].unload();
                     this.colliderTiles[i][k].destroy();
+                    this.colliderTiles[i][k] = null;
                     this.receivingMachines[i][k].unload();
+                    this.receivingMachines[i][k] = null;
                     this.colliderReceivingMachines[i][k].unload();
+                    this.colliderReceivingMachines[i][k] = null;
                 }
+                this.receivingMachines[i] = null;
+                this.colliderReceivingMachines[i] = null;
+                this.colliderTiles[i] = null;
+                this.tiles[i] = null;
             }
             this.tiles = null;
             this.receivingMachines = null;
