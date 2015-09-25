@@ -207,12 +207,6 @@ package com.starmaid.Cibele.states {
                                                                    FlxG.mouse.y));
                     add(en);
                     this.enemies.addEnemy(en);
-                } else if (FlxG.keys["Q"]) {
-                    /*
-                    var boss:BossEnemy = new (this.getBossClass())(new DHPoint(FlxG.mouse.x,FlxG.mouse.y));
-                    add(boss);
-                    this.enemies.addEnemy(boss);
-                    */
                 }
             }
 
