@@ -54,16 +54,20 @@ package com.starmaid.Cibele.entities {
             this._state = STATE_PRE_APPEAR;
             this.visible = false;
 
+            this._initNotificationText();
+
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.getStateString", "boss.state");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.pos", "boss.pos");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.footPos", "boss.footPos");
+        }
+
+        public function _initNotificationText():void {
             this._notificationText = new FlxText(0, ScreenManager.getInstance().screenHeight * .7, ScreenManager.getInstance().screenWidth, "");
             this._notificationText.setFormat("NexaBold-Regular", 24, 0xffe2678e, "left");
             this._notificationText.scrollFactor = new DHPoint(0,0);
             this._notificationText.size = 0;
             this._notificationText.alignment = "center";
             this._notificationText.color = this.notificationTextColor;
-
-            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.getStateString", "boss.state");
-            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.pos", "boss.pos");
-            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.footPos", "boss.footPos");
         }
 
         public function setPath(path:Path):void {
