@@ -232,7 +232,12 @@ package com.starmaid.Cibele.states {
             if (canConnect && ScreenManager.getInstance().DEBUG) {
                 trace("adding ray of length: " + ray.width);
             }
-            return {"canConnect": canConnect, "length": ray.width};
+            var w:Number = ray.width;
+            if (!ScreenManager.getInstance().DEBUG) {
+                ray.destroy();
+                ray = null;
+            }
+            return {"canConnect": canConnect, "length": w};
         }
 
         public function playFirstConvo():void {

@@ -162,6 +162,8 @@ package org.flixel.plugin.photonstorm
                 matrixImage = null;
                 contactPixels = null;
             }
+            overlapArea.dispose();
+            overlapArea = null;
 
             if (overlap.isEmpty()) {
                 return [false, null];

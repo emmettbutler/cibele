@@ -157,7 +157,7 @@ package com.starmaid.Cibele.entities {
             // examine nearby nodes to find the shortest path along the graph
             // from current position to worldPos
 
-            var maxTries:Number = 10;
+            var maxTries:Number = 3;
 
             // get closest N nodes to player
             var closeNodes:Array = this._mapnodes.getNClosestGenericNodes(maxTries, this.footPos);

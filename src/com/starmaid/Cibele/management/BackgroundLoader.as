@@ -37,8 +37,6 @@ package com.starmaid.Cibele.management {
         private var enemyContacts:Array;
         private var screenPos:DHPoint;
 
-        public var dbgText:FlxText;
-
         public function BackgroundLoader(macroImageName:String="",
                                          gridDimensions:DHPoint=null,
                                          estTileDimensions:DHPoint=null,
@@ -87,11 +85,6 @@ package com.starmaid.Cibele.management {
                     receivingMachines[i][j] = new Loader();
                 }
             }
-
-            this.dbgText = new FlxText(100, 100, FlxG.width, "");
-            this.dbgText.color = 0xff0000ff;
-            this.dbgText.scrollFactor = new FlxPoint(0, 0);
-            FlxG.state.add(dbgText);
         }
 
         public function destroy():void {
@@ -273,26 +266,43 @@ package com.starmaid.Cibele.management {
             return this.getTileByIndex(coords[0], coords[1], arr);
         }
 
-        public function collideRay(ray:FlxSprite, pt1:DHPoint, pt2:DHPoint):Boolean {
-            var tilesToCheck:Array = new Array();
-            //tilesToCheck.push(this.getTileAtPoint(pt1, this.colliderTiles));
-            //tilesToCheck.push(this.getTileAtPoint(pt2, this.colliderTiles));
-
-            var i:int;
-
-            for (i = 0; i < this.colliderTiles.length; i++) {
-                for (var k:int = 0; k < this.colliderTiles[i].length; k++) {
-                    tilesToCheck.push(this.colliderTiles[i][k]);
+        public function pointIsInBounds(checkCoords:Array, coords1:Array, coords2:Array):Boolean {
+            if (coords1[0] < coords2[0]) {
+                if (coords1[1] < coords2[1]) {
+                    return checkCoords[0] >= coords1[0] && checkCoords[0] <= coords2[0] && checkCoords[1] >= coords1[1] && checkCoords[1] <= coords2[1];
+                } else {
+                    return checkCoords[0] >= coords1[0] && checkCoords[0] <= coords2[0] && checkCoords[1] >= coords2[1] && checkCoords[1] <= coords1[1];
+                }
+            } else {
+                if (coords1[1] < coords2[1]) {
+                    return checkCoords[0] >= coords2[0] && checkCoords[0] <= coords1[0] && checkCoords[1] >= coords1[1] && checkCoords[1] <= coords2[1];
+                } else {
+                    return checkCoords[0] >= coords2[0] && checkCoords[0] <= coords1[0] && checkCoords[1] >= coords2[1] && checkCoords[1] <= coords1[1];
                 }
             }
+        }
 
+        public function collideRay(ray:FlxSprite, pt1:DHPoint, pt2:DHPoint):Boolean {
+            var tilesToCheck:Array = new Array();
+            var i:int, pt1Coords:Array, pt2Coords:Array;
+            pt1Coords = this.getCoordsAtPoint(pt1);
+            pt2Coords = this.getCoordsAtPoint(pt2);
+            for (i = 0; i < this.colliderTiles.length; i++) {
+                for (var k:int = 0; k < this.colliderTiles[i].length; k++) {
+                    if (this.pointIsInBounds([i, k], pt1Coords, pt2Coords)) {
+                        tilesToCheck.push(this.colliderTiles[i][k]);
+                    }
+                }
+            }
             var colliderTile:FlxExtSprite;
             for (i = 0; i < tilesToCheck.length; i++) {
                 colliderTile = tilesToCheck[i];
                 if (FlxCollision.pixelPerfectCheck(ray, colliderTile, 255, null, 0, 0, false, pt1)[0]) {
                     return true;
                 }
+                tilesToCheck[i] = null;
             }
+            tilesToCheck.length = 0;
             return false;
         }
 

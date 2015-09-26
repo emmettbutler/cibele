@@ -55,7 +55,9 @@ package com.starmaid.Cibele.management {
                 for (var j:int = 0; j < this.tiles[i].length; j++) {
                     this.tiles[i][j].destroy();
                 }
+                this.tiles[i] = null;
             }
+            this.tiles = null;
         }
 
         public function update():void {
