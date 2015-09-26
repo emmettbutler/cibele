@@ -39,7 +39,7 @@ package com.starmaid.Cibele.entities {
         protected var damageLockMap:Dictionary;
         protected var smoke:ParticleExplosion;
         public var footPos:DHPoint, footPosOffset:DHPoint, basePosOffset:DHPoint;
-        private var lastTrackingDirUpdateTime:Number = -1;
+        protected var lastTrackingDirUpdateTime:Number = -1;
         protected var flipFacing:Boolean = false;
         public var damagedByPartyMember:PartyMember;
 
@@ -294,6 +294,21 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        public function doState__TRACKING():void {
+            if (this.timeAlive - this.lastTrackingDirUpdateTime > 1300) {
+                this.lastTrackingDirUpdateTime = this.timeAlive;
+                var mul:Number = (FlxG.state as LevelMapState).enemyDirMultiplier;
+                if (mul != 1) {
+                    this.dir = this.closestPartyMemberDisp.normalized().mulScl(mul);
+                } else {
+                    this.dir = this.closestPartyMemberDisp.normalized();
+                }
+            }
+            if (!this.closestPartyMemberIsInTrackingRange()) {
+                this.enterIdleState();
+            }
+        }
+
         public function enterIdleState():void {
             this._state = STATE_IDLE;
             this.visible = true;
@@ -356,18 +371,7 @@ package com.starmaid.Cibele.entities {
                     break;
 
                 case STATE_TRACKING:
-                    if (this.timeAlive - this.lastTrackingDirUpdateTime > 1300) {
-                        this.lastTrackingDirUpdateTime = this.timeAlive;
-                        var mul:Number = (FlxG.state as LevelMapState).enemyDirMultiplier;
-                        if (mul != 1) {
-                            this.dir = this.closestPartyMemberDisp.normalized().mulScl(mul);
-                        } else {
-                            this.dir = this.closestPartyMemberDisp.normalized();
-                        }
-                    }
-                    if (!this.closestPartyMemberIsInTrackingRange()) {
-                        this.enterIdleState();
-                    }
+                    this.doState__TRACKING();
                     break;
 
                 case STATE_RECOIL:
