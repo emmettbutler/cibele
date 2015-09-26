@@ -224,6 +224,9 @@ package com.starmaid.Cibele.states {
         }
 
         public function ichiStartEmote():void {
+            if (pathWalker == null) {
+                return;
+            }
             if(pathWalker.inViewOfPlayer()) {
                 PopUpManager.getInstance().emote(new FlxRect(0,0), this.pathWalker, true, Emote.HAPPY);
             } else {

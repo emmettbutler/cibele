@@ -28,6 +28,7 @@ package com.starmaid.Cibele.base {
         protected var pausable:Boolean = true;
         protected var fadeLayer:GameObject;
         private var pauseScreen:PauseScreen;
+        private var callbackRefs:Array;
         private var sortedObjects:Array;
         private var postFadeFn:Function;
         private var postFadeWait:Number;
@@ -63,6 +64,7 @@ package com.starmaid.Cibele.base {
             this.updateMessages = messages;
             this.enable_fade = fade;
             this.slug = "" + (Math.random() * 1000000);
+            this.callbackRefs = new Array();
 
             this.ui_color_flag = UICOLOR_DEFAULT;
 
@@ -120,6 +122,17 @@ package com.starmaid.Cibele.base {
 
         override public function destroy():void {
             FlxG.stage.removeEventListener(MouseEvent.MOUSE_UP, clickHandler);
+            this.callbackRefs.length = 0;
+            this.callbackRefs = null;
+            if (this.enable_fade) {
+                this.fadeLayer.destroy();
+                this.fadeLayer = null;
+            }
+            this.baseLayer.destroy();
+            this.baseLayer = null;
+            this.pauseScreen.destroy();
+            this.pauseScreen = null;
+            trace("GameState.destroy()");
             super.destroy();
         }
 
@@ -422,7 +435,8 @@ package com.starmaid.Cibele.base {
         }
 
         public function addEventListener(event:String, callback:Function):void {
-            FlxG.stage.addEventListener(event, callback);
+            callbackRefs.push(callback);
+            FlxG.stage.addEventListener(event, callback, false, 0, true);
         }
 
         public function removeEventListener(event:String, callback:Function):void {

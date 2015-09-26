@@ -115,7 +115,9 @@ package com.starmaid.Cibele.entities {
             this.attackSounds = new Array(SfxAttack1, SfxAttack2);
 
             this.finalTarget = new DHPoint(0, 0);
-            this.debugText.color = 0xff444444;
+            if (this.debugText != null) {
+                this.debugText.color = 0xff444444;
+            }
 
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
             this.lastPositions = new Deque(3);
@@ -155,6 +157,14 @@ package com.starmaid.Cibele.entities {
         override public function destroy():void {
             FlxG.stage.removeEventListener(MouseEvent.MOUSE_DOWN,
                                            this.handleMouseDown);
+            if (this.attack_sprite != null) {
+                this.attack_sprite.destroy();
+                this.attack_sprite = null;
+                this.click_anim.destroy();
+                this.click_anim = null;
+                this.mapHitbox.destroy();
+                this.mapHitbox = null;
+            }
             super.destroy();
         }
 

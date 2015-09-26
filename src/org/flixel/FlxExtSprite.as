@@ -16,7 +16,6 @@ package org.flixel
         public function FlxExtSprite(X:Number, Y:Number, SimpleGraphic:Class=null):void
         {
             super(X, Y, SimpleGraphic);
-            this.makeGraphic(10, 10, 0x00000000);
         }
 
         override public function update():void {

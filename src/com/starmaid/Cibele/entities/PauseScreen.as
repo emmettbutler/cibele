@@ -140,6 +140,26 @@ package com.starmaid.Cibele.entities {
             this.visible = false;
         }
 
+        public function destroy():void {
+            this.baseLayer.destroy();
+            this.baseLayer = null;
+            this.quitButton.destroy();
+            this.quitButton = null;
+            this.titleScreenButton.destroy();
+            this.titleScreenButton = null;
+            this.resumeButton.destroy();
+            this.resumeButton = null;
+            this.confirmLayer.destroy();
+            this.confirmLayer = null;
+            this.confirmButton.destroy();
+            this.confirmButton = null;
+            this.confirmText.destroy();
+            this.confirmText = null;
+            this.cancelButton.destroy();
+            this.cancelButton = null;
+            this._state = null;
+        }
+
         public function confirmAction(fn:Function, text:String):void {
             this.confirmText.text = text;
             this.showConfirmDialogue();
