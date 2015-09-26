@@ -115,9 +115,11 @@ package com.starmaid.Cibele.base {
         public function defaultEnd():void { }
 
         public function stopSound():void {
-            soundObject.stop();
-            soundObject.destroy();
-            soundObject = null;
+            if (soundObject != null) {
+                soundObject.stop();
+                soundObject.destroy();
+                soundObject = null;
+            }
             this.running = false;
             this.stopped = true;
             if (this.endCallback != null && !this.callbackLock) {
