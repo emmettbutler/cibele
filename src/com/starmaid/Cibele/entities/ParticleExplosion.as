@@ -51,6 +51,13 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        public function destroy():void {
+            for(var i:int = 0; i < this.particles.length; i++) {
+                this.particles[i].destroy();
+            }
+            this.particles = null;
+        }
+
         public function set gravity(g:DHPoint):void {
             this.particleGravity.x = g.x;
             this.particleGravity.y = g.y;

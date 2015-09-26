@@ -115,7 +115,9 @@ package com.starmaid.Cibele.entities {
             this.attackSounds = new Array(SfxAttack1, SfxAttack2);
 
             this.finalTarget = new DHPoint(0, 0);
-            this.debugText.color = 0xff444444;
+            if (this.debugText != null) {
+                this.debugText.color = 0xff444444;
+            }
 
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
             this.lastPositions = new Deque(3);
@@ -155,6 +157,14 @@ package com.starmaid.Cibele.entities {
         override public function destroy():void {
             FlxG.stage.removeEventListener(MouseEvent.MOUSE_DOWN,
                                            this.handleMouseDown);
+            if (this.attack_sprite != null) {
+                this.attack_sprite.destroy();
+                this.attack_sprite = null;
+                this.click_anim.destroy();
+                this.click_anim = null;
+                this.mapHitbox.destroy();
+                this.mapHitbox = null;
+            }
             super.destroy();
         }
 
@@ -259,6 +269,9 @@ package com.starmaid.Cibele.entities {
             }
 
             this.initWalk(worldPos);
+            this.visible = true;
+            this.shadow_sprite.visible = true;
+            this.attack_sprite.visible = false;
             if (got_enemy && this.targetEnemy != null && !this.targetEnemy.isDead()) {
                 this._state = STATE_MOVE_TO_ENEMY;
                 this.targetEnemy.activeTarget();
@@ -267,9 +280,6 @@ package com.starmaid.Cibele.entities {
                 }
             } else if (!got_enemy) {
                 this.targetEnemy = null;
-                this.visible = true;
-                this.shadow_sprite.visible = true;
-                this.attack_sprite.visible = false;
             }
             if (prevTargetEnemy != null && prevTargetEnemy != this.targetEnemy) {
                 prevTargetEnemy.inactiveTarget();

@@ -201,5 +201,12 @@ package com.starmaid.Cibele.states {
                 super.clickCallback(screenPos, worldPos);
             }
         }
+
+        override public function destroy():void {
+            this.loader.unload();
+            this.tileLoader.unload();
+            this.fernBase.unload();
+            super.destroy();
+        }
     }
 }

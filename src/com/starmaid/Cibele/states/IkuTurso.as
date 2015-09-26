@@ -106,7 +106,7 @@ package com.starmaid.Cibele.states {
             this.graph_filename = "data/ikuturso_graph.txt";
             this.mapTilePrefix = "ikuturso";
             this.tileGridDimensions = new DHPoint(10, 5);
-            this.estTileDimensions = new DHPoint(1359, 818);
+            this.estTileDimensions = new DHPoint(1359, 818);  // 1360, 816
             this.playerStartPos = new DHPoint(4600, 7565);
             this.colliderScaleFactor = 8.65;
             this.enemyDirMultiplier = 1;
@@ -121,6 +121,20 @@ package com.starmaid.Cibele.states {
                 GlobalTimer.getInstance().setMark("First Convo", GameState.SHORT_DIALOGUE ? 1 : 7*GameSound.MSEC_PER_SEC, this.bulldogHellPopup);
             }
             this.convo1Sound = null;
+
+            if (ScreenManager.getInstance().QUICK_LEVELS) {
+                GlobalTimer.getInstance().setMark(
+                    "end_level_it",
+                    10 * GameSound.MSEC_PER_SEC,
+                    this.playEndFilm
+                )
+            }
+        }
+
+        override public function destroy():void {
+            this.bubbles = null;
+            this.seaweeds = null;
+            super.destroy();
         }
 
         override public function addEnvironmentDetails():void {
@@ -210,6 +224,9 @@ package com.starmaid.Cibele.states {
         }
 
         public function ichiStartEmote():void {
+            if (pathWalker == null) {
+                return;
+            }
             if(pathWalker.inViewOfPlayer()) {
                 PopUpManager.getInstance().emote(new FlxRect(0,0), this.pathWalker, true, Emote.HAPPY);
             } else {

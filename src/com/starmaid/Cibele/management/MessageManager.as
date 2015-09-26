@@ -358,13 +358,14 @@ package com.starmaid.Cibele.management {
 
             this.reply_box = new FlxRect(this.reply_to_msg.x, this.reply_to_msg.y, 64, this.reply_to_msg.height);
 
-
             this.ellipse_anim = new UIElement(reply_to_msg.x, reply_to_msg.y + 10);
             this.ellipse_anim.loadGraphic(ImgEllipse, false, false, 23, 4);
             this.ellipse_anim.addAnimation("ellipse", [0,1,2,3], 5, true);
             this.ellipse_anim.play("ellipse");
             this.ellipse_anim.scrollFactor = new DHPoint(0,0);
-            FlxG.state.add(this.ellipse_anim);
+            if (addToState) {
+                FlxG.state.add(this.ellipse_anim);
+            }
             this.ellipse_anim.visible = false;
 
             this.debugText = new FlxText(_screen.screenWidth * .01,
@@ -398,6 +399,16 @@ package com.starmaid.Cibele.management {
                 for (var i:int = 0; i < this.threads_map[k].length; i++) {
                     this.threads_map[k][i].initVisibleObjects();
                 }
+            }
+        }
+
+        public function destroy():void {
+            if (this.threads != null) {
+                for(var i:int = 1; i < this.threads.length; i++){
+                    this.threads[i].unloadSprites();
+                    this.threads[i] = null;
+                }
+                this.threads = null;
             }
         }
 
@@ -690,6 +701,9 @@ package com.starmaid.Cibele.management {
         }
 
         public static function resetInstance():void {
+            if (_instance != null) {
+                _instance.destroy();
+            }
             _instance = new MessageManager();
         }
 

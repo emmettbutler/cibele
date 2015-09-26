@@ -188,6 +188,20 @@ package com.starmaid.Cibele.states {
                     CONVO_1_HALL
                 );
             }
+
+            if (ScreenManager.getInstance().QUICK_LEVELS) {
+                GlobalTimer.getInstance().setMark(
+                    "end_level_hi",
+                    10 * GameSound.MSEC_PER_SEC,
+                    this.playEndFilm
+                )
+            }
+        }
+
+        override public function destroy():void {
+            this.steams = null;
+            this.rocks = null;
+            super.destroy();
         }
 
         override public function addEnvironmentDetails():void {

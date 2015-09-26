@@ -131,6 +131,15 @@ package com.starmaid.Cibele.entities {
             this.rotate();
         }
 
+        public function unloadSprites():void {
+            this.truncated_textbox = null;
+            this.unread_icon = null;
+            this.read_icon = null;
+            for (var i:int = 0; i < this.messages.length; i++) {
+                this.messages[i].unloadSprites();
+            }
+        }
+
         public function initVisibleObjects():void {
             this.truncated_textbox = new FlxText(pos.x, pos.y, _inbox_ref.width,
                 this.sent_by + " >> " +

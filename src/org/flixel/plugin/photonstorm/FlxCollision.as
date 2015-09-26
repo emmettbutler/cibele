@@ -60,6 +60,9 @@ package org.flixel.plugin.photonstorm
                                                  showCollider:Boolean=false,
                                                  rotationOrigin:DHPoint=null):Array
         {
+            if (target.framePixels == null) {
+                return [false, null];
+            }
             var pointA:Point = new Point;
             var pointB:Point = new Point;
 
@@ -69,15 +72,17 @@ package org.flixel.plugin.photonstorm
             }
 
             var contactPixels:BitmapData;
+            var rotated:Boolean = false;
             var contactPos:DHPoint = new DHPoint(contact.x, contact.y);
             if (contact.angle == 0) {
                 contactPixels = contact.framePixels;
             } else {
+                rotated = true;
                 var degrees:Number = contact.angle;
                 var angle_in_radians:Number = degrees * Math.PI / 180;
                 var matrixImage:BitmapData = new BitmapData(
-                    Math.max(contact.width, contact.height) * 2,
-                    Math.max(contact.width, contact.height) * 2, true,
+                    Math.max(contact.width, contact.height, 1) * 2,
+                    Math.max(contact.width, contact.height, 1) * 2, true,
                     0x00cccccc);
                 var rotationMatrix:Matrix = new Matrix();
                 rotationMatrix.rotate(angle_in_radians);
@@ -150,6 +155,15 @@ package org.flixel.plugin.photonstorm
 
             var overlap:Rectangle = overlapArea.getColorBoundsRect(0xffffffff, 0xff00ffff);
             overlap.offset(intersect.x, intersect.y);
+
+            if (rotated) {
+                testA.dispose();
+                testA = null;
+                matrixImage = null;
+                contactPixels = null;
+            }
+            overlapArea.dispose();
+            overlapArea = null;
 
             if (overlap.isEmpty()) {
                 return [false, null];

@@ -78,6 +78,20 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        override public function destroy():void {
+            for (var k:Object in this.emoji) {
+                this.emoji[k].destroy();
+            }
+            this.emoji = null;
+            if (this.nameText != null) {
+                this.nameText.destroy();
+                this.nameText = null;
+                this.teamPowerDeltaText.destroy();
+                this.teamPowerDeltaText = null;
+            }
+            super.destroy();
+        }
+
         public function setupSprites():void { }
         public function setupFootsteps():void { }
 
@@ -143,7 +157,7 @@ package com.starmaid.Cibele.entities {
             // examine nearby nodes to find the shortest path along the graph
             // from current position to worldPos
 
-            var maxTries:Number = 10;
+            var maxTries:Number = 3;
 
             // get closest N nodes to player
             var closeNodes:Array = this._mapnodes.getNClosestGenericNodes(maxTries, this.footPos);

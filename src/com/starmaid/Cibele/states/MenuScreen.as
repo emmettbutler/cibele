@@ -36,6 +36,7 @@ package com.starmaid.Cibele.states {
         public var quit_rect:FlxRect;
         public var mouse_rect:FlxRect;
         private var has_initiated_switch:Boolean = false;
+        private var bgLoader:FernBackgroundLoader;
 
         public var crystal_icon:GameObject;
 
@@ -59,7 +60,8 @@ package com.starmaid.Cibele.states {
             FlxG.bgColor = 0x00000000;
             var _screen:ScreenManager = ScreenManager.getInstance();
 
-            new FernBackgroundLoader().load();
+            this.bgLoader = new FernBackgroundLoader();
+            this.bgLoader.load();
 
             var smoke:GameObject = new GameObject(new DHPoint(0, 0));
             smoke.active = false;
@@ -236,6 +238,11 @@ package com.starmaid.Cibele.states {
                 },
                 1 * GameSound.MSEC_PER_SEC
             );
+        }
+
+        override public function destroy():void {
+            this.bgLoader.unload();
+            super.destroy();
         }
     }
 }

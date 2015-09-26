@@ -26,6 +26,12 @@ package com.starmaid.Cibele.states {
             this.add(this.player.mapHitbox)
         }
 
+        override public function destroy():void {
+            this.player.destroy();
+            this.player = null;
+            super.destroy();
+        }
+
         override public function postCreate():void {
             this.player.initFootsteps();
             this.player.addVisibleObjects();

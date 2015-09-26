@@ -48,6 +48,45 @@ package com.starmaid.Cibele.management {
             }
         }
 
+        public function removeFolders(root:Object):void {
+            var _screen:ScreenManager = ScreenManager.getInstance();
+            var cur:Object, recurseSet:Array;
+            recurseSet = new Array();
+            for (var i:int = 0; i < root["contents"].length; i++) {
+                cur = root["contents"][i];
+                if ("icon" in cur && cur["icon"] != null) {
+                    cur["icon_sprite"].destroy();
+                    cur["icon_sprite"] = null;
+                }
+                if("hitbox_pos" in cur && "hitbox_dim" in cur) {
+                    cur["hitbox_sprite"].destroy();
+                    cur["hitbox_sprite"] = null;
+                }
+                if (cur["contents"] is Array) {
+                    recurseSet.push([cur])
+                } else {
+                    cur["full_sprite"].destroy();
+                    cur["full_sprite"] = null;
+                    cur["x_sprite"].destroy();
+                    cur["x_sprite"] = null;
+                    cur["x_hover_sprite"].destroy();
+                    cur["x_hover_sprite"] = null;
+                }
+            }
+            // add all folder sprites at the same time, before recursion
+            for (var k:int = 0; k < recurseSet.length; k++) {
+                this.removeFolders(recurseSet[k][0]);
+            }
+            for (k = 0; k < recurseSet.length; k++) {
+                recurseSet[k][0]["folder_sprite"].destroy();
+                recurseSet[k][0]["folder_sprite"] = null;
+                recurseSet[k][0]["x_sprite"].destroy();
+                recurseSet[k][0]["x_sprite"] = null;
+                recurseSet[k][0]["x_hover_sprite"].destroy();
+                recurseSet[k][0]["x_hover_sprite"] = null;
+            }
+        }
+
         public function populateFolders(root:Object, elements:Array=null, root_folder:UIElement=null):void {
             var _screen:ScreenManager = ScreenManager.getInstance();
             var cur:Object, curX:UIElement, curXHover:UIElement, spr:GameObject,

@@ -537,7 +537,19 @@ package com.starmaid.Cibele.management {
             this.setDefaultDockPopups();
         }
 
+        public function destroy():void {
+            for (var key:Object in this.folder_structure) {
+                if(this.folder_structure[key] != null) {
+                    this.folder_structure[key] = null;
+                }
+            }
+            this.folder_structure = null;
+        }
+
         public static function resetInstance():void {
+            if (_instance != null) {
+                _instance.destroy();
+            }
             _instance = new PopUpManager();
         }
 

@@ -25,6 +25,10 @@ package com.starmaid.Cibele.utils {
             this.enemies.push(en);
         }
 
+        public function destroy():void {
+            this.enemies = null;
+        }
+
         public function length():Number {
             return this.enemies.length;
         }
