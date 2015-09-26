@@ -172,7 +172,7 @@ package com.starmaid.Cibele.states {
                     "folder_img": ImgPicturesFolder,
                     "folder_dim": new DHPoint(631, 356),
                     "hitbox_pos": new DHPoint(_screen.screenWidth * .87, _screen.screenHeight * .08),
-                    "hitbox_dim": new DHPoint(150, 100),
+                    "hitbox_dim": new DHPoint(300, 250),
                     "name": "selfies",
                     "contents": [
                         {
@@ -344,8 +344,8 @@ package com.starmaid.Cibele.states {
                         {
                             "folder_img": ImgPicturesFolder,
                             "folder_dim": new DHPoint(631, 356),
-                            "hitbox_pos": new DHPoint(_screen.screenWidth * .7, _screen.screenHeight * .33),
-                            "hitbox_dim": new DHPoint(150, 100),
+                            "hitbox_pos": new DHPoint(_screen.screenWidth * .72, _screen.screenHeight * .31),
+                            "hitbox_dim": new DHPoint(300, 250),
                             "name": "old site folder stuff",
                             "contents": [
                                 {
@@ -615,7 +615,7 @@ package com.starmaid.Cibele.states {
                     "folder_img": ImgScreenshot,
                     "folder_dim": new DHPoint(528, 448),
                     "hitbox_pos": new DHPoint(_screen.screenWidth * .72, _screen.screenHeight * .03),
-                    "hitbox_dim": new DHPoint(150, 105),
+                    "hitbox_dim": new DHPoint(300, 250),
                     "contents": []
                 },
                 {
@@ -623,7 +623,7 @@ package com.starmaid.Cibele.states {
                     "folder_img": ImgTravelNotes,
                     "folder_dim": new DHPoint(631, 356),
                     "hitbox_pos": new DHPoint(_screen.screenWidth * .6, _screen.screenHeight * .09),
-                    "hitbox_dim": new DHPoint(150, 110),
+                    "hitbox_dim": new DHPoint(300, 270),
                     "contents": []
                 },
                 {
@@ -631,7 +631,7 @@ package com.starmaid.Cibele.states {
                     "folder_img": ImgPicturesFolder,
                     "folder_dim": new DHPoint(631, 356),
                     "hitbox_pos": new DHPoint(_screen.screenWidth * .84, _screen.screenHeight * .3),
-                    "hitbox_dim": new DHPoint(150, 115),
+                    "hitbox_dim": new DHPoint(300, 250),
                     "contents": [
                         {
                             "name": "hw1",

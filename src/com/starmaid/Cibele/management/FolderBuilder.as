@@ -3,6 +3,7 @@ package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.UIElement;
+    import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.entities.XSprite;
 
     import org.flixel.*;
@@ -111,7 +112,7 @@ package com.starmaid.Cibele.management {
                 }
                 if("hitbox_pos" in cur && "hitbox_dim" in cur) {
                     spr = UIElement.fromPoint(new DHPoint(cur["hitbox_pos"].x, cur["hitbox_pos"].y));
-                    spr.makeGraphic(cur["hitbox_dim"].x, cur["hitbox_dim"].y, 0x00ff0000);
+                    spr.makeGraphic(cur["hitbox_dim"].x * ScreenManager.getInstance().calcFullscreenScale(new DHPoint(3000, 1636)), cur["hitbox_dim"].y * ScreenManager.getInstance().calcFullscreenScale(new DHPoint(3000, 1636)), 0x00ff0000);
                     spr.scrollFactor = new DHPoint(0,0);
                     spr.slug = HITBOX_TAG;
                     FlxG.state.add(spr);
