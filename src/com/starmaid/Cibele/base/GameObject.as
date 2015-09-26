@@ -40,8 +40,10 @@ package com.starmaid.Cibele.base {
             this.bornTime = new Date().valueOf();
             this.timeAlive = 0;
             this.dir = new DHPoint(0, 0);
-            this.debugText = new FlxText(0, 0, 400, "");
-            this.debugText.color = 0xff444444;
+            if (ScreenManager.getInstance().DEBUG) {
+                this.debugText = new FlxText(0, 0, 400, "");
+                this.debugText.color = 0xff444444;
+            }
         }
 
         public function buildDefaultSprite(dim:DHPoint, col:uint=0xffff0000):void {
@@ -56,8 +58,10 @@ package com.starmaid.Cibele.base {
             this.pos.y = this.y;
             this.setPos(this.pos.add(this.dir));
 
-            this.debugText.x = this.pos.x;
-            this.debugText.y = this.pos.y;
+            if (ScreenManager.getInstance().DEBUG) {
+                this.debugText.x = this.pos.x;
+                this.debugText.y = this.pos.y;
+            }
         }
 
         public function toggleActive():void {

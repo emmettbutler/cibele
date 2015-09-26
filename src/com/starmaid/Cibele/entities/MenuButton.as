@@ -35,6 +35,14 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        override public function destroy():void {
+            if (this._text != null) {
+                this._text.destroy();
+                this._text = null;
+            }
+            super.destroy();
+        }
+
         public function setVisible(val:Boolean):void {
             this._text.visible = val;
             this.visible = val;

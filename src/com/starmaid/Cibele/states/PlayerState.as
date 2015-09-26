@@ -27,6 +27,7 @@ package com.starmaid.Cibele.states {
         }
 
         override public function destroy():void {
+            this.player.destroy();
             this.player = null;
             super.destroy();
         }
