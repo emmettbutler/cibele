@@ -457,8 +457,8 @@ package com.starmaid.Cibele.states {
                 {
                     this.increaseTeamPower(1);
                 }
-                if(this.boss_gate ||
-                   this.teamPower >= this.teamPowerBossThresholds[this.boss.spawnCounter]) {
+                if((this.boss_gate ||
+                                   this.teamPower >= this.teamPowerBossThresholds[this.boss.spawnCounter]) && !this.boss.active_lock) {
                     this.startBoss();
                 }
             }
