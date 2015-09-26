@@ -50,6 +50,14 @@ package com.starmaid.Cibele.management {
             }
         }
 
+        public function unload():void {
+            for (var i:int = 0; i < this.tiles.length; i++) {
+                for (var j:int = 0; j < this.tiles[i].length; j++) {
+                    this.tiles[i][j].destroy();
+                }
+            }
+        }
+
         public function update():void {
             var cur:HallwayTile;
             var front:Number = this.player.pos.y - 100;

@@ -4,6 +4,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.FolderBuilder;
     import com.starmaid.Cibele.management.BackgroundLoader;
     import com.starmaid.Cibele.management.PopUpManager;
+    import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.utils.DHPoint;
@@ -68,6 +69,8 @@ package com.starmaid.Cibele.states {
 
         override public function destroy():void {
             this.bg.unload();
+            this.folder_builder.removeFolders(this.folder_structure);
+            this.folder_structure = null;
             super.destroy();
         }
 

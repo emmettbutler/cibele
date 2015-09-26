@@ -361,7 +361,6 @@ package com.starmaid.Cibele.states {
                                                 FlxG.switchState(new TextScreen(
                                                     5*GameSound.MSEC_PER_SEC,
                                                     function():void {
-                                                        ScreenManager.getInstance().resetSingletons();
                                                         FlxG.switchState(new HiisiDesktop());
                                                     }, "August 10th, 2009"
                                                 ));

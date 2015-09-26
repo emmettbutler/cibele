@@ -715,7 +715,6 @@ package com.starmaid.Cibele.states {
             this.folder_builder = new FolderBuilder();
             this.folder_builder.populateFolders(folder_structure);
             this.folder_builder.setUpLeafPopups();
-
         }
 
         override public function update():void{

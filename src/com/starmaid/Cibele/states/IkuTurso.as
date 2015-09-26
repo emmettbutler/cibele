@@ -284,7 +284,6 @@ package com.starmaid.Cibele.states {
                                     function():void {
                                         FlxG.switchState(new TextScreen(5*GameSound.MSEC_PER_SEC,
                                         function():void {
-                                            ScreenManager.getInstance().resetSingletons();
                                             FlxG.switchState(new EuryaleDesktop());
                                         }, "April 13th, 2009"
                                         ));

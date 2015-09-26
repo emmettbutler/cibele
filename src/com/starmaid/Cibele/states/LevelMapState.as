@@ -87,8 +87,6 @@ package com.starmaid.Cibele.states {
 
         override public function destroy():void {
             this.bgLoader.destroy();
-            PopUpManager.getInstance().disposeSprites();
-            MessageManager.getInstance().disposeSprites();
             super.destroy();
         }
 
