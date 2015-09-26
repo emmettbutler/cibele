@@ -343,6 +343,9 @@ package com.starmaid.Cibele.entities {
         override public function die(p:PartyMember):void {
             this._state = STATE_DEAD;
             this.smoke.run(this.getMiddlePos());
+            this._notificationText.text = this._name + " has been defeated!";
+            this._notificationText.visible = true;
+            this.scaleText = true;
             FlxG.stage.dispatchEvent(
                 new DataEvent(GameState.EVENT_BOSS_DIED, {'killed_by': p}));
             SoundManager.getInstance().playSound(
