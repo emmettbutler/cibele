@@ -171,7 +171,7 @@ package com.starmaid.Cibele.states {
                     "folder_img": ImgPicturesFolder,
                     "folder_dim": new DHPoint(631, 356),
                     "hitbox_pos": new DHPoint(_screen.screenWidth * .87, _screen.screenHeight * .08),
-                    "hitbox_dim": new DHPoint(150, 100),
+                    "hitbox_dim": new DHPoint(300, 250),
                     "name": "selfies",
                     "contents": [
                         {
@@ -423,15 +423,15 @@ package com.starmaid.Cibele.states {
                     "folder_img": ImgScreenshot,
                     "folder_dim": new DHPoint(528, 426),
                     "hitbox_pos": new DHPoint(_screen.screenWidth * .72, _screen.screenHeight * .03),
-                    "hitbox_dim": new DHPoint(150, 105),
+                    "hitbox_dim": new DHPoint(300, 250),
                     "contents": []
                 },
                 {
                     "name": "lingerie",
                     "folder_img": ImgLingerie,
                     "folder_dim": new DHPoint(631, 409),
-                    "hitbox_pos": new DHPoint(_screen.screenWidth * .52, _screen.screenHeight * .28),
-                    "hitbox_dim": new DHPoint(150, 105),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .54, _screen.screenHeight * .28),
+                    "hitbox_dim": new DHPoint(300, 250),
                     "contents": []
                 },
                 {
@@ -439,7 +439,7 @@ package com.starmaid.Cibele.states {
                     "folder_img": ImgPicturesFolder,
                     "folder_dim": new DHPoint(631, 356),
                     "hitbox_pos": new DHPoint(_screen.screenWidth * .84, _screen.screenHeight * .3),
-                    "hitbox_dim": new DHPoint(150, 115),
+                    "hitbox_dim": new DHPoint(300, 270),
                     "contents": [
                         {
                             "name": "cosmo",
@@ -570,8 +570,8 @@ package com.starmaid.Cibele.states {
                 {
                     "folder_img": ImgPicturesFolder,
                     "folder_dim": new DHPoint(631, 356),
-                    "hitbox_pos": new DHPoint(_screen.screenWidth * .7, _screen.screenHeight * .32),
-                    "hitbox_dim": new DHPoint(150, 100),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .72, _screen.screenHeight * .32),
+                    "hitbox_dim": new DHPoint(300, 250),
                     "name": "old site folder stuff",
                     "contents": [
                         {
