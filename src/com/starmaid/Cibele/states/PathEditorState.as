@@ -384,14 +384,6 @@ package com.starmaid.Cibele.states {
                         new DHPoint(Number(coords[0]), Number(coords[1])));
                     add(en);
                     this.enemies.addEnemy(en);
-                } else if (prefix_.indexOf("boss") == 0 && this.shouldAddEnemies) {
-                    /*
-                    coords = line[1].split("x");
-                    var bo:BossEnemy = new (this.getBossClass())(
-                        new DHPoint(Number(coords[0]), Number(coords[1])));
-                    add(bo);
-                    this.enemies.addEnemy(bo);
-                    */
                 }
             }
         }

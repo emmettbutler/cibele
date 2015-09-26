@@ -47,6 +47,7 @@ package com.starmaid.Cibele.states {
 
             this.clickObjectGroups = [
                 PopUpManager.getInstance().elements,
+                MessageManager.getInstance().elements
             ];
             if (this is PathEditorState) {
                 this.clickObjectGroups.push(

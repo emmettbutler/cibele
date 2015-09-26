@@ -132,7 +132,10 @@ package com.starmaid.Cibele.base {
             this.baseLayer = null;
             this.pauseScreen.destroy();
             this.pauseScreen = null;
+<<<<<<< HEAD
             trace("GameState.destroy()");
+=======
+>>>>>>> 3b18ebb24788715997d337d4fe80e22c3ed1ec6e
             super.destroy();
         }
 
