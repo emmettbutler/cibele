@@ -27,6 +27,7 @@ package com.starmaid.Cibele.entities {
         protected var _notificationText:FlxText;
         public var notificationTextColor:uint;
         private var scaleText:Boolean = false;
+        public var _active_lock:Boolean = false;
         protected var _name:String;
 
         public static const STATE_PRE_APPEAR:Number = 39485723987;
@@ -90,7 +91,16 @@ package com.starmaid.Cibele.entities {
             this._started = v;
         }
 
+        public function get active_lock():Boolean {
+            return this._active_lock;
+        }
+
+        public function set active_lock(v:Boolean):void {
+            this._active_lock = v;
+        }
+
         public function setActive():void {
+            this.active_lock = true;
             this._started = true;
             this.footPosOffset = new DHPoint(this.width / 2, this.height);
             this.basePosOffset = new DHPoint(0, this.height);
@@ -205,7 +215,16 @@ package com.starmaid.Cibele.entities {
             this.visible = false;
             this._notificationText.text = this._name + " has escaped!";
             this._healthBar.setVisible(false);
-            this.showNotificationText();
+            this.showNotificationText(true);
+        }
+
+        public function hideEscapeText():void {
+            if(!(FlxG.state is LevelMapState)) {
+                return;
+            }
+            this._notificationText.visible = false;
+            this.scaleText = false;
+            this.active_lock = false;
         }
 
         public function hideNotificationText():void {
@@ -216,10 +235,14 @@ package com.starmaid.Cibele.entities {
             this.scaleText = false;
         }
 
-        public function showNotificationText():void {
+        public function showNotificationText(esc:Boolean=false):void {
             this._notificationText.visible = true;
             this.scaleText = true;
-            GlobalTimer.getInstance().setMark("boss escape" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.hideNotificationText);
+            if(esc) {
+                GlobalTimer.getInstance().setMark("boss escape" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.hideEscapeText);
+            } else {
+                GlobalTimer.getInstance().setMark("boss escape" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.hideNotificationText);
+            }
         }
 
         override public function startTracking():void {
