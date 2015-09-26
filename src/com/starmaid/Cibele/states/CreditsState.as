@@ -28,9 +28,11 @@ package com.starmaid.Cibele.states {
             super(true, false, false);
             this.enable_fade = true;
             this.use_loading_screen = false;
-            this.enable_cursor = false;
 
             this.creditsStructure = new Array(
+                {
+                    'text': 'First love is a very confusing thing, and sometimes it really hurts, but I\'m glad I had mine with you.\n\n-Nina'
+                },
                 {
                     'text': 'Written and designed by Nina Freeman'
                 },
@@ -51,6 +53,9 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     'text': 'Special thanks to:\n\n\nBennett Foddy,\n\nSteve Gaynor\n\nAnd our many helpful playtesters.'
+                },
+                {
+                    'text': 'Finally, special thanks to all of the people that Nina met (and grew up with) on the Sylph server in Final Fantasy Online. This game would not exist without all of you.'
                 }
             );
 
@@ -61,6 +66,8 @@ package com.starmaid.Cibele.states {
             super.create();
 
             var _screen:ScreenManager = ScreenManager.getInstance();
+
+            this.hide_cursor_on_unpause = true;
 
             this.bg = new GameObject(new DHPoint(0,0));
             this.bg.makeGraphic(_screen.screenWidth, _screen.screenHeight, 0xff000000);
@@ -96,7 +103,13 @@ package com.starmaid.Cibele.states {
                 .4, GameSound.BGM, CreditsState.BGM, false, false, false
             );
 
+            this.updatePopup = false;
+            this.updateMessages = false;
+            this.use_loading_screen = false;
+
             this.postCreate();
+
+            this.game_cursor.hide();
         }
 
         override public function update():void {

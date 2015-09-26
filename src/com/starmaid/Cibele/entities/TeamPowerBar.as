@@ -1,6 +1,7 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.UIElement;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.SoundManager;
@@ -12,11 +13,14 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/ui/pactbar.png")] private var UIBar:Class;
 
         private var _animatingBar:Boolean = false;
-        private var _topFrame:GameObject;
+        private var _topFrame:UIElement;
         private var _helpText:FlxText;
+        public var elements:Array;
 
         public function TeamPowerBar(maxPoints:Number) {
             super(new DHPoint(0, 0), maxPoints, 205, 20);
+
+            this.elements = new Array();
 
             this._barFrame.scrollFactor = new DHPoint(0, 0);
             this._barFrame.fill(0xffffc8d7);
@@ -25,11 +29,13 @@ package com.starmaid.Cibele.entities {
             this._changeText.setFormat("NexaBold-Regular", 25, 0xff7c6e6a,
                                        "left");
             this._changeText.scrollFactor = new DHPoint(0, 0);
-            this._topFrame = new GameObject(new DHPoint(0, 0));
+            this._topFrame = new UIElement(0, 0);
             this._topFrame.loadGraphic(UIBar, true, false, 300, 94);
             this._topFrame.addAnimation("play", [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26], 12, true);
             this._topFrame.addAnimation("stop", [0], 12, false);
             this._topFrame.scrollFactor = new DHPoint(0, 0);
+            this._topFrame.slug = "teampowerbar_frame";
+            this.elements.push(this._topFrame);
             this.setVisible(true);
 
             this._helpText = new FlxText(0, 0, 250, "Attack enemies as a team to lure the boss out!");

@@ -15,7 +15,9 @@ package com.starmaid.Cibele.management {
 
         public function DebugConsoleManager() {
             this.trackedAttributes = {};
-            this.initTextObjects();
+            if (ScreenManager.getInstance().DEBUG) {
+                this.initTextObjects();
+            }
         }
 
         public function initTextObjects():void {

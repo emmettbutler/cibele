@@ -20,3 +20,6 @@ SigningCert.p12
 
 *.mpc
 *.cache
+*.tmp
+
+*.log

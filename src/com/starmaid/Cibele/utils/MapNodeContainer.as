@@ -14,7 +14,6 @@ package com.starmaid.Cibele.utils {
         public var nodesHash:Object;
         public var path:Path;
         public var player:Player;
-        public var dbgText:FlxText;
         public var closestPathNode:PathNode;
         public var currentClosestNode:MapNode;
 
@@ -24,9 +23,6 @@ package com.starmaid.Cibele.utils {
             this.nodesHash = {};
             this.path = p;
             this.player = player;
-            this.dbgText = new FlxText(100, 250, FlxG.width, "");
-            this.dbgText.active = false;
-            FlxG.state.add(this.dbgText);
         }
 
         public function addNode(point:DHPoint, showNodes:Boolean=false):MapNode {

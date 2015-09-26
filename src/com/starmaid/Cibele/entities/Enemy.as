@@ -41,6 +41,7 @@ package com.starmaid.Cibele.entities {
         public var footPos:DHPoint, footPosOffset:DHPoint, basePosOffset:DHPoint;
         private var lastTrackingDirUpdateTime:Number = -1;
         protected var flipFacing:Boolean = false;
+        public var damagedByPartyMember:PartyMember;
 
         public static const STATE_IDLE:Number = 1;
         public static const STATE_TRACKING:Number = 3;
@@ -112,7 +113,7 @@ package com.starmaid.Cibele.entities {
         }
 
         protected function setupSmoke():void {
-            this.smoke = new ParticleExplosion(10, Enemy.PARTICLE_SMOKE, 3, .8,
+            this.smoke = new ParticleExplosion(7, Enemy.PARTICLE_SMOKE, 3, .8,
                                                7, 5, .3, this, 4);
             this.smoke.addVisibleObjects();
         }
@@ -159,6 +160,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function takeDamage(p:PartyMember):void{
+            this.damagedByPartyMember = p;
             if (this.isDead()) {
                 return;
             }
@@ -169,13 +171,16 @@ package com.starmaid.Cibele.entities {
             GlobalTimer.getInstance().setMark(this.takeDamageEventSlug + p.slug,
                                               1 * GameSound.MSEC_PER_SEC,
                                               function():void {
+                                                if(!(FlxG.state is LevelMapState)) {
+                                                    return;
+                                                }
                                                 damageLockMap[p.slug] = false;
                                               }, true);
             this._state = STATE_RECOIL;
             this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
             this.hitPoints -= Math.floor(this.hitDamage * p.teamPowerDamageMul);
             this._healthBar.setPoints(this.hitPoints);
-            p.runParticles(this.getMiddlePos().sub(new DHPoint(0, this.height/3)));
+
             if(this.hitPoints <= 0){
                 this.die(p);
             }
@@ -193,6 +198,12 @@ package com.starmaid.Cibele.entities {
                 return;
             }
             this._healthBar.setVisible(false);
+        }
+
+        override public function destroy():void {
+            this.smoke.destroy();
+            this._healthBar.destroy();
+            super.destroy();
         }
 
         public function die(p:PartyMember):void {

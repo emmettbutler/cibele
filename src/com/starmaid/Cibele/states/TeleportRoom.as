@@ -56,9 +56,6 @@ package com.starmaid.Cibele.states {
             door_fern.visible = false;
             add(door_fern);
 
-            this.setScaleFactor(
-                ScreenManager.getInstance().calcFullscreenScale());
-
             this.postCreate();
         }
 
@@ -83,6 +80,12 @@ package com.starmaid.Cibele.states {
             } else {
                 this.bgLoader.collideTile(this.bgCollider);
             }
+        }
+
+        override public function destroy():void {
+            this.bgCollider.unload();
+            this.bgImage.unload();
+            super.destroy();
         }
     }
 }

@@ -21,9 +21,6 @@ package com.starmaid.Cibele.management {
             this.nodes = new Array();
             this.currentNode = null;
             this.nodesHash = {};
-
-            this.dbgText = new FlxText(100, 250, FlxG.width, "");
-            FlxG.state.add(this.dbgText);
         }
 
         public function addNode(point:DHPoint, showNodes:Boolean=false):void {
@@ -237,6 +234,12 @@ package com.starmaid.Cibele.management {
                 }
             }
             return ret;
+        }
+
+        public function destroy():void {
+            this.clearPath();
+            this.nodes = null;
+            this.nodesHash = null;
         }
     }
 }

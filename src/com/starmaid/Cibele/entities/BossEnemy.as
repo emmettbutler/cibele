@@ -7,6 +7,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.management.LevelTracker;
+    import com.starmaid.Cibele.states.LevelMapState;
     import com.starmaid.Cibele.utils.MapNodeContainer;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.management.Path;
@@ -19,7 +20,6 @@ package com.starmaid.Cibele.entities {
         private var _path:Path = null;
         private var targetPathNode:PathNode;
         private var escape_counter:Number = 0;
-        private var damagedByPartyMember:PartyMember;
         private var damageThreshold:Array;
         private var _spawnCounter:Number = 0;
         private var _started:Boolean = false;
@@ -27,6 +27,7 @@ package com.starmaid.Cibele.entities {
         protected var _notificationText:FlxText;
         public var notificationTextColor:uint;
         private var scaleText:Boolean = false;
+        public var _active_lock:Boolean = false;
         protected var _name:String;
 
         public static const STATE_PRE_APPEAR:Number = 39485723987;
@@ -46,7 +47,7 @@ package com.starmaid.Cibele.entities {
             this.damageThreshold = [400, 200];
             this._enemyType = Enemy.TYPE_BOSS;
             this.sightRange = 750;
-            this.hitDamage = 10;
+            this.hitDamage = ScreenManager.getInstance().SHORT_DIALOGUE ? 100 : 10;
             this.recoilPower = 0;
 
             this.alpha = 0;
@@ -54,16 +55,20 @@ package com.starmaid.Cibele.entities {
             this._state = STATE_PRE_APPEAR;
             this.visible = false;
 
+            this._initNotificationText();
+
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.getStateString", "boss.state");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.pos", "boss.pos");
+            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.footPos", "boss.footPos");
+        }
+
+        public function _initNotificationText():void {
             this._notificationText = new FlxText(0, ScreenManager.getInstance().screenHeight * .7, ScreenManager.getInstance().screenWidth, "");
             this._notificationText.setFormat("NexaBold-Regular", 24, 0xffe2678e, "left");
             this._notificationText.scrollFactor = new DHPoint(0,0);
             this._notificationText.size = 0;
             this._notificationText.alignment = "center";
             this._notificationText.color = this.notificationTextColor;
-
-            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.getStateString", "boss.state");
-            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.pos", "boss.pos");
-            DebugConsoleManager.getInstance().trackAttribute("FlxG.state.boss.footPos", "boss.footPos");
         }
 
         public function setPath(path:Path):void {
@@ -90,7 +95,16 @@ package com.starmaid.Cibele.entities {
             this._started = v;
         }
 
+        public function get active_lock():Boolean {
+            return this._active_lock;
+        }
+
+        public function set active_lock(v:Boolean):void {
+            this._active_lock = v;
+        }
+
         public function setActive():void {
+            this.active_lock = true;
             this._started = true;
             this.footPosOffset = new DHPoint(this.width / 2, this.height);
             this.basePosOffset = new DHPoint(0, this.height);
@@ -110,6 +124,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function showHealthBar():void {
+            if(!(FlxG.state is LevelMapState)) {
+                return;
+            }
             this._healthBar.setVisible(true);
         }
 
@@ -202,18 +219,34 @@ package com.starmaid.Cibele.entities {
             this.visible = false;
             this._notificationText.text = this._name + " has escaped!";
             this._healthBar.setVisible(false);
-            this.showNotificationText();
+            this.showNotificationText(true);
+        }
+
+        public function hideEscapeText():void {
+            if(!(FlxG.state is LevelMapState)) {
+                return;
+            }
+            this._notificationText.visible = false;
+            this.scaleText = false;
+            this.active_lock = false;
         }
 
         public function hideNotificationText():void {
+            if(!(FlxG.state is LevelMapState)) {
+                return;
+            }
             this._notificationText.visible = false;
             this.scaleText = false;
         }
 
-        public function showNotificationText():void {
+        public function showNotificationText(esc:Boolean=false):void {
             this._notificationText.visible = true;
             this.scaleText = true;
-            GlobalTimer.getInstance().setMark("boss escape" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.hideNotificationText);
+            if(esc) {
+                GlobalTimer.getInstance().setMark("boss escape" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.hideEscapeText);
+            } else {
+                GlobalTimer.getInstance().setMark("boss escape" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.hideNotificationText);
+            }
         }
 
         override public function startTracking():void {
@@ -270,9 +303,12 @@ package com.starmaid.Cibele.entities {
             GlobalTimer.getInstance().setMark(this.takeDamageEventSlug + p.slug,
                                               1 * GameSound.MSEC_PER_SEC,
                                               function():void {
+                                                if(!(FlxG.state is LevelMapState)) {
+                                                    return;
+                                                }
                                                 damageLockMap[p.slug] = false;
                                               }, true);
-            p.runParticles(this.footPos.add(new DHPoint(0, -20)));
+
             if(!this.canDie &&
                this.hitPoints <= this.damageThreshold[this._spawnCounter - 1])
             {
@@ -311,6 +347,9 @@ package com.starmaid.Cibele.entities {
         override public function die(p:PartyMember):void {
             this._state = STATE_DEAD;
             this.smoke.run(this.getMiddlePos());
+            this._notificationText.text = this._name + " has been defeated!";
+            this._notificationText.visible = true;
+            this.scaleText = true;
             FlxG.stage.dispatchEvent(
                 new DataEvent(GameState.EVENT_BOSS_DIED, {'killed_by': p}));
             SoundManager.getInstance().playSound(
@@ -318,9 +357,13 @@ package com.starmaid.Cibele.entities {
             );
         }
 
-        override public function activeTarget():void { }
+        override public function activeTarget():void {
+            this._healthBar._activeText.visible = true;
+        }
 
-        override public function inactiveTarget():void { }
+        override public function inactiveTarget():void {
+            this._healthBar._activeText.visible = false;
+        }
 
         override public function addVisibleObjects():void {
             FlxG.state.add(this.debugText);

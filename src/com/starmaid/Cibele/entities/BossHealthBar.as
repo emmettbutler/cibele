@@ -26,17 +26,23 @@ package com.starmaid.Cibele.entities {
             this._changeText.setFormat("NexaBold-Regular", 25, text_color,
                                        "left");
             this._changeText.scrollFactor = new DHPoint(0, 0);
-            this.name_text = new FlxText(0, 0, 500, this.cur_name);
+            this.name_text = new FlxText(0, 0, 200, this.cur_name);
             this.name_text.scrollFactor = new DHPoint(0,0);
             this.name_text.setFormat("NexaBold-Regular", 18, text_color,
                                      "left");
+
+            this._activeText.scrollFactor = new DHPoint(0, 0);
+            this._activeText.size = 15;
 
             this.setVisible(false);
         }
 
         override public function setVisible(v:Boolean):void {
-            super.setVisible(v);
-            this.name_text.visible = v;
+            if(this.name_text != null && this._activeText != null) {
+                super.setVisible(v);
+                this.name_text.visible = v;
+                this._activeText.visible = false;
+            }
         }
 
         override public function addVisibleObjects():void {
@@ -54,6 +60,8 @@ package com.starmaid.Cibele.entities {
             super.setPos(screenPos);
             this._changeText.x = this.name_text.x + 100;
             this._changeText.y = this.name_text.y;
+            this._activeText.x = this.name_text.x;
+            this._activeText.y = this.name_text.y + 45;
         }
     }
 }

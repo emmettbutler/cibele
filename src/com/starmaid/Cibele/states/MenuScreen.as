@@ -36,6 +36,7 @@ package com.starmaid.Cibele.states {
         public var quit_rect:FlxRect;
         public var mouse_rect:FlxRect;
         private var has_initiated_switch:Boolean = false;
+        private var bgLoader:FernBackgroundLoader;
 
         public var crystal_icon:GameObject;
 
@@ -55,11 +56,12 @@ package com.starmaid.Cibele.states {
             PopUpManager.GAME_ACTIVE = true;
             super.create();
 
-            this.use_loading_screen = false;
+            this.use_loading_screen = true;
             FlxG.bgColor = 0x00000000;
             var _screen:ScreenManager = ScreenManager.getInstance();
 
-            new FernBackgroundLoader().load();
+            this.bgLoader = new FernBackgroundLoader();
+            this.bgLoader.load();
 
             var smoke:GameObject = new GameObject(new DHPoint(0, 0));
             smoke.active = false;
@@ -133,17 +135,20 @@ package com.starmaid.Cibele.states {
             debugText = new FlxText(0,0,100,"");
             add(debugText);
 
-            function _musicCallback():void {
-                if (FlxG.state is MenuScreen && has_initiated_switch == false) {
-                    SoundManager.getInstance().playSound(MenuBGMLoop, 0, null,
-                        true, 1, GameSound.BGM, MenuScreen.BGM, false, false, false, true);
-                }
-            }
-            SoundManager.getInstance().playSound(MenuBGMIntro,
-                7.9*GameSound.MSEC_PER_SEC, _musicCallback, false, 1,
-                GameSound.SFX, MenuScreen.BGM, false, false, false, true);
-
             super.postCreate();
+        }
+
+        override public function loadingScreenEndCallback():void {
+            SoundManager.getInstance().playSound(MenuBGMIntro,
+                    7.9*GameSound.MSEC_PER_SEC, musicCallback, false, 1,
+                    GameSound.SFX, MenuScreen.BGM, false, false, false, true);
+        }
+
+        public function musicCallback():void {
+            if (FlxG.state is MenuScreen && has_initiated_switch == false) {
+                SoundManager.getInstance().playSound(MenuBGMLoop, 0, null,
+                    true, 1, GameSound.BGM, MenuScreen.BGM, false, false, false, true);
+            }
         }
 
         override public function update():void{
@@ -233,6 +238,11 @@ package com.starmaid.Cibele.states {
                 },
                 1 * GameSound.MSEC_PER_SEC
             );
+        }
+
+        override public function destroy():void {
+            this.bgLoader.unload();
+            super.destroy();
         }
     }
 }

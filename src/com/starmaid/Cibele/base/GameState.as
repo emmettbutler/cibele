@@ -14,6 +14,7 @@ package com.starmaid.Cibele.base {
 
     import org.flixel.*;
     import flash.events.Event;
+    import flash.events.UncaughtErrorEvent;
     import flash.events.MouseEvent;
 
     public class GameState extends FlxState {
@@ -27,13 +28,15 @@ package com.starmaid.Cibele.base {
         protected var pausable:Boolean = true;
         protected var fadeLayer:GameObject;
         private var pauseScreen:PauseScreen;
+        private var callbackRefs:Array;
         private var sortedObjects:Array;
         private var postFadeFn:Function;
         private var postFadeWait:Number;
         protected var menuButtons:Array;
         public var loadingScreen:LoadingScreen;
         public var use_loading_screen:Boolean = true;
-        public var enable_cursor:Boolean = true;
+        public var enable_cursor:Boolean = true,
+                   hide_cursor_on_unpause:Boolean = false;
         public var loading_screen_timer:Number = 3;
         public var play_loading_dialogue:Boolean = true;
         public var fpsCounter:FPSCounter;
@@ -61,6 +64,7 @@ package com.starmaid.Cibele.base {
             this.updateMessages = messages;
             this.enable_fade = fade;
             this.slug = "" + (Math.random() * 1000000);
+            this.callbackRefs = new Array();
 
             this.ui_color_flag = UICOLOR_DEFAULT;
 
@@ -118,6 +122,16 @@ package com.starmaid.Cibele.base {
 
         override public function destroy():void {
             FlxG.stage.removeEventListener(MouseEvent.MOUSE_UP, clickHandler);
+            this.callbackRefs.length = 0;
+            this.callbackRefs = null;
+            if (this.enable_fade) {
+                this.fadeLayer.destroy();
+                this.fadeLayer = null;
+            }
+            this.baseLayer.destroy();
+            this.baseLayer = null;
+            this.pauseScreen.destroy();
+            this.pauseScreen = null;
             super.destroy();
         }
 
@@ -379,12 +393,16 @@ package com.starmaid.Cibele.base {
             GlobalTimer.getInstance().pause();
             SoundManager.getInstance().pause();
             this.pauseScreen.visible = GlobalTimer.getInstance().isPaused();
+            this.game_cursor.show();
         }
 
         public function resume():void {
             GlobalTimer.getInstance().resume();
             SoundManager.getInstance().resume();
             this.pauseScreen.visible = GlobalTimer.getInstance().isPaused();
+            if (this.hide_cursor_on_unpause) {
+                this.game_cursor.hide();
+            }
         }
 
         public function addMenuButton(button:MenuButton):void {
@@ -416,7 +434,8 @@ package com.starmaid.Cibele.base {
         }
 
         public function addEventListener(event:String, callback:Function):void {
-            FlxG.stage.addEventListener(event, callback);
+            callbackRefs.push(callback);
+            FlxG.stage.addEventListener(event, callback, false, 0, true);
         }
 
         public function removeEventListener(event:String, callback:Function):void {

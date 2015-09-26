@@ -299,7 +299,7 @@ package com.starmaid.Cibele.states {
                                     "icon": ImgChatlog1Icon,
                                     "icon_dim": new DHPoint(120, 95),
                                     "icon_pos": new DHPoint(30, 30),
-                                    "dim": new DHPoint(631, 409),
+                                    "dim": new DHPoint(631, 491),
                                     "contents": ImgChatlog1
                                 },
                                 {
@@ -348,7 +348,7 @@ package com.starmaid.Cibele.states {
                                     "name": "liberty",
                                     "icon": ImgLibertyIcon,
                                     "icon_dim": new DHPoint(76, 96),
-                                    "icon_pos": new DHPoint(240, 28),
+                                    "icon_pos": new DHPoint(240, 24),
                                     "dim": new DHPoint(568, 426),
                                     "contents": ImgLiberty
                                 },
@@ -382,7 +382,7 @@ package com.starmaid.Cibele.states {
                                     "name": "russell",
                                     "icon": ImgRussellOrchIcon,
                                     "icon_dim": new DHPoint(107, 91),
-                                    "icon_pos": new DHPoint(135, 30),
+                                    "icon_pos": new DHPoint(130, 30),
                                     "dim": new DHPoint(397, 530),
                                     "contents": ImgRussellOrch
                                 },
@@ -390,7 +390,7 @@ package com.starmaid.Cibele.states {
                                     "name": "car",
                                     "icon": ImgOldCarIcon,
                                     "icon_dim": new DHPoint(74, 88),
-                                    "icon_pos": new DHPoint(240, 36),
+                                    "icon_pos": new DHPoint(245, 31),
                                     "dim": new DHPoint(560, 420),
                                     "contents": ImgOldCar
                                 }

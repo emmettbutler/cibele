@@ -154,7 +154,8 @@ package com.starmaid.Cibele.states {
             this.clickObjectGroups = [
                 this.enemies.enemies,
                 PopUpManager.getInstance().elements,
-                MessageManager.getInstance().elements
+                MessageManager.getInstance().elements,
+                this.teamPowerBar.elements
             ];
             this.teamPowerBar.clickCallback(screenPos, worldPos);
             super.clickCallback(screenPos, worldPos);
@@ -231,7 +232,12 @@ package com.starmaid.Cibele.states {
             if (canConnect && ScreenManager.getInstance().DEBUG) {
                 trace("adding ray of length: " + ray.width);
             }
-            return {"canConnect": canConnect, "length": ray.width};
+            var w:Number = ray.width;
+            if (!ScreenManager.getInstance().DEBUG) {
+                ray.destroy();
+                ray = null;
+            }
+            return {"canConnect": canConnect, "length": w};
         }
 
         public function playFirstConvo():void {
@@ -389,7 +395,7 @@ package com.starmaid.Cibele.states {
                         that.last_convo_playing = true;
                     }
                     FlxG.stage.removeEventListener(GameState.EVENT_POPUP_CLOSED,
-                                                    arguments.callee);
+                                                   arguments.callee);
                 });
         }
 

@@ -44,7 +44,8 @@ package com.starmaid.Cibele.states {
 
             ScreenManager.getInstance();
 
-            this.crystalIcon = new GameObject(new DHPoint(ScreenManager.getInstance().screenWidth * .37, ScreenManager.getInstance().screenHeight * .02));
+            this.crystalIcon = new GameObject(new DHPoint((ScreenManager.getInstance().screenWidth * .5) - 314/2,
+                (ScreenManager.getInstance().screenHeight * .5) - 500/2 - 70));
             this.crystalIcon.loadGraphic(ImgXtal, false, false, 314, 500);
             add(this.crystalIcon);
 
@@ -82,7 +83,7 @@ package com.starmaid.Cibele.states {
             if (fileLevel != LevelTracker.LVL_IT) {
                 this._loadButton = new MenuButton(
                     new DHPoint(
-                        ScreenManager.getInstance().screenWidth * .42,
+                        ScreenManager.getInstance().screenWidth * .5 - _startButtonWidth/2,
                         this.crystalIcon.y + (this.crystalIcon.height + 130)
                     ),
                     new DHPoint(_startButtonWidth, 30),
@@ -95,7 +96,7 @@ package com.starmaid.Cibele.states {
 
             this._quitButton = new MenuButton(
                 new DHPoint(
-                    ScreenManager.getInstance().screenWidth * .62,
+                    ((ScreenManager.getInstance().screenWidth * .5 - _startButtonWidth/2) - (ScreenManager.getInstance().screenWidth * .22 + _startButtonWidth)) + ScreenManager.getInstance().screenWidth * .5 + _startButtonWidth/2,
                     this.crystalIcon.y + (this.crystalIcon.height + 130)
                 ),
                 new DHPoint(_startButtonWidth, 30),

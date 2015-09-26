@@ -16,6 +16,7 @@ package com.starmaid.Cibele.management {
 
     public class FernBackgroundLoader {
         public var doors:Array;
+        public var bg:FlxExtSprite;
 
         public function load():FlxExtSprite {
             var _screen:ScreenManager = ScreenManager.getInstance();
@@ -40,7 +41,7 @@ package com.starmaid.Cibele.management {
                 }
             ];
 
-            var bg:FlxExtSprite = (new BackgroundLoader()).loadSingleTileBG("/../assets/images/worlds/Fern-part-1.png");
+            bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/images/worlds/Fern-part-1.png");
 
             var cur:Object;
             for (var i:int = 0; i < doors.length; i++) {
@@ -97,5 +98,11 @@ package com.starmaid.Cibele.management {
             };
         }
 
+        public function unload():void {
+            bg.unload();
+            for (var i:int = 0; i < doors.length; i++) {
+                doors[i]['object'].unload();
+            }
+        }
     }
 }

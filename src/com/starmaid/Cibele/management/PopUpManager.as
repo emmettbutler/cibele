@@ -505,11 +505,7 @@ package com.starmaid.Cibele.management {
                               em:Number=111):void
         {
             if(procedural) {
-                new Emote(new DHPoint(char.pos.x + char.nameTextOffset.x,
-                                      char.pos.y + char.nameTextOffset.y),
-                          em,
-                          (FlxG.state as GameState).ui_color_flag
-                );
+                char.emote(em);
             } else {
                 var overlap:Boolean, element:UIElement, mood:Number;
                 for (var k:Object in this.emojiButtons) {
@@ -520,10 +516,7 @@ package com.starmaid.Cibele.management {
                                     element.height)
                     );
                     if (overlap) {
-                        new Emote(new DHPoint(char.pos.x + char.nameTextOffset.x,
-                                              char.pos.y + char.nameTextOffset.y),
-                                  mood,
-                                  (FlxG.state as GameState).ui_color_flag);
+                        char.emote(mood);
                     }
                 }
             }
@@ -544,7 +537,19 @@ package com.starmaid.Cibele.management {
             this.setDefaultDockPopups();
         }
 
+        public function destroy():void {
+            for (var key:Object in this.folder_structure) {
+                if(this.folder_structure[key] != null) {
+                    this.folder_structure[key] = null;
+                }
+            }
+            this.folder_structure = null;
+        }
+
         public static function resetInstance():void {
+            if (_instance != null) {
+                _instance.destroy();
+            }
             _instance = new PopUpManager();
         }
 

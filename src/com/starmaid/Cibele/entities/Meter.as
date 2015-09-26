@@ -5,6 +5,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.states.LevelMapState;
 
     import org.flixel.*;
 
@@ -44,6 +45,13 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        override public function destroy():void {
+            this._barFrame = null;
+            this._innerBar = null;
+            this._changeText = null;
+            super.destroy();
+        }
+
         public function setPoints(points:Number):void {
             if (this._curPoints == points) {
                 return;
@@ -59,6 +67,9 @@ package com.starmaid.Cibele.entities {
                 GlobalTimer.getInstance().setMark(this.slug + "showChange",
                                                 .7 * GameSound.MSEC_PER_SEC,
                                                 function():void {
+                                                    if(!(FlxG.state is LevelMapState)) {
+                                                        return;
+                                                    }
                                                     _changeText.text = "";
                                                     _curDiff = 0;
                                                 },
@@ -82,9 +93,11 @@ package com.starmaid.Cibele.entities {
         }
 
         public function setVisible(v:Boolean):void {
-            this._barFrame.visible = v;
-            this._innerBar.visible = v;
-            this._changeText.text = "";
+            if(this._barFrame != null && this._innerBar != null && this._changeText != null) {
+                this._barFrame.visible = v;
+                this._innerBar.visible = v;
+                this._changeText.text = "";
+            }
         }
 
         public function isVisible():Boolean {

@@ -445,7 +445,7 @@ package com.starmaid.Cibele.states {
                             "name": "cosmo",
                             "icon": ImgCosmoIcon,
                             "icon_dim": new DHPoint(61, 84),
-                            "icon_pos": new DHPoint(27, 36),
+                            "icon_pos": new DHPoint(47, 36),
                             "dim": new DHPoint(631, 356),
                             "contents": ImgCosmo
                         },
@@ -715,7 +715,6 @@ package com.starmaid.Cibele.states {
             this.folder_builder = new FolderBuilder();
             this.folder_builder.populateFolders(folder_structure);
             this.folder_builder.setUpLeafPopups();
-
         }
 
         override public function update():void{

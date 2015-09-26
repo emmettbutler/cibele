@@ -72,7 +72,9 @@ package com.starmaid.Cibele.entities {
             this.slug = _slug;
             this.zSorted = true;
             this.basePos = new DHPoint(this.x, this.y + (this.height-10));
-            this.debugText.color = 0xff444444;
+            if (this.debugText != null) {
+                this.debugText.color = 0xff444444;
+            }
             this.attackRange = 90;
             this.attackSounds = new Array(SfxAttack1, SfxAttack2, SfxAttack3, SfxAttack4);
 
@@ -405,11 +407,15 @@ package com.starmaid.Cibele.entities {
 
         override public function resolveStatePostAttack():void {
             super.resolveStatePostAttack();
+            if (!(FlxG.state is LevelMapState)) {
+                return;
+            }
             if (!this.evaluateEnemyDistance()) {
                 this.enterIdleState();
             }
             this.attackAnim.visible = false;
             this.visible = true;
+            this.shadow_sprite.visible = true;
         }
 
         public function setClosestEnemy():Enemy {
@@ -498,6 +504,7 @@ package com.starmaid.Cibele.entities {
                 return;
             }
             this.attackAnim.play("reverse_attack");
+            this.runAttackParticles();
             GlobalTimer.getInstance().setMark(
                 "attack anim stuff reverse", 1*GameSound.MSEC_PER_SEC,
                 this.resolveStatePostAttack, true
@@ -516,6 +523,7 @@ package com.starmaid.Cibele.entities {
                 this.attackAnim.visible = true;
                 this.attackAnim.play("attack");
                 this.visible = false;
+                this.shadow_sprite.visible = false;
 
                 if(this.inViewOfPlayer()) {
                     this.playAttackSound();

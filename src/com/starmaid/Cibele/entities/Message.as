@@ -54,6 +54,10 @@ package com.starmaid.Cibele.entities {
             FlxG.state.add(this.textbox);
         }
 
+        public function unloadSprites():void {
+            this.textbox = null;
+        }
+
         public function set inbox_ref(ref:GameObject):void {
             this._inbox_ref = ref;
         }

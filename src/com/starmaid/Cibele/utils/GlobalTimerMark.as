@@ -35,6 +35,7 @@ package com.starmaid.Cibele.utils {
                 this.finished = true;
                 if (this.callback != null) {
                     this.callback();
+                    this.callback = null;
                 }
             }
         }

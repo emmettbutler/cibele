@@ -30,6 +30,7 @@ package com.starmaid.Cibele.management {
         public var exit_hover_ui:UIElement;
         public var img_msg:UIElement;
         public var ellipse_anim:UIElement;
+        public var back_reply_button:UIElement;
 
         public var notifications_box:FlxRect,
                     notification_num_box:FlxRect,
@@ -317,10 +318,24 @@ package com.starmaid.Cibele.management {
                 FlxG.state.add(this.exit_hover_ui);
             }
 
+            this.back_reply_button = new UIElement(this.img_inbox.x + 10,
+                this.img_inbox.y + (this.img_inbox.height-50));
+            if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
+            {
+                this.back_reply_button.makeGraphic(150, 30, 0xffdf7b95);
+            } else {
+                this.back_reply_button.makeGraphic(150, 30, 0xff60a0ab);
+            }
+            this.back_reply_button.visible = false;
+            this.back_reply_button.scrollFactor = new FlxPoint(0,0);
+            if (addToState) {
+                FlxG.state.add(this.back_reply_button);
+            }
+
             this.exit_msg = new FlxText(this.img_inbox.x + 20,
                 this.img_inbox.y + (this.img_inbox.height-40),
                 this.img_inbox.width, "Back /");
-            this.exit_msg.setFormat("NexaBold-Regular",FONT_SIZE,0xff616161,"left");
+            this.exit_msg.setFormat("NexaBold-Regular",FONT_SIZE,0xffffffff,"left");
             this.exit_msg.scrollFactor = new FlxPoint(0, 0);
             this.exit_msg.visible = false;
             this.exit_msg.active = false;
@@ -333,7 +348,7 @@ package com.starmaid.Cibele.management {
             this.reply_to_msg = new FlxText(this.img_inbox.x + 85,
                 this.img_inbox.y + (this.img_inbox.height - 35),
                 this.img_inbox.width, "/ Reply");
-            this.reply_to_msg.setFormat("NexaBold-Regular",FONT_SIZE,0xff616161,"left");
+            this.reply_to_msg.setFormat("NexaBold-Regular",FONT_SIZE,0xffffffff,"left");
             this.reply_to_msg.scrollFactor = new FlxPoint(0, 0);
             this.reply_to_msg.visible = false;
             this.reply_to_msg.active = false;
@@ -343,13 +358,14 @@ package com.starmaid.Cibele.management {
 
             this.reply_box = new FlxRect(this.reply_to_msg.x, this.reply_to_msg.y, 64, this.reply_to_msg.height);
 
-
             this.ellipse_anim = new UIElement(reply_to_msg.x, reply_to_msg.y + 10);
             this.ellipse_anim.loadGraphic(ImgEllipse, false, false, 23, 4);
             this.ellipse_anim.addAnimation("ellipse", [0,1,2,3], 5, true);
             this.ellipse_anim.play("ellipse");
             this.ellipse_anim.scrollFactor = new DHPoint(0,0);
-            FlxG.state.add(this.ellipse_anim);
+            if (addToState) {
+                FlxG.state.add(this.ellipse_anim);
+            }
             this.ellipse_anim.visible = false;
 
             this.debugText = new FlxText(_screen.screenWidth * .01,
@@ -386,6 +402,16 @@ package com.starmaid.Cibele.management {
             }
         }
 
+        public function destroy():void {
+            if (this.threads != null) {
+                for(var i:int = 1; i < this.threads.length; i++){
+                    this.threads[i].unloadSprites();
+                    this.threads[i] = null;
+                }
+                this.threads = null;
+            }
+        }
+
         public function reloadPersistentObjects():void {
             this.ui_loaded = false;
             this.initNotifications(true);
@@ -393,12 +419,7 @@ package com.starmaid.Cibele.management {
             for(var i:int = 1; i < this.threads.length; i++){
                 this.threads[i].setListPos(this.threads[i - 1].pos);
             }
-            if (this._state == STATE_HIDE_INBOX) {
-                this.exitInbox();
-            } else {
-                this.openInbox();
-                this.openThread(this.cur_viewing);
-            }
+            this.exitInbox();
             this.ui_loaded = true;
         }
 
@@ -427,6 +448,7 @@ package com.starmaid.Cibele.management {
             this.reply_to_msg.visible = false;
             this.ellipse_anim.visible = false;
             this.exit_msg.visible = false;
+            this.back_reply_button.visible = false;
         }
 
         public function openThread(thread:Thread):void {
@@ -440,6 +462,7 @@ package com.starmaid.Cibele.management {
                     this.reply_to_msg.visible = true;
                 }
                 this.exit_msg.visible = true;
+                this.back_reply_button.visible = true;
                 this._state = STATE_VIEW_MESSAGE;
                 thread.rotate();
                 for(var i:int = 0; i < this.threads.length; i++) {
@@ -470,6 +493,9 @@ package com.starmaid.Cibele.management {
             this.reply_box = new FlxRect(this.reply_to_msg.x,
                                          this.reply_to_msg.y, 64,
                                          this.reply_to_msg.height);
+
+            this.back_reply_button.x = this.exit_msg.x - 7;
+            this.back_reply_button.y = this.exit_msg.y - 2;
 
             this.ellipse_anim.x = this.reply_to_msg.x + 2;
             this.ellipse_anim.y = this.reply_to_msg.y + 13;
@@ -600,19 +626,19 @@ package com.starmaid.Cibele.management {
         }
 
         public function highlightReplyColor():void {
-            this.reply_to_msg.color = Thread.HIGHLIGHT_COLOR;
+            this.reply_to_msg.color = 0xfffadde7;
         }
 
         public function defaultReplyColor():void {
-            this.reply_to_msg.color = Thread.DEFAULT_COLOR;
+            this.reply_to_msg.color = 0xffffffff;
         }
 
         public function highlightExitColor():void {
-            this.exit_msg.color = Thread.HIGHLIGHT_COLOR;
+            this.exit_msg.color = 0xfffadde7;
         }
 
         public function defaultExitColor():void {
-            this.exit_msg.color = Thread.DEFAULT_COLOR;
+            this.exit_msg.color = 0xffffffff;
         }
 
         public function showReplyButton():void {
@@ -631,6 +657,7 @@ package com.starmaid.Cibele.management {
             }
             this.exit_msg.visible = false;
             this.reply_to_msg.visible = false;
+            this.back_reply_button.visible = false;
             this.ellipse_anim.visible = false;
             for(var i:int = 0; i < this.threads.length; i++) {
                 this.threads[i].hide();
@@ -674,6 +701,9 @@ package com.starmaid.Cibele.management {
         }
 
         public static function resetInstance():void {
+            if (_instance != null) {
+                _instance.destroy();
+            }
             _instance = new MessageManager();
         }
 

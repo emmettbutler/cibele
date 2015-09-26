@@ -4,6 +4,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.HallwayTileLoader;
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.management.BackgroundLoader;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameObject;
@@ -94,9 +95,6 @@ package com.starmaid.Cibele.states {
             fernBase = (new BackgroundLoader()).loadSingleTileBG("/../assets/images/worlds/Fern-part-2.png");
             fernBase.scrollFactor = new DHPoint(1, 1);
 
-            this.setScaleFactor(
-                ScreenManager.getInstance().calcFullscreenScale());
-
             leftBound = ScreenManager.getInstance().screenWidth * .39;
             rightBound = ScreenManager.getInstance().screenWidth * .52;
 
@@ -186,7 +184,7 @@ package com.starmaid.Cibele.states {
             super.postCreate();
 
             var _screen:ScreenManager = ScreenManager.getInstance();
-            call_button = new UIElement(_screen.screenWidth * .35, _screen.screenHeight * .3);
+            call_button = new UIElement(_screen.screenWidth * .5 - 406/2, _screen.screenHeight * .5 - 260/2);
             call_button.loadGraphic(ImgCall,false,false,406,260);
             call_button.scrollFactor = new DHPoint(0, 0);
             FlxG.state.add(call_button);
@@ -199,6 +197,13 @@ package com.starmaid.Cibele.states {
             {
                 super.clickCallback(screenPos, worldPos);
             }
+        }
+
+        override public function destroy():void {
+            this.loader.unload();
+            this.tileLoader.unload();
+            this.fernBase.unload();
+            super.destroy();
         }
     }
 }
