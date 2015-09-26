@@ -56,9 +56,6 @@ package com.starmaid.Cibele.states {
             door_fern.visible = false;
             add(door_fern);
 
-            this.setScaleFactor(
-                ScreenManager.getInstance().calcFullscreenScale());
-
             this.postCreate();
         }
 
