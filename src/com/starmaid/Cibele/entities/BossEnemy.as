@@ -46,7 +46,7 @@ package com.starmaid.Cibele.entities {
             this.damageThreshold = [400, 200];
             this._enemyType = Enemy.TYPE_BOSS;
             this.sightRange = 750;
-            this.hitDamage = 10;
+            this.hitDamage = ScreenManager.getInstance().SHORT_DIALOGUE ? 100 : 10;
             this.recoilPower = 0;
 
             this.alpha = 0;
