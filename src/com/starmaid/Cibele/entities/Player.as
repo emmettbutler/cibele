@@ -470,6 +470,9 @@ package com.starmaid.Cibele.entities {
                 // don't start walking if the click starts on a uielement
                 if (!this.clickStartedOnUI) {
                     this.initWalk(new DHPoint(FlxG.mouse.x, FlxG.mouse.y), false);
+                    this.visible = true;
+                    this.shadow_sprite.visible = true;
+                    this.attack_sprite.visible = false;
                 }
                 this.mouseHeld = true;
             }
