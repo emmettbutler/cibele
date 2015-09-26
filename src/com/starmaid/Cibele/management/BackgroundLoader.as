@@ -306,16 +306,6 @@ package com.starmaid.Cibele.management {
             }
         }
 
-        public function unloadAllTiles():void {
-            for (var row:int = 0; row < rows; row++) {
-                for (var col:int = 0; col < cols; col++) {
-                    this.loadTile(row, col, this.colliderTiles,
-                                  this.colliderReceivingMachines,
-                                  this.colliderName, true);
-                }
-            }
-        }
-
         public function allTilesLoaded():Boolean {
             for (var row:int = 0; row < rows; row++) {
                 for (var col:int = 0; col < cols; col++) {
