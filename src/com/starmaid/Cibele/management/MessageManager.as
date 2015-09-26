@@ -402,9 +402,13 @@ package com.starmaid.Cibele.management {
             }
         }
 
-        public function disposeSprites():void {
-            for(var i:int = 1; i < this.threads.length; i++){
-                this.threads[i].unloadSprites();
+        public function destroy():void {
+            if (this.threads != null) {
+                for(var i:int = 1; i < this.threads.length; i++){
+                    this.threads[i].unloadSprites();
+                    this.threads[i] = null;
+                }
+                this.threads = null;
             }
         }
 
