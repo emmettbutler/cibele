@@ -198,13 +198,13 @@ def main():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Compile Cibele")
     parser.add_argument('--mainclass', '-m', metavar="MAINCLASS", type=str,
-                        default="", nargs=1,
+                        default=["StartScreen"], nargs=1,
                         help="The main FlxState class to use")
     parser.add_argument('--libpath', '-l', metavar="LIBPATH", type=str,
                         nargs=1,
                         help="The name of the flex directory in /opt")
     parser.add_argument('--version_id', '-v', metavar="VERSION_ID", type=str,
-                        nargs=1, default=["3.1"],
+                        nargs=1, default=["18.0"],
                         help="The xml namespace version to compile against")
     parser.add_argument('--outfile_name', '-o', metavar="OUTFILE_NAME", type=str,
                         default="CibeleBeta",
