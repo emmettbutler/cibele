@@ -128,12 +128,12 @@ if __name__ == "__main__":
                         help="The path to the steam sdk directory")
     parser.add_argument('--app_path', '-a', metavar="APPPATH", type=str,
                         required=True,
-                        help="The path to the .app file to upload")
+                        help="The path to the executable file to upload")
     parser.add_argument('--description', '-d', metavar="DESCRIPTION", type=str,
                         nargs="+", default=["Build update"],
                         help="A description of this build's changes")
     parser.add_argument('--platform', '-t', type=str, default="mac",
-                        help="The platform for which to build an executable (windows | mac)")
+                        help="The platform for which to upload this build (windows | mac)")
     parser.add_argument('--steam_uname', '-u', metavar="UNAME", type=str,
                         required=True, help="Steam username")
     parser.add_argument('--steam_passwd', '-p', metavar="PASSWD", type=str,
