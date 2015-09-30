@@ -40,6 +40,7 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_doingthis.mp3")] private var Convo14:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_iloveyou.mp3")] private var Convo15:Class;
         [Embed(source="/../assets/images/worlds/steam.png")] private var ImgSteam:Class;
+        [Embed(source="/../assets/images/worlds/lava_bubble.png")] private var ImgBubble:Class;
         [Embed(source="/../assets/images/worlds/rock.png")] private var ImgRock:Class;
 
         public static var BGM:String = "hiisi bgm loop";
@@ -47,10 +48,11 @@ package com.starmaid.Cibele.states {
         public static const CONVO_2_HALL:String = "blajfhkjsdhfksjh";
         public static const SHOW_FIRST_POPUP:String = "yeaahhhahahjsdkah";
 
-        public static const STEAMS_COUNT:Number = 45;
+        public static const STEAMS_COUNT:Number = 23;
+        public static const BUBBLES_COUNT:Number = 22;
         public static const ROCKS_COUNT:Number = 3;
 
-        private var steams:Array, rocks:Array;
+        private var steams:Array, rocks:Array, bubbles:Array;
 
         public function Hiisi() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_HI;
@@ -205,11 +207,13 @@ package com.starmaid.Cibele.states {
         override public function destroy():void {
             this.steams = null;
             this.rocks = null;
+            this.bubbles = null;
             super.destroy();
         }
 
         override public function addEnvironmentDetails():void {
             this.setupSteam();
+            this.setupBubbles();
         }
 
         override public function addScreenspaceDetails():void {
@@ -253,6 +257,35 @@ package com.starmaid.Cibele.states {
                 FlxG.state.add(steam);
                 steam.play("run");
                 this.steams.push(steam);
+            }
+        }
+
+        private function setupBubbles():void {
+            this.bubbles = new Array();
+            var bubble:GameObject;
+            var bubbleDimensions:DHPoint = new DHPoint(90, 55);
+            var frames:Array;
+            for (var i:int = 0; i < STEAMS_COUNT; i++) {
+                frames = new Array();
+                bubble = new GameObject(new DHPoint(
+                    Math.random() * (this.levelDimensions.x - bubbleDimensions.x),
+                    Math.random() * (this.levelDimensions.y - bubbleDimensions.y)
+                ));
+                bubble.loadGraphic(ImgBubble, false, false,
+                                   bubbleDimensions.x, bubbleDimensions.y);
+                for (var k:int = 0; k < 21; k++) {
+                    frames.push(k);
+                }
+                var limit:Number = 5 + Math.floor(Math.random() * 10);
+                for (k = 0; k < 10; k++) {
+                    frames.push(0);
+                }
+                bubble.addAnimation("run", frames, 18, true);
+                bubble.zSorted = true;
+                bubble.basePos = new DHPoint(bubble.x, bubble.y + bubble.height);
+                FlxG.state.add(bubble);
+                bubble.play("run");
+                this.bubbles.push(bubble);
             }
         }
 
