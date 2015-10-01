@@ -63,6 +63,7 @@ package com.starmaid.Cibele.entities {
             this.walkTarget = new DHPoint(0, 0);
             this.footstepOffsets = new LRUDVector();
             this.setupDebugSprites();
+            this._state = STATE_IDLE;
 
             this.emoji = {};
             this.emoji[Emote.HAPPY] = new Emote(
