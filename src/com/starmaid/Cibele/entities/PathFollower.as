@@ -446,6 +446,7 @@ package com.starmaid.Cibele.entities {
             if (!(FlxG.state is LevelMapState)) {
                 return;
             }
+            this.inReverseAttack = false;
             if (!this.evaluateEnemyDistance()) {
                 this.enterIdleState();
             }
@@ -541,6 +542,7 @@ package com.starmaid.Cibele.entities {
             if (!(FlxG.state is LevelMapState)) {
                 return;
             }
+            this.inReverseAttack = true;
             this.attackAnim.play("reverse_attack");
             GlobalTimer.getInstance().setMark(
                 "attack anim stuff reverse", 1*GameSound.MSEC_PER_SEC,

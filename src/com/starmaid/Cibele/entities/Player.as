@@ -596,6 +596,7 @@ package com.starmaid.Cibele.entities {
             }
             super.resolveStatePostAttack();
 
+            this.inReverseAttack = false;
             this.attack_sound_lock = false;
 
             if (this.targetEnemy != null && !this.targetEnemy.isDead())
@@ -656,6 +657,7 @@ package com.starmaid.Cibele.entities {
             if (!(FlxG.state is LevelMapState)) {
                 return;
             }
+            this.inReverseAttack = true;
             this.attack_sprite.play("reverse_attack");
             GlobalTimer.getInstance().setMark("attack_finished_reverse",
                     (23.0/13.0)*GameSound.MSEC_PER_SEC, function():void {

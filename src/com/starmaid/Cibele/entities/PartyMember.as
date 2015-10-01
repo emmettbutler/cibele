@@ -27,6 +27,7 @@ package com.starmaid.Cibele.entities {
         public static const PARTICLE_ICHI:Number = 2;
 
         public var lastAttackTime:Number = 0;
+        public var inReverseAttack:Boolean = false;
         public var footsteps:FootstepTrail = null;
         public var footstepOffset:DHPoint;
         public var attackRange:Number = 70;
