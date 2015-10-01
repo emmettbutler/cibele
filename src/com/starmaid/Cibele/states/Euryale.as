@@ -47,7 +47,7 @@ package com.starmaid.Cibele.states {
         public static const SHOW_FIRST_POPUP:String = "pennisuyuyi";
 
         public static const SPARKLES_COUNT:Number = 45;
-        public static const DROPLETS_COUNT:Number = 3;
+        public static const DROPLETS_COUNT:Number = 6;
         public static const MIST_COUNT:Number = 30;
 
         private var sparkles:Array, droplets:Array, mists:Array;

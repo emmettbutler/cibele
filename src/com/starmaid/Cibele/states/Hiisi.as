@@ -50,7 +50,7 @@ package com.starmaid.Cibele.states {
 
         public static const STEAMS_COUNT:Number = 23;
         public static const BUBBLES_COUNT:Number = 22;
-        public static const ROCKS_COUNT:Number = 3;
+        public static const ROCKS_COUNT:Number = 6;
 
         private var steams:Array, rocks:Array, bubbles:Array;
 
