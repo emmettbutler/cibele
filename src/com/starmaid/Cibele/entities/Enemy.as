@@ -41,7 +41,6 @@ package com.starmaid.Cibele.entities {
         public var footPos:DHPoint, footPosOffset:DHPoint, basePosOffset:DHPoint;
         protected var lastTrackingDirUpdateTime:Number = -1;
         protected var flipFacing:Boolean = false;
-        public var damagedByPartyMember:PartyMember;
 
         public static const STATE_IDLE:Number = 1;
         public static const STATE_TRACKING:Number = 3;
@@ -160,7 +159,6 @@ package com.starmaid.Cibele.entities {
         }
 
         public function takeDamage(p:PartyMember):void{
-            this.damagedByPartyMember = p;
             if (this.isDead()) {
                 return;
             }
@@ -180,7 +178,7 @@ package com.starmaid.Cibele.entities {
             this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
             this.hitPoints -= Math.floor(this.hitDamage * p.teamPowerDamageMul);
             this._healthBar.setPoints(this.hitPoints);
-
+            p.runParticles(this.getMiddlePos().sub(new DHPoint(0, this.height/3)));
             if(this.hitPoints <= 0){
                 this.die(p);
             }
