@@ -38,6 +38,7 @@ package com.starmaid.Cibele.entities {
                     clickStartedOnUI:Boolean = false;
         private var _bgLoaderRef:BackgroundLoader;
         private var clickObjectsGroup:Array;
+        private var lastFinalTargetRecalcTime:Number = 0;
 
         public var colliding:Boolean = false;
         public var mapHitbox:GameObject, cameraPos:GameObject;
@@ -276,13 +277,14 @@ package com.starmaid.Cibele.entities {
                 return;
             }
 
+            this.inReverseAttack = false;
             this.initWalk(worldPos);
             this.visible = true;
             this.shadow_sprite.visible = true;
             this.attack_sprite.visible = false;
             this.idle_sprite.visible = false;
             if (got_enemy && this.targetEnemy != null && !this.targetEnemy.isDead()) {
-                this._state = STATE_MOVE_TO_ENEMY;
+                this.enterStateMoveToEnemy();
                 this.targetEnemy.activeTarget();
                 if(this.targetEnemy != prevTargetEnemy) {
                     this.playEnemySelectSfx();
@@ -385,6 +387,14 @@ package com.starmaid.Cibele.entities {
         }
 
         public function doMovementState():void {
+            if (this.timeAlive - this.lastFinalTargetRecalcTime >= 1 * GameSound.MSEC_PER_SEC) {
+                this.lastFinalTargetRecalcTime = this.timeAlive;
+                if (!this.canConnectToFinalTarget() && !this.hasCurPath()) {
+                    var preWalkState:Number = this._state;
+                    this.initWalk(this.finalTarget);
+                    this._state = preWalkState;
+                }
+            }
             if (this.finalTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
                 this._state = STATE_IDLE;
                 this.dir = ZERO_POINT;
@@ -392,7 +402,7 @@ package com.starmaid.Cibele.entities {
                 if (_cur_path == null) {
                     if (this.inAttack()) {
                         this.initWalk(this.targetEnemy.getAttackPos());
-                        this._state = STATE_MOVE_TO_ENEMY;
+                        this.enterStateMoveToEnemy();
                     } else {
                         this._state = STATE_IDLE;
                         this.dir = ZERO_POINT;
@@ -423,6 +433,15 @@ package com.starmaid.Cibele.entities {
                 this.dir = ZERO_POINT;
                 this._cur_path = null;
             }
+        }
+
+        public function canConnectToFinalTarget():Boolean {
+            if (this.finalTarget == null) {
+                return false;
+            }
+            var connectInfo:Object = (FlxG.state as LevelMapState).pointsCanConnect(
+                this.footPos, this.finalTarget);
+            return connectInfo["canConnect"];
         }
 
         override public function update():void{
@@ -590,8 +609,13 @@ package com.starmaid.Cibele.entities {
             return pa.sub(pb)._length() > 5;
         }
 
+        public function enterStateMoveToEnemy():void {
+            this._state = STATE_MOVE_TO_ENEMY;
+            this.lastFinalTargetRecalcTime = this.timeAlive;
+        }
+
         override public function resolveStatePostAttack():void {
-            if (!(FlxG.state is LevelMapState) || !this.inAttack()) {
+            if (!(FlxG.state is LevelMapState) || !this.inAttack() || !this.inReverseAttack) {
                 return;
             }
             super.resolveStatePostAttack();
@@ -605,7 +629,7 @@ package com.starmaid.Cibele.entities {
                     this._state = STATE_AT_ENEMY;
                 } else {
                     this.initWalk(this.targetEnemy.getAttackPos());
-                    this._state = STATE_MOVE_TO_ENEMY;
+                    this.enterStateMoveToEnemy();
                 }
             } else {
                 if (this.targetEnemy != null) {
