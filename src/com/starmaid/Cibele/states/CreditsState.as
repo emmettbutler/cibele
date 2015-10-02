@@ -49,10 +49,19 @@ package com.starmaid.Cibele.states {
                     'text': 'Short films produced by Samantha Corey'
                 },
                 {
+                    'text': 'Blake played by\nJustin Briner (voice)\nEmmett Butler (short film actor)'
+                },
+                {
+                    'text': 'Nina voiced and acted by Nina Freeman'
+                },
+                {
                     'text': 'Special thanks to:\n\n\nNöel Hanson\n\nand Sean Hogan\n\nfor asset support.'
                 },
                 {
-                    'text': 'Special thanks to:\n\n\nBennett Foddy,\n\nSteve Gaynor\n\nAnd our many helpful playtesters.'
+                    'text': 'Special thanks to the folks who let us use their likeness in photographs:\nDiego Garcia, Arielle Martinez, Adam Christie, Brittney Lezon, Jenny Jiao Hsia, Alec Thomson, Nick Robinson and SQ Sunseri.'
+                },
+                {
+                    'text': 'Special thanks to our various playtesters and supporters:\nBennett Foddy, Steve Gaynor, Diego Garcia, Karla Zimonja, Heather Winter, Hannah Bown, Tynan Wales, Josh Clark, Michael Hansen, Josh Schonstal and Joni Kittaka.'
                 },
                 {
                     'text': 'Finally, special thanks to all of the people that Nina met (and grew up with) on the Sylph server in Final Fantasy Online. This game would not exist without all of you.'
