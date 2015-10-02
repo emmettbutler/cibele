@@ -201,21 +201,30 @@ package com.starmaid.Cibele.entities {
             this.setFootPos();
             var useNodes:Boolean = true;
             if (this._mapnodes != null && FlxG.state is LevelMapState) {
-                var closestNode:MapNode = this._mapnodes.getClosestNode(this.pos);
+                var closestNode:MapNode = this._mapnodes.getClosestNode(this.footPos);
                 var connectInfo:Object = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, worldPos);
                 if (closestNode == null || connectInfo["canConnect"]) {
                     useNodes = false;
                     if (ScreenManager.getInstance().DEBUG) {
-                        trace(this.slug + ": not using pathfinding (closestNode == " + closestNode + ")");
+                        trace(this.slug + ": not using nodes (closestNode == " + closestNode + ")");
                     }
                 } else {
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace("deciding whether to use paths");
+                    }
                     var destinationDisp:Number = this.footPos.sub(worldPos)._length();
                     var nearestNodeDisp:Number = this.footPos.sub(closestNode.pos)._length();
                     if (!usePaths || destinationDisp < nearestNodeDisp) {
+                        if (ScreenManager.getInstance().DEBUG) {
+                            trace("walking directly to target");
+                        }
                         this.walkTarget = worldPos;
                         this.finalTarget = worldPos;
                         this._cur_path = null;
                     } else {
+                        if (ScreenManager.getInstance().DEBUG) {
+                            trace("building best path");
+                        }
                         useNodes = this.buildBestPath(worldPos);
                     }
                 }
