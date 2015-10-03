@@ -93,6 +93,8 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/hi_email/mini_class_email_link.png")] private static var ImgHiMiniClassEmailLink:Class;
         [Embed(source="/../assets/images/ui/popups/eu_email/email_ichi_pic.png")] private static var ImgEuEmailIchiPic:Class;
         [Embed(source="/../assets/images/ui/popups/eu_email/email_ichi_pic_icon.png")] private static var ImgEuEmailIchiIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/friend_4_icon.png")] private static var ImgFriend4Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_files/friend_4.png")] private static var ImgFriend4:Class;
 
         /*
             Directory tree definition
@@ -752,6 +754,15 @@ package com.starmaid.Cibele.management {
                     "dim": new DHPoint(336, 448),
                     "struc": PopUpManager.HI_SELFIE_DC,
                     "contents": ImgHiSelfie3
+                },
+                {
+                    "name": "hi friend 4",
+                    "icon": ImgFriend4Icon,
+                    "icon_dim": new DHPoint(79, 92),
+                    "icon_pos": new DHPoint(105, 131),
+                    "dim": new DHPoint(720, 540),
+                    "struc": PopUpManager.HI_SELFIE_DC,
+                    "contents": ImgFriend4
                 }
             ]};
             struc[PopUpManager.HI_EMAIL_3] = { "contents": [
