@@ -4,9 +4,9 @@ import shutil
 import subprocess
 
 
-APP_ID = 000000
-MAC_DEPOT_ID = 000000
-WINDOWS_DEPOT_ID = 000000
+APP_ID = 408120
+MAC_DEPOT_ID = 408122
+WINDOWS_DEPOT_ID = 408123
 
 
 def prepare_app_mac(app_path, sdk_path):
