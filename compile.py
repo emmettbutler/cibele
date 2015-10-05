@@ -115,15 +115,18 @@ def get_conf_path(entry_point_class):
     return "{}.xml".format(entry_point_class)
 
 
-def write_conf_file(swf_path, entry_point_class, version_id):
+def write_conf_file(swf_path, entry_point_class, version_id, beta=True):
     conf_path = get_conf_path(entry_point_class)
+    filename = "Cibele"
+    if beta:
+        filename = "CibeleBeta-{ts}".format(ts=dt.datetime.now().strftime('%Y.%m.%d.%H.%M.%S'))
     with open(conf_path, "w") as f:
         f.write(
 """
 <application xmlns="http://ns.adobe.com/air/application/{version_id}">
     <id>com.starmaid.Cibele</id>
     <versionNumber>1.0</versionNumber>
-    <filename>CibeleBeta-{ts}</filename>
+    <filename>{fname}</filename>
     <initialWindow>
         <content>{swf_path}</content>
         <visible>true</visible>
@@ -134,7 +137,7 @@ def write_conf_file(swf_path, entry_point_class, version_id):
     </initialWindow>
 </application>
 """.format(version_id=version_id,
-           ts=dt.datetime.now().strftime('%Y.%m.%d.%H.%M.%S'),
+           fname=filename,
            swf_path=swf_path)
         )
     return conf_path
@@ -186,7 +189,8 @@ def main():
                                 disable_saves=args.disable_saves,
                                 windowed=args.windowed,
                                 platform=args.platform)
-        conf_path = write_conf_file(swf_path, entry_point_class, args.version_id[0])
+        conf_path = write_conf_file(swf_path, entry_point_class,
+                                    args.version_id[0], args.beta)
 
         if args.package:
             package_application(entry_point_class, swf_path, platform=args.platform,
@@ -217,6 +221,8 @@ if __name__ == "__main__":
                         help="Debug level to compile under. One of [debug|test|release]")
     parser.add_argument('--package', '-p', action="store_true",
                         help="Build an executable")
+    parser.add_argument('--beta', '-b', action="store_true",
+                        help="Use the beta naming convention, including datestamp")
     parser.add_argument('--mute', '-e', action="store_true",
                         help="Mute all sounds in this build")
     parser.add_argument('--short_dialogue', '-i', action="store_true",

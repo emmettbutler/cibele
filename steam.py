@@ -109,10 +109,17 @@ def upload_build(sdk_path, platform, app_vdf, steam_uname, steam_passwd):
                     shell=platform == "windows")
 
 
+def move_app(app_path, sdk_path):
+    app_name = os.path.basename(app_path)
+    shutil.copytree(app_path, os.path.join(sdk_path, "tools", "ContentBuilder", "content", app_name))
+
+
 def main():
     description = " ".join(args.description)
     if args.platform == "mac":
         prepare_app_mac(args.app_path, args.sdk_path)
+    elif args.platform == "windows":
+        move_app(args.app_path, args.sdk_path)
     app_vdf = build_app_vdf(args.sdk_path, description, args.platform)
     build_depot_vdf(args.app_path,
                     args.sdk_path,
