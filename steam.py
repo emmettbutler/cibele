@@ -111,6 +111,7 @@ def upload_build(sdk_path, platform, app_vdf, steam_uname, steam_passwd):
 
 def move_app(app_path, sdk_path):
     app_name = os.path.basename(app_path)
+    print "Copying app to steamworks sdk"
     shutil.copytree(app_path, os.path.join(sdk_path, "tools", "ContentBuilder", "content", app_name))
 
 
