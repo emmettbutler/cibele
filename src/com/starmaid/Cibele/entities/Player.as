@@ -33,6 +33,7 @@ package com.starmaid.Cibele.entities {
                     hitboxDim:DHPoint;
         private var click_anim:GameObject, attack_sprite:GameObject,
                     idle_sprite:GameObject;
+        private var swapEnemy:Enemy;
         private var click_anim_lock:Boolean = false, clickWait:Boolean,
                     mouseHeld:Boolean = false, attack_sound_lock:Boolean = false,
                     clickStartedOnUI:Boolean = false;
@@ -253,7 +254,7 @@ package com.starmaid.Cibele.entities {
                             if(!got_enemy) {
                                 got_enemy = true;
                                 prevTargetEnemy = this.targetEnemy;
-                                this.targetEnemy = cur as Enemy;
+                                this.swapEnemy = cur as Enemy;
                             }
                         } else if (!ui_clicked) {
                             (cur as Enemy).inactiveTarget();
@@ -273,7 +274,7 @@ package com.starmaid.Cibele.entities {
             }
 
             // noop when re-clicking the selected enemy
-            if (got_enemy && this.targetEnemy == prevTargetEnemy) {
+            if (got_enemy && this.swapEnemy == prevTargetEnemy) {
                 return;
             }
 
@@ -283,18 +284,20 @@ package com.starmaid.Cibele.entities {
             this.shadow_sprite.visible = true;
             this.attack_sprite.visible = false;
             this.idle_sprite.visible = false;
-            if (got_enemy && this.targetEnemy != null && !this.targetEnemy.isDead()) {
+            if (got_enemy && this.swapEnemy != null && !this.swapEnemy.isDead()) {
                 this.enterStateMoveToEnemy();
-                this.targetEnemy.activeTarget();
-                if(this.targetEnemy != prevTargetEnemy) {
+                this.swapEnemy.activeTarget();
+                if(this.swapEnemy != prevTargetEnemy) {
                     this.playEnemySelectSfx();
                 }
             } else if (!got_enemy) {
-                this.targetEnemy = null;
+                this.swapEnemy = null;
             }
-            if (prevTargetEnemy != null && prevTargetEnemy != this.targetEnemy) {
+            if (prevTargetEnemy != null && prevTargetEnemy != this.swapEnemy) {
                 prevTargetEnemy.inactiveTarget();
             }
+            this.targetEnemy = this.swapEnemy;
+            this.swapEnemy = null;
 
             this.clickWait = true;
             if(!this.click_anim_lock) {
@@ -569,6 +572,8 @@ package com.starmaid.Cibele.entities {
                                 var _screen:ScreenManager = ScreenManager.getInstance();
                                 this.walkTarget = new DHPoint(_screen.screenWidth/2, this.y);
                             }
+                            this.targetEnemy.inactiveTarget();
+                            this.targetEnemy = null;
                         }
                     } else if (this._state != STATE_WALK_HARD){
                         if (this.dir.x > 0 && this.collisionDirection[1] == 1) {
