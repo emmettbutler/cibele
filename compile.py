@@ -151,7 +151,7 @@ def run_main(conf_file, runtime):
     subprocess.call(command.split())
 
 
-def package_application(entry_point_class, swf_path, platform="air", outfile_name="CibeleBeta"):
+def package_application(entry_point_class, swf_path, platform="air", outfile_name="CibeleBeta", nots=False):
     command = 'adt -certificate -cn SelfSign -ou QE -o "Star_Maid_Games" -c US 2048-RSA cibelecert.pfx AmanoJyakku!'
     print command
     subprocess.call(command.split(), shell=platform == "windows")
@@ -164,8 +164,9 @@ def package_application(entry_point_class, swf_path, platform="air", outfile_nam
     elif platform == "windows":
         target = "-target bundle"
         outfile = outfile_name
-    command = "adt -package -storetype pkcs12 -tsa none -keystore cibelecert.pfx {target} {outfile} {entry_point_class}.xml {swf_path} assets".format(
-        entry_point_class=entry_point_class, swf_path=swf_path, target=target, outfile=outfile)
+    command = "adt -package -storetype pkcs12 {nots} -keystore cibelecert.pfx {target} {outfile} {entry_point_class}.xml {swf_path} assets".format(
+        entry_point_class=entry_point_class, swf_path=swf_path, target=target, outfile=outfile,
+        nots="-tsa none" if nots else "")
     print command
     subprocess.call(command.split(), shell=platform == "windows")
 
@@ -194,7 +195,8 @@ def main():
 
         if args.package:
             package_application(entry_point_class, swf_path, platform=args.platform,
-                                outfile_name=args.outfile_name)
+                                outfile_name=args.outfile_name,
+                                nots=args.nots)
         else:
             run_main(conf_path, args.runtime[0])
 
@@ -233,6 +235,8 @@ if __name__ == "__main__":
                         help="Compile without load-from-save feature")
     parser.add_argument('--windowed', '-w', action="store_true",
                         help="Default this build to windowed mode")
+    parser.add_argument('--nots', '-n', action="store_true",
+                        help="Don't timestamp the build")
     parser.add_argument('--platform', '-t', type=str, default="air",
                         help="The platform for which to build an executable (windows | mac | air)")
     parser.add_argument('--copy_path', '-a', action="store_true",
