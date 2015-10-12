@@ -392,7 +392,7 @@ package com.starmaid.Cibele.entities {
         public function doMovementState():void {
             if (this.timeAlive - this.lastFinalTargetRecalcTime >= 1 * GameSound.MSEC_PER_SEC) {
                 this.lastFinalTargetRecalcTime = this.timeAlive;
-                if (!this.canConnectToFinalTarget() && !this.hasCurPath()) {
+                if ((!this.canConnectToFinalTarget() || this.colliding) && !this.hasCurPath()) {
                     var preWalkState:Number = this._state;
                     this.initWalk(this.finalTarget);
                     this._state = preWalkState;
