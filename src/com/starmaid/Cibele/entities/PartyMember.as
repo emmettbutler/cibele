@@ -200,6 +200,7 @@ package com.starmaid.Cibele.entities {
         public function initWalk(worldPos:DHPoint, usePaths:Boolean=true):void {
             this.setFootPos();
             var useNodes:Boolean = true;
+            this._cur_path = null;
             if (this._mapnodes != null && FlxG.state is LevelMapState) {
                 var closestNode:MapNode = this._mapnodes.getClosestNode(this.footPos);
                 var connectInfo:Object = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, worldPos);

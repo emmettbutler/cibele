@@ -401,6 +401,7 @@ package com.starmaid.Cibele.entities {
             if (this.finalTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
                 this._state = STATE_IDLE;
                 this.dir = ZERO_POINT;
+                this._cur_path = null;
             } else if (this.walkTarget.sub(this.footPos)._length() < 10 && !FlxG.mouse.pressed()) {
                 if (_cur_path == null) {
                     if (this.inAttack()) {
@@ -536,6 +537,7 @@ package com.starmaid.Cibele.entities {
                         }
                     } else {
                         this._state = STATE_IDLE;
+                        this._cur_path = null;
                     }
                 }
                 this.walk();
@@ -572,8 +574,10 @@ package com.starmaid.Cibele.entities {
                                 var _screen:ScreenManager = ScreenManager.getInstance();
                                 this.walkTarget = new DHPoint(_screen.screenWidth/2, this.y);
                             }
-                            this.targetEnemy.inactiveTarget();
-                            this.targetEnemy = null;
+                            if (this.targetEnemy != null) {
+                                this.targetEnemy.inactiveTarget();
+                                this.targetEnemy = null;
+                            }
                         }
                     } else if (this._state != STATE_WALK_HARD){
                         if (this.dir.x > 0 && this.collisionDirection[1] == 1) {
@@ -644,6 +648,7 @@ package com.starmaid.Cibele.entities {
                 }
                 this._state = STATE_IDLE;
                 this.dir = ZERO_POINT;
+                this._cur_path = null;
             }
 
             if(this._state != STATE_IN_ATTACK) {
