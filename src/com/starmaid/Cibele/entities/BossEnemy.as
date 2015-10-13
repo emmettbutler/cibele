@@ -81,6 +81,10 @@ package com.starmaid.Cibele.entities {
             this._state = STATE_DESPAWN;
         }
 
+        override public function targetable():Boolean {
+            return this.visible;
+        }
+
         public function get name():String {
             return this._name;
         }

@@ -121,6 +121,10 @@ package com.starmaid.Cibele.entities {
             return this._enemyType;
         }
 
+        public function targetable():Boolean {
+            return this.isDead();
+        }
+
         public function isBoss():Boolean {
             if(this.enemyType == TYPE_BOSS) {
                 return true;
