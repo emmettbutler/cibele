@@ -223,7 +223,7 @@ package com.starmaid.Cibele.management {
                             "icon": ImgBHIcon,
                             "icon_dim": new DHPoint(74, 14),
                             "icon_pos": new DHPoint(180, 106),
-                            "dim": new DHPoint(1030, 437),
+                            "dim": new DHPoint(970, 437),
                             "struc": PopUpManager.ICHI_SELFIE1,
                             "contents": ImgBH
                         }]
@@ -235,7 +235,7 @@ package com.starmaid.Cibele.management {
                     "icon": ImgBHIcon,
                     "icon_dim": new DHPoint(74, 14),
                     "icon_pos": new DHPoint(179, 101),
-                    "dim": new DHPoint(1030, 437),
+                    "dim": new DHPoint(970, 437),
                     "struc": PopUpManager.BULLDOG_HELL,
                     "contents": ImgBH
                 },
@@ -273,7 +273,7 @@ package com.starmaid.Cibele.management {
                             "icon": ImgBHIcon,
                             "icon_dim": new DHPoint(74, 14),
                             "icon_pos": new DHPoint(180, 106),
-                            "dim": new DHPoint(1030, 437),
+                            "dim": new DHPoint(970, 437),
                             "struc": PopUpManager.GUIL_1,
                             "contents": ImgBH
                         }]
