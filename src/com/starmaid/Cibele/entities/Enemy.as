@@ -122,7 +122,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function targetable():Boolean {
-            return this.isDead();
+            return !this.isDead();
         }
 
         public function isBoss():Boolean {
