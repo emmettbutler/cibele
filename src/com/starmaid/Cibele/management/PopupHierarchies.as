@@ -69,6 +69,13 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/eu_email/poemedits_email.png")] private static var ImgEuPoemEditEmail:Class;
         [Embed(source="/../assets/images/ui/popups/eu_email/poemedits_icon.png")] private static var ImgEuPoemEditIcon:Class;
         [Embed(source="/../assets/images/ui/popups/eu_email/poemedits.png")] private static var ImgEuPoemEdit:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/fanart1_icon.png")] private static var ImgFanart1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/fanart1.png")] private static var ImgFanart1:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/fanart2_icon.png")] private static var ImgFanart2Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/fanart2.png")] private static var ImgFanart2:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/fanart3_icon.png")] private static var ImgFanart3Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/fanart3.png")] private static var ImgFanart3:Class;
+        [Embed(source="/../assets/images/ui/popups/eu_files/fanartfolder_icon.png")] private static var ImgFanartFolderIcon:Class;
 
         //hiisi
         [Embed(source="/../assets/images/ui/popups/hi_email/flight_link.png")] private static var ImgHiFlightLink:Class;
@@ -613,6 +620,44 @@ package com.starmaid.Cibele.management {
                             "dim": new DHPoint(648, 484),
                             "struc": PopUpManager.EU_DOWNLOADS,
                             "contents": ImgLolDad
+                        },
+                        {
+                            "name": "fanart folder",
+                            "icon": ImgFanartFolderIcon,
+                            "icon_dim": new DHPoint(114, 87),
+                            "icon_pos": new DHPoint(30, 130),
+                            "folder_dim": new DHPoint(631, 356),
+                            "struc": PopUpManager.EU_DOWNLOADS,
+                            "folder_img": ImgPicturesFolder,
+                            "contents": [
+                                {
+                                    "name": "fanart 1",
+                                    "icon": ImgFanart1Icon,
+                                    "icon_dim": new DHPoint(87, 95),
+                                    "icon_pos": new DHPoint(30, 30),
+                                    "dim": new DHPoint(609, 637),
+                                    "struc": PopUpManager.EU_DOWNLOADS,
+                                    "contents": ImgFanart1
+                                },
+                                {
+                                    "name": "fanart 2",
+                                    "icon": ImgFanart2Icon,
+                                    "icon_dim": new DHPoint(87, 91),
+                                    "icon_pos": new DHPoint(130, 32),
+                                    "dim": new DHPoint(534, 637),
+                                    "struc": PopUpManager.EU_DOWNLOADS,
+                                    "contents": ImgFanart2
+                                },
+                                {
+                                    "name": "fanart 3",
+                                    "icon": ImgFanart3Icon,
+                                    "icon_dim": new DHPoint(77, 91),
+                                    "icon_pos": new DHPoint(230, 30),
+                                    "dim": new DHPoint(694, 562),
+                                    "struc": PopUpManager.EU_DOWNLOADS,
+                                    "contents": ImgFanart3
+                                }
+                            ]
                         }
                     ]
                 }
