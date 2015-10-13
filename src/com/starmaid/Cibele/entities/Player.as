@@ -440,6 +440,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function canConnectToFinalTarget():Boolean {
+            if (!(FlxG.state is LevelMapState)) {
+                return true;
+            }
             if (this.finalTarget == null) {
                 return false;
             }
