@@ -272,7 +272,7 @@ package com.starmaid.Cibele.management {
 
             for(var _key:Object in this.folder_structure) {
                 var _val:Object = this.folder_structure[_key];
-                this.folder_builder.overlapXSprite(_val);
+                this.folder_builder.overlapSprite(_val, "x_sprite");
             }
 
             for(var i:Number = 0; i < this.open_popups.length; i++) {

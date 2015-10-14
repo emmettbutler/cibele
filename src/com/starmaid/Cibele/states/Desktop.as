@@ -76,8 +76,7 @@ package com.starmaid.Cibele.states {
 
         override public function update():void{
             super.update();
-
-            this.folder_builder.overlapXSprite(this.folder_structure);
+            this.folder_builder.overlapSprite(this.folder_structure, "x_sprite");
         }
 
         override public function clickCallback(screenPos:DHPoint,

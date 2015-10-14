@@ -253,7 +253,8 @@ package com.starmaid.Cibele.management {
                     "icon_pos": new DHPoint(293, 100),
                     "dim": new DHPoint(284, 356),
                     "struc": PopUpManager.BULLDOG_HELL,
-                    "contents": ImgLastNightSmall
+                    "contents": ImgLastNightSmall,
+                    "email_link": true
                 }
             ]};
             struc[PopUpManager.GUIL_1] = { "contents": [
