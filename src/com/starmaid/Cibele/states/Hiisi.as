@@ -24,6 +24,7 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/music/vid_meetup.mp3")] private var BGMMeetup:Class;
         [Embed(source="/../assets/audio/music/vid_goodbye.mp3")] private var BGMGoodbye:Class;
         [Embed(source="/../assets/audio/music/vid_sex.mp3")] private var BGMSex:Class;
+        [Embed(source="/../assets/audio/music/vid_hallway.mp3")] private var BGMHallway:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_morning.mp3")] private var Convo1:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_westcoast.mp3")] private var Convo2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_whatifwemet.mp3")] private var Convo3:Class;
@@ -375,6 +376,11 @@ package com.starmaid.Cibele.states {
         }
 
         public function playHallways():void {
+            SoundManager.getInstance().playSound(
+                        BGMHallway,
+                        19 * GameSound.MSEC_PER_SEC,
+                        null, false, 1, GameSound.BGM
+                    );
             FlxG.switchState(new PlayVideoState("/../assets/video/4.2 Hallways_v1.mp4",
                 playBlankScreen1)
             );
