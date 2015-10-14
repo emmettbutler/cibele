@@ -20,10 +20,8 @@ package com.starmaid.Cibele.entities {
         [Embed(source="/../assets/images/characters/Sprite_Ichi_Walk_Cycle.png")] private var ImgIchi:Class;
         [Embed(source="/../assets/images/characters/Ichi_attack_sprite.png")] private var ImgIchiAttack:Class;
         [Embed(source="/../assets/images/characters/ichi_idle.png")] private var ImgIdle:Class;
-        [Embed(source="/../assets/audio/effects/sfx_protoattack1.mp3")] private var SfxAttack1:Class;
-        [Embed(source="/../assets/audio/effects/sfx_protoattack2.mp3")] private var SfxAttack2:Class;
-        [Embed(source="/../assets/audio/effects/sfx_protoattack3.mp3")] private var SfxAttack3:Class;
-        [Embed(source="/../assets/audio/effects/sfx_protoattack4.mp3")] private var SfxAttack4:Class;
+        [Embed(source="/../assets/audio/effects/sfx_ichiattack1.mp3")] private var SfxAttack1:Class;
+        [Embed(source="/../assets/audio/effects/sfx_ichiattack2.mp3")] private var SfxAttack2:Class;
 
         private var _precon_path:Path;
         private var _enemies:EnemyGroup;
@@ -77,7 +75,7 @@ package com.starmaid.Cibele.entities {
                 this.debugText.color = 0xff444444;
             }
             this.attackRange = 90;
-            this.attackSounds = new Array(SfxAttack1, SfxAttack2, SfxAttack3, SfxAttack4);
+            this.attackSounds = new Array(SfxAttack1, SfxAttack2);
 
             this.setupSprites();
             this.setupFootsteps();
