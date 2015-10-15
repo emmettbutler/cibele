@@ -89,7 +89,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
-                    "delay": 0, endfn: showBeccaEmail, "min_team_power": 10
+                    "delay": 0, endfn: showBeccaEmail, "min_team_power": 7
                 },
                 {
                     "audio": Convo5, "len": 21*GameSound.MSEC_PER_SEC,
@@ -97,7 +97,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "min_team_power": 12
+                    "delay": 0, "min_team_power": 9
                 },
                 {
                     "audio": Convo6, "len": 22*GameSound.MSEC_PER_SEC,
@@ -121,7 +121,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": Convo9, "len": 11*GameSound.MSEC_PER_SEC,
-                    "delay": 0, endfn: showProfEmail, "min_team_power": 20
+                    "delay": 0, endfn: showProfEmail, "min_team_power": 15
                 },
                 {
                     "audio": Convo10, "len": 59*GameSound.MSEC_PER_SEC,
@@ -141,11 +141,11 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "min_team_power": 28
+                    "delay": 0, "min_team_power": 20
                 },
                 {
                     "audio": Convo13, "len": 27*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "min_team_power": 30
+                    "delay": 0, "min_team_power": 22
                 },
                 {
                     "audio": Convo14, "len": 28*GameSound.MSEC_PER_SEC,
@@ -169,7 +169,7 @@ package com.starmaid.Cibele.states {
             this.playerStartPos = new DHPoint(1527, 6347);
             this.colliderScaleFactor = 8.05;
             this.enemyDirMultiplier = 2.5;
-            this.maxTeamPower = 30;
+            this.maxTeamPower = 22;
         }
 
         override public function create():void {
