@@ -105,6 +105,18 @@ package com.starmaid.Cibele.management {
             recurseSet = new Array();
             for (var i:int = 0; i < root["contents"].length; i++) {
                 cur = root["contents"][i];
+                if("email_link" in cur && cur["email_link"] == true) {
+                    curEmailLink = UIElement.fromPoint(cur["icon_pos"].add(root["folder_sprite"].pos).sub(new DHPoint(7, 4)));
+                    curEmailLink.loadGraphic(ImgEmailLinkBg, false, false, 337, 29);
+                    curEmailLink.scrollFactor = new DHPoint(0,0);
+                    curEmailLink.visible = false;
+                    FlxG.state.add(curEmailLink);
+                    if(elements != null) {
+                        elements.push(curEmailLink);
+                    }
+                    cur["email_link_sprite"] = curEmailLink;
+                    allClickableElements.push(curEmailLink);
+                }
                 if ("icon" in cur && cur["icon"] != null) {
                     spr = UIElement.fromPoint(cur["icon_pos"].add(root["folder_sprite"].pos));
                     spr.loadGraphic(cur["icon"], false, false, cur["icon_dim"].x, cur["icon_dim"].y);
@@ -116,21 +128,6 @@ package com.starmaid.Cibele.management {
                         elements.push(spr);
                     }
                     cur["icon_sprite"] = spr;
-
-                    if("email_link" in cur) {
-                        if(cur["email_link"] == true) {
-                            curEmailLink = UIElement.fromPoint(cur["icon_pos"].add(root["folder_sprite"].pos));
-                            curEmailLink.loadGraphic(ImgEmailLinkBg, false, false, 337, 29);
-                            curEmailLink.scrollFactor = new DHPoint(0,0);
-                            curEmailLink.visible = false;
-                            FlxG.state.add(curEmailLink);
-                            if(elements != null) {
-                                elements.push(curEmailLink);
-                            }
-                            cur["email_link_sprite"] = curEmailLink;
-                            allClickableElements.push(curEmailLink);
-                        }
-                    }
                 }
                 if("hitbox_pos" in cur && "hitbox_dim" in cur) {
                     spr = UIElement.fromPoint(new DHPoint(cur["hitbox_pos"].x, cur["hitbox_pos"].y));
@@ -178,7 +175,6 @@ package com.starmaid.Cibele.management {
                         elements.push(spr);
                         elements.push(curX);
                         elements.push(curXHover);
-                        elements.push(curEmailLink);
                     }
                     cur["x_sprite"] = curX;
                     cur["x_hover_sprite"] = curXHover;
@@ -377,13 +373,13 @@ package com.starmaid.Cibele.management {
             }
         }
 
-        public function overlapSprite(root:Object, t:String):void {
+        public function overlapSprites(root:Object):void {
             var cur:Object;
             for (var i:int = 0; i < root["contents"].length; i++) {
                 cur = root["contents"][i];
                 if (cur["contents"] is Array) {
                     if (cur["folder_sprite"].visible) {
-                        if(t == "x_sprite") {
+                        if ("x_sprite" in cur) {
                             if((FlxG.state as GameState).cursorOverlaps(cur["x_sprite"]._getRect(), true)) {
                                 cur["x_sprite"].visible = false;
                                 cur["x_hover_sprite"].visible = true;
@@ -391,24 +387,19 @@ package com.starmaid.Cibele.management {
                                 cur["x_sprite"].visible = true;
                                 cur["x_hover_sprite"].visible = false;
                             }
-                            this.overlapSprite(cur, "x_sprite");
-                        } else if(t == "email_link") {
-                            trace("ok");
-                            trace("email_link_sprite" in cur);
-                            if("email_link_sprite" in cur) {
-                                trace("cool");
-                                if((FlxG.state as GameState).cursorOverlaps(cur["email_link_sprite"]._getRect(), true)) {
-                                    cur["email_link_sprite"].visible = true;
-                                } else {
-                                    cur["email_link_sprite"].visible = false;
-                                }
-                            }
-                            this.overlapSprite(cur, "email_link");
+                        }
+                        this.overlapSprites(cur);
+                    }
+                    if("email_link_sprite" in cur) {
+                        if((FlxG.state as GameState).cursorOverlaps(cur["email_link_sprite"]._getRect(), true)) {
+                            cur["email_link_sprite"].visible = true;
+                        } else {
+                            cur["email_link_sprite"].visible = false;
                         }
                     }
                 } else {
                     if(cur["full_sprite"].visible) {
-                        if(t == "x_sprite") {
+                        if ("c_sprite" in cur) {
                             if ((FlxG.state as GameState).cursorOverlaps(cur["x_sprite"]._getRect(), true)) {
                                 cur["x_sprite"].visible = false;
                                 cur["x_hover_sprite"].visible = true;
@@ -416,17 +407,13 @@ package com.starmaid.Cibele.management {
                                 cur["x_sprite"].visible = true;
                                 cur["x_hover_sprite"].visible = false;
                             }
-                        } else if(t == "email_link") {
-                            trace("ok");
-                            trace("email_link_sprite" in cur);
-                            if("email_link_sprite" in cur) {
-                                trace("cool");
-                                if((FlxG.state as GameState).cursorOverlaps(cur["email_link_sprite"]._getRect(), true)) {
-                                    cur["email_link_sprite"].visible = true;
-                                } else {
-                                    cur["email_link_sprite"].visible = false;
-                                }
-                            }
+                        }
+                    }
+                    if("email_link_sprite" in cur) {
+                        if((FlxG.state as GameState).cursorOverlaps(cur["email_link_sprite"]._getRect(), true)) {
+                            cur["email_link_sprite"].visible = true;
+                        } else {
+                            cur["email_link_sprite"].visible = false;
                         }
                     }
                 }
