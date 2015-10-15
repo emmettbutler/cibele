@@ -12,11 +12,15 @@ package com.starmaid.Cibele.management {
     import flash.utils.Dictionary;
 
     public class DialoguePlayer {
-        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_photogenic.mp3")] private static var Convo3:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_photogenic.mp3")] private static var ConvoIT3:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_picture.mp3")] private static var ConvoIT5:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_whattowear.mp3")] private static var ConvoIT6:Class;
 
         {
             public static var sndFiles:Object = {
-                'voc_ikuturso_photogenic': Convo3
+                'voc_ikuturso_photogenic': ConvoIT3,
+                'voc_ikuturso_picture': ConvoIT5,
+                'voc_ikuturso_whattowear': ConvoIT6
             };
         }
 

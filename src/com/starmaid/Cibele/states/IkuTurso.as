@@ -87,14 +87,15 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": Convo5, "len": 16*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "delay": 0, "audio_name": "voc_ikuturso_picture"
                 },
                 {
                     "audio": null, "len": 8*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showCibSelfieFolder, "min_team_power": 22
                 },
                 {
-                    "audio": Convo6, "len": 32 * GameSound.MSEC_PER_SEC, "delay": 0, "min_team_power": 25
+                    "audio": Convo6, "len": 32 * GameSound.MSEC_PER_SEC, "delay": 0,
+                    "min_team_power": 25, "audio_name": "voc_ikuturso_whattowear"
                 },
                 {
                     "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
