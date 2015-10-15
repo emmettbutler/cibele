@@ -1,6 +1,7 @@
 package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.utils.GlobalTimer;
+    import com.starmaid.Cibele.utils.DHPoint;
 
     import org.flixel.*;
 
@@ -61,6 +62,7 @@ package com.starmaid.Cibele.management {
                     ""
                 );
                 this.subtitlesText.setFormat("NexaBold-Regular", 22, 0xffffffff, "center");
+                this.subtitlesText.scrollFactor = new DHPoint(0, 0);
                 FlxG.state.add(this.subtitlesText);
             }
         }

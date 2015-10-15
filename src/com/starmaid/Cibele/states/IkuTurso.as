@@ -2,6 +2,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.entities.Emote;
     import com.starmaid.Cibele.entities.IkuTursoBoss;
     import com.starmaid.Cibele.entities.MapNode;
@@ -70,7 +71,7 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "audio": Convo3, "len": 27*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "delay": 0, "audio_name": "voc_ikuturso_photogenic"
                 },
                 {
                     "audio": null, "len": 5*GameSound.MSEC_PER_SEC,

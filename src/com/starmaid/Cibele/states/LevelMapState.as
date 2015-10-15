@@ -4,6 +4,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.BackgroundLoader;
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.ProceduralDialogueGenerator;
+    import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.PartyMember;
     import com.starmaid.Cibele.entities.Enemy;
@@ -283,11 +284,19 @@ package com.starmaid.Cibele.states {
                         finalEndFn, true
                     );
                 } else {
-                    SoundManager.getInstance().playSound(
-                        audioInfo["audio"],
-                        GameState.SHORT_DIALOGUE ? 1 : audioInfo["len"],
-                        finalEndFn, false, 1, GameSound.VOCAL
-                    );
+                    if (audioInfo.hasOwnProperty("audio_name")) {
+                        DialoguePlayer.getInstance().playFile(
+                            audioInfo["audio_name"],
+                            GameState.SHORT_DIALOGUE ? 1 : audioInfo["len"],
+                            finalEndFn, 1
+                        );
+                    } else {
+                        SoundManager.getInstance().playSound(
+                            audioInfo["audio"],
+                            GameState.SHORT_DIALOGUE ? 1 : audioInfo["len"],
+                            finalEndFn, false, 1, GameSound.VOCAL
+                        );
+                    }
                 }
             } else {
                 this.finalConvoDone();
