@@ -114,11 +114,21 @@ package com.starmaid.Cibele.entities {
                 this.canDie = true;
             }
             this._spawnCounter += 1;
-            this.visible = true;
+            this.attemptWarp();
+        }
+
+        public function attemptWarp():void {
+            this.visible = false;
             this.warpToPlayer();
-            this._notificationText.text = this._name + " has appeared!";
-            this.showNotificationText();
-            GlobalTimer.getInstance().setMark("boss app hb" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.showHealthBar);
+            if (this.isOnscreen()) {
+                GlobalTimer.getInstance().setMark("boss warp" + Math.random().toString(),
+                    3 * GameSound.MSEC_PER_SEC, this.attemptWarp);
+            } else {
+                this.visible = true;
+                this._notificationText.text = this._name + " has appeared!";
+                this.showNotificationText();
+                GlobalTimer.getInstance().setMark("boss app hb" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.showHealthBar);
+            }
         }
 
         public function hideHealthBar():void {
