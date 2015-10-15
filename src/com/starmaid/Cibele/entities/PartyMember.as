@@ -336,7 +336,9 @@ package com.starmaid.Cibele.entities {
                 "delta" + this.slug + Math.random() * 100000,
                 1.3 * GameSound.MSEC_PER_SEC,
                 function():void {
-                    teamPowerDeltaText.text = "";
+                    if (teamPowerDeltaText != null) {
+                        teamPowerDeltaText.text = "";
+                    }
                 }
             );
         }
