@@ -121,6 +121,10 @@ package com.starmaid.Cibele.entities {
             return this._enemyType;
         }
 
+        public function targetable():Boolean {
+            return !this.isDead();
+        }
+
         public function isBoss():Boolean {
             if(this.enemyType == TYPE_BOSS) {
                 return true;
@@ -175,7 +179,9 @@ package com.starmaid.Cibele.entities {
                                                 damageLockMap[p.slug] = false;
                                               }, true);
             this._state = STATE_RECOIL;
-            this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
+            if (this.closestPartyMemberDisp != null) {
+                this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
+            }
             this.hitPoints -= Math.floor(this.hitDamage * p.teamPowerDamageMul);
             this._healthBar.setPoints(this.hitPoints);
             p.runParticles(this.getMiddlePos().sub(new DHPoint(0, this.height/3)));
