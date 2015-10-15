@@ -156,10 +156,6 @@ package com.starmaid.Cibele.states {
                     );
                 }
             }
-
-            if (FlxG.mouse.justPressed()) {
-                this.startConvo();
-            }
         }
 
         public function nextState():void { }
@@ -193,6 +189,7 @@ package com.starmaid.Cibele.states {
 
         override public function clickCallback(screenPos:DHPoint,
                                                worldPos:DHPoint):void {
+            this.startConvo();
             if ((new Date().valueOf() - this.startTime) > 1 * GameSound.MSEC_PER_SEC)
             {
                 super.clickCallback(screenPos, worldPos);

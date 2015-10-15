@@ -77,15 +77,17 @@ package com.starmaid.Cibele.states {
         override public function update():void{
             super.update();
 
-            var mouseScreenRect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
-            var clicked:GameObject;
-            if(FlxG.mouse.justPressed()) {
-                clicked = this.folder_builder.getClickedElement(mouseScreenRect);
-                this.folder_builder.resolveClick(this.folder_structure,
-                                                 mouseScreenRect, clicked);
-            }
-
             this.folder_builder.overlapXSprite(this.folder_structure);
+        }
+
+        override public function clickCallback(screenPos:DHPoint,
+                                               worldPos:DHPoint):void {
+            var clicked:GameObject;
+            var mouseScreenRect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
+            clicked = this.folder_builder.getClickedElement(mouseScreenRect);
+            this.folder_builder.resolveClick(this.folder_structure,
+                                             mouseScreenRect, clicked);
+            super.clickCallback(screenPos, worldPos);
         }
     }
 }
