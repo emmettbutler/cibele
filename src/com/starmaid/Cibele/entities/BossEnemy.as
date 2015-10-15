@@ -106,14 +106,6 @@ package com.starmaid.Cibele.entities {
         }
 
         public function setActive():void {
-            this.active_lock = true;
-            this._started = true;
-            this.footPosOffset = new DHPoint(this.width / 2, this.height);
-            this.basePosOffset = new DHPoint(0, this.height);
-            if(this._spawnCounter >= this.damageThreshold.length) {
-                this.canDie = true;
-            }
-            this._spawnCounter += 1;
             this.attemptWarp();
         }
 
@@ -124,6 +116,14 @@ package com.starmaid.Cibele.entities {
                 GlobalTimer.getInstance().setMark("boss warp" + Math.random().toString(),
                     3 * GameSound.MSEC_PER_SEC, this.attemptWarp);
             } else {
+                this.footPosOffset = new DHPoint(this.width / 2, this.height);
+                this.basePosOffset = new DHPoint(0, this.height);
+                if(this._spawnCounter >= this.damageThreshold.length) {
+                    this.canDie = true;
+                }
+                this._spawnCounter += 1;
+                this.active_lock = true;
+                this._started = true;
                 this.visible = true;
                 this._notificationText.text = this._name + " has appeared!";
                 this.showNotificationText();
