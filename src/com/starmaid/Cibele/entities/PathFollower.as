@@ -481,7 +481,7 @@ package com.starmaid.Cibele.entities {
         public function moveToNextPathNode():void {
             this._precon_path.advance();
             this.targetNode = this._precon_path.currentNode;
-            this.initWalk(this.targetNode.pos);
+            this.initWalk(this.targetNode.pos, true, false);
             this._cur_target_type = TARGET_NODE;
         }
 

@@ -197,14 +197,17 @@ package com.starmaid.Cibele.entities {
             return false;
         }
 
-        public function initWalk(worldPos:DHPoint, usePaths:Boolean=true):void {
+        public function initWalk(worldPos:DHPoint, usePaths:Boolean=true, checkConnect:Boolean=true):void {
             this.setFootPos();
             var useNodes:Boolean = true;
             this._cur_path = null;
             if (this._mapnodes != null && FlxG.state is LevelMapState) {
                 var closestNode:MapNode = this._mapnodes.getClosestNode(this.footPos);
-                var connectInfo:Object = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, worldPos);
-                if (closestNode == null || connectInfo["canConnect"]) {
+                var connectInfo:Object = null;
+                if (checkConnect) {
+                    connectInfo = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, worldPos);
+                }
+                if (closestNode == null || (connectInfo != null && connectInfo["canConnect"])) {
                     useNodes = false;
                     if (ScreenManager.getInstance().DEBUG) {
                         trace(this.slug + ": not using nodes (closestNode == " + closestNode + ")");
