@@ -34,3 +34,20 @@ voc_ikuturso_ampule 47481 Ichi: I'm not gonna yell at a cute girl.
 voc_ikuturso_ampule 46198 Nina: [laughs]
 voc_ikuturso_ampule 52237 Nina: I'm not cute...
 voc_ikuturso_ampule 53671 Ichi: Pfft!
+voc_ikuturso_ampule 56691 Nina: Hah, I don't think I am, but that's really nice of you.
+voc_ikuturso_ampule 60767 Ichi: Hey, I know what you look like! You've posted a picture of yourself on the forums.
+voc_ikuturso_ampule 66277 Nina: I mean, I know. That's a pretty flattering photo though.
+voc_ikuturso_ampule 71863 Ichi: You should... send me a different picture, then I can I really decide if I think you're cute!
+voc_ikuturso_ampule 76770 Nina: [laughs] Yeaaah...
+voc_ikuturso_attractive 1 Nina: I don't know. He's like, attractive... but not really my type, you know?
+voc_ikuturso_attractive 6454 Ichi: I don't know, dudes got pecs!
+voc_ikuturso_attractive 9561 Nina: [laughs] Ew...
+voc_ikuturso_attractive 12722 Nina: I like when guys are more... lean.
+voc_ikuturso_attractive 16945 Ichi: Skinny dudes?
+voc_ikuturso_attractive 18857 Ichi: I guess I fit that profile.
+voc_ikuturso_attractive 20902 Nina: [laughs] I guess so.
+voc_ikuturso_attractive 25957 Nina: Hmm...
+voc_ikuturso_attractive 28525 Nina: What do you like?
+voc_ikuturso_attractive 30437 Ichi: About girls?
+voc_ikuturso_attractive 32376 Nina: Yeah.
+voc_ikuturso_attractive 34607 Ichi: I... I like... uh, curvy, skinny girls... not like, fat girls. I just like it when they're not like, rail thin, you know? Girls gotta have some meat.
