@@ -1,23 +1,36 @@
-voc_ikuturso_photogenic 1 I'm so not photogenic...
-voc_ikuturso_photogenic 2291 You definitely are! I'm not photogenic - I look like a fuckin' ghost!
-voc_ikuturso_photogenic 6455 [chuckles] I thought you looked really nice in that photo you posted.
-voc_ikuturso_photogenic 11276 You don't have to lie. I'll still like you even if you admit that I look like a ghost.
-voc_ikuturso_photogenic 15220 [chuckles] No...
-voc_ikuturso_photogenic 17372 Yes! Come on, have you seen Guile? He's like a fuckin' bodybuilder!
-voc_ikuturso_photogenic 21495 [laughs] ...yeah...
-voc_extra_areyoucoming 1 Are you coming?
-voc_ikuturso_picture 1 Sooo...how about that picture?
-voc_ikuturso_picture 3987 [sigh] y-yeah... Yeah, I can send you one if you want. I'll have to take it first though.
-voc_ikuturso_picture 13599 Okay!
-voc_ikuturso_start 1 Yeah! Final boss in Iku Turso?
-voc_ikuturso_start 3048 You're...really obsessed with that zone lately.
-voc_ikuturso_start 6634 [laughs] Coral gyre, yo!
-voc_ikuturso_start 9403 Yeah, I guess that makes sense. My coral gyre's pretty good.
-voc_ikuturso_start 14903 Yup! I mean, if there's somewhere else you'd rather go, that's cool too.
-voc_ikuturso_start 19307 Aw, that's nice. It's ok though, I like helping you.
-voc_ikuturso_whattowear 1 Ugh, yeah... I never know what to wear when I take pictures of myself, though. I get so self-conscious.
-voc_ikuturso_whattowear 9459 You could literally wear anything and I'll probably still like the picture.
-voc_ikuturso_whattowear 13162 [nervous laugh] Really? I mean, not *anything*...
-voc_ikuturso_whattowear 16960 Seriously.
-voc_ikuturso_whattowear 19838 Okay. That last one was just of me standing there, so maybe I'll take more of a close-up this time.
-voc_ikuturso_whattowear 28589 Yes please.
+voc_ikuturso_photogenic 1 Nina: I'm so not photogenic...
+voc_ikuturso_photogenic 2291 Ichi: You definitely are! I'm not photogenic - I look like a fuckin' ghost!
+voc_ikuturso_photogenic 6455 Ichi: [laughs] I thought you looked really nice in that photo you posted.
+voc_ikuturso_photogenic 11276 Ichi: You don't have to lie. I'll still like you even if you admit that I look like a ghost.
+voc_ikuturso_photogenic 15220 Nina: [laughs] No...
+voc_ikuturso_photogenic 17372 Ichi: Yes! Come on, have you seen Guil? He's like a fuckin' bodybuilder!
+voc_ikuturso_photogenic 21495 Nina: [laughs] ...yeah...
+voc_extra_areyoucoming 1 Ichi: Are you coming?
+voc_ikuturso_picture 1 Ichi: Sooo...how about that picture?
+voc_ikuturso_picture 3987 Nina: [sigh] y-yeah... Yeah, I can send you one if you want. I'll have to take it first though.
+voc_ikuturso_picture 13599 Ichi: Okay!
+voc_ikuturso_start 1 Nina: Yeah! Final boss in Iku Turso?
+voc_ikuturso_start 3048 Nina: You're...really obsessed with that zone lately.
+voc_ikuturso_start 6634 Ichi: [laughs] Coral gyre, yo!
+voc_ikuturso_start 9403 Nina: Yeah, I guess that makes sense. My coral gyre's pretty good.
+voc_ikuturso_start 14903 Ichi: Yup! I mean, if there's somewhere else you'd rather go, that's cool too.
+voc_ikuturso_start 19307 Nina: Aw, that's nice. It's ok though, I like helping you.
+voc_ikuturso_whattowear 1 Nina: Ugh, yeah... I never know what to wear when I take pictures of myself, though. I get so self-conscious.
+voc_ikuturso_whattowear 9459 Ichi: You could literally wear anything and I'll probably still like the picture.
+voc_ikuturso_whattowear 13162 Nina: [nervous laugh] Really? I mean, not *anything*...
+voc_ikuturso_whattowear 16960 Ichi: Seriously.
+voc_ikuturso_whattowear 19838 Nina: Okay. That last one was just of me standing there, so maybe I'll take more of a close-up this time.
+voc_ikuturso_whattowear 28589 Ichi: Yes please.
+voc_ikuturso_ampule 1 Nina: You've been leading this ampule since it started, right?
+voc_ikuturso_ampule 4907 Ichi: No, some other dude was, but he quit... and he was crap anyways. We didn't become good until I whooped everyone's ass into shape.
+voc_ikuturso_ampule 13512 Nina: People really do listen to you. It's kind of amazing.
+voc_ikuturso_ampule 18268 Ichi: I'm just really straightforward. Like, if people don't listen to me and then they fuck up, I make sure that they know they fucked up. You gotta get in people's faces. That's why they respect me.
+voc_ikuturso_ampule 31025 Nina: Haha, I'm glad I haven't messed up that bad yet.
+voc_ikuturso_ampule 36913 Ichi: Hah, I'm never gonna yell at you... uh, but still, don't be an idiot.
+voc_ikuturso_ampule 42197 Nina: You... wouldn't yell at me?
+voc_ikuturso_ampule 44915 Ichi: No!
+voc_ikuturso_ampule 46198 Nina: Really?
+voc_ikuturso_ampule 47481 Ichi: I'm not gonna yell at a cute girl.
+voc_ikuturso_ampule 46198 Nina: [laughs]
+voc_ikuturso_ampule 52237 Nina: I'm not cute...
+voc_ikuturso_ampule 53671 Ichi: Pfft!
