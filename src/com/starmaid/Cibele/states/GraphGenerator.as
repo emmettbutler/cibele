@@ -38,6 +38,8 @@ package com.starmaid.Cibele.states {
             super.create();
 
             this.bgLoader.shouldLoadMap = false;
+            this.bgLoader.shouldUnloadTiles = false;
+            trace("Loading all tiles");
             this.bgLoader.loadAllTiles();
         }
 

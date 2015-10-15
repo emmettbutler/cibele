@@ -32,7 +32,8 @@ package com.starmaid.Cibele.management {
         public var coordsToLoad:Array, coordsToUnload:Array;
         public var colliderScaleFactor:Number, lastTileLoadUpdate:Number = -1;
         public var collisionData:Array;
-        public var shouldLoadMap:Boolean, shouldCollidePlayer:Boolean = true;
+        public var shouldLoadMap:Boolean, shouldCollidePlayer:Boolean = true,
+            shouldUnloadTiles:Boolean;
         public var allTilesHaveLoaded:Boolean = false;
         private var enemyContacts:Array;
         private var screenPos:DHPoint;
@@ -45,6 +46,7 @@ package com.starmaid.Cibele.management {
         {
             this.screenPos = new DHPoint(0, 0);
             this.shouldLoadMap = true;
+            this.shouldUnloadTiles = true;
             this.colliderName = macroImageName + "_collider"
             this.macroImageName = macroImageName + "_map";
             this.colliderScaleFactor = colliderScaleFactor;
@@ -380,11 +382,13 @@ package com.starmaid.Cibele.management {
                               this.colliderName, true);
             }
             // unload background tiles that are far offscreen
-            for (i = 0; i < coordsToUnload.length; i++) {
-                row = coordsToUnload[i][0];
-                col = coordsToUnload[i][1];
-                this.unloadTile(row, col);
-                this.unloadTile(row, col, this.colliderTiles);
+            if (this.shouldUnloadTiles) {
+                for (i = 0; i < coordsToUnload.length; i++) {
+                    row = coordsToUnload[i][0];
+                    col = coordsToUnload[i][1];
+                    this.unloadTile(row, col);
+                    this.unloadTile(row, col, this.colliderTiles);
+                }
             }
             for (row = 0; row < rows; row++) {
                 for (col = 0; col < cols; col++) {
