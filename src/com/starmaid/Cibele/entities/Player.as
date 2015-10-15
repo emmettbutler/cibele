@@ -535,6 +535,14 @@ package com.starmaid.Cibele.entities {
                         this._cur_path = null;
                     }
                 }
+                if (this.timeAlive - this.lastFinalTargetRecalcTime >= 1 * GameSound.MSEC_PER_SEC) {
+                    this.lastFinalTargetRecalcTime = this.timeAlive;
+                    if (this.colliding && !this.hasCurPath()) {
+                        var preWalkState:Number = this._state;
+                        this.initWalk(this.finalTarget);
+                        this._state = preWalkState;
+                    }
+                }
                 this.walk();
             } else if (this._state == STATE_AT_ENEMY) {
                 this.attack();
