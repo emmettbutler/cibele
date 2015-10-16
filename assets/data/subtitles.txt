@@ -166,3 +166,15 @@ voc_euryale_parents 34539 Blake: I'm not nearly on that level with girls.
 voc_euryale_parents 38273 Blake: I'm shit at talking to people in general.
 voc_euryale_parents 40840 Nina: Really? You're so good with people in the game, though.
 voc_euryale_parents 45002 Blake: Yeah, it's easier to talk when you're not looking at someone.
+voc_euryale_dredge 12 Nina: I met up with Dredge once - like, in person. Talking with him didn't feel all that different.
+voc_euryale_dredge 7288 Blake: I've never met anyone from the game in person.
+voc_euryale_dredge 10743 Blake: But you...you're way too hot, I wouldn't even be able to breathe near you in real life.
+voc_euryale_dredge 15630 Nina: [laughs]
+voc_euryale_dredge 16936 Blake: It's true!
+voc_euryale_dredge 18200 Nina: I think you're giving me too much credit.
+voc_euryale_dredge 23382 Blake: I like making you blush.
+voc_euryale_dredge 26163 Nina: Aww...
+voc_euryale_dredge 34041 Blake: Listening to youre voice...
+voc_euryale_dredge 38801 Blake: I like it.
+voc_euryale_dredge 41119 Nina: Me too.
+voc_euryale_dredge 43478 Nina: I like talking to you. Like, a lot.

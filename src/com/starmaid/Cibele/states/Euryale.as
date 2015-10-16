@@ -22,8 +22,6 @@ package com.starmaid.Cibele.states {
     public class Euryale extends LevelMapState {
         [Embed(source="/../assets/audio/music/bgm_euryale_intro.mp3")] private var EUBGMIntro:Class;
         [Embed(source="/../assets/audio/music/bgm_euryale_loop.mp3")] private var EUBGMLoop:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_dredge.mp3")] private var Convo5:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_iwish.mp3")] private var Convo5_1:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_canicallyou.mp3")] private var Convo5_2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_cibyeah.mp3")] private var Convo5_3:Class;
         [Embed(source="/../assets/audio/music/vid_phonecall.mp3")] private var VidBGMLoop:Class;
@@ -115,16 +113,16 @@ package com.starmaid.Cibele.states {
                     "delay": 0, "endfn": showDredgeSelfie, "min_team_power": 25
                 },
                 {
-                    "audio": Convo5, "len": 54*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "audio": null, "len": 54*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_dredge"
                 },
                 {
                     "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0, "min_team_power": 30
                 },
                 {
-                    "audio": Convo5_1, "len": 42*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "audio": null, "len": 42*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_iwish"
                 },
                 {
                     "audio": null, "len": 1*GameSound.MSEC_PER_SEC,

@@ -28,6 +28,8 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/audio/voiceover/voc_euryale_closer.mp3")] private static var ConvoEU5:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_meetup.mp3")] private static var ConvoEU6:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_parents.mp3")] private static var ConvoEU7:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_dredge.mp3")] private static var ConvoEU8:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_iwish.mp3")] private var ConvoEU9:Class;
 
         {
             public static var sndFiles:Object = {
@@ -46,7 +48,9 @@ package com.starmaid.Cibele.management {
                 'voc_euryale_callmeblake': ConvoEU4,
                 'voc_euryale_closer': ConvoEU5,
                 'voc_euryale_meetup': ConvoEU6,
-                'voc_euryale_parents': ConvoEU7
+                'voc_euryale_parents': ConvoEU7,
+                'voc_euryale_dredge': ConvoEU8,
+                'voc_euryale_iwish': ConvoEU9
             };
         }
 
