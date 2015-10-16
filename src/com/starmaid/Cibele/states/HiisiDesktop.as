@@ -137,6 +137,8 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/hi_desktop/blog_draft_icon.png")] private static var ImgBlogDraftWPIcon:Class;
         [Embed(source="/../assets/images/ui/popups/hi_email/sendtoichi_icon.png")] private static var ImgSendToIchiIcon:Class;
         [Embed(source="/../assets/images/ui/popups/hi_email/thermal_poem.png")] private static var ImgThermal:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/ffxi.png")] private static var ImgFfxi:Class;
+        [Embed(source="/../assets/images/ui/popups/hi_desktop/ffxi_icon.png")] private static var ImgFfxiIcon:Class;
 
         public function HiisiDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_HI;
@@ -656,6 +658,14 @@ package com.starmaid.Cibele.states {
                             "icon_pos": new DHPoint(125, 131),
                             "dim": new DHPoint(631, 531),
                             "contents": ImgThermal
+                        },
+                        {
+                            "name": "ffxi",
+                            "icon": ImgFfxiIcon,
+                            "icon_dim": new DHPoint(79, 89),
+                            "icon_pos": new DHPoint(220, 131),
+                            "dim": new DHPoint(493, 662),
+                            "contents": ImgFfxi
                         },
                         {
                             "name": "chatlogs",
