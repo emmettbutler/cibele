@@ -272,7 +272,7 @@ package com.starmaid.Cibele.states {
                     endfn, audioInfo);
                 var finalEndFn:Function = prevEndFn;
                 var prevDialogueLock:Boolean = this.bitDialogueLock;
-                if(audioInfo["audio"] == null) {
+                if(audioInfo["audio"] == null && audioInfo["audio_name"] == null) {
                     finalEndFn = function():void {
                         bitDialogueLock = prevDialogueLock;
                         prevEndFn();

@@ -12,13 +12,19 @@ package com.starmaid.Cibele.management {
     import flash.utils.Dictionary;
 
     public class DialoguePlayer {
+        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_bulldog.mp3")] private static var ConvoIT1:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_ampule.mp3")] private static var ConvoIT2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_ikuturso_photogenic.mp3")] private static var ConvoIT3:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_attractive.mp3")] private static var ConvoIT4:Class;
         [Embed(source="/../assets/audio/voiceover/voc_ikuturso_picture.mp3")] private static var ConvoIT5:Class;
         [Embed(source="/../assets/audio/voiceover/voc_ikuturso_whattowear.mp3")] private static var ConvoIT6:Class;
 
         {
             public static var sndFiles:Object = {
+                'voc_ikuturso_bulldog': ConvoIT1,
+                'voc_ikuturso_ampule': ConvoIT2,
                 'voc_ikuturso_photogenic': ConvoIT3,
+                'voc_ikuturso_attractive': ConvoIT4,
                 'voc_ikuturso_picture': ConvoIT5,
                 'voc_ikuturso_whattowear': ConvoIT6
             };

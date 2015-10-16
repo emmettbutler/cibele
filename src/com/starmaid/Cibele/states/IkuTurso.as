@@ -20,12 +20,6 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/music/bgm_ikuturso_intro.mp3")] private var ITBGMIntro:Class;
         [Embed(source="/../assets/audio/music/bgm_ikuturso_loop.mp3")] private var ITBGMLoop:Class;
         [Embed(source="/../assets/audio/music/vid_sexyselfie.mp3")] private var VidBGMLoop:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_bulldog.mp3")] private var Convo1:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_ampule.mp3")] private var Convo2:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_photogenic.mp3")] private var Convo3:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_attractive.mp3")] private var Convo4:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_picture.mp3")] private var Convo5:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_whattowear.mp3")] private var Convo6:Class;
         [Embed(source="/../assets/audio/voiceover/voc_extra_ichilasthit.mp3")] private var IchiBossKill:Class;
         [Embed(source="/../assets/audio/voiceover/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
         [Embed(source="/../assets/audio/voiceover/voc_extra_areyoucoming.mp3")] private var SndRUComing:Class;
@@ -54,23 +48,24 @@ package com.starmaid.Cibele.states {
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo1, "len": 59*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "ends_with_popup": false
+                    "audio": null, "len": 59*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "ends_with_popup": false,
+                    "audio_name": "voc_ikuturso_bulldog"
                 },
                 {
                     "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showIchiDownloadWindow, "min_team_power": 5
                 },
                 {
-                    "audio": Convo2, "len": 80*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "audio": null, "len": 80*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_ikuturso_ampule"
                 },
                 {
                     "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showSelfiesWindow, "min_team_power": 10
                 },
                 {
-                    "audio": Convo3, "len": 27*GameSound.MSEC_PER_SEC,
+                    "audio": null, "len": 27*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_ikuturso_photogenic"
                 },
                 {
@@ -78,15 +73,15 @@ package com.starmaid.Cibele.states {
                     "delay": 0, "endfn": this.showGuilEmail
                 },
                 {
-                    "audio": Convo4, "len": 108*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "audio": null, "len": 108*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_ikuturso_attractive"
                 },
                 {
                     "audio": null, "len": 2*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showIchiSelfie1, "min_team_power": 20
                 },
                 {
-                    "audio": Convo5, "len": 16*GameSound.MSEC_PER_SEC,
+                    "audio": null, "len": 16*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_ikuturso_picture"
                 },
                 {
@@ -94,7 +89,7 @@ package com.starmaid.Cibele.states {
                     "delay": 0, "endfn": this.showCibSelfieFolder, "min_team_power": 22
                 },
                 {
-                    "audio": Convo6, "len": 32 * GameSound.MSEC_PER_SEC, "delay": 0,
+                    "audio": null, "len": 32 * GameSound.MSEC_PER_SEC, "delay": 0,
                     "min_team_power": 25, "audio_name": "voc_ikuturso_whattowear"
                 },
                 {

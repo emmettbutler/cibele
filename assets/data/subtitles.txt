@@ -51,3 +51,31 @@ voc_ikuturso_attractive 28525 Nina: What do you like?
 voc_ikuturso_attractive 30437 Ichi: About girls?
 voc_ikuturso_attractive 32376 Nina: Yeah.
 voc_ikuturso_attractive 34607 Ichi: I... I like... uh, curvy, skinny girls... not like, fat girls. I just like it when they're not like, rail thin, you know? Girls gotta have some meat.
+voc_ikuturso_attractive 45070 Nina: [laughs] hmm...
+voc_ikuturso_attractive 50937 Nina: I wish I was skinnier.
+voc_ikuturso_attractive 53159 Ichi: No way, you'd lose your boobs!
+voc_ikuturso_attractive 54937 Nina: [laughs] Uh, I guess so??
+voc_ikuturso_attractive 58670 Ichi: Seriously, you have to know that you've got a nice rack - come on!
+voc_ikuturso_attractive 62315 Nina: [laughs] I mean, people have told me that before, but -
+voc_ikuturso_attractive 68538 Ichi: As they should.
+voc_ikuturso_attractive 70493 Nina: [nervous laugh]
+voc_ikuturso_attractive 74583 Ichi: Aw, don't know how to take a compliment?
+voc_ikuturso_attractive 77338 Nina: [laughs] I really dont.
+voc_ikuturso_attractive 80539 Ichi: I'm gonna just have to keep giving you compliments until you get used to it.
+voc_ikuturso_attractive 84717 Nina: [laughs] That'd be completely impossible, honestly - but you can give it a shot.
+voc_ikuturso_attractive 92539 Ichi: Done!
+voc_ikuturso_attractive 93606 Nina: Deal.
+voc_ikuturso_attractive 95437 [both laugh]
+voc_ikuturso_attractive 98851 Nina: This is the silliest. What are we even doing right now?
+voc_ikuturso_attractive 103118 Ichi: Being friends and whacking stuff online.
+voc_ikuturso_attractive 106496 Nina: [laughs] True story...
+voc_ikuturso_bulldog 1 Ichi: [laughs] Guess you don't want to go waste your money on "Bullshit Hell" tonight?
+voc_ikuturso_bulldog 4929 Nina: [laughs] Very funny. I barely even play other games anymore, honestly.
+voc_ikuturso_bulldog 11700 Ichi: Me neither - they're all crap anyways.
+voc_ikuturso_bulldog 14787 Nina: It - makes me kind of sad though... I like playing through good story games.
+voc_ikuturso_bulldog 20038 Ichi: I dunno, those are boring to me. They all have expiration dates - you play for sixty hours and that's it.
+voc_ikuturso_bulldog 25980 Ichi: At least with this game you can play it for a long time without worrying that you'll have to find some new shit to buy.
+voc_ikuturso_bulldog 31508 Nina: Yeah, I mean, the time you get out of an online game like this is a lot more...and you get to meet people.
+voc_ikuturso_bulldog 40767 Ichi: Yeah, I don't like most of the people I meet in here, though. Except for, like, you and a few others.
+voc_ikuturso_bulldog 47078 Ichi: I just like running shit - like making people get organized for some fight or whatever.
+voc_ikuturso_bulldog 51638 Ichi: The big battles where everything's dependent on your ability to find the right guys to do the job - that's what I like.
