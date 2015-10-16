@@ -434,8 +434,10 @@ package com.starmaid.Cibele.base {
         }
 
         public function addEventListener(event:String, callback:Function):void {
-            callbackRefs.push(callback);
-            FlxG.stage.addEventListener(event, callback, false, 0, true);
+            if (callbackRefs != null) {
+                callbackRefs.push(callback);
+                FlxG.stage.addEventListener(event, callback, false, 0, true);
+            }
         }
 
         public function removeEventListener(event:String, callback:Function):void {
