@@ -4,6 +4,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.entities.Emote;
     import com.starmaid.Cibele.entities.FallingObject;
     import com.starmaid.Cibele.entities.Mist;
@@ -21,15 +22,6 @@ package com.starmaid.Cibele.states {
     public class Euryale extends LevelMapState {
         [Embed(source="/../assets/audio/music/bgm_euryale_intro.mp3")] private var EUBGMIntro:Class;
         [Embed(source="/../assets/audio/music/bgm_euryale_loop.mp3")] private var EUBGMLoop:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_hey.mp3")] private var Convo1:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_teleport.mp3")] private var Convo1_2:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_breakups.mp3")] private var Convo2:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_nada.mp3")] private var Convo2_2:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_crush.mp3")] private var Convo3:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_callmeblake.mp3")] private var Convo3_2:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_closer.mp3")] private var Convo4:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_meetup.mp3")] private var Convo4_2:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_parents.mp3")] private var Convo4_3:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_dredge.mp3")] private var Convo5:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_iwish.mp3")] private var Convo5_1:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_canicallyou.mp3")] private var Convo5_2:Class;
@@ -71,52 +63,52 @@ package com.starmaid.Cibele.states {
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo2, "len": 43*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "audio": null, "len": 43*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_breakups"
                 },
                 {
                     "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": Convo2_2, "len": 19*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "audio": null, "len": 19*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_nada"
                 },
                 {
                     "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showSelfiePostEmail, "min_team_power": 10
                 },
                 {
-                    "audio": Convo3, "len": 28*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "audio": null, "len": 28*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_crush"
                 },
                 {
                     "audio": null, "len": 8*GameSound.MSEC_PER_SEC,
                     "delay": 0, "min_team_power": 12
                 },
                 {
-                    "audio": Convo3_2, "len": 44*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "audio": null, "len": 44*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_callmeblake"
                 },
                 {
                     "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showFriendEmail2, "min_team_power": 15
                 },
                 {
-                    "audio": Convo4, "len": 11*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "audio": null, "len": 11*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_closer"
                 },
                 {
                     "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
                     "delay": 0, "min_team_power": 17
                 },
                 {
-                    "audio": Convo4_2, "len": 74*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "audio": null, "len": 74*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_meetup"
                 },
                 {
-                    "audio": Convo4_3, "len": 50*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "audio": null, "len": 50*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_parents"
                 },
                 {
                     "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
@@ -179,11 +171,10 @@ package com.starmaid.Cibele.states {
             );
 
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
-                SoundManager.getInstance().playSound(
-                    Convo1,
+                DialoguePlayer.getInstance().playFile(
+                    "voc_euryale_hey",
                     GameState.SHORT_DIALOGUE ? 1 : 12*GameSound.MSEC_PER_SEC,
-                    firstConvoPartTwo, false, 1, GameSound.VOCAL,
-                    CONVO_1_HALL
+                    firstConvoPartTwo, 1, CONVO_1_HALL
                 );
             }
 
@@ -283,10 +274,11 @@ package com.starmaid.Cibele.states {
         }
 
         public function firstConvoPartTwo():void {
-            SoundManager.getInstance().playSound(
-                    Convo1_2, GameState.SHORT_DIALOGUE ? 1 : 33*GameSound.MSEC_PER_SEC, this.delayShowFriendEmail, false, 1, GameSound.VOCAL,
-                    CONVO_1_2_HALL
-                );
+            DialoguePlayer.getInstance().playFile(
+                "voc_euryale_teleport",
+                GameState.SHORT_DIALOGUE ? 1 : 33*GameSound.MSEC_PER_SEC,
+                this.delayShowFriendEmail, 1, CONVO_1_2_HALL
+            );
         }
 
         public function delayShowFriendEmail():void {

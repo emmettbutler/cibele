@@ -1,3 +1,9 @@
+voc_firstconvo 1 Nina: Hey, what's up?
+voc_firstconvo 3193 Ichi: Let's just private chat. I'm sick of all these fuckers in the main channel.
+voc_firstconvo 7131 Nina: [laughs] Yeah, everyone's pretty rowdy today.
+voc_firstconvo 12025 Ichi: They're all spazzing because Bulldog Hell is coming out tonight.
+voc_firstconvo 15734 Ichi: They're gonna go line up at whatever store, which fucking sucks because now we can't do anything serious tonight.
+voc_firstconvo 20972 Nina: Uhhh, yeaahhh...
 voc_ikuturso_photogenic 1 Nina: I'm so not photogenic...
 voc_ikuturso_photogenic 2291 Ichi: You definitely are! I'm not photogenic - I look like a fuckin' ghost!
 voc_ikuturso_photogenic 6455 Ichi: [laughs] I thought you looked really nice in that photo you posted.
@@ -79,3 +85,84 @@ voc_ikuturso_bulldog 31508 Nina: Yeah, I mean, the time you get out of an online
 voc_ikuturso_bulldog 40767 Ichi: Yeah, I don't like most of the people I meet in here, though. Except for, like, you and a few others.
 voc_ikuturso_bulldog 47078 Ichi: I just like running shit - like making people get organized for some fight or whatever.
 voc_ikuturso_bulldog 51638 Ichi: The big battles where everything's dependent on your ability to find the right guys to do the job - that's what I like.
+voc_euryale_hey 1 Ichi: Heeeeeyy!
+voc_euryale_hey 1958 Nina: [sigh] Sorry I missed your call last night.
+voc_euryale_hey 5600 Ichi: It's ok.
+voc_euryale_teleport 1 Nina: We haven't done Euryale together in a while.
+voc_euryale_teleport 3873 Ichi: Yeah, I hate it. All the crystals - it's like some fuckin' Final Fantasy game.
+voc_euryale_teleport 9727 Nina: [laughs] I kinda like it actually. Wanna do a run together?
+voc_euryale_teleport 15695 Ichi: Yeah.
+voc_euryale_teleport 19860 Ichi: What happened yesterday?
+voc_euryale_teleport 21999 Nina: When I logged off? Some school friends wanted to hang out.
+voc_euryale_teleport 27741 Ichi: Lame.
+voc_euryale_breakups 1 Nina: They basically wanted to gossip about poetry class and their recent breakups. It took forever.
+voc_euryale_breakups 7876 Ichi: Wow.
+voc_euryale_breakups 11581 Ichi: Breakups sound shitty.
+voc_euryale_breakups 13550 Nina: Yeah... I've never even had a boyfriend.
+voc_euryale_breakups 20525 Ichi: Seriously?
+voc_euryale_breakups 22427 Nina: Yup.
+voc_euryale_breakups 24263 Ichi: You're so hot though!
+voc_euryale_breakups 25932 Nina: [laughs] You always say that.
+voc_euryale_breakups 29369 Ichi: It's true!
+voc_euryale_breakups 30771 Nina: You're, like, the only guy on earth that thinks I'm hot.
+voc_euryale_breakups 34976 Ichi: Looks like I've got no competition then.
+voc_euryale_breakups 37346 [both laugh]
+voc_euryale_nada 1 Nina: What about your breakups?
+voc_euryale_nada 4602 Ichi: Nada.
+voc_euryale_nada 6931 Nina: Nada?
+voc_euryale_nada 9021 Ichi: I've never had a girlfriend.
+voc_euryale_nada 11125 Nina: Wow, I'm pretty suprised.
+voc_euryale_nada 13721 Ichi: Don't be - I'm a total loser.
+voc_euryale_nada 15938 Nina: Pfft, no.
+voc_euryale_crush 1000 Nina: I think I would've had a huge crush on you if we'd met sooner, honestly. In, like, high school or whatever.
+voc_euryale_crush 8110 Ichi: [laughs] Yeah?
+voc_euryale_crush 11389 Nina: No guys ever liked me back then. I was too nerdy.
+voc_euryale_crush 16285 Ichi: Well they had no taste. I would've totally been all over you.
+voc_euryale_crush 20124 Nina: [laughs] I doubt that.
+voc_euryale_callmeblake 1 Nina: Ichi -
+voc_euryale_callmeblake 1953 Ichi: Call me Blake.
+voc_euryale_callmeblake 3495 Nina: Blake?
+voc_euryale_callmeblake 7023 Nina: Do you think I did good in Iku Turso the other day?
+voc_euryale_callmeblake 10621 Blake: Nina, you did good.
+voc_euryale_callmeblake 13978 Blake: Why do you always ask me if you're good at the game? You're way better than other girls in the ampule.
+voc_euryale_callmeblake 19151 Nina: Oh! [laughs nervously]
+voc_euryale_callmeblake 22646 Blake: You're a pro.
+voc_euryale_callmeblake 24153 Nina: I'm not that great.
+voc_euryale_callmeblake 26723 Blake: You're sexy and smart - the perfect combo.
+voc_euryale_callmeblake 30697 Nina: [gasps] Do you...talk to anyone else offline like this?
+voc_euryale_callmeblake 38817 Blake: No, do you?
+voc_euryale_callmeblake 41660 Nina: No.
+voc_euryale_closer 1451 Nina: I kinda wish we lived closer.
+voc_euryale_closer 4529 Blake: Yeah, being on opposite coasts isn't the best for hanging out.
+voc_euryale_meetup 1 Nina: Would you...want to meet up with me?
+voc_euryale_meetup 4057 Nina: Like, in real life, if we lived closer.
+voc_euryale_meetup 11301 Blake: I think so.
+voc_euryale_meetup 14894 Blake: But if you were on Pacific time, you wouldn't always be online when I woke up. I like chatting with you first thing.
+voc_euryale_meetup 21268 Nina: [laughs] aw. I bet you have so many people in the game to talk to though.
+voc_euryale_meetup 26542 Blake: They're all fuckin' idiots.
+voc_euryale_meetup 28164 Nina: [laughs] You always say that, but I feel like Lenore is way cooler than me.
+voc_euryale_meetup 34481 Blake: Nina. Have you ever seen her picture?
+voc_euryale_meetup 38016 Nina: No...why?
+voc_euryale_meetup 41551 Blake: She...sent me one the other day.
+voc_euryale_meetup 45550 Nina: Oh, really?
+voc_euryale_meetup 51287 Blake: Your face is way nicer.
+voc_euryale_meetup 53315 Nina: [laughs] My face is pretty normal.
+voc_euryale_meetup 53315 Blake: If by normal you mean gorgeous, then yeah.
+voc_euryale_meetup 60965 Nina: [laughs] Thanks.
+voc_euryale_meetup 64558 Blake: Isn't your mom a model or something?
+voc_euryale_meetup 67340 Nina: That's true, she was. I look more like my dad though.
+voc_euryale_meetup 72092 Blake: Oh yeah?
+voc_euryale_parents 1 Nina: Yeah, my parents met on the beach.
+voc_euryale_parents 4706 Blake: Sounds sweet.
+voc_euryale_parents 5951 Nina: [laughs] It's ridiculous.
+voc_euryale_parents 8207 Nina: My mom was walking down the beach in her red bikini when my dad saw her from his boat.
+voc_euryale_parents 12991 Nina: I guess he was like, "whoa, check out that babe", so he left his friends and swam in to talk to her.
+voc_euryale_parents 19875 Blake: What a dude!
+voc_euryale_parents 21003 Nina: I know. He asked her out on a date.
+voc_euryale_parents 23804 Nina: She was really impressed that he swam all the way in from his boat to say hello, so she said, "ok".
+voc_euryale_parents 30533 Blake: That's a pretty crazy story.
+voc_euryale_parents 32983 Nina: Isn't it?
+voc_euryale_parents 34539 Blake: I'm not nearly on that level with girls.
+voc_euryale_parents 38273 Blake: I'm shit at talking to people in general.
+voc_euryale_parents 40840 Nina: Really? You're so good with people in the game, though.
+voc_euryale_parents 45002 Blake: Yeah, it's easier to talk when you're not looking at someone.

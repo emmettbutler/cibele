@@ -12,21 +12,41 @@ package com.starmaid.Cibele.management {
     import flash.utils.Dictionary;
 
     public class DialoguePlayer {
+        [Embed(source="/../assets/audio/voiceover/voc_firstconvo.mp3")] private static var ConvoITH1:Class;
         [Embed(source="/../assets/audio/voiceover/voc_ikuturso_bulldog.mp3")] private static var ConvoIT1:Class;
         [Embed(source="/../assets/audio/voiceover/voc_ikuturso_ampule.mp3")] private static var ConvoIT2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_ikuturso_photogenic.mp3")] private static var ConvoIT3:Class;
         [Embed(source="/../assets/audio/voiceover/voc_ikuturso_attractive.mp3")] private static var ConvoIT4:Class;
         [Embed(source="/../assets/audio/voiceover/voc_ikuturso_picture.mp3")] private static var ConvoIT5:Class;
         [Embed(source="/../assets/audio/voiceover/voc_ikuturso_whattowear.mp3")] private static var ConvoIT6:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_hey.mp3")] private static var ConvoEUH1:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_teleport.mp3")] private static var ConvoEUH2:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_breakups.mp3")] private static var ConvoEU1:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_nada.mp3")] private static var ConvoEU2:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_crush.mp3")] private static var ConvoEU3:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_callmeblake.mp3")] private static var ConvoEU4:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_closer.mp3")] private static var ConvoEU5:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_meetup.mp3")] private static var ConvoEU6:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_parents.mp3")] private static var ConvoEU7:Class;
 
         {
             public static var sndFiles:Object = {
+                'voc_firstconvo': ConvoITH1,
                 'voc_ikuturso_bulldog': ConvoIT1,
                 'voc_ikuturso_ampule': ConvoIT2,
                 'voc_ikuturso_photogenic': ConvoIT3,
                 'voc_ikuturso_attractive': ConvoIT4,
                 'voc_ikuturso_picture': ConvoIT5,
-                'voc_ikuturso_whattowear': ConvoIT6
+                'voc_ikuturso_whattowear': ConvoIT6,
+                'voc_euryale_hey': ConvoEUH1,
+                'voc_euryale_teleport': ConvoEUH2,
+                'voc_euryale_breakups': ConvoEU1,
+                'voc_euryale_nada': ConvoEU2,
+                'voc_euryale_crush': ConvoEU3,
+                'voc_euryale_callmeblake': ConvoEU4,
+                'voc_euryale_closer': ConvoEU5,
+                'voc_euryale_meetup': ConvoEU6,
+                'voc_euryale_parents': ConvoEU7
             };
         }
 
@@ -44,11 +64,12 @@ package com.starmaid.Cibele.management {
         public function playFile(filename:String,
                                  len:Number,
                                  endfn:Function=null,
-                                 vol:Number=1):void
+                                 vol:Number=1,
+                                 name:String=null):void
         {
             var sndFile:Class = sndFiles[filename];
             SoundManager.getInstance().playSound(
-                sndFile, len, endfn, false, vol, GameSound.VOCAL
+                sndFile, len, endfn, false, vol, GameSound.VOCAL, name
             );
 
             var dialogue:String;
@@ -73,7 +94,7 @@ package com.starmaid.Cibele.management {
                 );
                 this.subtitlesText.setFormat("NexaBold-Regular", 22, 0xffffffff, "center");
                 this.subtitlesText.scrollFactor = new DHPoint(0, 0);
-                FlxG.state.add(this.subtitlesText);
+                FlxG.state.add(this.subtitlesText, true);
             }
         }
 
@@ -87,7 +108,9 @@ package com.starmaid.Cibele.management {
                     "subtitle-remove",
                     8 * GameSound.MSEC_PER_SEC,
                     function():void {
-                        that.subtitlesText.text = "";
+                        if (that.subtitlesText.scale != null) {
+                            that.subtitlesText.text = "";
+                        }
                     }, true
                 );
             };
