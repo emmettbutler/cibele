@@ -292,7 +292,7 @@ package com.starmaid.Cibele.states {
                                         FlxG.switchState(new TextScreen(5*GameSound.MSEC_PER_SEC,
                                         function():void {
                                             FlxG.switchState(new EuryaleDesktop());
-                                        }, "April 13th, 2009"
+                                        }, "2 Months Later\nApril 13th, 2009"
                                         ));
                                     }
                                 ));

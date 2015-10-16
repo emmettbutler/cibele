@@ -366,7 +366,7 @@ package com.starmaid.Cibele.states {
                                                     5*GameSound.MSEC_PER_SEC,
                                                     function():void {
                                                         FlxG.switchState(new HiisiDesktop());
-                                                    }, "August 10th, 2009"
+                                                    }, "4 Months Later\nAugust 10th, 2009"
                                                 ));
                                             }
                                         ));

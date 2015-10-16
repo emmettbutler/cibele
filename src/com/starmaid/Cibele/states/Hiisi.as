@@ -372,7 +372,7 @@ package com.starmaid.Cibele.states {
                             playHallways
                         )
                     );
-                }, "September 18th, 2009"));
+                }, "1 Month Later\nSeptember 18th, 2009"));
         }
 
         public function playHallways():void {
