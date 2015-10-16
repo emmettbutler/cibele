@@ -191,7 +191,7 @@ package com.starmaid.Cibele.entities {
         }
 
         public function activeTarget():void {
-            if (this._healthBar == null || this.isDead()) {
+            if (this._healthBar == null || !this.targetable()) {
                 return;
             }
             this._healthBar.setVisible(true);

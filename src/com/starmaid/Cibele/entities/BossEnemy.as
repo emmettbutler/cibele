@@ -239,6 +239,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function setInactive():void {
+            if (this._state == STATE_INACTIVE) {
+                return;
+            }
             this._state = STATE_INACTIVE;
             this.visible = false;
             this._notificationText.text = this._name + " has escaped!";

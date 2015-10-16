@@ -81,13 +81,15 @@ package com.starmaid.Cibele.entities {
             if (!FlxG.state is LevelMapState) {
                 return;
             }
+            if (this._state != STATE_INACTIVE || this._state != STATE_DEAD) {
             var rand:Number = Math.random()*1000000;
-            for (var i:int = 0; i < Math.random()*NUM_TENTACLES; i++) {
-                GlobalTimer.getInstance().setMark(
-                    "tentacle_sprouts_" + rand.toString() + "_" + i.toString(),
-                    Math.random()*1*GameSound.MSEC_PER_SEC,
-                    this.addTentacle
-                );
+                for (var i:int = 0; i < Math.random()*NUM_TENTACLES; i++) {
+                    GlobalTimer.getInstance().setMark(
+                        "tentacle_sprouts_" + rand.toString() + "_" + i.toString(),
+                        Math.random()*1*GameSound.MSEC_PER_SEC,
+                        this.addTentacle
+                    );
+                }
             }
 
             GlobalTimer.getInstance().setMark(

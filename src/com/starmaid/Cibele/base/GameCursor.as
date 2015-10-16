@@ -176,7 +176,7 @@ package com.starmaid.Cibele.base {
                         cur = curGroup[k];
                         rect = cur._getRect();
                         if (cur is Enemy) {
-                            if (this.mouse_rect.overlaps(rect) && !(cur as Enemy).isDead()) {
+                            if (this.mouse_rect.overlaps(rect) && (cur as Enemy).targetable()) {
                                 _on_enemy = true;
                             }
                         }
