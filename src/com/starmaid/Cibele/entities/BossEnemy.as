@@ -22,6 +22,7 @@ package com.starmaid.Cibele.entities {
         private var escape_counter:Number = 0;
         private var damagedByPartyMember:PartyMember;
         private var damageThreshold:Array;
+        private var appearanceStartHP:Number;
         private var _spawnCounter:Number = 0;
         private var _started:Boolean = false;
         private var canDie:Boolean = false;
@@ -47,6 +48,7 @@ package com.starmaid.Cibele.entities {
         public function BossEnemy(pos:DHPoint) {
             super(pos, 600);
             this.damageThreshold = [400, 200];
+            this.appearanceStartHP = this.hitPoints;
             this._enemyType = Enemy.TYPE_BOSS;
             this.sightRange = 750;
             this.hitDamage = ScreenManager.getInstance().SHORT_DIALOGUE ? 100 : 10;
@@ -157,7 +159,8 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function doState__TRACKING():void {
-            this.playerDisp = this.playerRef.pos.sub(this.getAttackPos());
+            this.playerDisp = this.playerRef.footPos.add(new DHPoint(0, 100))
+                                                    .sub(this.getAttackPos());
             if (this.timeAlive - this.lastTrackingDirUpdateTime > 1300) {
                 this.lastTrackingDirUpdateTime = this.timeAlive;
                 this.dir = this.playerDisp.normalized().mulScl(7);
@@ -296,6 +299,7 @@ package com.starmaid.Cibele.entities {
                 dir.normalized().mulScl(ScreenManager.getInstance().screenWidth));
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint, false);
             var headFootDisp:DHPoint = this.pos.sub(this.footPos);
+            this.appearanceStartHP = this.hitPoints;
             this.setPos(warpNode.pos.add(headFootDisp));
             this.startTracking();
         }
@@ -312,13 +316,9 @@ package com.starmaid.Cibele.entities {
                 this.die(this.damagedByPartyMember);
                 return;
             }
-            if (!this.isEscaping()) {
-                if(this.hitPoints % 100 == 0) {
-                    this._state = STATE_ESCAPE;
-                } else {
-                    this._state = STATE_RECOIL;
-                    this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
-                }
+            if(this.hitPoints < this.appearanceStartHP - this.hitDamage * 6) {
+                this._state = STATE_ESCAPE;
+                this.targetPathNode = null;
             }
             if (this.damageLockMap[p.slug] == true) {
                 return;
