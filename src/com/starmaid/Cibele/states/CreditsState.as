@@ -10,7 +10,7 @@ package com.starmaid.Cibele.states {
     import org.flixel.*;
 
     public class CreditsState extends GameState {
-        [Embed(source="/../assets/audio/music/bgm_cibele.mp3")] private var BGM:Class;
+        [Embed(source="/../assets/audio/music/bgm_cibele.mp3")] private var SndBGM:Class;
         private var creditsStructure:Array;
         private var creditsText:FlxText;
         private var curCredit:Number;
@@ -135,8 +135,8 @@ package com.starmaid.Cibele.states {
 
         public function playCreditsMusic():void {
             SoundManager.getInstance().playSound(
-                BGM, 116 * GameSound.MSEC_PER_SEC, null, true,
-                .4, GameSound.BGM, CreditsState.BGM, false, false, false
+                SndBGM, 116 * GameSound.MSEC_PER_SEC, null, true,
+                .4, GameSound.BGM, CreditsState.BGM, false, false, false, true
             );
         }
 

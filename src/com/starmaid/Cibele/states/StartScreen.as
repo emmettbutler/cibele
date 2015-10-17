@@ -19,10 +19,11 @@ package com.starmaid.Cibele.states {
 
     public class StartScreen extends GameState {
         [Embed(source="/../assets/audio/music/vid_intro.mp3")] private var VidBGMLoop:Class;
-        [Embed(source="/../assets/audio/music/bgm_cibele.mp3")] private var BGM:Class;
+        [Embed(source="/../assets/audio/music/bgm_cibele.mp3")] private var SndBGM:Class;
         [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
         [Embed(source="/../assets/images/ui/Crystal-icon-large-title.png")] private var ImgXtal:Class;
 
+        public static const BGM:String = "start-screen-bgm";
         public var startText:FlxText, startText2:FlxText, startText3:FlxText;
         private var _startButton:MenuButton, _loadButton:MenuButton,
                     _quitButton:MenuButton, _subtitlesButton:MenuButton,
@@ -123,9 +124,9 @@ package com.starmaid.Cibele.states {
 
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.BGM)) {
                 SoundManager.getInstance().playSound(
-                    BGM, 116 * GameSound.MSEC_PER_SEC, null, true,
-                    .4, GameSound.BGM, CreditsState.BGM, false, false, false
-                );
+                    SndBGM, 116 * GameSound.MSEC_PER_SEC, null, true,
+                    .4, GameSound.BGM, StartScreen.BGM, false, false, false,
+                    true);
             }
 
             super.postCreate();
@@ -168,7 +169,7 @@ package com.starmaid.Cibele.states {
                 }
             }
 
-            this.fadeOut(fn, 4 * GameSound.MSEC_PER_SEC, CreditsState.BGM);
+            this.fadeOut(fn, 4 * GameSound.MSEC_PER_SEC, StartScreen.BGM);
         }
     }
 }
