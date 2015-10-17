@@ -33,6 +33,18 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/audio/voiceover/voc_euryale_canicallyou.mp3")] private static var ConvoEU10:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_cibyeah.mp3")] private static var ConvoEU11:Class;
         [Embed(source="/../assets/audio/music/vid_phonecall.mp3")] private static var ConvoPhone:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_hiisi_morning.mp3")] private static var ConvoHI1:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_hiisi_westcoast.mp3")] private static var ConvoHI2:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_hiisi_whatifwemet.mp3")] private static var ConvoHI3:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_hiisi_whatdoyouthink.mp3")] private static var ConvoHI4:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_hiisi_youtoldme.mp3")] private static var ConvoHI5:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_hiisi_weshouldmeet.mp3")] private static var ConvoHI6:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_hiisi_ifwemet.mp3")] private static var ConvoHI7:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_hiisi_thinkabout.mp3")] private static var ConvoHI8:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_hiisi_superhot.mp3")] private static var ConvoHI9:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_hiisi_itcouldhappen.mp3")] private static var ConvoHI10:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_hiisi_nervous.mp3")] private static var ConvoHI11:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_hiisi_beingwithyou.mp3")] private static var ConvoHI12:Class;
 
         {
             public static var sndFiles:Object = {
@@ -56,7 +68,19 @@ package com.starmaid.Cibele.management {
                 'voc_euryale_iwish': ConvoEU9,
                 'voc_euryale_canicallyou': ConvoEU10,
                 'voc_euryale_cibyeah': ConvoEU11,
-                'vid_phonecall': ConvoPhone
+                'vid_phonecall': ConvoPhone,
+                'voc_hiisi_morning': ConvoHI1,
+                'voc_hiisi_westcoast': ConvoHI2,
+                'voc_hiisi_whatifwemet': ConvoHI3,
+                'voc_hiisi_whatdoyouthink': ConvoHI4,
+                'voc_hiisi_youtoldme': ConvoHI5,
+                'voc_hiisi_weshouldmeet': ConvoHI6,
+                'voc_hiisi_ifwemet': ConvoHI7,
+                'voc_hiisi_thinkabout': ConvoHI8,
+                'voc_hiisi_superhot': ConvoHI9,
+                'voc_hiisi_itcouldhappen': ConvoHI10,
+                'voc_hiisi_nervous': ConvoHI11,
+                'voc_hiisi_beingwithyou': ConvoHI12
             };
         }
 

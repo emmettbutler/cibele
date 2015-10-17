@@ -195,3 +195,98 @@ vid_phonecall 18655 Blake: Yeah.
 vid_phonecall 22582 Nina: I want you so much.
 vid_phonecall 25056 Blake: Nina, I think...I love you.
 vid_phonecall 31144 Nina: [exhales] I love you too.
+voc_hiisi_morning 649 Nina: Morning.
+voc_hiisi_morning 2171 Blake: Sup.
+voc_hiisi_morning 3479 Nina: Not much.
+voc_hiisi_morning 5565 Nina: You really wanna do a Hiisi run? Isn't it, like, 5 AM there?
+voc_hiisi_morning 10257 Blake: Eh, I've been up for hours. It's chill.
+voc_hiisi_morning 12598 Nina: Wow, do you ever sleep?
+voc_hiisi_morning 16343 Blake: [laughs]
+voc_hiisi_westcoast 582 Blake: You said the other day that you'd think about living on the west coast a lot. Like, near me.
+voc_hiisi_westcoast 7344 Nina: Yeah.
+voc_hiisi_westcoast 9440 Blake: It would be so cool if you could come hang out with me and my real life friends.
+voc_hiisi_westcoast 12848 Nina: Austin and Andrew?
+voc_hiisi_westcoast 14498 Blake: Yeah, we could just go chill at the beach or something.
+voc_hiisi_westcoast 17338 Nina: Do you think they'd like me?
+voc_hiisi_westcoast 19624 Blake: Don't you get along with everyone?
+voc_hiisi_westcoast 21436 Nina: [laughs] Maybe.
+voc_hiisi_whatifwemet 540 Nina: Seriously though. What if we met?
+voc_hiisi_whatifwemet 6774 Blake: You want to?
+voc_hiisi_whatifwemet 9406 Nina: Yeah. I mean, you told me that you love me.
+voc_hiisi_whatifwemet 15762 Nina: I love you too. I want to meet you in person.
+voc_hiisi_whatifwemet 20795 Blake: Yeah.
+voc_hiisi_whatdoyouthink 1 Nina: So, what do you think?
+voc_hiisi_whatdoyouthink 3100 Blake: About what?
+voc_hiisi_whatdoyouthink 5051 Nina: Meeting.
+voc_hiisi_whatdoyouthink 7733 Blake: I want that. But, I also want no relationship whatsoever.
+voc_hiisi_whatdoyouthink 13620 Blake: I could be single forever. It's comfortable.
+voc_hiisi_whatdoyouthink 17417 Nina: I...yeah...wait. What do you mean?
+voc_hiisi_whatdoyouthink 22712 Blake: Relationships are...attempts at living in...normalcy.
+voc_hiisi_whatdoyouthink 28808 Nina: I guess so?
+voc_hiisi_whatdoyouthink 30794 Blake: I'm antisocial, so those normal relationships...don't fit my lifestyle.
+voc_hiisi_whatdoyouthink 36925 Nina: You're the leader of our ampule - how can you be antisocial?
+voc_hiisi_whatdoyouthink 40792 Blake: I don't know - I just don't think relationships are comfortable.
+voc_hiisi_whatdoyouthink 44101 Nina: You've never been in one, so how can you know that?
+voc_hiisi_whatdoyouthink 48386 Blake: I don't like leaving my security zone. I'm less antisocial and more anti-connections.
+voc_hiisi_whatdoyouthink 57269 Nina: Then...how did this happen?
+voc_hiisi_youtoldme 754 Nina: You told me you loved me two months ago and you've been telling me that every day since.
+voc_hiisi_youtoldme 5300 Nina: How have we been talking on the phone every night, like we're...
+voc_hiisi_youtoldme 9149 Blake: I don't know - hence my confusion.
+voc_hiisi_youtoldme 13076 Nina: [exasperated sigh]
+voc_hiisi_youtoldme 15900 Nina: Since when were you confused?
+voc_hiisi_youtoldme 18072 Blake: I don't know!
+voc_hiisi_weshouldmeet 214 Nina: Blake, I really care about you.
+voc_hiisi_weshouldmeet 7295 Blake: I know, me too.
+voc_hiisi_weshouldmeet 10586 Nina: We should just meet. I think we need to see each other in person.
+voc_hiisi_weshouldmeet 17750 Blake: I do want to meet you.
+voc_hiisi_weshouldmeet 19472 Nina: This can work.
+voc_hiisi_ifwemet 480 Blake: Yeah. If we met, though...do you want to, like, really spend time together?
+voc_hiisi_ifwemet 7808 Blake: I mean, are we gonna - kiss and make out...all that stuff?
+voc_hiisi_ifwemet 16890 Nina: Do you want to?
+voc_hiisi_ifwemet 21754 Blake: Yeah, I think so.
+voc_hiisi_ifwemet 24113 Nina: Me too.
+voc_hiisi_ifwemet 27579 Blake: I don't know what would happen. I don't even know what I want to happen - but I do think about it a lot.
+voc_hiisi_thinkabout 10 Nina: What do you think about?
+voc_hiisi_thinkabout 4249 Blake: We've talked about this before. I feel attracted to you, physically.
+voc_hiisi_thinkabout 9271 Nina: Yeah?
+voc_hiisi_thinkabout 11098 Blake: If we met, I probably couldn't help it - I'd want to kiss you.
+voc_hiisi_thinkabout 15768 Nina: Yeah, and?
+voc_hiisi_thinkabout 18964 Blake: Whatever - stuff. I don't know.
+voc_hiisi_thinkabout 20790 Nina: [laughs] I get it, Blake - I think the same thing.
+voc_hiisi_thinkabout 26480 Blake: What do you think?
+voc_hiisi_thinkabout 28446 Nina: [sighs] I should tell you...
+voc_hiisi_thinkabout 34943 Nina: I've never had sex before.
+voc_hiisi_thinkabout 39474 Blake: I...haven't either.
+voc_hiisi_thinkabout 43899 Nina: Wait, really? Are you serious?
+voc_hiisi_thinkabout 46708 Blake: I haven't.
+voc_hiisi_thinkabout 48429 Nina: So we, uh, I...
+voc_hiisi_thinkabout 53205 Blake: I told you, relationships are weird for me, so I've just never been in the situation...
+voc_hiisi_thinkabout 58403 Nina: Yeah, I totally get it.
+voc_hiisi_superhot 686 Nina: It's crazy to me, though, because you're, like, super hot!
+voc_hiisi_superhot 4706 Blake: I'm a skinny ghost dude - girls do *not* want to fuck me.
+voc_hiisi_superhot 8299 Nina: [laughs] I don't know.
+voc_hiisi_itcouldhappen 268 Nina: It could happen.
+voc_hiisi_itcouldhappen 2612 Blake: "It"?
+voc_hiisi_itcouldhappen 4387 Nina: Well, we could have sex for the first time...together.
+voc_hiisi_itcouldhappen 17281 Nina: Do you not like that idea?
+voc_hiisi_itcouldhappen 19324 Blake: Physically, yes. Mentally, I'm not sure how to deal with that feeling.
+voc_hiisi_itcouldhappen 24548 Nina: What do you mean?
+voc_hiisi_itcouldhappen 25921 Blake: I'm used to immersing myself in this game. I don't like thinking about dealing with people in person.
+voc_hiisi_itcouldhappen 33892 Nina: If you want to meet me -
+voc_hiisi_itcouldhappen 35667 Blake: I know, I'd have to figure out how to be - how to feel normal about it? I don't know.
+voc_hiisi_itcouldhappen 43503 Nina: We love each other - it's not just in the game.
+voc_hiisi_itcouldhappen 47991 Blake: I rely on the game.
+voc_hiisi_itcouldhappen 51842 Blake: I fell comfortable with my relationships inside this game. I don't know about real life.
+voc_hiisi_nervous 201 Nina: It's ok if you're nervous. I am too.
+voc_hiisi_nervous 5587 Blake: I'm not nervous, I'm just not used to this. It's weird for me that I like you this much!
+voc_hiisi_nervous 11992 Nina: I'm really glad that you feel that way.
+voc_hiisi_nervous 15087 Blake: That I feel weird?
+voc_hiisi_nervous 16798 Nina: That you like me. I told you, Blake - I love you.
+voc_hiisi_beingwithyou 4285 Blake: Nina...
+voc_hiisi_beingwithyou 6706 Nina: Yeah?
+voc_hiisi_beingwithyou 9248 Blake: I like thinking about being far away from whoever - just us.
+voc_hiisi_beingwithyou 16705 Blake: I really have no idea why I feel like that, but maybe it could happen.
+voc_hiisi_beingwithyou 22830 Nina: I want that.
+voc_hiisi_beingwithyou 24815 Blake: I dont' want a relationship, but I want you - I don't know.
+voc_hiisi_beingwithyou 31400 Nina: Please, let's meet and figure this out. We need to talk face to face.
+voc_hiisi_beingwithyou 40745 Blake: Face to face, huh?
