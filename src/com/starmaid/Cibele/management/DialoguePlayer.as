@@ -29,7 +29,10 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/audio/voiceover/voc_euryale_meetup.mp3")] private static var ConvoEU6:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_parents.mp3")] private static var ConvoEU7:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_dredge.mp3")] private static var ConvoEU8:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_iwish.mp3")] private var ConvoEU9:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_iwish.mp3")] private static var ConvoEU9:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_canicallyou.mp3")] private static var ConvoEU10:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_euryale_cibyeah.mp3")] private static var ConvoEU11:Class;
+        [Embed(source="/../assets/audio/music/vid_phonecall.mp3")] private static var ConvoPhone:Class;
 
         {
             public static var sndFiles:Object = {
@@ -50,7 +53,10 @@ package com.starmaid.Cibele.management {
                 'voc_euryale_meetup': ConvoEU6,
                 'voc_euryale_parents': ConvoEU7,
                 'voc_euryale_dredge': ConvoEU8,
-                'voc_euryale_iwish': ConvoEU9
+                'voc_euryale_iwish': ConvoEU9,
+                'voc_euryale_canicallyou': ConvoEU10,
+                'voc_euryale_cibyeah': ConvoEU11,
+                'vid_phonecall': ConvoPhone
             };
         }
 
@@ -69,11 +75,12 @@ package com.starmaid.Cibele.management {
                                  len:Number,
                                  endfn:Function=null,
                                  vol:Number=1,
+                                 _type:Number=GameSound.VOCAL,
                                  name:String=null):void
         {
             var sndFile:Class = sndFiles[filename];
             SoundManager.getInstance().playSound(
-                sndFile, len, endfn, false, vol, GameSound.VOCAL, name
+                sndFile, len, endfn, false, vol, _type, name
             );
 
             var dialogue:String;

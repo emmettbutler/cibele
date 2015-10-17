@@ -49,7 +49,7 @@ package com.starmaid.Cibele.states {
                 "voc_euryale_teleport",
                 GameState.SHORT_DIALOGUE ? 1 : 30*GameSound.MSEC_PER_SEC,
                 EuryaleHallway.firstConvoPartTwoPause, 1,
-                Euryale.CONVO_1_2_HALL
+                GameSound.VOCAL, Euryale.CONVO_1_2_HALL
             );
         }
 
@@ -64,7 +64,7 @@ package com.starmaid.Cibele.states {
                 "voc_euryale_hey",
                 GameState.SHORT_DIALOGUE ? 1 : 8*GameSound.MSEC_PER_SEC,
                 EuryaleHallway.firstConvoPartTwo, 1,
-                Euryale.CONVO_1_HALL
+                GameSound.VOCAL, Euryale.CONVO_1_HALL
             );
         }
     }

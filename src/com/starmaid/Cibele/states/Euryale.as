@@ -22,9 +22,6 @@ package com.starmaid.Cibele.states {
     public class Euryale extends LevelMapState {
         [Embed(source="/../assets/audio/music/bgm_euryale_intro.mp3")] private var EUBGMIntro:Class;
         [Embed(source="/../assets/audio/music/bgm_euryale_loop.mp3")] private var EUBGMLoop:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_canicallyou.mp3")] private var Convo5_2:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_cibyeah.mp3")] private var Convo5_3:Class;
-        [Embed(source="/../assets/audio/music/vid_phonecall.mp3")] private var VidBGMLoop:Class;
         [Embed(source="/../assets/images/worlds/sparkles_1.png")] private var ImgSparkle1:Class;
         [Embed(source="/../assets/images/worlds/sparkles_2.png")] private var ImgSparkle2:Class;
         [Embed(source="/../assets/images/worlds/sparkles_3.png")] private var ImgSparkle3:Class;
@@ -133,12 +130,13 @@ package com.starmaid.Cibele.states {
                     "delay": 0, "ends_with_popup": false
                 },
                 {
-                    "audio": Convo5_2, "len": 5*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_canicallyou"
                 },
                 {
-                    "audio": Convo5_3, "len": 4*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.playEndFilm
+                    "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "endfn": this.playEndFilm,
+                    "audio_name": "voc_euryale_cibyeah"
                 }
             ];
 
@@ -172,7 +170,7 @@ package com.starmaid.Cibele.states {
                 DialoguePlayer.getInstance().playFile(
                     "voc_euryale_hey",
                     GameState.SHORT_DIALOGUE ? 1 : 12*GameSound.MSEC_PER_SEC,
-                    firstConvoPartTwo, 1, CONVO_1_HALL
+                    firstConvoPartTwo, 1, GameSound.VOCAL, CONVO_1_HALL
                 );
             }
 
@@ -275,7 +273,7 @@ package com.starmaid.Cibele.states {
             DialoguePlayer.getInstance().playFile(
                 "voc_euryale_teleport",
                 GameState.SHORT_DIALOGUE ? 1 : 33*GameSound.MSEC_PER_SEC,
-                this.delayShowFriendEmail, 1, CONVO_1_2_HALL
+                this.delayShowFriendEmail, 1, GameSound.VOCAL, CONVO_1_2_HALL
             );
         }
 
@@ -343,8 +341,8 @@ package com.starmaid.Cibele.states {
                     FlxG.switchState(
                         new BlankScreen(4*GameSound.MSEC_PER_SEC,
                             function():void {
-                                SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
-                                    false, 1, GameSound.BGM);
+                                DialoguePlayer.getInstance().playFile(
+                                    "vid_phonecall", 0, null, 1, GameSound.BGM);
                                 FlxG.switchState(new PlayVideoState(
                                     "/../assets/video/Phone Talk_v1.mp4",
                                     function():void {

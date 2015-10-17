@@ -147,7 +147,7 @@ voc_euryale_meetup 41551 Blake: She...sent me one the other day.
 voc_euryale_meetup 45550 Nina: Oh, really?
 voc_euryale_meetup 51287 Blake: Your face is way nicer.
 voc_euryale_meetup 53315 Nina: [laughs] My face is pretty normal.
-voc_euryale_meetup 53315 Blake: If by normal you mean gorgeous, then yeah.
+voc_euryale_meetup 57928 Blake: If by normal you mean gorgeous, then yeah.
 voc_euryale_meetup 60965 Nina: [laughs] Thanks.
 voc_euryale_meetup 64558 Blake: Isn't your mom a model or something?
 voc_euryale_meetup 67340 Nina: That's true, she was. I look more like my dad though.
@@ -174,7 +174,24 @@ voc_euryale_dredge 16936 Blake: It's true!
 voc_euryale_dredge 18200 Nina: I think you're giving me too much credit.
 voc_euryale_dredge 23382 Blake: I like making you blush.
 voc_euryale_dredge 26163 Nina: Aww...
-voc_euryale_dredge 34041 Blake: Listening to youre voice...
+voc_euryale_dredge 34041 Blake: Listening to your voice...
 voc_euryale_dredge 38801 Blake: I like it.
 voc_euryale_dredge 41119 Nina: Me too.
 voc_euryale_dredge 43478 Nina: I like talking to you. Like, a lot.
+voc euryale_iwish 494 Blake: Nina, I wish I was with you right now.
+voc euryale_iwish 7984 Nina: Me too.
+voc euryale_iwish 10886 Blake: If we ever get to meet...
+voc euryale_iwish 14960 Nina: What?
+voc euryale_iwish 19158 Blake: I wanna talk, lying down at night. Just us.
+voc euryale_iwish 25867 Nina: [sigh] Yeah, I think about doing that sometimes, and...I would love that.
+voc_euryale_canicallyou 10 Blake: Can I call you?
+voc_euryale_cibyeah 20 Nina: Yeah.
+vid_phonecall 196 Nina: Blake, what would happen if we met?
+vid_phonecall 3436 Blake: I think...you know...
+vid_phonecall 6225 Nina: Tell me.
+vid_phonecall 8169 Blake: I'd kiss you.
+vid_phonecall 13844 Nina: Do you think we could...have sex?
+vid_phonecall 18655 Blake: Yeah.
+vid_phonecall 22582 Nina: I want you so much.
+vid_phonecall 25056 Blake: Nina, I think...I love you.
+vid_phonecall 31144 Nina: [exhales] I love you too.

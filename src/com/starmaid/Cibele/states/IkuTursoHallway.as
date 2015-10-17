@@ -42,7 +42,8 @@ package com.starmaid.Cibele.states {
         override public function startConvoCallback():void {
             DialoguePlayer.getInstance().playFile(
                 "voc_firstconvo", GameState.SHORT_DIALOGUE
-                ? 1 : 26*GameSound.MSEC_PER_SEC, firstConvo, 1, "convo_1_hall");
+                ? 1 : 26*GameSound.MSEC_PER_SEC, firstConvo, 1,
+                GameSound.VOCAL, "convo_1_hall");
         }
     }
 }
