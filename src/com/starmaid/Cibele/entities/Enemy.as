@@ -169,6 +169,9 @@ package com.starmaid.Cibele.entities {
             if (this.damageLockMap[p.slug] == true) {
                 return;
             }
+            if (this != p.attackStartTarget) {
+                return;
+            }
             this.damageLockMap[p.slug] = true;
             GlobalTimer.getInstance().setMark(this.takeDamageEventSlug + p.slug,
                                               1 * GameSound.MSEC_PER_SEC,

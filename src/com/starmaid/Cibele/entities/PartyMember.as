@@ -29,6 +29,7 @@ package com.starmaid.Cibele.entities {
         public var lastAttackTime:Number = 0;
         public var inReverseAttack:Boolean = false;
         public var footsteps:FootstepTrail = null;
+        public var attackStartTarget:Enemy;
         public var footstepOffset:DHPoint;
         public var attackRange:Number = 70;
         public var nameText:FlxText;
@@ -293,6 +294,7 @@ package com.starmaid.Cibele.entities {
                 this._state = STATE_IN_ATTACK;
                 this.lastAttackTime = this.currentTime;
             }
+            this.attackStartTarget = this.targetEnemy;
         }
 
         public function runParticles(pos:DHPoint):void {
