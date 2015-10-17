@@ -2,6 +2,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.management.FernBackgroundLoader;
     import com.starmaid.Cibele.management.PopUpManager;
+    import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.management.HallwayTileLoader;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.MessageManager;
@@ -189,7 +190,9 @@ package com.starmaid.Cibele.states {
 
         override public function clickCallback(screenPos:DHPoint,
                                                worldPos:DHPoint):void {
-            this.startConvo();
+            if (!GlobalTimer.getInstance().isPaused()) {
+                this.startConvo();
+            }
             if ((new Date().valueOf() - this.startTime) > 1 * GameSound.MSEC_PER_SEC)
             {
                 super.clickCallback(screenPos, worldPos);

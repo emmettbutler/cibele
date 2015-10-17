@@ -43,6 +43,8 @@ package com.starmaid.Cibele.base {
         private var slug:String;
         private var fadeSoundName:String;
         public var load_screen_text:String;
+        private var framesAlive:Number = 0;
+        public var soundFadeRate:Number = 1;
 
         public var ui_color_flag:Number;
         public var fading:Boolean;
@@ -248,6 +250,8 @@ package com.starmaid.Cibele.base {
             // the following loop is copypasta from FlxGroup update, altered to
             // support pausing
 
+            this.framesAlive++;
+
             if(this.use_loading_screen) {
                 if(this.loadingScreen != null) {
                     this.loadingScreen.update();
@@ -317,9 +321,11 @@ package com.starmaid.Cibele.base {
                         this.postFadeFn
                     );
                 }
-                var snd:GameSound = SoundManager.getInstance().getSoundByName(this.fadeSoundName);
-                if(snd != null) {
-                    snd.fadeOutSound();
+                if (this.framesAlive % this.soundFadeRate == 0) {
+                    var snd:GameSound = SoundManager.getInstance().getSoundByName(this.fadeSoundName);
+                    if(snd != null) {
+                        snd.fadeOutSound();
+                    }
                 }
             }
 
