@@ -26,7 +26,7 @@ package com.starmaid.Cibele.states {
         public function CreditsState() {
             super(true, false, false);
             this.enable_fade = true;
-            this.fadeRate = 10;
+            this.soundFadeRate = 10;
             this.use_loading_screen = false;
 
             this.creditsStructure = new Array(
@@ -171,7 +171,7 @@ package com.starmaid.Cibele.states {
                     function():void {
                         ScreenManager.getInstance().resetGame();
                     },
-                    1 * GameSound.MSEC_PER_SEC,
+                    3 * GameSound.MSEC_PER_SEC,
                     CreditsState.BGM
                 );
             }

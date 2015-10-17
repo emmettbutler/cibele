@@ -44,7 +44,7 @@ package com.starmaid.Cibele.base {
         private var fadeSoundName:String;
         public var load_screen_text:String;
         private var framesAlive:Number = 0;
-        public var fadeRate:Number = 1;
+        public var soundFadeRate:Number = 1;
 
         public var ui_color_flag:Number;
         public var fading:Boolean;
@@ -310,7 +310,7 @@ package com.starmaid.Cibele.base {
 
             this.updateCursor();
 
-            if (this.fading && this.framesAlive % this.fadeRate == 0) {
+            if (this.fading) {
                 if (this.fadeLayer.alpha < 1) {
                     this.fadeLayer.alpha += .01;
                 } else {
@@ -321,9 +321,11 @@ package com.starmaid.Cibele.base {
                         this.postFadeFn
                     );
                 }
-                var snd:GameSound = SoundManager.getInstance().getSoundByName(this.fadeSoundName);
-                if(snd != null) {
-                    snd.fadeOutSound();
+                if (this.framesAlive % this.soundFadeRate == 0) {
+                    var snd:GameSound = SoundManager.getInstance().getSoundByName(this.fadeSoundName);
+                    if(snd != null) {
+                        snd.fadeOutSound();
+                    }
                 }
             }
 
