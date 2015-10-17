@@ -18,6 +18,7 @@ package com.starmaid.Cibele.states {
 
     public class StartScreen extends GameState {
         [Embed(source="/../assets/audio/music/vid_intro.mp3")] private var VidBGMLoop:Class;
+        [Embed(source="/../assets/audio/music/bgm_cibele.mp3")] private var BGM:Class;
         [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
         [Embed(source="/../assets/images/ui/Crystal-icon-large-title.png")] private var ImgXtal:Class;
 
@@ -105,6 +106,13 @@ package com.starmaid.Cibele.states {
             );
             this.menuButtons.push(this._quitButton);
             this._quitButton.addToState();
+
+            if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.BGM)) {
+                SoundManager.getInstance().playSound(
+                    BGM, 116 * GameSound.MSEC_PER_SEC, null, true,
+                    .4, GameSound.BGM, CreditsState.BGM, false, false, false
+                );
+            }
 
             super.postCreate();
         }
