@@ -120,6 +120,10 @@ package com.starmaid.Cibele.states {
                 this.tileLoader.update();
             }
 
+            if (this.player.mouse_held) {
+                this.startConvo();
+            }
+
             if (this.fernBase.y != this.fernTop.y + this.fernTop.height) {
                 this.fernBase.y = this.fernTop.y + this.fernTop.height;
                 this.tileLoader.stopY = this.fernBase.y;

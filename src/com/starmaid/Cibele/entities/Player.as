@@ -138,6 +138,10 @@ package com.starmaid.Cibele.entities {
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getFinalTarget", "player.finalTarget");
         }
 
+        public function get mouse_held():Boolean {
+            return this.mouseHeld;
+        }
+
         override public function setupFootsteps():void {
             this.footstepOffsets.up = new DHPoint(70, this.height);
             this.footstepOffsets.down = this.footstepOffsets.up;
