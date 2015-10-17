@@ -1,6 +1,7 @@
 package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.states.IkuTursoDesktop;
     import com.starmaid.Cibele.management.BackgroundLoader;
     import com.starmaid.Cibele.management.LevelTracker;
@@ -23,7 +24,8 @@ package com.starmaid.Cibele.states {
 
         public var startText:FlxText, startText2:FlxText, startText3:FlxText;
         private var _startButton:MenuButton, _loadButton:MenuButton,
-                    _quitButton:MenuButton, crystalIcon:GameObject, bgLayer:GameObject;
+                    _quitButton:MenuButton, _subtitlesButton:MenuButton,
+                    crystalIcon:GameObject, bgLayer:GameObject;
 
         override public function create():void {
             this.enable_fade = true;
@@ -106,7 +108,25 @@ package com.starmaid.Cibele.states {
             this.menuButtons.push(this._quitButton);
             this._quitButton.addToState();
 
+            this._subtitlesButton = new MenuButton(
+                new DHPoint(
+                    (ScreenManager.getInstance().screenWidth * .5 - _startButtonWidth / 2),
+                    this.crystalIcon.y + (this.crystalIcon.height + 170)
+                ),
+                new DHPoint(_startButtonWidth, 30),
+                "Subtitles " + (DialoguePlayer.getInstance().subtitles_enabled ? "On" : "Off"),
+                this.toggleSubtitles
+            );
+            this.menuButtons.push(this._subtitlesButton);
+            this._subtitlesButton.addToState();
+
             super.postCreate();
+        }
+
+        public function toggleSubtitles():void {
+            DialoguePlayer.getInstance().toggle_subtitles_enabled();
+            this._subtitlesButton.text = "Subtitles " +
+                (DialoguePlayer.getInstance().subtitles_enabled ? "On" : "Off");
         }
 
         public function startGame(shouldLoad:Boolean=false):void {
