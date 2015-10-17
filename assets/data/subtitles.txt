@@ -22,7 +22,7 @@ voc_ikuturso_start 9403 Nina: Yeah, I guess that makes sense. My coral gyre's pr
 voc_ikuturso_start 14903 Ichi: Yup! I mean, if there's somewhere else you'd rather go, that's cool too.
 voc_ikuturso_start 19307 Nina: Aw, that's nice. It's ok though, I like helping you.
 voc_ikuturso_whattowear 1 Nina: Ugh, yeah... I never know what to wear when I take pictures of myself, though. I get so self-conscious.
-voc_ikuturso_whattowear 9459 Ichi: You could literally wear anything and I'll probably still like the picture.
+voc_ikuturso_whattowear 9459 Ichi: You can literally wear anything and I'll probably still like the picture.
 voc_ikuturso_whattowear 13162 Nina: [nervous laugh] Really? I mean, not *anything*...
 voc_ikuturso_whattowear 16960 Ichi: Seriously.
 voc_ikuturso_whattowear 19838 Nina: Okay. That last one was just of me standing there, so maybe I'll take more of a close-up this time.
@@ -31,8 +31,8 @@ voc_ikuturso_ampule 1 Nina: You've been leading this ampule since it started, ri
 voc_ikuturso_ampule 4907 Ichi: No, some other dude was, but he quit... and he was crap anyways. We didn't become good until I whooped everyone's ass into shape.
 voc_ikuturso_ampule 13512 Nina: People really do listen to you. It's kind of amazing.
 voc_ikuturso_ampule 18268 Ichi: I'm just really straightforward. Like, if people don't listen to me and then they fuck up, I make sure that they know they fucked up. You gotta get in people's faces. That's why they respect me.
-voc_ikuturso_ampule 31025 Nina: Haha, I'm glad I haven't messed up that bad yet.
-voc_ikuturso_ampule 36913 Ichi: Hah, I'm never gonna yell at you... uh, but still, don't be an idiot.
+voc_ikuturso_ampule 31025 Nina: [laughs] I'm glad I haven't messed up that bad yet.
+voc_ikuturso_ampule 36913 Ichi: [laughs] I'm never gonna yell at you... uh, but still, don't be an idiot.
 voc_ikuturso_ampule 42197 Nina: You... wouldn't yell at me?
 voc_ikuturso_ampule 44915 Ichi: No!
 voc_ikuturso_ampule 46198 Nina: Really?
@@ -46,7 +46,7 @@ voc_ikuturso_ampule 66277 Nina: I mean, I know. That's a pretty flattering photo
 voc_ikuturso_ampule 71863 Ichi: You should... send me a different picture, then I can I really decide if I think you're cute!
 voc_ikuturso_ampule 76770 Nina: [laughs] Yeaaah...
 voc_ikuturso_attractive 1 Nina: I don't know. He's like, attractive... but not really my type, you know?
-voc_ikuturso_attractive 6454 Ichi: I don't know, dudes got pecs!
+voc_ikuturso_attractive 6454 Ichi: I don't know, dude's got pecs!
 voc_ikuturso_attractive 9561 Nina: [laughs] Ew...
 voc_ikuturso_attractive 12722 Nina: I like when guys are more... lean.
 voc_ikuturso_attractive 16945 Ichi: Skinny dudes?
@@ -74,8 +74,8 @@ voc_ikuturso_attractive 93606 Nina: Deal.
 voc_ikuturso_attractive 95437 [both laugh]
 voc_ikuturso_attractive 98851 Nina: This is the silliest. What are we even doing right now?
 voc_ikuturso_attractive 103118 Ichi: Being friends and whacking stuff online.
-voc_ikuturso_attractive 106496 Nina: [laughs] True story...
-voc_ikuturso_bulldog 1 Ichi: [laughs] Guess you don't want to go waste your money on "Bullshit Hell" tonight?
+voc_ikuturso_attractive 106496 Nina: [laughs]
+voc_ikuturso_bulldog 1 Ichi: [laughs] Guess you don't want to go out and waste your money on "Bullshit Hell" tonight?
 voc_ikuturso_bulldog 4929 Nina: [laughs] Very funny. I barely even play other games anymore, honestly.
 voc_ikuturso_bulldog 11700 Ichi: Me neither - they're all crap anyways.
 voc_ikuturso_bulldog 14787 Nina: It - makes me kind of sad though... I like playing through good story games.
@@ -178,12 +178,12 @@ voc_euryale_dredge 34041 Blake: Listening to your voice...
 voc_euryale_dredge 38801 Blake: I like it.
 voc_euryale_dredge 41119 Nina: Me too.
 voc_euryale_dredge 43478 Nina: I like talking to you. Like, a lot.
-voc euryale_iwish 494 Blake: Nina, I wish I was with you right now.
-voc euryale_iwish 7984 Nina: Me too.
-voc euryale_iwish 10886 Blake: If we ever get to meet...
-voc euryale_iwish 14960 Nina: What?
-voc euryale_iwish 19158 Blake: I wanna talk, lying down at night. Just us.
-voc euryale_iwish 25867 Nina: [sigh] Yeah, I think about doing that sometimes, and...I would love that.
+voc_euryale_iwish 494 Blake: Nina, I wish I was with you right now.
+voc_euryale_iwish 7984 Nina: Me too.
+voc_euryale_iwish 10886 Blake: If we ever get to meet...
+voc_euryale_iwish 14960 Nina: What?
+voc_euryale_iwish 19158 Blake: I wanna talk, lying down at night. Just us.
+voc_euryale_iwish 25867 Nina: [sigh] Yeah, I think about doing that sometimes, and...I would love that.
 voc_euryale_canicallyou 10 Blake: Can I call you?
 voc_euryale_cibyeah 20 Nina: Yeah.
 vid_phonecall 196 Nina: Blake, what would happen if we met?
@@ -322,7 +322,7 @@ voc_extra_cibeast 10 Nina: Come east.
 voc_extra_cibwest 10 Nina: Come west.
 voc_extra_cibnorth 10 Nina: Come north.
 voc_extra_cibsouth 10 Nina: Come south.
-voc_extra_ciblost 10 Nina: I lost you - where'd you go?
+voc_extra_ciblost 20 Nina: I lost you - where'd you go?
 voc_extra_cibhere 10 Nina: I'm here.
 voc_extra_ichinorth 10 Ichi: Come north.
 voc_extra_ichisouth 10 Ichi: Come south.

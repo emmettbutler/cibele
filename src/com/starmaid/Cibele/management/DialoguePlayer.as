@@ -136,6 +136,7 @@ package com.starmaid.Cibele.management {
         private var subtitlesMap:Object;
         private var subtitlesText:FlxText;
         private var backgroundBox:GameObject;
+        private var prePauseBoxVisible:Boolean;
         private var textWidth:Number;
         private var _subtitles_enabled:Boolean;
         public static var _instance:DialoguePlayer = null;
@@ -175,7 +176,7 @@ package com.starmaid.Cibele.management {
                 this.backgroundBox = new GameObject(
                     new DHPoint(
                         ScreenManager.getInstance().screenWidth / 2 - boxWidth / 2,
-                        ScreenManager.getInstance().screenHeight - 200
+                        ScreenManager.getInstance().screenHeight - 210
                     )
                 );
                 this.backgroundBox.makeGraphic(boxWidth, 100, 0xaa888888);
@@ -251,6 +252,7 @@ package com.starmaid.Cibele.management {
         public function pause():void {
             if (this.subtitlesText != null) {
                 this.subtitlesText.visible = false;
+                this.prePauseBoxVisible = this.backgroundBox.visible;
                 this.backgroundBox.visible = false;
             }
         }
@@ -258,7 +260,7 @@ package com.starmaid.Cibele.management {
         public function resume():void {
             if (this.subtitlesText != null) {
                 this.subtitlesText.visible = true;
-                this.backgroundBox.visible = true;
+                this.backgroundBox.visible = this.prePauseBoxVisible;
             }
         }
 
