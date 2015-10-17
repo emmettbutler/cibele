@@ -395,6 +395,7 @@ package com.starmaid.Cibele.base {
         public function pause():void {
             GlobalTimer.getInstance().pause();
             SoundManager.getInstance().pause();
+            DialoguePlayer.getInstance().pause();
             this.pauseScreen.visible = GlobalTimer.getInstance().isPaused();
             this.game_cursor.show();
         }
@@ -402,6 +403,7 @@ package com.starmaid.Cibele.base {
         public function resume():void {
             GlobalTimer.getInstance().resume();
             SoundManager.getInstance().resume();
+            DialoguePlayer.getInstance().resume();
             this.pauseScreen.visible = GlobalTimer.getInstance().isPaused();
             if (this.hide_cursor_on_unpause) {
                 this.game_cursor.hide();

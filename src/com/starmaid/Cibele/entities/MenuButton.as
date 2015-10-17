@@ -25,6 +25,10 @@ package com.starmaid.Cibele.entities {
             this._text.setFormat("NexaBold-Regular", 24, 0xffffffff, "center");
         }
 
+        public function set text(t:String):void {
+            this._text.text = t;
+        }
+
         public function addToState(_state:GameState=null):void {
             if (_state == null) {
                 FlxG.state.add(this);

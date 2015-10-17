@@ -89,6 +89,7 @@ package com.starmaid.Cibele.management {
         private var subtitlesMap:Object;
         private var subtitlesText:FlxText;
         private var textWidth:Number;
+        private var _subtitles_enabled:Boolean;
         public static var _instance:DialoguePlayer = null;
 
         public function DialoguePlayer() {
@@ -136,6 +137,9 @@ package com.starmaid.Cibele.management {
         private function buildSubtitleCallback(tx:String):Function {
             var that:DialoguePlayer = this;
             return function():void {
+                if (!that._subtitles_enabled) {
+                    return;
+                }
                 initSubtitleText();
                 that.subtitlesText.text = tx;
 
@@ -180,6 +184,30 @@ package com.starmaid.Cibele.management {
                 }
                 subtitlesMap[filename][ts] = dialogueText;
             }
+        }
+
+        public function pause():void {
+            if (this.subtitlesText != null) {
+                this.subtitlesText.visible = false;
+            }
+        }
+
+        public function resume():void {
+            if (this.subtitlesText != null) {
+                this.subtitlesText.visible = true;
+            }
+        }
+
+        public function toggle_subtitles_enabled():void {
+            this._subtitles_enabled = !this._subtitles_enabled;
+        }
+
+        public function set subtitles_enabled(v:Boolean):void {
+            this._subtitles_enabled = v;
+        }
+
+        public function get subtitles_enabled():Boolean {
+            return this._subtitles_enabled;
         }
 
         public static function getInstance():DialoguePlayer {
