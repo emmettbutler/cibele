@@ -90,8 +90,10 @@ package com.starmaid.Cibele.management {
                 recurseSet[k][0]["x_sprite"] = null;
                 recurseSet[k][0]["x_hover_sprite"].destroy();
                 recurseSet[k][0]["x_hover_sprite"] = null;
-                recurseSet[k][0]["email_link_sprite"].destroy();
-                recurseSet[k][0]["email_link_sprite"] = null;
+                if(recurseSet[k][0]["email_link_sprite"] != null) {
+                    recurseSet[k][0]["email_link_sprite"].destroy();
+                    recurseSet[k][0]["email_link_sprite"] = null;
+                }
             }
         }
 
