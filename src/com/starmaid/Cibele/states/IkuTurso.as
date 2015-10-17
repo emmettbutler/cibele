@@ -48,56 +48,56 @@ package com.starmaid.Cibele.states {
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": null, "len": 59*GameSound.MSEC_PER_SEC,
+                    "len": 59*GameSound.MSEC_PER_SEC,
                     "delay": 0, "ends_with_popup": false,
                     "audio_name": "voc_ikuturso_bulldog"
                 },
                 {
-                    "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
+                    "len": 4*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showIchiDownloadWindow, "min_team_power": 5
                 },
                 {
-                    "audio": null, "len": 80*GameSound.MSEC_PER_SEC,
+                    "len": 80*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_ikuturso_ampule"
                 },
                 {
-                    "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
+                    "len": 4*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showSelfiesWindow, "min_team_power": 10
                 },
                 {
-                    "audio": null, "len": 27*GameSound.MSEC_PER_SEC,
+                    "len": 27*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_ikuturso_photogenic"
                 },
                 {
-                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
+                    "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showGuilEmail
                 },
                 {
-                    "audio": null, "len": 108*GameSound.MSEC_PER_SEC,
+                    "len": 108*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_ikuturso_attractive"
                 },
                 {
-                    "audio": null, "len": 2*GameSound.MSEC_PER_SEC,
+                    "len": 2*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showIchiSelfie1, "min_team_power": 20
                 },
                 {
-                    "audio": null, "len": 16*GameSound.MSEC_PER_SEC,
+                    "len": 16*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_ikuturso_picture"
                 },
                 {
-                    "audio": null, "len": 8*GameSound.MSEC_PER_SEC,
+                    "len": 8*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showCibSelfieFolder, "min_team_power": 22
                 },
                 {
-                    "audio": null, "len": 32 * GameSound.MSEC_PER_SEC, "delay": 0,
+                    "len": 32 * GameSound.MSEC_PER_SEC, "delay": 0,
                     "min_team_power": 25, "audio_name": "voc_ikuturso_whattowear"
                 },
                 {
-                    "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
+                    "len": 1*GameSound.MSEC_PER_SEC,
                     "delay": 0, "boss_gate": true
                 },
                 {
-                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC, "endfn": playEndDialogue
+                    "len": 3*GameSound.MSEC_PER_SEC, "endfn": playEndDialogue
                 }
             ];
         }

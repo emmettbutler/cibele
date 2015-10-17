@@ -58,83 +58,83 @@ package com.starmaid.Cibele.states {
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": null, "len": 43*GameSound.MSEC_PER_SEC,
+                    "len": 43*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_euryale_breakups"
                 },
                 {
-                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
+                    "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": null, "len": 19*GameSound.MSEC_PER_SEC,
+                    "len": 19*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_euryale_nada"
                 },
                 {
-                    "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
+                    "len": 7*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showSelfiePostEmail, "min_team_power": 10
                 },
                 {
-                    "audio": null, "len": 28*GameSound.MSEC_PER_SEC,
+                    "len": 28*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_euryale_crush"
                 },
                 {
-                    "audio": null, "len": 8*GameSound.MSEC_PER_SEC,
+                    "len": 8*GameSound.MSEC_PER_SEC,
                     "delay": 0, "min_team_power": 12
                 },
                 {
-                    "audio": null, "len": 44*GameSound.MSEC_PER_SEC,
+                    "len": 44*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_euryale_callmeblake"
                 },
                 {
-                    "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
+                    "len": 7*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showFriendEmail2, "min_team_power": 15
                 },
                 {
-                    "audio": null, "len": 11*GameSound.MSEC_PER_SEC,
+                    "len": 11*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_euryale_closer"
                 },
                 {
-                    "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
+                    "len": 10*GameSound.MSEC_PER_SEC,
                     "delay": 0, "min_team_power": 17
                 },
                 {
-                    "audio": null, "len": 74*GameSound.MSEC_PER_SEC,
+                    "len": 74*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_euryale_meetup"
                 },
                 {
-                    "audio": null, "len": 50*GameSound.MSEC_PER_SEC,
+                    "len": 50*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_euryale_parents"
                 },
                 {
-                    "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
+                    "len": 10*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": showDredgeSelfie, "min_team_power": 25
                 },
                 {
-                    "audio": null, "len": 54*GameSound.MSEC_PER_SEC,
+                    "len": 54*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_euryale_dredge"
                 },
                 {
-                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
+                    "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0, "min_team_power": 30
                 },
                 {
-                    "audio": null, "len": 42*GameSound.MSEC_PER_SEC,
+                    "len": 42*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_euryale_iwish"
                 },
                 {
-                    "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
+                    "len": 1*GameSound.MSEC_PER_SEC,
                     "delay": 0, "boss_gate": true
                 },
                 {
-                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC,
+                    "len": 3*GameSound.MSEC_PER_SEC,
                     "delay": 0, "ends_with_popup": false
                 },
                 {
-                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
+                    "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_euryale_canicallyou"
                 },
                 {
-                    "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
+                    "len": 4*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.playEndFilm,
                     "audio_name": "voc_euryale_cibyeah"
                 }

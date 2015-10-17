@@ -62,90 +62,90 @@ package com.starmaid.Cibele.states {
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": null, "len": 25*GameSound.MSEC_PER_SEC,
+                    "len": 25*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_hiisi_whatifwemet"
                 },
                 {
-                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
+                    "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0, endfn: showBlakeSelfie, "min_team_power": 5
                 },
                 {
-                    "audio": null, "len": 61*GameSound.MSEC_PER_SEC,
+                    "len": 61*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_hiisi_whatdoyouthink"
                 },
                 {
-                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
+                    "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0, endfn: showBeccaEmail, "min_team_power": 7
                 },
                 {
-                    "audio": null, "len": 21*GameSound.MSEC_PER_SEC,
+                    "len": 21*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_hiisi_youtoldme"
                 },
                 {
-                    "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
+                    "len": 7*GameSound.MSEC_PER_SEC,
                     "delay": 0, "min_team_power": 9
                 },
                 {
-                    "audio": null, "len": 22*GameSound.MSEC_PER_SEC,
+                    "len": 22*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_hiisi_weshouldmeet"
                 },
                 {
-                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC,
+                    "len": 3*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": null, "len": 37*GameSound.MSEC_PER_SEC,
+                    "len": 37*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_hiisi_ifwemet"
                 },
                 {
-                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC,
+                    "len": 3*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": null, "len": 61*GameSound.MSEC_PER_SEC,
+                    "len": 61*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_hiisi_thinkabout"
                 },
                 {
-                    "audio": null, "len": 11*GameSound.MSEC_PER_SEC,
+                    "len": 11*GameSound.MSEC_PER_SEC,
                     "delay": 0, endfn: showProfEmail, "min_team_power": 15,
                     "audio_name": "voc_hiisi_superhot"
                 },
                 {
-                    "audio": null, "len": 59*GameSound.MSEC_PER_SEC,
+                    "len": 59*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_hiisi_itcouldhappen"
                 },
                 {
-                    "audio": null, "len": 23*GameSound.MSEC_PER_SEC,
+                    "len": 23*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_hiisi_nervous"
                 },
                 {
-                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC,
+                    "len": 3*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": null, "len": 42*GameSound.MSEC_PER_SEC,
+                    "len": 42*GameSound.MSEC_PER_SEC,
                     "delay": 0, "ends_with_popup": false,
                     "audio_name": "voc_hiisi_beingwithyou"
                 },
                 {
-                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
+                    "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0, "min_team_power": 20
                 },
                 {
-                    "audio": null, "len": 27*GameSound.MSEC_PER_SEC,
+                    "len": 27*GameSound.MSEC_PER_SEC,
                     "delay": 0, "min_team_power": 22,
                     "audio_name": "voc_hiisi_illcome"
                 },
                 {
-                    "audio": null, "len": 28*GameSound.MSEC_PER_SEC,
+                    "len": 28*GameSound.MSEC_PER_SEC,
                     "delay": 0, "audio_name": "voc_hiisi_doingthis"
                 },
                 {
-                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC,
+                    "len": 3*GameSound.MSEC_PER_SEC,
                     "delay": 0, "boss_gate": true
                 },
                 {
-                    "audio": null, "len": 15*GameSound.MSEC_PER_SEC,
+                    "len": 15*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": playEndFilm,
                     "audio_name": "voc_hiisi_iloveyou"
                 }

@@ -272,7 +272,7 @@ package com.starmaid.Cibele.states {
                     endfn, audioInfo);
                 var finalEndFn:Function = prevEndFn;
                 var prevDialogueLock:Boolean = this.bitDialogueLock;
-                if(audioInfo["audio"] == null && audioInfo["audio_name"] == null) {
+                if(!audioInfo.hasOwnProperty("audio_name") || audioInfo["audio_name"] == null) {
                     finalEndFn = function():void {
                         bitDialogueLock = prevDialogueLock;
                         prevEndFn();
@@ -284,19 +284,11 @@ package com.starmaid.Cibele.states {
                         finalEndFn, true
                     );
                 } else {
-                    if (audioInfo.hasOwnProperty("audio_name")) {
-                        DialoguePlayer.getInstance().playFile(
-                            audioInfo["audio_name"],
-                            GameState.SHORT_DIALOGUE ? 1 : audioInfo["len"],
-                            finalEndFn, 1
-                        );
-                    } else {
-                        SoundManager.getInstance().playSound(
-                            audioInfo["audio"],
-                            GameState.SHORT_DIALOGUE ? 1 : audioInfo["len"],
-                            finalEndFn, false, 1, GameSound.VOCAL
-                        );
-                    }
+                    DialoguePlayer.getInstance().playFile(
+                        audioInfo["audio_name"],
+                        GameState.SHORT_DIALOGUE ? 1 : audioInfo["len"],
+                        finalEndFn, 1
+                    );
                 }
             } else {
                 this.finalConvoDone();
