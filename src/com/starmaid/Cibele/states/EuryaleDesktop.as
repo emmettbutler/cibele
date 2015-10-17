@@ -142,6 +142,7 @@ package com.starmaid.Cibele.states {
         }
 
         override public function create():void {
+            this.bgImageName = "UI_Desktop_Eu";
             super.create();
             ScreenManager.getInstance().setupCamera(null, 1);
             var _screen:ScreenManager = ScreenManager.getInstance();

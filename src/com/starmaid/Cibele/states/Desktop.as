@@ -21,6 +21,7 @@ package com.starmaid.Cibele.states {
 
         public var bg:FlxExtSprite, folder_structure:Object, leafPopups:Array;
         public var folder_builder:FolderBuilder;
+        public var bgImageName:String;
 
         public static var ROOMTONE:String = "desktop room tone";
 
@@ -34,13 +35,7 @@ package com.starmaid.Cibele.states {
             this.ui_color_flag = GameState.UICOLOR_PINK;
             this.use_loading_screen = false;
             FlxG.bgColor = 0x00000000;
-            if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_IT) {
-                bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/async/images/ui/UI_Desktop.png");
-            } else if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_EU) {
-                bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/async/images/ui/UI_Desktop_Eu.png");
-            } else if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_HI) {
-                bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/async/images/ui/UI_Desktop_Hi.png");
-            }
+            bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/async/images/ui/" + this.bgImageName + ".png");
 
             ScreenManager.getInstance().setupCamera(null, 1);
             var _screen:ScreenManager = ScreenManager.getInstance();
@@ -76,8 +71,7 @@ package com.starmaid.Cibele.states {
 
         override public function update():void{
             super.update();
-
-            this.folder_builder.overlapXSprite(this.folder_structure);
+            this.folder_builder.overlapSprites(this.folder_structure);
         }
 
         override public function clickCallback(screenPos:DHPoint,
