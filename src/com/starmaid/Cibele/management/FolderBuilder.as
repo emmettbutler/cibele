@@ -403,7 +403,7 @@ package com.starmaid.Cibele.management {
                     }
                 } else {
                     if(cur["full_sprite"].visible) {
-                        if ("c_sprite" in cur) {
+                        if ("x_sprite" in cur) {
                             if ((FlxG.state as GameState).cursorOverlaps(cur["x_sprite"]._getRect(), true)) {
                                 cur["x_sprite"].visible = false;
                                 cur["x_hover_sprite"].visible = true;
