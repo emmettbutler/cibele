@@ -82,6 +82,7 @@ package com.starmaid.Cibele.base {
             this.menuButtons = new Array();
 
             FlxG.bgColor = 0xff000000;
+            FlxG.clearCameraBuffer = false;
 
             var baseLayerColor:uint = 0xff000000;
             if (ScreenManager.getInstance().DEBUG) {
