@@ -44,6 +44,7 @@ package com.starmaid.Cibele.states {
 
             this.bitDialogueLock = false;
             this.load_screen_text = "Euryale";
+            this.notificationTextColor = 0xff7c6e6a;
             if (ScreenManager.getInstance().SHORT_DIALOGUE) {
                 this.teamPowerBossThresholds = [1, 3];
             } else {

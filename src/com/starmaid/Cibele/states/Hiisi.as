@@ -46,6 +46,7 @@ package com.starmaid.Cibele.states {
             //currently no bit dialogue is playing in this act. may want to change later.
             this.bitDialogueLock = true;
             this.load_screen_text = "Hiisi";
+            this.notificationTextColor = 0xffffffff;
             this.ui_color_flag = GameState.UICOLOR_PINK;
             if (ScreenManager.getInstance().SHORT_DIALOGUE) {
                 this.teamPowerBossThresholds = [1, 3];

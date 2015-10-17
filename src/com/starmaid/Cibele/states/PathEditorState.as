@@ -124,7 +124,7 @@ package com.starmaid.Cibele.states {
                 this.pathWalker.moveToNextPathNode();
             }
 
-            this.boss = new (this.getBossClass())(new DHPoint(0, 0));
+            this.boss = new (this.getBossClass())(new DHPoint(0, 0), this.notificationTextColor);
 
             add(this.boss);
             this.boss.addVisibleObjects();

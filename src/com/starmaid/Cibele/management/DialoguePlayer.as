@@ -1,6 +1,7 @@
 package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.utils.DHPoint;
 
@@ -170,26 +171,30 @@ package com.starmaid.Cibele.management {
 
         private function initSubtitleText():void {
             if (this.subtitlesText == null || this.subtitlesText.scale == null) {
-                this.textWidth = ScreenManager.getInstance().screenWidth * .5;
+                var textX:Number = 500;
+                this.textWidth = ScreenManager.getInstance().screenWidth - 50 - textX;
+                if (!(FlxG.state as GameState).updatePopup) {
+                    this.textWidth = ScreenManager.getInstance().screenWidth * .5;
+                    textX = ScreenManager.getInstance().screenWidth / 2 - this.textWidth / 2;
+                }
                 var boxWidth:Number = this.textWidth + 20;
 
                 this.backgroundBox = new GameObject(
                     new DHPoint(
-                        ScreenManager.getInstance().screenWidth / 2 - boxWidth / 2,
-                        ScreenManager.getInstance().screenHeight - 210
+                        textX,
+                        ScreenManager.getInstance().screenHeight - 110
                     )
                 );
-                this.backgroundBox.makeGraphic(boxWidth, 100, 0xaa888888);
+                this.backgroundBox.makeGraphic(boxWidth, 110, 0x55555555);
                 this.backgroundBox.scrollFactor = new DHPoint(0, 0);
                 FlxG.state.add(this.backgroundBox);
 
                 this.subtitlesText = new FlxText(
-                    ScreenManager.getInstance().screenWidth / 2 - this.textWidth / 2,
-                    ScreenManager.getInstance().screenHeight - 200,
-                    this.textWidth,
-                    ""
+                    textX, ScreenManager.getInstance().screenHeight - 100,
+                    this.textWidth, ""
                 );
-                this.subtitlesText.setFormat("NexaBold-Regular", 22, 0xffffffff, "center");
+                this.subtitlesText.setFormat("NexaBold-Regular", 22,
+                    0xffffffff, "center");
                 this.subtitlesText.scrollFactor = new DHPoint(0, 0);
                 FlxG.state.add(this.subtitlesText, true);
             }

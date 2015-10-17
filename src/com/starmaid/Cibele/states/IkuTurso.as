@@ -34,6 +34,7 @@ package com.starmaid.Cibele.states {
 
         public function IkuTurso() {
             PopUpManager.GAME_ACTIVE = true;
+            this.notificationTextColor = 0xff7c6e6a;
             this.load_screen_text = "Iku Turso";
             this.ui_color_flag = GameState.UICOLOR_PINK;
             if (ScreenManager.getInstance().SHORT_DIALOGUE) {

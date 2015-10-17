@@ -22,7 +22,7 @@ package com.starmaid.Cibele.base {
         [Embed(source="/../assets/audio/effects/sfx_mouseclick.mp3")] private var SfxClick:Class;
         [Embed(source="/../assets/audio/effects/sfx_mouseclick2.mp3")] private var SfxClick2:Class;
 
-        protected var updateSound:Boolean, updatePopup:Boolean,
+        public var updateSound:Boolean, updatePopup:Boolean,
                       updateMessages:Boolean, showEmoji:Boolean = true,
                       enable_fade:Boolean = false;
         protected var game_cursor:GameCursor, baseLayer:GameObject;
@@ -44,6 +44,7 @@ package com.starmaid.Cibele.base {
         private var slug:String;
         private var fadeSoundName:String;
         public var load_screen_text:String;
+        public var notificationTextColor:uint;
 
         public var ui_color_flag:Number;
         public var fading:Boolean;
@@ -66,6 +67,7 @@ package com.starmaid.Cibele.base {
             this.enable_fade = fade;
             this.slug = "" + (Math.random() * 1000000);
             this.callbackRefs = new Array();
+            this.notificationTextColor = 0xffffffff;
 
             this.ui_color_flag = UICOLOR_DEFAULT;
 
