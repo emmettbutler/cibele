@@ -148,7 +148,7 @@ package com.starmaid.Cibele.states {
                 }
             }
 
-            this.fadeOut(fn, 4 * GameSound.MSEC_PER_SEC);
+            this.fadeOut(fn, 4 * GameSound.MSEC_PER_SEC, CreditsState.BGM);
         }
     }
 }
