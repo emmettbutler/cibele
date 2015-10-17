@@ -355,11 +355,7 @@ package com.starmaid.Cibele.entities {
                 if (this._cur_path != null) {
                     this._cur_path.advance();
                     if (this._cur_path.isAtFirstNode()) {
-                        var destinationDisp:Number = this.footPos.sub(this.finalTarget)._length();
-                        if (destinationDisp > 100) {
-                            this.walkTarget = this.finalTarget;
-                        }
-                        this._cur_path = null;
+                        this.initWalk(this.finalTarget, true, false);
                     } else {
                         this.walkTarget = this._cur_path.currentNode.pos;
                     }
@@ -514,7 +510,8 @@ package com.starmaid.Cibele.entities {
         }
 
         public function playerIsAttacking():Boolean {
-            return (inViewOfPlayer() && playerRef.inAttack() && playerRef.targetEnemy != null);
+            return (inViewOfPlayer() && playerRef.inAttack() &&
+                    playerRef.targetEnemy != null);
         }
 
         public function warpToPlayer():void {
