@@ -447,12 +447,24 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function update():void{
-            if(this.facing == UP || this.facing == DOWN){
-                this.nameTextOffset.x = 45;
-            } else if(this.facing == LEFT) {
-                this.nameTextOffset.x = 70;
-            } else if(this.facing == RIGHT) {
-                this.nameTextOffset.x = 15;
+            if(this._state == STATE_IDLE) {
+                if(this.facing == UP) {
+                    this.nameTextOffset.x = 40;
+                } else if(this.facing == DOWN || this.facing == LEFT) {
+                    this.nameTextOffset.x = 60;
+                } else if(this.facing == RIGHT) {
+                    this.nameTextOffset.x = 20;
+                }
+            } else if(this._state == STATE_IN_ATTACK) {
+                this.nameTextOffset.x = 58;
+            } else {
+                if(this.facing == UP || this.facing == DOWN){
+                    this.nameTextOffset.x = 45;
+                } else if(this.facing == LEFT) {
+                    this.nameTextOffset.x = 70;
+                } else if(this.facing == RIGHT) {
+                    this.nameTextOffset.x = 15;
+                }
             }
 
             if(this.walkTarget != null) {
