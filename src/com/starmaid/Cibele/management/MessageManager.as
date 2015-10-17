@@ -18,6 +18,8 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/UI_pink_x.png")] private var ImgInboxXPink:Class;
         [Embed(source="/../assets/images/ui/UI_pink_x_hover.png")] private var ImgInboxXPinkHover:Class;
         [Embed(source="/../assets/images/ui/ellipse_anim.png")] private var ImgEllipse:Class;
+        [Embed(source="/../assets/images/ui/back_reply_button.png")] private var ImgBackReplyPink:Class;
+        [Embed(source="/../assets/images/ui/back_reply_button_b.png")] private var ImgBackReplyBlue:Class;
         [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
         public static var _instance:MessageManager = null;
@@ -321,12 +323,12 @@ package com.starmaid.Cibele.management {
             }
 
             this.back_reply_button = new UIElement(this.img_inbox.x + 10,
-                this.img_inbox.y + (this.img_inbox.height-50));
+                this.img_inbox.y + (this.img_inbox.height-55));
             if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
             {
-                this.back_reply_button.makeGraphic(150, 30, 0xffdf7b95);
+                this.back_reply_button.loadGraphic(ImgBackReplyPink, false, false, 505, 32);
             } else {
-                this.back_reply_button.makeGraphic(150, 30, 0xff60a0ab);
+                this.back_reply_button.loadGraphic(ImgBackReplyBlue, false, false, 505, 32);
             }
             this.back_reply_button.visible = false;
             this.back_reply_button.scrollFactor = new FlxPoint(0,0);
@@ -486,18 +488,18 @@ package com.starmaid.Cibele.management {
             this.exit_hover_ui.y = this.img_inbox.y - 5;
 
             this.exit_msg.x = this.img_inbox.x + 20;
-            this.exit_msg.y = this.img_inbox.y + (this.img_inbox.height-40);
+            this.exit_msg.y = this.img_inbox.y + (this.img_inbox.height - 45);
             this.exit_box = new FlxRect(this.exit_msg.x, this.exit_msg.y, 57,
                                         this.exit_msg.height);
 
             this.reply_to_msg.x = this.img_inbox.x + 83;
-            this.reply_to_msg.y = this.img_inbox.y + (this.img_inbox.height - 40);
+            this.reply_to_msg.y = this.img_inbox.y + (this.img_inbox.height - 45);
             this.reply_box = new FlxRect(this.reply_to_msg.x,
                                          this.reply_to_msg.y, 64,
                                          this.reply_to_msg.height);
 
             this.back_reply_button.x = this.exit_msg.x - 7;
-            this.back_reply_button.y = this.exit_msg.y - 2;
+            this.back_reply_button.y = this.exit_msg.y - 3;
 
             this.ellipse_anim.x = this.reply_to_msg.x + 2;
             this.ellipse_anim.y = this.reply_to_msg.y + 13;
