@@ -35,11 +35,11 @@ package com.starmaid.Cibele.states {
             this.use_loading_screen = false;
             FlxG.bgColor = 0x00000000;
             if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_IT) {
-                bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/images/ui/UI_Desktop.png");
+                bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/async/images/ui/UI_Desktop.png");
             } else if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_EU) {
-                bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/images/ui/UI_Desktop_Eu.png");
+                bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/async/images/ui/UI_Desktop_Eu.png");
             } else if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_HI) {
-                bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/images/ui/UI_Desktop_Hi.png");
+                bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/async/images/ui/UI_Desktop_Hi.png");
             }
 
             ScreenManager.getInstance().setupCamera(null, 1);

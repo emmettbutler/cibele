@@ -164,7 +164,7 @@ def package_application(entry_point_class, swf_path, platform="air", outfile_nam
     elif platform == "windows":
         target = "-target bundle"
         outfile = outfile_name
-    command = "adt -package -storetype pkcs12 {nots} -keystore cibelecert.pfx {target} {outfile} {entry_point_class}.xml {swf_path} assets".format(
+    command = "adt -package -storetype pkcs12 {nots} -keystore cibelecert.pfx {target} {outfile} {entry_point_class}.xml {swf_path} assets/async".format(
         entry_point_class=entry_point_class, swf_path=swf_path, target=target, outfile=outfile,
         nots="-tsa none" if nots else "")
     print command
