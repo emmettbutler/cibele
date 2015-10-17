@@ -1,5 +1,6 @@
 package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.base.GameSound;
+    import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.utils.DHPoint;
 
@@ -88,6 +89,7 @@ package com.starmaid.Cibele.management {
 
         private var subtitlesMap:Object;
         private var subtitlesText:FlxText;
+        private var backgroundBox:GameObject;
         private var textWidth:Number;
         private var _subtitles_enabled:Boolean;
         public static var _instance:DialoguePlayer = null;
@@ -121,7 +123,19 @@ package com.starmaid.Cibele.management {
 
         private function initSubtitleText():void {
             if (this.subtitlesText == null || this.subtitlesText.scale == null) {
-                this.textWidth = ScreenManager.getInstance().screenWidth * .6;
+                this.textWidth = ScreenManager.getInstance().screenWidth * .5;
+                var boxWidth:Number = this.textWidth + 20;
+
+                this.backgroundBox = new GameObject(
+                    new DHPoint(
+                        ScreenManager.getInstance().screenWidth / 2 - boxWidth / 2,
+                        ScreenManager.getInstance().screenHeight - 200
+                    )
+                );
+                this.backgroundBox.makeGraphic(boxWidth, 100, 0xaa888888);
+                this.backgroundBox.scrollFactor = new DHPoint(0, 0);
+                FlxG.state.add(this.backgroundBox);
+
                 this.subtitlesText = new FlxText(
                     ScreenManager.getInstance().screenWidth / 2 - this.textWidth / 2,
                     ScreenManager.getInstance().screenHeight - 200,
@@ -142,6 +156,7 @@ package com.starmaid.Cibele.management {
                 }
                 initSubtitleText();
                 that.subtitlesText.text = tx;
+                that.backgroundBox.visible = true;
 
                 GlobalTimer.getInstance().setMark(
                     "subtitle-remove",
@@ -149,6 +164,7 @@ package com.starmaid.Cibele.management {
                     function():void {
                         if (that.subtitlesText.scale != null) {
                             that.subtitlesText.text = "";
+                            that.backgroundBox.visible = false;
                         }
                     }, true
                 );
@@ -189,12 +205,14 @@ package com.starmaid.Cibele.management {
         public function pause():void {
             if (this.subtitlesText != null) {
                 this.subtitlesText.visible = false;
+                this.backgroundBox.visible = false;
             }
         }
 
         public function resume():void {
             if (this.subtitlesText != null) {
                 this.subtitlesText.visible = true;
+                this.backgroundBox.visible = true;
             }
         }
 
