@@ -26,6 +26,7 @@ package com.starmaid.Cibele.states {
         public function CreditsState() {
             super(true, false, false);
             this.enable_fade = true;
+            this.fadeRate = 10;
             this.use_loading_screen = false;
 
             this.creditsStructure = new Array(
@@ -54,7 +55,7 @@ package com.starmaid.Cibele.states {
                     'text': 'Nina voiced and acted by Nina Freeman'
                 },
                 {
-                    'text': 'Special thanks to:\n\n\nNöel Clark (art)\n\nand Sean Hogan (sound)\n\nfor asset support.'
+                    'text': 'Special thanks to:\n\n\nNöel Clark (art)\nand Sean Hogan (sound)\n\nfor asset support.'
                 },
                 {
                     'text': 'Special thanks to the folks who let us use their likeness in photographs:\nDiego Garcia, Arielle Martinez, Adam Christie, Brittney Lezon, Melanie Lezon, Jenny Jiao Hsia, Alec Thomson, Nick Robinson and SQ Sunseri.\n\nSpecial thanks for paintings by\nEric Lahaie ("Bulldog Hell")\nand Puri ("ffxi").'
@@ -170,7 +171,7 @@ package com.starmaid.Cibele.states {
                     function():void {
                         ScreenManager.getInstance().resetGame();
                     },
-                    3 * GameSound.MSEC_PER_SEC,
+                    1 * GameSound.MSEC_PER_SEC,
                     CreditsState.BGM
                 );
             }
