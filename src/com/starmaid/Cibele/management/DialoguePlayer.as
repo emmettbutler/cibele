@@ -140,6 +140,7 @@ package com.starmaid.Cibele.management {
         private var prePauseBoxVisible:Boolean;
         private var textWidth:Number;
         private var _subtitles_enabled:Boolean;
+        private var lastSubtitleState:GameState;
         public static var _instance:DialoguePlayer = null;
 
         public function DialoguePlayer() {
@@ -170,7 +171,8 @@ package com.starmaid.Cibele.management {
         }
 
         private function initSubtitleText():void {
-            if (this.subtitlesText == null || this.subtitlesText.scale == null) {
+            if (this.subtitlesText == null || this.lastSubtitleState != (FlxG.state as GameState)) {
+                this.lastSubtitleState = FlxG.state as GameState;
                 var textX:Number = 500;
                 this.textWidth = ScreenManager.getInstance().screenWidth - 50 - textX;
                 if (!(FlxG.state as GameState).updatePopup) {
