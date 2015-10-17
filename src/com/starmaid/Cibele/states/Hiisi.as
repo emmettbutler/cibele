@@ -26,9 +26,6 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/music/vid_goodbye.mp3")] private var BGMGoodbye:Class;
         [Embed(source="/../assets/audio/music/vid_sex.mp3")] private var BGMSex:Class;
         [Embed(source="/../assets/audio/music/vid_hallway.mp3")] private var BGMHallway:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_illcome.mp3")] private var Convo13:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_doingthis.mp3")] private var Convo14:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_iloveyou.mp3")] private var Convo15:Class;
         [Embed(source="/../assets/images/worlds/steam.png")] private var ImgSteam:Class;
         [Embed(source="/../assets/images/worlds/lava_bubble.png")] private var ImgBubble:Class;
         [Embed(source="/../assets/images/worlds/rock.png")] private var ImgRock:Class;
@@ -135,20 +132,22 @@ package com.starmaid.Cibele.states {
                     "delay": 0, "min_team_power": 20
                 },
                 {
-                    "audio": Convo13, "len": 27*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "min_team_power": 22
+                    "audio": null, "len": 27*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "min_team_power": 22,
+                    "audio_name": "voc_hiisi_illcome"
                 },
                 {
-                    "audio": Convo14, "len": 28*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "audio": null, "len": 28*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_hiisi_doingthis"
                 },
                 {
                     "audio": null, "len": 3*GameSound.MSEC_PER_SEC,
                     "delay": 0, "boss_gate": true
                 },
                 {
-                    "audio": Convo15, "len": 15*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": playEndFilm
+                    "audio": null, "len": 15*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "endfn": playEndFilm,
+                    "audio_name": "voc_hiisi_iloveyou"
                 }
             ];
 

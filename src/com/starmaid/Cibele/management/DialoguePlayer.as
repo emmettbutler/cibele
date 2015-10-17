@@ -46,6 +46,9 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_itcouldhappen.mp3")] private static var ConvoHI10:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_nervous.mp3")] private static var ConvoHI11:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_beingwithyou.mp3")] private static var ConvoHI12:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_hiisi_illcome.mp3")] private static var ConvoHI13:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_hiisi_doingthis.mp3")] private static var ConvoHI14:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_hiisi_iloveyou.mp3")] private static var ConvoHI15:Class;
 
         {
             public static var sndFiles:Object = {
@@ -81,7 +84,10 @@ package com.starmaid.Cibele.management {
                 'voc_hiisi_superhot': ConvoHI9,
                 'voc_hiisi_itcouldhappen': ConvoHI10,
                 'voc_hiisi_nervous': ConvoHI11,
-                'voc_hiisi_beingwithyou': ConvoHI12
+                'voc_hiisi_beingwithyou': ConvoHI12,
+                'voc_hiisi_illcome': ConvoHI13,
+                'voc_hiisi_doingthis': ConvoHI14,
+                'voc_hiisi_iloveyou': ConvoHI15
             };
         }
 

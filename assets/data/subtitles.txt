@@ -290,3 +290,18 @@ voc_hiisi_beingwithyou 22830 Nina: I want that.
 voc_hiisi_beingwithyou 24815 Blake: I dont' want a relationship, but I want you - I don't know.
 voc_hiisi_beingwithyou 31400 Nina: Please, let's meet and figure this out. We need to talk face to face.
 voc_hiisi_beingwithyou 40745 Blake: Face to face, huh?
+voc_hiisi_illcome 194 Blake: Ok, I'll come.
+voc_hiisi_illcome 2356 Blake: I'll ask my mom to buy a flight to New York - I'll tell her I want to visit my cousins there.
+voc_hiisi_illcome 7910 Nina: Really? You think she'd believe you?
+voc_hiisi_illcome 10849 Blake: Yes.
+voc_hiisi_illcome 13075 Nina: [exhales] Ok, you can stay with me.
+voc_hiisi_illcome 19860 Nina: I live in a dorm here, so you could just stay, like, here?
+voc_hiisi_illcome 25133 Blake: Ok.
+voc_hiisi_doingthis 638 Nina: So, you really mean it. We're doing this.
+voc_hiisi_doingthis 5762 Blake: Yes. I don't know what will happen - I have no expectations.
+voc_hiisi_doingthis 11948 Nina: I think it'll be good.
+voc_hiisi_doingthis 14308 Blake: We've been talking for a long time in the game, so it makes sense - logically - that we should meet.
+voc_hiisi_doingthis 21856 Nina: We should. Yeah.
+voc_hiisi_doingthis 24577 Blake: I know.
+voc_hiisi_iloveyou 521 Nina: Blake, I love you.
+voc_hiisi_iloveyou 7681 Blake: I...love you too, Nina.
