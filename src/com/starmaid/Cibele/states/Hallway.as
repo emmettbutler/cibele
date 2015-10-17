@@ -93,7 +93,7 @@ package com.starmaid.Cibele.states {
             fernTop = loader.load();
             fernTop.scrollFactor = new DHPoint(1, 1);
 
-            fernBase = (new BackgroundLoader()).loadSingleTileBG("/../assets/images/worlds/Fern-part-2.png");
+            fernBase = (new BackgroundLoader()).loadSingleTileBG("/../assets/async/images/worlds/Fern-part-2.png");
             fernBase.scrollFactor = new DHPoint(1, 1);
 
             leftBound = ScreenManager.getInstance().screenWidth * .39;

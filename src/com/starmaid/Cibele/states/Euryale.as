@@ -345,7 +345,7 @@ package com.starmaid.Cibele.states {
                                 DialoguePlayer.getInstance().playFile(
                                     "vid_phonecall", 0, null, 1, GameSound.BGM);
                                 FlxG.switchState(new PlayVideoState(
-                                    "/../assets/video/Phone Talk_v1.mp4",
+                                    "/../assets/async/video/Phone Talk_v1.mp4",
                                     function():void {
                                         PopUpManager.GAME_ACTIVE = false;
                                         FlxG.switchState(new BlankScreen(

@@ -358,7 +358,7 @@ package com.starmaid.Cibele.states {
                     );
                     FlxG.switchState(
                         new PlayVideoState(
-                            "/../assets/video/4.1 Meetup_v1.mp4",
+                            "/../assets/async/video/4.1 Meetup_v1.mp4",
                             playHallways
                         )
                     );
@@ -371,7 +371,7 @@ package com.starmaid.Cibele.states {
                         19 * GameSound.MSEC_PER_SEC,
                         null, false, 1, GameSound.BGM
                     );
-            FlxG.switchState(new PlayVideoState("/../assets/video/4.2 Hallways_v1.mp4",
+            FlxG.switchState(new PlayVideoState("/../assets/async/video/4.2 Hallways_v1.mp4",
                 playBlankScreen1)
             );
         }
@@ -388,7 +388,7 @@ package com.starmaid.Cibele.states {
                 69 * GameSound.MSEC_PER_SEC,
                 null, false, 1, GameSound.BGM
             );
-            FlxG.switchState(new PlayVideoState("/../assets/video/4.3 Sex_v1.mp4",
+            FlxG.switchState(new PlayVideoState("/../assets/async/video/4.3 Sex_v1.mp4",
                 playBlankScreen2)
             );
         }
@@ -404,7 +404,7 @@ package com.starmaid.Cibele.states {
                 "vid_goodbye", 46 * GameSound.MSEC_PER_SEC, null, 1,
                 GameSound.BGM
             );
-            FlxG.switchState(new PlayVideoState("/../assets/video/4.4 Goodbye_v1.mp4",
+            FlxG.switchState(new PlayVideoState("/../assets/async/video/4.4 Goodbye_v1.mp4",
                 playBlankScreen3)
             );
         }
@@ -421,7 +421,7 @@ package com.starmaid.Cibele.states {
                 14 * GameSound.MSEC_PER_SEC,
                 null, false, 1, GameSound.BGM
             );
-            FlxG.switchState(new PlayVideoState("/../assets/video/4.5 Turn off_v1.mp4",
+            FlxG.switchState(new PlayVideoState("/../assets/async/video/4.5 Turn off_v1.mp4",
                 playBlankScreen4, null, true)
             );
         }

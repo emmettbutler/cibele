@@ -19,6 +19,7 @@ package com.starmaid.Cibele.states {
 
     public class StartScreen extends GameState {
         [Embed(source="/../assets/audio/music/vid_intro.mp3")] private var VidBGMLoop:Class;
+        [Embed(source="/../assets/audio/music/bgm_cibele.mp3")] private var BGM:Class;
         [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
         [Embed(source="/../assets/images/ui/Crystal-icon-large-title.png")] private var ImgXtal:Class;
 
@@ -120,6 +121,13 @@ package com.starmaid.Cibele.states {
             this.menuButtons.push(this._subtitlesButton);
             this._subtitlesButton.addToState();
 
+            if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.BGM)) {
+                SoundManager.getInstance().playSound(
+                    BGM, 116 * GameSound.MSEC_PER_SEC, null, true,
+                    .4, GameSound.BGM, CreditsState.BGM, false, false, false
+                );
+            }
+
             super.postCreate();
         }
 
@@ -143,7 +151,7 @@ package com.starmaid.Cibele.states {
                             SoundManager.getInstance().playSound(VidBGMLoop, 24*GameSound.MSEC_PER_SEC, null, false, 1, Math.random()*5000+100);
                             FlxG.switchState(
                                 new PlayVideoState(
-                                    "/../assets/video/computer_open.flv",
+                                    "/../assets/async/video/computer_open.flv",
                                     function ():void {
                                         FlxG.switchState(new IkuTursoDesktop());
                                     }
@@ -160,7 +168,7 @@ package com.starmaid.Cibele.states {
                 }
             }
 
-            this.fadeOut(fn, 4 * GameSound.MSEC_PER_SEC);
+            this.fadeOut(fn, 4 * GameSound.MSEC_PER_SEC, CreditsState.BGM);
         }
     }
 }

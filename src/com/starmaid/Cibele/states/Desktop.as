@@ -35,7 +35,7 @@ package com.starmaid.Cibele.states {
             this.ui_color_flag = GameState.UICOLOR_PINK;
             this.use_loading_screen = false;
             FlxG.bgColor = 0x00000000;
-            bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/images/ui/" + this.bgImageName + ".png");
+            bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/async/images/ui/" + this.bgImageName + ".png");
 
             ScreenManager.getInstance().setupCamera(null, 1);
             var _screen:ScreenManager = ScreenManager.getInstance();
