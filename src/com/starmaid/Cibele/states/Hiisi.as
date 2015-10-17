@@ -23,7 +23,6 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/music/bgm_hiisi_loop.mp3")] private var BGMLoop:Class;
         [Embed(source="/../assets/audio/music/vid_turnoff.mp3")] private var BGMTurnoff:Class;
         [Embed(source="/../assets/audio/music/vid_meetup.mp3")] private var BGMMeetup:Class;
-        [Embed(source="/../assets/audio/music/vid_goodbye.mp3")] private var BGMGoodbye:Class;
         [Embed(source="/../assets/audio/music/vid_sex.mp3")] private var BGMSex:Class;
         [Embed(source="/../assets/audio/music/vid_hallway.mp3")] private var BGMHallway:Class;
         [Embed(source="/../assets/images/worlds/steam.png")] private var ImgSteam:Class;
@@ -400,10 +399,9 @@ package com.starmaid.Cibele.states {
         }
 
         public function playGoodbye():void {
-            SoundManager.getInstance().playSound(
-                BGMGoodbye,
-                46 * GameSound.MSEC_PER_SEC,
-                null, false, 1, GameSound.BGM
+            DialoguePlayer.getInstance().playFile(
+                "vid_goodbye", 46 * GameSound.MSEC_PER_SEC, null, 1,
+                GameSound.BGM
             );
             FlxG.switchState(new PlayVideoState("/../assets/video/4.4 Goodbye_v1.mp4",
                 playBlankScreen3)

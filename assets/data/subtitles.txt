@@ -305,3 +305,29 @@ voc_hiisi_doingthis 21856 Nina: We should. Yeah.
 voc_hiisi_doingthis 24577 Blake: I know.
 voc_hiisi_iloveyou 521 Nina: Blake, I love you.
 voc_hiisi_iloveyou 7681 Blake: I...love you too, Nina.
+vid_goodbye 5864 Nina: Do you think we'll ever see each other again?
+vid_goodbye 9602 Blake: Nina...I had fun, but...I fucked up.
+vid_goodbye 17922 Nina: What...what do you mean?
+vid_goodbye 22540 Blake: I shouldn't have come. I knew I shouldn't.
+vid_goodbye 26241 Nina: Blake...what are you talking about?
+vid_goodbye 31849 Blake: I don't love you.
+vid_goodbye 35770 Nina: ....what?
+vid_goodbye 36576 Blake: We can chat. I've gotta catch my plane. I'll see you online tomorrow, Nina. I'm sorry.
+voc_extra_cibsoslow 30 Nina: Ugh...so slow...
+voc_extra_ichilasthit 10 Ichi: Yes! I got the last hit on that boss!
+voc_extra_yeahsorry 20 Nina: Yeah, sorry.
+voc_extra_areyoucoming 20 Ichi: Are you coming?
+voc_extra_cibnicehit 10 Nina: Nice hit!
+voc_extra_cibeast 10 Nina: Come east.
+voc_extra_cibwest 10 Nina: Come west.
+voc_extra_cibnorth 10 Nina: Come north.
+voc_extra_cibsouth 10 Nina: Come south.
+voc_extra_ciblost 10 Nina: I lost you - where'd you go?
+voc_extra_cibhere 10 Nina: I'm here.
+voc_extra_ichinorth 10 Ichi: Come north.
+voc_extra_ichisouth 10 Ichi: Come south.
+voc_extra_ichieast 10 Ichi: Come east.
+voc_extra_ichiwest 10 Ichi: Come west.
+voc_extra_ichiwhichway 10 Ichi: I don't see you - which way'd you go?
+voc_extra_ichinice2 10 Ichi: Nice move!
+voc_extra_ichirighthere 10 Ichi: I'm right here.

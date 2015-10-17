@@ -20,9 +20,6 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/music/bgm_ikuturso_intro.mp3")] private var ITBGMIntro:Class;
         [Embed(source="/../assets/audio/music/bgm_ikuturso_loop.mp3")] private var ITBGMLoop:Class;
         [Embed(source="/../assets/audio/music/vid_sexyselfie.mp3")] private var VidBGMLoop:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_ichilasthit.mp3")] private var IchiBossKill:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_areyoucoming.mp3")] private var SndRUComing:Class;
         [Embed(source="/../assets/images/worlds/bubbles_1.png")] private var ImgBubbles:Class;
         [Embed(source="/../assets/images/worlds/seaweed1.png")] private var ImgSeaweed1:Class;
         [Embed(source="/../assets/images/worlds/seaweed2.png")] private var ImgSeaweed2:Class;
@@ -269,9 +266,9 @@ package com.starmaid.Cibele.states {
 
         public function playEndDialogue():void {
             this.bitDialogueLock = true;
-            SoundManager.getInstance().playSound(
-                IchiBossKill, 3*GameSound.MSEC_PER_SEC, this.playEndFilm,
-                false, 1, GameSound.VOCAL);
+            DialoguePlayer.getInstance().playFile(
+                "voc_extra_ichilasthit", 3*GameSound.MSEC_PER_SEC,
+                this.playEndFilm, 1, GameSound.VOCAL);
         }
 
         public function playEndFilm():void {
@@ -320,16 +317,16 @@ package com.starmaid.Cibele.states {
         }
 
         public function playRUComing():void {
-            SoundManager.getInstance().playSound(
-                SndRUComing, GameSound.MSEC_PER_SEC * 3, this.playYeahSorry,
-                false, 1, GameSound.VOCAL
+            DialoguePlayer.getInstance().playFile(
+                "voc_extra_areyoucoming", GameSound.MSEC_PER_SEC * 3,
+                this.playYeahSorry, 1, GameSound.VOCAL
             );
         }
 
         public function playYeahSorry():void {
-            SoundManager.getInstance().playSound(
-                SndYeahSorry, GameSound.MSEC_PER_SEC * 2, this.playFirstConvo,
-                false, 1, GameSound.VOCAL
+            DialoguePlayer.getInstance().playFile(
+                "voc_extra_yeahsorry", GameSound.MSEC_PER_SEC * 2,
+                this.playFirstConvo, 1, GameSound.VOCAL
             );
         }
 

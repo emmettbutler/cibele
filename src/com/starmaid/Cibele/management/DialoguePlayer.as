@@ -13,6 +13,9 @@ package com.starmaid.Cibele.management {
     import flash.utils.Dictionary;
 
     public class DialoguePlayer {
+        [Embed(source="/../assets/audio/voiceover/voc_extra_cibsoslow.mp3")] private static var VOCibSlow:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_areyoucoming.mp3")] private static var VOComing:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_yeahsorry.mp3")] private static var VOYeahSorry:Class;
         [Embed(source="/../assets/audio/voiceover/voc_firstconvo.mp3")] private static var ConvoITH1:Class;
         [Embed(source="/../assets/audio/voiceover/voc_ikuturso_bulldog.mp3")] private static var ConvoIT1:Class;
         [Embed(source="/../assets/audio/voiceover/voc_ikuturso_ampule.mp3")] private static var ConvoIT2:Class;
@@ -20,6 +23,7 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/audio/voiceover/voc_ikuturso_attractive.mp3")] private static var ConvoIT4:Class;
         [Embed(source="/../assets/audio/voiceover/voc_ikuturso_picture.mp3")] private static var ConvoIT5:Class;
         [Embed(source="/../assets/audio/voiceover/voc_ikuturso_whattowear.mp3")] private static var ConvoIT6:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ichilasthit.mp3")] private static var VOIchiHit:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_hey.mp3")] private static var ConvoEUH1:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_teleport.mp3")] private static var ConvoEUH2:Class;
         [Embed(source="/../assets/audio/voiceover/voc_euryale_breakups.mp3")] private static var ConvoEU1:Class;
@@ -49,9 +53,28 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_illcome.mp3")] private static var ConvoHI13:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_doingthis.mp3")] private static var ConvoHI14:Class;
         [Embed(source="/../assets/audio/voiceover/voc_hiisi_iloveyou.mp3")] private static var ConvoHI15:Class;
+        [Embed(source="/../assets/audio/music/vid_goodbye.mp3")] private static var ConvoGoodbye:Class;
+
+        [Embed(source="/../assets/audio/voiceover/voc_extra_cibnicehit.mp3")] private static var BitCibNice:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_cibeast.mp3")] private static var BitCibEast:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_cibnorth.mp3")] private static var BitCibNorth:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_cibwest.mp3")] private static var BitCibWest:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_cibsouth.mp3")] private static var BitCibSouth:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ciblost.mp3")] private static var BitCibWhichWay:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_cibhere.mp3")] private static var BitCibHere:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ichieast.mp3")] private static var BitIchiEast:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ichinorth.mp3")] private static var BitIchiNorth:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ichiwest.mp3")] private static var BitIchiWest:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ichisouth.mp3")] private static var BitIchiSouth:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ichiwhichway.mp3")] private static var BitIchiWhichWay:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ichinice2.mp3")] private static var BitIchiNiceHit:Class;
+        [Embed(source="/../assets/audio/voiceover/voc_extra_ichirighthere.mp3")] private static var BitIchiHere:Class;
 
         {
             public static var sndFiles:Object = {
+                'voc_extra_cibsoslow': VOCibSlow,
+                'voc_extra_areyoucoming': VOComing,
+                'voc_extra_yeahsorry': VOYeahSorry,
                 'voc_firstconvo': ConvoITH1,
                 'voc_ikuturso_bulldog': ConvoIT1,
                 'voc_ikuturso_ampule': ConvoIT2,
@@ -59,6 +82,7 @@ package com.starmaid.Cibele.management {
                 'voc_ikuturso_attractive': ConvoIT4,
                 'voc_ikuturso_picture': ConvoIT5,
                 'voc_ikuturso_whattowear': ConvoIT6,
+                'voc_extra_ichilasthit': VOIchiHit,
                 'voc_euryale_hey': ConvoEUH1,
                 'voc_euryale_teleport': ConvoEUH2,
                 'voc_euryale_breakups': ConvoEU1,
@@ -87,7 +111,23 @@ package com.starmaid.Cibele.management {
                 'voc_hiisi_beingwithyou': ConvoHI12,
                 'voc_hiisi_illcome': ConvoHI13,
                 'voc_hiisi_doingthis': ConvoHI14,
-                'voc_hiisi_iloveyou': ConvoHI15
+                'voc_hiisi_iloveyou': ConvoHI15,
+                'vid_goodbye': ConvoGoodbye,
+
+                'voc_extra_cibnicehit': BitCibNice,
+                'voc_extra_cibeast': BitCibEast,
+                'voc_extra_cibnorth': BitCibNorth,
+                'voc_extra_cibwest': BitCibWest,
+                'voc_extra_cibsouth': BitCibSouth,
+                'voc_extra_ciblost': BitCibWhichWay,
+                'voc_extra_cibhere': BitCibHere,
+                'voc_extra_ichinorth': BitIchiNorth,
+                'voc_extra_ichisouth': BitIchiSouth,
+                'voc_extra_ichieast': BitIchiEast,
+                'voc_extra_ichiwest': BitIchiWest,
+                'voc_extra_ichiwhichway': BitIchiWhichWay,
+                'voc_extra_ichinice2': BitIchiNiceHit,
+                'voc_extra_ichirighthere': BitIchiHere
             };
         }
 
