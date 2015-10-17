@@ -164,8 +164,8 @@ package com.starmaid.Cibele.entities {
             this.confirmText = null;
             this.cancelButton.destroy();
             this.cancelButton = null;
-            this.saveText = null;
             this.saveText.destroy();
+            this.saveText = null;
             this._state = null;
         }
 
