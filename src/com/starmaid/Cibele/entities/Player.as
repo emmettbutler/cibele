@@ -284,7 +284,7 @@ package com.starmaid.Cibele.entities {
             this.shadow_sprite.visible = true;
             this.attack_sprite.visible = false;
             this.idle_sprite.visible = false;
-            if (got_enemy && this.swapEnemy != null && !this.swapEnemy.isDead()) {
+            if (got_enemy && this.swapEnemy != null && this.swapEnemy.targetable()) {
                 this.enterStateMoveToEnemy();
                 this.swapEnemy.activeTarget();
                 if(this.swapEnemy != prevTargetEnemy) {

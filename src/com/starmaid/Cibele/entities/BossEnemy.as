@@ -84,7 +84,7 @@ package com.starmaid.Cibele.entities {
         }
 
         override public function targetable():Boolean {
-            return this.visible;
+            return this.visible && this._healthBar.visible;
         }
 
         public function get name():String {
@@ -133,7 +133,8 @@ package com.starmaid.Cibele.entities {
                 this.visible = true;
                 this._notificationText.text = this._name + " has appeared!";
                 this.showNotificationText();
-                GlobalTimer.getInstance().setMark("boss app hb" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.showHealthBar);
+                GlobalTimer.getInstance().setMark("boss app hb" + Math.random().toString(),
+                    5*GameSound.MSEC_PER_SEC, this.showHealthBar);
             }
         }
 
@@ -309,7 +310,7 @@ package com.starmaid.Cibele.entities {
             if(this._state == STATE_DESPAWN && !this.canDie) {
                 return;
             }
-            if (this.isDead()) {
+            if (this.isDead() || this._state == STATE_INACTIVE) {
                 return;
             }
             if (this.hitPoints <= 0) {
