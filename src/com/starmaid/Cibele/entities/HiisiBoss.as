@@ -14,9 +14,9 @@ package com.starmaid.Cibele.entities {
 
         private var tentacles:Array;
 
-        public function HiisiBoss(pos:DHPoint) {
-            this.notificationTextColor = 0xffffffff;
+        public function HiisiBoss(pos:DHPoint, textColor:uint) {
             this._name = "KUU";
+            this.notificationTextColor = textColor;
             super(pos);
         }
 

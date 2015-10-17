@@ -2,6 +2,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.management.ScreenManager;
+    import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.Emote;
@@ -22,24 +23,8 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/music/bgm_hiisi_loop.mp3")] private var BGMLoop:Class;
         [Embed(source="/../assets/audio/music/vid_turnoff.mp3")] private var BGMTurnoff:Class;
         [Embed(source="/../assets/audio/music/vid_meetup.mp3")] private var BGMMeetup:Class;
-        [Embed(source="/../assets/audio/music/vid_goodbye.mp3")] private var BGMGoodbye:Class;
         [Embed(source="/../assets/audio/music/vid_sex.mp3")] private var BGMSex:Class;
         [Embed(source="/../assets/audio/music/vid_hallway.mp3")] private var BGMHallway:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_morning.mp3")] private var Convo1:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_westcoast.mp3")] private var Convo2:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_whatifwemet.mp3")] private var Convo3:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_whatdoyouthink.mp3")] private var Convo4:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_youtoldme.mp3")] private var Convo5:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_weshouldmeet.mp3")] private var Convo6:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_ifwemet.mp3")] private var Convo7:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_thinkabout.mp3")] private var Convo8:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_superhot.mp3")] private var Convo9:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_itcouldhappen.mp3")] private var Convo10:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_nervous.mp3")] private var Convo11:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_beingwithyou.mp3")] private var Convo12:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_illcome.mp3")] private var Convo13:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_doingthis.mp3")] private var Convo14:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_iloveyou.mp3")] private var Convo15:Class;
         [Embed(source="/../assets/images/worlds/steam.png")] private var ImgSteam:Class;
         [Embed(source="/../assets/images/worlds/lava_bubble.png")] private var ImgBubble:Class;
         [Embed(source="/../assets/images/worlds/rock.png")] private var ImgRock:Class;
@@ -61,6 +46,7 @@ package com.starmaid.Cibele.states {
             //currently no bit dialogue is playing in this act. may want to change later.
             this.bitDialogueLock = true;
             this.load_screen_text = "Hiisi";
+            this.notificationTextColor = 0xffffffff;
             this.ui_color_flag = GameState.UICOLOR_PINK;
             if (ScreenManager.getInstance().SHORT_DIALOGUE) {
                 this.teamPowerBossThresholds = [1, 3];
@@ -76,88 +62,92 @@ package com.starmaid.Cibele.states {
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo3, "len": 25*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 25*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_hiisi_whatifwemet"
                 },
                 {
-                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
+                    "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0, endfn: showBlakeSelfie, "min_team_power": 5
                 },
                 {
-                    "audio": Convo4, "len": 61*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 61*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_hiisi_whatdoyouthink"
                 },
                 {
-                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
+                    "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0, endfn: showBeccaEmail, "min_team_power": 7
                 },
                 {
-                    "audio": Convo5, "len": 21*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 21*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_hiisi_youtoldme"
                 },
                 {
-                    "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
+                    "len": 7*GameSound.MSEC_PER_SEC,
                     "delay": 0, "min_team_power": 9
                 },
                 {
-                    "audio": Convo6, "len": 22*GameSound.MSEC_PER_SEC,
+                    "len": 22*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_hiisi_weshouldmeet"
+                },
+                {
+                    "len": 3*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC,
+                    "len": 37*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_hiisi_ifwemet"
+                },
+                {
+                    "len": 3*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": Convo7, "len": 37*GameSound.MSEC_PER_SEC,
+                    "len": 61*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_hiisi_thinkabout"
+                },
+                {
+                    "len": 11*GameSound.MSEC_PER_SEC,
+                    "delay": 0, endfn: showProfEmail, "min_team_power": 15,
+                    "audio_name": "voc_hiisi_superhot"
+                },
+                {
+                    "len": 59*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_hiisi_itcouldhappen"
+                },
+                {
+                    "len": 23*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_hiisi_nervous"
+                },
+                {
+                    "len": 3*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 42*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "ends_with_popup": false,
+                    "audio_name": "voc_hiisi_beingwithyou"
                 },
                 {
-                    "audio": Convo8, "len": 61*GameSound.MSEC_PER_SEC,
-                    "delay": 0
-                },
-                {
-                    "audio": Convo9, "len": 11*GameSound.MSEC_PER_SEC,
-                    "delay": 0, endfn: showProfEmail, "min_team_power": 15
-                },
-                {
-                    "audio": Convo10, "len": 59*GameSound.MSEC_PER_SEC,
-                    "delay": 0
-                },
-                {
-                    "audio": Convo11, "len": 23*GameSound.MSEC_PER_SEC,
-                    "delay": 0
-                },
-                {
-                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC,
-                    "delay": 0
-                },
-                {
-                    "audio": Convo12, "len": 42*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "ends_with_popup": false
-                },
-                {
-                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
+                    "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0, "min_team_power": 20
                 },
                 {
-                    "audio": Convo13, "len": 27*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "min_team_power": 22
+                    "len": 27*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "min_team_power": 22,
+                    "audio_name": "voc_hiisi_illcome"
                 },
                 {
-                    "audio": Convo14, "len": 28*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 28*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_hiisi_doingthis"
                 },
                 {
-                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC,
+                    "len": 3*GameSound.MSEC_PER_SEC,
                     "delay": 0, "boss_gate": true
                 },
                 {
-                    "audio": Convo15, "len": 15*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": playEndFilm
+                    "len": 15*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "endfn": playEndFilm,
+                    "audio_name": "voc_hiisi_iloveyou"
                 }
             ];
 
@@ -188,10 +178,10 @@ package com.starmaid.Cibele.states {
             );
 
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
-                SoundManager.getInstance().playSound(
-                    Convo1,
+                DialoguePlayer.getInstance().playFile(
+                    "voc_hiisi_morning",
                     GameState.SHORT_DIALOGUE ? 1 : 20*GameSound.MSEC_PER_SEC,
-                    delayFirstConvoPartTwo, false, 1, GameSound.VOCAL,
+                    delayFirstConvoPartTwo, 1, GameSound.VOCAL,
                     CONVO_1_HALL
                 );
             }
@@ -298,10 +288,10 @@ package com.starmaid.Cibele.states {
         }
 
         public function firstConvoPartTwo():void {
-            SoundManager.getInstance().playSound(
-                Convo2,
+            DialoguePlayer.getInstance().playFile(
+                "voc_hiisi_westcoast",
                 GameState.SHORT_DIALOGUE ? 1 : 25*GameSound.MSEC_PER_SEC,
-                this.delayFlightEmail, false, 1, GameSound.VOCAL,
+                this.delayFlightEmail, 1, GameSound.VOCAL,
                 CONVO_2_HALL
             );
         }
@@ -368,7 +358,7 @@ package com.starmaid.Cibele.states {
                     );
                     FlxG.switchState(
                         new PlayVideoState(
-                            "/../assets/video/4.1 Meetup_v1.mp4",
+                            "/../assets/async/video/4.1 Meetup_v1.mp4",
                             playHallways
                         )
                     );
@@ -381,7 +371,7 @@ package com.starmaid.Cibele.states {
                         19 * GameSound.MSEC_PER_SEC,
                         null, false, 1, GameSound.BGM
                     );
-            FlxG.switchState(new PlayVideoState("/../assets/video/4.2 Hallways_v1.mp4",
+            FlxG.switchState(new PlayVideoState("/../assets/async/video/4.2 Hallways_v1.mp4",
                 playBlankScreen1)
             );
         }
@@ -398,7 +388,7 @@ package com.starmaid.Cibele.states {
                 69 * GameSound.MSEC_PER_SEC,
                 null, false, 1, GameSound.BGM
             );
-            FlxG.switchState(new PlayVideoState("/../assets/video/4.3 Sex_v1.mp4",
+            FlxG.switchState(new PlayVideoState("/../assets/async/video/4.3 Sex_v1.mp4",
                 playBlankScreen2)
             );
         }
@@ -410,12 +400,11 @@ package com.starmaid.Cibele.states {
         }
 
         public function playGoodbye():void {
-            SoundManager.getInstance().playSound(
-                BGMGoodbye,
-                46 * GameSound.MSEC_PER_SEC,
-                null, false, 1, GameSound.BGM
+            DialoguePlayer.getInstance().playFile(
+                "vid_goodbye", 46 * GameSound.MSEC_PER_SEC, null, 1,
+                GameSound.BGM
             );
-            FlxG.switchState(new PlayVideoState("/../assets/video/4.4 Goodbye_v1.mp4",
+            FlxG.switchState(new PlayVideoState("/../assets/async/video/4.4 Goodbye_v1.mp4",
                 playBlankScreen3)
             );
         }
@@ -432,7 +421,7 @@ package com.starmaid.Cibele.states {
                 14 * GameSound.MSEC_PER_SEC,
                 null, false, 1, GameSound.BGM
             );
-            FlxG.switchState(new PlayVideoState("/../assets/video/4.5 Turn off_v1.mp4",
+            FlxG.switchState(new PlayVideoState("/../assets/async/video/4.5 Turn off_v1.mp4",
                 playBlankScreen4, null, true)
             );
         }

@@ -1,6 +1,6 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.management.ScreenManager;
-    import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.utils.DHPoint;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.utils.GlobalTimer;
@@ -11,7 +11,6 @@ package com.starmaid.Cibele.entities {
     public class LoadingScreen {
         [Embed(source="/../assets/images/ui/loading_icon.png")] private var ImgLoadingIcon:Class;
         [Embed(source="/../assets/images/ui/loading_text.png")] private var ImgLoadingText:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_cibsoslow.mp3")] private var CibSlow:Class;
         [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
 
         public var loading_icon:GameObject;
@@ -62,9 +61,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function slowDialogue():void {
-            SoundManager.getInstance().playSound(
-                CibSlow, 3*GameSound.MSEC_PER_SEC, null,
-                false, 1, GameSound.VOCAL
+            DialoguePlayer.getInstance().playFile(
+                "voc_extra_cibsoslow", 3*GameSound.MSEC_PER_SEC, null,
+                1, GameSound.VOCAL
             );
         }
 

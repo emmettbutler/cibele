@@ -100,6 +100,12 @@ package org.flixel
 		 * Handy shared variable for implementing your own pause behavior.
 		 */
 		static public var paused:Boolean;
+
+        /*
+         * Whether to empty the camera buffer every frame or simply draw
+         * bgColor over its existing contents
+         */
+		static public var clearCameraBuffer:Boolean;
 		/**
 		 * Whether you are running in Debug or Release mode.
 		 * Set automatically by <code>FlxPreloader</code> during startup.
@@ -1171,7 +1177,11 @@ package org.flixel
 					continue;
 				if(useBufferLocking)
 					cam.buffer.lock();
-				cam.fill(cam.bgColor);
+                if (FlxG.clearCameraBuffer) {
+                    cam.fillTransparent();
+                } else {
+                    cam.fill(cam.bgColor);
+                }
 				cam.screen.dirty = true;
 			}
 		}

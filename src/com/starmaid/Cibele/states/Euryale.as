@@ -4,6 +4,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.entities.Emote;
     import com.starmaid.Cibele.entities.FallingObject;
     import com.starmaid.Cibele.entities.Mist;
@@ -21,20 +22,6 @@ package com.starmaid.Cibele.states {
     public class Euryale extends LevelMapState {
         [Embed(source="/../assets/audio/music/bgm_euryale_intro.mp3")] private var EUBGMIntro:Class;
         [Embed(source="/../assets/audio/music/bgm_euryale_loop.mp3")] private var EUBGMLoop:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_hey.mp3")] private var Convo1:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_teleport.mp3")] private var Convo1_2:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_breakups.mp3")] private var Convo2:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_nada.mp3")] private var Convo2_2:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_crush.mp3")] private var Convo3:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_callmeblake.mp3")] private var Convo3_2:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_closer.mp3")] private var Convo4:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_meetup.mp3")] private var Convo4_2:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_parents.mp3")] private var Convo4_3:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_dredge.mp3")] private var Convo5:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_iwish.mp3")] private var Convo5_1:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_canicallyou.mp3")] private var Convo5_2:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_cibyeah.mp3")] private var Convo5_3:Class;
-        [Embed(source="/../assets/audio/music/vid_phonecall.mp3")] private var VidBGMLoop:Class;
         [Embed(source="/../assets/images/worlds/sparkles_1.png")] private var ImgSparkle1:Class;
         [Embed(source="/../assets/images/worlds/sparkles_2.png")] private var ImgSparkle2:Class;
         [Embed(source="/../assets/images/worlds/sparkles_3.png")] private var ImgSparkle3:Class;
@@ -57,6 +44,7 @@ package com.starmaid.Cibele.states {
 
             this.bitDialogueLock = false;
             this.load_screen_text = "Euryale";
+            this.notificationTextColor = 0xff7c6e6a;
             if (ScreenManager.getInstance().SHORT_DIALOGUE) {
                 this.teamPowerBossThresholds = [1, 3];
             } else {
@@ -71,84 +59,85 @@ package com.starmaid.Cibele.states {
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo2, "len": 43*GameSound.MSEC_PER_SEC,
+                    "len": 43*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_breakups"
+                },
+                {
+                    "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0
                 },
                 {
-                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 19*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_nada"
                 },
                 {
-                    "audio": Convo2_2, "len": 19*GameSound.MSEC_PER_SEC,
-                    "delay": 0
-                },
-                {
-                    "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
+                    "len": 7*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showSelfiePostEmail, "min_team_power": 10
                 },
                 {
-                    "audio": Convo3, "len": 28*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 28*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_crush"
                 },
                 {
-                    "audio": null, "len": 8*GameSound.MSEC_PER_SEC,
+                    "len": 8*GameSound.MSEC_PER_SEC,
                     "delay": 0, "min_team_power": 12
                 },
                 {
-                    "audio": Convo3_2, "len": 44*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 44*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_callmeblake"
                 },
                 {
-                    "audio": null, "len": 7*GameSound.MSEC_PER_SEC,
+                    "len": 7*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showFriendEmail2, "min_team_power": 15
                 },
                 {
-                    "audio": Convo4, "len": 11*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 11*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_closer"
                 },
                 {
-                    "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
+                    "len": 10*GameSound.MSEC_PER_SEC,
                     "delay": 0, "min_team_power": 17
                 },
                 {
-                    "audio": Convo4_2, "len": 74*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 74*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_meetup"
                 },
                 {
-                    "audio": Convo4_3, "len": 50*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 50*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_parents"
                 },
                 {
-                    "audio": null, "len": 10*GameSound.MSEC_PER_SEC,
+                    "len": 10*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": showDredgeSelfie, "min_team_power": 25
                 },
                 {
-                    "audio": Convo5, "len": 54*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 54*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_dredge"
                 },
                 {
-                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
+                    "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0, "min_team_power": 30
                 },
                 {
-                    "audio": Convo5_1, "len": 42*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 42*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_iwish"
                 },
                 {
-                    "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
+                    "len": 1*GameSound.MSEC_PER_SEC,
                     "delay": 0, "boss_gate": true
                 },
                 {
-                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC,
+                    "len": 3*GameSound.MSEC_PER_SEC,
                     "delay": 0, "ends_with_popup": false
                 },
                 {
-                    "audio": Convo5_2, "len": 5*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 5*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_euryale_canicallyou"
                 },
                 {
-                    "audio": Convo5_3, "len": 4*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "endfn": this.playEndFilm
+                    "len": 4*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "endfn": this.playEndFilm,
+                    "audio_name": "voc_euryale_cibyeah"
                 }
             ];
 
@@ -179,11 +168,10 @@ package com.starmaid.Cibele.states {
             );
 
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.VOCAL)) {
-                SoundManager.getInstance().playSound(
-                    Convo1,
+                DialoguePlayer.getInstance().playFile(
+                    "voc_euryale_hey",
                     GameState.SHORT_DIALOGUE ? 1 : 12*GameSound.MSEC_PER_SEC,
-                    firstConvoPartTwo, false, 1, GameSound.VOCAL,
-                    CONVO_1_HALL
+                    firstConvoPartTwo, 1, GameSound.VOCAL, CONVO_1_HALL
                 );
             }
 
@@ -283,10 +271,11 @@ package com.starmaid.Cibele.states {
         }
 
         public function firstConvoPartTwo():void {
-            SoundManager.getInstance().playSound(
-                    Convo1_2, GameState.SHORT_DIALOGUE ? 1 : 33*GameSound.MSEC_PER_SEC, this.delayShowFriendEmail, false, 1, GameSound.VOCAL,
-                    CONVO_1_2_HALL
-                );
+            DialoguePlayer.getInstance().playFile(
+                "voc_euryale_teleport",
+                GameState.SHORT_DIALOGUE ? 1 : 33*GameSound.MSEC_PER_SEC,
+                this.delayShowFriendEmail, 1, GameSound.VOCAL, CONVO_1_2_HALL
+            );
         }
 
         public function delayShowFriendEmail():void {
@@ -353,10 +342,10 @@ package com.starmaid.Cibele.states {
                     FlxG.switchState(
                         new BlankScreen(4*GameSound.MSEC_PER_SEC,
                             function():void {
-                                SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
-                                    false, 1, GameSound.BGM);
+                                DialoguePlayer.getInstance().playFile(
+                                    "vid_phonecall", 0, null, 1, GameSound.BGM);
                                 FlxG.switchState(new PlayVideoState(
-                                    "/../assets/video/Phone Talk_v1.mp4",
+                                    "/../assets/async/video/Phone Talk_v1.mp4",
                                     function():void {
                                         PopUpManager.GAME_ACTIVE = false;
                                         FlxG.switchState(new BlankScreen(

@@ -5,6 +5,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.MessageManager;
+    import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.entities.MenuButton;
 
     import org.flixel.*;
@@ -15,7 +16,7 @@ package com.starmaid.Cibele.entities {
         private var baseLayer:GameObject, confirmLayer:GameObject;
         private var quitButton:MenuButton, titleScreenButton:MenuButton,
                     confirmButton:MenuButton, cancelButton:MenuButton,
-                    resumeButton:MenuButton;
+                    resumeButton:MenuButton, subtitlesButton:MenuButton;
         private var confirmText:FlxText;
         private var saveText:FlxText;
         private var _state:GameState;
@@ -79,10 +80,23 @@ package com.starmaid.Cibele.entities {
             this.buttons.push(this.titleScreenButton);
             this._state.addMenuButton(this.titleScreenButton);
 
-            this.resumeButton = new MenuButton(
+            this.subtitlesButton = new MenuButton(
                 new DHPoint(
                     ScreenManager.getInstance().screenWidth / 2 - _buttonWidth / 2,
                     ScreenManager.getInstance().screenHeight - 200
+                ),
+                new DHPoint(_buttonWidth, 30),
+                "Subtitles " + (DialoguePlayer.getInstance().subtitles_enabled ? "On" : "Off"),
+                this.toggleSubtitles
+            );
+            this.subtitlesButton.observeGlobalPause = false;
+            this.buttons.push(this.subtitlesButton);
+            this._state.addMenuButton(this.subtitlesButton);
+
+            this.resumeButton = new MenuButton(
+                new DHPoint(
+                    ScreenManager.getInstance().screenWidth / 2 - _buttonWidth / 2,
+                    ScreenManager.getInstance().screenHeight - 240
                 ),
                 new DHPoint(_buttonWidth, 30),
                 "Resume",
@@ -145,6 +159,12 @@ package com.starmaid.Cibele.entities {
             this.cancelButton.visible = false;
 
             this.visible = false;
+        }
+
+        public function toggleSubtitles():void {
+            DialoguePlayer.getInstance().toggle_subtitles_enabled();
+            this.subtitlesButton.text = "Subtitles " +
+                (DialoguePlayer.getInstance().subtitles_enabled ? "On" : "Off");
         }
 
         public function destroy():void {

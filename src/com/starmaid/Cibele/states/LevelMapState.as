@@ -4,6 +4,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.BackgroundLoader;
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.ProceduralDialogueGenerator;
+    import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.PartyMember;
     import com.starmaid.Cibele.entities.Enemy;
@@ -271,7 +272,7 @@ package com.starmaid.Cibele.states {
                     endfn, audioInfo);
                 var finalEndFn:Function = prevEndFn;
                 var prevDialogueLock:Boolean = this.bitDialogueLock;
-                if(audioInfo["audio"] == null) {
+                if(!audioInfo.hasOwnProperty("audio_name") || audioInfo["audio_name"] == null) {
                     finalEndFn = function():void {
                         bitDialogueLock = prevDialogueLock;
                         prevEndFn();
@@ -283,10 +284,10 @@ package com.starmaid.Cibele.states {
                         finalEndFn, true
                     );
                 } else {
-                    SoundManager.getInstance().playSound(
-                        audioInfo["audio"],
+                    DialoguePlayer.getInstance().playFile(
+                        audioInfo["audio_name"],
                         GameState.SHORT_DIALOGUE ? 1 : audioInfo["len"],
-                        finalEndFn, false, 1, GameSound.VOCAL
+                        finalEndFn, 1
                     );
                 }
             } else {

@@ -1,0 +1,333 @@
+voc_firstconvo 1 Nina: Hey, what's up?
+voc_firstconvo 3193 Ichi: Let's just private chat. I'm sick of all these fuckers in the main channel.
+voc_firstconvo 7131 Nina: [laughs] Yeah, everyone's pretty rowdy today.
+voc_firstconvo 12025 Ichi: They're all spazzing because Bulldog Hell is coming out tonight.
+voc_firstconvo 15734 Ichi: They're gonna go line up at whatever store, which fucking sucks because now we can't do anything serious tonight.
+voc_firstconvo 20972 Nina: Uhhh, yeaahhh...
+voc_ikuturso_photogenic 1 Nina: I'm so not photogenic...
+voc_ikuturso_photogenic 2291 Ichi: You definitely are! I'm not photogenic - I look like a fuckin' ghost!
+voc_ikuturso_photogenic 6455 Ichi: [laughs] I thought you looked really nice in that photo you posted.
+voc_ikuturso_photogenic 11276 Ichi: You don't have to lie. I'll still like you even if you admit that I look like a ghost.
+voc_ikuturso_photogenic 15220 Nina: [laughs] No...
+voc_ikuturso_photogenic 17372 Ichi: Yes! Come on, have you seen Guil? He's like a fuckin' bodybuilder!
+voc_ikuturso_photogenic 21495 Nina: [laughs] ...yeah...
+voc_extra_areyoucoming 1 Ichi: Are you coming?
+voc_ikuturso_picture 1 Ichi: Sooo...how about that picture?
+voc_ikuturso_picture 3987 Nina: [sigh] y-yeah... Yeah, I can send you one if you want. I'll have to take it first though.
+voc_ikuturso_picture 13599 Ichi: Okay!
+voc_ikuturso_start 1 Nina: Yeah! Final boss in Iku Turso?
+voc_ikuturso_start 3048 Nina: You're...really obsessed with that zone lately.
+voc_ikuturso_start 6634 Ichi: [laughs] Coral gyre, yo!
+voc_ikuturso_start 9403 Nina: Yeah, I guess that makes sense. My coral gyre's pretty good.
+voc_ikuturso_start 14903 Ichi: Yup! I mean, if there's somewhere else you'd rather go, that's cool too.
+voc_ikuturso_start 19307 Nina: Aw, that's nice. It's ok though, I like helping you.
+voc_ikuturso_whattowear 1 Nina: Ugh, yeah... I never know what to wear when I take pictures of myself, though. I get so self-conscious.
+voc_ikuturso_whattowear 9459 Ichi: You can literally wear anything and I'll probably still like the picture.
+voc_ikuturso_whattowear 13162 Nina: [nervous laugh] Really? I mean, not *anything*...
+voc_ikuturso_whattowear 16960 Ichi: Seriously.
+voc_ikuturso_whattowear 19838 Nina: Okay. That last one was just of me standing there, so maybe I'll take more of a close-up this time.
+voc_ikuturso_whattowear 28589 Ichi: Yes please.
+voc_ikuturso_ampule 1 Nina: You've been leading this ampule since it started, right?
+voc_ikuturso_ampule 4907 Ichi: No, some other dude was, but he quit... and he was crap anyways. We didn't become good until I whooped everyone's ass into shape.
+voc_ikuturso_ampule 13512 Nina: People really do listen to you. It's kind of amazing.
+voc_ikuturso_ampule 18268 Ichi: I'm just really straightforward. Like, if people don't listen to me and then they fuck up, I make sure that they know they fucked up. You gotta get in people's faces. That's why they respect me.
+voc_ikuturso_ampule 31025 Nina: [laughs] I'm glad I haven't messed up that bad yet.
+voc_ikuturso_ampule 36913 Ichi: [laughs] I'm never gonna yell at you... uh, but still, don't be an idiot.
+voc_ikuturso_ampule 42197 Nina: You... wouldn't yell at me?
+voc_ikuturso_ampule 44915 Ichi: No!
+voc_ikuturso_ampule 46198 Nina: Really?
+voc_ikuturso_ampule 47481 Ichi: I'm not gonna yell at a cute girl.
+voc_ikuturso_ampule 46198 Nina: [laughs]
+voc_ikuturso_ampule 52237 Nina: I'm not cute...
+voc_ikuturso_ampule 53671 Ichi: Pfft!
+voc_ikuturso_ampule 56691 Nina: Hah, I don't think I am, but that's really nice of you.
+voc_ikuturso_ampule 60767 Ichi: Hey, I know what you look like! You've posted a picture of yourself on the forums.
+voc_ikuturso_ampule 66277 Nina: I mean, I know. That's a pretty flattering photo though.
+voc_ikuturso_ampule 71863 Ichi: You should... send me a different picture, then I can I really decide if I think you're cute!
+voc_ikuturso_ampule 76770 Nina: [laughs] Yeaaah...
+voc_ikuturso_attractive 1 Nina: I don't know. He's like, attractive... but not really my type, you know?
+voc_ikuturso_attractive 6454 Ichi: I don't know, dude's got pecs!
+voc_ikuturso_attractive 9561 Nina: [laughs] Ew...
+voc_ikuturso_attractive 12722 Nina: I like when guys are more... lean.
+voc_ikuturso_attractive 16945 Ichi: Skinny dudes?
+voc_ikuturso_attractive 18857 Ichi: I guess I fit that profile.
+voc_ikuturso_attractive 20902 Nina: [laughs] I guess so.
+voc_ikuturso_attractive 25957 Nina: Hmm...
+voc_ikuturso_attractive 28525 Nina: What do you like?
+voc_ikuturso_attractive 30437 Ichi: About girls?
+voc_ikuturso_attractive 32376 Nina: Yeah.
+voc_ikuturso_attractive 34607 Ichi: I... I like... uh, curvy, skinny girls... not like, fat girls. I just like it when they're not like, rail thin, you know? Girls gotta have some meat.
+voc_ikuturso_attractive 45070 Nina: [laughs] hmm...
+voc_ikuturso_attractive 50937 Nina: I wish I was skinnier.
+voc_ikuturso_attractive 53159 Ichi: No way, you'd lose your boobs!
+voc_ikuturso_attractive 54937 Nina: [laughs] Uh, I guess so??
+voc_ikuturso_attractive 58670 Ichi: Seriously, you have to know that you've got a nice rack - come on!
+voc_ikuturso_attractive 62315 Nina: [laughs] I mean, people have told me that before, but -
+voc_ikuturso_attractive 68538 Ichi: As they should.
+voc_ikuturso_attractive 70493 Nina: [nervous laugh]
+voc_ikuturso_attractive 74583 Ichi: Aw, don't know how to take a compliment?
+voc_ikuturso_attractive 77338 Nina: [laughs] I really dont.
+voc_ikuturso_attractive 80539 Ichi: I'm gonna just have to keep giving you compliments until you get used to it.
+voc_ikuturso_attractive 84717 Nina: [laughs] That'd be completely impossible, honestly - but you can give it a shot.
+voc_ikuturso_attractive 92539 Ichi: Done!
+voc_ikuturso_attractive 93606 Nina: Deal.
+voc_ikuturso_attractive 95437 [both laugh]
+voc_ikuturso_attractive 98851 Nina: This is the silliest. What are we even doing right now?
+voc_ikuturso_attractive 103118 Ichi: Being friends and whacking stuff online.
+voc_ikuturso_attractive 106496 Nina: [laughs]
+voc_ikuturso_bulldog 1 Ichi: [laughs] Guess you don't want to go out and waste your money on "Bullshit Hell" tonight?
+voc_ikuturso_bulldog 4929 Nina: [laughs] Very funny. I barely even play other games anymore, honestly.
+voc_ikuturso_bulldog 11700 Ichi: Me neither - they're all crap anyways.
+voc_ikuturso_bulldog 14787 Nina: It - makes me kind of sad though... I like playing through good story games.
+voc_ikuturso_bulldog 20038 Ichi: I dunno, those are boring to me. They all have expiration dates - you play for sixty hours and that's it.
+voc_ikuturso_bulldog 25980 Ichi: At least with this game you can play it for a long time without worrying that you'll have to find some new shit to buy.
+voc_ikuturso_bulldog 31508 Nina: Yeah, I mean, the time you get out of an online game like this is a lot more...and you get to meet people.
+voc_ikuturso_bulldog 40767 Ichi: Yeah, I don't like most of the people I meet in here, though. Except for, like, you and a few others.
+voc_ikuturso_bulldog 47078 Ichi: I just like running shit - like making people get organized for some fight or whatever.
+voc_ikuturso_bulldog 51638 Ichi: The big battles where everything's dependent on your ability to find the right guys to do the job - that's what I like.
+voc_euryale_hey 1 Ichi: Heeeeeyy!
+voc_euryale_hey 1958 Nina: [sigh] Sorry I missed your call last night.
+voc_euryale_hey 5600 Ichi: It's ok.
+voc_euryale_teleport 1 Nina: We haven't done Euryale together in a while.
+voc_euryale_teleport 3873 Ichi: Yeah, I hate it. All the crystals - it's like some fuckin' Final Fantasy game.
+voc_euryale_teleport 9727 Nina: [laughs] I kinda like it actually. Wanna do a run together?
+voc_euryale_teleport 15695 Ichi: Yeah.
+voc_euryale_teleport 19860 Ichi: What happened yesterday?
+voc_euryale_teleport 21999 Nina: When I logged off? Some school friends wanted to hang out.
+voc_euryale_teleport 27741 Ichi: Lame.
+voc_euryale_breakups 1 Nina: They basically wanted to gossip about poetry class and their recent breakups. It took forever.
+voc_euryale_breakups 7876 Ichi: Wow.
+voc_euryale_breakups 11581 Ichi: Breakups sound shitty.
+voc_euryale_breakups 13550 Nina: Yeah... I've never even had a boyfriend.
+voc_euryale_breakups 20525 Ichi: Seriously?
+voc_euryale_breakups 22427 Nina: Yup.
+voc_euryale_breakups 24263 Ichi: You're so hot though!
+voc_euryale_breakups 25932 Nina: [laughs] You always say that.
+voc_euryale_breakups 29369 Ichi: It's true!
+voc_euryale_breakups 30771 Nina: You're, like, the only guy on earth that thinks I'm hot.
+voc_euryale_breakups 34976 Ichi: Looks like I've got no competition then.
+voc_euryale_breakups 37346 [both laugh]
+voc_euryale_nada 1 Nina: What about your breakups?
+voc_euryale_nada 4602 Ichi: Nada.
+voc_euryale_nada 6931 Nina: Nada?
+voc_euryale_nada 9021 Ichi: I've never had a girlfriend.
+voc_euryale_nada 11125 Nina: Wow, I'm pretty suprised.
+voc_euryale_nada 13721 Ichi: Don't be - I'm a total loser.
+voc_euryale_nada 15938 Nina: Pfft, no.
+voc_euryale_crush 1000 Nina: I think I would've had a huge crush on you if we'd met sooner, honestly. In, like, high school or whatever.
+voc_euryale_crush 8110 Ichi: [laughs] Yeah?
+voc_euryale_crush 11389 Nina: No guys ever liked me back then. I was too nerdy.
+voc_euryale_crush 16285 Ichi: Well they had no taste. I would've totally been all over you.
+voc_euryale_crush 20124 Nina: [laughs] I doubt that.
+voc_euryale_callmeblake 1 Nina: Ichi -
+voc_euryale_callmeblake 1953 Ichi: Call me Blake.
+voc_euryale_callmeblake 3495 Nina: Blake?
+voc_euryale_callmeblake 7023 Nina: Do you think I did good in Iku Turso the other day?
+voc_euryale_callmeblake 10621 Blake: Nina, you did good.
+voc_euryale_callmeblake 13978 Blake: Why do you always ask me if you're good at the game? You're way better than other girls in the ampule.
+voc_euryale_callmeblake 19151 Nina: Oh! [laughs nervously]
+voc_euryale_callmeblake 22646 Blake: You're a pro.
+voc_euryale_callmeblake 24153 Nina: I'm not that great.
+voc_euryale_callmeblake 26723 Blake: You're sexy and smart - the perfect combo.
+voc_euryale_callmeblake 30697 Nina: [gasps] Do you...talk to anyone else offline like this?
+voc_euryale_callmeblake 38817 Blake: No, do you?
+voc_euryale_callmeblake 41660 Nina: No.
+voc_euryale_closer 1451 Nina: I kinda wish we lived closer.
+voc_euryale_closer 4529 Blake: Yeah, being on opposite coasts isn't the best for hanging out.
+voc_euryale_meetup 1 Nina: Would you...want to meet up with me?
+voc_euryale_meetup 4057 Nina: Like, in real life, if we lived closer.
+voc_euryale_meetup 11301 Blake: I think so.
+voc_euryale_meetup 14894 Blake: But if you were on Pacific time, you wouldn't always be online when I woke up. I like chatting with you first thing.
+voc_euryale_meetup 21268 Nina: [laughs] aw. I bet you have so many people in the game to talk to though.
+voc_euryale_meetup 26542 Blake: They're all fuckin' idiots.
+voc_euryale_meetup 28164 Nina: [laughs] You always say that, but I feel like Lenore is way cooler than me.
+voc_euryale_meetup 34481 Blake: Nina. Have you ever seen her picture?
+voc_euryale_meetup 38016 Nina: No...why?
+voc_euryale_meetup 41551 Blake: She...sent me one the other day.
+voc_euryale_meetup 45550 Nina: Oh, really?
+voc_euryale_meetup 51287 Blake: Your face is way nicer.
+voc_euryale_meetup 53315 Nina: [laughs] My face is pretty normal.
+voc_euryale_meetup 57928 Blake: If by normal you mean gorgeous, then yeah.
+voc_euryale_meetup 60965 Nina: [laughs] Thanks.
+voc_euryale_meetup 64558 Blake: Isn't your mom a model or something?
+voc_euryale_meetup 67340 Nina: That's true, she was. I look more like my dad though.
+voc_euryale_meetup 72092 Blake: Oh yeah?
+voc_euryale_parents 1 Nina: Yeah, my parents met on the beach.
+voc_euryale_parents 4706 Blake: Sounds sweet.
+voc_euryale_parents 5951 Nina: [laughs] It's ridiculous.
+voc_euryale_parents 8207 Nina: My mom was walking down the beach in her red bikini when my dad saw her from his boat.
+voc_euryale_parents 12991 Nina: I guess he was like, "whoa, check out that babe", so he left his friends and swam in to talk to her.
+voc_euryale_parents 19875 Blake: What a dude!
+voc_euryale_parents 21003 Nina: I know. He asked her out on a date.
+voc_euryale_parents 23804 Nina: She was really impressed that he swam all the way in from his boat to say hello, so she said, "ok".
+voc_euryale_parents 30533 Blake: That's a pretty crazy story.
+voc_euryale_parents 32983 Nina: Isn't it?
+voc_euryale_parents 34539 Blake: I'm not nearly on that level with girls.
+voc_euryale_parents 38273 Blake: I'm shit at talking to people in general.
+voc_euryale_parents 40840 Nina: Really? You're so good with people in the game, though.
+voc_euryale_parents 45002 Blake: Yeah, it's easier to talk when you're not looking at someone.
+voc_euryale_dredge 12 Nina: I met up with Dredge once - like, in person. Talking with him didn't feel all that different.
+voc_euryale_dredge 7288 Blake: I've never met anyone from the game in person.
+voc_euryale_dredge 10743 Blake: But you...you're way too hot, I wouldn't even be able to breathe near you in real life.
+voc_euryale_dredge 15630 Nina: [laughs]
+voc_euryale_dredge 16936 Blake: It's true!
+voc_euryale_dredge 18200 Nina: I think you're giving me too much credit.
+voc_euryale_dredge 23382 Blake: I like making you blush.
+voc_euryale_dredge 26163 Nina: Aww...
+voc_euryale_dredge 34041 Blake: Listening to your voice...
+voc_euryale_dredge 38801 Blake: I like it.
+voc_euryale_dredge 41119 Nina: Me too.
+voc_euryale_dredge 43478 Nina: I like talking to you. Like, a lot.
+voc_euryale_iwish 494 Blake: Nina, I wish I was with you right now.
+voc_euryale_iwish 7984 Nina: Me too.
+voc_euryale_iwish 10886 Blake: If we ever get to meet...
+voc_euryale_iwish 14960 Nina: What?
+voc_euryale_iwish 19158 Blake: I wanna talk, lying down at night. Just us.
+voc_euryale_iwish 25867 Nina: [sigh] Yeah, I think about doing that sometimes, and...I would love that.
+voc_euryale_canicallyou 10 Blake: Can I call you?
+voc_euryale_cibyeah 20 Nina: Yeah.
+vid_phonecall 196 Nina: Blake, what would happen if we met?
+vid_phonecall 3436 Blake: I think...you know...
+vid_phonecall 6225 Nina: Tell me.
+vid_phonecall 8169 Blake: I'd kiss you.
+vid_phonecall 13844 Nina: Do you think we could...have sex?
+vid_phonecall 18655 Blake: Yeah.
+vid_phonecall 22582 Nina: I want you so much.
+vid_phonecall 25056 Blake: Nina, I think...I love you.
+vid_phonecall 31144 Nina: [exhales] I love you too.
+voc_hiisi_morning 649 Nina: Morning.
+voc_hiisi_morning 2171 Blake: Sup.
+voc_hiisi_morning 3479 Nina: Not much.
+voc_hiisi_morning 5565 Nina: You really wanna do a Hiisi run? Isn't it, like, 5 AM there?
+voc_hiisi_morning 10257 Blake: Eh, I've been up for hours. It's chill.
+voc_hiisi_morning 12598 Nina: Wow, do you ever sleep?
+voc_hiisi_morning 16343 Blake: [laughs]
+voc_hiisi_westcoast 582 Blake: You said the other day that you'd think about living on the west coast a lot. Like, near me.
+voc_hiisi_westcoast 7344 Nina: Yeah.
+voc_hiisi_westcoast 9440 Blake: It would be so cool if you could come hang out with me and my real life friends.
+voc_hiisi_westcoast 12848 Nina: Austin and Andrew?
+voc_hiisi_westcoast 14498 Blake: Yeah, we could just go chill at the beach or something.
+voc_hiisi_westcoast 17338 Nina: Do you think they'd like me?
+voc_hiisi_westcoast 19624 Blake: Don't you get along with everyone?
+voc_hiisi_westcoast 21436 Nina: [laughs] Maybe.
+voc_hiisi_whatifwemet 540 Nina: Seriously though. What if we met?
+voc_hiisi_whatifwemet 6774 Blake: You want to?
+voc_hiisi_whatifwemet 9406 Nina: Yeah. I mean, you told me that you love me.
+voc_hiisi_whatifwemet 15762 Nina: I love you too. I want to meet you in person.
+voc_hiisi_whatifwemet 20795 Blake: Yeah.
+voc_hiisi_whatdoyouthink 1 Nina: So, what do you think?
+voc_hiisi_whatdoyouthink 3100 Blake: About what?
+voc_hiisi_whatdoyouthink 5051 Nina: Meeting.
+voc_hiisi_whatdoyouthink 7733 Blake: I want that. But, I also want no relationship whatsoever.
+voc_hiisi_whatdoyouthink 13620 Blake: I could be single forever. It's comfortable.
+voc_hiisi_whatdoyouthink 17417 Nina: I...yeah...wait. What do you mean?
+voc_hiisi_whatdoyouthink 22712 Blake: Relationships are...attempts at living in...normalcy.
+voc_hiisi_whatdoyouthink 28808 Nina: I guess so?
+voc_hiisi_whatdoyouthink 30794 Blake: I'm antisocial, so those normal relationships...don't fit my lifestyle.
+voc_hiisi_whatdoyouthink 36925 Nina: You're the leader of our ampule - how can you be antisocial?
+voc_hiisi_whatdoyouthink 40792 Blake: I don't know - I just don't think relationships are comfortable.
+voc_hiisi_whatdoyouthink 44101 Nina: You've never been in one, so how can you know that?
+voc_hiisi_whatdoyouthink 48386 Blake: I don't like leaving my security zone. I'm less antisocial and more anti-connections.
+voc_hiisi_whatdoyouthink 57269 Nina: Then...how did this happen?
+voc_hiisi_youtoldme 754 Nina: You told me you loved me two months ago and you've been telling me that every day since.
+voc_hiisi_youtoldme 5300 Nina: How have we been talking on the phone every night, like we're...
+voc_hiisi_youtoldme 9149 Blake: I don't know - hence my confusion.
+voc_hiisi_youtoldme 13076 Nina: [exasperated sigh]
+voc_hiisi_youtoldme 15900 Nina: Since when were you confused?
+voc_hiisi_youtoldme 18072 Blake: I don't know!
+voc_hiisi_weshouldmeet 214 Nina: Blake, I really care about you.
+voc_hiisi_weshouldmeet 7295 Blake: I know, me too.
+voc_hiisi_weshouldmeet 10586 Nina: We should just meet. I think we need to see each other in person.
+voc_hiisi_weshouldmeet 17750 Blake: I do want to meet you.
+voc_hiisi_weshouldmeet 19472 Nina: This can work.
+voc_hiisi_ifwemet 480 Blake: Yeah. If we met, though...do you want to, like, really spend time together?
+voc_hiisi_ifwemet 7808 Blake: I mean, are we gonna - kiss and make out...all that stuff?
+voc_hiisi_ifwemet 16890 Nina: Do you want to?
+voc_hiisi_ifwemet 21754 Blake: Yeah, I think so.
+voc_hiisi_ifwemet 24113 Nina: Me too.
+voc_hiisi_ifwemet 27579 Blake: I don't know what would happen. I don't even know what I want to happen - but I do think about it a lot.
+voc_hiisi_thinkabout 10 Nina: What do you think about?
+voc_hiisi_thinkabout 4249 Blake: We've talked about this before. I feel attracted to you, physically.
+voc_hiisi_thinkabout 9271 Nina: Yeah?
+voc_hiisi_thinkabout 11098 Blake: If we met, I probably couldn't help it - I'd want to kiss you.
+voc_hiisi_thinkabout 15768 Nina: Yeah, and?
+voc_hiisi_thinkabout 18964 Blake: Whatever - stuff. I don't know.
+voc_hiisi_thinkabout 20790 Nina: [laughs] I get it, Blake - I think the same thing.
+voc_hiisi_thinkabout 26480 Blake: What do you think?
+voc_hiisi_thinkabout 28446 Nina: [sighs] I should tell you...
+voc_hiisi_thinkabout 34943 Nina: I've never had sex before.
+voc_hiisi_thinkabout 39474 Blake: I...haven't either.
+voc_hiisi_thinkabout 43899 Nina: Wait, really? Are you serious?
+voc_hiisi_thinkabout 46708 Blake: I haven't.
+voc_hiisi_thinkabout 48429 Nina: So we, uh, I...
+voc_hiisi_thinkabout 53205 Blake: I told you, relationships are weird for me, so I've just never been in the situation...
+voc_hiisi_thinkabout 58403 Nina: Yeah, I totally get it.
+voc_hiisi_superhot 686 Nina: It's crazy to me, though, because you're, like, super hot!
+voc_hiisi_superhot 4706 Blake: I'm a skinny ghost dude - girls do *not* want to fuck me.
+voc_hiisi_superhot 8299 Nina: [laughs] I don't know.
+voc_hiisi_itcouldhappen 268 Nina: It could happen.
+voc_hiisi_itcouldhappen 2612 Blake: "It"?
+voc_hiisi_itcouldhappen 4387 Nina: Well, we could have sex for the first time...together.
+voc_hiisi_itcouldhappen 17281 Nina: Do you not like that idea?
+voc_hiisi_itcouldhappen 19324 Blake: Physically, yes. Mentally, I'm not sure how to deal with that feeling.
+voc_hiisi_itcouldhappen 24548 Nina: What do you mean?
+voc_hiisi_itcouldhappen 25921 Blake: I'm used to immersing myself in this game. I don't like thinking about dealing with people in person.
+voc_hiisi_itcouldhappen 33892 Nina: If you want to meet me -
+voc_hiisi_itcouldhappen 35667 Blake: I know, I'd have to figure out how to be - how to feel normal about it? I don't know.
+voc_hiisi_itcouldhappen 43503 Nina: We love each other - it's not just in the game.
+voc_hiisi_itcouldhappen 47991 Blake: I rely on the game.
+voc_hiisi_itcouldhappen 51842 Blake: I fell comfortable with my relationships inside this game. I don't know about real life.
+voc_hiisi_nervous 201 Nina: It's ok if you're nervous. I am too.
+voc_hiisi_nervous 5587 Blake: I'm not nervous, I'm just not used to this. It's weird for me that I like you this much!
+voc_hiisi_nervous 11992 Nina: I'm really glad that you feel that way.
+voc_hiisi_nervous 15087 Blake: That I feel weird?
+voc_hiisi_nervous 16798 Nina: That you like me. I told you, Blake - I love you.
+voc_hiisi_beingwithyou 4285 Blake: Nina...
+voc_hiisi_beingwithyou 6706 Nina: Yeah?
+voc_hiisi_beingwithyou 9248 Blake: I like thinking about being far away from whoever - just us.
+voc_hiisi_beingwithyou 16705 Blake: I really have no idea why I feel like that, but maybe it could happen.
+voc_hiisi_beingwithyou 22830 Nina: I want that.
+voc_hiisi_beingwithyou 24815 Blake: I dont' want a relationship, but I want you - I don't know.
+voc_hiisi_beingwithyou 31400 Nina: Please, let's meet and figure this out. We need to talk face to face.
+voc_hiisi_beingwithyou 40745 Blake: Face to face, huh?
+voc_hiisi_illcome 194 Blake: Ok, I'll come.
+voc_hiisi_illcome 2356 Blake: I'll ask my mom to buy a flight to New York - I'll tell her I want to visit my cousins there.
+voc_hiisi_illcome 7910 Nina: Really? You think she'd believe you?
+voc_hiisi_illcome 10849 Blake: Yes.
+voc_hiisi_illcome 13075 Nina: [exhales] Ok, you can stay with me.
+voc_hiisi_illcome 19860 Nina: I live in a dorm here, so you could just stay, like, here?
+voc_hiisi_illcome 25133 Blake: Ok.
+voc_hiisi_doingthis 638 Nina: So, you really mean it. We're doing this.
+voc_hiisi_doingthis 5762 Blake: Yes. I don't know what will happen - I have no expectations.
+voc_hiisi_doingthis 11948 Nina: I think it'll be good.
+voc_hiisi_doingthis 14308 Blake: We've been talking for a long time in the game, so it makes sense - logically - that we should meet.
+voc_hiisi_doingthis 21856 Nina: We should. Yeah.
+voc_hiisi_doingthis 24577 Blake: I know.
+voc_hiisi_iloveyou 521 Nina: Blake, I love you.
+voc_hiisi_iloveyou 7681 Blake: I...love you too, Nina.
+vid_goodbye 5864 Nina: Do you think we'll ever see each other again?
+vid_goodbye 9602 Blake: Nina...I had fun, but...I fucked up.
+vid_goodbye 17922 Nina: What...what do you mean?
+vid_goodbye 22540 Blake: I shouldn't have come. I knew I shouldn't.
+vid_goodbye 26241 Nina: Blake...what are you talking about?
+vid_goodbye 31849 Blake: I don't love you.
+vid_goodbye 35770 Nina: ....what?
+vid_goodbye 36576 Blake: We can chat. I've gotta catch my plane. I'll see you online tomorrow, Nina. I'm sorry.
+voc_extra_cibsoslow 30 Nina: Ugh...so slow...
+voc_extra_ichilasthit 10 Ichi: Yes! I got the last hit on that boss!
+voc_extra_yeahsorry 20 Nina: Yeah, sorry.
+voc_extra_areyoucoming 20 Ichi: Are you coming?
+voc_extra_cibnicehit 10 Nina: Nice hit!
+voc_extra_cibeast 10 Nina: Come east.
+voc_extra_cibwest 10 Nina: Come west.
+voc_extra_cibnorth 10 Nina: Come north.
+voc_extra_cibsouth 10 Nina: Come south.
+voc_extra_ciblost 20 Nina: I lost you - where'd you go?
+voc_extra_cibhere 10 Nina: I'm here.
+voc_extra_ichinorth 10 Ichi: Come north.
+voc_extra_ichisouth 10 Ichi: Come south.
+voc_extra_ichieast 10 Ichi: Come east.
+voc_extra_ichiwest 10 Ichi: Come west.
+voc_extra_ichiwhichway 10 Ichi: I don't see you - which way'd you go?
+voc_extra_ichinice2 10 Ichi: Nice move!
+voc_extra_ichirighthere 10 Ichi: I'm right here.

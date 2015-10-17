@@ -13,21 +13,6 @@ package com.starmaid.Cibele.management {
     import org.flixel.*;
 
     public class ProceduralDialogueGenerator {
-        [Embed(source="/../assets/audio/voiceover/voc_extra_cibnicehit.mp3")] private var CibNiceHit:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_ichiwhichway.mp3")] private var IchiWhichWay:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_ichinice2.mp3")] private var IchiNiceHit:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_cibeast.mp3")] private var CibEast:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_cibnorth.mp3")] private var CibNorth:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_cibwest.mp3")] private var CibWest:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_cibsouth.mp3")] private var CibSouth:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_ichieast.mp3")] private var IchiEast:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_ichinorth.mp3")] private var IchiNorth:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_ichiwest.mp3")] private var IchiWest:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_ichisouth.mp3")] private var IchiSouth:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_ciblost.mp3")] private var CibWhichWay:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_cibhere.mp3")] private var CibHere:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_ichirighthere.mp3")] private var IchiHere:Class;
-
         public static const CIB_NICEHIT:String = "cib_nicehit";
         public static const CIB_EAST:String = "cib_east";
         public static const CIB_NORTH:String = "cib_north";
@@ -57,20 +42,20 @@ package com.starmaid.Cibele.management {
         public function ProceduralDialogueGenerator(containerState:LevelMapState) {
             this.containerState = containerState;
 
-            bitDialoguePieces[CIB_NICEHIT] = [CibNiceHit, false, false];
-            bitDialoguePieces[CIB_EAST] = [CibEast, false, true];
-            bitDialoguePieces[CIB_SOUTH] = [CibSouth, false, true];
-            bitDialoguePieces[CIB_NORTH] = [CibNorth, false, true];
-            bitDialoguePieces[CIB_WEST] = [CibWest, false, true];
-            bitDialoguePieces[ICHI_NICEHIT] = [IchiNiceHit, false, false];
-            bitDialoguePieces[ICHI_WHICHWAY] = [IchiWhichWay, false, true];
-            bitDialoguePieces[ICHI_NORTH] = [IchiNorth, false, true];
-            bitDialoguePieces[ICHI_SOUTH] = [IchiSouth, false, true];
-            bitDialoguePieces[ICHI_WEST] = [IchiWest, false, true];
-            bitDialoguePieces[ICHI_EAST] = [IchiEast, false, true];
-            bitDialoguePieces[CIB_WHICHWAY] = [CibWhichWay, false, false];
-            bitDialoguePieces[CIB_HERE] = [CibHere, false, false];
-            bitDialoguePieces[ICHI_HERE] = [IchiHere, false, false];
+            bitDialoguePieces[CIB_NICEHIT] = ["voc_extra_cibnicehit", false, false];
+            bitDialoguePieces[CIB_EAST] = ["voc_extra_cibeast", false, true];
+            bitDialoguePieces[CIB_SOUTH] = ["voc_extra_cibsouth", false, true];
+            bitDialoguePieces[CIB_NORTH] = ["voc_extra_cibnorth", false, true];
+            bitDialoguePieces[CIB_WEST] = ["voc_extra_cibwest", false, true];
+            bitDialoguePieces[CIB_WHICHWAY] = ["voc_extra_ciblost", false, false];
+            bitDialoguePieces[CIB_HERE] = ["voc_extra_cibhere", false, false];
+            bitDialoguePieces[ICHI_NICEHIT] = ["voc_extra_ichinice2", false, false];
+            bitDialoguePieces[ICHI_WHICHWAY] = ["voc_extra_ichiwhichway", false, true];
+            bitDialoguePieces[ICHI_NORTH] = ["voc_extra_ichinorth", false, true];
+            bitDialoguePieces[ICHI_SOUTH] = ["voc_extra_ichisouth", false, true];
+            bitDialoguePieces[ICHI_WEST] = ["voc_extra_ichiwest", false, true];
+            bitDialoguePieces[ICHI_EAST] = ["voc_extra_ichieast", false, true];
+            bitDialoguePieces[ICHI_HERE] = ["voc_extra_ichirighthere", false, false];
         }
 
         public function update():void {
@@ -148,30 +133,30 @@ package com.starmaid.Cibele.management {
         public function directionalDialogue(from:PartyMember, to:PartyMember, prefix:String="cib_"):void {
             var dirForDialogue:Number = this.getDialogueDirection(from, to);
             if(pathWalker.inViewOfPlayer()){
-                SoundManager.getInstance().playSound(
+                DialoguePlayer.getInstance().playFile(
                     bitDialoguePieces[prefix+"here"][IDX_FILE],
-                    7*GameSound.MSEC_PER_SEC, null, false, 1, GameSound.BIT_DIALOGUE
+                    7*GameSound.MSEC_PER_SEC, null, 1, GameSound.BIT_DIALOGUE
                 );
             } else {
                 if(dirForDialogue == LevelMapState.EAST) {
-                    SoundManager.getInstance().playSound(
+                    DialoguePlayer.getInstance().playFile(
                         bitDialoguePieces[prefix+"east"][IDX_FILE], 2*GameSound.MSEC_PER_SEC, null,
-                        false, 1, GameSound.BIT_DIALOGUE
+                        1, GameSound.BIT_DIALOGUE
                     );
                 } else if(dirForDialogue == LevelMapState.WEST) {
-                    SoundManager.getInstance().playSound(
+                    DialoguePlayer.getInstance().playFile(
                         bitDialoguePieces[prefix+"west"][IDX_FILE], 2*GameSound.MSEC_PER_SEC, null,
-                        false, 1, GameSound.BIT_DIALOGUE
+                        1, GameSound.BIT_DIALOGUE
                     );
                 } else if(dirForDialogue == LevelMapState.SOUTH) {
-                    SoundManager.getInstance().playSound(
+                    DialoguePlayer.getInstance().playFile(
                         bitDialoguePieces[prefix+"south"][IDX_FILE], 2*GameSound.MSEC_PER_SEC, null,
-                        false, 1, GameSound.BIT_DIALOGUE
+                        1, GameSound.BIT_DIALOGUE
                     );
                 } else if(dirForDialogue == LevelMapState.NORTH) {
-                    SoundManager.getInstance().playSound(
+                    DialoguePlayer.getInstance().playFile(
                         bitDialoguePieces[prefix+"north"][IDX_FILE], 2*GameSound.MSEC_PER_SEC, null,
-                        false, 1, GameSound.BIT_DIALOGUE
+                        1, GameSound.BIT_DIALOGUE
                     );
                 }
             }
@@ -203,9 +188,9 @@ package com.starmaid.Cibele.management {
         }
 
         public function playIchiNiceHit():void {
-            SoundManager.getInstance().playSound(
+            DialoguePlayer.getInstance().playFile(
                 bitDialoguePieces[ICHI_NICEHIT][IDX_FILE], 4*GameSound.MSEC_PER_SEC, null,
-                false, 1, GameSound.BIT_DIALOGUE
+                1, GameSound.BIT_DIALOGUE
             );
             bitDialoguePieces[ICHI_NICEHIT][IDX_HAS_PLAYED] = true;
             PopUpManager.getInstance().emote(new FlxRect(0,0), pathWalker, true, Emote.HAPPY);
@@ -219,31 +204,31 @@ package com.starmaid.Cibele.management {
         }
 
         public function playCibWhichWay():void {
-            SoundManager.getInstance().playSound(
+            DialoguePlayer.getInstance().playFile(
                 bitDialoguePieces[CIB_WHICHWAY][IDX_FILE], 2*GameSound.MSEC_PER_SEC,
                 function():void {
                     directionalDialogue(player, pathWalker, "ichi_");
                 },
-                false, 1, GameSound.BIT_DIALOGUE
+                1, GameSound.BIT_DIALOGUE
             );
             bitDialoguePieces[CIB_WHICHWAY][IDX_HAS_PLAYED] = true;
         }
 
         public function playIchiWhichWay():void {
-            SoundManager.getInstance().playSound(
+            DialoguePlayer.getInstance().playFile(
                 bitDialoguePieces[ICHI_WHICHWAY][IDX_FILE], 2*GameSound.MSEC_PER_SEC,
                 function():void {
                     directionalDialogue(pathWalker, player, "cib_");
                 },
-                false, 1, GameSound.BIT_DIALOGUE
+                1, GameSound.BIT_DIALOGUE
             );
             bitDialoguePieces[ICHI_WHICHWAY][IDX_HAS_PLAYED] = true;
         }
 
         public function playCibNiceHit():void {
-            SoundManager.getInstance().playSound(
+            DialoguePlayer.getInstance().playFile(
                 bitDialoguePieces[CIB_NICEHIT][IDX_FILE], 4*GameSound.MSEC_PER_SEC, null,
-                false, 1, GameSound.BIT_DIALOGUE
+                1, GameSound.BIT_DIALOGUE
             );
             bitDialoguePieces[CIB_NICEHIT][IDX_HAS_PLAYED] = true;
             PopUpManager.getInstance().emote(new FlxRect(0,0), pathWalker, true, Emote.HAPPY);

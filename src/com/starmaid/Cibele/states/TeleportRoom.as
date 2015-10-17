@@ -31,8 +31,8 @@ package com.starmaid.Cibele.states {
             super.create();
 
             this.bgLoader = new BackgroundLoader();
-            this.bgCollider = this.bgLoader.loadSingleTileBG("/../assets/images/worlds/" + this.bg_img_name + "_collider.png");
-            this.bgImage = this.bgLoader.loadSingleTileBG("/../assets/images/worlds/" + this.bg_img_name + ".png");
+            this.bgCollider = this.bgLoader.loadSingleTileBG("/../assets/async/images/worlds/" + this.bg_img_name + "_collider.png");
+            this.bgImage = this.bgLoader.loadSingleTileBG("/../assets/async/images/worlds/" + this.bg_img_name + ".png");
             this.bgLoader.setPlayerReference(this.player);
             ScreenManager.getInstance().setupCamera(null, 1);
 

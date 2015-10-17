@@ -15,8 +15,8 @@ package com.starmaid.Cibele.entities {
         private var tentacles:Array;
         private const NUM_TENTACLES:Number = 6;
 
-        public function IkuTursoBoss(pos:DHPoint) {
-            this.notificationTextColor = 0xff7c6e6a;
+        public function IkuTursoBoss(pos:DHPoint, textColor:uint) {
+            this.notificationTextColor = textColor;
             this._name = "AKKA";
             super(pos);
             GlobalTimer.getInstance().setMark(

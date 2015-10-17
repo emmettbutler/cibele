@@ -53,12 +53,14 @@ package com.starmaid.Cibele.states {
             // mute videos for now
             videoStream.soundTransform = new SoundTransform(0);
 
-            FlxG.stage.addChild(video);
+            FlxG.stage.addChildAt(video, 0);
         }
 
         override public function create():void {
             super.create();
-            FlxG.bgColor = 0xff000000;
+            this.baseLayer.visible = false;
+            FlxG.clearCameraBuffer = true;
+            FlxG.bgColor = 0x00000000;
         }
 
         override public function destroy():void {
