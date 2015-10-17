@@ -392,7 +392,9 @@ package com.starmaid.Cibele.management {
                     }
                     if("email_link_sprite" in cur) {
                         if((FlxG.state as GameState).cursorOverlaps(cur["email_link_sprite"]._getRect(), true)) {
-                            cur["email_link_sprite"].visible = true;
+                            if(cur["icon_sprite"].visible) {
+                                cur["email_link_sprite"].visible = true;
+                            }
                         } else {
                             cur["email_link_sprite"].visible = false;
                         }
@@ -411,7 +413,9 @@ package com.starmaid.Cibele.management {
                     }
                     if("email_link_sprite" in cur) {
                         if((FlxG.state as GameState).cursorOverlaps(cur["email_link_sprite"]._getRect(), true)) {
-                            cur["email_link_sprite"].visible = true;
+                            if(cur["icon_sprite"].visible) {
+                                cur["email_link_sprite"].visible = true;
+                            }
                         } else {
                             cur["email_link_sprite"].visible = false;
                         }

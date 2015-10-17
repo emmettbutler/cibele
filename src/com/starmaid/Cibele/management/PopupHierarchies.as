@@ -201,29 +201,32 @@ package com.starmaid.Cibele.management {
                 {
                     "name": "last night small",
                     "icon": ImgLastNightIcon,
-                    "icon_dim": new DHPoint(322, 22),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(293, 102),
                     "dim": new DHPoint(284, 356),
                     "struc": PopUpManager.ICHI_SELFIE1,
-                    "contents": ImgLastNightSmall
+                    "contents": ImgLastNightSmall,
+                    "email_link": true
                 },
                 {
                     "name": "ichi selfie email sub 1",
                     "icon": ImgIchiSelfieSubLink1,
-                    "icon_dim": new DHPoint(325, 22),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(290, 125),
                     "dim": new DHPoint(280, 356),
                     "struc": PopUpManager.ICHI_SELFIE1,
-                    "contents": ImgIchiSelfieSub1
+                    "contents": ImgIchiSelfieSub1,
+                    "email_link": true
                 },
                 {
                     "name": "ichi selfie email link",
                     "icon": ImgGuilLink1,
-                    "icon_dim": new DHPoint(327, 20),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(290, 149),
                     "folder_dim": new DHPoint(280, 356),
                     "struc": PopUpManager.ICHI_SELFIE1,
                     "folder_img": ImgGuilSub,
+                    "email_link": true,
                     "contents": [
                         {
                             "name": "ichi selfie sub bulldog hell",
@@ -249,7 +252,7 @@ package com.starmaid.Cibele.management {
                 {
                     "name": "last night small",
                     "icon": ImgLastNightIcon,
-                    "icon_dim": new DHPoint(322, 22),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(293, 100),
                     "dim": new DHPoint(284, 356),
                     "struc": PopUpManager.BULLDOG_HELL,
@@ -261,20 +264,22 @@ package com.starmaid.Cibele.management {
                 {
                     "name": "last night small",
                     "icon": ImgLastNightIcon,
-                    "icon_dim": new DHPoint(322, 22),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(292, 100),
                     "dim": new DHPoint(284, 356),
                     "struc": PopUpManager.GUIL_1,
-                    "contents": ImgLastNightSmall
+                    "contents": ImgLastNightSmall,
+                    "email_link": true
                 },
                 {
                     "name": "guil email link",
                     "icon": ImgGuilLink1,
-                    "icon_dim": new DHPoint(327, 20),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(290, 125),
                     "folder_dim": new DHPoint(280, 356),
                     "struc": PopUpManager.GUIL_1,
                     "folder_img": ImgGuilSub,
+                    "email_link": true,
                     "contents": [
                         {
                             "name": "guil sub bulldog hell",
@@ -376,11 +381,12 @@ package com.starmaid.Cibele.management {
                     {
                         "name": "eu ling 1",
                         "icon": ImgEuPoemEditLinkIcon,
-                        "icon_dim": new DHPoint(322, 24),
+                        "icon_dim": new DHPoint(316, 19),
                         "icon_pos": new DHPoint(293, 102),
                         "folder_dim": new DHPoint(283, 356),
                         "struc": PopUpManager.EU_EMAIL_LINGERIE,
                         "folder_img": ImgEuPoemEditEmail,
+                        "email_link": true,
                         "contents": [
                             {
                                 "name": "eu ling 1 popup",
@@ -397,20 +403,22 @@ package com.starmaid.Cibele.management {
                 {
                     "name": "eu email ling",
                     "icon": ImgEuEmailLingIcon,
-                    "icon_dim": new DHPoint(326, 23),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(290, 98),
                     "dim": new DHPoint(284, 356),
                     "struc": PopUpManager.EU_EMAIL_1,
-                    "contents": ImgEuEmailLingSmall
+                    "contents": ImgEuEmailLingSmall,
+                    "email_link": true
                 },
                 {
                         "name": "eu ling 1",
                         "icon": ImgEuPoemEditLinkIcon,
-                        "icon_dim": new DHPoint(322, 24),
+                        "icon_dim": new DHPoint(316, 19),
                         "icon_pos": new DHPoint(291, 118),
                         "folder_dim": new DHPoint(283, 356),
                         "struc": PopUpManager.EU_EMAIL_1,
                         "folder_img": ImgEuPoemEditEmail,
+                        "email_link": true,
                         "contents": [
                             {
                                 "name": "eu ling 1 popup",
@@ -436,20 +444,22 @@ package com.starmaid.Cibele.management {
                 {
                     "name": "eu email ling",
                     "icon": ImgEuEmailLingIcon,
-                    "icon_dim": new DHPoint(326, 23),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(290, 98),
                     "dim": new DHPoint(284, 356),
                     "struc": PopUpManager.EU_EMAIL_SELFIE,
-                    "contents": ImgEuEmailLingSmall
+                    "contents": ImgEuEmailLingSmall,
+                    "email_link": true
                 },
                 {
                         "name": "eu ling 1",
                         "icon": ImgEuPoemEditLinkIcon,
-                        "icon_dim": new DHPoint(322, 24),
+                        "icon_dim": new DHPoint(316, 19),
                         "icon_pos": new DHPoint(291, 118),
                         "folder_dim": new DHPoint(283, 356),
                         "struc": PopUpManager.EU_EMAIL_SELFIE,
                         "folder_img": ImgEuPoemEditEmail,
+                        "email_link": true,
                         "contents": [
                             {
                                 "name": "eu ling 1 popup",
@@ -464,11 +474,12 @@ package com.starmaid.Cibele.management {
                 {
                     "name": "eu email selfie link 2",
                     "icon": ImgEuEmail2Link1,
-                    "icon_dim": new DHPoint(322, 24),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(291, 140),
                     "dim": new DHPoint(284, 356),
                     "struc": PopUpManager.EU_EMAIL_SELFIE,
-                    "contents": ImgEuEmailSmallEmail1
+                    "contents": ImgEuEmailSmallEmail1,
+                    "email_link": true
                 }
             ]};
             struc[PopUpManager.EU_EMAIL_2] = { "contents": [
@@ -484,20 +495,22 @@ package com.starmaid.Cibele.management {
                 {
                     "name": "eu email ling",
                     "icon": ImgEuEmailLingIcon,
-                    "icon_dim": new DHPoint(326, 23),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(290, 98),
                     "dim": new DHPoint(284, 356),
                     "struc": PopUpManager.EU_EMAIL_2,
-                    "contents": ImgEuEmailLingSmall
+                    "contents": ImgEuEmailLingSmall,
+                    "email_link": true
                 },
                 {
                         "name": "eu ling 1",
                         "icon": ImgEuPoemEditLinkIcon,
-                        "icon_dim": new DHPoint(322, 24),
+                        "icon_dim": new DHPoint(316, 19),
                         "icon_pos": new DHPoint(292, 118),
                         "folder_dim": new DHPoint(283, 356),
                         "struc": PopUpManager.EU_EMAIL_2,
                         "folder_img": ImgEuPoemEditEmail,
+                        "email_link": true,
                         "contents": [
                             {
                                 "name": "eu ling 1 popup",
@@ -512,20 +525,22 @@ package com.starmaid.Cibele.management {
                 {
                     "name": "eu email 2 link 1daf",
                     "icon": ImgEuEmail2Link1,
-                    "icon_dim": new DHPoint(322, 24),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(292, 140),
                     "dim": new DHPoint(284, 356),
                     "struc": PopUpManager.EU_EMAIL_2,
-                    "contents": ImgEuEmailSmallEmail1
+                    "contents": ImgEuEmailSmallEmail1,
+                    "email_link": true
                 },
                 {
                     "name": "eu email 2 link 3",
                     "icon": ImgEuEmailSelfieMiniLink,
-                    "icon_dim": new DHPoint(322, 24),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(292, 160),
                     "folder_dim": new DHPoint(284, 356),
                     "struc": PopUpManager.EU_EMAIL_2,
                     "folder_img": ImgEuMiniSelfieEmail,
+                    "email_link": true,
                     "contents": [
                         {
                             "name": "eu mini selfie email",
@@ -687,11 +702,12 @@ package com.starmaid.Cibele.management {
                 {
                     "name": "hi emailichi",
                     "icon": ImgEuEmailIchiSmallIcon,
-                    "icon_dim": new DHPoint(321, 22),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(290, 100),
                     "folder_img": ImgEuEmailIchiSmall,
                     "folder_dim": new DHPoint(284, 356),
                     "struc": PopUpManager.HI_EMAIL_1,
+                    "email_link": true,
                     "contents": [
                         {
                             "name": "hi email small ichi",
@@ -709,11 +725,12 @@ package com.starmaid.Cibele.management {
                 {
                     "name": "hi email ichisfdf",
                     "icon": ImgEuEmailIchiSmallIcon,
-                    "icon_dim": new DHPoint(321, 22),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(291, 100),
                     "folder_img": ImgEuEmailIchiSmall,
                     "folder_dim": new DHPoint(284, 356),
                     "struc": PopUpManager.HI_EMAIL_2,
+                    "email_link": true,
                     "contents": [
                         {
                             "name": "hi email 1 small ichiefsf",
@@ -729,11 +746,12 @@ package com.starmaid.Cibele.management {
                 {
                     "name": "hi link to email 1",
                     "icon": ImgHiMiniFlightLink,
-                    "icon_dim": new DHPoint(323, 22),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(292, 121),
                     "folder_dim": new DHPoint(284, 356),
                     "struc": PopUpManager.HI_EMAIL_2,
                     "folder_img": ImgHiMiniFlight,
+                    "email_link": true,
                     "contents": [
                         {
                             "name": "mini link to expired flight in email 2",
@@ -824,11 +842,12 @@ package com.starmaid.Cibele.management {
                 {
                     "name": "hi small ichi email",
                     "icon": ImgEuEmailIchiSmallIcon,
-                    "icon_dim": new DHPoint(321, 22),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(289, 100),
                     "folder_img": ImgEuEmailIchiSmall,
                     "folder_dim": new DHPoint(284, 356),
                     "struc": PopUpManager.HI_EMAIL_3,
+                    "email_link": true,
                     "contents": [
                         {
                             "name": "hi email 1 small ichidffg",
@@ -844,20 +863,22 @@ package com.starmaid.Cibele.management {
                 {
                     "name": "hi link to email 2 in 3",
                     "icon": ImgHiMiniClassEmailLink,
-                    "icon_dim": new DHPoint(323, 22),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(290, 120),
                     "dim": new DHPoint(284, 356),
                     "struc": PopUpManager.HI_EMAIL_3,
-                    "contents": ImgHiMiniClassEmail
+                    "contents": ImgHiMiniClassEmail,
+                    "email_link": true
                 },
                 {
                     "name": "hi link to email 1 in 3",
                     "icon": ImgHiMiniFlightLink,
-                    "icon_dim": new DHPoint(323, 22),
+                    "icon_dim": new DHPoint(316, 19),
                     "icon_pos": new DHPoint(290, 143),
                     "folder_dim": new DHPoint(284, 356),
                     "struc": PopUpManager.HI_EMAIL_3,
                     "folder_img": ImgHiMiniFlight,
+                    "email_link": true,
                     "contents": [
                         {
                             "name": "mini link to expired flight in email 2",
