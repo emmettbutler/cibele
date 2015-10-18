@@ -112,7 +112,6 @@ package com.starmaid.Cibele.management {
                                                             screenHeight);
             FlxG.stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
             this.setupCamera(cam != null ? cam.target as GameObject : null);
-            FlxG.stage.nativeWindow.orderToBack();
         }
 
         private function setupWindowedMode():void {
