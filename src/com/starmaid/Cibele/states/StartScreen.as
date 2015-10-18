@@ -22,27 +22,23 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/music/vid_intro.mp3")] private var VidBGMLoop:Class;
         [Embed(source="/../assets/audio/music/bgm_cibele.mp3")] private var SndBGM:Class;
         [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
-        [Embed(source="/../assets/images/ui/Crystal-icon-medium-title.png")] private var ImgXtal:Class;
 
         public static const BGM:String = "start-screen-bgm";
         private var _startButton:MenuButton, _loadButton:MenuButton,
-                    _quitButton:MenuButton, _subtitlesButton:MenuButton,
-                    crystalIcon:GameObject;
+                    _quitButton:MenuButton, _subtitlesButton:MenuButton;
 
         override public function create():void {
             this.enable_fade = true;
             this.pausable = false;
             super.create();
             FlxG.bgColor = 0xffffffff;
-            (new BackgroundLoader()).loadSingleTileBG("/../assets/async/images/ui/startscreen_bg.png");
+            var bgFile:String = "startscreen_bg.png";
+            if(ScreenManager.getInstance().screenWidth < 1300) {
+                bgFile = "startscreen_bg_1280x720.png";
+            }
+            (new BackgroundLoader()).loadSingleTileBG("/../assets/async/images/ui/" + bgFile);
 
             ScreenManager.getInstance();
-
-            this.crystalIcon = new GameObject(new DHPoint((ScreenManager.getInstance().screenWidth * .5) - 314/2,
-                (ScreenManager.getInstance().screenHeight * .5) - 500/2 - 70));
-            this.crystalIcon.loadGraphic(ImgXtal, false, false, 251, 400);
-            this.crystalIcon.visible = false;
-            add(this.crystalIcon);
 
             this.updatePopup = false;
             this.updateMessages = false;
@@ -53,7 +49,7 @@ package com.starmaid.Cibele.states {
             this._startButton = new MenuButton(
                 new DHPoint(
                     ScreenManager.getInstance().screenWidth * .22,
-                    this.crystalIcon.y + (this.crystalIcon.height + 40)
+                    0
                 ),
                 new DHPoint(_startButtonWidth, 30),
                 "New Game",
@@ -67,7 +63,7 @@ package com.starmaid.Cibele.states {
                 this._loadButton = new MenuButton(
                     new DHPoint(
                         ScreenManager.getInstance().screenWidth * .5 - _startButtonWidth/2,
-                        this.crystalIcon.y + (this.crystalIcon.height + 40)
+                        0
                     ),
                     new DHPoint(_startButtonWidth, 30),
                     "Continue",
@@ -80,7 +76,7 @@ package com.starmaid.Cibele.states {
             this._quitButton = new MenuButton(
                 new DHPoint(
                     ((ScreenManager.getInstance().screenWidth * .5 - _startButtonWidth/2) - (ScreenManager.getInstance().screenWidth * .22 + _startButtonWidth)) + ScreenManager.getInstance().screenWidth * .5 + _startButtonWidth/2,
-                    this.crystalIcon.y + (this.crystalIcon.height + 40)
+                    0
                 ),
                 new DHPoint(_startButtonWidth, 30),
                 "Exit",
@@ -92,7 +88,7 @@ package com.starmaid.Cibele.states {
             this._subtitlesButton = new MenuButton(
                 new DHPoint(
                     (ScreenManager.getInstance().screenWidth * .5 - _startButtonWidth / 2),
-                    this.crystalIcon.y + (this.crystalIcon.height + 100)
+                    0
                 ),
                 new DHPoint(_startButtonWidth, 30),
                 "Subtitles " + (DialoguePlayer.getInstance().subtitles_enabled ? "On" : "Off"),
@@ -104,24 +100,19 @@ package com.starmaid.Cibele.states {
             var that:StartScreen = this;
             this.addEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
                 function(event:DataEvent):void {
-                    that.crystalIcon.visible = true;
-                    that.crystalIcon.setPos(new DHPoint(
-                        event.userData['bg'].x + event.userData['bg'].width * .7,
-                        event.userData['bg'].y + event.userData['bg'].height * 0
-                    ));
                     if (that._loadButton != null) {
                         that._loadButton.setPos(new DHPoint(
                             that._loadButton.x,
-                            event.userData['bg'].y + event.userData['bg'].height * .8
+                            event.userData['bg'].y + event.userData['bg'].height * .84
                         ));
                     }
                     that._quitButton.setPos(new DHPoint(
                         that._quitButton.x,
-                        event.userData['bg'].y + event.userData['bg'].height * .8
+                        event.userData['bg'].y + event.userData['bg'].height * .84
                     ));
                     that._startButton.setPos(new DHPoint(
                         that._startButton.x,
-                        event.userData['bg'].y + event.userData['bg'].height * .8
+                        event.userData['bg'].y + event.userData['bg'].height * .84
                     ));
                     that._subtitlesButton.setPos(new DHPoint(
                         that._subtitlesButton.x,
