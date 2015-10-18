@@ -132,7 +132,7 @@ package com.starmaid.Cibele.management {
             };
         }
 
-        public static const subtitlesFilename:String = "assets/data/subtitles.txt";
+        public static const subtitlesFilename:String = "assets/async/data/subtitles.txt";
 
         private var subtitlesMap:Object;
         private var subtitlesText:FlxText;
