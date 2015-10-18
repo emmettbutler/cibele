@@ -334,11 +334,7 @@ package com.starmaid.Cibele.base {
                 }
             }
 
-            if (FlxG.keys.justPressed("P")) {
-                SoundManager.getInstance().increaseVolume();
-            } else if (FlxG.keys.justPressed("O")) {
-                SoundManager.getInstance().decreaseVolume();
-            } else if (FlxG.keys.justPressed("ESCAPE")) {
+            if (FlxG.keys.justPressed("ESCAPE")) {
                 if (GlobalTimer.getInstance().isPaused()) {
                     this.resume();
                 } else if (this.pausable){
