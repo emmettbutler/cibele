@@ -864,7 +864,7 @@ package com.starmaid.Cibele.management {
                     "name": "hi link to email 2 in 3",
                     "icon": ImgHiMiniClassEmailLink,
                     "icon_dim": new DHPoint(316, 19),
-                    "icon_pos": new DHPoint(295, 120),
+                    "icon_pos": new DHPoint(295, 122),
                     "dim": new DHPoint(284, 356),
                     "struc": PopUpManager.HI_EMAIL_3,
                     "contents": ImgHiMiniClassEmail,

@@ -499,7 +499,7 @@ package com.starmaid.Cibele.management {
                                          this.reply_to_msg.height);
 
             this.back_reply_button.x = this.exit_msg.x - 7;
-            this.back_reply_button.y = this.exit_msg.y - 3;
+            this.back_reply_button.y = this.exit_msg.y - 1;
 
             this.ellipse_anim.x = this.reply_to_msg.x + 2;
             this.ellipse_anim.y = this.reply_to_msg.y + 13;
