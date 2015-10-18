@@ -58,7 +58,7 @@ package com.starmaid.Cibele.states {
                     'text': 'Special thanks to:\n\n\nNöel Clark (art)\nand Sean Hogan (sound)\n\nfor asset support.'
                 },
                 {
-                    'text': 'Special thanks to the folks who let us use their likeness in photographs:\nDiego Garcia, Arielle Martinez, Adam Christie, Brittney Lezon, Melanie Lezon, Jenny Jiao Hsia, Alec Thomson, Nick Robinson and SQ Sunseri.\n\nSpecial thanks for paintings by\nEric Lahaie ("Bulldog Hell")\nand Puri ("ffxi").'
+                    'text': 'Special thanks to the folks who let us use their likeness in photographs:\nDiego Garcia, Arielle Martinez, Adam Christie, Brittney Lezon, Melanie Lezon, Jenny Jiao Hsia, Alec Thomson, Nick Robinson and SQ Sunseri.\n\nSpecial thanks for paintings by\nEric Lahaie ("Bulldog Hell")\nand Puri ("ffxi")\nand to Brittney and Melanie for the fan art scans.'
                 },
                 {
                     'text': 'Special thanks to our playtesters and supporters:\nBennett Foddy, Steve Gaynor, Diego Garcia, Karla Zimonja, Heather Winter, Hannah Bown, Tynan Wales, Josh Clark, Nöel Clark, Michael Hansen, Josh Schonstal, Naomi Clark and Joni Kittaka.'
