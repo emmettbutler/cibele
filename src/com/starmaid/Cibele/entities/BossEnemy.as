@@ -171,6 +171,8 @@ package com.starmaid.Cibele.entities {
         override public function update():void{
             super.update();
 
+            this.scale.x = 1;
+
             if(this.scaleText) {
                 if(this._notificationText.size < 30) {
                     this._notificationText.size += 1;
