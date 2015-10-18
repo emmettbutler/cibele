@@ -39,6 +39,12 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        override public function setPos(pos:DHPoint):void {
+            super.setPos(pos);
+            this._text.x = pos.x;
+            this._text.y = pos.y;
+        }
+
         override public function destroy():void {
             if (this._text != null) {
                 this._text.destroy();

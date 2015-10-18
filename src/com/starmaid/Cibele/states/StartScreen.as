@@ -11,6 +11,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.utils.DHPoint;
 
     import org.flixel.*;
@@ -21,35 +22,26 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/music/vid_intro.mp3")] private var VidBGMLoop:Class;
         [Embed(source="/../assets/audio/music/bgm_cibele.mp3")] private var SndBGM:Class;
         [Embed(source="/../assets/fonts/Nexa Bold.otf", fontFamily="NexaBold-Regular", embedAsCFF="false")] public var GameFont:String;
-        [Embed(source="/../assets/images/ui/Crystal-icon-large-title.png")] private var ImgXtal:Class;
+        [Embed(source="/../assets/images/ui/Crystal-icon-medium-title.png")] private var ImgXtal:Class;
 
         public static const BGM:String = "start-screen-bgm";
         private var _startButton:MenuButton, _loadButton:MenuButton,
                     _quitButton:MenuButton, _subtitlesButton:MenuButton,
-                    crystalIcon:GameObject, bgLayer:GameObject;
+                    crystalIcon:GameObject;
 
         override public function create():void {
             this.enable_fade = true;
             this.pausable = false;
             super.create();
             FlxG.bgColor = 0xffffffff;
-            //(new BackgroundLoader()).loadSingleTileBG("/../assets/images/ui/UI_Startscreen_Background.png");
-
-            this.bgLayer = new GameObject(new DHPoint(0, 0));
-            this.bgLayer.scrollFactor = new DHPoint(0, 0);
-            this.bgLayer.active = false;
-            this.bgLayer.makeGraphic(
-                ScreenManager.getInstance().screenWidth,
-                ScreenManager.getInstance().screenHeight,
-                0xffffffff
-            );
-            this.add(this.bgLayer);
+            (new BackgroundLoader()).loadSingleTileBG("/../assets/async/images/ui/startscreen_bg.png");
 
             ScreenManager.getInstance();
 
             this.crystalIcon = new GameObject(new DHPoint((ScreenManager.getInstance().screenWidth * .5) - 314/2,
                 (ScreenManager.getInstance().screenHeight * .5) - 500/2 - 70));
-            this.crystalIcon.loadGraphic(ImgXtal, false, false, 314, 500);
+            this.crystalIcon.loadGraphic(ImgXtal, false, false, 251, 400);
+            this.crystalIcon.visible = false;
             add(this.crystalIcon);
 
             this.updatePopup = false;
@@ -108,6 +100,38 @@ package com.starmaid.Cibele.states {
             );
             this.menuButtons.push(this._subtitlesButton);
             this._subtitlesButton.addToState();
+
+            var that:StartScreen = this;
+            this.addEventListener(GameState.EVENT_SINGLETILE_BG_LOADED,
+                function(event:DataEvent):void {
+                    that.crystalIcon.visible = true;
+                    that.crystalIcon.setPos(new DHPoint(
+                        event.userData['bg'].x + event.userData['bg'].width * .7,
+                        event.userData['bg'].y + event.userData['bg'].height * 0
+                    ));
+                    if (that._loadButton != null) {
+                        that._loadButton.setPos(new DHPoint(
+                            that._loadButton.x,
+                            event.userData['bg'].y + event.userData['bg'].height * .8
+                        ));
+                    }
+                    that._quitButton.setPos(new DHPoint(
+                        that._quitButton.x,
+                        event.userData['bg'].y + event.userData['bg'].height * .8
+                    ));
+                    that._startButton.setPos(new DHPoint(
+                        that._startButton.x,
+                        event.userData['bg'].y + event.userData['bg'].height * .8
+                    ));
+                    that._subtitlesButton.setPos(new DHPoint(
+                        that._subtitlesButton.x,
+                        event.userData['bg'].y + event.userData['bg'].height * .9
+                    ));
+                    FlxG.stage.removeEventListener(
+                        GameState.EVENT_SINGLETILE_BG_LOADED,
+                        arguments.callee
+                    );
+                });
 
             if(!SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.BGM)) {
                 SoundManager.getInstance().playSound(
