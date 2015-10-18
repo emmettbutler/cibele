@@ -488,21 +488,21 @@ package com.starmaid.Cibele.management {
             this.exit_hover_ui.y = this.img_inbox.y - 5;
 
             this.exit_msg.x = this.img_inbox.x + 20;
-            this.exit_msg.y = this.img_inbox.y + (this.img_inbox.height - 45);
+            this.exit_msg.y = this.img_inbox.y + (this.img_inbox.height - 40);
             this.exit_box = new FlxRect(this.exit_msg.x, this.exit_msg.y, 57,
                                         this.exit_msg.height);
 
             this.reply_to_msg.x = this.img_inbox.x + 83;
-            this.reply_to_msg.y = this.img_inbox.y + (this.img_inbox.height - 45);
+            this.reply_to_msg.y = this.img_inbox.y + (this.img_inbox.height - 40);
             this.reply_box = new FlxRect(this.reply_to_msg.x,
                                          this.reply_to_msg.y, 64,
                                          this.reply_to_msg.height);
 
             this.back_reply_button.x = this.exit_msg.x - 7;
-            this.back_reply_button.y = this.exit_msg.y - 1;
+            this.back_reply_button.y = this.exit_msg.y + 1;
 
             this.ellipse_anim.x = this.reply_to_msg.x + 2;
-            this.ellipse_anim.y = this.reply_to_msg.y + 13;
+            this.ellipse_anim.y = this.reply_to_msg.y + 18;
 
             for(var i:int = 0; i < this.threads.length; i++) {
                 this.threads[i].inbox_ref = this.img_inbox;
