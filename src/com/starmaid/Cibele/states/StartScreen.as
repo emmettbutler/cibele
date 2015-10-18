@@ -24,7 +24,6 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/Crystal-icon-large-title.png")] private var ImgXtal:Class;
 
         public static const BGM:String = "start-screen-bgm";
-        public var startText:FlxText, startText2:FlxText, startText3:FlxText;
         private var _startButton:MenuButton, _loadButton:MenuButton,
                     _quitButton:MenuButton, _subtitlesButton:MenuButton,
                     crystalIcon:GameObject, bgLayer:GameObject;
@@ -53,18 +52,6 @@ package com.starmaid.Cibele.states {
             this.crystalIcon.loadGraphic(ImgXtal, false, false, 314, 500);
             add(this.crystalIcon);
 
-            startText = new FlxText(ScreenManager.getInstance().screenWidth * .22, this.crystalIcon.y + (this.crystalIcon.height + 30),1000,"CLICK to move and interact with objects.\nMake sure your sound is on.");
-            add(startText);
-            startText.setFormat("NexaBold-Regular",16,0xffea98a9,"left");
-
-            startText2 = new FlxText(ScreenManager.getInstance().screenWidth * .57, this.crystalIcon.y + (this.crystalIcon.height + 30),1000,"COMMAND+Q or Alt+F4 to Quit.\nESC to pause.");
-            add(startText2);
-            startText2.setFormat("NexaBold-Regular",16,0xffea98a9,"left");
-
-            startText3 = new FlxText(ScreenManager.getInstance().screenWidth * .22, this.crystalIcon.y + (this.crystalIcon.height + 75),1000,"This build contains the full game. Please note that it is, however, still in development.\nPlease do not share this build with anyone.");
-            add(startText3);
-            startText3.setFormat("NexaBold-Regular",16,0xff8d8d8d,"left");
-
             this.updatePopup = false;
             this.updateMessages = false;
             this.use_loading_screen = false;
@@ -74,7 +61,7 @@ package com.starmaid.Cibele.states {
             this._startButton = new MenuButton(
                 new DHPoint(
                     ScreenManager.getInstance().screenWidth * .22,
-                    this.crystalIcon.y + (this.crystalIcon.height + 130)
+                    this.crystalIcon.y + (this.crystalIcon.height + 40)
                 ),
                 new DHPoint(_startButtonWidth, 30),
                 "New Game",
@@ -88,7 +75,7 @@ package com.starmaid.Cibele.states {
                 this._loadButton = new MenuButton(
                     new DHPoint(
                         ScreenManager.getInstance().screenWidth * .5 - _startButtonWidth/2,
-                        this.crystalIcon.y + (this.crystalIcon.height + 130)
+                        this.crystalIcon.y + (this.crystalIcon.height + 40)
                     ),
                     new DHPoint(_startButtonWidth, 30),
                     "Continue",
@@ -101,7 +88,7 @@ package com.starmaid.Cibele.states {
             this._quitButton = new MenuButton(
                 new DHPoint(
                     ((ScreenManager.getInstance().screenWidth * .5 - _startButtonWidth/2) - (ScreenManager.getInstance().screenWidth * .22 + _startButtonWidth)) + ScreenManager.getInstance().screenWidth * .5 + _startButtonWidth/2,
-                    this.crystalIcon.y + (this.crystalIcon.height + 130)
+                    this.crystalIcon.y + (this.crystalIcon.height + 40)
                 ),
                 new DHPoint(_startButtonWidth, 30),
                 "Exit",
@@ -113,7 +100,7 @@ package com.starmaid.Cibele.states {
             this._subtitlesButton = new MenuButton(
                 new DHPoint(
                     (ScreenManager.getInstance().screenWidth * .5 - _startButtonWidth / 2),
-                    this.crystalIcon.y + (this.crystalIcon.height + 170)
+                    this.crystalIcon.y + (this.crystalIcon.height + 100)
                 ),
                 new DHPoint(_startButtonWidth, 30),
                 "Subtitles " + (DialoguePlayer.getInstance().subtitles_enabled ? "On" : "Off"),
