@@ -163,7 +163,7 @@ package com.starmaid.Cibele.states {
                             SoundManager.getInstance().playSound(VidBGMLoop, 24*GameSound.MSEC_PER_SEC, null, false, 1, Math.random()*5000+100);
                             FlxG.switchState(
                                 new PlayVideoState(
-                                    "/../assets/async/video/computer_open.flv",
+                                    "/../assets/async/video/computer_open.mp4",
                                     function ():void {
                                         FlxG.switchState(new IkuTursoDesktop());
                                     }
