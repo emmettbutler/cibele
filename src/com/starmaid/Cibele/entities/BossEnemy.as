@@ -397,11 +397,11 @@ package com.starmaid.Cibele.entities {
 
         override public function addVisibleObjects():void {
             FlxG.state.add(this.debugText);
-            FlxG.state.add(this._notificationText);
         }
 
         public function addHealthBarVisibleObjects():void {
             this._healthBar.addVisibleObjects();
+            FlxG.state.add(this._notificationText);
         }
     }
 }
