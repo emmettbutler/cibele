@@ -41,7 +41,6 @@ package com.starmaid.Cibele.entities {
             if(this.name_text != null && this._activeText != null) {
                 super.setVisible(v);
                 this.name_text.visible = v;
-                this._activeText.visible = false;
             }
         }
 

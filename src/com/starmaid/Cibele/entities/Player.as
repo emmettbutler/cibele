@@ -408,7 +408,6 @@ package com.starmaid.Cibele.entities {
                     }
                 } else {
                     this._cur_path.advance();
-
                     if (this._cur_path.isAtFirstNode()) {
                         var destinationDisp:Number = this.footPos.sub(this.finalTarget)._length();
                         if (destinationDisp > 100) {
