@@ -49,7 +49,7 @@ package com.starmaid.Cibele.states {
             this._startButton = new MenuButton(
                 new DHPoint(
                     ScreenManager.getInstance().screenWidth * .22,
-                    0
+                    -1000
                 ),
                 new DHPoint(_startButtonWidth, 30),
                 "New Game",
@@ -63,7 +63,7 @@ package com.starmaid.Cibele.states {
                 this._loadButton = new MenuButton(
                     new DHPoint(
                         ScreenManager.getInstance().screenWidth * .5 - _startButtonWidth/2,
-                        0
+                        -1000
                     ),
                     new DHPoint(_startButtonWidth, 30),
                     "Continue",
@@ -76,7 +76,7 @@ package com.starmaid.Cibele.states {
             this._quitButton = new MenuButton(
                 new DHPoint(
                     ((ScreenManager.getInstance().screenWidth * .5 - _startButtonWidth/2) - (ScreenManager.getInstance().screenWidth * .22 + _startButtonWidth)) + ScreenManager.getInstance().screenWidth * .5 + _startButtonWidth/2,
-                    0
+                    -1000
                 ),
                 new DHPoint(_startButtonWidth, 30),
                 "Exit",
@@ -88,7 +88,7 @@ package com.starmaid.Cibele.states {
             this._subtitlesButton = new MenuButton(
                 new DHPoint(
                     (ScreenManager.getInstance().screenWidth * .5 - _startButtonWidth / 2),
-                    0
+                    -1000
                 ),
                 new DHPoint(_startButtonWidth, 30),
                 "Subtitles " + (DialoguePlayer.getInstance().subtitles_enabled ? "On" : "Off"),
