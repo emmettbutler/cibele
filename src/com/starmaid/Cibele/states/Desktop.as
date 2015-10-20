@@ -8,6 +8,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameSound;
@@ -76,11 +77,13 @@ package com.starmaid.Cibele.states {
 
         override public function clickCallback(screenPos:DHPoint,
                                                worldPos:DHPoint):void {
-            var clicked:GameObject;
-            var mouseScreenRect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
-            clicked = this.folder_builder.getClickedElement(mouseScreenRect);
-            this.folder_builder.resolveClick(this.folder_structure,
-                                             mouseScreenRect, clicked);
+            if (!GlobalTimer.getInstance().isPaused()) {
+                var clicked:GameObject;
+                var mouseScreenRect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
+                clicked = this.folder_builder.getClickedElement(mouseScreenRect);
+                this.folder_builder.resolveClick(this.folder_structure,
+                                                mouseScreenRect, clicked);
+            }
             super.clickCallback(screenPos, worldPos);
         }
     }
