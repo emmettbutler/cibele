@@ -15,6 +15,8 @@ package com.starmaid.Cibele.states {
         public function BlankScreen(end_timer:Number, end_callback:Function) {
             super(false,false,false);
             this.endCallback = end_callback;
+            this.use_loading_screen = false;
+            this.hide_cursor_on_unpause = true;
             this.endTime = end_timer;
 
             GlobalTimer.getInstance().setMark("deactivate blank screen", this.endTime, this.endCallback, true);
@@ -30,6 +32,8 @@ package com.starmaid.Cibele.states {
             this.bg.visible = true;
             this.add(this.bg);
 
+            this.postCreate();
+            this.game_cursor.hide();
         }
 
         override public function update():void {
