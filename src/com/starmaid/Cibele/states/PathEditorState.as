@@ -77,13 +77,13 @@ package com.starmaid.Cibele.states {
         override public function postCreate():void {
             if (this.filename != null) {
                 this.dataFile = File.applicationDirectory.resolvePath(
-                    "assets/" + this.filename);
+                    "assets/async/" + this.filename);
                 this.writeFile = File.applicationStorageDirectory.resolvePath(
                     this.filename);
                 this.backupFile = File.applicationStorageDirectory.resolvePath(
                     this.filename + ".bak");
                 this.graphDataFile = File.applicationDirectory.resolvePath(
-                    "assets/" + this.graph_filename);
+                    "assets/async/" + this.graph_filename);
 
                 if (!this.writeFile.exists) {
                     this.editorMode = MODE_READONLY;
@@ -101,6 +101,7 @@ package com.starmaid.Cibele.states {
             pathWalker = new PathFollower(new DHPoint(player.x-10, player.y-100));
 
             pathWalker.initFootsteps();
+            this.player.initFootsteps();
 
             _path = new Path();
             pathWalker.precon_path = _path;
@@ -123,7 +124,7 @@ package com.starmaid.Cibele.states {
                 this.pathWalker.moveToNextPathNode();
             }
 
-            this.boss = new (this.getBossClass())(new DHPoint(0, 0));
+            this.boss = new (this.getBossClass())(new DHPoint(0, 0), this.notificationTextColor);
 
             add(this.boss);
             this.boss.addVisibleObjects();

@@ -8,6 +8,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.utils.DataEvent;
     import com.starmaid.Cibele.utils.DHPoint;
+    import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameSound;
@@ -21,6 +22,7 @@ package com.starmaid.Cibele.states {
 
         public var bg:FlxExtSprite, folder_structure:Object, leafPopups:Array;
         public var folder_builder:FolderBuilder;
+        public var bgImageName:String;
 
         public static var ROOMTONE:String = "desktop room tone";
 
@@ -34,13 +36,7 @@ package com.starmaid.Cibele.states {
             this.ui_color_flag = GameState.UICOLOR_PINK;
             this.use_loading_screen = false;
             FlxG.bgColor = 0x00000000;
-            if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_IT) {
-                bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/images/ui/UI_Desktop.png");
-            } else if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_EU) {
-                bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/images/ui/UI_Desktop_Eu.png");
-            } else if(ScreenManager.getInstance().levelTracker.level == LevelTracker.LVL_HI) {
-                bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/images/ui/UI_Desktop_Hi.png");
-            }
+            bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/async/images/ui/" + this.bgImageName + ".png");
 
             ScreenManager.getInstance().setupCamera(null, 1);
             var _screen:ScreenManager = ScreenManager.getInstance();
@@ -76,16 +72,19 @@ package com.starmaid.Cibele.states {
 
         override public function update():void{
             super.update();
+            this.folder_builder.overlapSprites(this.folder_structure);
+        }
 
-            var mouseScreenRect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
-            var clicked:GameObject;
-            if(FlxG.mouse.justPressed()) {
+        override public function clickCallback(screenPos:DHPoint,
+                                               worldPos:DHPoint):void {
+            if (!GlobalTimer.getInstance().isPaused()) {
+                var clicked:GameObject;
+                var mouseScreenRect:FlxRect = new FlxRect(FlxG.mouse.x, FlxG.mouse.y);
                 clicked = this.folder_builder.getClickedElement(mouseScreenRect);
                 this.folder_builder.resolveClick(this.folder_structure,
-                                                 mouseScreenRect, clicked);
+                                                mouseScreenRect, clicked);
             }
-
-            this.folder_builder.overlapXSprite(this.folder_structure);
+            super.clickCallback(screenPos, worldPos);
         }
     }
 }

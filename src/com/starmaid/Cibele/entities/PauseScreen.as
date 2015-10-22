@@ -5,6 +5,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.MessageManager;
+    import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.entities.MenuButton;
 
     import org.flixel.*;
@@ -15,8 +16,9 @@ package com.starmaid.Cibele.entities {
         private var baseLayer:GameObject, confirmLayer:GameObject;
         private var quitButton:MenuButton, titleScreenButton:MenuButton,
                     confirmButton:MenuButton, cancelButton:MenuButton,
-                    resumeButton:MenuButton;
+                    resumeButton:MenuButton, subtitlesButton:MenuButton;
         private var confirmText:FlxText;
+        private var saveText:FlxText;
         private var _state:GameState;
         private var curConfirmFunction:Function;
         private var buttons:Array;
@@ -37,6 +39,12 @@ package com.starmaid.Cibele.entities {
             );
 
             var _buttonWidth:Number = 200;
+
+            this.saveText = new FlxText(this.baseLayer.x, (this.baseLayer.y + this.baseLayer.height) - 40, this.baseLayer.width, "Cibele autosaves at the beginning of each act.");
+            this.saveText.scrollFactor = new DHPoint(0, 0);
+            this.saveText.setFormat("NexaBold-Regular",
+                                             MessageManager.FONT_SIZE,
+                                             0xffffffff, "center");
 
             this.quitButton = new MenuButton(
                 new DHPoint(
@@ -72,10 +80,23 @@ package com.starmaid.Cibele.entities {
             this.buttons.push(this.titleScreenButton);
             this._state.addMenuButton(this.titleScreenButton);
 
-            this.resumeButton = new MenuButton(
+            this.subtitlesButton = new MenuButton(
                 new DHPoint(
                     ScreenManager.getInstance().screenWidth / 2 - _buttonWidth / 2,
                     ScreenManager.getInstance().screenHeight - 200
+                ),
+                new DHPoint(_buttonWidth, 30),
+                "Subtitles " + (DialoguePlayer.getInstance().subtitles_enabled ? "On" : "Off"),
+                this.toggleSubtitles
+            );
+            this.subtitlesButton.observeGlobalPause = false;
+            this.buttons.push(this.subtitlesButton);
+            this._state.addMenuButton(this.subtitlesButton);
+
+            this.resumeButton = new MenuButton(
+                new DHPoint(
+                    ScreenManager.getInstance().screenWidth / 2 - _buttonWidth / 2,
+                    ScreenManager.getInstance().screenHeight - 240
                 ),
                 new DHPoint(_buttonWidth, 30),
                 "Resume",
@@ -140,6 +161,12 @@ package com.starmaid.Cibele.entities {
             this.visible = false;
         }
 
+        public function toggleSubtitles():void {
+            DialoguePlayer.getInstance().toggle_subtitles_enabled();
+            this.subtitlesButton.text = "Subtitles " +
+                (DialoguePlayer.getInstance().subtitles_enabled ? "On" : "Off");
+        }
+
         public function destroy():void {
             this.baseLayer.destroy();
             this.baseLayer = null;
@@ -157,6 +184,8 @@ package com.starmaid.Cibele.entities {
             this.confirmText = null;
             this.cancelButton.destroy();
             this.cancelButton = null;
+            this.saveText.destroy();
+            this.saveText = null;
             this._state = null;
         }
 
@@ -197,6 +226,7 @@ package com.starmaid.Cibele.entities {
 
         public function set visible(val:Boolean):void {
             this.baseLayer.visible = val;
+            this.saveText.visible = val;
             for(var i:int = 0; i < this.buttons.length; i++) {
                 if (this.buttons[i].slug != CONFIRM_SLUG) {
                     this.buttons[i].setVisible(val);
@@ -215,6 +245,7 @@ package com.starmaid.Cibele.entities {
 
         public function addToState():void {
             this._state.add(this.baseLayer);
+            this._state.add(this.saveText);
             this.addConfirmDialogue();
             for(var i:int = 0; i < this.buttons.length; i++) {
                 this.buttons[i].addToState(this._state);

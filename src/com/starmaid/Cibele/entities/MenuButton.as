@@ -25,6 +25,10 @@ package com.starmaid.Cibele.entities {
             this._text.setFormat("NexaBold-Regular", 24, 0xffffffff, "center");
         }
 
+        public function set text(t:String):void {
+            this._text.text = t;
+        }
+
         public function addToState(_state:GameState=null):void {
             if (_state == null) {
                 FlxG.state.add(this);
@@ -33,6 +37,12 @@ package com.starmaid.Cibele.entities {
                 _state.add(this);
                 _state.add(this._text);
             }
+        }
+
+        override public function setPos(pos:DHPoint):void {
+            super.setPos(pos);
+            this._text.x = pos.x;
+            this._text.y = pos.y;
         }
 
         override public function destroy():void {

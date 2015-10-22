@@ -22,6 +22,7 @@ package com.starmaid.Cibele.entities {
     public class Player extends PartyMember {
         [Embed(source="/../assets/images/ui/click_anim.png")] private var ImgWalkTo:Class;
         [Embed(source="/../assets/images/characters/c_walk.png")] private var ImgCibWalk:Class;
+        [Embed(source="/../assets/images/characters/cibele_idle.png")] private var ImgIdle:Class;
         [Embed(source="/../assets/images/characters/cib_attack.png")] private var ImgAttack:Class;
         [Embed(source="/../assets/audio/effects/sfx_cibattack.mp3")] private var SfxAttack1:Class;
         [Embed(source="/../assets/audio/effects/sfx_cibattack2.mp3")] private var SfxAttack2:Class;
@@ -30,12 +31,15 @@ package com.starmaid.Cibele.entities {
         private var walkSpeed:Number = 7, mouseDownTime:Number;
         private var hitboxOffset:DHPoint,
                     hitboxDim:DHPoint;
-        private var click_anim:GameObject, attack_sprite:GameObject;
+        private var click_anim:GameObject, attack_sprite:GameObject,
+                    idle_sprite:GameObject;
+        private var swapEnemy:Enemy;
         private var click_anim_lock:Boolean = false, clickWait:Boolean,
                     mouseHeld:Boolean = false, attack_sound_lock:Boolean = false,
                     clickStartedOnUI:Boolean = false;
         private var _bgLoaderRef:BackgroundLoader;
         private var clickObjectsGroup:Array;
+        private var lastFinalTargetRecalcTime:Number = 0;
 
         public var colliding:Boolean = false;
         public var mapHitbox:GameObject, cameraPos:GameObject;
@@ -74,19 +78,14 @@ package com.starmaid.Cibele.entities {
             loadGraphic(ImgCibWalk, true, false, 143, 150);
             addAnimation("walk_u",
                 [0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10], 20, false);
-            addAnimation("idle_u", [9], 20, false);
             addAnimation("walk_d",
                 [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21], 20, false);
-            addAnimation("idle_d", [12], 20, false);
             addAnimation("walk_l",
                 [35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22],
                 20, false);
-            addAnimation("idle_l", [26], 20, false);
             addAnimation("walk_r",
                 [49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36],
                 20, false);
-            addAnimation("idle_r", [40], 20, false);
-            addAnimation("idle", [11], 7, false);
 
             this.attack_sprite = new GameObject(this.pos);
             this.attack_sprite.zSorted = true;
@@ -95,6 +94,15 @@ package com.starmaid.Cibele.entities {
             this.attack_sprite.addAnimation("attack",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22],13,false);
             this.attack_sprite.addAnimation("reverse_attack",[22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0],13,false);
             this.attack_sprite.visible = false;
+
+            this.idle_sprite = new GameObject(this.pos);
+            this.idle_sprite.zSorted = true;
+            this.idle_sprite.basePos = new DHPoint(0, 0);
+            this.idle_sprite.loadGraphic(ImgIdle, true, false, 131, 146);
+            this.idle_sprite.addAnimation("back",[0,1,2,3,4,5,6,7],13,false);
+            this.idle_sprite.addAnimation("left",[8, 9, 10, 11, 12, 13, 14, 15], 13, false);
+            this.idle_sprite.addAnimation("right",[16, 17, 18, 19, 20, 21, 22, 23], 13, false);
+            this.idle_sprite.visible = false;
 
             this.click_anim = new GameObject(this.pos);
             this.click_anim.loadGraphic(ImgWalkTo, true, false, 275*.7, 164*.7);
@@ -130,6 +138,10 @@ package com.starmaid.Cibele.entities {
             DebugConsoleManager.getInstance().trackAttribute("FlxG.state.player.getFinalTarget", "player.finalTarget");
         }
 
+        public function get mouse_held():Boolean {
+            return this.mouseHeld;
+        }
+
         override public function setupFootsteps():void {
             this.footstepOffsets.up = new DHPoint(70, this.height);
             this.footstepOffsets.down = this.footstepOffsets.up;
@@ -160,6 +172,8 @@ package com.starmaid.Cibele.entities {
             if (this.attack_sprite != null) {
                 this.attack_sprite.destroy();
                 this.attack_sprite = null;
+                this.idle_sprite.destroy();
+                this.idle_sprite = null;
                 this.click_anim.destroy();
                 this.click_anim = null;
                 this.mapHitbox.destroy();
@@ -244,7 +258,7 @@ package com.starmaid.Cibele.entities {
                             if(!got_enemy) {
                                 got_enemy = true;
                                 prevTargetEnemy = this.targetEnemy;
-                                this.targetEnemy = cur as Enemy;
+                                this.swapEnemy = cur as Enemy;
                             }
                         } else if (!ui_clicked) {
                             (cur as Enemy).inactiveTarget();
@@ -264,26 +278,30 @@ package com.starmaid.Cibele.entities {
             }
 
             // noop when re-clicking the selected enemy
-            if (got_enemy && this.targetEnemy == prevTargetEnemy) {
+            if (got_enemy && this.swapEnemy == prevTargetEnemy) {
                 return;
             }
 
+            this.inReverseAttack = false;
             this.initWalk(worldPos);
             this.visible = true;
             this.shadow_sprite.visible = true;
             this.attack_sprite.visible = false;
-            if (got_enemy && this.targetEnemy != null && !this.targetEnemy.isDead()) {
-                this._state = STATE_MOVE_TO_ENEMY;
-                this.targetEnemy.activeTarget();
-                if(this.targetEnemy != prevTargetEnemy) {
+            this.idle_sprite.visible = false;
+            if (got_enemy && this.swapEnemy != null && this.swapEnemy.targetable()) {
+                this.enterStateMoveToEnemy();
+                this.swapEnemy.activeTarget();
+                if(this.swapEnemy != prevTargetEnemy) {
                     this.playEnemySelectSfx();
                 }
             } else if (!got_enemy) {
-                this.targetEnemy = null;
+                this.swapEnemy = null;
             }
-            if (prevTargetEnemy != null && prevTargetEnemy != this.targetEnemy) {
+            if (prevTargetEnemy != null && prevTargetEnemy != this.swapEnemy) {
                 prevTargetEnemy.inactiveTarget();
             }
+            this.targetEnemy = this.swapEnemy;
+            this.swapEnemy = null;
 
             this.clickWait = true;
             if(!this.click_anim_lock) {
@@ -341,6 +359,8 @@ package com.starmaid.Cibele.entities {
         public function walk():void {
             var walkDirection:DHPoint = walkTarget.sub(footPos).normalized();
             this.dir = walkDirection.mulScl(this.walkSpeed);
+            this.visible = true;
+            this.idle_sprite.visible = false;
             switch(this.facing) {
                 case LEFT:
                     this.play("walk_l");
@@ -365,6 +385,7 @@ package com.starmaid.Cibele.entities {
             super.addVisibleObjects();
             FlxG.state.add(this.click_anim);
             FlxG.state.add(this.attack_sprite);
+            FlxG.state.add(this.idle_sprite);
             FlxG.state.add(this.shadow_sprite);
             FlxG.state.add(this);
             FlxG.state.add(this.nameText);
@@ -380,14 +401,13 @@ package com.starmaid.Cibele.entities {
                 if (_cur_path == null) {
                     if (this.inAttack()) {
                         this.initWalk(this.targetEnemy.getAttackPos());
-                        this._state = STATE_MOVE_TO_ENEMY;
+                        this.enterStateMoveToEnemy();
                     } else {
                         this._state = STATE_IDLE;
                         this.dir = ZERO_POINT;
                     }
                 } else {
                     this._cur_path.advance();
-
                     if (this._cur_path.isAtFirstNode()) {
                         var destinationDisp:Number = this.footPos.sub(this.finalTarget)._length();
                         if (destinationDisp > 100) {
@@ -413,13 +433,37 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        public function canConnectToFinalTarget():Boolean {
+            if (!(FlxG.state is LevelMapState)) {
+                return true;
+            }
+            if (this.finalTarget == null) {
+                return false;
+            }
+            var connectInfo:Object = (FlxG.state as LevelMapState).pointsCanConnect(
+                this.footPos, this.finalTarget);
+            return connectInfo["canConnect"];
+        }
+
         override public function update():void{
-            if(this.facing == UP || this.facing == DOWN){
-                this.nameTextOffset.x = 45;
-            } else if(this.facing == LEFT) {
-                this.nameTextOffset.x = 70;
-            } else if(this.facing == RIGHT) {
-                this.nameTextOffset.x = 15;
+            if(this._state == STATE_IDLE) {
+                if(this.facing == UP) {
+                    this.nameTextOffset.x = 40;
+                } else if(this.facing == DOWN || this.facing == LEFT) {
+                    this.nameTextOffset.x = 60;
+                } else if(this.facing == RIGHT) {
+                    this.nameTextOffset.x = 20;
+                }
+            } else if(this._state == STATE_IN_ATTACK) {
+                this.nameTextOffset.x = 58;
+            } else {
+                if(this.facing == UP || this.facing == DOWN){
+                    this.nameTextOffset.x = 45;
+                } else if(this.facing == LEFT) {
+                    this.nameTextOffset.x = 70;
+                } else if(this.facing == RIGHT) {
+                    this.nameTextOffset.x = 15;
+                }
             }
 
             if(this.walkTarget != null) {
@@ -441,6 +485,8 @@ package com.starmaid.Cibele.entities {
 
             this.attack_sprite.x = this.x;
             this.attack_sprite.y = this.y - 45;
+            this.idle_sprite.x = this.x;
+            this.idle_sprite.y = this.y;
 
             if(this.facing == LEFT) {
                 this.shadow_sprite.x = this.pos.center(this).x - 15;
@@ -458,6 +504,7 @@ package com.starmaid.Cibele.entities {
 
             this.basePos.y = this.y + (this.height - 10);
             this.attack_sprite.basePos.y = this.attack_sprite.y + (this.attack_sprite.height - 10);
+            this.idle_sprite.basePos.y = this.idle_sprite.y + (this.idle_sprite.height - 10);
 
             if(this._state != STATE_AT_ENEMY) {
                 this.setFacing(false);
@@ -470,6 +517,10 @@ package com.starmaid.Cibele.entities {
                 // don't start walking if the click starts on a uielement
                 if (!this.clickStartedOnUI) {
                     this.initWalk(new DHPoint(FlxG.mouse.x, FlxG.mouse.y), false);
+                    this.visible = true;
+                    this.shadow_sprite.visible = true;
+                    this.attack_sprite.visible = false;
+                    this.idle_sprite.visible = false;
                 }
                 this.mouseHeld = true;
             }
@@ -487,7 +538,7 @@ package com.starmaid.Cibele.entities {
                 this.doMovementState();
             } else if (this._state == STATE_MOVE_TO_ENEMY) {
                 if(this.targetEnemy != null) {
-                    if(this.targetEnemy.isSmall() || (this.targetEnemy.isBoss() && this.targetEnemy.visible)) {
+                    if(this.targetEnemy.targetable()) {
                         this.finalTarget = this.targetEnemy.getAttackPos();
                         this.doMovementState();
                         if (this.enemyIsInAttackRange(this.targetEnemy)) {
@@ -495,6 +546,14 @@ package com.starmaid.Cibele.entities {
                         }
                     } else {
                         this._state = STATE_IDLE;
+                    }
+                }
+                if (this.timeAlive - this.lastFinalTargetRecalcTime >= 1 * GameSound.MSEC_PER_SEC) {
+                    this.lastFinalTargetRecalcTime = this.timeAlive;
+                    if (this.colliding && !this.hasCurPath()) {
+                        var preWalkState:Number = this._state;
+                        this.initWalk(this.finalTarget);
+                        this._state = preWalkState;
                     }
                 }
                 this.walk();
@@ -530,6 +589,10 @@ package com.starmaid.Cibele.entities {
                             } else {
                                 var _screen:ScreenManager = ScreenManager.getInstance();
                                 this.walkTarget = new DHPoint(_screen.screenWidth/2, this.y);
+                            }
+                            if (this.targetEnemy != null) {
+                                this.targetEnemy.inactiveTarget();
+                                this.targetEnemy = null;
                             }
                         }
                     } else if (this._state != STATE_WALK_HARD){
@@ -571,12 +634,18 @@ package com.starmaid.Cibele.entities {
             return pa.sub(pb)._length() > 5;
         }
 
+        public function enterStateMoveToEnemy():void {
+            this._state = STATE_MOVE_TO_ENEMY;
+            this.lastFinalTargetRecalcTime = this.timeAlive;
+        }
+
         override public function resolveStatePostAttack():void {
-            if (!(FlxG.state is LevelMapState) || !this.inAttack()) {
+            if (!(FlxG.state is LevelMapState) || !this.inAttack() || !this.inReverseAttack) {
                 return;
             }
             super.resolveStatePostAttack();
 
+            this.inReverseAttack = false;
             this.attack_sound_lock = false;
 
             if (this.targetEnemy != null && !this.targetEnemy.isDead())
@@ -585,7 +654,7 @@ package com.starmaid.Cibele.entities {
                     this._state = STATE_AT_ENEMY;
                 } else {
                     this.initWalk(this.targetEnemy.getAttackPos());
-                    this._state = STATE_MOVE_TO_ENEMY;
+                    this.enterStateMoveToEnemy();
                 }
             } else {
                 if (this.targetEnemy != null) {
@@ -601,18 +670,21 @@ package com.starmaid.Cibele.entities {
                 this.visible = true;
                 this.shadow_sprite.visible = true;
                 this.attack_sprite.visible = false;
+                this.idle_sprite.visible = false;
             }
         }
 
         public function setIdleAnim():void {
+            this.visible = false;
+            this.idle_sprite.visible = true;
             if(this.facing == UP) {
-                this.play("idle_u");
+                this.idle_sprite.play("back");
             } else if(this.facing == DOWN) {
-                this.play("idle_d");
+                this.idle_sprite.play("left");
             } else if(this.facing == LEFT) {
-                this.play("idle_l");
+                this.idle_sprite.play("left");
             } else if(this.facing == RIGHT) {
-                this.play("idle_r");
+                this.idle_sprite.play("right");
             }
         }
 
@@ -634,18 +706,20 @@ package com.starmaid.Cibele.entities {
             if (!(FlxG.state is LevelMapState)) {
                 return;
             }
+            this.inReverseAttack = true;
             this.attack_sprite.play("reverse_attack");
-            this.runAttackParticles();
-            GlobalTimer.getInstance().setMark("attack_finished_reverse",
-                    (23.0/13.0)*GameSound.MSEC_PER_SEC, function():void {
-                        resolveStatePostAttack();
-                    }, true);
+            GlobalTimer.getInstance().setMark(
+                "attack_finished_reverse",
+                (23.0/13.0)*GameSound.MSEC_PER_SEC, function():void {
+                    resolveStatePostAttack();
+                }, true);
         }
 
         override public function attack():void {
             super.attack();
             if (this._state == STATE_IN_ATTACK) {
                 this.attack_sprite.visible = true;
+                this.idle_sprite.visible = false;
                 this.visible = false;
                 this.shadow_sprite.visible = false;
                 this.attack_sprite.play("attack");

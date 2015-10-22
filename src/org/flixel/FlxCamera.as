@@ -674,6 +674,10 @@ package org.flixel
 			_fill.fillRect(_flashRect,Color);
 			buffer.copyPixels(_fill,_flashRect,_flashPoint,null,null,BlendAlpha);
 		}
+
+        public function fillTransparent():void {
+            buffer.fillRect(buffer.rect, 0);
+        }
 		
 		/**
 		 * Internal helper function, handles the actual drawing of all the special effects.

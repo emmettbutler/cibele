@@ -27,7 +27,9 @@ package com.starmaid.Cibele.entities {
         public static const PARTICLE_ICHI:Number = 2;
 
         public var lastAttackTime:Number = 0;
+        public var inReverseAttack:Boolean = false;
         public var footsteps:FootstepTrail = null;
+        public var attackStartTarget:Enemy;
         public var footstepOffset:DHPoint;
         public var attackRange:Number = 70;
         public var nameText:FlxText;
@@ -63,6 +65,7 @@ package com.starmaid.Cibele.entities {
             this.walkTarget = new DHPoint(0, 0);
             this.footstepOffsets = new LRUDVector();
             this.setupDebugSprites();
+            this._state = STATE_IDLE;
 
             this.emoji = {};
             this.emoji[Emote.HAPPY] = new Emote(
@@ -139,9 +142,13 @@ package com.starmaid.Cibele.entities {
         }
 
         public function emote(mood:Number):void {
-            this.emoji[mood].run(
-                new DHPoint(this.pos.x + this.nameTextOffset.x,
-                            this.pos.y + this.nameTextOffset.y));
+            if (this.emoji[mood] != undefined) {
+                if (this.pos != null && this.nameTextOffset != null) {
+                    this.emoji[mood].run(
+                        new DHPoint(this.pos.x + this.nameTextOffset.x,
+                                    this.pos.y + this.nameTextOffset.y));
+                }
+            }
         }
 
         public function playAttackSound():void {
@@ -195,25 +202,38 @@ package com.starmaid.Cibele.entities {
             return false;
         }
 
-        public function initWalk(worldPos:DHPoint, usePaths:Boolean=true):void {
+        public function initWalk(worldPos:DHPoint, usePaths:Boolean=true, checkConnect:Boolean=true):void {
             this.setFootPos();
             var useNodes:Boolean = true;
+            this._cur_path = null;
             if (this._mapnodes != null && FlxG.state is LevelMapState) {
-                var closestNode:MapNode = this._mapnodes.getClosestNode(this.pos);
-                var connectInfo:Object = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, worldPos);
-                if (closestNode == null || connectInfo["canConnect"]) {
+                var closestNode:MapNode = this._mapnodes.getClosestNode(this.footPos);
+                var connectInfo:Object = null;
+                if (checkConnect) {
+                    connectInfo = (FlxG.state as LevelMapState).pointsCanConnect(this.footPos, worldPos);
+                }
+                if (closestNode == null || (connectInfo != null && connectInfo["canConnect"])) {
                     useNodes = false;
                     if (ScreenManager.getInstance().DEBUG) {
-                        trace(this.slug + ": not using pathfinding (closestNode == " + closestNode + ")");
+                        trace(this.slug + ": not using nodes (closestNode == " + closestNode + ")");
                     }
                 } else {
+                    if (ScreenManager.getInstance().DEBUG) {
+                        trace("deciding whether to use paths");
+                    }
                     var destinationDisp:Number = this.footPos.sub(worldPos)._length();
                     var nearestNodeDisp:Number = this.footPos.sub(closestNode.pos)._length();
                     if (!usePaths || destinationDisp < nearestNodeDisp) {
+                        if (ScreenManager.getInstance().DEBUG) {
+                            trace("walking directly to target");
+                        }
                         this.walkTarget = worldPos;
                         this.finalTarget = worldPos;
                         this._cur_path = null;
                     } else {
+                        if (ScreenManager.getInstance().DEBUG) {
+                            trace("building best path");
+                        }
                         useNodes = this.buildBestPath(worldPos);
                     }
                 }
@@ -278,22 +298,11 @@ package com.starmaid.Cibele.entities {
                 this._state = STATE_IN_ATTACK;
                 this.lastAttackTime = this.currentTime;
             }
+            this.attackStartTarget = this.targetEnemy;
         }
 
         public function runParticles(pos:DHPoint):void {
             this.particles.run(pos);
-        }
-
-        public function runAttackParticles():void {
-            if(this.targetEnemy != null) {
-                if(this.targetEnemy.isSmall()) {
-                    this.runParticles(this.targetEnemy.getMiddlePos().sub(new DHPoint(0, this.targetEnemy.height/3)));
-                } else {
-                   this.runParticles(this.getMiddlePos().sub(new DHPoint(this.width/2, this.height - 20)));
-                }
-            } else {
-                this.runParticles(this.getMiddlePos().sub(new DHPoint(this.width/2, this.height - 20)));
-            }
         }
 
         public function hasCurPath():Boolean {
@@ -336,7 +345,9 @@ package com.starmaid.Cibele.entities {
                 "delta" + this.slug + Math.random() * 100000,
                 1.3 * GameSound.MSEC_PER_SEC,
                 function():void {
-                    teamPowerDeltaText.text = "";
+                    if (teamPowerDeltaText != null) {
+                        teamPowerDeltaText.text = "";
+                    }
                 }
             );
         }

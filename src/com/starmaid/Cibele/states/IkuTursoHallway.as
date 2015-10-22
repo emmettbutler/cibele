@@ -1,5 +1,5 @@
 package com.starmaid.Cibele.states {
-    import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.states.IkuTurso;
@@ -12,7 +12,6 @@ package com.starmaid.Cibele.states {
     import org.flixel.plugin.photonstorm.FlxCollision;
 
     public class IkuTursoHallway extends Hallway {
-        [Embed(source="/../assets/audio/voiceover/voc_firstconvo.mp3")] private var Convo1:Class;
         [Embed(source="/../assets/audio/music/bgm_fern_intro.mp3")] private var FernBGMIntro:Class;
         [Embed(source="/../assets/audio/music/bgm_fern_loop.mp3")] private var FernBGMLoop:Class;
 
@@ -41,10 +40,10 @@ package com.starmaid.Cibele.states {
         }
 
         override public function startConvoCallback():void {
-            SoundManager.getInstance().playSound(
-                Convo1, GameState.SHORT_DIALOGUE ? 1 : 26*GameSound.MSEC_PER_SEC, firstConvo, false, 1, GameSound.VOCAL,
-                "convo_1_hall"
-            );
+            DialoguePlayer.getInstance().playFile(
+                "voc_firstconvo", GameState.SHORT_DIALOGUE
+                ? 1 : 26*GameSound.MSEC_PER_SEC, firstConvo, 1,
+                GameSound.VOCAL, "convo_1_hall");
         }
     }
 }

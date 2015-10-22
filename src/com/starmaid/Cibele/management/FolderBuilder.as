@@ -3,6 +3,7 @@ package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.base.UIElement;
+    import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.entities.XSprite;
 
     import org.flixel.*;
@@ -13,6 +14,7 @@ package com.starmaid.Cibele.management {
     public class FolderBuilder {
         [Embed(source="/../assets/images/ui/UI_pink_x.png")] private var ImgInboxXPink:Class;
         [Embed(source="/../assets/images/ui/UI_pink_x_hover.png")] private var ImgInboxXPinkHover:Class;
+        [Embed(source="/../assets/images/ui/email_link_bg.png")] private static var ImgEmailLinkBg:Class;
 
         public var leafPopups:Array, allClickableElements:Array;
 
@@ -57,6 +59,10 @@ package com.starmaid.Cibele.management {
                 if ("icon" in cur && cur["icon"] != null) {
                     cur["icon_sprite"].destroy();
                     cur["icon_sprite"] = null;
+                    if("email_link_sprite" in cur && cur["email_link_sprite"] != null) {
+                        cur["email_link_sprite"].destroy();
+                        cur["email_link_sprite"] = null;
+                    }
                 }
                 if("hitbox_pos" in cur && "hitbox_dim" in cur) {
                     cur["hitbox_sprite"].destroy();
@@ -84,12 +90,16 @@ package com.starmaid.Cibele.management {
                 recurseSet[k][0]["x_sprite"] = null;
                 recurseSet[k][0]["x_hover_sprite"].destroy();
                 recurseSet[k][0]["x_hover_sprite"] = null;
+                if(recurseSet[k][0]["email_link_sprite"] != null) {
+                    recurseSet[k][0]["email_link_sprite"].destroy();
+                    recurseSet[k][0]["email_link_sprite"] = null;
+                }
             }
         }
 
         public function populateFolders(root:Object, elements:Array=null, root_folder:UIElement=null):void {
             var _screen:ScreenManager = ScreenManager.getInstance();
-            var cur:Object, curX:UIElement, curXHover:UIElement, spr:GameObject,
+            var cur:Object, curX:UIElement, curXHover:UIElement, curEmailLink:UIElement, spr:GameObject,
                 icon_pos:DHPoint, recurseSet:Array;
             if (root_folder != null) {
                 root["folder_sprite"] = root_folder;
@@ -97,6 +107,18 @@ package com.starmaid.Cibele.management {
             recurseSet = new Array();
             for (var i:int = 0; i < root["contents"].length; i++) {
                 cur = root["contents"][i];
+                if("email_link" in cur && cur["email_link"] == true) {
+                    curEmailLink = UIElement.fromPoint(cur["icon_pos"].add(root["folder_sprite"].pos).sub(new DHPoint(7, 4)));
+                    curEmailLink.loadGraphic(ImgEmailLinkBg, false, false, 337, 29);
+                    curEmailLink.scrollFactor = new DHPoint(0,0);
+                    curEmailLink.visible = false;
+                    FlxG.state.add(curEmailLink);
+                    if(elements != null) {
+                        elements.push(curEmailLink);
+                    }
+                    cur["email_link_sprite"] = curEmailLink;
+                    allClickableElements.push(curEmailLink);
+                }
                 if ("icon" in cur && cur["icon"] != null) {
                     spr = UIElement.fromPoint(cur["icon_pos"].add(root["folder_sprite"].pos));
                     spr.loadGraphic(cur["icon"], false, false, cur["icon_dim"].x, cur["icon_dim"].y);
@@ -111,7 +133,7 @@ package com.starmaid.Cibele.management {
                 }
                 if("hitbox_pos" in cur && "hitbox_dim" in cur) {
                     spr = UIElement.fromPoint(new DHPoint(cur["hitbox_pos"].x, cur["hitbox_pos"].y));
-                    spr.makeGraphic(cur["hitbox_dim"].x, cur["hitbox_dim"].y, 0x00ff0000);
+                    spr.makeGraphic(cur["hitbox_dim"].x * ScreenManager.getInstance().calcFullscreenScale(new DHPoint(3000, 1636)), cur["hitbox_dim"].y * ScreenManager.getInstance().calcFullscreenScale(new DHPoint(3000, 1636)), 0x00ff0000);
                     spr.scrollFactor = new DHPoint(0,0);
                     spr.slug = HITBOX_TAG;
                     FlxG.state.add(spr);
@@ -353,29 +375,51 @@ package com.starmaid.Cibele.management {
             }
         }
 
-        public function overlapXSprite(root:Object):void {
+        public function overlapSprites(root:Object):void {
             var cur:Object;
             for (var i:int = 0; i < root["contents"].length; i++) {
                 cur = root["contents"][i];
                 if (cur["contents"] is Array) {
                     if (cur["folder_sprite"].visible) {
-                        if((FlxG.state as GameState).cursorOverlaps(cur["x_sprite"]._getRect(), true)) {
-                            cur["x_sprite"].visible = false;
-                            cur["x_hover_sprite"].visible = true;
+                        if ("x_sprite" in cur) {
+                            if((FlxG.state as GameState).cursorOverlaps(cur["x_sprite"]._getRect(), true)) {
+                                cur["x_sprite"].visible = false;
+                                cur["x_hover_sprite"].visible = true;
+                            } else {
+                                cur["x_sprite"].visible = true;
+                                cur["x_hover_sprite"].visible = false;
+                            }
+                        }
+                        this.overlapSprites(cur);
+                    }
+                    if("email_link_sprite" in cur) {
+                        if((FlxG.state as GameState).cursorOverlaps(cur["email_link_sprite"]._getRect(), true)) {
+                            if(cur["icon_sprite"].visible) {
+                                cur["email_link_sprite"].visible = true;
+                            }
                         } else {
-                            cur["x_sprite"].visible = true;
-                            cur["x_hover_sprite"].visible = false;
+                            cur["email_link_sprite"].visible = false;
                         }
                     }
-                    this.overlapXSprite(cur);
                 } else {
                     if(cur["full_sprite"].visible) {
-                        if ((FlxG.state as GameState).cursorOverlaps(cur["x_sprite"]._getRect(), true)) {
-                            cur["x_sprite"].visible = false;
-                            cur["x_hover_sprite"].visible = true;
+                        if ("x_sprite" in cur) {
+                            if ((FlxG.state as GameState).cursorOverlaps(cur["x_sprite"]._getRect(), true)) {
+                                cur["x_sprite"].visible = false;
+                                cur["x_hover_sprite"].visible = true;
+                            } else {
+                                cur["x_sprite"].visible = true;
+                                cur["x_hover_sprite"].visible = false;
+                            }
+                        }
+                    }
+                    if("email_link_sprite" in cur) {
+                        if((FlxG.state as GameState).cursorOverlaps(cur["email_link_sprite"]._getRect(), true)) {
+                            if(cur["icon_sprite"].visible) {
+                                cur["email_link_sprite"].visible = true;
+                            }
                         } else {
-                            cur["x_sprite"].visible = true;
-                            cur["x_hover_sprite"].visible = false;
+                            cur["email_link_sprite"].visible = false;
                         }
                     }
                 }

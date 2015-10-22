@@ -12,6 +12,7 @@ package com.starmaid.Cibele.states {
     import flash.media.SoundTransform;
     import flash.media.Video;
     import flash.events.NetStatusEvent;
+    import flash.events.MouseEvent;
 
     public class PlayVideoState extends GameState {
         public var videoStream:NetStream;
@@ -20,8 +21,14 @@ package com.starmaid.Cibele.states {
         public var fadeThis:GameSound;
         public var holdLastFrame:Boolean;
 
-        public function PlayVideoState(filename:String, endCallback:Function, fadingSound:GameSound=null, endPause:Boolean=false) {
+        public function PlayVideoState(filename:String,
+                                       endCallback:Function,
+                                       fadingSound:GameSound=null,
+                                       endPause:Boolean=false)
+        {
             super(true, false, false);
+            this.hide_cursor_on_unpause = true;
+            this.use_loading_screen = false;
             this.loadVideo(filename);
             this.endCallback = endCallback;
             this.fadeThis = fadingSound;
@@ -53,12 +60,16 @@ package com.starmaid.Cibele.states {
             // mute videos for now
             videoStream.soundTransform = new SoundTransform(0);
 
-            FlxG.stage.addChild(video);
+            FlxG.stage.addChildAt(video, 0);
         }
 
         override public function create():void {
             super.create();
-            FlxG.bgColor = 0xff000000;
+            this.baseLayer.visible = false;
+            FlxG.clearCameraBuffer = true;
+            FlxG.bgColor = 0x00000000;
+            this.postCreate();
+            this.game_cursor.hide();
         }
 
         override public function destroy():void {
@@ -66,6 +77,18 @@ package com.starmaid.Cibele.states {
             videoStream.dispose();
             videoStream = null;
             super.destroy();
+        }
+
+        override public function clickHandler(event:MouseEvent):void {
+            if(!this.fading) {
+                if (!GlobalTimer.getInstance().isPaused()) {
+                    this.playClick();
+                }
+                this.clickCallback(
+                    new DHPoint(FlxG.mouse.screenX, FlxG.mouse.screenY),
+                    new DHPoint(FlxG.mouse.x, FlxG.mouse.y)
+                );
+            }
         }
 
         override public function update():void {

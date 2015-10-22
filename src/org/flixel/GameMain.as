@@ -14,6 +14,7 @@ package org.flixel {
         public function GameMain(GameSizeX:uint,GameSizeY:uint,InitialState:Class,Zoom:Number=1,GameFramerate:uint=60,FlashFramerate:uint=30,UseSystemCursor:Boolean=false)
         {
             super(GameSizeX, GameSizeY, InitialState, Zoom, GameFramerate, FlashFramerate, UseSystemCursor);
+            this.useSoundHotKeys = false;
             this.logfile = File.applicationStorageDirectory.resolvePath(
                 "error_log_" + new Date().valueOf() + ".txt");
             this.root.loaderInfo.uncaughtErrorEvents.addEventListener(

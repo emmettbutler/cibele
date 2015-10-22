@@ -2,6 +2,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.management.FernBackgroundLoader;
     import com.starmaid.Cibele.management.PopUpManager;
+    import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.management.HallwayTileLoader;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.MessageManager;
@@ -92,7 +93,7 @@ package com.starmaid.Cibele.states {
             fernTop = loader.load();
             fernTop.scrollFactor = new DHPoint(1, 1);
 
-            fernBase = (new BackgroundLoader()).loadSingleTileBG("/../assets/images/worlds/Fern-part-2.png");
+            fernBase = (new BackgroundLoader()).loadSingleTileBG("/../assets/async/images/worlds/Fern-part-2.png");
             fernBase.scrollFactor = new DHPoint(1, 1);
 
             leftBound = ScreenManager.getInstance().screenWidth * .39;
@@ -117,6 +118,10 @@ package com.starmaid.Cibele.states {
             super.update();
             if (this._state != STATE_RETURN) {
                 this.tileLoader.update();
+            }
+
+            if (this.player.mouse_held) {
+                this.startConvo();
             }
 
             if (this.fernBase.y != this.fernTop.y + this.fernTop.height) {
@@ -156,10 +161,6 @@ package com.starmaid.Cibele.states {
                     );
                 }
             }
-
-            if (FlxG.mouse.justPressed()) {
-                this.startConvo();
-            }
         }
 
         public function nextState():void { }
@@ -193,6 +194,9 @@ package com.starmaid.Cibele.states {
 
         override public function clickCallback(screenPos:DHPoint,
                                                worldPos:DHPoint):void {
+            if (!GlobalTimer.getInstance().isPaused()) {
+                this.startConvo();
+            }
             if ((new Date().valueOf() - this.startTime) > 1 * GameSound.MSEC_PER_SEC)
             {
                 super.clickCallback(screenPos, worldPos);

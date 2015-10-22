@@ -4,6 +4,7 @@ package com.starmaid.Cibele.base {
     import com.starmaid.Cibele.entities.MenuButton;
     import com.starmaid.Cibele.management.DebugConsoleManager;
     import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.management.MessageManager;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.PopUpManager;
@@ -21,7 +22,7 @@ package com.starmaid.Cibele.base {
         [Embed(source="/../assets/audio/effects/sfx_mouseclick.mp3")] private var SfxClick:Class;
         [Embed(source="/../assets/audio/effects/sfx_mouseclick2.mp3")] private var SfxClick2:Class;
 
-        protected var updateSound:Boolean, updatePopup:Boolean,
+        public var updateSound:Boolean, updatePopup:Boolean,
                       updateMessages:Boolean, showEmoji:Boolean = true,
                       enable_fade:Boolean = false;
         protected var game_cursor:GameCursor, baseLayer:GameObject;
@@ -43,6 +44,9 @@ package com.starmaid.Cibele.base {
         private var slug:String;
         private var fadeSoundName:String;
         public var load_screen_text:String;
+        public var notificationTextColor:uint;
+        private var framesAlive:Number = 0;
+        public var soundFadeRate:Number = 1;
 
         public var ui_color_flag:Number;
         public var fading:Boolean;
@@ -65,6 +69,7 @@ package com.starmaid.Cibele.base {
             this.enable_fade = fade;
             this.slug = "" + (Math.random() * 1000000);
             this.callbackRefs = new Array();
+            this.notificationTextColor = 0xffffffff;
 
             this.ui_color_flag = UICOLOR_DEFAULT;
 
@@ -81,6 +86,7 @@ package com.starmaid.Cibele.base {
             this.menuButtons = new Array();
 
             FlxG.bgColor = 0xff000000;
+            FlxG.clearCameraBuffer = false;
 
             var baseLayerColor:uint = 0xff000000;
             if (ScreenManager.getInstance().DEBUG) {
@@ -118,6 +124,7 @@ package com.starmaid.Cibele.base {
             this.game_cursor = new GameCursor();
 
             FlxG.stage.addEventListener(MouseEvent.MOUSE_UP, clickHandler);
+            DialoguePlayer.getInstance();
         }
 
         override public function destroy():void {
@@ -248,6 +255,8 @@ package com.starmaid.Cibele.base {
             // the following loop is copypasta from FlxGroup update, altered to
             // support pausing
 
+            this.framesAlive++;
+
             if(this.use_loading_screen) {
                 if(this.loadingScreen != null) {
                     this.loadingScreen.update();
@@ -317,17 +326,15 @@ package com.starmaid.Cibele.base {
                         this.postFadeFn
                     );
                 }
-                var snd:GameSound = SoundManager.getInstance().getSoundByName(this.fadeSoundName);
-                if(snd != null) {
-                    snd.fadeOutSound();
+                if (this.framesAlive % this.soundFadeRate == 0) {
+                    var snd:GameSound = SoundManager.getInstance().getSoundByName(this.fadeSoundName);
+                    if(snd != null) {
+                        snd.fadeOutSound();
+                    }
                 }
             }
 
-            if (FlxG.keys.justPressed("P")) {
-                SoundManager.getInstance().increaseVolume();
-            } else if (FlxG.keys.justPressed("O")) {
-                SoundManager.getInstance().decreaseVolume();
-            } else if (FlxG.keys.justPressed("ESCAPE")) {
+            if (FlxG.keys.justPressed("ESCAPE")) {
                 if (GlobalTimer.getInstance().isPaused()) {
                     this.resume();
                 } else if (this.pausable){
@@ -392,6 +399,7 @@ package com.starmaid.Cibele.base {
         public function pause():void {
             GlobalTimer.getInstance().pause();
             SoundManager.getInstance().pause();
+            DialoguePlayer.getInstance().pause();
             this.pauseScreen.visible = GlobalTimer.getInstance().isPaused();
             this.game_cursor.show();
         }
@@ -399,6 +407,7 @@ package com.starmaid.Cibele.base {
         public function resume():void {
             GlobalTimer.getInstance().resume();
             SoundManager.getInstance().resume();
+            DialoguePlayer.getInstance().resume();
             this.pauseScreen.visible = GlobalTimer.getInstance().isPaused();
             if (this.hide_cursor_on_unpause) {
                 this.game_cursor.hide();
@@ -434,8 +443,10 @@ package com.starmaid.Cibele.base {
         }
 
         public function addEventListener(event:String, callback:Function):void {
-            callbackRefs.push(callback);
-            FlxG.stage.addEventListener(event, callback, false, 0, true);
+            if (callbackRefs != null) {
+                callbackRefs.push(callback);
+                FlxG.stage.addEventListener(event, callback, false, 0, true);
+            }
         }
 
         public function removeEventListener(event:String, callback:Function):void {

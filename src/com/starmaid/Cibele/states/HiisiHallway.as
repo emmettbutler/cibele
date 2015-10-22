@@ -1,5 +1,5 @@
 package com.starmaid.Cibele.states {
-    import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.utils.DHPoint;
@@ -11,8 +11,6 @@ package com.starmaid.Cibele.states {
     import org.flixel.plugin.photonstorm.FlxCollision;
 
     public class HiisiHallway extends Hallway {
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_morning.mp3")] private static var Convo1:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_westcoast.mp3")] private static var Convo2:Class;
 
         public function HiisiHallway(state:Number=0){
             _state = state;
@@ -48,19 +46,19 @@ package com.starmaid.Cibele.states {
 
         public static function playFirstConvoPartTwo():void {
             if (FlxG.state is HiisiHallway || FlxG.state is HiisiTeleportRoom) {
-                SoundManager.getInstance().playSound(HiisiHallway.Convo2,
+                DialoguePlayer.getInstance().playFile("voc_hiisi_westcoast",
                     GameState.SHORT_DIALOGUE ? 1 : 25*GameSound.MSEC_PER_SEC,
-                    HiisiHallway.startHiisiConvo, false, 1, GameSound.VOCAL,
+                    HiisiHallway.startHiisiConvo, 1, GameSound.VOCAL,
                     Hiisi.CONVO_2_HALL
                 );
             }
         }
 
         override public function startConvoCallback():void {
-            SoundManager.getInstance().playSound(
-                HiisiHallway.Convo1,
+            DialoguePlayer.getInstance().playFile(
+                "voc_hiisi_morning",
                 GameState.SHORT_DIALOGUE ? 1 : 20*GameSound.MSEC_PER_SEC,
-                HiisiHallway.firstConvoPartTwo, false, 1,
+                HiisiHallway.firstConvoPartTwo, 1,
                 GameSound.VOCAL,
                 Hiisi.CONVO_1_HALL
             );

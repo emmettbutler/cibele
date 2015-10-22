@@ -39,9 +39,8 @@ package com.starmaid.Cibele.entities {
         protected var damageLockMap:Dictionary;
         protected var smoke:ParticleExplosion;
         public var footPos:DHPoint, footPosOffset:DHPoint, basePosOffset:DHPoint;
-        private var lastTrackingDirUpdateTime:Number = -1;
+        protected var lastTrackingDirUpdateTime:Number = -1;
         protected var flipFacing:Boolean = false;
-        public var damagedByPartyMember:PartyMember;
 
         public static const STATE_IDLE:Number = 1;
         public static const STATE_TRACKING:Number = 3;
@@ -91,6 +90,11 @@ package com.starmaid.Cibele.entities {
             this.loopCallSound();
         }
 
+        public function shouldCollide():Boolean {
+            return this.isOnscreen() && !this.isDead() &&
+                (this._state == STATE_RECOIL || this._state == STATE_TRACKING);
+        }
+
         public function isDead():Boolean {
             return this._state == STATE_DEAD;
         }
@@ -120,6 +124,10 @@ package com.starmaid.Cibele.entities {
 
         public function get enemyType():String {
             return this._enemyType;
+        }
+
+        public function targetable():Boolean {
+            return !this.isDead();
         }
 
         public function isBoss():Boolean {
@@ -160,11 +168,13 @@ package com.starmaid.Cibele.entities {
         }
 
         public function takeDamage(p:PartyMember):void{
-            this.damagedByPartyMember = p;
             if (this.isDead()) {
                 return;
             }
             if (this.damageLockMap[p.slug] == true) {
+                return;
+            }
+            if (this != p.attackStartTarget) {
                 return;
             }
             this.damageLockMap[p.slug] = true;
@@ -177,17 +187,19 @@ package com.starmaid.Cibele.entities {
                                                 damageLockMap[p.slug] = false;
                                               }, true);
             this._state = STATE_RECOIL;
-            this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
+            if (this.closestPartyMemberDisp != null) {
+                this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
+            }
             this.hitPoints -= Math.floor(this.hitDamage * p.teamPowerDamageMul);
             this._healthBar.setPoints(this.hitPoints);
-
+            p.runParticles(this.getMiddlePos().sub(new DHPoint(0, this.height/3)));
             if(this.hitPoints <= 0){
                 this.die(p);
             }
         }
 
         public function activeTarget():void {
-            if (this._healthBar == null || this.isDead()) {
+            if (this._healthBar == null || !this.targetable()) {
                 return;
             }
             this._healthBar.setVisible(true);
@@ -294,6 +306,21 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        public function doState__TRACKING():void {
+            if (this.timeAlive - this.lastTrackingDirUpdateTime > 1300) {
+                this.lastTrackingDirUpdateTime = this.timeAlive;
+                var mul:Number = (FlxG.state as LevelMapState).enemyDirMultiplier;
+                if (mul != 1) {
+                    this.dir = this.closestPartyMemberDisp.normalized().mulScl(mul);
+                } else {
+                    this.dir = this.closestPartyMemberDisp.normalized();
+                }
+            }
+            if (!this.closestPartyMemberIsInTrackingRange()) {
+                this.enterIdleState();
+            }
+        }
+
         public function enterIdleState():void {
             this._state = STATE_IDLE;
             this.visible = true;
@@ -356,18 +383,7 @@ package com.starmaid.Cibele.entities {
                     break;
 
                 case STATE_TRACKING:
-                    if (this.timeAlive - this.lastTrackingDirUpdateTime > 1300) {
-                        this.lastTrackingDirUpdateTime = this.timeAlive;
-                        var mul:Number = (FlxG.state as LevelMapState).enemyDirMultiplier;
-                        if (mul != 1) {
-                            this.dir = this.closestPartyMemberDisp.normalized().mulScl(mul);
-                        } else {
-                            this.dir = this.closestPartyMemberDisp.normalized();
-                        }
-                    }
-                    if (!this.closestPartyMemberIsInTrackingRange()) {
-                        this.enterIdleState();
-                    }
+                    this.doState__TRACKING();
                     break;
 
                 case STATE_RECOIL:

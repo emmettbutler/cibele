@@ -70,7 +70,7 @@ package com.starmaid.Cibele.entities {
                     that._state = STATE_HANG;
                     GlobalTimer.getInstance().setMark(
                         that.slug + "fade",
-                        .6 * GameSound.MSEC_PER_SEC,
+                        1 * GameSound.MSEC_PER_SEC,
                         function():void {
                             that._state = STATE_FADE;
                         }, true

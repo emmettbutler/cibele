@@ -2,6 +2,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.entities.Emote;
     import com.starmaid.Cibele.entities.IkuTursoBoss;
     import com.starmaid.Cibele.entities.MapNode;
@@ -19,15 +20,6 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/audio/music/bgm_ikuturso_intro.mp3")] private var ITBGMIntro:Class;
         [Embed(source="/../assets/audio/music/bgm_ikuturso_loop.mp3")] private var ITBGMLoop:Class;
         [Embed(source="/../assets/audio/music/vid_sexyselfie.mp3")] private var VidBGMLoop:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_bulldog.mp3")] private var Convo1:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_ampule.mp3")] private var Convo2:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_photogenic.mp3")] private var Convo3:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_attractive.mp3")] private var Convo4:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_picture.mp3")] private var Convo5:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_ikuturso_whattowear.mp3")] private var Convo6:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_ichilasthit.mp3")] private var IchiBossKill:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_yeahsorry.mp3")] private var SndYeahSorry:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_extra_areyoucoming.mp3")] private var SndRUComing:Class;
         [Embed(source="/../assets/images/worlds/bubbles_1.png")] private var ImgBubbles:Class;
         [Embed(source="/../assets/images/worlds/seaweed1.png")] private var ImgSeaweed1:Class;
         [Embed(source="/../assets/images/worlds/seaweed2.png")] private var ImgSeaweed2:Class;
@@ -42,61 +34,68 @@ package com.starmaid.Cibele.states {
 
         public function IkuTurso() {
             PopUpManager.GAME_ACTIVE = true;
+            this.notificationTextColor = 0xff7c6e6a;
             this.load_screen_text = "Iku Turso";
             this.ui_color_flag = GameState.UICOLOR_PINK;
-            this.teamPowerBossThresholds = [6, 15];
+            if (ScreenManager.getInstance().SHORT_DIALOGUE) {
+                this.teamPowerBossThresholds = [1, 3];
+            } else {
+                this.teamPowerBossThresholds = [6, 15];
+            }
 
             // embedded sound, length in ms, time to wait before playing
             this.conversationPieces = [
                 {
-                    "audio": Convo1, "len": 59*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "ends_with_popup": false
+                    "len": 59*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "ends_with_popup": false,
+                    "audio_name": "voc_ikuturso_bulldog"
                 },
                 {
-                    "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
+                    "len": 4*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showIchiDownloadWindow, "min_team_power": 5
                 },
                 {
-                    "audio": Convo2, "len": 80*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 80*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_ikuturso_ampule"
                 },
                 {
-                    "audio": null, "len": 4*GameSound.MSEC_PER_SEC,
+                    "len": 4*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showSelfiesWindow, "min_team_power": 10
                 },
                 {
-                    "audio": Convo3, "len": 27*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 27*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_ikuturso_photogenic"
                 },
                 {
-                    "audio": null, "len": 5*GameSound.MSEC_PER_SEC,
+                    "len": 5*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showGuilEmail
                 },
                 {
-                    "audio": Convo4, "len": 108*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 108*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_ikuturso_attractive"
                 },
                 {
-                    "audio": null, "len": 2*GameSound.MSEC_PER_SEC,
+                    "len": 2*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showIchiSelfie1, "min_team_power": 20
                 },
                 {
-                    "audio": Convo5, "len": 16*GameSound.MSEC_PER_SEC,
-                    "delay": 0
+                    "len": 16*GameSound.MSEC_PER_SEC,
+                    "delay": 0, "audio_name": "voc_ikuturso_picture"
                 },
                 {
-                    "audio": null, "len": 8*GameSound.MSEC_PER_SEC,
+                    "len": 8*GameSound.MSEC_PER_SEC,
                     "delay": 0, "endfn": this.showCibSelfieFolder, "min_team_power": 22
                 },
                 {
-                    "audio": Convo6, "len": 32 * GameSound.MSEC_PER_SEC, "delay": 0, "min_team_power": 25
+                    "len": 32 * GameSound.MSEC_PER_SEC, "delay": 0,
+                    "min_team_power": 25, "audio_name": "voc_ikuturso_whattowear"
                 },
                 {
-                    "audio": null, "len": 1*GameSound.MSEC_PER_SEC,
+                    "len": 1*GameSound.MSEC_PER_SEC,
                     "delay": 0, "boss_gate": true
                 },
                 {
-                    "audio": null, "len": 3*GameSound.MSEC_PER_SEC, "endfn": playEndDialogue
+                    "len": 3*GameSound.MSEC_PER_SEC, "endfn": playEndDialogue
                 }
             ];
         }
@@ -268,9 +267,9 @@ package com.starmaid.Cibele.states {
 
         public function playEndDialogue():void {
             this.bitDialogueLock = true;
-            SoundManager.getInstance().playSound(
-                IchiBossKill, 3*GameSound.MSEC_PER_SEC, this.playEndFilm,
-                false, 1, GameSound.VOCAL);
+            DialoguePlayer.getInstance().playFile(
+                "voc_extra_ichilasthit", 3*GameSound.MSEC_PER_SEC,
+                this.playEndFilm, 1, GameSound.VOCAL);
         }
 
         public function playEndFilm():void {
@@ -279,7 +278,7 @@ package com.starmaid.Cibele.states {
                     SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
                         false, 1, GameSound.BGM);
                     FlxG.switchState(
-                        new PlayVideoState("/../assets/video/sexy_selfie.flv",
+                        new PlayVideoState("/../assets/async/video/sexy_selfie.mp4",
                             function():void {
                                 PopUpManager.GAME_ACTIVE = false;
                                 FlxG.switchState(new BlankScreen(
@@ -290,7 +289,7 @@ package com.starmaid.Cibele.states {
                                         FlxG.switchState(new TextScreen(5*GameSound.MSEC_PER_SEC,
                                         function():void {
                                             FlxG.switchState(new EuryaleDesktop());
-                                        }, "April 13th, 2009"
+                                        }, "2 Months Later\nApril 13th, 2009"
                                         ));
                                         */
                                     }
@@ -322,16 +321,16 @@ package com.starmaid.Cibele.states {
         }
 
         public function playRUComing():void {
-            SoundManager.getInstance().playSound(
-                SndRUComing, GameSound.MSEC_PER_SEC * 3, this.playYeahSorry,
-                false, 1, GameSound.VOCAL
+            DialoguePlayer.getInstance().playFile(
+                "voc_extra_areyoucoming", GameSound.MSEC_PER_SEC * 3,
+                this.playYeahSorry, 1, GameSound.VOCAL
             );
         }
 
         public function playYeahSorry():void {
-            SoundManager.getInstance().playSound(
-                SndYeahSorry, GameSound.MSEC_PER_SEC * 2, this.playFirstConvo,
-                false, 1, GameSound.VOCAL
+            DialoguePlayer.getInstance().playFile(
+                "voc_extra_yeahsorry", GameSound.MSEC_PER_SEC * 2,
+                this.playFirstConvo, 1, GameSound.VOCAL
             );
         }
 

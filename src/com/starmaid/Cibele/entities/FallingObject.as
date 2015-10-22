@@ -14,7 +14,7 @@ package com.starmaid.Cibele.entities {
 
         public function FallingObject(pos:DHPoint) {
             super(pos);
-            this.scrollFactor = new DHPoint(0, 0);
+            this.scrollFactor = new DHPoint(.3, 0);
             this.parentState = FlxG.state as GameState;
             this.setFallDir();
         }
@@ -42,7 +42,7 @@ package com.starmaid.Cibele.entities {
 
             if (this.pos.y >= ScreenManager.getInstance().screenHeight) {
                 this.setPos(new DHPoint(
-                    Math.random() * (ScreenManager.getInstance().screenWidth - this.frameWidth),
+                    -2 * ScreenManager.getInstance().screenWidth + (4 * Math.random() * ScreenManager.getInstance().screenWidth),
                     -1 * this.frameHeight
                 ));
                 this.setFallDir();

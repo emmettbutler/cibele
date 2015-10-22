@@ -20,10 +20,13 @@ package com.starmaid.Cibele.entities {
         private var _path:Path = null;
         private var targetPathNode:PathNode;
         private var escape_counter:Number = 0;
+        private var damagedByPartyMember:PartyMember;
         private var damageThreshold:Array;
+        private var appearanceStartHP:Number;
         private var _spawnCounter:Number = 0;
         private var _started:Boolean = false;
         private var canDie:Boolean = false;
+        private var playerDisp:DHPoint;
         protected var _notificationText:FlxText;
         public var notificationTextColor:uint;
         private var scaleText:Boolean = false;
@@ -45,6 +48,7 @@ package com.starmaid.Cibele.entities {
         public function BossEnemy(pos:DHPoint) {
             super(pos, 600);
             this.damageThreshold = [400, 200];
+            this.appearanceStartHP = this.hitPoints;
             this._enemyType = Enemy.TYPE_BOSS;
             this.sightRange = 750;
             this.hitDamage = ScreenManager.getInstance().SHORT_DIALOGUE ? 100 : 10;
@@ -79,6 +83,10 @@ package com.starmaid.Cibele.entities {
             this._state = STATE_DESPAWN;
         }
 
+        override public function targetable():Boolean {
+            return this.visible && this._healthBar.visible;
+        }
+
         public function get name():String {
             return this._name;
         }
@@ -104,19 +112,30 @@ package com.starmaid.Cibele.entities {
         }
 
         public function setActive():void {
-            this.active_lock = true;
-            this._started = true;
-            this.footPosOffset = new DHPoint(this.width / 2, this.height);
-            this.basePosOffset = new DHPoint(0, this.height);
-            if(this._spawnCounter >= this.damageThreshold.length) {
-                this.canDie = true;
-            }
-            this._spawnCounter += 1;
-            this.visible = true;
+            this.attemptWarp();
+        }
+
+        public function attemptWarp():void {
+            this.visible = false;
             this.warpToPlayer();
-            this._notificationText.text = this._name + " has appeared!";
-            this.showNotificationText();
-            GlobalTimer.getInstance().setMark("boss app hb" + Math.random().toString(), 5*GameSound.MSEC_PER_SEC, this.showHealthBar);
+            if (this.isOnscreen()) {
+                GlobalTimer.getInstance().setMark("boss warp" + Math.random().toString(),
+                    3 * GameSound.MSEC_PER_SEC, this.attemptWarp);
+            } else {
+                this.footPosOffset = new DHPoint(this.width / 2, this.height);
+                this.basePosOffset = new DHPoint(0, this.height);
+                if(this._spawnCounter >= this.damageThreshold.length) {
+                    this.canDie = true;
+                }
+                this._spawnCounter += 1;
+                this.active_lock = true;
+                this._started = true;
+                this.visible = true;
+                this._notificationText.text = this._name + " has appeared!";
+                this.showNotificationText();
+                GlobalTimer.getInstance().setMark("boss app hb" + Math.random().toString(),
+                    5*GameSound.MSEC_PER_SEC, this.showHealthBar);
+            }
         }
 
         public function hideHealthBar():void {
@@ -140,8 +159,19 @@ package com.starmaid.Cibele.entities {
             }
         }
 
+        override public function doState__TRACKING():void {
+            this.playerDisp = this.playerRef.footPos.add(new DHPoint(0, 100))
+                                                    .sub(this.getAttackPos());
+            if (this.timeAlive - this.lastTrackingDirUpdateTime > 1300) {
+                this.lastTrackingDirUpdateTime = this.timeAlive;
+                this.dir = this.playerDisp.normalized().mulScl(7);
+            }
+        }
+
         override public function update():void{
             super.update();
+
+            this.scale.x = 1;
 
             if(this.scaleText) {
                 if(this._notificationText.size < 30) {
@@ -170,7 +200,7 @@ package com.starmaid.Cibele.entities {
                     } else {
                         disp = this.targetPathNode.pos.sub(this.footPos);
                         if (disp._length() < 10) {
-                            if(this.escape_counter > 10) {
+                            if(this.escape_counter > 0) {
                                 this.startTracking();
                                 this.escape_counter = 0;
                             } else {
@@ -215,6 +245,9 @@ package com.starmaid.Cibele.entities {
         }
 
         public function setInactive():void {
+            if (this._state == STATE_INACTIVE) {
+                return;
+            }
             this._state = STATE_INACTIVE;
             this.visible = false;
             this._notificationText.text = this._name + " has escaped!";
@@ -269,6 +302,7 @@ package com.starmaid.Cibele.entities {
                 dir.normalized().mulScl(ScreenManager.getInstance().screenWidth));
             var warpNode:MapNode = this._mapnodes.getClosestNode(targetPoint, false);
             var headFootDisp:DHPoint = this.pos.sub(this.footPos);
+            this.appearanceStartHP = this.hitPoints;
             this.setPos(warpNode.pos.add(headFootDisp));
             this.startTracking();
         }
@@ -278,20 +312,16 @@ package com.starmaid.Cibele.entities {
             if(this._state == STATE_DESPAWN && !this.canDie) {
                 return;
             }
-            if (this.isDead()) {
+            if (this.isDead() || this._state == STATE_INACTIVE) {
                 return;
             }
             if (this.hitPoints <= 0) {
                 this.die(this.damagedByPartyMember);
                 return;
             }
-            if (!this.isEscaping()) {
-                if(this.hitPoints % 100 == 0) {
-                    this._state = STATE_ESCAPE;
-                } else {
-                    this._state = STATE_RECOIL;
-                    this.dir = this.closestPartyMemberDisp.normalized().mulScl(this.recoilPower).reflectX();
-                }
+            if(this.hitPoints < this.appearanceStartHP - this.hitDamage * 6) {
+                this._state = STATE_ESCAPE;
+                this.targetPathNode = null;
             }
             if (this.damageLockMap[p.slug] == true) {
                 return;
@@ -308,7 +338,7 @@ package com.starmaid.Cibele.entities {
                                                 }
                                                 damageLockMap[p.slug] = false;
                                               }, true);
-
+            p.runParticles(this.footPos.add(new DHPoint(0, -20)));
             if(!this.canDie &&
                this.hitPoints <= this.damageThreshold[this._spawnCounter - 1])
             {
@@ -367,11 +397,11 @@ package com.starmaid.Cibele.entities {
 
         override public function addVisibleObjects():void {
             FlxG.state.add(this.debugText);
-            FlxG.state.add(this._notificationText);
         }
 
         public function addHealthBarVisibleObjects():void {
             this._healthBar.addVisibleObjects();
+            FlxG.state.add(this._notificationText);
         }
     }
 }

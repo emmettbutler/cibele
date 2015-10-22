@@ -10,8 +10,7 @@ package com.starmaid.Cibele.states {
     import org.flixel.*;
 
     public class CreditsState extends GameState {
-        [Embed(source="/../assets/audio/music/bgm_euryale_intro.mp3")] private var BGMIntro:Class;
-        [Embed(source="/../assets/audio/music/bgm_euryale_loop.mp3")] private var BGMLoop:Class;
+        [Embed(source="/../assets/audio/music/bgm_cibele.mp3")] private var SndBGM:Class;
         private var creditsStructure:Array;
         private var creditsText:FlxText;
         private var curCredit:Number;
@@ -27,6 +26,7 @@ package com.starmaid.Cibele.states {
         public function CreditsState() {
             super(true, false, false);
             this.enable_fade = true;
+            this.soundFadeRate = 10;
             this.use_loading_screen = false;
 
             this.creditsStructure = new Array(
@@ -49,13 +49,25 @@ package com.starmaid.Cibele.states {
                     'text': 'Short films produced by Samantha Corey'
                 },
                 {
-                    'text': 'Special thanks to:\n\n\nNöel Hanson\n\nand Sean Hogan\n\nfor asset support.'
+                    'text': 'Blake played by\nJustin Briner (voice)\nEmmett Butler (short film actor)'
                 },
                 {
-                    'text': 'Special thanks to:\n\n\nBennett Foddy,\n\nSteve Gaynor\n\nAnd our many helpful playtesters.'
+                    'text': 'Nina voiced and acted by Nina Freeman'
                 },
                 {
-                    'text': 'Finally, special thanks to all of the people that Nina met (and grew up with) on the Sylph server in Final Fantasy Online. This game would not exist without all of you.'
+                    'text': 'Special thanks to:\n\n\nNöel Clark (art)\nand Sean Hogan (sound)\n\nfor asset support.'
+                },
+                {
+                    'text': 'Special thanks to the folks who let us use their likeness in photographs:\nDiego Garcia, Arielle Martinez, Adam Christie, Brittney Lezon, Melanie Lezon, Jenny Jiao Hsia, Alec Thomson, Nick Robinson and SQ Sunseri.\n\nSpecial thanks for paintings by\nEric Lahaie ("Bulldog Hell")\nand Puri ("ffxi")\nand to Brittney and Melanie for the fan art scans.'
+                },
+                {
+                    'text': 'Special thanks to our playtesters and supporters:\nBennett Foddy, Steve Gaynor, Diego Garcia, Karla Zimonja, Heather Winter, Hannah Bown, Tynan Wales, Josh Clark, Nöel Clark, Michael Hansen, Josh Schonstal, Naomi Clark and Joni Kittaka.'
+                },
+                {
+                    'text': 'Finally, special thanks to all of the people that Nina met (and grew up with) on the Sylph server in Final Fantasy Online.\nThis game would not exist without all of you.'
+                },
+                {
+                    'text': 'Thanks for playing Cibele.\n\n(c) Star Maid Games, 2015'
                 }
             );
 
@@ -92,15 +104,9 @@ package com.starmaid.Cibele.states {
                 this.showNextCredit
             );
 
-            function _bgmCallback():void {
-                SoundManager.getInstance().playSound(
-                    BGMLoop, 0, null, true, .4, GameSound.BGM, CreditsState.BGM,
-                    false, false
-                );
-            }
-            SoundManager.getInstance().playSound(
-                BGMIntro, 2.6 * GameSound.MSEC_PER_SEC, _bgmCallback, false,
-                .4, GameSound.BGM, CreditsState.BGM, false, false, false
+            GlobalTimer.getInstance().setMark(
+                "credits-bgm-start", 10 * GameSound.MSEC_PER_SEC,
+                this.playCreditsMusic
             );
 
             this.updatePopup = false;
@@ -125,6 +131,13 @@ package com.starmaid.Cibele.states {
                 case STATE_STEADY:
                     break;
             }
+        }
+
+        public function playCreditsMusic():void {
+            SoundManager.getInstance().playSound(
+                SndBGM, 116 * GameSound.MSEC_PER_SEC, null, true,
+                .4, GameSound.BGM, CreditsState.BGM, false, false, false, true
+            );
         }
 
         public function showNextCredit():void {
@@ -158,7 +171,7 @@ package com.starmaid.Cibele.states {
                     function():void {
                         ScreenManager.getInstance().resetGame();
                     },
-                    1 * GameSound.MSEC_PER_SEC,
+                    3 * GameSound.MSEC_PER_SEC,
                     CreditsState.BGM
                 );
             }

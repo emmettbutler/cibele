@@ -1,5 +1,5 @@
 package com.starmaid.Cibele.states {
-    import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.utils.DHPoint;
@@ -11,9 +11,6 @@ package com.starmaid.Cibele.states {
     import org.flixel.plugin.photonstorm.FlxCollision;
 
     public class EuryaleHallway extends Hallway {
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_hey.mp3")] private static var Convo1:Class;
-        [Embed(source="/../assets/audio/voiceover/voc_euryale_teleport.mp3")] private static var Convo1_2:Class;
-
         public function EuryaleHallway(state:Number=0){
             _state = state;
             loading_screen_timer = 9;
@@ -48,10 +45,12 @@ package com.starmaid.Cibele.states {
         }
 
         public static function playFirstConvoPartTwo():void {
-            SoundManager.getInstance().playSound(
-                    EuryaleHallway.Convo1_2, GameState.SHORT_DIALOGUE ? 1 : 30*GameSound.MSEC_PER_SEC, EuryaleHallway.firstConvoPartTwoPause, false, 1, GameSound.VOCAL,
-                    Euryale.CONVO_1_2_HALL
-                );
+            DialoguePlayer.getInstance().playFile(
+                "voc_euryale_teleport",
+                GameState.SHORT_DIALOGUE ? 1 : 30*GameSound.MSEC_PER_SEC,
+                EuryaleHallway.firstConvoPartTwoPause, 1,
+                GameSound.VOCAL, Euryale.CONVO_1_2_HALL
+            );
         }
 
         public static function firstConvoPartTwoPause():void {
@@ -61,9 +60,11 @@ package com.starmaid.Cibele.states {
         }
 
         override public function startConvoCallback():void {
-            SoundManager.getInstance().playSound(
-                EuryaleHallway.Convo1, GameState.SHORT_DIALOGUE ? 1 : 8*GameSound.MSEC_PER_SEC, EuryaleHallway.firstConvoPartTwo, false, 1, GameSound.VOCAL,
-                Euryale.CONVO_1_HALL
+            DialoguePlayer.getInstance().playFile(
+                "voc_euryale_hey",
+                GameState.SHORT_DIALOGUE ? 1 : 8*GameSound.MSEC_PER_SEC,
+                EuryaleHallway.firstConvoPartTwo, 1,
+                GameSound.VOCAL, Euryale.CONVO_1_HALL
             );
         }
     }

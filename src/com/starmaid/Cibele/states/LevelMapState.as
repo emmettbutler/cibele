@@ -4,6 +4,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.BackgroundLoader;
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.ProceduralDialogueGenerator;
+    import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.PartyMember;
     import com.starmaid.Cibele.entities.Enemy;
@@ -162,15 +163,13 @@ package com.starmaid.Cibele.states {
         }
 
         public function resolveAttacksHelper(obj:PartyMember):void {
-            if (!obj.isAttacking()) {
+            if (!obj.inReverseAttack) {
                 return;
             }
             var current_enemy:Enemy;
             for (var i:int = 0; i < this.enemies.length(); i++) {
                 current_enemy = this.enemies.get_(i);
-                if (obj.enemyIsInAttackRange(current_enemy) &&
-                    current_enemy == obj.targetEnemy
-                ) {
+                if (current_enemy == obj.targetEnemy) {
                     current_enemy.takeDamage(obj);
                 }
             }
@@ -273,7 +272,7 @@ package com.starmaid.Cibele.states {
                     endfn, audioInfo);
                 var finalEndFn:Function = prevEndFn;
                 var prevDialogueLock:Boolean = this.bitDialogueLock;
-                if(audioInfo["audio"] == null) {
+                if(!audioInfo.hasOwnProperty("audio_name") || audioInfo["audio_name"] == null) {
                     finalEndFn = function():void {
                         bitDialogueLock = prevDialogueLock;
                         prevEndFn();
@@ -285,10 +284,10 @@ package com.starmaid.Cibele.states {
                         finalEndFn, true
                     );
                 } else {
-                    SoundManager.getInstance().playSound(
-                        audioInfo["audio"],
+                    DialoguePlayer.getInstance().playFile(
+                        audioInfo["audio_name"],
                         GameState.SHORT_DIALOGUE ? 1 : audioInfo["len"],
-                        finalEndFn, false, 1, GameSound.VOCAL
+                        finalEndFn, 1
                     );
                 }
             } else {

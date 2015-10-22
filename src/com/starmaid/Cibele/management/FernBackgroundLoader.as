@@ -24,24 +24,24 @@ package com.starmaid.Cibele.management {
                 {
                     "xPos": _screen.screenWidth * .165,
                     "frame": new DHPoint(526, 1172),
-                    "image": "/../assets/images/worlds/waterfall_l.png",
+                    "image": "/../assets/async/images/worlds/waterfall_l.png",
                     "object": null
                 },
                 {
                     "xPos": _screen.screenWidth * .395,
                     "frame": new DHPoint(629, 940),
-                    "image": "/../assets/images/worlds/waterfall_m.png",
+                    "image": "/../assets/async/images/worlds/waterfall_m.png",
                     "object": null
                 },
                 {
                     "xPos": _screen.screenWidth * .65,
                     "frame": new DHPoint(526, 1172),
-                    "image": "/../assets/images/worlds/waterfall_r.png",
+                    "image": "/../assets/async/images/worlds/waterfall_r.png",
                     "object": null
                 }
             ];
 
-            bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/images/worlds/Fern-part-1.png");
+            bg = (new BackgroundLoader()).loadSingleTileBG("/../assets/async/images/worlds/Fern-part-1.png");
 
             var cur:Object;
             for (var i:int = 0; i < doors.length; i++) {

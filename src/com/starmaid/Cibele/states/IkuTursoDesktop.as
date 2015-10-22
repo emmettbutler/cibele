@@ -50,6 +50,14 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/it_files/prom_icon.png")] private var ImgPromIcon:Class;
 
         //old website stuff
+        [Embed(source="/../assets/images/ui/popups/it_files/fanart1_icon.png")] private var ImgFanart1Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/fanart1.png")] private var ImgFanart1:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/fanart2_icon.png")] private var ImgFanart2Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/fanart2.png")] private var ImgFanart2:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/fanart3_icon.png")] private var ImgFanart3Icon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/fanart3.png")] private var ImgFanart3:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/cur_blog_fanart_icon.png")] private var ImgFanartUpdateIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/cur_blog_fanart.png")] private var ImgFanartUpdate:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/blog1_icon.png")] private var ImgBlog1Icon:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/blog1.png")] private var ImgBlog1:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/blog5_icon.png")] private var ImgBlog2Icon:Class;
@@ -101,6 +109,7 @@ package com.starmaid.Cibele.states {
         }
 
         override public function create():void {
+            this.bgImageName = "UI_Desktop";
             super.create();
             ScreenManager.getInstance().setupCamera(null, 1);
             var _screen:ScreenManager = ScreenManager.getInstance();
@@ -128,7 +137,7 @@ package com.starmaid.Cibele.states {
                     "folder_img": ImgPicturesFolder,
                     "folder_dim": new DHPoint(631, 356),
                     "hitbox_pos": new DHPoint(_screen.screenWidth * .87, _screen.screenHeight * .08),
-                    "hitbox_dim": new DHPoint(150, 100),
+                    "hitbox_dim": new DHPoint(300, 250),
                     "name": "selfies folder stuff",
                     "contents": [
                         {
@@ -243,8 +252,8 @@ package com.starmaid.Cibele.states {
                     "name": "screenshot",
                     "folder_img": ImgScreenshot,
                     "folder_dim": new DHPoint(651, 426),
-                    "hitbox_pos": new DHPoint(_screen.screenWidth * .72, _screen.screenHeight * .07),
-                    "hitbox_dim": new DHPoint(150, 100),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .72, _screen.screenHeight * .05),
+                    "hitbox_dim": new DHPoint(300, 250),
                     "contents": []
                 },
                 {
@@ -252,7 +261,7 @@ package com.starmaid.Cibele.states {
                     "folder_img": ImgPicturesFolder,
                     "folder_dim": new DHPoint(631, 356),
                     "hitbox_pos": new DHPoint(_screen.screenWidth * .84, _screen.screenHeight * .3),
-                    "hitbox_dim": new DHPoint(150, 115),
+                    "hitbox_dim": new DHPoint(300, 270),
                     "contents": [
                         {
                             "name": "kawaii",
@@ -401,23 +410,55 @@ package com.starmaid.Cibele.states {
                 {
                     "folder_img": ImgPicturesFolder,
                     "folder_dim": new DHPoint(631, 356),
-                    "hitbox_pos": new DHPoint(_screen.screenWidth * .7, _screen.screenHeight * .32),
-                    "hitbox_dim": new DHPoint(150, 100),
+                    "hitbox_pos": new DHPoint(_screen.screenWidth * .71, _screen.screenHeight * .32),
+                    "hitbox_dim": new DHPoint(300, 250),
                     "name": "old site folder stuff",
                     "contents": [
                         {
                             "name": "hiatus",
                             "icon": ImgHiatusIcon,
-                            "icon_dim": new DHPoint(108, 87),
-                            "icon_pos": new DHPoint(30, 32),
+                            "icon_dim": new DHPoint(105, 92),
+                            "icon_pos": new DHPoint(30, 35),
                             "dim": new DHPoint(631, 356),
                             "contents": ImgHiatus
+                        },
+                        {
+                            "name": "fanart update",
+                            "icon": ImgFanartUpdateIcon,
+                            "icon_dim": new DHPoint(87, 94),
+                            "icon_pos": new DHPoint(140, 32),
+                            "dim": new DHPoint(631, 409),
+                            "contents": ImgFanartUpdate
+                        },
+                        {
+                            "name": "fanart1",
+                            "icon": ImgFanart1Icon,
+                            "icon_dim": new DHPoint(85, 94),
+                            "icon_pos": new DHPoint(242, 32),
+                            "dim": new DHPoint(702, 509),
+                            "contents": ImgFanart1
+                        },
+                        {
+                            "name": "fanart2",
+                            "icon": ImgFanart2Icon,
+                            "icon_dim": new DHPoint(86, 91),
+                            "icon_pos": new DHPoint(342, 32),
+                            "dim": new DHPoint(702, 509),
+                            "contents": ImgFanart2
+                        },
+                        {
+                            "name": "fanart3",
+                            "icon": ImgFanart3Icon,
+                            "icon_dim": new DHPoint(90, 97),
+                            "icon_pos": new DHPoint(440, 28),
+                            "dim": new DHPoint(702, 509),
+                            "contents": ImgFanart3
                         },
                         {
                             "name": "old site icon",
                             "icon": ImgOldSiteFolder,
                             "icon_dim": new DHPoint(90, 85),
-                            "icon_pos": new DHPoint(144, 32),
+                            "icon_pos": new DHPoint(30, 135),
                             "folder_img": ImgPicturesFolder,
                             "folder_dim": new DHPoint(631, 356),
                             "contents": [
