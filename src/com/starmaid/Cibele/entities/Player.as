@@ -433,18 +433,6 @@ package com.starmaid.Cibele.entities {
             }
         }
 
-        public function canConnectToFinalTarget():Boolean {
-            if (!(FlxG.state is LevelMapState)) {
-                return true;
-            }
-            if (this.finalTarget == null) {
-                return false;
-            }
-            var connectInfo:Object = (FlxG.state as LevelMapState).pointsCanConnect(
-                this.footPos, this.finalTarget);
-            return connectInfo["canConnect"];
-        }
-
         override public function update():void{
             if(this._state == STATE_IDLE) {
                 if(this.facing == UP) {
