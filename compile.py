@@ -127,6 +127,9 @@ def write_conf_file(swf_path, entry_point_class, version_id, beta=True):
     <id>com.starmaid.Cibele</id>
     <versionNumber>1.0</versionNumber>
     <filename>{fname}</filename>
+    <icon>
+        <image128x128>assets/async/images/ui/Crystal-icon-128x128.png</image128x128>
+    </icon>
     <initialWindow>
         <content>{swf_path}</content>
         <visible>true</visible>
