@@ -490,7 +490,7 @@ package com.starmaid.Cibele.entities {
         public function moveToNearestPathNode():void {
             this.targetNode = this.setNearestPathNodeCurrent();
             if (this.targetNode != null) {
-                this.initWalk(this.targetNode.pos);
+                this.initWalk(this.targetNode.pos, true, false);
                 this._cur_target_type = TARGET_NODE;
             }
         }
