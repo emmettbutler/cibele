@@ -142,9 +142,13 @@ package com.starmaid.Cibele.entities {
         }
 
         public function emote(mood:Number):void {
-            this.emoji[mood].run(
-                new DHPoint(this.pos.x + this.nameTextOffset.x,
-                            this.pos.y + this.nameTextOffset.y));
+            if (this.emoji[mood] != undefined) {
+                if (this.pos != null && this.nameTextOffset != null) {
+                    this.emoji[mood].run(
+                        new DHPoint(this.pos.x + this.nameTextOffset.x,
+                                    this.pos.y + this.nameTextOffset.y));
+                }
+            }
         }
 
         public function playAttackSound():void {
