@@ -90,6 +90,11 @@ package com.starmaid.Cibele.entities {
             this.loopCallSound();
         }
 
+        public function shouldCollide():Boolean {
+            return this.isOnscreen() && !this.isDead() &&
+                (this._state == STATE_RECOIL || this._state == STATE_TRACKING);
+        }
+
         public function isDead():Boolean {
             return this._state == STATE_DEAD;
         }

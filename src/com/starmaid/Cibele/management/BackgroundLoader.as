@@ -404,7 +404,7 @@ package com.starmaid.Cibele.management {
                         for (k = 0; k < this.enemiesRef.length; k++) {
                             if (this.enemiesRef[k] is SmallEnemy) {
                                 curEnemy = this.enemiesRef[k];
-                                if (curEnemy.isOnscreen() && !curEnemy.isDead()) {
+                                if (curEnemy.shouldCollide()) {
                                     collisionData = this.getEnemyCollisionData(
                                         colliderTile, this.enemiesRef[k]);
                                     if (collisionData[0]) {
