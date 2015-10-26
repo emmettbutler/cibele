@@ -113,6 +113,7 @@ package com.starmaid.Cibele.base {
                 this.fadeLayer = new GameObject(new DHPoint(0, 0));
                 this.fadeLayer.scrollFactor = new DHPoint(0, 0);
                 this.fadeLayer.active = false;
+                this.fadeLayer.visible = false;
                 this.fadeLayer.makeGraphic(
                     ScreenManager.getInstance().screenWidth,
                     ScreenManager.getInstance().screenHeight,
@@ -191,6 +192,7 @@ package com.starmaid.Cibele.base {
                 return;
             }
             this.fading = true;
+            this.fadeLayer.visible = true;
             this.fadeSoundName = soundName;
             this.postFadeWait = postFadeWait;
             this.postFadeFn = fn;
