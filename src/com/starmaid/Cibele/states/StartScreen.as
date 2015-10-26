@@ -91,7 +91,7 @@ package com.starmaid.Cibele.states {
                     -1000
                 ),
                 new DHPoint(_startButtonWidth, 30),
-                "Subtitles " + (DialoguePlayer.getInstance().subtitles_enabled ? "On" : "Off"),
+                "Subtitles: " + (DialoguePlayer.getInstance().subtitles_enabled ? "On" : "Off"),
                 this.toggleSubtitles
             );
             this.menuButtons.push(this._subtitlesButton);
@@ -114,9 +114,13 @@ package com.starmaid.Cibele.states {
                         that._startButton.x,
                         event.userData['bg'].y + event.userData['bg'].height * .84
                     ));
+                    var subY:Number = event.userData['bg'].y + event.userData['bg'].height * .84
+                    if (fileLevel != LevelTracker.LVL_IT) {
+                        subY = event.userData['bg'].y + event.userData['bg'].height * .9
+                    }
                     that._subtitlesButton.setPos(new DHPoint(
                         that._subtitlesButton.x,
-                        event.userData['bg'].y + event.userData['bg'].height * .9
+                        subY
                     ));
                     FlxG.stage.removeEventListener(
                         GameState.EVENT_SINGLETILE_BG_LOADED,
