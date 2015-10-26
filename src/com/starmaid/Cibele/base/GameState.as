@@ -213,7 +213,7 @@ package com.starmaid.Cibele.base {
             for (var i:int = objZ + 1; i < this.members.length; i++) {
                 if (this.members[i] != undefined) {
                     if (!this.game_cursor.isCursorSprite(this.members[i]) && this.members[i].visible) {
-                        if (obj._getScreenRect().overlaps(this.members[i]._getScreenRect())) {
+                        if (obj.occludedBy(this.members[i])) {
                             return true;
                         }
                     }

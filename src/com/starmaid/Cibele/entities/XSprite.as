@@ -1,5 +1,6 @@
 package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.base.UIElement;
+    import com.starmaid.Cibele.base.GameObject;
     import com.starmaid.Cibele.utils.DHPoint;
 
     import org.flixel.*;
@@ -25,6 +26,15 @@ package com.starmaid.Cibele.entities {
                                curScreenPos.y - 10,
                                this.width + 20,
                                this.height + 20);
+        }
+
+        override public function occludedBy(obj:GameObject):Boolean {
+            var curScreenPos:DHPoint = new DHPoint(0, 0);
+            this.getScreenXY(curScreenPos);
+            var occludeRect:FlxRect = new FlxRect(curScreenPos.x + 10,
+                                                  curScreenPos.y + 8,
+                                                  10, 10);
+            return obj._getScreenRect().overlaps(occludeRect);
         }
     }
 }

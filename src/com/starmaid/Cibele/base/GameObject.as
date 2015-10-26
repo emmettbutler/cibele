@@ -85,6 +85,10 @@ package com.starmaid.Cibele.base {
                                this.width, this.height);
         }
 
+        public function occludedBy(obj:GameObject):Boolean {
+            return obj._getScreenRect().overlaps(this._getScreenRect());
+        }
+
         public function getMiddlePos():DHPoint {
             return new DHPoint(
                 this.pos.x + this.width / 2,
