@@ -206,6 +206,20 @@ package com.starmaid.Cibele.base {
             }
         }
 
+        public function isOccluded(obj:GameObject):Boolean {
+            var objZ:Number = this.getZIndex(obj);
+            for (var i:int = objZ + 1; i < this.members.length; i++) {
+                if (this.members[i] != undefined) {
+                    if (!this.game_cursor.isCursorSprite(this.members[i]) && this.members[i].visible) {
+                        if (obj._getRect().overlaps(this.members[i]._getRect())) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
         private function sortByBasePos(a:GameObject, b:GameObject):Number {
             var aY:Number = a.basePos != null ? a.basePos.y : a.y;
             var bY:Number = b.basePos != null ? b.basePos.y : b.y;

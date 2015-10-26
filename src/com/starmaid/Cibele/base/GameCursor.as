@@ -145,6 +145,10 @@ package com.starmaid.Cibele.base {
             FlxG.state.add(this.game_mouse, true);
         }
 
+        public function isCursorSprite(obj:FlxBasic):Boolean {
+            return obj == this.enemy_mouse || obj == this.pc_mouse || obj == this.game_mouse;
+        }
+
         public function setGameMouse():void {
             this._state = GAME;
         }

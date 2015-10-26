@@ -237,7 +237,9 @@ package com.starmaid.Cibele.management {
                 if (cur.slug == HITBOX_TAG) {
                     isAbove = curClicked == null;
                 }
-                if(mouse_rect.overlaps(cur._getRect()) && cur.visible) {
+                if(mouse_rect.overlaps(cur._getRect()) && cur.visible &&
+                    !((FlxG.state as GameState).isOccluded(cur)))
+                {
                     if (isAbove) {
                         curClicked = cur;
                     }
