@@ -211,7 +211,7 @@ package com.starmaid.Cibele.base {
         public function isOccluded(obj:GameObject):Boolean {
             var objZ:Number = this.getZIndex(obj);
             for (var i:int = objZ + 1; i < this.members.length; i++) {
-                if (this.members[i] != undefined) {
+                if (this.members[i] != undefined && (this.members[i] is GameObject)) {
                     if (!this.game_cursor.isCursorSprite(this.members[i]) && this.members[i].visible) {
                         if (obj.occludedBy(this.members[i])) {
                             return true;
