@@ -140,7 +140,7 @@ package com.starmaid.Cibele.states {
 
         public function toggleSubtitles():void {
             DialoguePlayer.getInstance().toggle_subtitles_enabled();
-            this._subtitlesButton.text = "Subtitles " +
+            this._subtitlesButton.text = "Subtitles: " +
                 (DialoguePlayer.getInstance().subtitles_enabled ? "On" : "Off");
         }
 
