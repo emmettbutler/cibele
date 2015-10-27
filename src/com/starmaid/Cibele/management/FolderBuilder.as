@@ -136,6 +136,7 @@ package com.starmaid.Cibele.management {
                     spr.makeGraphic(cur["hitbox_dim"].x * ScreenManager.getInstance().calcFullscreenScale(new DHPoint(3000, 1636)), cur["hitbox_dim"].y * ScreenManager.getInstance().calcFullscreenScale(new DHPoint(3000, 1636)), 0x00ff0000);
                     spr.scrollFactor = new DHPoint(0,0);
                     spr.slug = HITBOX_TAG;
+                    spr.alpha = 0;
                     FlxG.state.add(spr);
                     allClickableElements.push(spr);
                     if(elements != null) {

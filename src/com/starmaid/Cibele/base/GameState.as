@@ -212,7 +212,9 @@ package com.starmaid.Cibele.base {
             var objZ:Number = this.getZIndex(obj);
             for (var i:int = objZ + 1; i < this.members.length; i++) {
                 if (this.members[i] != undefined && (this.members[i] is GameObject)) {
-                    if (!this.game_cursor.isCursorSprite(this.members[i]) && this.members[i].visible) {
+                    if (!this.game_cursor.isCursorSprite(this.members[i]) &&
+                        this.members[i].visible && this.members[i].alpha != 0)
+                    {
                         if (obj.occludedBy(this.members[i])) {
                             return true;
                         }
