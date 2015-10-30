@@ -103,6 +103,8 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/it_files/chatlog2.png")] private var ImgChatlog2:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/chatlog3_icon.png")] private var ImgChatlog3Icon:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/chatlog3.png")] private var ImgChatlog3:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/desktop_icon.png")] private var ImgDesktopIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/desktop.png")] private var ImgDesktop:Class;
 
         public function IkuTursoDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_IT;
@@ -469,6 +471,14 @@ package com.starmaid.Cibele.states {
                                     "icon_pos": new DHPoint(27, 36),
                                     "dim": new DHPoint(700, 400),
                                     "contents": ImgLayout
+                                },
+                                {
+                                    "name": "old desktop",
+                                    "icon": ImgDesktopIcon,
+                                    "icon_dim": new DHPoint(87, 97),
+                                    "icon_pos": new DHPoint(27, 136),
+                                    "dim": new DHPoint(700, 500),
+                                    "contents": ImgDesktop
                                 },
                                 {
                                     "name": "old web profile",
