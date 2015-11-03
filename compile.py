@@ -125,7 +125,7 @@ def write_conf_file(swf_path, entry_point_class, version_id, beta=True):
 """
 <application xmlns="http://ns.adobe.com/air/application/{version_id}">
     <id>com.starmaid.Cibele</id>
-    <versionNumber>1.0.1</versionNumber>
+    <versionNumber>1.0.2</versionNumber>
     <filename>{fname}</filename>
     <icon>
         <image128x128>assets/async/images/ui/Crystal-icon-128x128.png</image128x128>
