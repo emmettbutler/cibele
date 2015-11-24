@@ -31,7 +31,7 @@ package com.starmaid.Cibele.states {
 
             this.creditsStructure = new Array(
                 {
-                    'text': 'First love is a very confusing thing, and sometimes it really hurts, but I\'m glad I had mine with you.\n\n-Nina'
+                    'text': 'First love is a very confusing thing, and sometimes it really hurts,\nbut I\'m glad I had mine with you.\n\n-Nina'
                 },
                 {
                     'text': 'Written and designed by Nina Freeman'
@@ -58,10 +58,13 @@ package com.starmaid.Cibele.states {
                     'text': 'Special thanks to:\n\n\nNöel Clark (art)\nand Sean Hogan (sound)\n\nfor asset support.'
                 },
                 {
-                    'text': 'Special thanks to the folks who let us use their likeness in photographs:\nDiego Garcia, Arielle Martinez, Adam Christie, Brittney Lezon, Melanie Lezon, Jenny Jiao Hsia, Alec Thomson, Nick Robinson and SQ Sunseri.\n\nSpecial thanks for paintings by\nEric Lahaie ("Bulldog Hell")\nand Puri ("ffxi")\nand to Brittney and Melanie for the fan art scans.'
+                    'text': 'Special thanks to the folks who let us use their likeness in photographs:\nDiego Garcia, Arielle Martinez, Adam Christie, Brittney Lezon, Melanie Lezon, Jenny Jiao Hsia, Alec Thomson, Nick Robinson and SQ Sunseri.'
                 },
                 {
-                    'text': 'Special thanks to our playtesters and supporters:\nBennett Foddy, Steve Gaynor, Diego Garcia, Karla Zimonja, Heather Winter, Hannah Bown, Tynan Wales, Josh Clark, Nöel Clark, Michael Hansen, Josh Schonstal, Naomi Clark and Joni Kittaka.'
+                    'text': 'Special thanks to the artists who contributed illustrations:\n\nEric Lahaie ("Bulldog Hell"),\nPuri ("ffxi"),\nCutesu ("blogbg"),\nand to Brittney and Melanie for the fan art scans.'
+                },
+                {
+                    'text': 'Special thanks to our playtesters and supporters:\nBennett Foddy, Steve Gaynor, Diego Garcia, Heather Winter, Karla Zimonja, Hannah Bown, Tynan Wales, Rachel Jacks, Josh Clark, Nöel Clark, Michael Hansen, Josh Schonstal, Naomi Clark and Joni Kittaka.'
                 },
                 {
                     'text': 'Finally, special thanks to all of the people that Nina met (and grew up with) on the Sylph server in Final Fantasy Online.\nThis game would not exist without all of you.'

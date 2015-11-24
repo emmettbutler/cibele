@@ -86,7 +86,7 @@ package com.starmaid.Cibele.entities {
                     ScreenManager.getInstance().screenHeight - 200
                 ),
                 new DHPoint(_buttonWidth, 30),
-                "Subtitles " + (DialoguePlayer.getInstance().subtitles_enabled ? "On" : "Off"),
+                "Subtitles: " + (DialoguePlayer.getInstance().subtitles_enabled ? "On" : "Off"),
                 this.toggleSubtitles
             );
             this.subtitlesButton.observeGlobalPause = false;
@@ -163,7 +163,7 @@ package com.starmaid.Cibele.entities {
 
         public function toggleSubtitles():void {
             DialoguePlayer.getInstance().toggle_subtitles_enabled();
-            this.subtitlesButton.text = "Subtitles " +
+            this.subtitlesButton.text = "Subtitles: " +
                 (DialoguePlayer.getInstance().subtitles_enabled ? "On" : "Off");
         }
 

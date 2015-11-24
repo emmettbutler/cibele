@@ -113,6 +113,7 @@ package com.starmaid.Cibele.base {
                 this.fadeLayer = new GameObject(new DHPoint(0, 0));
                 this.fadeLayer.scrollFactor = new DHPoint(0, 0);
                 this.fadeLayer.active = false;
+                this.fadeLayer.visible = false;
                 this.fadeLayer.makeGraphic(
                     ScreenManager.getInstance().screenWidth,
                     ScreenManager.getInstance().screenHeight,
@@ -191,6 +192,7 @@ package com.starmaid.Cibele.base {
                 return;
             }
             this.fading = true;
+            this.fadeLayer.visible = true;
             this.fadeSoundName = soundName;
             this.postFadeWait = postFadeWait;
             this.postFadeFn = fn;
@@ -204,6 +206,22 @@ package com.starmaid.Cibele.base {
                     this.cursorResetFlag = true;
                 }
             }
+        }
+
+        public function isOccluded(obj:GameObject):Boolean {
+            var objZ:Number = this.getZIndex(obj);
+            for (var i:int = objZ + 1; i < this.members.length; i++) {
+                if (this.members[i] != undefined && (this.members[i] is GameObject)) {
+                    if (!this.game_cursor.isCursorSprite(this.members[i]) &&
+                        this.members[i].visible && this.members[i].alpha != 0)
+                    {
+                        if (obj.occludedBy(this.members[i])) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         private function sortByBasePos(a:GameObject, b:GameObject):Number {

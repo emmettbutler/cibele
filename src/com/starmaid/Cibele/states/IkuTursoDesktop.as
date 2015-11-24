@@ -103,6 +103,8 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/it_files/chatlog2.png")] private var ImgChatlog2:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/chatlog3_icon.png")] private var ImgChatlog3Icon:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/chatlog3.png")] private var ImgChatlog3:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/desktop_icon.png")] private var ImgDesktopIcon:Class;
+        [Embed(source="/../assets/images/ui/popups/it_files/desktop.png")] private var ImgDesktop:Class;
 
         public function IkuTursoDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_IT;
@@ -315,7 +317,7 @@ package com.starmaid.Cibele.states {
                                     "name": "chatlog2",
                                     "icon": ImgChatlog2Icon,
                                     "icon_dim": new DHPoint(137, 93),
-                                    "icon_pos": new DHPoint(150, 30),
+                                    "icon_pos": new DHPoint(153, 30),
                                     "dim": new DHPoint(631, 409),
                                     "contents": ImgChatlog2
                                 },
@@ -323,7 +325,7 @@ package com.starmaid.Cibele.states {
                                     "name": "chatlog3",
                                     "icon": ImgChatlog3Icon,
                                     "icon_dim": new DHPoint(119, 91),
-                                    "icon_pos": new DHPoint(290, 30),
+                                    "icon_pos": new DHPoint(293, 30),
                                     "dim": new DHPoint(631, 409),
                                     "contents": ImgChatlog3
                                 }
@@ -469,6 +471,14 @@ package com.starmaid.Cibele.states {
                                     "icon_pos": new DHPoint(27, 36),
                                     "dim": new DHPoint(700, 400),
                                     "contents": ImgLayout
+                                },
+                                {
+                                    "name": "old desktop",
+                                    "icon": ImgDesktopIcon,
+                                    "icon_dim": new DHPoint(87, 97),
+                                    "icon_pos": new DHPoint(27, 136),
+                                    "dim": new DHPoint(700, 500),
+                                    "contents": ImgDesktop
                                 },
                                 {
                                     "name": "old web profile",

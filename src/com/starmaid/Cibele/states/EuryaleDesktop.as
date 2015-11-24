@@ -502,7 +502,7 @@ package com.starmaid.Cibele.states {
                                     "name": "chatlog2",
                                     "icon": ImgChatlog2Icon,
                                     "icon_dim": new DHPoint(126, 90),
-                                    "icon_pos": new DHPoint(150, 30),
+                                    "icon_pos": new DHPoint(153, 30),
                                     "dim": new DHPoint(631, 568),
                                     "contents": ImgChatlog2
                                 },
@@ -510,7 +510,7 @@ package com.starmaid.Cibele.states {
                                     "name": "chatlog3",
                                     "icon": ImgChatlog3Icon,
                                     "icon_dim": new DHPoint(126, 90),
-                                    "icon_pos": new DHPoint(270, 30),
+                                    "icon_pos": new DHPoint(25, 130),
                                     "dim": new DHPoint(631, 605),
                                     "contents": ImgChatlog3
                                 },
@@ -518,7 +518,7 @@ package com.starmaid.Cibele.states {
                                     "name": "chatlog4",
                                     "icon": ImgChatlog4Icon,
                                     "icon_dim": new DHPoint(135, 92),
-                                    "icon_pos": new DHPoint(400, 30),
+                                    "icon_pos": new DHPoint(160, 130),
                                     "dim": new DHPoint(631, 409),
                                     "contents": ImgChatlog4
                                 }
