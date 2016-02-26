@@ -26,7 +26,7 @@ package com.starmaid.Cibele.states {
                                        fadingSound:GameSound=null,
                                        endPause:Boolean=false)
         {
-            super(true, false, false);
+            super(true, false, false, false, false);
             this.hide_cursor_on_unpause = true;
             this.use_loading_screen = false;
             this.loadVideo(filename);

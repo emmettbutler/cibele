@@ -47,6 +47,9 @@ package com.starmaid.Cibele.base {
         public var notificationTextColor:uint;
         private var framesAlive:Number = 0;
         public var soundFadeRate:Number = 1;
+        public var lastInputTime:Number = 0;
+        public var lastMousePos:DHPoint;
+        public var shouldTimeoutInput:Boolean;
 
         public var ui_color_flag:Number;
         public var fading:Boolean;
@@ -60,9 +63,11 @@ package com.starmaid.Cibele.base {
         public static const EVENT_ENEMY_DIED:String = "enemy_died";
         public static const EVENT_BOSS_DIED:String = "boss_died";
         public static const EVENT_TEAM_POWER_INCREASED:String = "team_power_increased";
+        public static const INPUT_TIMEOUT:Number = 120000;
 
         public function GameState(snd:Boolean=true, popup:Boolean=true,
-                                  messages:Boolean=true, fade:Boolean=false){
+                                  messages:Boolean=true, fade:Boolean=false,
+                                  timeout:Boolean=true){
             this.updateSound = snd;
             this.updatePopup = popup;
             this.updateMessages = messages;
@@ -70,10 +75,12 @@ package com.starmaid.Cibele.base {
             this.slug = "" + (Math.random() * 1000000);
             this.callbackRefs = new Array();
             this.notificationTextColor = 0xffffffff;
+            this.shouldTimeoutInput = timeout;
 
             this.ui_color_flag = UICOLOR_DEFAULT;
 
             this.sortedObjects = new Array();
+            this.lastMousePos = new DHPoint(0, 0);
         }
 
         public static function get SHORT_DIALOGUE():Boolean {
@@ -359,6 +366,19 @@ package com.starmaid.Cibele.base {
                     this.pause();
                 }
             }
+
+            if (this.lastMousePos.x != int(FlxG.mouse.x) ||
+                this.lastMousePos.y != int(FlxG.mouse.y))
+            {
+                this.lastInputTime = new Date().getTime();
+            }
+            this.lastMousePos.x = int(FlxG.mouse.x);
+            this.lastMousePos.y = int(FlxG.mouse.y);
+            if (this.shouldTimeoutInput &&
+                new Date().getTime() - this.lastInputTime >= INPUT_TIMEOUT)
+            {
+                ScreenManager.getInstance().resetGame();
+            }
         }
 
         override public function draw():void {
@@ -437,6 +457,7 @@ package com.starmaid.Cibele.base {
         }
 
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
+            this.lastInputTime = new Date().getTime();
             if (!GlobalTimer.getInstance().isPaused() && this.updatePopup) {
                 PopUpManager.getInstance().clickCallback(screenPos, worldPos);
             }

@@ -30,6 +30,7 @@ package com.starmaid.Cibele.states {
         override public function create():void {
             this.enable_fade = true;
             this.pausable = false;
+            this.shouldTimeoutInput = false;
             super.create();
             FlxG.bgColor = 0xffffffff;
             var bgFile:String = "startscreen_bg.png";
