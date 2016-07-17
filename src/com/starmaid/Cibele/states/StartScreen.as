@@ -41,6 +41,13 @@ package com.starmaid.Cibele.states {
 
             ScreenManager.getInstance();
 
+            var startText:FlxText = new FlxText(
+                0, ScreenManager.getInstance().screenHeight*.95,
+                ScreenManager.getInstance().screenWidth,
+                "This build contains the first of three acts.");
+            add(startText);
+            startText.setFormat("NexaBold-Regular",16,0xffff0000,"left");
+
             this.updatePopup = false;
             this.updateMessages = false;
             this.use_loading_screen = false;
