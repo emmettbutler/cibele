@@ -9,3 +9,29 @@ Collider tiles exactly match their corresponding map tiles, with two
 differences:
 1. 1/8 the size
 2. all non-collidable areas are fully transparent
+
+
+
+
+
+commentary mode
+---------------
+
+commentary toggle button on home screen
+    "Developer Commentary"
+folder icons should have optional audio clips
+    should start when opened, stop when closed, restart when opened
+duck all game audio when commentary is playing
+commentary on short films - alternate audio
+commentary when boss appears
+mail icon should have different audio per chapter
+text string next to dock that indicates what commentary will play based on
+        most recent conversationPiece
+    text and audio name can be stored in conversationPieces
+    stop audio when clicked
+toggle folder icons between commentary indicator states based on commentary
+        mode toggle
+    indicator baked into images
+    switch filename when loading images
+extra folder on desktop containing decky comments
+    invisible when not in commentary mode
