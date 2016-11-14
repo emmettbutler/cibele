@@ -31,6 +31,7 @@ package com.starmaid.Cibele.management {
         public var QUICK_LEVELS:Boolean = false;
         public var WINDOWED:Boolean = false;
         public var RELEASE:Boolean = true;
+        public var COMMENTARY:Boolean = false;
 
         private var resizeTimer:Timer;
         private var resizeInterval:Number = 50;
@@ -101,6 +102,10 @@ package com.starmaid.Cibele.management {
                 this.fullscreen = true;
                 this.setupFullscreenMode();
             }
+        }
+
+        public function toggle_commentary_enabled():void {
+            this.COMMENTARY = !this.COMMENTARY;
         }
 
         private function setupFullscreenMode():void {

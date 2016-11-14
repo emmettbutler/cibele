@@ -11,7 +11,8 @@ package com.starmaid.Cibele.entities {
         private var _clickFn:Function;
         private var fillLock:Boolean = false;
 
-        public function MenuButton(pos:DHPoint, dim:DHPoint, txt:String, clickFn:Function) {
+        public function MenuButton(pos:DHPoint, dim:DHPoint, txt:String, clickFn:Function,
+                                   fontSize:Number=24) {
             super(pos);
 
             this._dimensions = dim;
@@ -22,7 +23,7 @@ package com.starmaid.Cibele.entities {
 
             this._text = new FlxText(pos.x, pos.y, dim.x, txt);
             this._text.scrollFactor = new DHPoint(0, 0);
-            this._text.setFormat("NexaBold-Regular", 24, 0xffffffff, "center");
+            this._text.setFormat("NexaBold-Regular", fontSize, 0xffffffff, "center");
         }
 
         public function set text(t:String):void {
