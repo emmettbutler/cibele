@@ -263,6 +263,7 @@ package com.starmaid.Cibele.management {
                                 cur["folder_sprite"].visible = false;
                                 cur["x_sprite"].visible = false;
                                 cur["x_hover_sprite"].visible = false;
+                                CommentaryPlayer.getInstance().stop();
                                 this.setIconVisibility(cur, false);
                             }
                         }
@@ -274,6 +275,9 @@ package com.starmaid.Cibele.management {
                                     cur["x_sprite"].visible = true;
                                     cur["x_hover_sprite"].visible = true;
                                     this.setIconVisibility(cur, true);
+                                    if ("commentary_file" in cur && cur["commentary_file"] is String) {
+                                        CommentaryPlayer.getInstance().playFile(cur["commentary_file"]);
+                                    }
                                     propagateClick = false;
                                 }
                             }
@@ -288,12 +292,16 @@ package com.starmaid.Cibele.management {
                             cur["full_sprite"].visible = false;
                             cur["x_sprite"].visible = false;
                             cur["x_hover_sprite"].visible = false;
+                            CommentaryPlayer.getInstance().stop();
                         }
                     } else if (mouse_rect.overlaps(cur["icon_sprite"]._getRect()) && cur["icon_sprite"].visible) {
                         if (cur["icon_sprite"] == clicked) {
                             cur["full_sprite"].visible = true;
                             cur["x_sprite"].visible = true;
                             cur["x_hover_sprite"].visible = true;
+                            if ("commentary_file" in cur && cur["commentary_file"] is String) {
+                                CommentaryPlayer.getInstance().playFile(cur["commentary_file"]);
+                            }
                         }
                     }
                 }
