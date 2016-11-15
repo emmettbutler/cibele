@@ -18,6 +18,9 @@ package com.starmaid.Cibele.management {
 
         public function playFile(filename:String):void
         {
+            if (!ScreenManager.getInstance().COMMENTARY) {
+                return;
+            }
             var sndFile:Class = sndFiles[filename];
             SoundManager.getInstance().playSound(
                 sndFile, -1, null, false, 1, GameSound.COMMENTARY
