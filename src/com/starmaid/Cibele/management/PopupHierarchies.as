@@ -247,7 +247,8 @@ package com.starmaid.Cibele.management {
                     "icon_pos": new DHPoint(179, 101),
                     "dim": new DHPoint(970, 437),
                     "struc": PopUpManager.BULLDOG_HELL,
-                    "contents": ImgBH
+                    "contents": ImgBH,
+                    "commentary_file": "commentary_1"
                 },
                 {
                     "name": "last night small",

@@ -20,11 +20,15 @@ package com.starmaid.Cibele.base {
         public static const SFX:Number = 2;
         public static const BIT_DIALOGUE:Number = 3;
         public static const COMMENTARY:Number = 4;
+        public static const ALLSOUNDS:Number = 28743658;
+        public static const DUCK_STEP:Number = .025;
         public var _type:Number = VOCAL;
         public var fadeIn:Boolean = false;
         public var fadeOut:Boolean = false;
         public var fading:Boolean = false;
         public var ducks:Boolean = false;
+        public var ducking:Boolean = false;
+        public var duckStep:Number;
 
         public static const MSEC_PER_SEC:Number = 1000;
 
@@ -33,8 +37,9 @@ package com.starmaid.Cibele.base {
                                   _kind:Number=0, name:String=null,
                                   fadeIn:Boolean=false, fadeOut:Boolean=false,
                                   endCallback:Function=null, ducks:Boolean=false) {
-            if (_kind == BGM || ducks) {
-                _vol += SoundManager.DUCK_STEP;
+            this.duckStep = DUCK_STEP;
+            if (_kind == VOCAL) {
+                this.duckStep = .95;
             }
             this.name = name;
             this.virtualVolume = _vol;
@@ -67,6 +72,22 @@ package com.starmaid.Cibele.base {
         public function decreaseVolume(step:Number=0):void {
             this.virtualVolume -= step == 0 ? SoundManager.VOLUME_STEP : step;
             this.applyVolume();
+        }
+
+        public function duck():void {
+            if (this.ducking || this._type == COMMENTARY) {
+                return;
+            }
+            this.decreaseVolume(this.duckStep);
+            this.ducking = true;
+        }
+
+        public function unduck():void {
+            if (!this.ducking || this._type == COMMENTARY) {
+                return;
+            }
+            this.increaseVolume(this.duckStep);
+            this.ducking = false;
         }
 
         public function applyVolume():void {

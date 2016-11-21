@@ -12,10 +12,8 @@ package com.starmaid.Cibele.management {
         public var runningSounds:Array;
         public var newSound:GameSound;
         public var globalVolume:Number;
-        public var ducking:Boolean = false;
 
         public static const VOLUME_STEP:Number = .1;
-        public static const DUCK_STEP:Number = .05;
 
         public function SoundManager() {
             this.runningSounds = new Array();
@@ -41,11 +39,10 @@ package com.starmaid.Cibele.management {
             this.clearSoundsByType(_kind);
 
             var _callback:Function = function():void {
-                if (this._type == GameSound.VOCAL) {
-                    if (ducking) {
-                        unduckMusic();
-                        ducking = false;
-                    }
+                if (this._type == GameSound.VOCAL ||
+                    this._type == GameSound.COMMENTARY)
+                {
+                    unduckSounds(this._type);
                 }
                 if (endCallback != null) {
                     endCallback();
@@ -55,12 +52,12 @@ package com.starmaid.Cibele.management {
                                                    _vol, _kind, name, fadeIn,
                                                    fadeOut, _callback, duck);
             this.runningSounds.push(newSound);
-            if (_kind == GameSound.VOCAL && !this.ducking) {
-                this.ducking = true;
-                this.duckMusic();
+            if (_kind == GameSound.COMMENTARY || _kind == GameSound.VOCAL)
+            {
+                this.duckSounds(_kind);
             }
-            if (this.ducking && (_kind == GameSound.BGM || duck)) {
-                newSound.decreaseVolume(DUCK_STEP);
+            if (this.shouldDuckSound(newSound) || duck) {
+                newSound.duck();
             }
 
             GlobalTimer.getInstance().setMark(name, dur, null, overwriteTimer);
@@ -68,22 +65,53 @@ package com.starmaid.Cibele.management {
             return newSound;
         }
 
-        public function duckMusic():void {
+        public function shouldDuckSound(sound:GameSound):Boolean {
+            if (sound.fading) {
+                return false;
+            }
+            if (sound.ducks) {
+                return true;
+            }
+            var vocalIsPlaying:Boolean = this.soundOfTypeIsPlaying(GameSound.VOCAL);
+            var commentaryIsPlaying:Boolean = this.soundOfTypeIsPlaying(
+                GameSound.COMMENTARY);
+            if (sound._type == GameSound.BGM) {
+                return vocalIsPlaying;
+            }
+            return commentaryIsPlaying;
+        }
+
+        public function typesToDuckFromType(_type:Number):Number {
+            if (_type == GameSound.VOCAL) {
+                return GameSound.BGM;
+            } else if (_type == GameSound.COMMENTARY) {
+                return GameSound.ALLSOUNDS;
+            }
+            return -1;
+        }
+
+        public function duckSounds(_type:Number):void {
+            var toDuck:Number = this.typesToDuckFromType(_type);
             var cur:GameSound
             for(var i:int = 0; i < this.runningSounds.length; i++) {
                 cur = this.runningSounds[i];
-                if ((cur.ducks || cur._type == GameSound.BGM) && !cur.fading) {
-                    this.runningSounds[i].decreaseVolume(DUCK_STEP);
+                if ((cur.ducks || cur._type == toDuck || toDuck == GameSound.ALLSOUNDS)
+                    && !cur.fading)
+                {
+                    cur.duck();
                 }
             }
         }
 
-        public function unduckMusic():void {
+        public function unduckSounds(_type:Number):void {
+            var toUnduck:Number = this.typesToDuckFromType(_type);
             var cur:GameSound
             for(var i:int = 0; i < this.runningSounds.length; i++) {
                 cur = this.runningSounds[i];
-                if ((cur.ducks || cur._type == GameSound.BGM) && !cur.fading) {
-                    this.runningSounds[i].increaseVolume(DUCK_STEP);
+                if ((cur.ducks || cur._type == toUnduck || toUnduck == GameSound.ALLSOUNDS)
+                    && !cur.fading)
+                {
+                    cur.unduck();
                 }
             }
         }
@@ -133,6 +161,7 @@ package com.starmaid.Cibele.management {
         private function stopSound(sound:GameSound):void {
             this.runningSounds.splice(this.runningSounds.indexOf(sound), 1);
             sound.stopSound();
+            this.unduckSounds(sound._type);
         }
 
         public function soundOfTypeIsPlaying(_kind:Number):Boolean {
