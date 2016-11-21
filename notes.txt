@@ -24,10 +24,10 @@ folder icons should have optional audio clips
     should start when opened, stop when closed, restart when opened
 duck all game audio when commentary is playing
 commentary when boss appears
+commentary on short films - alternate audio
 
 TODO
 ----
-commentary on short films - alternate audio
 mail icon should have different audio per chapter
 text string next to dock that indicates what commentary will play based on
         most recent conversationPiece

@@ -29,9 +29,8 @@ package com.starmaid.Cibele.management {
             }
             var selected:Object = sndFiles[filename];
             if (selected) {
-                var sndFile:Class = selected['file'];
                 SoundManager.getInstance().playSound(
-                    sndFile, 0, null, false, 1, GameSound.COMMENTARY
+                    selected['file'], selected['dur'], null, false, 1, GameSound.COMMENTARY
                 );
             }
         }
