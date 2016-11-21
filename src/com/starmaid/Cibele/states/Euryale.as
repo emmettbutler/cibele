@@ -1,4 +1,5 @@
 package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.management.CommentaryPlayer;
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.management.ScreenManager;
@@ -342,8 +343,12 @@ package com.starmaid.Cibele.states {
                     FlxG.switchState(
                         new BlankScreen(4*GameSound.MSEC_PER_SEC,
                             function():void {
-                                DialoguePlayer.getInstance().playFile(
-                                    "vid_phonecall", 0, null, 1, GameSound.BGM);
+                                if (ScreenManager.getInstance().COMMENTARY) {
+                                    CommentaryPlayer.getInstance().playFile("commentary_1");
+                                } else {
+                                    DialoguePlayer.getInstance().playFile(
+                                        "vid_phonecall", 0, null, 1, GameSound.BGM);
+                                }
                                 FlxG.switchState(new PlayVideoState(
                                     "/../assets/async/video/Phone Talk_v1.mp4",
                                     function():void {

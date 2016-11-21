@@ -1,4 +1,5 @@
 package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.management.CommentaryPlayer;
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.LevelTracker;
     import com.starmaid.Cibele.management.ScreenManager;
@@ -351,11 +352,15 @@ package com.starmaid.Cibele.states {
             PopUpManager.GAME_ACTIVE = false;
             FlxG.switchState(new TextScreen(6 * GameSound.MSEC_PER_SEC,
                 function():void {
-                    SoundManager.getInstance().playSound(
-                        BGMMeetup,
-                        7 * GameSound.MSEC_PER_SEC,
-                        null, false, 1, GameSound.BGM
-                    );
+                    if (ScreenManager.getInstance().COMMENTARY) {
+                        CommentaryPlayer.getInstance().playFile("commentary_1");
+                    } else {
+                        SoundManager.getInstance().playSound(
+                            BGMMeetup,
+                            7 * GameSound.MSEC_PER_SEC,
+                            null, false, 1, GameSound.BGM
+                        );
+                    }
                     FlxG.switchState(
                         new PlayVideoState(
                             "/../assets/async/video/4.1 Meetup_v1.mp4",

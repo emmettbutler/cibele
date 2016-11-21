@@ -1,4 +1,5 @@
 package com.starmaid.Cibele.states {
+    import com.starmaid.Cibele.management.CommentaryPlayer;
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.SoundManager;
@@ -275,8 +276,12 @@ package com.starmaid.Cibele.states {
         public function playEndFilm():void {
             this.fadeOut(
                 function():void {
-                    SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
-                        false, 1, GameSound.BGM);
+                    if (ScreenManager.getInstance().COMMENTARY) {
+                        CommentaryPlayer.getInstance().playFile("commentary_1");
+                    } else {
+                        SoundManager.getInstance().playSound(VidBGMLoop, 0, null,
+                            false, 1, GameSound.BGM);
+                    }
                     FlxG.switchState(
                         new PlayVideoState("/../assets/async/video/sexy_selfie.mp4",
                             function():void {

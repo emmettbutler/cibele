@@ -23,11 +23,11 @@ commentary toggle button on home screen
 folder icons should have optional audio clips
     should start when opened, stop when closed, restart when opened
 duck all game audio when commentary is playing
+commentary when boss appears
 
 TODO
 ----
 commentary on short films - alternate audio
-commentary when boss appears
 mail icon should have different audio per chapter
 text string next to dock that indicates what commentary will play based on
         most recent conversationPiece

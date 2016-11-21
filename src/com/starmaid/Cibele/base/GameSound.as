@@ -96,6 +96,9 @@ package com.starmaid.Cibele.base {
         }
 
         public function applyVolume():void {
+            if (this == null || this.soundObject == null) {
+                return;
+            }
             this.soundObject.volume = Math.min(Math.max(virtualVolume, 0), 1);
         }
 
@@ -133,6 +136,9 @@ package com.starmaid.Cibele.base {
         }
 
         public function fadeOutSound(step:Number=.08):void {
+            if (this.soundObject == null) {
+                return;
+            }
             this.decreaseVolume(step);
             if (this.soundObject.volume <= 0) {
                 this.stopSound();
