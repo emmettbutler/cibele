@@ -3,7 +3,7 @@ package com.starmaid.Cibele.management {
     import com.starmaid.Cibele.management.SoundManager;
 
     public class CommentaryPlayer {
-        [Embed(source="/../assets/audio/voiceover/voc_hiisi_superhot.mp3")] private static var Commentary1:Class;
+        [Embed(source="/../assets/audio/commentary/voc_hiisi_weshouldmeet.mp3")] private static var Commentary1:Class;
 
         {
             public static var sndFiles:Object = {
@@ -23,7 +23,7 @@ package com.starmaid.Cibele.management {
             }
             var sndFile:Class = sndFiles[filename];
             SoundManager.getInstance().playSound(
-                sndFile, -1, null, false, 1, GameSound.COMMENTARY
+                sndFile, 0, null, false, 1, GameSound.COMMENTARY
             );
         }
 

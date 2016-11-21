@@ -454,7 +454,8 @@ package com.starmaid.Cibele.states {
                             "icon_dim": new DHPoint(90, 97),
                             "icon_pos": new DHPoint(440, 28),
                             "dim": new DHPoint(702, 509),
-                            "contents": ImgFanart3
+                            "contents": ImgFanart3,
+                            "commentary_file": "commentary_1"
                         },
                         {
                             "name": "old site icon",

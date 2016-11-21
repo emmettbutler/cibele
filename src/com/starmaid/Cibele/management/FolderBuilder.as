@@ -275,7 +275,7 @@ package com.starmaid.Cibele.management {
                                     cur["x_sprite"].visible = true;
                                     cur["x_hover_sprite"].visible = true;
                                     this.setIconVisibility(cur, true);
-                                    if ("commentary_file" in cur && cur["commentary_file"] is String) {
+                                    if (cur.hasOwnProperty("commentary_file")) {
                                         CommentaryPlayer.getInstance().playFile(cur["commentary_file"]);
                                     }
                                     propagateClick = false;
@@ -299,7 +299,7 @@ package com.starmaid.Cibele.management {
                             cur["full_sprite"].visible = true;
                             cur["x_sprite"].visible = true;
                             cur["x_hover_sprite"].visible = true;
-                            if ("commentary_file" in cur && cur["commentary_file"] is String) {
+                            if (cur.hasOwnProperty("commentary_file")) {
                                 CommentaryPlayer.getInstance().playFile(cur["commentary_file"]);
                             }
                         }
