@@ -21,7 +21,7 @@ package com.starmaid.Cibele.base {
         public static const BIT_DIALOGUE:Number = 3;
         public static const COMMENTARY:Number = 4;
         public static const ALLSOUNDS:Number = 28743658;
-        public static const DUCK_STEP:Number = .025;
+        public static const DUCK_STEP:Number = .05;
         public var _type:Number = VOCAL;
         public var fadeIn:Boolean = false;
         public var fadeOut:Boolean = false;
@@ -38,6 +38,11 @@ package com.starmaid.Cibele.base {
                                   fadeIn:Boolean=false, fadeOut:Boolean=false,
                                   endCallback:Function=null, ducks:Boolean=false) {
             this.duckStep = DUCK_STEP;
+            // XXX this is only here because removing it makes things sound
+            // bad and i don't know what it's supposed to do
+            if (_kind == BGM || ducks) {
+                _vol += DUCK_STEP;
+            }
             if (_kind == VOCAL) {
                 this.duckStep = .95;
             }
