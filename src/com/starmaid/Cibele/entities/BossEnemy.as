@@ -3,6 +3,7 @@ package com.starmaid.Cibele.entities {
     import com.starmaid.Cibele.utils.GlobalTimer;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameState;
+    import com.starmaid.Cibele.management.CommentaryPlayer;
     import com.starmaid.Cibele.management.DebugConsoleManager;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.SoundManager;
@@ -31,6 +32,7 @@ package com.starmaid.Cibele.entities {
         public var notificationTextColor:uint;
         private var scaleText:Boolean = false;
         public var _active_lock:Boolean = false;
+        public var commentaryFile:String;
         protected var _name:String;
 
         public static const STATE_PRE_APPEAR:Number = 39485723987;
@@ -113,6 +115,9 @@ package com.starmaid.Cibele.entities {
 
         public function setActive():void {
             this.attemptWarp();
+            if (!this.hasAppeared()) {
+                CommentaryPlayer.getInstance().setCurrentFile(this.commentaryFile);
+            }
         }
 
         public function attemptWarp():void {

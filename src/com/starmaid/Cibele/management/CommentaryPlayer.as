@@ -7,11 +7,17 @@ package com.starmaid.Cibele.management {
 
         {
             public static var sndFiles:Object = {
-                'commentary_1': Commentary1
+                'commentary_1': {
+                    'file': Commentary1,
+                    'dur': 20 * GameSound.MSEC_PER_SEC,
+                    'str': 'this is a test commentary string'
+                }
             }
         }
 
         public static var _instance:CommentaryPlayer = null;
+
+        public var currentTrayCommentary:Object;
 
         public function CommentaryPlayer() {
         }
@@ -21,10 +27,26 @@ package com.starmaid.Cibele.management {
             if (!ScreenManager.getInstance().COMMENTARY) {
                 return;
             }
-            var sndFile:Class = sndFiles[filename];
-            SoundManager.getInstance().playSound(
-                sndFile, 0, null, false, 1, GameSound.COMMENTARY
-            );
+            var selected:Object = sndFiles[filename];
+            if (selected) {
+                var sndFile:Class = selected['file'];
+                SoundManager.getInstance().playSound(
+                    sndFile, 0, null, false, 1, GameSound.COMMENTARY
+                );
+            }
+        }
+
+        /*
+         * Set the commentary tray to the given track name
+         */
+        public function setCurrentFile(filename:String):void
+        {
+            if (!ScreenManager.getInstance().COMMENTARY) {
+                return;
+            }
+            var selected:Object = sndFiles[filename];
+            this.currentTrayCommentary = selected;
+            // set tray string to selected['str']
         }
 
         public function stop():void {

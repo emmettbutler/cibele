@@ -18,6 +18,7 @@ package com.starmaid.Cibele.entities {
         public function IkuTursoBoss(pos:DHPoint, textColor:uint) {
             this.notificationTextColor = textColor;
             this._name = "AKKA";
+            this.commentaryFile = "commentary_1";
             super(pos);
             GlobalTimer.getInstance().setMark(
                 "tentacle", 3*GameSound.MSEC_PER_SEC, this.addTentacles

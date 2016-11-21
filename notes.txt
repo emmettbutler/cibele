@@ -15,13 +15,17 @@ differences:
 
 
 commentary mode
----------------
-
+===============
+DONE
+----
 commentary toggle button on home screen
     "Developer Commentary"
 folder icons should have optional audio clips
     should start when opened, stop when closed, restart when opened
 duck all game audio when commentary is playing
+
+TODO
+----
 commentary on short films - alternate audio
 commentary when boss appears
 mail icon should have different audio per chapter
