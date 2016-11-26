@@ -2,6 +2,7 @@ package com.starmaid.Cibele.base {
     import com.starmaid.Cibele.entities.LoadingScreen;
     import com.starmaid.Cibele.entities.PauseScreen;
     import com.starmaid.Cibele.entities.MenuButton;
+    import com.starmaid.Cibele.management.CommentaryPlayer;
     import com.starmaid.Cibele.management.DebugConsoleManager;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.management.DialoguePlayer;
@@ -154,6 +155,7 @@ package com.starmaid.Cibele.base {
             if (this.updatePopup) {
                 PopUpManager.getInstance().loadPopUps();
             }
+            CommentaryPlayer.getInstance().initCommentaryText();
 
             if(this.use_loading_screen) {
                 this.loadingScreen = new LoadingScreen(this.loading_screen_timer,
@@ -437,8 +439,11 @@ package com.starmaid.Cibele.base {
         }
 
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
-            if (!GlobalTimer.getInstance().isPaused() && this.updatePopup) {
-                PopUpManager.getInstance().clickCallback(screenPos, worldPos);
+            if (!GlobalTimer.getInstance().isPaused()) {
+                if (this.updatePopup) {
+                    PopUpManager.getInstance().clickCallback(screenPos, worldPos);
+                }
+                CommentaryPlayer.getInstance().clickCallback(screenPos, worldPos);
             }
 
             var _mouseRect:FlxRect = new FlxRect(screenPos.x, screenPos.y, 1, 1);

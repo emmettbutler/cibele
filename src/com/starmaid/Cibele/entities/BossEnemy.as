@@ -114,10 +114,10 @@ package com.starmaid.Cibele.entities {
         }
 
         public function setActive():void {
-            this.attemptWarp();
             if (!this.hasAppeared()) {
                 CommentaryPlayer.getInstance().setCurrentFile(this.commentaryFile);
             }
+            this.attemptWarp();
         }
 
         public function attemptWarp():void {
