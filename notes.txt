@@ -33,10 +33,10 @@ toggle folder icons between commentary indicator states based on commentary
         mode toggle
     indicator baked into images
     switch filename when loading images
+mail icon should have different audio per chapter
+    indicator image switch for mail icon
 
 TODO
 ----
-mail icon should have different audio per chapter
-    indicator image switch for mail icon
 extra folder on desktop containing decky comments
     invisible when not in commentary mode
