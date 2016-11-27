@@ -11,6 +11,8 @@ package com.starmaid.Cibele.management {
     public class MessageManager {
         [Embed(source="/../assets/images/ui/UI_letter.png")] private var ImgMsg:Class;
         [Embed(source="/../assets/images/ui/UI_letter_pink.png")] private var ImgMsgPink:Class;
+        [Embed(source="/../assets/images/ui/UI_letter_commentary.png")] private var ImgMsgCommentary:Class;
+        [Embed(source="/../assets/images/ui/UI_letter_pink_commentary.png")] private var ImgMsgPinkCommentary:Class;
         [Embed(source="/../assets/images/ui/UI_text_box.png")] private var ImgInbox:Class;
         [Embed(source="/../assets/images/ui/UI_text_box_x_blue.png")] private var ImgInboxX:Class;
         [Embed(source="/../assets/images/ui/UI_text_box_x_blue_hover.png")] private var ImgInboxXHover:Class;
@@ -41,6 +43,7 @@ package com.starmaid.Cibele.management {
         private var inbox_pos:DHPoint;
 
         public var threads_map:Object;
+        public var commentaryFiles:Object;
         public var threads:Array;
         public var cur_viewing:Thread;
 
@@ -76,6 +79,12 @@ package com.starmaid.Cibele.management {
             this.initNotifications();
             // forgive me
             this.notifications_text._textField = null
+
+            this.commentaryFiles = {
+                'it': 'commentary_1',
+                'eu': 'commentary_1',
+                'hi': 'commentary_1'
+            };
 
             this.threads_map = {};
             this.threads_map['it'] = new Array(
@@ -254,10 +263,16 @@ package com.starmaid.Cibele.management {
             );
 
             imgClass = ImgMsg;
+            if (ScreenManager.getInstance().COMMENTARY) {
+                imgClass = ImgMsgCommentary;
+            }
             imgSize = new DHPoint(143, 143);
             if((FlxG.state as GameState).ui_color_flag == GameState.UICOLOR_PINK)
             {
                 imgClass = ImgMsgPink;
+                if (ScreenManager.getInstance().COMMENTARY) {
+                    imgClass = ImgMsgPinkCommentary;
+                }
                 imgSize = new DHPoint(144, 144);
             }
             img_msg = new UIElement(
@@ -666,6 +681,9 @@ package com.starmaid.Cibele.management {
             for(var i:int = 0; i < this.threads.length; i++) {
                 this.threads[i].hide();
             }
+            if (ScreenManager.getInstance().COMMENTARY) {
+                CommentaryPlayer.getInstance().stop();
+            }
         }
 
         public function minimizeWindow(obj:UIElement):void {
@@ -702,6 +720,17 @@ package com.starmaid.Cibele.management {
             this.img_inbox.scale.y = 0;
             this.maximizeExitFlag = true;
             this.maximizeInboxFlag = true;
+            if (ScreenManager.getInstance().COMMENTARY) {
+                var curLevel:String;
+                if (ScreenManager.getInstance().levelTracker.it()) {
+                    curLevel = 'it';
+                } else if (ScreenManager.getInstance().levelTracker.eu()) {
+                    curLevel = 'eu';
+                } else if (ScreenManager.getInstance().levelTracker.hi()) {
+                    curLevel = 'hi';
+                }
+                CommentaryPlayer.getInstance().playFile(this.commentaryFiles[curLevel]);
+            }
         }
 
         public static function resetInstance():void {
