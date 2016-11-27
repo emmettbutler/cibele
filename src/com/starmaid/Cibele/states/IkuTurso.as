@@ -49,7 +49,8 @@ package com.starmaid.Cibele.states {
                 {
                     "len": 59*GameSound.MSEC_PER_SEC,
                     "delay": 0, "ends_with_popup": false,
-                    "audio_name": "voc_ikuturso_bulldog"
+                    "audio_name": "voc_ikuturso_bulldog",
+                    "commentary_name": "commentary_1"
                 },
                 {
                     "len": 4*GameSound.MSEC_PER_SEC,
@@ -57,7 +58,8 @@ package com.starmaid.Cibele.states {
                 },
                 {
                     "len": 80*GameSound.MSEC_PER_SEC,
-                    "delay": 0, "audio_name": "voc_ikuturso_ampule"
+                    "delay": 0, "audio_name": "voc_ikuturso_ampule",
+                    "commentary_name": "commentary_2"
                 },
                 {
                     "len": 4*GameSound.MSEC_PER_SEC,

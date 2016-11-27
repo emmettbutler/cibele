@@ -293,6 +293,9 @@ package com.starmaid.Cibele.states {
                         finalEndFn, 1
                     );
                 }
+                if (audioInfo.hasOwnProperty("commentary_name")) {
+                    CommentaryPlayer.getInstance().setCurrentFile(audioInfo['commentary_name']);
+                }
             } else {
                 this.finalConvoDone();
             }

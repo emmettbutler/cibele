@@ -17,6 +17,11 @@ package com.starmaid.Cibele.management {
                     'file': Commentary1,
                     'dur': 20 * GameSound.MSEC_PER_SEC,
                     'str': 'this is a test commentary string'
+                },
+                'commentary_2': {
+                    'file': Commentary1,
+                    'dur': 20 * GameSound.MSEC_PER_SEC,
+                    'str': 'this is super different guys'
                 }
             }
             // make name accessible in object
