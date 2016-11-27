@@ -121,7 +121,11 @@ package com.starmaid.Cibele.management {
                 }
                 if ("icon" in cur && cur["icon"] != null) {
                     spr = UIElement.fromPoint(cur["icon_pos"].add(root["folder_sprite"].pos));
-                    spr.loadGraphic(cur["icon"], false, false, cur["icon_dim"].x, cur["icon_dim"].y);
+                    var _icon:Class = cur["icon"];
+                    if (cur.hasOwnProperty("commentary_file") && ScreenManager.getInstance().COMMENTARY) {
+                        _icon = cur["commentary_icon"];
+                    }
+                    spr.loadGraphic(_icon, false, false, cur["icon_dim"].x, cur["icon_dim"].y);
                     spr.visible = false;
                     spr.scrollFactor = new DHPoint(0,0);
                     FlxG.state.add(spr);

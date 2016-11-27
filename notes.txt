@@ -25,14 +25,14 @@ folder icons should have optional audio clips
 duck all game audio when commentary is playing
 commentary when boss appears
 commentary on short films - alternate audio
-
-TODO
-----
-mail icon should have different audio per chapter
 text string next to dock that indicates what commentary will play based on
         most recent conversationPiece
     text and audio name can be stored in conversationPieces
     stop audio when clicked
+
+TODO
+----
+mail icon should have different audio per chapter
 toggle folder icons between commentary indicator states based on commentary
         mode toggle
     indicator baked into images

@@ -103,6 +103,8 @@ package com.starmaid.Cibele.management {
         [Embed(source="/../assets/images/ui/popups/hi_files/friend_4_icon.png")] private static var ImgFriend4Icon:Class;
         [Embed(source="/../assets/images/ui/popups/hi_files/friend_4.png")] private static var ImgFriend4:Class;
 
+        [Embed(source="/../assets/images/ui/popups/it_email/bulldoghell_commentary_icon.png")] private static var ImgBHCommentaryIcon:Class;
+
         /*
             Directory tree definition
 
@@ -248,7 +250,8 @@ package com.starmaid.Cibele.management {
                     "dim": new DHPoint(970, 437),
                     "struc": PopUpManager.BULLDOG_HELL,
                     "contents": ImgBH,
-                    "commentary_file": "commentary_1"
+                    "commentary_file": "commentary_1",
+                    "commentary_icon": ImgBHCommentaryIcon
                 },
                 {
                     "name": "last night small",
