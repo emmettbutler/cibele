@@ -1,5 +1,6 @@
 package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.SoundManager;
+    import com.starmaid.Cibele.management.CommentaryPlayer;
     import com.starmaid.Cibele.management.ScreenManager;
     import com.starmaid.Cibele.management.DialoguePlayer;
     import com.starmaid.Cibele.states.IkuTursoDesktop;
@@ -180,7 +181,11 @@ package com.starmaid.Cibele.states {
                 fn = function ():void {
                     FlxG.switchState(new TextScreen(6 * GameSound.MSEC_PER_SEC,
                         function():void {
-                            SoundManager.getInstance().playSound(VidBGMLoop, 24*GameSound.MSEC_PER_SEC, null, false, 1, Math.random()*5000+100);
+                            if (ScreenManager.getInstance().COMMENTARY) {
+                                CommentaryPlayer.getInstance().playFile("commentary_1");
+                            } else {
+                                SoundManager.getInstance().playSound(VidBGMLoop, 24*GameSound.MSEC_PER_SEC, null, false, 1, Math.random()*5000+100);
+                            }
                             FlxG.switchState(
                                 new PlayVideoState(
                                     "/../assets/async/video/computer_open.mp4",

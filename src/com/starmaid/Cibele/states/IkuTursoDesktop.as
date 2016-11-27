@@ -106,6 +106,8 @@ package com.starmaid.Cibele.states {
         [Embed(source="/../assets/images/ui/popups/it_files/desktop_icon.png")] private var ImgDesktopIcon:Class;
         [Embed(source="/../assets/images/ui/popups/it_files/desktop.png")] private var ImgDesktop:Class;
 
+        [Embed(source="/../assets/images/ui/popups/it_files/fanart3_icon_commentary.png")] private var ImgFanart3IconCommentary:Class;
+
         public function IkuTursoDesktop() {
             ScreenManager.getInstance().levelTracker.level = LevelTracker.LVL_IT;
         }
@@ -455,7 +457,8 @@ package com.starmaid.Cibele.states {
                             "icon_pos": new DHPoint(440, 28),
                             "dim": new DHPoint(702, 509),
                             "contents": ImgFanart3,
-                            "commentary_file": "commentary_1"
+                            "commentary_file": "commentary_1",
+                            "commentary_icon": ImgFanart3IconCommentary
                         },
                         {
                             "name": "old site icon",
