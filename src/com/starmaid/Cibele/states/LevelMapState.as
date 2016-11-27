@@ -5,6 +5,7 @@ package com.starmaid.Cibele.states {
     import com.starmaid.Cibele.management.PopUpManager;
     import com.starmaid.Cibele.management.ProceduralDialogueGenerator;
     import com.starmaid.Cibele.management.DialoguePlayer;
+    import com.starmaid.Cibele.management.CommentaryPlayer;
     import com.starmaid.Cibele.management.SoundManager;
     import com.starmaid.Cibele.entities.PartyMember;
     import com.starmaid.Cibele.entities.Enemy;
@@ -144,7 +145,8 @@ package com.starmaid.Cibele.states {
                 var cursorObjectGroups:Array = [
                     this.enemies.enemies,
                     PopUpManager.getInstance().elements,
-                    MessageManager.getInstance().elements
+                    MessageManager.getInstance().elements,
+                    CommentaryPlayer.getInstance().elements
                 ];
                 this.game_cursor.checkObjectOverlap(cursorObjectGroups);
             }
@@ -156,6 +158,7 @@ package com.starmaid.Cibele.states {
                 this.enemies.enemies,
                 PopUpManager.getInstance().elements,
                 MessageManager.getInstance().elements,
+                CommentaryPlayer.getInstance().elements,
                 this.teamPowerBar.elements
             ];
             this.teamPowerBar.clickCallback(screenPos, worldPos);

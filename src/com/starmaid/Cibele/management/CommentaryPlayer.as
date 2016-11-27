@@ -1,4 +1,6 @@
 package com.starmaid.Cibele.management {
+    import com.starmaid.Cibele.base.GameObject;
+    import com.starmaid.Cibele.base.UIElement;
     import com.starmaid.Cibele.base.GameSound;
     import com.starmaid.Cibele.base.GameState;
     import com.starmaid.Cibele.management.SoundManager;
@@ -17,15 +19,23 @@ package com.starmaid.Cibele.management {
                     'str': 'this is a test commentary string'
                 }
             }
+            // make name accessible in object
+            public static var k:String;
+            for (k in sndFiles) {
+                sndFiles[k]['name'] = k;
+            }
         }
 
         public static var _instance:CommentaryPlayer = null;
 
         public var currentTrayCommentary:Object;
+        public var elements:Array;
         private var commentaryNameText:FlxText;
+        private var commentaryTextHitbox:GameObject;
         private var lastTextState:GameState;
 
         public function CommentaryPlayer() {
+            this.elements = new Array();
         }
 
         public function playFile(filename:String):void
@@ -52,6 +62,9 @@ package com.starmaid.Cibele.management {
             var selected:Object = sndFiles[filename];
             this.currentTrayCommentary = selected;
             this.initCommentaryText();
+            this.elements.push(this.commentaryTextHitbox);
+            this.commentaryTextHitbox.visible = true;
+            this.commentaryNameText.visible = true;
             this.commentaryNameText.text = this.currentTrayCommentary['str'];
         }
 
@@ -60,21 +73,42 @@ package com.starmaid.Cibele.management {
                 return;
             }
             if (this.commentaryNameText == null || this.lastTextState != (FlxG.state as GameState)) {
+                this.elements.length = 0;
                 this.lastTextState = FlxG.state as GameState;
-                this.commentaryNameText = new FlxText(
+
+                var buttonPos:DHPoint = new DHPoint(
                     ScreenManager.getInstance().screenWidth * .4,
-                    ScreenManager.getInstance().screenHeight - 100,
-                    500, ""
+                    ScreenManager.getInstance().screenHeight - 100
                 );
+                var buttonWidth:Number = 500;
+
+                this.commentaryTextHitbox = new UIElement(buttonPos.x, buttonPos.y);
+                this.commentaryTextHitbox.scrollFactor = new DHPoint(0, 0);
+                this.commentaryTextHitbox.active = false;
+                this.commentaryTextHitbox.makeGraphic(buttonWidth, 70, 0xff00ff00);
+                this.commentaryTextHitbox.visible = false;
+                FlxG.state.add(this.commentaryTextHitbox, true);
+
+                this.commentaryNameText = new FlxText(buttonPos.x, buttonPos.y,
+                                                      buttonWidth, "");
                 this.commentaryNameText.setFormat("NexaBold-Regular", 22,
                     0xffff0000, "center");
                 this.commentaryNameText.scrollFactor = new DHPoint(0, 0);
+                this.commentaryNameText.visible = false;
                 FlxG.state.add(this.commentaryNameText, true);
             }
         }
 
         public function clickCallback(screenPos:DHPoint, worldPos:DHPoint):void {
-            trace("click happened in commentary player");
+            var mouseScreenRect:FlxRect = new FlxRect(screenPos.x, screenPos.y, 5, 5);
+            var screenRect:FlxRect = this.commentaryTextHitbox._getScreenRect();
+            if (mouseScreenRect.overlaps(screenRect) && this.commentaryNameText.visible){
+                if (SoundManager.getInstance().soundOfTypeIsPlaying(GameSound.COMMENTARY)) {
+                    this.stop();
+                } else {
+                    this.playFile(this.currentTrayCommentary['name']);
+                }
+            }
         }
 
         public function stop():void {
